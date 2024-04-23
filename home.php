@@ -49,40 +49,7 @@ function displayEmployeeData() {
       background-repeat: no-repeat;
     }
 
-.form-control-sm {
-    margin-top:10px;
-}
-.active>.page-link, .page-link.active {
-    z-index: 3;
-    color: #fff;
-    background-color: #174793;
-    border-color: #174793;
-}
 
-.paginate_button{
-    color: #174793;
-}
-
-.page-link {
-    color: #174793;
-}
-
-th{
-    background-color:red;
-}
-
-#example th{
-    background-color:#E96529;
-    text-align:center;
-    color:#fff;
-}
-
-.page-item.active .page-link {
-    z-index: 3;
-    color: #fff;
-    background-color: #E96529;
-    border-color: #E96529;
-}
   </style>
 </head>
 <body>
