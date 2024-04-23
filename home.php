@@ -17,9 +17,8 @@ function displayEmployeeData() {
          
           // Add other columns as needed
           echo "<td>" . $row['role'] . "</td>";
-          echo "<td>";
-          echo "<button class='btn btn-success btn-sm' onclick='editEmployee(" . $row['employee_id'] . ")'><i class='fa-solid fa-eye'></i></button> ";
-          echo "<button class='btn btn-danger btn-sm' onclick='deleteEmployee(" . $row['employee_id'] . ")'><i class='fa-solid fa-trash'></i></button> ";
+          echo "<td style='text-align:center;'>";
+          echo "<button class='btn btn-success btn-sm' style='background-color:#E8C0AE;border:none;color:black;border-radius: 20px;width:60px;' onclick='editEmployee(" . $row['employee_id'] . ")'>View</button> ";
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -47,8 +46,16 @@ function displayEmployeeData() {
       background-image: url("images/bg.png");
       background-size: cover;
       background-repeat: no-repeat;
+      background-color:#fff9e4;
     }
 
+    .page-item.active .page-link {
+      z-index: 3;
+      color: #fff;
+      background-color: #E96529;
+      border-color: #E96529;
+    }
+  
 
   </style>
 </head>
