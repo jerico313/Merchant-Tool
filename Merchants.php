@@ -10,7 +10,7 @@ function displayEmployeeData() {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
           echo "<tr data-id='" . $row['employee_id'] . "'>";
-          echo "<td><center><input type='checkbox' class='schedule-checkbox' value='" . $row['employee_id'] . "'></center></td>";
+          echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='schedule-checkbox' value='" . $row['employee_id'] . "'></center></td>";
           echo "<td>" . $row['employee_id'] . "</td>";
           echo "<td>" . $row['emp_firstname'] . "</td>";
           echo "<td>" . $row['emp_lastname'] . "</td>";
@@ -90,6 +90,9 @@ function displayEmployeeData() {
         <?php displayEmployeeData(); ?>
         </tbody>
     </table>
+    <div class="reset" style="padding: 10px 0px 20px 0px; text-align: right;">
+    <button type="button" class="btn btn-danger" id="resetStatusButton" style="border: none; background-color: #E96529; width:180px;">Checks Settlement Report</button>
+</div>
   </div>
 </div>
 </div>
