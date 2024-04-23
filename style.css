@@ -59,3 +59,10 @@
   text-align:center;
   color:#fff;
 }
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #E96529;
+  border-color: #E96529;
+}

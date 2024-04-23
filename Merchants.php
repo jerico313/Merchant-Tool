@@ -19,10 +19,9 @@ function displayEmployeeData() {
           // Add other columns as needed
           echo "<td><img src='images/" . $row['profile_picture'] . "' alt='Employee Image' style='width:50px;height:50px;'></td>"; // Example for image column
           echo "<td>" . $row['role'] . "</td>";
-          echo "<td>";
-          echo "<button class='btn btn-success btn-sm' onclick='editEmployee(" . $row['employee_id'] . ")'><i class='fa-solid fa-pen-to-square'></i></button> ";
-          echo "<button class='btn btn-danger btn-sm' onclick='deleteEmployee(" . $row['employee_id'] . ")'><i class='fa-solid fa-trash'></i></button> ";
-          echo "<button class='btn btn-primary btn-sm' style='background-color:borde; onclick='editEmployee(" . $row['employee_id'] . ")'><i class='fa-solid fa-eye'></i></button>";
+          echo "<td style='text-align:center;'>";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['employee_id'] . ")'>View</button> ";
+          echo "<button class='btn btn-danger btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='deleteEmployee(" . $row['employee_id'] . ")'>Checks</button> ";
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -52,33 +51,12 @@ function displayEmployeeData() {
       background-repeat: no-repeat;
     }
 
-.form-control-sm {
-    margin-top:10px;
-}
-.active>.page-link, .page-link.active {
-    z-index: 3;
-    color: #fff;
-    background-color: #174793;
-    border-color: #174793;
-}
-
-.paginate_button{
-    color: #174793;
-}
-
-.page-link {
-    color: #174793;
-}
-
-th{
-    background-color:red;
-}
-
-#example th{
-    background-color:#E96529;
-    text-align:center;
-    color:#fff;
-}
+    .page-item.active .page-link {
+      z-index: 3;
+      color: #fff;
+      background-color: #E96529;
+      border-color: #E96529;
+    }
   </style>
 </head>
 <body>
@@ -86,22 +64,25 @@ th{
   <div class="custom-box pt-5">
   <div class="sub" style="text-align:left;">
   
-  <div class="reset" style="padding-bottom: 0px; padding-right: 30px; display: flex; align-items: center;">
-    <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:30px;color:#E96529;">Merchants</p>
-    <button type="button" class="btn btn-danger" id="resetStatusButton" style="border: none; border-radius: 20px; background-color: #E96529; width: 150px;"><i class="fa-solid fa-upload"></i> Upload Merchant</button>
+  <div class="voucher-type" style="padding-bottom: 0px; padding-right: 30px; display: flex; align-items: center;">
+  <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:30px;color:#E96529;">Store</p>
+    <button type="button" class="btn btn-danger" id="resetStatusButton" style="border: none; border-radius: 20px; background-color: #E96529; width: 110px;">COUPLED</button>
+    <button type="button" class="btn btn-danger" id="resetTrainButton" style="border: none; border-radius: 20px; margin-left: 10px; background-color: #E96529; width: 110px;">DECOUPLED</button>
+    <button type="button" class="btn btn-danger" id="resetTrainButton" style="border: none; border-radius: 20px; margin-left: 10px; background-color: #E96529; width: 110px;">GCASH</button>
 </div>
+
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
         <table id="example" class="table bord">
         <thead>
             <tr>
                 <th>Select</th>
-                <th>No.</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Image</th>
-                <th>Role </th>
+                <th>Merchant ID</th>
+                <th>Store ID</th>
+                <th>Store Name</th>
+                <th>Commision Rate</th>
+                <th>VAT Type</th>
+                <th>Fulfillment Types </th>
                 <th>Action</th>
             </tr>
         </thead>
