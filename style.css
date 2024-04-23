@@ -54,20 +54,8 @@
   color: #174793;
 }
 
-th{
-  background-color:red;
-}
-
 #example th{
-  background-color:yellow;
+  background-color:#E96529;
   text-align:center;
   color:#fff;
 }
-
-.page-item.active .page-link {
-  z-index: 3;
-  color: #fff;
-  background-color: #E96529;
-  border-color: #E96529;
-}
-  
