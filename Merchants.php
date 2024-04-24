@@ -76,7 +76,7 @@ function displayEmployeeData() {
         <table id="example" class="table bord">
         <thead>
             <tr>
-                <th>Select</th>
+                <th><center><input type="checkbox" style="accent-color:#E96529;" class="schedule-checkbox"></center></th>
                 <th>Merchant ID</th>
                 <th>Store ID</th>
                 <th>Store Name</th>
