@@ -10,13 +10,11 @@ function displayEmployeeData() {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
           echo "<tr data-id='" . $row['employee_id'] . "'>";
-          echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='schedule-checkbox' value='" . $row['employee_id'] . "'></center></td>";
+          echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['employee_id'] . "'></center></td>";
           echo "<td>" . $row['employee_id'] . "</td>";
           echo "<td>" . $row['emp_firstname'] . "</td>";
           echo "<td>" . $row['emp_lastname'] . "</td>";
           echo "<td>" . $row['emp_email'] . "</td>";
-         
-          // Add other columns as needed
           echo "<td><img src='images/" . $row['profile_picture'] . "' alt='Employee Image' style='width:50px;height:50px;'></td>"; // Example for image column
           echo "<td>" . $row['role'] . "</td>";
           echo "<td style='text-align:center;'>";
@@ -76,7 +74,7 @@ function displayEmployeeData() {
         <table id="example" class="table bord">
         <thead>
             <tr>
-                <th><center><input type="checkbox" style="accent-color:#E96529;" class="schedule-checkbox"></center></th>
+                <th><center><input type="checkbox" style="accent-color:#E96529;" class="store-checkbox" id="checkAll"></center></th>
                 <th>Merchant ID</th>
                 <th>Store ID</th>
                 <th>Store Name</th>
@@ -100,5 +98,12 @@ function displayEmployeeData() {
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script src="./js/script.js"></script>
+<script>
+  $(document).ready(function(){
+    $('#checkAll').change(function(){
+      $('.store-checkbox').prop('checked', $(this).prop('checked'));
+    });
+  });
+</script>
 </body>
 </html>
