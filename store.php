@@ -62,8 +62,8 @@ function displayEmployeeData() {
   <div class="custom-box pt-5">
   <div class="sub" style="text-align:left;">
   
-  <div class="voucher-type" style="padding-bottom: 0px; padding-right: 30px; display: flex; align-items: center;">
-  <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:30px;color:#E96529;">Store</p>
+  <div class="voucher-type" style="padding-bottom: 0px; padding-right: 5vh; display: flex; align-items: center;">
+  <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:5vh;color:#E96529;">Store</p>
     <button type="button" class="btn btn-danger" id="resetStatusButton" style="border: none; border-radius: 20px; background-color: #E96529; width: 110px;">COUPLED</button>
     <button type="button" class="btn btn-danger" id="resetTrainButton" style="border: none; border-radius: 20px; margin-left: 10px; background-color: #E96529; width: 110px;">DECOUPLED</button>
     <button type="button" class="btn btn-danger" id="resetTrainButton" style="border: none; border-radius: 20px; margin-left: 10px; background-color: #E96529; width: 110px;">GCASH</button>
@@ -88,7 +88,7 @@ function displayEmployeeData() {
         <?php displayEmployeeData(); ?>
         </tbody>
     </table>
-    <div class="reset" style="padding: 10px 0px 20px 0px; text-align: right;">
+    <div class="check" style="padding: 10px 0px 20px 0px; text-align: right;">
     <button type="button" class="btn btn-danger" id="resetStatusButton" style="border: none; background-color: #E96529; width:180px;">Checks Settlement Report</button>
 </div>
   </div>
