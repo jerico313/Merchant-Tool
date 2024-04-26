@@ -1,25 +1,26 @@
 <?php include("header.php")?>
 <?php
-function displayEmployeeData() {
+function displayStore() {
   include("inc/config.php");
 
-  $sql = "SELECT * FROM employees";
+  $sql = "SELECT * FROM store";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
-          echo "<tr data-id='" . $row['employee_id'] . "'>";
-          echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['employee_id'] . "'></center></td>";
-          echo "<td>" . $row['employee_id'] . "</td>";
-          echo "<td>" . $row['emp_firstname'] . "</td>";
-          echo "<td>" . $row['emp_lastname'] . "</td>";
-          echo "<td>" . $row['emp_email'] . "</td>";
-          echo "<td><img src='images/" . $row['profile_picture'] . "' alt='Employee Image' style='width:50px;height:50px;'></td>"; // Example for image column
-          echo "<td>" . $row['role'] . "</td>";
+          echo "<tr data-id='" . $row['store_id'] . "'>";
+          echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['store_id'] . "'></center></td>";
+          echo "<td>" . $row['store_id'] . "</td>";
+          echo "<td>" . $row['merchant_id'] . "</td>";
+          echo "<td>" . $row['store_name'] . "</td>";
+          echo "<td>" . $row['store_address'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['commission_rate'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['vat_type'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['fulfillment_type'] . "</td>";
           echo "<td style='text-align:center;'>";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['employee_id'] . ")'>View</button> ";
-          echo "<button class='btn btn-danger btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='deleteEmployee(" . $row['employee_id'] . ")'>Checks</button> ";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['store_id'] . ")'>View</button> ";
+          echo "<button class='btn btn-danger btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='deleteEmployee(" . $row['store_id'] . ")'>Checks</button> ";
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -78,14 +79,15 @@ function displayEmployeeData() {
                 <th>Merchant ID</th>
                 <th>Store ID</th>
                 <th>Store Name</th>
+                <th>Store Address</th>
                 <th>Commision Rate</th>
                 <th>VAT Type</th>
                 <th>Fulfillment Types </th>
-                <th>Action</th>
+                <th style="width:110px;">Action</th>
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
-        <?php displayEmployeeData(); ?>
+        <?php displayStore(); ?>
         </tbody>
     </table>
     <div class="check" style="padding: 10px 0px 20px 0px; text-align: right;">

@@ -3,7 +3,7 @@
 $db_host = "localhost"; // Replace with your database host
 $db_user = "root"; // Replace with your database username
 $db_password = ""; // Replace with your database password
-$db_name = "pnr";
+$db_name = "leadgen_db";
 
 // Create a database connection
 $conn = mysqli_connect($db_host, $db_user, $db_password, $db_name);

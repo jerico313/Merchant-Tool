@@ -28,15 +28,15 @@
 <body>
   <div class="login-container">
     <h2 class="text-center mb-4"><img src="images/booky.png" alt="booky" height="85" width="150"></h2>
-    <form>
+    <form action="login.php" method="post">
   <!-- Email input -->
   <div data-mdb-input-init class="form-outline mb-4">
-    <input type="email" id="form2Example1" class="form-control" style="border-radius:20px;padding:18px;border:none;" placeholder="Username"/>
+    <input type="email" id="email" name="email" class="form-control" style="border-radius:20px;padding:18px;border:none;" placeholder="Email" required>
   </div>
 
   <!-- Password input -->
   <div data-mdb-input-init class="form-outline mb-4">
-    <input type="password" id="form2Example2" class="form-control" style="border-radius:20px;padding:18px;border:none;" placeholder="Password"/>
+    <input type="password" id="password" name="password" class="form-control" style="border-radius:20px;padding:18px;border:none;" placeholder="Password" required>
   </div>
 
   <!-- 2 column grid layout for inline styling -->
@@ -44,16 +44,26 @@
     <div class="col d-flex justify-content">
       <!-- Checkbox -->
       <div class="form-check" style="color:#fff;">
-        <input class="form-check-input" type="checkbox" value="" id="form2Example31" />
-        <label class="form-check-label" for="form2Example31" style="font-size:10px;"> Remember Password </label>
+        <input class="form-check-input" type="checkbox" value="" id="show_password" />
+        <label class="form-check-label" for="form2Example31" style="font-size:10px;">Show Password </label>
       </div>
     </div>
   </div>
 
   <!-- Submit button -->
-  <button style="border-radius:20px;background-color:#fff;color:black;border:none;font-size:12px;color:#F47831;font-weight:bold;padding:8px" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Login</button>
+  <button style="border-radius:20px;background-color:#fff;color:black;border:none;font-size:12px;color:#F47831;font-weight:bold;padding:8px" type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Login</button>
   </div>
 </form>
-  </div>
+</div>
+<script>
+    document.getElementById('show_password').addEventListener('change', function() {
+      var passwordField = document.getElementById('password');
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+      } else {
+        passwordField.type = 'password';
+      }
+    });
+</script>
 </body>
 </html>

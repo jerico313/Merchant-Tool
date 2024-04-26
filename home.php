@@ -1,22 +1,24 @@
 <?php include("header.php")?>
 <?php
-function displayEmployeeData() {
+function displayMerchant() {
   include("inc/config.php");
 
-  $sql = "SELECT * FROM employees";
+  $sql = "SELECT * FROM merchant";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
-          echo "<tr data-id='" . $row['employee_id'] . "'>";
-          echo "<td>" . $row['employee_id'] . "</td>";
-          echo "<td>" . $row['emp_firstname'] . "</td>";
-          echo "<td>" . $row['emp_lastname'] . "</td>";
-          echo "<td>" . $row['emp_email'] . "</td>";
-          echo "<td>" . $row['role'] . "</td>";
+          echo "<tr data-id='" . $row['merchant_id'] . "'>";
+          echo "<td>" . $row['merchant_id'] . "</td>";
+          echo "<td>" . $row['merchant_name'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['merchant_type'] . "</td>";
+          echo "<td>" . $row['legal_entity_name'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['lead_gen_type'] . "</td>";
+          echo "<td>" . $row['business_address'] . "</td>";
+          echo "<td>" . $row['email_address'] . "</td>";
           echo "<td style='text-align:center;'>";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['employee_id'] . ")'>View</button> ";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['merchant_id'] . ")'>View</button> ";
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -52,6 +54,10 @@ function displayEmployeeData() {
       background-color: #E96529;
       border-color: #E96529;
     }
+
+    .pagination{
+      padding-bottom:10px;
+    }
   </style>
 </head>
 <body>
@@ -71,13 +77,15 @@ function displayEmployeeData() {
                 <th>Merchant ID</th>
                 <th>Merchant Name</th>
                 <th>Merchant Type</th>
-                <th>Transaction Type</th>
                 <th>Legal Entity Name</th>
+                <th>Lead Gen Type</th>
+                <th>Business Address</th>
+                <th>Email Address</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
-        <?php displayEmployeeData(); ?>
+        <?php displayMerchant(); ?>
         </tbody>
     </table>
   </div>
