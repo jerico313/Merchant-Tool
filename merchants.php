@@ -41,38 +41,13 @@ function displayMerchant() {
   <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+  <link rel="stylesheet" href="style.css">
 
   <style>
     body {
       background-image: url("images/bg.png");
       background-size: cover;
       background-repeat: no-repeat;
-    }
-    .page-item.active .page-link {
-      z-index: 3;
-      color: #fff;
-      background-color: #E96529;
-      border-color: #E96529;
-    }
-    .pagination{
-      padding-bottom:10px;
-    }
-    .upload-btn {
-      display: inline-block;
-      background-color: #E96529;
-      color:#fff;
-      border: none;
-      padding:5px;
-      width:150px;
-      border-radius: 20px;
-      cursor: pointer;
-      text-align: center;
-    }
-    .upload-btn:hover {
-      background-color: #CD683B;
-    }
-    input[type="file"] {
-      display: none;
     }
     </style>
   </style>
@@ -82,9 +57,9 @@ function displayMerchant() {
   <div class="custom-box pt-5">
   <div class="sub" style="text-align:left;">
   
-  <div class="reset" style="padding-bottom: 0px; padding-right: 30px; display: flex; align-items: center;">
-    <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:30px;color:#E96529;">Merchants</p>
-    <button type="button" class="btn btn-danger" style="border: none; border-radius: 20px;margin-right:10px; background-color: #E96529; width: 150px;"><i class="fa-solid fa-plus"></i> Add New Merchant</button>
+  <div class="reset" style="padding-bottom: 0px; padding-right: 5vh; display: flex; align-items: center;">
+    <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:5vh;color:#E96529;">Merchants</p>
+    <button type="button" class="btn btn-danger add-merchant"><i class="fa-solid fa-plus"></i> Add New Merchant</button>
     <form action="/upload" method="post" enctype="multipart/form-data">
             <label for="fileToUpload" class="upload-btn"><i class="fa-solid fa-upload"></i> Upload Merchant</label>
             <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">

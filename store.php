@@ -35,26 +35,19 @@ function displayStore() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Homepage</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
   <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
   <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+  <link rel="stylesheet" href="style.css">
 
   <style>
     body {
       background-image: url("images/bg.png");
       background-size: cover;
       background-repeat: no-repeat;
-    }
-
-    .page-item.active .page-link {
-      z-index: 3;
-      color: #fff;
-      background-color: #E96529;
-      border-color: #E96529;
     }
   </style>
 </head>
@@ -65,9 +58,9 @@ function displayStore() {
   
   <div class="voucher-type" style="padding-bottom: 0px; padding-right: 5vh; display: flex; align-items: center;">
   <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:5vh;color:#E96529;">Store</p>
-    <button type="button" class="btn btn-danger" id="resetStatusButton" style="border: none; border-radius: 20px; background-color: #E96529; width: 110px;">COUPLED</button>
-    <button type="button" class="btn btn-danger" id="resetTrainButton" style="border: none; border-radius: 20px; margin-left: 10px; background-color: #E96529; width: 110px;">DECOUPLED</button>
-    <button type="button" class="btn btn-danger" id="resetTrainButton" style="border: none; border-radius: 20px; margin-left: 10px; background-color: #E96529; width: 110px;">GCASH</button>
+    <button type="button" class="btn btn-danger coupled">COUPLED</button>
+    <button type="button" class="btn btn-danger decoupled">DECOUPLED</button>
+    <button type="button" class="btn btn-danger gcash">GCASH</button>
 </div>
 
 

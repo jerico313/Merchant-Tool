@@ -39,20 +39,6 @@
 .form-control-sm {
   margin-top:10px;
 }
-.active>.page-link, .page-link.active {
-  z-index: 3;
-  color: #fff;
-  background-color: #174793;
-  border-color: #174793;
-}
-
-.paginate_button{
-  color: #174793;
-}
-
-.page-link {
-  color: #174793;
-}
 
 #example th{
   background-color:#E96529;
@@ -66,7 +52,9 @@
   background-color: #E96529;
   border-color: #E96529;
 }
-
+.pagination{
+  padding-bottom:10px;
+}
 .error{
   background-color: #E8C0AE;
   color:red;
@@ -76,4 +64,44 @@
   border:solid red 1px;
   border-radius:5px;
   text-align:center;
+}
+
+.add-merchant{
+  margin-right:10px;
+}
+.upload-btn, .add-merchant{
+  display: inline-block;
+  background-color: #E96529;
+  color:#fff;
+  border: none;
+  padding:5px;
+  width:150px;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+}
+.add-merchant:hover, .upload-btn:hover {
+  background-color: #fff;
+  color:#E96529;
+  border:solid #E96529 2px;
+}
+input[type="file"] {
+  display: none;
+}
+
+.coupled, .decoupled, .gcash{
+  border: none; 
+  border-radius: 20px; 
+  background-color: #E96529; 
+  width: 110px;
+}
+
+.decoupled, .gcash{
+  margin-left:10px;
+}
+
+.coupled:hover, .decoupled:hover, .gcash:hover{
+  background-color: #fff;
+  color:#E96529;
+  border:solid #E96529 2px;
 }
