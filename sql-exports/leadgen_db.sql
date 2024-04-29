@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2024 at 08:35 AM
+-- Generation Time: Apr 29, 2024 at 05:40 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -24,64 +24,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `coupled_order`
+-- Table structure for table `commission_rate`
 --
 
-CREATE TABLE `coupled_order` (
-  `coupled_id` varchar(36) NOT NULL,
-  `store_id` varchar(36) NOT NULL,
-  `offer_id` varchar(36) NOT NULL,
-  `customer_id` varchar(36) NOT NULL,
-  `customer_name` varchar(100) NOT NULL,
-  `transaction_number` varchar(100) NOT NULL,
-  `transaction_date` datetime NOT NULL,
-  `offer_price` decimal(10,2) NOT NULL,
-  `gross_sales` decimal(10,2) NOT NULL,
-  `discount` decimal(10,2) NOT NULL,
-  `payment_method` enum('cod','Paymaya','Gcash','Gcash_miniapp','Card Payment','Maya_checkout') NOT NULL,
-  `commission_rate` decimal(6,4) NOT NULL,
-  `pg_fee_id` varchar(36) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `decoupled_order`
---
-
-CREATE TABLE `decoupled_order` (
-  `decoupled_id` varchar(36) NOT NULL,
-  `store_id` varchar(36) NOT NULL,
-  `offer_id` varchar(36) NOT NULL,
-  `customer_id` varchar(36) NOT NULL,
-  `customer_name` varchar(100) NOT NULL,
-  `transaction_number` varchar(100) NOT NULL,
-  `transaction_date` datetime NOT NULL,
-  `offer_price` decimal(10,2) NOT NULL,
-  `gross_sales` decimal(10,2) NOT NULL,
-  `discount` decimal(10,2) NOT NULL,
-  `payment_method` enum('cod','Paymaya','Gcash','Gcash_miniapp','Card Payment','Maya_checkout') NOT NULL,
-  `commission_rate` decimal(6,4) NOT NULL,
-  `pg_fee_id` varchar(36) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `gcash_order`
---
-
-CREATE TABLE `gcash_order` (
-  `gcash_id` varchar(36) NOT NULL,
+CREATE TABLE `commission_rate` (
+  `commission_id` varchar(36) NOT NULL,
   `merchant_id` varchar(36) NOT NULL,
-  `item` varchar(250) NOT NULL,
-  `total_redemptions` int(11) NOT NULL,
-  `voucher_price` decimal(10,2) NOT NULL,
-  `commission_rate` decimal(6,4) NOT NULL,
+  `rate` decimal(6,4) NOT NULL,
+  `effective_date` date NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -95,11 +45,12 @@ CREATE TABLE `gcash_order` (
 CREATE TABLE `merchant` (
   `merchant_id` varchar(36) NOT NULL,
   `merchant_name` varchar(100) NOT NULL,
-  `merchant_type` enum('Primary','Secondary') NOT NULL,
+  `merchant_partnership_type` enum('Primary','Secondary') NOT NULL,
   `legal_entity_name` varchar(250) NOT NULL,
-  `lead_gen_type` enum('Decoupled','Coupled','Gcash') NOT NULL,
+  `fulfillment_type` enum('Decoupled','Coupled','Gcash') NOT NULL,
   `business_address` varchar(250) NOT NULL,
-  `email_address` varchar(100) NOT NULL,
+  `email_address` varchar(250) NOT NULL,
+  `vat_type` enum('Vat Inc','Vat Ex') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -119,9 +70,6 @@ CREATE TABLE `offer` (
   `offer_quantity` int(11) NOT NULL,
   `offer_amount` decimal(10,2) NOT NULL,
   `voucher_code` varchar(100) NOT NULL,
-  `start_date` date NOT NULL,
-  `end_date` date NOT NULL,
-  `billable_date` date NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -129,13 +77,52 @@ CREATE TABLE `offer` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pg_fee`
+-- Table structure for table `offer_renewal`
 --
 
-CREATE TABLE `pg_fee` (
+CREATE TABLE `offer_renewal` (
+  `renewal_id` varchar(36) NOT NULL,
+  `offer_id` varchar(36) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `billable_date` date DEFAULT NULL,
+  `status` enum('Active','Expired','Renewed') DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE `order_details` (
+  `order_id` varchar(36) NOT NULL,
+  `store_id` varchar(36) NOT NULL,
+  `offer_id` varchar(36) NOT NULL,
+  `customer_id` varchar(36) NOT NULL,
+  `customer_name` varchar(100) NOT NULL,
+  `transaction_reference` varchar(100) NOT NULL,
+  `transaction_date` datetime NOT NULL,
+  `gross_sales` decimal(10,2) NOT NULL,
+  `discount` decimal(10,2) NOT NULL,
+  `mode_of_payment` enum('cod','gcash','gcash_miniapp','maya','maya_checkout','maya_credit_card','paymaya') NOT NULL,
+  `pg_fee_id` varchar(36) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pg_fee_rate`
+--
+
+CREATE TABLE `pg_fee_rate` (
   `pg_fee_id` varchar(36) NOT NULL,
   `payment_method` enum('cod','Paymaya','Gcash','Gcash_miniapp','Card Payment','Maya_checkout') NOT NULL,
-  `pg_fee_rate` decimal(6,4) NOT NULL,
+  `rate` decimal(6,4) NOT NULL,
   `effective_date` date NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -152,9 +139,6 @@ CREATE TABLE `store` (
   `merchant_id` varchar(36) NOT NULL,
   `store_name` varchar(100) NOT NULL,
   `store_address` varchar(250) NOT NULL,
-  `commission_rate` decimal(6,4) NOT NULL,
-  `vat_type` enum('Vat Inc','Vat Ex') NOT NULL,
-  `fulfillment_type` enum('Lead Gen','QR/MAPS Lead Gen','Gcash') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -170,7 +154,8 @@ CREATE TABLE `users` (
   `email_address` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `type` varchar(100) NOT NULL
+  `type` enum('Admin','User_full','User_partial') NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -178,29 +163,11 @@ CREATE TABLE `users` (
 --
 
 --
--- Indexes for table `coupled_order`
+-- Indexes for table `commission_rate`
 --
-ALTER TABLE `coupled_order`
-  ADD PRIMARY KEY (`coupled_id`),
-  ADD KEY `store_id` (`store_id`),
-  ADD KEY `offer_id` (`offer_id`),
-  ADD KEY `pg_fee_id` (`pg_fee_id`);
-
---
--- Indexes for table `decoupled_order`
---
-ALTER TABLE `decoupled_order`
-  ADD PRIMARY KEY (`decoupled_id`),
-  ADD KEY `store_id` (`store_id`),
-  ADD KEY `offer_id` (`offer_id`),
-  ADD KEY `pg_fee_id` (`pg_fee_id`);
-
---
--- Indexes for table `gcash_order`
---
-ALTER TABLE `gcash_order`
-  ADD PRIMARY KEY (`gcash_id`),
-  ADD KEY `merchant_id` (`merchant_id`);
+ALTER TABLE `commission_rate`
+  ADD PRIMARY KEY (`commission_id`),
+  ADD UNIQUE KEY `merchant_id` (`merchant_id`);
 
 --
 -- Indexes for table `merchant`
@@ -216,9 +183,25 @@ ALTER TABLE `offer`
   ADD KEY `merchant_id` (`merchant_id`);
 
 --
--- Indexes for table `pg_fee`
+-- Indexes for table `offer_renewal`
 --
-ALTER TABLE `pg_fee`
+ALTER TABLE `offer_renewal`
+  ADD PRIMARY KEY (`renewal_id`),
+  ADD KEY `offer_id` (`offer_id`);
+
+--
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `store_id` (`store_id`),
+  ADD KEY `offer_id` (`offer_id`),
+  ADD KEY `pg_fee_id` (`pg_fee_id`);
+
+--
+-- Indexes for table `pg_fee_rate`
+--
+ALTER TABLE `pg_fee_rate`
   ADD PRIMARY KEY (`pg_fee_id`);
 
 --
@@ -239,32 +222,30 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `coupled_order`
+-- Constraints for table `commission_rate`
 --
-ALTER TABLE `coupled_order`
-  ADD CONSTRAINT `coupled_order_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
-  ADD CONSTRAINT `coupled_order_ibfk_2` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`),
-  ADD CONSTRAINT `coupled_order_ibfk_3` FOREIGN KEY (`pg_fee_id`) REFERENCES `pg_fee` (`pg_fee_id`);
-
---
--- Constraints for table `decoupled_order`
---
-ALTER TABLE `decoupled_order`
-  ADD CONSTRAINT `decoupled_order_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
-  ADD CONSTRAINT `decoupled_order_ibfk_2` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`),
-  ADD CONSTRAINT `decoupled_order_ibfk_3` FOREIGN KEY (`pg_fee_id`) REFERENCES `pg_fee` (`pg_fee_id`);
-
---
--- Constraints for table `gcash_order`
---
-ALTER TABLE `gcash_order`
-  ADD CONSTRAINT `gcash_order_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
+ALTER TABLE `commission_rate`
+  ADD CONSTRAINT `commission_rate_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
 
 --
 -- Constraints for table `offer`
 --
 ALTER TABLE `offer`
   ADD CONSTRAINT `offer_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
+
+--
+-- Constraints for table `offer_renewal`
+--
+ALTER TABLE `offer_renewal`
+  ADD CONSTRAINT `offer_renewal_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`);
+
+--
+-- Constraints for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
+  ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`),
+  ADD CONSTRAINT `order_details_ibfk_3` FOREIGN KEY (`pg_fee_id`) REFERENCES `pg_fee_rate` (`pg_fee_id`);
 
 --
 -- Constraints for table `store`
