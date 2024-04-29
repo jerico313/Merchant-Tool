@@ -67,6 +67,7 @@ function displayMerchant() {
   
   <div class="reset" style="padding-bottom: 0px; padding-right: 30px; display: flex; align-items: center;">
     <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:30px;color:#E96529;">Merchants</p>
+    <button type="button" class="btn btn-danger" id="resetStatusButton" style="border: none; border-radius: 20px;margin-right:10px; background-color: #E96529; width: 150px;"><i class="fa-solid fa-plus"></i> Add New Merchant</button>
     <button type="button" class="btn btn-danger" id="resetStatusButton" style="border: none; border-radius: 20px; background-color: #E96529; width: 150px;"><i class="fa-solid fa-upload"></i> Upload Merchant</button>
 </div>
 
@@ -78,7 +79,7 @@ function displayMerchant() {
                 <th>Merchant Name</th>
                 <th>Merchant Type</th>
                 <th>Legal Entity Name</th>
-                <th>Lead Gen Type</th>
+                <th style="width:70px;">Lead Gen Type</th>
                 <th>Business Address</th>
                 <th>Email Address</th>
                 <th>Action</th>
