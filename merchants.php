@@ -1,22 +1,25 @@
 <?php include("header.php")?>
 <?php
-function displayEmployeeData() {
+function displayMerchant() {
   include("inc/config.php");
 
-  $sql = "SELECT * FROM employees";
+  $sql = "SELECT * FROM merchant";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
-          echo "<tr data-id='" . $row['employee_id'] . "'>";
-          echo "<td>" . $row['employee_id'] . "</td>";
-          echo "<td>" . $row['emp_firstname'] . "</td>";
-          echo "<td>" . $row['emp_lastname'] . "</td>";
-          echo "<td>" . $row['emp_email'] . "</td>";
-          echo "<td>" . $row['role'] . "</td>";
+          echo "<tr data-id='" . $row['merchant_id'] . "'>";
+          echo "<td>" . $row['merchant_id'] . "</td>";
+          echo "<td>" . $row['merchant_name'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['merchant_partnership_type'] . "</td>";
+          echo "<td>" . $row['legal_entity_name'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['fulfillment_type'] . "</td>";
+          echo "<td>" . $row['business_address'] . "</td>";
+          echo "<td>" . $row['email_address'] . "</td>";
+          echo "<td>" . $row['vat_type'] . "</td>";
           echo "<td style='text-align:center;'>";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['employee_id'] . ")'>View</button> ";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['merchant_id'] . ")'>View</button> ";
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -45,13 +48,33 @@ function displayEmployeeData() {
       background-size: cover;
       background-repeat: no-repeat;
     }
-
     .page-item.active .page-link {
       z-index: 3;
       color: #fff;
       background-color: #E96529;
       border-color: #E96529;
     }
+    .pagination{
+      padding-bottom:10px;
+    }
+    .upload-btn {
+      display: inline-block;
+      background-color: #E96529;
+      color:#fff;
+      border: none;
+      padding:5px;
+      width:150px;
+      border-radius: 20px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .upload-btn:hover {
+      background-color: #CD683B;
+    }
+    input[type="file"] {
+      display: none;
+    }
+    </style>
   </style>
 </head>
 <body>
@@ -61,7 +84,11 @@ function displayEmployeeData() {
   
   <div class="reset" style="padding-bottom: 0px; padding-right: 30px; display: flex; align-items: center;">
     <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:30px;color:#E96529;">Merchants</p>
-    <button type="button" class="btn btn-danger" id="resetStatusButton" style="border: none; border-radius: 20px; background-color: #E96529; width: 150px;"><i class="fa-solid fa-upload"></i> Upload Merchant</button>
+    <button type="button" class="btn btn-danger" style="border: none; border-radius: 20px;margin-right:10px; background-color: #E96529; width: 150px;"><i class="fa-solid fa-plus"></i> Add New Merchant</button>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="fileToUpload" class="upload-btn"><i class="fa-solid fa-upload"></i> Upload Merchant</label>
+            <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+    </form>
 </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -71,13 +98,16 @@ function displayEmployeeData() {
                 <th>Merchant ID</th>
                 <th>Merchant Name</th>
                 <th>Merchant Type</th>
-                <th>Transaction Type</th>
                 <th>Legal Entity Name</th>
+                <th style="width:70px;">Fulfillment Type</th>
+                <th>Business Address</th>
+                <th>Email Address</th>
+                <th>VAT Type</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
-        <?php displayEmployeeData(); ?>
+        <?php displayMerchant(); ?>
         </tbody>
     </table>
   </div>

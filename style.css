@@ -66,3 +66,14 @@
   background-color: #E96529;
   border-color: #E96529;
 }
+
+.error{
+  background-color: #E8C0AE;
+  color:red;
+  margin-bottom:5px;
+  height:30px;
+  padding:5px;
+  border:solid red 1px;
+  border-radius:5px;
+  text-align:center;
+}
