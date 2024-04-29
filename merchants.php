@@ -49,6 +49,123 @@ function displayMerchant() {
       background-size: cover;
       background-repeat: no-repeat;
     }
+
+    .title{
+      font-size: 30px; 
+      font-weight: bold; 
+      margin-right: auto; 
+      padding-left: 5vh;
+      color: #E96529;"
+    }
+
+    .add-btns{
+      padding-bottom: 0px; 
+      padding-right: 5vh; 
+      display: flex; 
+      align-items: center;
+    }
+    @media only screen and (max-width: 767px) {
+  /* Force table to not be like tables anymore */
+  table,
+thead,
+tbody,
+th,
+td,
+tr {
+    display: block;
+    text-align:left !important;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr,
+tfoot tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50% !important;
+  }
+
+  td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align:left !important;
+  }
+
+  .table td:nth-child(1) {
+    background: #E96529;
+    height: 100%;
+    top: 0;
+    left: 0;
+    font-weight: bold;
+    color:#fff;
+  }
+
+  /*
+  Label the data
+  */
+  td:nth-of-type(1):before {
+    content: "Merchant ID";
+  }
+
+  td:nth-of-type(2):before {
+    content: "Merchant Name";
+  }
+
+  td:nth-of-type(3):before {
+    content: "Merchant Type";
+  }
+
+  td:nth-of-type(4):before {
+    content: "Legal Entity Name";
+  }
+
+  td:nth-of-type(5):before {
+    content: "Fullfillment Type";
+  }
+
+  td:nth-of-type(6):before {
+    content: "Business Address";
+  }
+
+  td:nth-of-type(7):before {
+    content: "Email Address";
+  }
+
+  td:nth-of-type(8):before {
+    content: "VAT Type";
+  }
+
+  td:nth-of-type(9):before {
+    content: "Action";
+  }
+
+  .dataTables_length {
+    display: none;
+  }
+
+  .title{
+      font-size: 25px;
+      padding-left: 2vh;
+      padding-top:10px;
+    }
+  
+  .add-btns{
+    padding-right: 2vh; 
+  }
+}
     </style>
   </style>
 </head>
@@ -57,8 +174,8 @@ function displayMerchant() {
   <div class="custom-box pt-5">
   <div class="sub" style="text-align:left;">
   
-  <div class="reset" style="padding-bottom: 0px; padding-right: 5vh; display: flex; align-items: center;">
-    <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:5vh;color:#E96529;">Merchants</p>
+  <div class="add-btns">
+    <p class="title">Merchants</p>
     <button type="button" class="btn btn-danger add-merchant"><i class="fa-solid fa-plus"></i> Add New Merchant</button>
     <form action="/upload" method="post" enctype="multipart/form-data">
             <label for="fileToUpload" class="upload-btn"><i class="fa-solid fa-upload"></i> Upload Merchant</label>
