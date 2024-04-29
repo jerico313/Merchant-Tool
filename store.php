@@ -15,9 +15,6 @@ function displayStore() {
           echo "<td>" . $row['merchant_id'] . "</td>";
           echo "<td>" . $row['store_name'] . "</td>";
           echo "<td>" . $row['store_address'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['commission_rate'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['vat_type'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['fulfillment_type'] . "</td>";
           echo "<td style='text-align:center;'>";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['store_id'] . ")'>View</button> ";
           echo "<button class='btn btn-danger btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='deleteEmployee(" . $row['store_id'] . ")'>Checks</button> ";
@@ -49,6 +46,101 @@ function displayStore() {
       background-size: cover;
       background-repeat: no-repeat;
     }
+
+    .title{
+      font-size: 30px; 
+      font-weight: bold; 
+      margin-right: auto; 
+      padding-left: 5vh;
+      color: #E96529;"
+    }
+
+    .voucher-type{
+      padding-bottom: 0px; 
+      padding-right: 5vh; 
+      display: flex; 
+      align-items: center;
+    }
+
+    @media only screen and (max-width: 767px) {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+      text-align:left !important;
+    }
+
+    thead tr,
+    tfoot tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    td {
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding-left: 50% !important;
+    }
+
+    td:before {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      font-weight:bold;
+      text-align:left !important;
+    }
+
+    .table td:nth-child(1) {
+      background: #E96529;
+      height: 100%;
+      top: 0;
+      left: 0;
+      font-weight: bold;
+      color:#fff;
+    }
+
+    td:nth-of-type(1):before {
+      content: "Store ID";
+    }
+
+    td:nth-of-type(2):before {
+      content: "Merchant ID";
+    }
+
+    td:nth-of-type(3):before {
+      content: "Store Name";
+    }
+
+    td:nth-of-type(4):before {
+      content: "Store Address";
+    }
+
+    td:nth-of-type(5):before {
+      content: "Action";
+    }
+
+    .dataTables_length {
+      display: none;
+    }
+
+    .title{
+      font-size: 25px;
+      padding-left: 2vh;
+      padding-top:10px;
+    }
+  
+    .voucher-type{
+      padding-right: 2vh; 
+    }
+}
   </style>
 </head>
 <body>
@@ -56,8 +148,8 @@ function displayStore() {
   <div class="custom-box pt-5">
   <div class="sub" style="text-align:left;">
   
-  <div class="voucher-type" style="padding-bottom: 0px; padding-right: 5vh; display: flex; align-items: center;">
-  <p style="font-size: 30px; font-weight: bold; margin-right: auto; padding-left:5vh;color:#E96529;">Store</p>
+  <div class="voucher-type">
+  <p class="title">Store</p>
     <button type="button" class="btn btn-danger coupled">COUPLED</button>
     <button type="button" class="btn btn-danger decoupled">DECOUPLED</button>
     <button type="button" class="btn btn-danger gcash">GCASH</button>
@@ -69,13 +161,10 @@ function displayStore() {
         <thead>
             <tr>
                 <th><center><input type="checkbox" style="accent-color:#E96529;" class="store-checkbox" id="checkAll"></center></th>
-                <th>Merchant ID</th>
                 <th>Store ID</th>
+                <th>Merchant ID</th>
                 <th>Store Name</th>
                 <th>Store Address</th>
-                <th>Commision Rate</th>
-                <th>VAT Type</th>
-                <th>Fulfillment Types </th>
                 <th style="width:110px;">Action</th>
             </tr>
         </thead>
