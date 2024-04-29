@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2024 at 09:49 AM
+-- Generation Time: Apr 29, 2024 at 05:40 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -51,7 +51,6 @@ CREATE TABLE `merchant` (
   `business_address` varchar(250) NOT NULL,
   `email_address` varchar(250) NOT NULL,
   `vat_type` enum('Vat Inc','Vat Ex') NOT NULL,
-  `commission_id` varchar(36) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -174,8 +173,7 @@ ALTER TABLE `commission_rate`
 -- Indexes for table `merchant`
 --
 ALTER TABLE `merchant`
-  ADD PRIMARY KEY (`merchant_id`),
-  ADD KEY `merchant_ibfk_1` (`commission_id`);
+  ADD PRIMARY KEY (`merchant_id`);
 
 --
 -- Indexes for table `offer`
@@ -228,12 +226,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `commission_rate`
   ADD CONSTRAINT `commission_rate_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
-
---
--- Constraints for table `merchant`
---
-ALTER TABLE `merchant`
-  ADD CONSTRAINT `merchant_ibfk_1` FOREIGN KEY (`commission_id`) REFERENCES `commission_rate` (`commission_id`);
 
 --
 -- Constraints for table `offer`
