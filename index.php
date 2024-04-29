@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verify password
             if (password_verify($password, $user['password'])) {
                 // Password is correct, redirect to dashboard or homepage
-                header("Location: home.php");
+                header("Location: merchants.php");
                 exit();
             } else {
                 $error = "Incorrect password!";
