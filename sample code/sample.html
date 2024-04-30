@@ -1,0 +1,663 @@
+<style>
+	/* Adjust the size of the DataTable search input */
+	div.dataTables_wrapper div.dataTables_filter input {
+		width: 150px;
+		margin-right: 10px;
+	}
+</style>
+
+<div class="container-fluid">
+	<input type="hidden" name="centerLogID" value="@Model.logInfo.centerLogID" />
+	<div class="row">
+		<!-- Sidebar (desktop) -->
+		<nav id="sidebar" class="col-md-3 col-lg-3 d-md-block d-none sidebar">
+			<div class="position-sticky">
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link" href="/disaster/profile/informationboard/index?centerLogID=@Model.logInfo.centerLogID">Information Board</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/disaster/profile/entrylog/index?centerLogID=@Model.logInfo.centerLogID">Entry Log</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/disaster/profile/staffassignment/index?centerLogID=@Model.logInfo.centerLogID">Staff Assignment</a>
+					</li>
+					@if (@Model.ecLogNotif.remainingInventoryCount == 0)
+					{
+						<li class="nav-item">
+							<a class="nav-link" href="/disaster/profile/inventory/index?centerLogID=@Model.logInfo.centerLogID">
+								Inventory
+							</a>
+						</li>
+					}
+					else
+					{
+						<li class="nav-item">
+							<a class="nav-link" href="/disaster/profile/inventory/index?centerLogID=@Model.logInfo.centerLogID">
+								Inventory <span class="badge rounded-pill bg-primary ps-2">@Model.ecLogNotif.remainingInventoryCount</span>
+							</a>
+						</li>
+					}
+
+					@if (@Model.ecLogNotif.remainingPackCount == 0)
+					{
+						<li class="nav-item">
+							<a class="nav-link" href="/disaster/profile/reliefgoodspack/index?centerLogID=@Model.logInfo.centerLogID">
+								Relief Goods Pack
+							</a>
+						</li>
+					}
+					else
+					{
+						<li class="nav-item">
+							<a class="nav-link" href="/disaster/profile/reliefgoodspack/index?centerLogID=@Model.logInfo.centerLogID">
+								Relief Goods Pack <span class="badge rounded-pill bg-primary ps-2">@Model.ecLogNotif.remainingPackCount</span>
+							</a>
+						</li>
+					}
+
+					@if (@Model.ecLogNotif.remainingAssessmentCount == 0)
+					{
+						<li class="nav-item">
+							<a class="nav-link" href="/disaster/profile/vulnerabilityassessment/index?centerLogID=@Model.logInfo.centerLogID">
+								Vulnerability Assessment
+							</a>
+						</li>
+					}
+					else
+					{
+						<li class="nav-item">
+							<a class="nav-link" href="/disaster/profile/vulnerabilityassessment/index?centerLogID=@Model.logInfo.centerLogID">
+								Vulnerability Assessment <span class="badge rounded-pill bg-primary ps-2">@Model.ecLogNotif.remainingAssessmentCount</span>
+							</a>
+						</li>
+					}
+				</ul>
+			</div>
+		</nav>
+
+		<!-- Sidebar (mobile) -->
+		<div id="sidebarMobile" class="col-md-3 col-lg-3 d-md-none bg-light p-2">
+			<select class="form-select" id="pageSelect">
+				<option value="/disaster/profile/informationboard/index?centerLogID=@Model.logInfo.centerLogID">Information Board</option>
+				<option value="/disaster/profile/entrylog/index?centerLogID=@Model.logInfo.centerLogID">Entry Log</option>
+				<option value="/disaster/profile/staffassignment/index?centerLogID=@Model.logInfo.centerLogID">Staff Assignment</option>
+				@if (@Model.ecLogNotif.remainingInventoryCount == 0)
+				{
+					<option value="/disaster/profile/inventory/index?centerLogID=@Model.logInfo.centerLogID">Inventory</option>
+				}
+				else
+				{
+					<option value="/disaster/profile/inventory/index?centerLogID=@Model.logInfo.centerLogID">
+						Inventory <span>(@Model.ecLogNotif.remainingInventoryCount)</span>
+					</option>
+				}
+
+				@if (@Model.ecLogNotif.remainingPackCount == 0)
+				{
+					<option value="/disaster/profile/reliefgoodspack/index?centerLogID=@Model.logInfo.centerLogID">Relief Goods Pack</option>
+				}
+				else
+				{
+					<option value="/disaster/profile/reliefgoodspack/index?centerLogID=@Model.logInfo.centerLogID">
+						Relief Goods Pack <span>(@Model.ecLogNotif.remainingPackCount)</span>
+					</option>
+				}
+
+				@if (@Model.ecLogNotif.remainingAssessmentCount == 0)
+				{
+					<option value="/disaster/profile/vulnerabilityassessment/index?centerLogID=@Model.logInfo.centerLogID">Vulnerability Assessment</option>
+				}
+				else
+				{
+					<option value="/disaster/profile/vulnerabilityassessment/index?centerLogID=@Model.logInfo.centerLogID">
+						Vulnerability Assessment <span>(@Model.ecLogNotif.remainingAssessmentCount)</span>
+					</option>
+				}
+
+			</select>
+		</div>
+
+		<!-- Page Content -->
+		<div class="col-md-9 ms-sm-auto col-lg-9 px-md-4 pb-3 pt-3">
+			<div class="container">
+				<!-- Breadcrumb -->
+				<div class="row pb-2" aria-label="breadcrumb">
+					<nav style="--bs-breadcrumb-divider: '/';" aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/index"><i class="bi bi-house-door-fill" style="padding: 5px;"></i>Home</a></li>
+							<li class="breadcrumb-item"><a href="/disaster/index">Disaster</a></li>
+							<li class="breadcrumb-item"><a href="/disaster/profile/index?disasterID=@Model.logInfo.disasterID">@Model.logInfo.disasterName</a></li>
+							<li class="breadcrumb-item active"><a><strong>@Model.logInfo.centerName</strong></a></li>
+						</ol>
+					</nav>
+				</div>
+				<form method="POST" id="checkOut" style="padding: 0px;">
+					<input type="hidden" name="centerLogID" value="@Model.logInfo.centerLogID" />
+					<!-- Title, Check-In and Check-Out Buttons -->
+					@if (@Model.logInfo.status == "Open")
+					{
+						<div class="row pb-2">
+							<div class="col-12 d-flex justify-content-between align-items-center" style="gap: 30px">
+								<div class="d-flex align-items-center">
+									<h1>Entry Log</h1>
+								</div>
+
+								@if (Model.UserType == "Admin" || Model.assignmentInfo.status == "Assigned")
+								{
+									<div class="col-auto d-flex justify-content-between align-items-center" style="gap: 5px">
+										<a id="checkInButton" class="btn btn-primary mb-2 d-none d-sm-inline" href="/disaster/profile/entrylog/checkin?centerLogID=@Model.logInfo.centerLogID">
+											<i class="bi bi-check-circle pt" style="padding: 5px;"></i> Check-in Evacuee
+										</a>
+										<a id="checkInButtonSmall" class="btn btn-primary mb-2 d-sm-none" href="/disaster/profile/entrylog/checkin?centerLogID=@Model.logInfo.centerLogID">
+											<i class="bi bi-check-circle pt" style="padding: 5px;"></i>
+										</a>
+
+										<button id="checkOutButton" style="display: none;" type="button" class="btn btn-danger mb-2 d-none d-sm-inline" name="saveSelection" data-bs-toggle="modal" data-bs-target="#confirmSaveModal" disabled>
+											<i class="bi bi-x-circle pt" style="padding: 5px;"></i> Check-out Evacuee
+										</button>
+										<button id="checkOutButtonSmall" style="display: none;" type="button" class="btn btn-danger mb-2 d-sm-none" name="saveSelectionSmall" data-bs-toggle="modal" data-bs-target="#confirmSaveModal" disabled>
+											<i class="bi bi-x-circle pt" style="padding: 5px;"></i>
+										</button>
+									</div>
+								}
+							</div>
+						</div>
+					}
+					else if (@Model.logInfo.status == "Closed")
+					{
+						<div class="row pb-2">
+							<div class="col-12 d-flex justify-content-between align-items-center" style="gap: 30px">
+								<div class="d-flex align-items-center">
+									<h1>Entry Log</h1>
+								</div>
+							</div>
+						</div>
+					}
+
+					<!-- Table -->
+					<div class="col-lg-12">
+						<div style="overflow-x: auto; max-width: 100%;">
+							<table id="entrylog-table" class="table display compact order-column table-hover" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>
+											@if (@Model.logInfo.status == "Open")
+											{
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox" id="selectAllCheckboxes">
+													<label class="form-check-label"></label>
+												</div>
+											}
+											else if (@Model.logInfo.status == "Closed")
+											{
+												<text>#</text>
+											}
+										</th>
+										<th>Family Serial Num</th>
+										<th>Name</th>
+										<th style="text-align: center;">Remarks</th>
+										<th style="text-align: center;">Status</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									@{ var counter = 1; }
+									@foreach (var item in Model.listEntryLog)
+									{
+										<tr>
+											<td width="5%">
+												@if (@Model.logInfo.status == "Open")
+												{
+													<div class="form-check">
+														<input class="form-check-input" type="checkbox" value="@item.entryLogID"
+														   name="selectedEvacuees[]" @((item.entryStatus == "Check-out") ? "disabled" : "")>
+														<label class="form-check-label"></label>
+													</div>
+												}
+												else if (@Model.logInfo.status == "Closed")
+												{
+													@counter
+												}
+											</td>
+											<td width="30%" style="text-align: center;">@item.serialNum	</td>
+											<td width="25%">@item.fullName</td>
+											<td width="20%">@item.remarks</td>
+											<td width="15%" style="text-align: center;">
+												@if (@item.entryStatus == "Check-in")
+												{
+													<span class="badge rounded-pill bg-success">@item.entryStatus</span>
+												}
+												else if (@item.entryStatus == "Check-out")
+												{
+													<span class="badge rounded-pill bg-light">@item.entryStatus</span>
+												}
+											</td>
+											<td width="5%">
+												<div class="d-inline position-relative">
+													<a href="#" role="button" id="recordOptions" data-bs-toggle="dropdown" aria-expanded="false">
+														<i class="bi bi-three-dots-vertical"></i>
+													</a>
+													@if (@item.entryStatus == "Check-in")
+													{
+														<ul class="dropdown-menu" aria-labelledby="recordOptions">
+															<li>
+																<a class="dropdown-item" href="/family/profile/index?familyID=@item.familyID">
+																	View Family Profile
+																</a>
+															</li>
+															<li>
+																<a href="#" class="dropdown-item" onclick="showDatesPopup('@item.checkInDate', '@item.checkOutDate')"
+																   data-bs-toggle="modal" data-bs-target="#datesModal">
+																	View Entry Details
+																</a>
+															</li>
+															@*@if (@Model.logInfo.status == "Open")
+															{
+																@if (Model.UserType == "Admin")
+																{
+																	<li>
+																		<a href="#" class="dropdown-item text-danger" onclick="prepareDelete('@item.entryLogID')"
+																		   data-deleteid="@item.entryLogID" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
+																			Delete
+																		</a>
+																	</li>
+																}
+																else if (Model.UserType == "EC Staff")
+																{
+																	if (Model.assignmentInfo.status == "Assigned")
+																	{
+																		<li>
+																			<a href="#" class="dropdown-item text-danger" onclick="prepareDelete('@item.entryLogID')"
+																			   data-deleteid="@item.entryLogID" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
+																				Delete
+																			</a>
+																		</li>
+																	}																	
+																}
+															}*@
+														</ul>
+													}
+													else if (@item.entryStatus == "Check-out")
+													{
+														<ul class="dropdown-menu" aria-labelledby="recordOptions">
+															<li>
+																<a class="dropdown-item" href="/family/profile/index?familyID=@item.familyID">
+																	View Family Profile
+																</a>
+															</li>
+															<li>
+																<a href="#" class="dropdown-item" onclick="showDatesPopup('@item.checkInDate', '@item.checkOutDate')"
+																   data-bs-toggle="modal" data-bs-target="#datesModal">
+																	View Entry Details
+																</a>
+															</li>
+														</ul>
+													}
+												</div>
+											</td>
+											<td>@item.checkInDate</td>
+										</tr>
+										counter++;
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal: View Entry Details -->
+<div class="modal fade" id="datesModal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Entry Details</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<table>
+					<tr>
+						<th class="text-start pe-4">Check-in Date</th>
+						<td id="checkInDate" class="text-start"></td>
+					</tr>
+					<tr>
+						<th class="text-start pe-4">Check-out Date</th>
+						<td id="checkOutDate" class="text-start"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Entry Details Modal -->
+<script>
+	function showDatesPopup(checkInDate, checkOutDate) {
+		// Set the content of the modal with the provided dates
+		document.getElementById('checkInDate').innerText = checkInDate;
+		document.getElementById('checkOutDate').innerText = checkOutDate || "-";
+	}
+</script>
+
+<!-- Modal: Confirm Check-out -->
+<div class="modal" id="confirmSaveModal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Confirm Check-out</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				Are you sure you want to check-out the selected evacuees?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-danger" id="confirmSaveButton">Check-out</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal: Confirm Delete -->
+<div class="modal" id="deleteConfirmationModal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title text-danger">Confirm Delete</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to delete this entry log?</p>
+				<p><strong class="text-danger">This cannot be undone.</strong></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Sidebar (Mobile) -->
+<script>
+	// Get the current page URL
+	var currentPage = window.location.pathname.toLowerCase();
+
+	// Get the select element
+	var pageSelect = document.getElementById('pageSelect');
+
+	// Loop through the options and set the selected attribute if it matches the current page
+	for (var i = 0; i < pageSelect.options.length; i++) {
+		if (pageSelect.options[i].value.toLowerCase().includes(currentPage)) {
+			pageSelect.options[i].selected = true;
+			break; // Exit the loop once the first match is found
+		}
+	}
+
+	// Function to handle page redirection
+	function redirectToSelectedPage() {
+		var selectedOption = pageSelect.options[pageSelect.selectedIndex];
+		var selectedValue = selectedOption.value;
+		window.location.href = selectedValue;
+	}
+
+	// Attach the onchange event to the select element
+	pageSelect.addEventListener('change', redirectToSelectedPage);
+</script>
+
+<script>
+	$(document).ready(function () {
+		var drawCallbackEnabled = false; // Set default to false
+
+		var table = $('#entrylog-table').DataTable({
+			responsive: false,
+			pageLength: 25,
+			columnDefs: [
+				{ "orderable": true, "targets": [1, 2, 6] }, // Sortable columns
+				{ "orderable": false, "targets": [0, 3, 4, 5] }, // Non-sortable columns
+				{ "visible": false, "targets": 6 } // Hidden column
+			],
+			order:[[6, 'asc']],
+
+			// Group By button
+			drawCallback: function (settings) {
+				if (!drawCallbackEnabled) {
+					return;
+				}
+
+				var api = this.api();
+				var rows = api.rows({ page: 'current' }).nodes();
+				var last = null;
+
+				api.column(1, { page: 'current' }) // Assuming "Family Serial Num" is the second column (index 1)
+					.data()
+					.each(function (group, i) {
+						if (last !== group) {
+							$(rows)
+								.eq(i)
+								.before(
+									'<tr><td class="bg-light text-dark" colspan="6">'
+									+ '<b>' + group + '</b>' +
+									'</td></tr>'
+								);
+
+							last = group;
+						}
+					});	
+			}
+		});
+
+		// Append the button beside the search bar
+		var searchInput = $('#entrylog-table_filter input');
+		var groupby_family = $('<a class="btn btn-sm btn-secondary" id="groupby_family">Group by Family</button>');
+		searchInput.after(groupby_family);
+
+		// Toggle drawCallback on button click
+		groupby_family.on('click', function () {
+			drawCallbackEnabled = !drawCallbackEnabled;
+
+			// Set default ordering when group by is enabled
+			if (drawCallbackEnabled) {
+				table.order([[1, 'asc']]);
+			} else {
+				table.order([[6, 'asc']]);
+			}
+
+			// Redraw the table to apply the changes
+			table.draw();
+
+			// Change button color based on activation state
+			groupby_family.toggleClass('btn-secondary', !drawCallbackEnabled);
+			groupby_family.toggleClass('btn-primary', drawCallbackEnabled);
+		});
+
+		table.columns([3, 4]).every(function () {
+			var column = this;
+			var filterContainer = $('<div class="dropdown align-items-center d-inline-flex ps-2	"></div>').appendTo($(column.header()));
+			var btn = $('<button class="btn btn-sm btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-funnel"></i></button>').appendTo(filterContainer);
+			var menu = $('<div class="dropdown-menu p-3"></div>').appendTo(filterContainer);
+			
+			function updateFilterButton() {
+				var hasActiveFilter = column.search() !== '';
+				btn.toggleClass('btn-warning', hasActiveFilter);
+			}
+
+			column.data().unique().sort().each(function (d, j) {
+				// Only add the options "Check-in" and "Check-out" for the "Status" column
+				if (column.index() === 4) {
+					// Set specific filter options only if they haven't been added
+					if (menu.find("input[value='Check-in']").length === 0) {
+						menu.append('<div class="form-check"><input class="form-check-input" type="checkbox" value="Check-in">' +
+							'<label class="form-check-label ps-1">Check-in</label></div>');
+					}
+					if (menu.find("input[value='Check-out']").length === 0) {
+						menu.append('<div class="form-check"><input class="form-check-input" type="checkbox" value="Check-out">' +
+							'<label class="form-check-label ps-1">Check-out</label></div>');
+					}
+				}
+				// For other columns, show all unique values as filter options
+				else {
+					menu.append('<div class="form-check"><input class="form-check-input" type="checkbox" value="' + d + '">' +
+						'<label class="form-check-label ps-1">' + d + '</label></div>');
+				}
+			});
+
+			menu.prepend('<div class="form-check"><input class="form-check-input select-all" type="checkbox" value="select-all">' +
+				'<label class="form-check-label ps-1">Select All</label></div>');
+
+			menu.append('<hr class="dropdown-divider"><div class="p-1"><button type="button" class="btn btn-sm btn-light clear-filter"><i class="bi bi-eraser pe-1"></i>Clear Filter</button></div>');
+
+			menu.find('.form-check-input, .clear-filter').on('click', function () {
+				var checked = $(this).prop('checked');
+
+				if ($(this).hasClass('form-check-input')) {
+					if ($(this).val() === 'select-all') {
+						menu.find('.form-check-input').prop('checked', checked);
+					} else if (!checked) {
+						menu.find('.form-check-input[value="select-all"]').prop('checked', false);
+					}
+				} else {
+					menu.find('.form-check-input').prop('checked', false);
+					menu.find('.form-check-input[value="select-all"]').prop('checked', false);
+				}
+
+				var selectedValues = menu.find('.form-check-input:checked').map(function () {
+					return $(this).val();
+				}).get();
+
+				column.search(selectedValues.length > 0 ? '^(' + selectedValues.join('|') + ')$' : '', true, false).draw();
+				updateFilterButton();
+			});
+			updateFilterButton();
+		});
+	});
+</script>
+
+<!-- Select All checkboxes and Enable/disable "Check-out" button -->
+<script>
+	const selectAllCheckbox = document.getElementById('selectAllCheckboxes');
+	const checkboxes = document.querySelectorAll('input[name="selectedEvacuees[]"]');
+	const saveSelectionButton = document.querySelector('button[name="saveSelection"]');
+	const saveSelectionButtonSmall = document.querySelector('button[name="saveSelectionSmall"]');
+
+	// Event listener for the "Select All" checkbox
+	selectAllCheckbox.addEventListener('change', function () {
+		checkboxes.forEach(checkbox => {
+			if (!checkbox.disabled) {
+				checkbox.checked = selectAllCheckbox.checked;
+			}
+		});
+		updateSaveSelectionButtonState();
+		updateButtonVisibility();
+	});
+
+	// Event listener for individual checkboxes
+	checkboxes.forEach(checkbox => {
+		checkbox.addEventListener('change', function () {
+			updateSelectAllCheckboxState();
+			updateSaveSelectionButtonState();
+			updateButtonVisibility();
+		});
+	});
+
+	// Function to show/hide "Check-in" & "Check-out" buttons
+	function updateButtonVisibility() {
+		const atLeastOneEnabledCheckboxChecked = Array.from(checkboxes)
+			.filter(checkbox => !checkbox.disabled)
+			.some(checkbox => checkbox.checked);
+
+		const checkOutButton = document.getElementById('checkOutButton');
+		const checkOutButtonSmall = document.getElementById('checkOutButtonSmall');
+		const checkInButton = document.getElementById('checkInButton');
+		const checkInButtonSmall = document.getElementById('checkInButtonSmall');
+
+		if (atLeastOneEnabledCheckboxChecked) {
+			checkOutButton.style.display = 'block'; // Show the "Check-out Evacuee" button
+			checkInButton.style.display = 'none'; // Hide the "Check-in Evacuee" button
+			if (checkInButtonSmall) {
+				checkInButtonSmall.style.display = 'none'; // Hide the "Small Check-in Evacuee" button if it exists
+			}
+			if (checkOutButtonSmall) {
+				checkOutButtonSmall.style.display = 'block'; // Show the "Small Check-out Evacuee" button if it exists
+			}
+		} else {
+			checkOutButton.style.display = 'none'; // Hide the "Check-out Evacuee" button
+			checkInButton.style.display = 'block'; // Show the Check-in Evacuee button
+			if (checkInButtonSmall) {
+				checkInButtonSmall.style.display = 'block'; // Show the "Small Check-in Evacuee" button if it exists
+			}
+			if (checkOutButtonSmall) {
+				checkOutButtonSmall.style.display = 'none'; // Hide the "Small Check-out Evacuee" button if it exists
+			}
+		}
+	}
+
+	// Function to check "Select All" checkbox when all enabled checkboxes are checked
+	function updateSelectAllCheckboxState() {
+		const allEnabledCheckboxesChecked = Array.from(checkboxes)
+			.filter(checkbox => !checkbox.disabled)
+			.every(checkbox => checkbox.checked);
+		selectAllCheckbox.checked = allEnabledCheckboxesChecked;
+	}
+
+	// Function to enable "Check-out" button when at least one enabled checkbox is cheked
+	function updateSaveSelectionButtonState() {
+		const atLeastOneEnabledCheckboxChecked = Array.from(checkboxes)
+			.filter(checkbox => !checkbox.disabled)
+			.some(checkbox => checkbox.checked);
+		saveSelectionButton.disabled = !atLeastOneEnabledCheckboxChecked;
+		if (saveSelectionButtonSmall) {
+			saveSelectionButtonSmall.disabled = !atLeastOneEnabledCheckboxChecked;
+		}
+	}
+</script>
+
+<!-- Check-out button in Modal -->
+<script>
+	document.getElementById('confirmSaveButton').addEventListener('click', function () {
+		document.getElementById('checkOut').submit();
+	});
+</script>
+
+<!-- Confirm Delete -->
+<script>
+	const deleteButtons = document.querySelectorAll('.edit-button');
+	let entryLogIdToDelete = null;
+	let centerLogID = null;
+
+	deleteButtons.forEach(function (button) {
+		button.addEventListener('click', function () {
+			entryLogIdToDelete = this.getAttribute('data-deleteid');
+		});
+	});
+
+	// Function to prepare for delete action
+	function prepareDelete(entryLogID) {
+		if (entryLogID === null || entryLogID === undefined) {
+			// Retrieve entryLogID from the button's data-deleteid attribute
+			entryLogIdToDelete = event.currentTarget.getAttribute('data-deleteid');
+		} else {
+			entryLogIdToDelete = entryLogID;
+		}
+
+		// Retrieve centerLogID from the query string
+		const urlParams = new URLSearchParams(window.location.search);
+		centerLogID = urlParams.get("centerLogID");
+	}
+
+	const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+
+	confirmDeleteButton.addEventListener('click', function () {
+		if (entryLogIdToDelete !== null) {
+			window.location.href = "/disaster/profile/entrylog/delete?entryLogID=" + entryLogIdToDelete + "&centerLogID=" + centerLogID;
+		}
+	});
+</script>
