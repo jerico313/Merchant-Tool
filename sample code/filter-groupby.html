@@ -1,0 +1,258 @@
+<!-- Table -->
+<div class="col-lg-12">
+    <div style="overflow-x: auto; max-width: 100%;">
+        <table id="entrylog-table" class="table display compact order-column table-hover" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        @if (@Model.logInfo.status == "Open")
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAllCheckboxes">
+                                <label class="form-check-label"></label>
+                            </div>
+                        }
+                        else if (@Model.logInfo.status == "Closed")
+                        {
+                            <text>#</text>
+                        }
+                    </th>
+                    <th>Family Serial Num</th>
+                    <th>Name</th>
+                    <th style="text-align: center;">Remarks</th>
+                    <th style="text-align: center;">Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ var counter = 1; }
+                @foreach (var item in Model.listEntryLog)
+                {
+                    <tr>
+                        <td width="5%">
+                            @if (@Model.logInfo.status == "Open")
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="@item.entryLogID"
+                                       name="selectedEvacuees[]" @((item.entryStatus == "Check-out") ? "disabled" : "")>
+                                    <label class="form-check-label"></label>
+                                </div>
+                            }
+                            else if (@Model.logInfo.status == "Closed")
+                            {
+                                @counter
+                            }
+                        </td>
+                        <td width="30%" style="text-align: center;">@item.serialNum	</td>
+                        <td width="25%">@item.fullName</td>
+                        <td width="20%">@item.remarks</td>
+                        <td width="15%" style="text-align: center;">
+                            @if (@item.entryStatus == "Check-in")
+                            {
+                                <span class="badge rounded-pill bg-success">@item.entryStatus</span>
+                            }
+                            else if (@item.entryStatus == "Check-out")
+                            {
+                                <span class="badge rounded-pill bg-light">@item.entryStatus</span>
+                            }
+                        </td>
+                        <td width="5%">
+                            <div class="d-inline position-relative">
+                                <a href="#" role="button" id="recordOptions" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </a>
+                                @if (@item.entryStatus == "Check-in")
+                                {
+                                    <ul class="dropdown-menu" aria-labelledby="recordOptions">
+                                        <li>
+                                            <a class="dropdown-item" href="/family/profile/index?familyID=@item.familyID">
+                                                View Family Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="dropdown-item" onclick="showDatesPopup('@item.checkInDate', '@item.checkOutDate')"
+                                               data-bs-toggle="modal" data-bs-target="#datesModal">
+                                                View Entry Details
+                                            </a>
+                                        </li>
+                                        @*@if (@Model.logInfo.status == "Open")
+                                        {
+                                            @if (Model.UserType == "Admin")
+                                            {
+                                                <li>
+                                                    <a href="#" class="dropdown-item text-danger" onclick="prepareDelete('@item.entryLogID')"
+                                                       data-deleteid="@item.entryLogID" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
+                                                        Delete
+                                                    </a>
+                                                </li>
+                                            }
+                                            else if (Model.UserType == "EC Staff")
+                                            {
+                                                if (Model.assignmentInfo.status == "Assigned")
+                                                {
+                                                    <li>
+                                                        <a href="#" class="dropdown-item text-danger" onclick="prepareDelete('@item.entryLogID')"
+                                                           data-deleteid="@item.entryLogID" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
+                                                            Delete
+                                                        </a>
+                                                    </li>
+                                                }																	
+                                            }
+                                        }*@
+                                    </ul>
+                                }
+                                else if (@item.entryStatus == "Check-out")
+                                {
+                                    <ul class="dropdown-menu" aria-labelledby="recordOptions">
+                                        <li>
+                                            <a class="dropdown-item" href="/family/profile/index?familyID=@item.familyID">
+                                                View Family Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="dropdown-item" onclick="showDatesPopup('@item.checkInDate', '@item.checkOutDate')"
+                                               data-bs-toggle="modal" data-bs-target="#datesModal">
+                                                View Entry Details
+                                            </a>
+                                        </li>
+                                    </ul>
+                                }
+                            </div>
+                        </td>
+                        <td>@item.checkInDate</td>
+                    </tr>
+                    counter++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		var drawCallbackEnabled = false; // Set default to false
+
+		var table = $('#entrylog-table').DataTable({
+			responsive: false,
+			pageLength: 25,
+			columnDefs: [
+				{ "orderable": true, "targets": [1, 2, 6] }, // Sortable columns
+				{ "orderable": false, "targets": [0, 3, 4, 5] }, // Non-sortable columns
+				{ "visible": false, "targets": 6 } // Hidden column
+			],
+			order:[[6, 'asc']],
+
+			// Group By button
+			drawCallback: function (settings) {
+				if (!drawCallbackEnabled) {
+					return;
+				}
+
+				var api = this.api();
+				var rows = api.rows({ page: 'current' }).nodes();
+				var last = null;
+
+				api.column(1, { page: 'current' }) // Assuming "Family Serial Num" is the second column (index 1)
+					.data()
+					.each(function (group, i) {
+						if (last !== group) {
+							$(rows)
+								.eq(i)
+								.before(
+									'<tr><td class="bg-light text-dark" colspan="6">'
+									+ '<b>' + group + '</b>' +
+									'</td></tr>'
+								);
+
+							last = group;
+						}
+					});	
+			}
+		});
+
+		// Append the button beside the search bar
+		var searchInput = $('#entrylog-table_filter input');
+		var groupby_family = $('<a class="btn btn-sm btn-secondary" id="groupby_family">Group by Family</button>');
+		searchInput.after(groupby_family);
+
+		// Toggle drawCallback on button click
+		groupby_family.on('click', function () {
+			drawCallbackEnabled = !drawCallbackEnabled;
+
+			// Set default ordering when group by is enabled
+			if (drawCallbackEnabled) {
+				table.order([[1, 'asc']]);
+			} else {
+				table.order([[6, 'asc']]);
+			}
+
+			// Redraw the table to apply the changes
+			table.draw();
+
+			// Change button color based on activation state
+			groupby_family.toggleClass('btn-secondary', !drawCallbackEnabled);
+			groupby_family.toggleClass('btn-primary', drawCallbackEnabled);
+		});
+
+		table.columns([3, 4]).every(function () {
+			var column = this;
+			var filterContainer = $('<div class="dropdown align-items-center d-inline-flex ps-2	"></div>').appendTo($(column.header()));
+			var btn = $('<button class="btn btn-sm btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-funnel"></i></button>').appendTo(filterContainer);
+			var menu = $('<div class="dropdown-menu p-3"></div>').appendTo(filterContainer);
+			
+			function updateFilterButton() {
+				var hasActiveFilter = column.search() !== '';
+				btn.toggleClass('btn-warning', hasActiveFilter);
+			}
+
+			column.data().unique().sort().each(function (d, j) {
+				// Only add the options "Check-in" and "Check-out" for the "Status" column
+				if (column.index() === 4) {
+					// Set specific filter options only if they haven't been added
+					if (menu.find("input[value='Check-in']").length === 0) {
+						menu.append('<div class="form-check"><input class="form-check-input" type="checkbox" value="Check-in">' +
+							'<label class="form-check-label ps-1">Check-in</label></div>');
+					}
+					if (menu.find("input[value='Check-out']").length === 0) {
+						menu.append('<div class="form-check"><input class="form-check-input" type="checkbox" value="Check-out">' +
+							'<label class="form-check-label ps-1">Check-out</label></div>');
+					}
+				}
+				// For other columns, show all unique values as filter options
+				else {
+					menu.append('<div class="form-check"><input class="form-check-input" type="checkbox" value="' + d + '">' +
+						'<label class="form-check-label ps-1">' + d + '</label></div>');
+				}
+			});
+
+			menu.prepend('<div class="form-check"><input class="form-check-input select-all" type="checkbox" value="select-all">' +
+				'<label class="form-check-label ps-1">Select All</label></div>');
+
+			menu.append('<hr class="dropdown-divider"><div class="p-1"><button type="button" class="btn btn-sm btn-light clear-filter"><i class="bi bi-eraser pe-1"></i>Clear Filter</button></div>');
+
+			menu.find('.form-check-input, .clear-filter').on('click', function () {
+				var checked = $(this).prop('checked');
+
+				if ($(this).hasClass('form-check-input')) {
+					if ($(this).val() === 'select-all') {
+						menu.find('.form-check-input').prop('checked', checked);
+					} else if (!checked) {
+						menu.find('.form-check-input[value="select-all"]').prop('checked', false);
+					}
+				} else {
+					menu.find('.form-check-input').prop('checked', false);
+					menu.find('.form-check-input[value="select-all"]').prop('checked', false);
+				}
+
+				var selectedValues = menu.find('.form-check-input:checked').map(function () {
+					return $(this).val();
+				}).get();
+
+				column.search(selectedValues.length > 0 ? '^(' + selectedValues.join('|') + ')$' : '', true, false).draw();
+				updateFilterButton();
+			});
+			updateFilterButton();
+		});
+	});
+</script>
