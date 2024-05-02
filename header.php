@@ -24,17 +24,18 @@ mysqli_close($conn);
     <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-    .mainnav {  
-      min-height: 100px !important;
-      height: 100px !important;
-      max-height: 100px !important;
-    } 
-    
-    .dropdown-menu {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border: 1px solid #FFC30B;
-    }
+      .navbar{
+        font-size: 100px !important;
+      }
 
+      .active{
+        font-weight:900;
+      } 
+
+      .dropdown-menu{
+    left: auto !important;
+    right: 0 !important;
+}
     </style>
 </head>
 <body>
@@ -43,24 +44,40 @@ mysqli_close($conn);
   $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
-<nav class="navbar navbar-expand-md navbar-light mainnav">
-  <div class="container-fluid">
-   
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-       
-      </ul>
-          <li class="navbar-nav nav-item dropdown" >
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user fa-xl" style="color: #e96529;"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="login.php"><i class="fa-solid fa-pen-to-square fa-sm" style="color: #e96529;"></i> Edit Profile</a></li>
-              <li><a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket fa-sm" style="color: #e96529;"></i> Log out</a></li>
-            </ul>
-          </li>
-    </div>
-  </div>
-</nav>
+
+<nav class="navbar navbar-expand-lg navbar-dark p-3" style="background-color: #E96529;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><span class="navbar-brand mb-0 mr-2 h1 fs-2" style="font-weight:bold;color:#fff;">booky</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto ">
+            <li class="nav-item">
+              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'order.php') ? 'active' : ''; ?>" aria-current="page" href="order.php">ORDER</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'merchants.php') ? 'active' : ''; ?>" aria-current="page" href="merchants.php">MERCHANT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'pg_fee_rate.php') ? 'active' : ''; ?>" aria-current="page" href="pg_fee_rate.php">PG FEE RATE</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
+          <li class="nav-item dropdown">
+              <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-user fa-lg"></i>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a></li>
+                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 </body>

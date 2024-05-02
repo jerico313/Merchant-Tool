@@ -17,8 +17,6 @@ function displayMerchant() {
           echo "<td style='text-align:center;'>" . $row['fulfillment_type'] . "</td>";
           echo "<td>" . $row['business_address'] . "</td>";
           echo "<td>" . $row['email_address'] . "</td>";
-          echo "<td>" . $row['vat_type'] . "</td>";
-          echo "<td>" . $row['commission_id'] . "</td>";
           echo "<td style='text-align:center;'>";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['merchant_id'] . ")'>View</button> ";
           echo "</td>";
@@ -45,12 +43,6 @@ function displayMerchant() {
   <link rel="stylesheet" href="style.css">
 
   <style>
-    body {
-      background-image: url("images/bg.png");
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-
     .title{
       font-size: 30px; 
       font-weight: bold; 
@@ -164,11 +156,6 @@ function displayMerchant() {
     .add-btns{
       padding-right: 2vh; 
     }
-
-    body{
-      background-image: url("images/bg.png");
-      background-size: 1000px 600px;
-    }
 }
     </style>
   </style>
@@ -195,11 +182,9 @@ function displayMerchant() {
                 <th>Merchant Name</th>
                 <th style="width:120px;">Merchant Type</th>
                 <th>Legal Entity Name</th>
-                <th style="width:70px;">Fulfillment Type</th>
+                <th>Fulfillment Type</th>
                 <th>Business Address</th>
                 <th>Email Address</th>
-                <th>VAT Type</th>
-                <th>Commission ID</th>
                 <th>Action</th>
             </tr>
         </thead>

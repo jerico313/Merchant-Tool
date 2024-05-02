@@ -41,11 +41,6 @@ function displayStore() {
   <link rel="stylesheet" href="style.css">
 
   <style>
-    body {
-      background-image: url("images/bg.png");
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
 
     .title{
       font-size: 30px; 

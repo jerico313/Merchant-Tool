@@ -6,7 +6,12 @@
   font-size: 12px;
   margin:0;
 }
-  
+
+.navbar{
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  background-color: #E96529;
+}
+
 .login-container {
   width: 300px;
   background-color: none;
@@ -161,4 +166,9 @@ input[type="file"] {
 
 a {
   text-decoration: none;
+}
+
+ul.breadcrumb li {
+  display: inline;
+  font-size: 18px;
 }
