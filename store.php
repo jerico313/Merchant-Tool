@@ -12,9 +12,9 @@ function displayStore() {
           echo "<tr data-id='" . $row['store_id'] . "'>";
           echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['store_id'] . "'></center></td>";
           echo "<td>" . $row['store_id'] . "</td>";
-          echo "<td>" . $row['merchant_id'] . "</td>";
           echo "<td>" . $row['store_name'] . "</td>";
           echo "<td>" . $row['store_address'] . "</td>";
+          echo "<td>" . $row['merchant_id'] . "</td>";
           echo "<td style='text-align:center;'>";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['store_id'] . ")'>View</button> ";
           echo "<button class='btn btn-danger btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='deleteEmployee(" . $row['store_id'] . ")'>Checks</button> ";
@@ -148,15 +148,13 @@ function displayStore() {
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
         <li class="breadcrumb-item"><a href="/index" style="color:#E96529; font-size:14px;">Store</a></li>
-        <li class="breadcrumb-item"><a href="/disaster/index" style="color:#E96529;font-size:14px;">Store Name</a></li>
-        <li class="breadcrumb-item"><a href="/disaster/profile/index?disasterID=@Model.logInfo.disasterID" style="color:#E96529;font-size:14px;">Offer</a></li>
+        <li class="breadcrumb-item"><a href="/disaster/index" style="color:#E96529;font-size:14px;">Stores</a></li>
     </ol>
 </nav>
 
 </div>
-    <button type="button" class="btn btn-danger coupled">COUPLED</button>
-    <button type="button" class="btn btn-danger decoupled">DECOUPLED</button>
-    <button type="button" class="btn btn-danger gcash">GCASH</button>
+<button type="button" class="btn btn-warning check-report"><i class="fa-solid fa-print"></i> Check Report</button>
+    <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Store</button>
 </div>
 
 
@@ -166,9 +164,9 @@ function displayStore() {
             <tr>
                 <th><center><input type="checkbox" style="accent-color:#E96529;" class="store-checkbox" id="checkAll"></center></th>
                 <th>Store ID</th>
-                <th>Merchant ID</th>
                 <th>Store Name</th>
                 <th>Store Address</th>
+                <th>Legal Entity Name</th>
                 <th style="width:110px;">Action</th>
             </tr>
         </thead>

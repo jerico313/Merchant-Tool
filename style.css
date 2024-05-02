@@ -74,9 +74,9 @@
 }
 
 .add-merchant{
-  margin-right:10px;
+  margin-left:10px;
 }
-.upload-btn, .add-merchant{
+.upload-btn, .add-merchant, .check-report{
   display: inline-block;
   background-color: #E96529;
   color:#fff;
@@ -107,7 +107,7 @@ input[type="file"] {
   margin-left:10px;
 }
 
-.coupled:hover, .decoupled:hover, .gcash:hover{
+.coupled:hover, .decoupled:hover, .gcash:hover, .check-report:hover{
   background-color: #fff;
   color:#E96529;
   border:solid #E96529 2px;

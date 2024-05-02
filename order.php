@@ -1,6 +1,6 @@
 <?php require_once("header.php")?>
 <?php
-function displayMerchant() {
+function displayOrder() {
   include("inc/config.php");
 
   $sql = "SELECT * FROM merchant";
@@ -10,7 +10,6 @@ function displayMerchant() {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
           echo "<tr data-id='" . $row['merchant_id'] . "'>";
-          echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['merchant_id'] . "'></center></td>";
           echo "<td>" . $row['merchant_id'] . "</td>";
           echo "<td>" . $row['merchant_name'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_partnership_type'] . "</td>";
@@ -167,16 +166,17 @@ function displayMerchant() {
   <div class="sub" style="text-align:left;">
   
   <div class="add-btns">
-    <p class="title">Merchants</p>
-    <button type="button" class="btn btn-warning check-report"><i class="fa-solid fa-print"></i> Check Report</button>
-    <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Merchant</button>
+    <p class="title">Orders</p>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="fileToUpload" class="upload-btn"><i class="fa-solid fa-upload"></i> Upload Orders</label>
+            <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+    </form>
 </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
         <table id="example" class="table bord">
         <thead>
             <tr>
-                <th><center><input type="checkbox" style="accent-color:#E96529;" class="store-checkbox" id="checkAll"></center></th>
                 <th>Merchant ID</th>
                 <th>Merchant Name</th>
                 <th style="width:120px;">Merchant Type</th>
@@ -188,7 +188,7 @@ function displayMerchant() {
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
-        <?php displayMerchant(); ?>
+        <?php displayOrder(); ?>
         </tbody>
     </table>
   </div>
@@ -198,12 +198,5 @@ function displayMerchant() {
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script src="./js/script.js"></script>
-<script>
-  $(document).ready(function(){
-    $('#checkAll').change(function(){
-      $('.store-checkbox').prop('checked', $(this).prop('checked'));
-    });
-  });
-</script>
 </body>
 </html>

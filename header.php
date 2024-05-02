@@ -55,13 +55,13 @@ mysqli_close($conn);
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ms-auto ">
             <li class="nav-item">
-              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'order.php') ? 'active' : ''; ?>" aria-current="page" href="order.php">ORDER</a>
+              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'order.php') ? 'active' : ''; ?>" aria-current="page" href="order.php">Order</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'merchants.php') ? 'active' : ''; ?>" aria-current="page" href="merchants.php">MERCHANT</a>
+              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'merchants.php') ? 'active' : ''; ?>" aria-current="page" href="merchants.php">Merchant</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'pg_fee_rate.php') ? 'active' : ''; ?>" aria-current="page" href="pg_fee_rate.php">PG FEE RATE</a>
+              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'pg_fee_rate.php') ? 'active' : ''; ?>" aria-current="page" href="pg_fee_rate.php">Payment Gateway</a>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">

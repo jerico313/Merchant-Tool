@@ -1,6 +1,6 @@
 <?php require_once("header.php")?>
 <?php
-function displayMerchant() {
+function displayPGFeeRate() {
   include("inc/config.php");
 
   $sql = "SELECT * FROM merchant";
@@ -10,17 +10,11 @@ function displayMerchant() {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
           echo "<tr data-id='" . $row['merchant_id'] . "'>";
-          echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['merchant_id'] . "'></center></td>";
           echo "<td>" . $row['merchant_id'] . "</td>";
           echo "<td>" . $row['merchant_name'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_partnership_type'] . "</td>";
           echo "<td>" . $row['legal_entity_name'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['fulfillment_type'] . "</td>";
-          echo "<td>" . $row['business_address'] . "</td>";
-          echo "<td>" . $row['email_address'] . "</td>";
-          echo "<td style='text-align:center;'>";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['merchant_id'] . ")'>View</button> ";
-          echo "</td>";
           echo "</tr>";
           $count++;
       }
@@ -34,7 +28,6 @@ function displayMerchant() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Homepage</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
   <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
@@ -167,28 +160,23 @@ function displayMerchant() {
   <div class="sub" style="text-align:left;">
   
   <div class="add-btns">
-    <p class="title">Merchants</p>
-    <button type="button" class="btn btn-warning check-report"><i class="fa-solid fa-print"></i> Check Report</button>
-    <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Merchant</button>
+    <p class="title">Payment Gateway Fee Page</p>
+    <button type="button" class="btn btn-danger add-merchant"><i class="fa-solid fa-plus"></i> Add PG Fee Rate</button>
 </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
         <table id="example" class="table bord">
         <thead>
             <tr>
-                <th><center><input type="checkbox" style="accent-color:#E96529;" class="store-checkbox" id="checkAll"></center></th>
-                <th>Merchant ID</th>
-                <th>Merchant Name</th>
-                <th style="width:120px;">Merchant Type</th>
-                <th>Legal Entity Name</th>
-                <th>Fulfillment Type</th>
-                <th>Business Address</th>
-                <th>Email Address</th>
-                <th>Action</th>
+                <th>ID</th>
+                <th>Mode of Payment</th>
+                <th>PG Fee Rate</th>
+                <th>Effective Date</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
-        <?php displayMerchant(); ?>
+        <?php displayPGFeeRate(); ?>
         </tbody>
     </table>
   </div>
@@ -198,12 +186,5 @@ function displayMerchant() {
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script src="./js/script.js"></script>
-<script>
-  $(document).ready(function(){
-    $('#checkAll').change(function(){
-      $('.store-checkbox').prop('checked', $(this).prop('checked'));
-    });
-  });
-</script>
 </body>
 </html>
