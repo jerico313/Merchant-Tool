@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+include("inc/config.php");
+
+// Check if admin user is not logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to the login page if not logged in
+    header("Location: index.php");
+    exit();
+}
+
+mysqli_close($conn);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +55,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="login.php"><i class="fa-solid fa-pen-to-square fa-sm" style="color: #e96529;"></i> Edit Profile</a></li>
-              <li><a class="dropdown-item" href="login.php"><i class="fa-solid fa-right-from-bracket fa-sm" style="color: #e96529;"></i> Log out</a></li>
+              <li><a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket fa-sm" style="color: #e96529;"></i> Log out</a></li>
             </ul>
           </li>
     </div>
