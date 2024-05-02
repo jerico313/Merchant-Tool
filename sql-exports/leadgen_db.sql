@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2024 at 04:06 AM
+-- Generation Time: May 02, 2024 at 04:33 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -184,7 +184,9 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `type` enum('Admin','User_full','User_partial') NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL
+  `status` enum('Active','Inactive') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
