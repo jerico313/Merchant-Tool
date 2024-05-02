@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2024 at 03:59 AM
+-- Generation Time: Apr 29, 2024 at 09:49 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -39,35 +39,6 @@ CREATE TABLE `commission_rate` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fulfillment_type`
---
-
-CREATE TABLE `fulfillment_type` (
-  `fulfillment_id` varchar(36) NOT NULL,
-  `merchant_id` varchar(36) DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL,
-  `status` enum('Active','Expired','Renewed') DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `legal_entity_name`
---
-
-CREATE TABLE `legal_entity_name` (
-  `legal_entity_id` varchar(36) NOT NULL,
-  `legal_entity_name` varchar(250) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `merchant`
 --
 
@@ -75,9 +46,12 @@ CREATE TABLE `merchant` (
   `merchant_id` varchar(36) NOT NULL,
   `merchant_name` varchar(100) NOT NULL,
   `merchant_partnership_type` enum('Primary','Secondary') NOT NULL,
+  `legal_entity_name` varchar(250) NOT NULL,
+  `fulfillment_type` enum('Decoupled','Coupled','Gcash') NOT NULL,
   `business_address` varchar(250) NOT NULL,
   `email_address` varchar(250) NOT NULL,
   `vat_type` enum('Vat Inc','Vat Ex') NOT NULL,
+  `commission_id` varchar(36) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -164,7 +138,6 @@ CREATE TABLE `pg_fee_rate` (
 CREATE TABLE `store` (
   `store_id` varchar(36) NOT NULL,
   `merchant_id` varchar(36) NOT NULL,
-  `legal_entity_id` varchar(36) NOT NULL,
   `store_name` varchar(100) NOT NULL,
   `store_address` varchar(250) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -198,23 +171,11 @@ ALTER TABLE `commission_rate`
   ADD UNIQUE KEY `merchant_id` (`merchant_id`);
 
 --
--- Indexes for table `fulfillment_type`
---
-ALTER TABLE `fulfillment_type`
-  ADD PRIMARY KEY (`fulfillment_id`),
-  ADD KEY `merchant_id` (`merchant_id`);
-
---
--- Indexes for table `legal_entity_name`
---
-ALTER TABLE `legal_entity_name`
-  ADD PRIMARY KEY (`legal_entity_id`);
-
---
 -- Indexes for table `merchant`
 --
 ALTER TABLE `merchant`
-  ADD PRIMARY KEY (`merchant_id`);
+  ADD PRIMARY KEY (`merchant_id`),
+  ADD KEY `merchant_ibfk_1` (`commission_id`);
 
 --
 -- Indexes for table `offer`
@@ -250,8 +211,7 @@ ALTER TABLE `pg_fee_rate`
 --
 ALTER TABLE `store`
   ADD PRIMARY KEY (`store_id`),
-  ADD KEY `merchant_id` (`merchant_id`),
-  ADD KEY `store_ibfk_2` (`legal_entity_id`);
+  ADD KEY `merchant_id` (`merchant_id`);
 
 --
 -- Indexes for table `users`
@@ -270,10 +230,10 @@ ALTER TABLE `commission_rate`
   ADD CONSTRAINT `commission_rate_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
 
 --
--- Constraints for table `fulfillment_type`
+-- Constraints for table `merchant`
 --
-ALTER TABLE `fulfillment_type`
-  ADD CONSTRAINT `fulfillment_type_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
+ALTER TABLE `merchant`
+  ADD CONSTRAINT `merchant_ibfk_1` FOREIGN KEY (`commission_id`) REFERENCES `commission_rate` (`commission_id`);
 
 --
 -- Constraints for table `offer`
@@ -299,8 +259,7 @@ ALTER TABLE `order_details`
 -- Constraints for table `store`
 --
 ALTER TABLE `store`
-  ADD CONSTRAINT `store_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`),
-  ADD CONSTRAINT `store_ibfk_2` FOREIGN KEY (`legal_entity_id`) REFERENCES `legal_entity_name` (`legal_entity_id`);
+  ADD CONSTRAINT `store_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
