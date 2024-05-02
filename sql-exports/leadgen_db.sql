@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2024 at 03:59 AM
+-- Generation Time: May 02, 2024 at 04:06 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -135,6 +135,7 @@ CREATE TABLE `order_details` (
   `gross_sales` decimal(10,2) NOT NULL,
   `discount` decimal(10,2) NOT NULL,
   `mode_of_payment` enum('cod','gcash','gcash_miniapp','maya','maya_checkout','maya_credit_card','paymaya') NOT NULL,
+  `payment_status` enum('success','disbursed') NOT NULL,
   `pg_fee_id` varchar(36) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
