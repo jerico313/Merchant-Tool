@@ -1,36 +1,27 @@
 <?php
-require_once 'inc/config.php';
-$error = ""; 
+session_start();
+
+include("inc/config.php");
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
+    $email = $_POST['email_address'];
     $password = $_POST['password'];
 
-    if ($conn) {
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email_address = ?");
-        $stmt->bind_param("s", $email);
+    $sql = "SELECT user_id, password FROM users WHERE email_address = '$email'";
+    $result = $conn->query($sql);
 
-        $stmt->execute();
-        
-        $result = $stmt->get_result();
-        
-        // Check if user exists
-        if ($result->num_rows == 1) {
-            // Fetch user data
-            $user = $result->fetch_assoc();
-            // Verify password
-            if (password_verify($password, $user['password'])) {
-                // Password is correct, redirect to dashboard or homepage
-                header("Location: merchants.php");
-                exit();
-            } else {
-                $error = "Incorrect password!";
-            }
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['user_id'] = $row['user_id'];
+            $_SESSION['email'] = $row['email_address'];        
+            header("Location: merchants.php");
+            exit();
         } else {
-            $error = "User not found";
+            $error = "Incorrect password";
         }
-
-        // Close statement and connection
-        $stmt->close();
+    } else {
+        $error = "Email not found";
     }
 }
 ?>
@@ -66,15 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="login-container">
     <h2 class="text-center mb-4"><img src="images/booky.png" alt="booky" height="85" width="150"></h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    <div data-mdb-input-init class="form-outline mb-4">
-    <?php if (!empty($error)) { ?>
-      <div class="error">
-        <p><?php echo $error; ?></p>
-      </div>
-    <?php } ?>
-    </div>
+
       <div data-mdb-input-init class="form-outline mb-4">
-        <input type="email" id="email" name="email" class="form-control" style="border-radius:20px;padding:18px;border:none;" placeholder="Email" required>
+        <input type="email" id="email" name="email_address" class="form-control" style="border-radius:20px;padding:18px;border:none;" placeholder="Email" required>
       </div>
 
       <!-- Password input -->
@@ -92,9 +77,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
         </div>
       </div>
+      <?php if (!empty($error)) { ?>
+      <div class="error mb-3">
+        <p><?php echo $error; ?></p>
+      </div>
+    <?php } ?>
 
       <!-- Submit button -->
-      <button style="border-radius:20px;background-color:#fff;color:black;border:none;font-size:12px;color:#F47831;font-weight:bold;padding:8px" type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Login</button>
+      
+      <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-block mb-4 login-btn">Login</button>
+      <a href="signup_booky.php"><p style="color:#fff; text-align:center; text-decoration:none; ">Don't have an account? Sign Up</p></a>
     </form>
   </div>
   <script>

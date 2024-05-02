@@ -149,7 +149,16 @@ function displayStore() {
   <div class="sub" style="text-align:left;">
   
   <div class="voucher-type">
-  <p class="title">Store</p>
+  <div class="row pb-2 title" aria-label="breadcrumb" >
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
+        <li class="breadcrumb-item"><a href="/index" style="color:#E96529; font-size:14px;">Store</a></li>
+        <li class="breadcrumb-item"><a href="/disaster/index" style="color:#E96529;font-size:14px;">Store Name</a></li>
+        <li class="breadcrumb-item"><a href="/disaster/profile/index?disasterID=@Model.logInfo.disasterID" style="color:#E96529;font-size:14px;">Offer</a></li>
+    </ol>
+</nav>
+
+</div>
     <button type="button" class="btn btn-danger coupled">COUPLED</button>
     <button type="button" class="btn btn-danger decoupled">DECOUPLED</button>
     <button type="button" class="btn btn-danger gcash">GCASH</button>

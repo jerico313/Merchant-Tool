@@ -1,4 +1,4 @@
-<?php include("header.php")?>
+<?php require_once("header.php")?>
 <?php
 function displayMerchant() {
   include("inc/config.php");
@@ -164,6 +164,11 @@ function displayMerchant() {
     .add-btns{
       padding-right: 2vh; 
     }
+
+    body{
+      background-image: url("images/bg.png");
+      background-size: 1000px 600px;
+    }
 }
     </style>
   </style>
@@ -188,7 +193,7 @@ function displayMerchant() {
             <tr>
                 <th>Merchant ID</th>
                 <th>Merchant Name</th>
-                <th>Merchant Type</th>
+                <th style="width:120px;">Merchant Type</th>
                 <th>Legal Entity Name</th>
                 <th style="width:70px;">Fulfillment Type</th>
                 <th>Business Address</th>

@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('#example').DataTable({
       //disable sorting on last column
       "columnDefs": [
-        { "orderable": false, "targets": 5 }
+        { "orderable": false, "targets": 2 }
       ],
       language: {
         //customize pagination prev and next buttons: use arrows instead of words

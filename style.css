@@ -1,5 +1,8 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,500;1,500&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 *{
-  font-family: "Open Sans", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 12px;
   margin:0;
 }
@@ -57,11 +60,10 @@
 }
 .error{
   background-color: #E8C0AE;
-  color:red;
+  color:#D30000;
   margin-bottom:5px;
-  height:30px;
-  padding:5px;
-  border:solid red 1px;
+  height:25px;
+  padding:3px;
   border-radius:5px;
   text-align:center;
 }
@@ -104,4 +106,59 @@ input[type="file"] {
   background-color: #fff;
   color:#E96529;
   border:solid #E96529 2px;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+  height: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: #E96529;
+}
+
+.sidebar a {
+  padding: 10px 10px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #fff;
+  display: block;
+  transition: padding-left 0.2s ease-in-out;
+  -moz-transition: padding-left 0.2s ease-in-out;
+  -webkit-transition: padding-left 0.2s ease-in-out;
+  -o-transition: padding-left 0.2s ease-in-out;
+}
+
+.login-btn{
+  border-radius:20px;
+  background-color:#fff;
+  color:black;
+  border:solid #fff 2px;
+  font-size:12px;
+  color:#F47831;
+  font-weight:bold;
+  padding:8px;
+}
+
+.login-btn:hover{
+  background-color: #E96529;
+  color:#fff;
+  border:solid #fff 2px;
+}
+
+.login-btn:active{
+  background-color: #E96529;
+  color:#fff;
+  border:solid #fff 2px;
+}
+
+.dataTables_filter{
+  margin-bottom:10px;
+}
+
+a {
+  text-decoration: none;
 }
