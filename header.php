@@ -24,12 +24,13 @@ mysqli_close($conn);
     <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-      .navbar{
-        font-size: 100px !important;
+      .navbar a {
+        font-size: 15px !important;
+        background-color: #E96529;
       }
 
       .active{
-        font-weight:900;
+        border-bottom: 2px solid #55AAAD !important;
       } 
 
       .dropdown-menu{
@@ -40,14 +41,12 @@ mysqli_close($conn);
 </head>
 <body>
 <?php
-  // Assume you have a variable $currentPage containing the current page filename
   $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
-
-<nav class="navbar navbar-expand-lg navbar-dark p-3" style="background-color: #E96529;">
+<nav class="navbar navbar-expand-lg navbar-dark p-3">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><span class="navbar-brand mb-0 mr-2 h1 fs-2" style="font-weight:bold;color:#fff;">booky</span></a>
+        <a class="navbar-brand" href="order.php"><span class="navbar-brand mb-0 mr-2 h1 fs-2" style="font-weight:900 !important;color:#fff;">booky</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -55,13 +54,13 @@ mysqli_close($conn);
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ms-auto ">
             <li class="nav-item">
-              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'order.php') ? 'active' : ''; ?>" aria-current="page" href="order.php">Order</a>
+              <a class="nav-link mx-2 <?php echo ($currentPage == 'order.php') ? 'active' : ''; ?>" aria-current="page" href="order.php">Orders</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'merchants.php') ? 'active' : ''; ?>" aria-current="page" href="merchants.php">Merchant</a>
+              <a class="nav-link mx-2 <?php echo ($currentPage == 'merchants.php') ? 'active' : ''; ?>" aria-current="page" href="merchants.php">Merchants</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-2 fs-5 <?php echo ($currentPage == 'pg_fee_rate.php') ? 'active' : ''; ?>" aria-current="page" href="pg_fee_rate.php">Payment Gateway</a>
+              <a class="nav-link mx-2 <?php echo ($currentPage == 'pg_fee_rate.php') ? 'active' : ''; ?>" aria-current="page" href="pg_fee_rate.php">Payment Gateway</a>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">

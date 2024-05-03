@@ -78,7 +78,7 @@
 }
 .upload-btn, .add-merchant, .check-report{
   display: inline-block;
-  background-color: #E96529;
+  background-color: #55AAAD;
   color:#fff;
   border: none;
   padding:5px;
@@ -89,8 +89,8 @@
 }
 .add-merchant:hover, .upload-btn:hover {
   background-color: #fff;
-  color:#E96529;
-  border:solid #E96529 2px;
+  color: #55AAAD;
+  border:solid  #55AAAD 2px;
 }
 input[type="file"] {
   display: none;
@@ -99,7 +99,7 @@ input[type="file"] {
 .coupled, .decoupled, .gcash{
   border: none; 
   border-radius: 20px; 
-  background-color: #E96529; 
+  background-color:  #55AAAD; 
   width: 110px;
 }
 
@@ -109,8 +109,8 @@ input[type="file"] {
 
 .coupled:hover, .decoupled:hover, .gcash:hover, .check-report:hover{
   background-color: #fff;
-  color:#E96529;
-  border:solid #E96529 2px;
+  color: #55AAAD;
+  border:solid  #55AAAD 2px;
 }
 
 ::-webkit-scrollbar {
