@@ -41,7 +41,6 @@ function displayStore() {
   <link rel="stylesheet" href="style.css">
 
   <style>
-
     .title{
       font-size: 30px; 
       font-weight: bold; 
@@ -148,9 +147,21 @@ function displayStore() {
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
         <li class="breadcrumb-item"><a href="/index" style="color:#E96529; font-size:14px;">Store</a></li>
-        <li class="breadcrumb-item"><a href="/disaster/index" style="color:#E96529;font-size:14px;">Stores</a></li>
+        <li class="breadcrumb-item dropdown">
+            <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E96529;font-size:14px;">
+                Stores
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="storeDropdown">
+                <!-- Your dropdown items go here -->
+                <li><a class="dropdown-item" href="#">Store 1</a></li>
+                <li><a class="dropdown-item" href="#">Store 2</a></li>
+                <!-- Add more items as needed -->
+            </ul>
+        </li>
     </ol>
 </nav>
+
+
 
 </div>
 <button type="button" class="btn btn-warning check-report"><i class="fa-solid fa-print"></i> Check Report</button>
