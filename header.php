@@ -1,17 +1,3 @@
-<?php
-session_start();
-
-include("inc/config.php");
-
-// Check if admin user is not logged in
-if (!isset($_SESSION['user_id'])) {
-    // Redirect to the login page if not logged in
-    header("Location: index.php");
-    exit();
-}
-
-mysqli_close($conn);
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,23 +9,19 @@ mysqli_close($conn);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
-    <style>
+    <style>      
       .navbar a {
         font-size: 13px !important;
       }
 
       .active{
-        border-bottom: 2px solid #55AAAD !important;
+        background-color: #55AAAD !important;
+        border-radius: 30px !important;
       } 
-
       
     </style>
 </head>
 <body>
-<?php
-  $currentPage = basename($_SERVER['PHP_SELF']);
-?>
-
 <nav class="navbar navbar-expand-lg navbar-dark p-3">
     <div class="container-fluid">
         <a class="navbar-brand" href="order.php">
@@ -52,13 +34,13 @@ mysqli_close($conn);
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
-                    <a class="nav-link mx-2 <?php echo ($currentPage == 'order.php') ? 'active' : ''; ?>" aria-current="page" href="order.php">Orders</a>
+                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="order.php"  style="padding-right:10px;padding-left:10px;">Orders</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-2 <?php echo ($currentPage == 'merchants.php') ? 'active' : ''; ?>" aria-current="page" href="merchants.php">Merchants</a>
+                    <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="merchants.php" style="padding-right:10px;padding-left:10px;">Merchants</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-2 <?php echo ($currentPage == 'pg_fee_rate.php') ? 'active' : ''; ?>" aria-current="page" href="pg_fee_rate.php">Payment Gateway</a>
+                    <a id="pg-link" class="nav-link mx-2" aria-current="page" href="pg_fee_rate.php" style="padding-right:10px;padding-left:10px;">Payment Gateway</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
@@ -75,6 +57,41 @@ mysqli_close($conn);
         </div>
     </div>
 </nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the current page URL
+        var currentPage = window.location.href;
+
+        // Get the navbar links
+        var ordersLink = document.getElementById('orders-link');
+        var merchantsLink = document.getElementById('merchants-link');
+        var pgLink = document.getElementById('pg-link');
+
+        // Set the active class based on the current page
+        if (currentPage.includes('order.php')) {
+            ordersLink.classList.add('active');
+        } else if (currentPage.includes('merchants.php') || currentPage.includes('store.php')) {
+            merchantsLink.classList.add('active');
+        } else if (currentPage.includes('pg_fee_rate.php')) {
+            pgLink.classList.add('active');
+        }
+
+        // Prevent default behavior of anchor tags
+        var navbarLinks = document.querySelectorAll('.navbar-nav a');
+        navbarLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                var href = this.getAttribute('href');
+                if (href) {
+                    window.location.href = href;
+                }
+            });
+        });
+    });
+</script>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>

@@ -153,8 +153,9 @@ function displayStore() {
             </a>
             <ul class="dropdown-menu" aria-labelledby="storeDropdown">
                 <!-- Your dropdown items go here -->
-                <li><a class="dropdown-item" href="#">Store 1</a></li>
-                <li><a class="dropdown-item" href="#">Store 2</a></li>
+                <li><a class="dropdown-item" href="#">Coupled</a></li>
+                <li><a class="dropdown-item" href="#">Decoupled</a></li>
+                <li><a class="dropdown-item" href="#">GCash</a></li>
                 <!-- Add more items as needed -->
             </ul>
         </li>

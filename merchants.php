@@ -1,4 +1,4 @@
-<?php require_once("header.php")?>
+<?php include_once("header.php")?>
 <?php
 function displayMerchant() {
   include("inc/config.php");
