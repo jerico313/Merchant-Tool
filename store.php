@@ -41,6 +41,14 @@ function displayStore() {
   <link rel="stylesheet" href="style.css">
 
   <style>
+    body {
+      background-image: url("images/bg_booky.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
     .title{
       font-size: 30px; 
       font-weight: bold; 
@@ -48,6 +56,7 @@ function displayStore() {
       padding-left: 5vh;
       color: #E96529;"
     }
+    
 
     .voucher-type{
       padding-bottom: 0px; 
@@ -161,9 +170,7 @@ function displayStore() {
         </li>
     </ol>
 </nav>
-
-
-
+<p class="title_store" style="font-size:30px;">Store</p>
 </div>
 <button type="button" class="btn btn-warning check-report"><i class="fa-solid fa-print"></i> Check Report</button>
     <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Store</button>

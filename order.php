@@ -43,6 +43,14 @@ function displayOrder() {
   <link rel="stylesheet" href="style.css">
 
   <style>
+    body {
+      background-image: url("images/bg_booky.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
     .title{
       font-size: 30px; 
       font-weight: bold; 
