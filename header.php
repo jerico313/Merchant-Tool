@@ -15,7 +15,7 @@
       }
 
       .active{
-        background-color: #55AAAD !important;
+        border:solid #4BB0B8 2px !important ;
         border-radius: 30px !important;
       } 
       
