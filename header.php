@@ -14,7 +14,8 @@
         font-size: 13px !important;
       }
 
-      .active{
+      .active_nav{
+        color:#fff !important;
         border:solid #4BB0B8 2px !important ;
         border-radius: 30px !important;
       } 
@@ -70,11 +71,11 @@
 
         // Set the active class based on the current page
         if (currentPage.includes('order.php')) {
-            ordersLink.classList.add('active');
+            ordersLink.classList.add('active_nav');
         } else if (currentPage.includes('merchants.php') || currentPage.includes('store.php')) {
-            merchantsLink.classList.add('active');
+            merchantsLink.classList.add('active_nav');
         } else if (currentPage.includes('pg_fee_rate.php')) {
-            pgLink.classList.add('active');
+            pgLink.classList.add('active_nav');
         }
 
         // Prevent default behavior of anchor tags

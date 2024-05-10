@@ -3,18 +3,18 @@
 function displayPGFeeRate() {
   include("inc/config.php");
 
-  $sql = "SELECT * FROM merchant";
+  $sql = "SELECT * FROM pg_fee_rate";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
-          echo "<tr data-id='" . $row['merchant_id'] . "'>";
-          echo "<td>" . $row['merchant_id'] . "</td>";
-          echo "<td>" . $row['merchant_name'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['merchant_partnership_type'] . "</td>";
-          echo "<td>" . $row['legal_entity_name'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['fulfillment_type'] . "</td>";
+          echo "<tr data-id='" . $row['pg_fee_id'] . "'>";
+          echo "<td>" . $row['pg_fee_id'] . "</td>";
+          echo "<td>" . $row['payment_method'] . "</td>";
+          echo "<td>" . $row['rate'] . "</td>";
+          echo "<td>" . $row['effective_date'] . "</td>";
+          echo "<td>" . $row['created_at'] . "</td>";
           echo "</tr>";
           $count++;
       }
@@ -176,7 +176,7 @@ function displayPGFeeRate() {
         <table id="example" class="table bord">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>PG Fee ID</th>
                 <th>Mode of Payment</th>
                 <th>PG Fee Rate</th>
                 <th>Effective Date</th>

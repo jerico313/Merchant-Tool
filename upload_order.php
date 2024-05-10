@@ -1,0 +1,143 @@
+<?php require_once("header.php")?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homepage</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+<script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
+<link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+<link rel="stylesheet" href="style.css">
+<style>
+    body {
+      background-image: url("images/bg_booky.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    .title{
+      font-size: 30px; 
+      font-weight: bold; 
+      margin-right: auto; 
+      padding-left: 5vh;
+      color: #E96529;"
+    }
+
+    .back{
+      font-size: 20px; 
+      font-weight: bold; 
+      margin-right: auto; 
+      padding-left: 5vh;
+      color: #E96529;"
+    }
+
+    .add-btns{
+      padding-bottom: 0px; 
+      padding-right: 5vh; 
+      display: flex; 
+      align-items: center;
+    }
+
+    .table-transparent {
+    border:solid 1px lightgrey;
+    radius:10px;
+}
+
+    </style>
+</head>
+<body>
+<div class="cont-box">
+  <div class="custom-box pt-5">
+    <a href="order.php"><p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p></a>
+    <div class="sub" style="text-align:left;">
+      <div class="add-btns">
+        <p class="title">Upload Orders</p>
+        <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
+      </div>
+
+      <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+        <div class="file" style="padding:10px 10px 10px 0;font-size:15px;"><p style="font-weight:bold;">Selected File: <span class="filename" style="color:#E96529"></p></div>
+        <label for="fileToUpload" style="background-color:#fff;" class="upload-btn" id="uploadBtn"><i class="fa-solid fa-upload fa-lg"></i> Drag or Drop File </label>
+        <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
+        <div class="file-preview" style="margin-top:20px;background-color:#fff;"></div>
+        <button type="submit" class="btn btn-warning add-merchant">Submit</button>
+  </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // JavaScript to display filename and preview
+  document.getElementById('fileToUpload').addEventListener('change', function() {
+    const filenameElement = document.querySelector('.filename');
+    const filename = this.files[0].name;
+    filenameElement.textContent = `Selected file: ${filename}`;
+
+    // Preview the file content
+    const previewArea = document.querySelector('.file-preview');
+    previewArea.innerHTML = ''; // Clear previous preview
+    const file = this.files[0];
+    if (file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.name.endsWith('.csv')) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const contents = event.target.result;
+        const lines = contents.split('\n');
+        const table = document.createElement('table');
+        table.classList.add('table', 'table-bordered', 'table-striped', 'mt-3', 'mb-5', 'table-transparent');
+        const tbody = document.createElement('tbody');
+        for (let i = 0; i < Math.min(5, lines.length); i++) {
+          const cells = splitCSVLine(lines[i]); // Use custom function to handle CSV parsing
+          const row = document.createElement('tr');
+          for (let j = 0; j < cells.length; j++) {
+            const cell = document.createElement('td');
+            cell.textContent = cells[j];
+            row.appendChild(cell);
+          }
+          tbody.appendChild(row);
+        }
+        table.appendChild(tbody);
+        previewArea.appendChild(table);
+      }
+      reader.readAsText(file);
+    } else {
+      const pElement = document.createElement('p');
+      pElement.textContent = 'File preview not available';
+      previewArea.appendChild(pElement);
+    }
+  });
+
+  // Custom function to handle CSV line parsing
+  function splitCSVLine(line) {
+    const values = [];
+    let currentValue = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const char = line.charAt(i);
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === ',' && !inQuotes) {
+        values.push(currentValue.trim());
+        currentValue = '';
+      } else {
+        currentValue += char;
+      }
+    }
+    values.push(currentValue.trim());
+    return values;
+  }
+
+  // JavaScript for drag and drop functionality
+
+</script>
+
+
+</body>
+</html>
