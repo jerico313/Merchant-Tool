@@ -218,7 +218,7 @@ function uploadFile() {
         <p class="title">Orders</p>
         <!-- Form to upload file -->
         
-        <a href="upload_order.php"><button type="button" class="btn btn-warning check-report"><i class="fa-solid fa-upload"></i> Upload Orders</button></a>
+        <a href="upload_order.php"><button type="button" class="btn btn-info check-report"><i class="fa-solid fa-upload"></i> Upload Orders</button></a>
         
       </div>
       <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">

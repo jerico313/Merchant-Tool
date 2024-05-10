@@ -49,6 +49,10 @@
     radius:10px;
 }
 
+.loading {
+  display: none;
+}
+
     </style>
 </head>
 <body>
@@ -65,11 +69,13 @@
         <div class="file" style="padding:10px 10px 10px 0;font-size:15px;"><p style="font-weight:bold;">Selected File: <span class="filename" style="color:#E96529"></p></div>
         <label for="fileToUpload" style="background-color:#fff;" class="upload-btn" id="uploadBtn"><i class="fa-solid fa-upload fa-lg"></i> Drag or Drop File </label>
         <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
+        <div class="uploadfile" style="text-align:right;">
+        <button type="submit" class="btn upload_file" id="submitButton">Submit</button>
+        <div class="loading" id="loadingIndicator"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+        </div>
         <div class="file-preview" style="margin-top:20px;background-color:#fff;"></div>
-        <button type="submit" class="btn btn-warning add-merchant">Submit</button>
   </form>
       </div>
-
     </div>
   </div>
 </div>
@@ -134,10 +140,25 @@
     return values;
   }
 
-  // JavaScript for drag and drop functionality
+  document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    // Prevent default form submission
+    event.preventDefault();
 
+    // Show loading indicator inside the submit button
+    const submitButton = document.getElementById('submitButton');
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+    submitButton.disabled = true;
+
+    // Delay form submission for one minute
+    setTimeout(function() {
+      // Restore submit button state
+      submitButton.innerHTML = 'Submit';
+      submitButton.disabled = false;
+
+      // Submit the form
+      document.getElementById('uploadForm').submit();
+    }, 8000); // 60000 milliseconds = 1 minute
+  });
 </script>
-
-
 </body>
 </html>

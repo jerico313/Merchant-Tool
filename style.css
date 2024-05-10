@@ -92,6 +92,19 @@ select.form-control.input-sm{
   text-align: center;
 }
 
+.upload_file{
+  display: inline-block;
+  background-color: #4BB0B8;
+  color:#fff;
+  border: none;
+  padding:5px;
+  width:150px;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  margin-top:15px;
+}
+
 .upload-btn{
   display: inline-block;
   border: none;
@@ -110,6 +123,19 @@ select.form-control.input-sm{
   color: #4BB0B8;
   border:solid  #4BB0B8 2px;
 }
+
+.upload_file:hover, {
+  background-color: transparent;
+  color: #4BB0B8;
+  border:solid  #4BB0B8 2px;
+}
+
+.upload_file:active {
+  background-color: transparent;
+  color: #4BB0B8;
+  border:solid  #4BB0B8 2px;
+}
+
 input[type="file"] {
   display: none;
 }
