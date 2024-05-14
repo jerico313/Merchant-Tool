@@ -17,7 +17,8 @@ function displayMerchant() {
           echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['business_address'] . "</td>";
           echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['email_address'] . "</td>";
           echo "<td style='text-align:center;background-color:transparent;border-bottom: 1px solid #808080;'>";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['merchant_id'] . ")'>View</button> ";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(" . $row['merchant_id'] . ")'>View</button> ";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(" . $row['merchant_id'] . ")'>Edit</button> ";
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -64,7 +65,7 @@ function displayMerchant() {
       display: flex; 
       align-items: center;
     }
-
+    
     @media only screen and (max-width: 767px) {
     table,
     thead,
@@ -179,7 +180,7 @@ function displayMerchant() {
 </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-        <table id="example" class="table bord" style="width:100%;">
+        <table id="example" class="table bord" style="width:110%;">
         <thead>
             <tr>
                 <th><center><input type="checkbox" style="accent-color:#E96529;" class="store-checkbox" id="checkAll"></center></th>

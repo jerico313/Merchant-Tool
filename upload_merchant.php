@@ -66,6 +66,19 @@
   font-size:13px;
 }
 
+.or {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #000; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+} 
+
+.or span { 
+    background:#F1F1F1; 
+    padding:0 10px; 
+    font-size:15px;
+}
     </style>
 </head>
 <body>
@@ -88,6 +101,7 @@
         </div>
         <div class="file-preview" style="margin-top:20px;background-color:#fff;"></div>
   </form>
+  <p class="or"><span>or</span></p>
       </div>
     </div>
   </div>
