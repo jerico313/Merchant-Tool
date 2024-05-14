@@ -70,7 +70,7 @@
         var pgLink = document.getElementById('pg-link');
 
         // Set the active class based on the current page
-        if (currentPage.includes('merchants.php') || currentPage.includes('store.php')) {
+        if (currentPage.includes('merchants.php') || currentPage.includes('store.php') || currentPage.includes('upload_merchant.php') || currentPage.includes('upload_merchant_process.php')) {
             ordersLink.classList.add('active_nav');
         } else if (currentPage.includes('order.php') || currentPage.includes('upload_order.php') || currentPage.includes('upload.php')) {
             merchantsLink.classList.add('active_nav');

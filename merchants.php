@@ -10,15 +10,13 @@ function displayMerchant() {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
           echo "<tr data-id='" . $row['merchant_id'] . "'>";
-          echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['merchant_id'] . "'></center></td>";
-          echo "<td>" . $row['merchant_id'] . "</td>";
-          echo "<td>" . $row['merchant_name'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['merchant_partnership_type'] . "</td>";
-          echo "<td>" . $row['legal_entity_name'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['fulfillment_type'] . "</td>";
-          echo "<td>" . $row['business_address'] . "</td>";
-          echo "<td>" . $row['email_address'] . "</td>";
-          echo "<td style='text-align:center;'>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['merchant_id'] . "'></center></td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['merchant_id'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['merchant_name'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['merchant_partnership_type'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['business_address'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['email_address'] . "</td>";
+          echo "<td style='text-align:center;background-color:transparent;border-bottom: 1px solid #808080;'>";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['merchant_id'] . ")'>View</button> ";
           echo "</td>";
           echo "</tr>";
@@ -176,20 +174,18 @@ function displayMerchant() {
   
   <div class="add-btns">
     <p class="title">Merchants</p>
-    <button type="button" class="btn btn-warning check-report"><i class="fa-solid fa-print"></i> Check Report</button>
-    <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Merchant</button>
+    <button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
+    <a href="upload_merchant.php"><button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Merchant</button></a>
 </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-        <table id="example" class="table bord">
+        <table id="example" class="table bord" style="width:100%;">
         <thead>
             <tr>
                 <th><center><input type="checkbox" style="accent-color:#E96529;" class="store-checkbox" id="checkAll"></center></th>
                 <th>Merchant ID</th>
                 <th>Merchant Name</th>
-                <th style="width:120px;">Merchant Type</th>
-                <th>Legal Entity Name</th>
-                <th>Fulfillment Type</th>
+                <th>Merchant Type</th>
                 <th>Business Address</th>
                 <th>Email Address</th>
                 <th>Action</th>
@@ -210,8 +206,32 @@ function displayMerchant() {
   $(document).ready(function(){
     $('#checkAll').change(function(){
       $('.store-checkbox').prop('checked', $(this).prop('checked'));
+      toggleCheckReportButton();
     });
+
+    $('.store-checkbox').change(function(){
+      toggleCheckReportButton();
+    });
+
+    function toggleCheckReportButton() {
+      if ($('.store-checkbox:checked').length > 0) {
+        $('.check-report').show();
+      } else {
+        $('.check-report').hide();
+      }
+    }
   });
+</script>
+<script>
+$(document).ready(function() {
+  if ( $.fn.DataTable.isDataTable('#example') ) {
+    $('#example').DataTable().destroy();
+  }
+  
+  $('#example').DataTable({
+    scrollX: true
+  });
+});
 </script>
 </body>
 </html>
