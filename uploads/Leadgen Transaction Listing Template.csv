@@ -1,5 +1,5 @@
-﻿transaction_date,customer_name,customer_id,order_id,payment_status,payment,merchant_name,,,,,,,,,
-2/17/2024,EMMANUEL AARON BUGIA,1,88279a8f-bd79-4e3f-b7d9-d307b086eceb,success,paymaya,Kale Cafe + Restaurant,,,,,,,,,
-2/19/2024,Joy Mendoza,2,0b36298a-f957-4f1f-8891-5d9bbc94fecf,disbursed,maya,The Porch,,,,,,,,,
-2/18/2024,RODJIE GABRIEL GALENO,,6213e629-f9de-4ad3-abf0-28ade52652a5,disbursed,gcash,Family Bean Cafe,,,,,,,,,
-02/09/2024,SARAH AME SANGCAP,4,9814e36a-2dda-4dd9-a883-65c8bb2ac86c,disbursed,gcash,Family Bean Cafe,,,,,,,,,
+﻿transaction_date,customer_name,customer_id,order_id,payment_status,payment,merchant_name
+2/17/2024,EMMANUEL AARON BUGIA,1,88279a8f-bd79-4e3f-b7d9-d307b086eceb,success,paymaya,Kale Cafe + Restaurant
+2/19/2024,Joy Mendoza,2,0b36298a-f957-4f1f-8891-5d9bbc94fecf,disbursed,maya,The Porch
+2/18/2024,RODJIE GABRIEL GALENO,,6213e629-f9de-4ad3-abf0-28ade52652a5,disbursed,,Family Bean Cafe
+02/09/2024,SARAH AME SANGCAP,4,9814e36a-2dda-4dd9-a883-65c8bb2ac86c,disbursed,gcash,Family Bean Cafe

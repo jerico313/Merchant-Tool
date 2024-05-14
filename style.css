@@ -46,15 +46,15 @@ input.form-control.form-control-sm{
   background-color: transparent;
 }
 
-select.form-control.input-sm{
+select.form-select.form-select-sm{
   border:solid 2px #E96529;
   background-color: transparent;
 }
 
-#example th{
-  background-color:#E96529;
-  text-align:center;
-  color:#fff;
+th{
+  background-color:#E96529 !important;
+  text-align:center !important;
+  color:#fff !important;
 }
 
 .page-item.active .page-link {
@@ -84,7 +84,7 @@ select.form-control.input-sm{
   display: inline-block;
   background-color: #4BB0B8;
   color:#fff;
-  border: none;
+  border:solid  #4BB0B8 2px;
   padding:5px;
   width:150px;
   border-radius: 20px;
@@ -96,27 +96,27 @@ select.form-control.input-sm{
   display: inline-block;
   background-color: #4BB0B8;
   color:#fff;
-  border: none;
-  padding:5px;
+  border:solid  #4BB0B8 2px;
   width:150px;
   border-radius: 20px;
   cursor: pointer;
-  text-align: center;
   margin-top:15px;
 }
 
-.upload-btn{
+.upload-btn {
   display: inline-block;
   border: none;
-  padding:15px 5px 5px 5px;
-  width:100%;
-  height:50px;
+  padding: 25px 5px 5px 5px;
+  width: 100%;
+  height: 120px;
   border-radius: 10px;
-  border: dashed grey 1px;
+  border: 1px dashed grey;
   cursor: pointer;
-  color:grey;
+  color: grey;
   text-align: center;
+  border-spacing: 10px; /* Adjust the spacing here */
 }
+
 
 .add-merchant:hover {
   background-color: transparent;
@@ -124,7 +124,7 @@ select.form-control.input-sm{
   border:solid  #4BB0B8 2px;
 }
 
-.upload_file:hover, {
+.upload_file:hover {
   background-color: transparent;
   color: #4BB0B8;
   border:solid  #4BB0B8 2px;
@@ -161,7 +161,7 @@ input[type="file"] {
   width: 15px;
   height: 20px;
   opacity: 0.2;
-  background-color: !important;
+  background-color: #F1F1F1 !important;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -230,3 +230,46 @@ ul.breadcrumb li {
 li.paginate_button.page-item{
   color: #E96529 !important;
 } 
+
+.okay{
+  display: inline-block;
+  background-color: #4caf50;
+  color:#fff;
+  border:solid  #4caf50 2px;
+  width:150px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top:30px;
+}
+
+.okay:hover{
+  background-color: transparent;
+  color: #4caf50;
+  border:solid #4caf50 2px;
+}
+
+/* Adjust the width or thickness of the horizontal scrollbar */
+.dataTables_scrollBody::-webkit-scrollbar {
+  height: 7px; /* Set the height of the scrollbar */
+  margin: 10px;
+  padding: 4px !important; 
+}
+
+.dataTables_scrollBody::-webkit-scrollbar-track {
+  background: transparent; /* Set the background color of the scrollbar track */
+  padding: 4px !important; 
+}
+
+.dataTables_scrollBody::-webkit-scrollbar-thumb {
+  background: #E96529; /* Set the color of the scrollbar thumb */
+  border-radius: 6px; /* Round the corners of the scrollbar thumb */
+  padding: 4px !important; 
+}
+
+.dataTables_scrollBody::-webkit-scrollbar-thumb:hover {
+  background: #C85825; /* Set the color of the scrollbar thumb on hover */
+}
+
+#example_paginate{
+  margin-top: 10px;
+}

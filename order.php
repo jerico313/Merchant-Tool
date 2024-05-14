@@ -10,15 +10,23 @@ function displayOrder() {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
           echo "<tr data-id='" . $row['order_id'] . "'>";
-          echo "<td>" . $row['order_id'] . "</td>";
-          echo "<td>" . $row['transaction_date'] . "</td>";
-          echo "<td>" . $row['customer_name'] . "</td>";
-          echo "<td>" . $row['customer_id'] . "</td>";
-          echo "<td>" . $row['orders_id'] . "</td>";
-          echo "<td>" . $row['payment_status'] . "</td>";
-          echo "<td>" . $row['payment'] . "</td>";
-          echo "<td>" . $row['merchant_name'] . "</td>";
-          echo "<td style='text-align:center;'>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['order_id'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['transaction_date'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['customer_name'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['customer_id'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['payment_status'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['payment'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['merchant_name'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['merchant_id'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['store_name'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['store_id'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['promo_codes'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['promo_type'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . $row['claim_id'] . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . number_format($row['gross_sale'], 2) . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . number_format($row['voucher_price'], 2) . "</td>";
+          echo "<td style='background-color:transparent;border-bottom: 1px solid #808080;'>" . number_format($row['total_actual_sales'], 2) . "</td>";
+          echo "<td style='text-align:center;background-color:transparent;border-bottom: 1px solid #808080;'>";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['order_id'] . ")'>View</button> ";
           echo "</td>";
           echo "</tr>";
@@ -27,42 +35,6 @@ function displayOrder() {
   }
 
   $conn->close();
-}
-
-// Function to handle file upload and data insertion
-function uploadFile() {
-  include("inc/config.php");
-
-  // Check if file has been uploaded
-  if(isset($_FILES['fileToUpload'])) {
-    $file = $_FILES['fileToUpload']['tmp_name'];
-
-    // Load the spreadsheet from a file
-    $spreadsheet = IOFactory::load($file);
-    $worksheet = $spreadsheet->getActiveSheet();
-    $lastRow = $worksheet->getHighestRow();
-
-    // Iterate through rows and insert data into database
-    for ($row = 2; $row <= $lastRow; $row++) {
-        $order_id = $worksheet->getCell('A'.$row)->getValue();
-        $transaction_id = $worksheet->getCell('B'.$row)->getValue();
-        $transaction_date = $worksheet->getCell('C'.$row)->getValue();
-        $customer_name = $worksheet->getCell('D'.$row)->getValue();
-        $customer_id = $worksheet->getCell('E'.$row)->getValue();
-        $payment_status = $worksheet->getCell('F'.$row)->getValue();
-        $payment = $worksheet->getCell('G'.$row)->getValue();
-        $merchant_name = $worksheet->getCell('H'.$row)->getValue();
-
-        // Prepare and execute SQL query to insert data into database
-        $sql = "INSERT INTO orders (order_id, transaction_id, transaction_date, customer_name, customer_id, payment_status, payment, merchant_name) 
-                VALUES ('$order_id', '$transaction_id', '$transaction_date', '$customer_name', '$customer_id', '$payment_status', '$payment', '$merchant_name')";
-        $conn->query($sql);
-    }
-    
-    // Redirect to the homepage after data insertion
-    header("Location: index.php");
-    exit();
-  }
 }
 ?>
 
@@ -77,6 +49,8 @@ function uploadFile() {
 <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
 <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+<link rel='stylesheet' href='https://cdn.datatables.net/fixedcolumns/3.3.3/css/fixedColumns.bootstrap5.min.css'>
+<script src='https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js'></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 <link rel="stylesheet" href="style.css">
 <style>
@@ -93,7 +67,7 @@ function uploadFile() {
       font-weight: bold; 
       margin-right: auto; 
       padding-left: 5vh;
-      color: #E96529;"
+      color: #E96529;
     }
 
     .add-btns{
@@ -102,6 +76,7 @@ function uploadFile() {
       display: flex; 
       align-items: center;
     }
+
 
     @media only screen and (max-width: 767px) {
     table,
@@ -199,14 +174,14 @@ function uploadFile() {
     }
   
     .add-btns{
-      padding-right: 2vh; 
+      padding-right: 2vh;
+      padding-bottom: 10px;
     }
-}
-    </style>
+  }
+</style>
 <script>
-  // JavaScript function to submit form on file selection
-  function uploadFile() {
-    document.getElementById("uploadForm").submit();
+  function editEmployee(id) {
+    window.location = "edit_order.php?order_id=" + id;
   }
 </script>
 </head>
@@ -215,31 +190,41 @@ function uploadFile() {
   <div class="custom-box pt-5">
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
-        <p class="title">Orders</p>
+        <p class="title">Transaction</p>
         <!-- Form to upload file -->
         
-        <a href="upload_order.php"><button type="button" class="btn btn-info check-report"><i class="fa-solid fa-upload"></i> Upload Orders</button></a>
+        <a href="upload_order.php"><button type="button" class="btn btn-secondary check-report"><i class="fa-solid fa-upload"></i> Upload Orders</button></a>
         
       </div>
       <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-        <table id="example" class="table bord">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Transaction Date</th>
-              <th>Customer Name</th>
-              <th>Customer ID</th>
-              <th>Order ID</th>
-              <th>Payment Status</th>
-              <th>Payment</th>
-              <th>Merchant Name</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="dynamicTableBody">
-            <?php displayOrder(); ?>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table id="example" class="table bord" style="width:250%;">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Transaction Date</th>
+                <th>Customer Name</th>
+                <th>Customer ID</th>
+                <th>Payment Status</th>
+                <th>Payment</th>
+                <th>Merchant Name</th>
+                <th>Merchant ID</th>
+                <th>Store Name</th>
+                <th>Store ID</th>
+                <th>Promo Codes</th>
+                <th>Promo Type</th>
+                <th>Claim ID</th>
+                <th>Gross Sale</th>
+                <th>Voucher Price</th>
+                <th>Total Actual Sales</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="dynamicTableBody">
+              <?php displayOrder(); ?>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -248,7 +233,6 @@ function uploadFile() {
 <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
-<script src="./js/script.js"></script>
 
 <script>
   // JavaScript to display filename and preview
@@ -289,6 +273,21 @@ function uploadFile() {
       previewArea.appendChild(pElement);
     }
   });
+
+  
+</script>
+<script>
+$(document).ready(function() {
+  if ( $.fn.DataTable.isDataTable('#example') ) {
+    $('#example').DataTable().destroy();
+  }
+  
+  $('#example').DataTable({
+    scrollX: true
+  });
+});
+</script>
+<script>
 </script>
 </body>
 </html>

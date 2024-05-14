@@ -1,4 +1,4 @@
-<?php require_once("header.php")?>
+<?php include_once("header.php")?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,6 +53,19 @@
   display: none;
 }
 
+.alert-custom {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  margin-top:70px;
+  width: 99%;
+  padding:20px;
+  font-size:13px;
+}
+
     </style>
 </head>
 <body>
@@ -66,11 +79,11 @@
       </div>
 
       <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-        <div class="file" style="padding:10px 10px 10px 0;font-size:15px;"><p style="font-weight:bold;">Selected File: <span class="filename" style="color:#E96529"></p></div>
-        <label for="fileToUpload" style="background-color:#fff;" class="upload-btn" id="uploadBtn"><i class="fa-solid fa-upload fa-lg"></i> Drag or Drop File </label>
+        <div class="file" style="padding:10px 10px 10px 0;font-size:15px;"><p style="font-weight:bold;">Selected File: <span class="filename" style="color:#E96529"></span></p></div>
+        <label for="fileToUpload" style="background-color:#fff;font-size:20px;" class="upload-btn" id="uploadBtn"><i class="fa-solid fa-cloud-arrow-up fa-2xl" style="font-size:40px;padding-bottom:30px;"></i><br>Choose a File or Drag it here </label>
         <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
         <div class="uploadfile" style="text-align:right;">
-        <button type="submit" class="btn upload_file" id="submitButton">Submit</button>
+        <button type="submit" class="btn btn-secondary upload_file" id="submitButton">Submit</button>
         <div class="loading" id="loadingIndicator"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
         </div>
         <div class="file-preview" style="margin-top:20px;background-color:#fff;"></div>
@@ -79,6 +92,12 @@
     </div>
   </div>
 </div>
+
+<!-- Custom Alert Box -->
+<div class="alert-custom alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
+<i class="fa-solid fa-circle-exclamation"></i> Please choose a file to upload!
+</div>
+<!-- End Custom Alert Box -->
 
 <script>
   // JavaScript to display filename and preview
@@ -143,6 +162,16 @@
   document.getElementById('uploadForm').addEventListener('submit', function(event) {
     // Prevent default form submission
     event.preventDefault();
+    
+    // Check if a file has been selected
+    const fileInput = document.getElementById('fileToUpload');
+    if (fileInput.files.length === 0) {
+      $('.alert-custom').fadeIn();
+      setTimeout(function(){
+        $('.alert-custom').fadeOut();
+      }, 3000); // Hide the alert after 3 seconds
+      return;
+    }
 
     // Show loading indicator inside the submit button
     const submitButton = document.getElementById('submitButton');
@@ -159,6 +188,39 @@
       document.getElementById('uploadForm').submit();
     }, 8000); // 60000 milliseconds = 1 minute
   });
+
+    // JavaScript for drag and drop functionality
+    const uploadBtn = document.getElementById('uploadBtn');
+
+uploadBtn.addEventListener('dragenter', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  uploadBtn.classList.add('dragover');
+});
+
+uploadBtn.addEventListener('dragover', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  uploadBtn.classList.add('dragover');
+});
+
+uploadBtn.addEventListener('dragleave', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  uploadBtn.classList.remove('dragover');
+});
+
+uploadBtn.addEventListener('drop', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  uploadBtn.classList.remove('dragover');
+
+  const files = e.dataTransfer.files;
+  document.getElementById('fileToUpload').files = files;
+  // Trigger change event to handle the file
+  const event = new Event('change');
+  document.getElementById('fileToUpload').dispatchEvent(event);
+});
 </script>
 </body>
 </html>

@@ -1,0 +1,5 @@
+transaction date,customer_name,customer_id,order_id,payment_status,payment,merchant_name,merchant_id,store_name,stored_id,(v) Promo Codes,Promo Type,claim_id,Gross Sales (Order Total before Promo),Voucher Price,Total Actual Sales
+2/17/2024,EMMANUEL AARON BUGIA,,88279a8f-bd79-4e3f-b7d9-d307b086eceb,success,paymaya,Kale Cafe + Restaurant,,Kale Mini Cafe UP Town Center,,KALE15OFF,Unionbank,,,144,144
+2/19/2024,Joy Mendoza,,0b36298a-f957-4f1f-8891-5d9bbc94fecf,disbursed,maya,The Porch,,The Porch Sikatuna Village,,PORCHFREEBIE,Unionbank,,,"2,155.00","6,514.12"
+2/18/2024,RODJIE GABRIEL GALENO,,6213e629-f9de-4ad3-abf0-28ade52652a5,disbursed,gcash,Family Bean Cafe,,Family Bean Cafe Fairview,,VIET93SAFBC,Gcash,,,185,185
+02/09/2024,SARAH AME SANGCAP,,9814e36a-2dda-4dd9-a883-65c8bb2ac86c,disbursed,gcash,Family Bean Cafe,,Family Bean Cafe Fairview,,VIET93SAFBC,Gcash,,,185,185
