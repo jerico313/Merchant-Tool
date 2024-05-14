@@ -35,10 +35,10 @@
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
-                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="merchants.php"  style="padding-right:10px;padding-left:10px;">Merchants</a>
+                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="merchants.php"  style="padding-right:10px;padding-left:10px;">Merchant</a>
                 </li>
                 <li class="nav-item">
-                    <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="order.php" style="padding-right:10px;padding-left:10px;">Transactions</a>
+                    <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="order.php" style="padding-right:10px;padding-left:10px;">Transaction</a>
                 </li>
                 <li class="nav-item">
                     <a id="pg-link" class="nav-link mx-2" aria-current="page" href="pg_fee_rate.php" style="padding-right:10px;padding-left:10px;">Payment Gateway</a>
