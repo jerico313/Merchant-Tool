@@ -74,7 +74,7 @@
     <a href="transaction.php"><p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p></a>
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
-        <p class="title">Upload Orders</p>
+        <p class="title">Upload Transactions</p>
         <form id="uploadForm" action="upload_transaction_process.php" method="post" enctype="multipart/form-data">
       </div>
 
@@ -86,7 +86,7 @@
         <button type="submit" class="btn btn-secondary upload_file" id="submitButton">Submit</button>
         <div class="loading" id="loadingIndicator"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
         </div>
-        <div class="file-preview" style="margin-top:20px;background-color:#fff;"></div>
+        <div class="file-preview" style="margin-top:20px;"></div>
   </form>
       </div>
     </div>

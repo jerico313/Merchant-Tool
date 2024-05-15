@@ -103,8 +103,7 @@
 
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <div class="file" style="padding:10px 10px 10px 0;font-size:15px;">
-                    <p style="font-weight:bold;">Selected File: <span class="filename"
-                                                                      style="color:#E96529"></span></p>
+                    <p style="font-weight:bold;">Selected File: <span class="filename" style="color:#E96529"></span></p>
                 </div>
                 <label for="fileToUpload" style="background-color:#fff;font-size:20px;" class="upload-btn"
                        id="uploadBtn"><i class="fa-solid fa-cloud-arrow-up fa-2xl"
@@ -116,7 +115,7 @@
                     <div class="loading" id="loadingIndicator"><i class="fas fa-spinner fa-spin"></i> Loading...
                     </div>
                 </div>
-                <div class="file-preview" style="margin-top:20px;background-color:#fff;">
+                <div class="file-preview" style="margin-top:20px;">
                     <div class="table-container">
                         <!-- Table will be appended here -->
                     </div>

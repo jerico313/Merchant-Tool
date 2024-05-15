@@ -1,16 +1,25 @@
 <?php
-include("inc/config.php");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    include("inc/config.php");
 
-if (isset($_POST['merchant_id'])) {
-    $merchant_id = $_POST['merchant_id'];
-    $sql = "SELECT * FROM merchant WHERE merchant_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $merchant_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $merchant = $result->fetch_assoc();
-    echo json_encode($merchant);
+    $merchantId = $_POST['merchantId'];
+    $merchantName = $_POST['merchantName'];
+    $merchantType = $_POST['merchantType'];
+    $businessAddress = $_POST['businessAddress'];
+    $emailAddress = $_POST['emailAddress'];
+
+    $stmt = $conn->prepare("UPDATE merchant SET merchant_name=?, merchant_partnership_type=?, business_address=?, email_address=? WHERE merchant_id=?");
+    $stmt->bind_param("sssss", $merchantName, $merchantType, $businessAddress, $emailAddress, $merchantId);
+
+    if ($stmt->execute()) {
+        // Redirect to the same page after successful update
+        header("Location: merchant.php");
+        exit();
+    } else {
+        echo "Error updating record: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
 }
-
-$conn->close();
 ?>

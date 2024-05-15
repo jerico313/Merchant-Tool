@@ -73,7 +73,7 @@ function displayMerchant() {
       font-size:15px;
     }
     
-     /* Define keyframes for the animation */
+     /* Define keyframes for the animation 
   @keyframes shadow-animation {
     0% {
       box-shadow: 0px 0px 50px 20px rgba(255, 95, 31, 0.75);
@@ -86,10 +86,10 @@ function displayMerchant() {
     }
   }
 
-  /* Apply animation to the modal content */
+  /* Apply animation to the modal content 
   .modal-content {
     animation: shadow-animation 2s infinite alternate;
-  }
+  }*/
   </style>
 </head>
 <body>
@@ -133,7 +133,7 @@ function displayMerchant() {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="editMerchantForm" method="POST">
+        <form id="editMerchantForm" action="edit_merchant.php" method="POST">
           <input type="hidden" id="merchantId" name="merchantId">
           <div class="mb-3">
             <label for="merchantName" class="form-label">Merchant Name</label>
@@ -154,11 +154,12 @@ function displayMerchant() {
             <label for="emailAddress" class="form-label">Email Address</label>
             <input type="email" class="form-control" id="emailAddress" name="emailAddress">
           </div>
-        </form>
+        
       </div>
       <div class="modal-footer border-0">
-        <button type="button" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px; " onclick="saveMerchant()">Save changes</button>
+        <button type="submit" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px; ">Save changes</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
