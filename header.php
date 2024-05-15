@@ -35,10 +35,10 @@
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
-                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="merchants.php"  style="padding-right:10px;padding-left:10px;">Merchant</a>
+                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="merchant.php"  style="padding-right:10px;padding-left:10px;">Merchant</a>
                 </li>
                 <li class="nav-item">
-                    <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="order.php" style="padding-right:10px;padding-left:10px;">Transaction</a>
+                    <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="transaction.php" style="padding-right:10px;padding-left:10px;">Transaction</a>
                 </li>
                 <li class="nav-item">
                     <a id="pg-link" class="nav-link mx-2" aria-current="page" href="pg_fee_rate.php" style="padding-right:10px;padding-left:10px;">Payment Gateway</a>
@@ -70,9 +70,9 @@
         var pgLink = document.getElementById('pg-link');
 
         // Set the active class based on the current page
-        if (currentPage.includes('merchants.php') || currentPage.includes('store.php') || currentPage.includes('upload_merchant.php') || currentPage.includes('upload_merchant_process.php')) {
+        if (currentPage.includes('merchant.php') || currentPage.includes('store.php') || currentPage.includes('upload_merchant.php') || currentPage.includes('upload_merchant_process.php')) {
             ordersLink.classList.add('active_nav');
-        } else if (currentPage.includes('order.php') || currentPage.includes('upload_order.php') || currentPage.includes('upload.php')) {
+        } else if (currentPage.includes('transaction.php') || currentPage.includes('upload_transaction.php') || currentPage.includes('upload_transaction_process.php')) {
             merchantsLink.classList.add('active_nav');
         } else if (currentPage.includes('pg_fee_rate.php')) {
             pgLink.classList.add('active_nav');

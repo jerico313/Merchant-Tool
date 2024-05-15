@@ -159,7 +159,7 @@ input[type="file"] {
 
 ::-webkit-scrollbar {
   width: 15px;
-  height: 20px;
+  height: 15px;
   opacity: 0.2;
   background-color: #F1F1F1 !important;
 }
@@ -272,4 +272,9 @@ li.paginate_button.page-item{
 
 #example_paginate{
   margin-top: 10px;
+}
+
+td{
+  background-color:transparent !important;
+  border-bottom: 1px solid #808080 !important;
 }

@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row['password'])) {
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['email'] = $row['email_address'];        
-            header("Location: order.php");
+            header("Location: transaction.php");
             exit();
         } else {
             $error = "Incorrect password";

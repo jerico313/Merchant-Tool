@@ -109,11 +109,11 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
         <h2 style="padding-top:10px;color: #4caf50;">Successfully uploaded!</h2>
-        <a href="order.php"><button type="button" class="btn btn-secondary okay">Okay</button></a>
+        <a href="transaction.php"><button type="button" class="btn btn-secondary okay">Okay</button></a>
     </div>
     <script>
         setTimeout(function(){
-            window.location.href = 'order.php';
+            window.location.href = 'transaction.php';
         }, 3000); // Delay for 3 seconds (3000 milliseconds)
     </script>
 </body>
