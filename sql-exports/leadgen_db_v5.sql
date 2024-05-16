@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 08:11 AM
+-- Generation Time: May 14, 2024 at 04:58 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -32,7 +32,7 @@ CREATE TABLE `activity_history` (
   `user_id` varchar(36) DEFAULT NULL,
   `table_name` int(11) NOT NULL,
   `table_id` int(11) NOT NULL,
-  `activity_type` enum('Add','Update','Delete','Login') NOT NULL,
+  `activity_type` enum('Add','Update','Delete') NOT NULL,
   `description` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -60,17 +60,34 @@ CREATE TABLE `category_history` (
   `category_name` enum('Coupled','Decoupled','Gcash') DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
+  `billable_date` date DEFAULT NULL,
   `status` enum('Active','Expired') DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Triggers `category_history`
+-- Table structure for table `fulfillment_type`
+--
+
+CREATE TABLE `fulfillment_type` (
+  `fulfillment_id` varchar(36) NOT NULL,
+  `merchant_id` varchar(36) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `status` enum('Active','Expired','Renewed') DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Triggers `fulfillment_type`
 --
 DELIMITER $$
-CREATE TRIGGER `generate_category_id` BEFORE INSERT ON `category_history` FOR EACH ROW BEGIN
-    SET NEW.category_id = UUID(); 
+CREATE TRIGGER `generate_fulfillment_id` BEFORE INSERT ON `fulfillment_type` FOR EACH ROW BEGIN
+    SET NEW.fulfillment_id = UUID(); 
 END
 $$
 DELIMITER ;
@@ -109,10 +126,20 @@ CREATE TABLE `merchant` (
   `merchant_name` varchar(100) NOT NULL,
   `merchant_partnership_type` enum('Primary','Secondary') NOT NULL,
   `business_address` varchar(250) NOT NULL,
-  `email_address` text NOT NULL,
+  `email_address` varchar(250) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Triggers `merchant`
+--
+DELIMITER $$
+CREATE TRIGGER `generate_merchant_id` BEFORE INSERT ON `merchant` FOR EACH ROW BEGIN
+    SET NEW.merchant_id = UUID(); 
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -157,7 +184,7 @@ CREATE TABLE `offer_renewal` (
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `billable_date` date DEFAULT NULL,
-  `status` enum('Active','Expired') DEFAULT NULL,
+  `status` enum('Active','Expired','Renewed') DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -175,6 +202,24 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `order_details_vat_ex_view`
+-- (See below for the actual view)
+--
+CREATE TABLE `order_details_vat_ex_view` (
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `order_details_vat_inc_view`
+-- (See below for the actual view)
+--
+CREATE TABLE `order_details_vat_inc_view` (
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pg_fee_rate`
 --
 
@@ -183,7 +228,7 @@ CREATE TABLE `pg_fee_rate` (
   `mode_of_payment` enum('cod','Paymaya','Gcash','Gcash_miniapp','Card Payment','Maya_checkout') NOT NULL,
   `rate` decimal(6,4) NOT NULL,
   `effective_date` date NOT NULL,
-  `status` enum('Active','Expired') NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -214,6 +259,16 @@ CREATE TABLE `store` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Triggers `store`
+--
+DELIMITER $$
+CREATE TRIGGER `generate_store_id` BEFORE INSERT ON `store` FOR EACH ROW BEGIN
+    SET NEW.store_id = UUID(); 
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -229,13 +284,23 @@ CREATE TABLE `transaction` (
   `claim_id` varchar(36) NOT NULL,
   `transaction_date` datetime NOT NULL,
   `gross_sales` decimal(10,2) NOT NULL,
-  `voucher_price` decimal(10,2) NOT NULL,
+  `discount` decimal(10,2) NOT NULL,
   `mode_of_payment` enum('cod','gcash','gcash_miniapp','maya','maya_checkout','maya_credit_card','paymaya') NOT NULL,
   `payment_status` enum('success','disbursed') NOT NULL,
   `pg_fee_id` varchar(36) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Triggers `transaction`
+--
+DELIMITER $$
+CREATE TRIGGER `generate_order_details_id` BEFORE INSERT ON `transaction` FOR EACH ROW BEGIN
+    SET NEW.order_id = UUID(); 
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -312,6 +377,24 @@ END
 $$
 DELIMITER ;
 
+-- --------------------------------------------------------
+
+--
+-- Structure for view `order_details_vat_ex_view`
+--
+DROP TABLE IF EXISTS `order_details_vat_ex_view`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `order_details_vat_ex_view`  AS SELECT `s`.`store_name` AS `Store Name`, `o`.`customer_id` AS `Customer ID`, `o`.`customer_name` AS `Customer Name`, `o`.`order_id` AS `Transaction Ref No.`, `o`.`transaction_date` AS `Transaction Date`, `of`.`promo_code` AS `Offer ID`, `of`.`offer_price` AS `Offer Price`, `o`.`gross_sales` AS `Gross Sales`, `o`.`discount` AS `Discount`, `o`.`gross_sales`- `o`.`discount` AS `Net Amount`, `o`.`mode_of_payment` AS `Mode of Payment`, `o`.`payment_status` AS `Payment Status`, `of`.`commission_rate` AS `Commission Rate`, round((`o`.`gross_sales` - `o`.`discount`) * `of`.`commission_rate`,2) AS `Commission Amount (VAT Ex)`, `pfr`.`rate` AS `PG Fee Rate`, round((`o`.`gross_sales` - `o`.`discount`) * `pfr`.`rate`,2) AS `PG Fee Amount`, `o`.`gross_sales`- `o`.`discount` - round((`o`.`gross_sales` - `o`.`discount`) * `of`.`commission_rate`,2) - round((`o`.`gross_sales` - `o`.`discount`) * `pfr`.`rate`,2) AS `Amount to be Disbursed` FROM (((`order` `o` join `store` `s` on(`o`.`store_id` = `s`.`store_id`)) join `offer` `of` on(`o`.`offer_id` = `of`.`offer_id`)) left join `pg_fee_rate` `pfr` on(`o`.`pg_fee_id` = `pfr`.`pg_fee_id` and `o`.`mode_of_payment` = `pfr`.`mode_of_payment`)) WHERE `pfr`.`status` = 'Active''Active'  ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `order_details_vat_inc_view`
+--
+DROP TABLE IF EXISTS `order_details_vat_inc_view`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `order_details_vat_inc_view`  AS SELECT `s`.`store_name` AS `Store Name`, `o`.`customer_id` AS `Customer ID`, `o`.`customer_name` AS `Customer Name`, `o`.`order_id` AS `Transaction Ref No.`, `o`.`transaction_date` AS `Transaction Date`, `of`.`promo_code` AS `Offer ID`, `of`.`offer_price` AS `Offer Price`, `o`.`gross_sales` AS `Gross Sales`, `o`.`discount` AS `Discount`, `o`.`gross_sales`- `o`.`discount` AS `Net Amount`, `o`.`mode_of_payment` AS `Mode of Payment`, `o`.`payment_status` AS `Payment Status`, `of`.`commission_rate` AS `Commission Rate`, round((`o`.`gross_sales` - `o`.`discount`) * `of`.`commission_rate`,2) AS `Commission Amount (VAT Inc)`, `pfr`.`rate` AS `PG Fee Rate`, round((`o`.`gross_sales` - `o`.`discount`) * `pfr`.`rate`,2) AS `PG Fee Amount`, `o`.`gross_sales`- `o`.`discount` - round((`o`.`gross_sales` - `o`.`discount`) * `of`.`commission_rate`,2) - round((`o`.`gross_sales` - `o`.`discount`) * `pfr`.`rate`,2) AS `Amount to be Disbursed` FROM (((`order` `o` join `store` `s` on(`o`.`store_id` = `s`.`store_id`)) join `offer` `of` on(`o`.`offer_id` = `of`.`offer_id`)) left join `pg_fee_rate` `pfr` on(`o`.`pg_fee_id` = `pfr`.`pg_fee_id` and `o`.`mode_of_payment` = `pfr`.`mode_of_payment`)) WHERE `pfr`.`status` = 'Active''Active'  ;
+
 --
 -- Indexes for dumped tables
 --
@@ -328,6 +411,13 @@ ALTER TABLE `activity_history`
 --
 ALTER TABLE `category_history`
   ADD PRIMARY KEY (`category_id`),
+  ADD KEY `merchant_id` (`merchant_id`);
+
+--
+-- Indexes for table `fulfillment_type`
+--
+ALTER TABLE `fulfillment_type`
+  ADD PRIMARY KEY (`fulfillment_id`),
   ADD KEY `merchant_id` (`merchant_id`);
 
 --
@@ -400,6 +490,12 @@ ALTER TABLE `activity_history`
 --
 ALTER TABLE `category_history`
   ADD CONSTRAINT `category_history_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
+
+--
+-- Constraints for table `fulfillment_type`
+--
+ALTER TABLE `fulfillment_type`
+  ADD CONSTRAINT `fulfillment_type_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
 
 --
 -- Constraints for table `offer`
