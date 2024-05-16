@@ -24,6 +24,8 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
 
     // Prepare MySQL statement
     $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, business_address, email_address) VALUES ( ?, ?, ?, ?, ?)");
+    // Prepare MySQL statement for second table
+   // $stmt2 = $conn->prepare("INSERT INTO store (store_id, merchant_id, legal_entity_id, store_name, store_address) VALUES (?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         // Remove commas from numeric values
@@ -31,6 +33,9 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
 
         $stmt->bind_param("sssss", $data[0], $data[1], $data[12], $data[17], $data[18]);
         $stmt->execute();
+
+       // $stmt2->bind_param("sssss", $data[3], $data[0], $data[2], $data[4], $data[4]);
+       // $stmt2->execute();
     }
 
     fclose($handle);

@@ -2,6 +2,7 @@
 require_once("header.php");
 require_once("inc/config.php");
 
+// Check if the file is uploaded
 if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != ''){
     $file_name = $_FILES['fileToUpload']['name'];
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
@@ -10,11 +11,13 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     $file_ext = strtolower(end($file_name_parts));
     $extensions = array("csv");
 
+    // Check if the file extension is allowed
     if(in_array($file_ext,$extensions) === false){
         echo "Extension not allowed, please choose a CSV file.";
         exit();
     }
 
+    // Move the uploaded file to the uploads directory
     move_uploaded_file($file_tmp,"uploads/".$file_name);
 
     // Process CSV file and insert data into MySQL
@@ -22,17 +25,22 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     $handle = fopen($csvFile, "r");
     $header = fgetcsv($handle); // Skip header row
 
-    // Prepare MySQL statement
-    $stmt = $conn->prepare("INSERT INTO orders (order_id, transaction_date, customer_name, customer_id, payment_status, payment, merchant_name, merchant_id, store_name, store_id, promo_codes, promo_type, claim_id, gross_sale, voucher_price, total_actual_sales) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    // Prepare MySQL statement for first table
+    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, offer_id, customer_id, customer_name, claim_id, gross_sale, discount, mode_of_payment, payment_status, pg_fee_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         // Remove commas from numeric values
-        $data[13] = str_replace(',', '', $data[13]); // gross_sale
-        $data[14] = str_replace(',', '', $data[14]); // voucher_price
-        $data[15] = str_replace(',', '', $data[15]); // total_actual_sales
+        $data[6] = str_replace(',', '', $data[6]); // gross_sale
+        $data[7] = str_replace(',', '', $data[7]); // discount
 
-        $stmt->bind_param("ssssssssssssssss", $data[3], $data[0], $data[1], $data[2], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11], $data[12], $data[13], $data[14], $data[15]);
-        $stmt->execute();
+        // Bind and execute for first table
+        $stmt1->bind_param("sssssssssss", $data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10]);
+        $stmt1->execute();
+
+        // Bind and execute for second table
+        $stmt2->bind_param("sssssssssss", $data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10]);
+        $stmt2->execute();
     }
 
     fclose($handle);
@@ -40,7 +48,7 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
     <title>Upload Success</title>
     <style>
       body {
@@ -118,7 +126,6 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     </script>
 </body>
 </html>
-
 
 <?php
 } else {

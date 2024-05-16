@@ -23,11 +23,11 @@ function displayOrder() {
           echo "<td>" . $row['promo_codes'] . "</td>";
           echo "<td>" . $row['promo_type'] . "</td>";
           echo "<td>" . $row['claim_id'] . "</td>";
-          echo "<td>" . number_format($row['gross_sale'], 2) . "</td>";
+          
           echo "<td>" . number_format($row['voucher_price'], 2) . "</td>";
           echo "<td>" . number_format($row['total_actual_sales'], 2) . "</td>";
           echo "<td style='text-align:center;background-color:transparent;border-bottom: 1px solid #808080;'>";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['order_id'] . ")'>View</button> ";
+          
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -37,6 +37,40 @@ function displayOrder() {
   $conn->close();
 }
 ?>
+<?php
+function displayMerchant() {
+  include("inc/config.php");
+
+  $sql = "SELECT * FROM transaction";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+      $count = 1;
+      while ($row = $result->fetch_assoc()) {
+          echo "<tr data-uuid='" . $row['transaction_id'] . "'>";
+          echo "<td style='text-align:center;'>" . $row['transaction_id'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['claim_id'] . "</td>";
+          echo "<td style='text-align:center;'>" . number_format($row['gross_sale'], 2) . "</td>";
+          echo "<td style='text-align:center;'>" . number_format($row['discount'], 2) . "</td>";
+          echo "<td style='text-align:center;'>" . $row['mode_of_payment'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['payment_status'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['pg_fee_id'] . "</td>";
+          echo "<td style='text-align:center;'>";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['transaction_id'] . ")'>View</button> ";
+          echo "</td>";
+          echo "</tr>";
+          $count++;
+      }
+  }
+
+  $conn->close();
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">

@@ -11,11 +11,11 @@ function displayMerchant() {
       while ($row = $result->fetch_assoc()) {
           echo "<tr data-uuid='" . $row['merchant_id'] . "'>";
           echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['merchant_id'] . "'></center></td>";
-          echo "<td>" . $row['merchant_id'] . "</td>";
-          echo "<td>" . $row['merchant_name'] . "</td>";
-          echo "<td>" . $row['merchant_partnership_type'] . "</td>";
-          echo "<td>" . $row['business_address'] . "</td>";
-          echo "<td>" . $row['email_address'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['merchant_id'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['merchant_partnership_type'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['business_address'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['email_address'] . "</td>";
           echo "<td style='text-align:center;'>";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(" . $row['merchant_id'] . ")'>View</button> ";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['merchant_id'] . "\")'>Edit</button> ";
@@ -94,7 +94,7 @@ function displayMerchant() {
 </head>
 <body>
 <div class="cont-box">
-  <div class="custom-box pt-5">
+  <div class="custom-box pt-3">
   <div class="sub" style="text-align:left;">
   
   <div class="add-btns">
