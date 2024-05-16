@@ -91,7 +91,7 @@
 <body>
 
 <div class="cont-box">
-    <div class="custom-box pt-5">
+    <div class="custom-box pt-3">
         <a href="merchant.php">
             <p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p>
         </a>

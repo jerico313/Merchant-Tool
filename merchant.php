@@ -17,7 +17,7 @@ function displayMerchant() {
           echo "<td style='text-align:center;'>" . $row['business_address'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['email_address'] . "</td>";
           echo "<td style='text-align:center;'>";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(" . $row['merchant_id'] . ")'>View</button> ";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . htmlspecialchars($row['merchant_name'], ENT_QUOTES) . "\")'>View</button> ";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['merchant_id'] . "\")'>Edit</button> ";
           echo "</td>";
           echo "</tr>";
@@ -72,24 +72,6 @@ function displayMerchant() {
     .modal-title{
       font-size:15px;
     }
-    
-     /* Define keyframes for the animation 
-  @keyframes shadow-animation {
-    0% {
-      box-shadow: 0px 0px 50px 20px rgba(255, 95, 31, 0.75);
-    }
-    50% {
-      box-shadow: 0px 0px 20px 0px rgba(255, 95, 31, 0.5);
-    }
-    100% {
-      box-shadow: 0px 0px 50px 20px rgba(255, 95, 31, 0.75);
-    }
-  }
-
-  /* Apply animation to the modal content 
-  .modal-content {
-    animation: shadow-animation 2s infinite alternate;
-  }*/
   </style>
 </head>
 <body>
@@ -216,6 +198,11 @@ function editMerchant(merchantUuid) {
 
     // Open the edit modal
     $('#editMerchantModal').modal('show');
+}
+</script>
+<script>
+function viewMerchant(merchantName) {
+    window.location.href = 'store.php?merchant_name=' + encodeURIComponent(merchantName);
 }
 </script>
 

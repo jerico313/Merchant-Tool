@@ -22,20 +22,29 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     $handle = fopen($csvFile, "r");
     $header = fgetcsv($handle); // Skip header row
 
-    // Prepare MySQL statement
-    $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, business_address, email_address) VALUES ( ?, ?, ?, ?, ?)");
-    // Prepare MySQL statement for second table
-   // $stmt2 = $conn->prepare("INSERT INTO store (store_id, merchant_id, legal_entity_id, store_name, store_address) VALUES (?, ?, ?, ?, ?)");
+    // Prepare MySQL statement for the first table
+    $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, business_address, email_address) VALUES (?, ?, ?, ?, ?)");
+
+    // Prepare MySQL statement for the second table
+    $stmt2 = $conn->prepare("INSERT INTO category_history (category_id, merchant_id, category_name, start_date, end_date, billable_date, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        // Remove commas from numeric values
-        $data[17] = str_replace(',', '', $data[17]); // gross_sale
 
+        // Insert into the first table
         $stmt->bind_param("sssss", $data[0], $data[1], $data[12], $data[17], $data[18]);
         $stmt->execute();
 
-       // $stmt2->bind_param("sssss", $data[3], $data[0], $data[2], $data[4], $data[4]);
-       // $stmt2->execute();
+        // Generate a UUID for category_id
+        $category_id = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
+
+        // Format date from mm/dd/yyyy to yyyy-mm-dd
+        $start_date = !empty($data[13]) ? date('Y-m-d', strtotime($data[13])) : '';
+        $end_date = !empty($data[14]) ? date('Y-m-d', strtotime($data[14])) : '';
+        $billable_date = !empty($data[15]) ? date('Y-m-d', strtotime($data[15])) : '';
+
+        // Insert into the second table
+        $stmt2->bind_param("sssssss", $category_id, $data[0], $data[11], $start_date, $end_date, $billable_date, $data[19]);
+        $stmt2->execute();
     }
 
     fclose($handle);
@@ -43,16 +52,16 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
     <title>Upload Success</title>
     <style>
-      body {
-      background-image: url("images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-    }
+        body {
+            background-image: url("images/bg_booky.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
 
         .container {
             position: fixed;
@@ -121,7 +130,6 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     </script>
 </body>
 </html>
-
 
 <?php
 } else {

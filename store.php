@@ -1,5 +1,7 @@
 <?php include("header.php")?>
 <?php
+$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+
 function displayStore() {
   include("inc/config.php");
 
@@ -12,9 +14,10 @@ function displayStore() {
           echo "<tr data-id='" . $row['store_id'] . "'>";
           echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['store_id'] . "'></center></td>";
           echo "<td>" . $row['store_id'] . "</td>";
+          echo "<td>" . $row['merchant_id'] . "</td>";
+          echo "<td>" . $row['legal_entity_id'] . "</td>";
           echo "<td>" . $row['store_name'] . "</td>";
           echo "<td>" . $row['store_address'] . "</td>";
-          echo "<td>" . $row['merchant_id'] . "</td>";
           echo "<td style='text-align:center;'>";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['store_id'] . ")'>View</button> ";
           echo "<button class='btn btn-danger btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='deleteEmployee(" . $row['store_id'] . ")'>Checks</button> ";
@@ -155,24 +158,21 @@ function displayStore() {
   <div class="row pb-2 title" aria-label="breadcrumb" >
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-        <li class="breadcrumb-item"><a href="/index" style="color:#E96529; font-size:14px;">Store</a></li>
+        <li class="breadcrumb-item"><a href="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/'; ?>" style="color:#E96529; font-size:14px;"><?php echo $merchant_name; ?></a></li>
         <li class="breadcrumb-item dropdown">
             <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E96529;font-size:14px;">
-                Stores
+            Offers
             </a>
             <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                <!-- Your dropdown items go here -->
-                <li><a class="dropdown-item" href="#">Coupled</a></li>
-                <li><a class="dropdown-item" href="#">Decoupled</a></li>
-                <li><a class="dropdown-item" href="#">GCash</a></li>
-                <!-- Add more items as needed -->
+                <li><a class="dropdown-item" href="#">Stores</a></li>
+                <li><a class="dropdown-item" href="#">Category</a></li>
             </ul>
         </li>
     </ol>
 </nav>
 <p class="title_store" style="font-size:30px;">Store</p>
 </div>
-<button type="button" class="btn btn-warning check-report"><i class="fa-solid fa-print"></i> Check Report</button>
+<button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
     <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Store</button>
 </div>
 
@@ -183,9 +183,10 @@ function displayStore() {
             <tr>
                 <th><center><input type="checkbox" style="accent-color:#E96529;" class="store-checkbox" id="checkAll"></center></th>
                 <th>Store ID</th>
+                <th>Merchant ID</th>
+                <th>Legal Entity Name</th>
                 <th>Store Name</th>
                 <th>Store Address</th>
-                <th>Legal Entity Name</th>
                 <th style="width:110px;">Action</th>
             </tr>
         </thead>
@@ -193,9 +194,6 @@ function displayStore() {
         <?php displayStore(); ?>
         </tbody>
     </table>
-    <div class="check" style="padding: 10px 0px 20px 0px; text-align: right;">
-    <button type="button" class="btn btn-danger" id="resetStatusButton" style="border: none; background-color: #E96529; width:180px;">Checks Settlement Report</button>
-</div>
   </div>
 </div>
 </div>
@@ -208,6 +206,26 @@ function displayStore() {
     $('#checkAll').change(function(){
       $('.store-checkbox').prop('checked', $(this).prop('checked'));
     });
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('#checkAll').change(function(){
+      $('.store-checkbox').prop('checked', $(this).prop('checked'));
+      toggleCheckReportButton();
+    });
+
+    $('.store-checkbox').change(function(){
+      toggleCheckReportButton();
+    });
+
+    function toggleCheckReportButton() {
+      if ($('.store-checkbox:checked').length > 0) {
+        $('.check-report').show();
+      } else {
+        $('.check-report').hide();
+      }
+    }
   });
 </script>
 </body>

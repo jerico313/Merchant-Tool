@@ -37,10 +37,6 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
         // Bind and execute for first table
         $stmt1->bind_param("sssssssssss", $data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10]);
         $stmt1->execute();
-
-        // Bind and execute for second table
-        $stmt2->bind_param("sssssssssss", $data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10]);
-        $stmt2->execute();
     }
 
     fclose($handle);
