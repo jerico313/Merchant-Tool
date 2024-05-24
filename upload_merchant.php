@@ -1,4 +1,4 @@
-<?php include_once("header.php") ?>
+<?php include("header.php")?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +63,7 @@
             z-index: 1000;
             margin-top: 70px;
             width: 99%;
-            padding: 20px;
+            padding: 15px;
             font-size: 13px;
         }
 
@@ -75,29 +75,30 @@
             margin: 10px 0 20px;
         }
 
-        .or span {
-            background: #F1F1F1;
-            padding: 0 10px;
-            font-size: 15px;
-        }
-
         .table-container {
             overflow-x: auto;
             margin-left: auto;
             margin-right: auto;
+        }
+        
+        hr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
         }
     </style>
 </head>
 <body>
 
 <div class="cont-box">
-    <div class="custom-box pt-3">
+    <div class="custom-box pt-4">
         <a href="merchant.php">
             <p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p>
         </a>
-        <div class="sub" style="text-align:left;">
+        <div class="upload" style="text-align:left;">
             <div class="add-btns">
                 <p class="title">Upload Merchants</p>
+                <button type="button" class="btn btn-warning check-report" id="addMerchantBtn"><i class="fa-solid fa-plus"></i> Add New Merchant </button>
                 <form id="uploadForm" action="upload_merchant_process.php" method="post" enctype="multipart/form-data">
             </div>
 
@@ -121,7 +122,59 @@
                     </div>
                 </div>
                 </form>
-                <p class="or"><span>or</span></p>
+            </div>
+        </div>
+
+        <div class="form" style="text-align:left;display:none;">
+            <div class="add-btns">
+                <p class="title">Merchant Details</p>
+                <button type="button" class="btn btn-warning check-report" id="uploadMerchantBtn"><i class="fa-solid fa-upload"></i> Upload Merchants </button>
+                <button type="button" class="btn btn-success" id="add-field"><i class="fa-solid fa-plus"></i> Add More </button>
+            </div>
+
+            <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+            <form id="dynamic-form" action="add_merchant.php" method="POST">
+                <div id="form-fields">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
+                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
+                                    <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
+                                    <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
+                                        <option value="">-- Select Merchant Type --</option>
+                                        <option value="Primary">Primary</option>
+                                        <option value="Secondary">Secondary</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
+                                    <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
+                                    <input type="text" class="form-control" name="email_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                            </div>
+                            <div class="mb-3" style="text-align:right;">
+                                <button type="button" class="btn btn-danger remove-field">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="" style="text-align:right;margin:10px 0px;">
+                <button type="submit" class="check-report">Submit</button>
+    </div>
+            </form>
             </div>
         </div>
     </div>
@@ -130,141 +183,70 @@
 <div class="alert-custom alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
     <i class="fa-solid fa-circle-exclamation"></i> Please choose a file to upload!
 </div>
-
+<script src="./js/file_upload.js"></script>
 <script>
-    document.getElementById('fileToUpload').addEventListener('change', function () {
-    const filenameElement = document.querySelector('.filename');
-    const filename = this.files[0].name;
-    filenameElement.textContent = `Selected file: ${filename}`;
+    // Add event listeners to buttons
+    document.getElementById('addMerchantBtn').addEventListener('click', function () {
+        document.querySelector('.form').style.display = 'block';
+        document.querySelector('.upload').style.display = 'none';
+    });
 
-    // Preview the file content
-    const previewArea = document.querySelector('.file-preview .table-container');
-    previewArea.innerHTML = ''; // Clear previous preview
-    const file = this.files[0];
+    document.getElementById('uploadMerchantBtn').addEventListener('click', function () {
+        document.querySelector('.form').style.display = 'none';
+        document.querySelector('.upload').style.display = 'block';
+    });
 
-    if (file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.name.endsWith('.csv')) {
-        Papa.parse(file, {
-            header: true,
-            dynamicTyping: true,
-            complete: function(results) {
-                const data = results.data;
-                const table = document.createElement('table');
-                table.classList.add('table', 'table-bordered', 'table-striped', 'mt-3', 'mb-5', 'table-transparent', 'table-responsive');
-                const thead = document.createElement('thead');
-                const tbody = document.createElement('tbody');
-                
-                // Display header (first row)
-                const headerRow = document.createElement('tr');
-                for (let key in data[0]) {
-                    const th = document.createElement('th');
-                    th.textContent = key;
-                    headerRow.appendChild(th);
-                }
-                thead.appendChild(headerRow);
-                table.appendChild(thead);
+    document.addEventListener("DOMContentLoaded", function() {
+        // Trigger input event to generate form for default value
+        document.getElementById('MerchantNum').dispatchEvent(new Event('input'));
+    });
 
-                // Display data
-                for (let i = 0; i < Math.min(10, data.length); i++) {
-                    const row = document.createElement('tr');
-                    for (let key in data[i]) {
-                        const cell = document.createElement('td');
-                        cell.textContent = data[i][key];
-                        row.appendChild(cell);
-                    }
-                    tbody.appendChild(row);
-                }
-                table.appendChild(tbody);
-                previewArea.appendChild(table);
-            }
-        });
-    } else {
-        const pElement = document.createElement('p');
-        pElement.textContent = 'File preview not available';
-        previewArea.appendChild(pElement);
-    }
-});
+    document.getElementById('add-field').addEventListener('click', function() {
+        var formFields = document.getElementById('form-fields');
+        var newField = document.createElement('div');
+        newField.classList.add('form-group');
+        newField.innerHTML = `
+        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
+                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
+                                    <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
+                                    <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
+                                        <option value="">-- Select Merchant Type --</option>
+                                        <option value="Primary">Primary</option>
+                                        <option value="Secondary">Secondary</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
+                                    <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
+                                    <input type="text" class="form-control" name="email_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                            </div>
+                            <div class="mb-3" style="text-align:right;">
+                                <button type="button" class="btn btn-danger remove-field">Remove</button>
+                            </div>
+                        </div>
+        `;
+        formFields.appendChild(newField);
+    });
 
-    // Custom function to handle CSV line parsing
-    function splitCSVLine(line) {
-        const values = [];
-        let currentValue = '';
-        let inQuotes = false;
-        for (let i = 0; i < line.length; i++) {
-            const char = line.charAt(i);
-            if (char === '"') {
-                inQuotes = !inQuotes;
-            } else if (char === ',' && !inQuotes) {
-                values.push(currentValue.trim());
-                currentValue = '';
-            } else {
-                currentValue += char;
-            }
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('remove-field')) {
+            e.target.closest('.form-group').remove();
         }
-        values.push(currentValue.trim());
-        return values;
-    }
-
-    document.getElementById('uploadForm').addEventListener('submit', function (event) {
-        // Prevent default form submission
-        event.preventDefault();
-
-        // Check if a file has been selected
-        const fileInput = document.getElementById('fileToUpload');
-        if (fileInput.files.length === 0) {
-            $('.alert-custom').fadeIn();
-            setTimeout(function () {
-                $('.alert-custom').fadeOut();
-            }, 3000); // Hide the alert after 3 seconds
-            return;
-        }
-
-        // Show loading indicator inside the submit button
-        const submitButton = document.getElementById('submitButton');
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-        submitButton.disabled = true;
-
-        // Delay form submission for one minute
-        setTimeout(function () {
-            // Restore submit button state
-            submitButton.innerHTML = 'Submit';
-            submitButton.disabled = false;
-
-            // Submit the form
-            document.getElementById('uploadForm').submit();
-        }, 8000); // 60000 milliseconds = 1 minute
-    });
-
-    // JavaScript for drag and drop functionality
-    const uploadBtn = document.getElementById('uploadBtn');
-
-    uploadBtn.addEventListener('dragenter', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        uploadBtn.classList.add('dragover');
-    });
-
-    uploadBtn.addEventListener('dragover', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        uploadBtn.classList.add('dragover');
-    });
-
-    uploadBtn.addEventListener('dragleave', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        uploadBtn.classList.remove('dragover');
-    });
-
-    uploadBtn.addEventListener('drop', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        uploadBtn.classList.remove('dragover');
-
-        const files = e.dataTransfer.files;
-        document.getElementById('fileToUpload').files = files;
-        // Trigger change event to handle the file
-        const event = new Event('change');
-        document.getElementById('fileToUpload').dispatchEvent(event);
     });
 </script>
 </body>

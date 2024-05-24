@@ -92,7 +92,39 @@ th{
   text-align: center;
 }
 
+#add-field{
+  margin-left:10px;
+  background-color:#95DD59;
+  border-radius:20px;
+  width:150px;
+  cursor:pointer;
+  color:black;
+  border:solid #95DD59 2px;
+  padding:5px;
+}
+
+.remove-field{
+  background-color:#E8C0AE;
+  border-radius:20px;
+  width:150px;
+  cursor:pointer;
+  color:black;
+  border:solid #E8C0AE 2px;
+  padding:5px;
+}
+
 .upload_file{
+  display: inline-block;
+  background-color: #4BB0B8;
+  color:#fff;
+  border:solid  #4BB0B8 2px;
+  width:150px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top:15px;
+}
+
+.add_merchant{
   display: inline-block;
   background-color: #4BB0B8;
   color:#fff;

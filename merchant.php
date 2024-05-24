@@ -17,7 +17,8 @@ function displayMerchant() {
           echo "<td style='text-align:center;'>" . $row['business_address'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['email_address'] . "</td>";
           echo "<td style='text-align:center;'>";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . htmlspecialchars($row['merchant_name'], ENT_QUOTES) . "\")'>View</button> ";
+          $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['merchant_id'] . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['merchant_id'] . "\")'>Edit</button> ";
           echo "</td>";
           echo "</tr>";
@@ -28,7 +29,6 @@ function displayMerchant() {
   $conn->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +76,7 @@ function displayMerchant() {
 </head>
 <body>
 <div class="cont-box">
-  <div class="custom-box pt-3">
+  <div class="custom-box pt-4">
   <div class="sub" style="text-align:left;">
   
   <div class="add-btns">
@@ -201,10 +201,9 @@ function editMerchant(merchantUuid) {
 }
 </script>
 <script>
-function viewMerchant(merchantName) {
-    window.location.href = 'store.php?merchant_name=' + encodeURIComponent(merchantName);
+function viewMerchant(merchantId, merchantName) {
+    window.location.href = 'store.php?merchant_id=' + encodeURIComponent(merchantId) + '&merchant_name=' + encodeURIComponent(merchantName);
 }
 </script>
-
 </body>
 </html>
