@@ -3,13 +3,10 @@
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
-function displayStore($merchant_id) {
+function displayCategory($merchant_id) {
     include("inc/config.php");
 
-    $sql = "SELECT store.*, legal_entity_name.legal_entity_name 
-            FROM store 
-            JOIN legal_entity_name ON store.legal_entity_id = legal_entity_name.legal_entity_id 
-            WHERE store.merchant_id = ?";
+    $sql = "SELECT * FROM category_history WHERE merchant_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -17,16 +14,11 @@ function displayStore($merchant_id) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "<tr data-id='" . $row['store_id'] . "'>";
-            echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['store_id'] . "'></center></td>";
-            echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['store_address'] . "</td>";
-            echo "<td style='text-align:center;'>";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['store_id'] . ")'>View Orders</button> ";
-            echo "<button class='btn btn-danger btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='deleteEmployee(" . $row['store_id'] . ")'>Edit</button> ";
-            echo "</td>";
+            echo "<tr>";
+            echo "<td style='text-align:center;'>" . $row['category_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['category_name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
             echo "</tr>";
         }
     }
@@ -145,36 +137,28 @@ function displayStore($merchant_id) {
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                             <li class="breadcrumb-item"><a href="merchant.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
-                            <li class="breadcrumb-item dropdown">
-                                <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E96529;font-size:14px;">
-                                Store
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                    <li><a class="dropdown-item" href="offer.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Promo</a></li>
-                                    <li><a class="dropdown-item" href="category.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">Category</a></li>
-                                </ul>
-                            </li>
+                            <li class="breadcrumb-item"><a href="store.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
+                            <li class="breadcrumb-item"><a href="offer.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Promo</a></li>
+                            <li class="breadcrumb-item"><a href="category.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Category</a></li>
                         </ol>
                     </nav>
                     <p class="title_store" style="font-size:30px;"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
                 <button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
-                <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Store</button>
+                <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Category</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' id='checkAll'></center></th>
-                            <th>Store ID</th>
-                            <th>Store Name</th>
-                            <th>Legal Entity Name</th>
-                            <th>Store Address</th>
-                            <th style='width:110px;'>Action</th>
+                            <th>Category ID</th>
+                            <th>Category Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
-                    <?php displayStore($merchant_id); ?>
+                    <?php displayCategory($merchant_id); ?>
                     </tbody>
                 </table>
             </div>

@@ -3,13 +3,10 @@
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
-function displayStore($merchant_id) {
+function displayOffers($merchant_id) {
     include("inc/config.php");
 
-    $sql = "SELECT store.*, legal_entity_name.legal_entity_name 
-            FROM store 
-            JOIN legal_entity_name ON store.legal_entity_id = legal_entity_name.legal_entity_id 
-            WHERE store.merchant_id = ?";
+    $sql = "SELECT * FROM offer WHERE merchant_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -17,15 +14,20 @@ function displayStore($merchant_id) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "<tr data-id='" . $row['store_id'] . "'>";
-            echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['store_id'] . "'></center></td>";
-            echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['store_address'] . "</td>";
+            echo "<tr>";
+            echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['merchant_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['offer_name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['offer_details'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['offer_quantity'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['offer_price'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['promo_type'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['vat_type'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['commision_rate'] . "</td>";
             echo "<td style='text-align:center;'>";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['store_id'] . ")'>View Orders</button> ";
-            echo "<button class='btn btn-danger btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='deleteEmployee(" . $row['store_id'] . ")'>Edit</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['offer_id'] . "\")'>View History</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['offer_id'] . "\")'>Renew</button> ";
             echo "</td>";
             echo "</tr>";
         }
@@ -33,6 +35,7 @@ function displayStore($merchant_id) {
 
     $conn->close();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -145,13 +148,13 @@ function displayStore($merchant_id) {
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                             <li class="breadcrumb-item"><a href="merchant.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
+                            <li class="breadcrumb-item"><a href="store.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
                             <li class="breadcrumb-item dropdown">
                                 <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E96529;font-size:14px;">
-                                Store
+                                Promo
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                    <li><a class="dropdown-item" href="offer.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Promo</a></li>
-                                    <li><a class="dropdown-item" href="category.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">Category</a></li>
+                                    <li><a class="dropdown-item" href="category.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Category">Category</a></li>
                                 </ul>
                             </li>
                         </ol>
@@ -159,22 +162,27 @@ function displayStore($merchant_id) {
                     <p class="title_store" style="font-size:30px;"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
                 <button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
-                <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Store</button>
+                <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Promo</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' id='checkAll'></center></th>
-                            <th>Store ID</th>
-                            <th>Store Name</th>
-                            <th>Legal Entity Name</th>
-                            <th>Store Address</th>
-                            <th style='width:110px;'>Action</th>
+                            <th>Offer ID</th>
+                            <th>Merchant ID</th>
+                            <th>Offer Name</th>
+                            <th>Offer Details</th>
+                            <th>Offer Quantity</th>
+                            <th>Offer Price</th>
+                            <th>Promo Code</th>
+                            <th>Promo Type</th>
+                            <th>VAT Type</th>
+                            <th>Commission Rate</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
-                    <?php displayStore($merchant_id); ?>
+                    <?php displayOffers($merchant_id); ?>
                     </tbody>
                 </table>
             </div>
@@ -187,23 +195,6 @@ function displayStore($merchant_id) {
 <script src="./js/script.js"></script>
 <script>
 $(document).ready(function() {
-    $('#checkAll').change(function() {
-        $('.store-checkbox').prop('checked', $(this).prop('checked'));
-        toggleCheckReportButton();
-    });
-
-    $('.store-checkbox').change(function() {
-        toggleCheckReportButton();
-    });
-
-    function toggleCheckReportButton() {
-        if ($('.store-checkbox:checked').length > 0) {
-            $('.check-report').show();
-        } else {
-            $('.check-report').hide();
-        }
-    }
-
     if ($.fn.DataTable.isDataTable('#example')) {
         $('#example').DataTable().destroy();
     }
