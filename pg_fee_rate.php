@@ -164,7 +164,7 @@ function displayPGFeeRate() {
 </head>
 <body>
 <div class="cont-box">
-  <div class="custom-box pt-5">
+  <div class="custom-box pt-4">
   <div class="sub" style="text-align:left;">
   
   <div class="add-btns">

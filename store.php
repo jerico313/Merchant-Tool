@@ -6,10 +6,12 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 function displayStore($merchant_id) {
     include("inc/config.php");
 
-    $sql = "SELECT store.*, legal_entity_name.legal_entity_name 
-            FROM store 
-            JOIN legal_entity_name ON store.legal_entity_id = legal_entity_name.legal_entity_id 
-            WHERE store.merchant_id = ?";
+    $sql = "SELECT store.*, legal_entity_name.legal_entity_name, merchant.merchant_name
+    FROM store
+    JOIN legal_entity_name ON store.legal_entity_id = legal_entity_name.legal_entity_id
+    JOIN merchant ON store.merchant_id = merchant.merchant_id
+    WHERE store.merchant_id = ?
+    ";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -17,15 +19,16 @@ function displayStore($merchant_id) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "<tr data-id='" . $row['store_id'] . "'>";
+            echo "<tr data-uuid='" . $row['store_id'] . "'>";
             echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['store_id'] . "'></center></td>";
             echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['store_address'] . "</td>";
             echo "<td style='text-align:center;'>";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['store_id'] . ")'>View Orders</button> ";
-            echo "<button class='btn btn-danger btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='deleteEmployee(" . $row['store_id'] . ")'>Edit</button> ";
+            $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\")'>View Order</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
             echo "</td>";
             echo "</tr>";
         }
@@ -170,7 +173,7 @@ function displayStore($merchant_id) {
                             <th>Store Name</th>
                             <th>Legal Entity Name</th>
                             <th>Store Address</th>
-                            <th style='width:110px;'>Action</th>
+                            <th style='width:200px;'>Action</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
@@ -180,6 +183,32 @@ function displayStore($merchant_id) {
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="editStoreModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="editStoreModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:20px;">
+      <div class="modal-header border-0">
+        <p class="modal-title" id="editStoreModalLabel">Edit Store Details</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form id="editStoreForm" action="edit_store.php" method="POST">
+    <input type="hidden" id="storeId" name="storeId">
+    <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
+    <input type="hidden" id="merchantName" name="merchantName" value="<?php echo htmlspecialchars($merchant_name); ?>">
+    <div class="mb-3">
+        <label for="storeName" class="form-label">Store Name</label>
+        <input type="text" class="form-control" id="storeName" name="storeName">
+    </div>
+    <div class="mb-3">
+        <label for="storeAddress" class="form-label">Store Address</label>
+        <input type="text" class="form-control" id="storeAddress" name="storeAddress">
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
+</form>
+    </div>
+  </div>
 </div>
 <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
@@ -212,6 +241,30 @@ $(document).ready(function() {
         scrollX: true
     });
 });
+
+function editStore(storeId) {
+    // Fetch the current data of the selected store
+    var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
+    var storeName = storeRow.find('td:nth-child(3)').text();
+    var storeAddress = storeRow.find('td:nth-child(5)').text();
+    var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>"; // Set from PHP
+    var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; // Set from PHP
+
+    // Set values in the edit modal
+    $('#storeId').val(storeId);
+    $('#storeName').val(storeName);
+    $('#storeAddress').val(storeAddress);
+    $('#merchantId').val(merchantId);
+    $('#merchantName').val(merchantName);
+
+    // Open the edit modal
+    $('#editStoreModal').modal('show');
+}
+</script>
+<script>
+function viewOrder(storeId, merchantName) {
+    window.location.href = 'orders.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId);
+}
 </script>
 </body>
 </html>

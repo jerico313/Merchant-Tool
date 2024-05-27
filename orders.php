@@ -1,31 +1,13 @@
 <?php include("header.php")?>
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
+$store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
-function updateStatus($merchant_id) {
+function displayOffers($merchant_id) {
     include("inc/config.php");
 
-    // Update status to 'Expired' where end date is today or in the past
-    $sqlExpired = "UPDATE category_history SET status = 'Expired' WHERE merchant_id = ? AND end_date <= CURDATE()";
-    $stmtExpired = $conn->prepare($sqlExpired);
-    $stmtExpired->bind_param("s", $merchant_id);
-    $stmtExpired->execute();
-
-    // Update status to 'Active' where end date is in the future
-    $sqlActive = "UPDATE category_history SET status = 'Active' WHERE merchant_id = ? AND end_date > CURDATE()";
-    $stmtActive = $conn->prepare($sqlActive);
-    $stmtActive->bind_param("s", $merchant_id);
-    $stmtActive->execute();
-
-    $conn->close();
-}
-
-function displayCategory($merchant_id) {
-    include("inc/config.php");
-
-    // Display categories
-    $sql = "SELECT * FROM category_history WHERE merchant_id = ?";
+    $sql = "SELECT * FROM transaction WHERE store_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -34,12 +16,23 @@ function displayCategory($merchant_id) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td style='text-align:center;'>" . $row['category_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['category_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
-            $statusColor = $row['status'] == 'Active' ? '#95DD59' : '#E8C0AE';
-            echo "<td><center><div style='background-color: $statusColor !important; padding: 2px; border-radius: 20px;width:70px;'>" . $row['status'] . "</div></center></td>";
+            echo "<td>" . $row['transaction_id'] . "</td>";
+            echo "<td>" . $row['transaction_date'] . "</td>";
+            echo "<td>" . $row['customer_name'] . "</td>";
+            echo "<td>" . $row['customer_id'] . "</td>";
+            echo "<td>" . $row['payment_status'] . "</td>";
+            echo "<td>" . $row['payment'] . "</td>";
+            echo "<td>" . $row['merchant_name'] . "</td>";
+            echo "<td>" . $row['merchant_id'] . "</td>";
+            echo "<td>" . $row['store_name'] . "</td>";
+            echo "<td>" . $row['store_id'] . "</td>";
+            echo "<td>" . $row['promo_codes'] . "</td>";
+            echo "<td>" . $row['promo_type'] . "</td>";
+            echo "<td>" . $row['claim_id'] . "</td>";
+            echo "<td style='text-align:center;'>";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['offer_id'] . "\")'>View History</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['offer_id'] . "\")'>Renew</button> ";
+            echo "</td>";
             echo "</tr>";
         }
     }
@@ -47,12 +40,7 @@ function displayCategory($merchant_id) {
     $conn->close();
 }
 
-// Call the function to update status first
-updateStatus($merchant_id);
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -165,28 +153,37 @@ updateStatus($merchant_id);
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                             <li class="breadcrumb-item"><a href="merchant.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
                             <li class="breadcrumb-item"><a href="store.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
-                            <li class="breadcrumb-item"><a href="offer.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Promo</a></li>
-                            <li class="breadcrumb-item"><a href="category.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Category</a></li>
+                            <li class="breadcrumb-item"><a href="#" onclick="location.reload();" style="color:#E96529; font-size:14px;">Transaction Details</a></li>
                         </ol>
                     </nav>
                     <p class="title_store" style="font-size:30px;"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
                 <button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
-                <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Category</button>
+                <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Promo</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                <table id="example" class="table bord" style="width:100%;">
+                <table id="example" class="table bord" style="width:120%;">
                     <thead>
                         <tr>
-                            <th>Category ID</th>
-                            <th>Category Name</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Status</th>
+                        <th>Order ID</th>
+                        <th>Transaction Date</th>
+                        <th>Customer Name</th>
+                        <th>Customer ID</th>
+                        <th>Payment Status</th>
+                        <th>Payment</th>
+                        <th>Merchant Name</th>
+                        <th>Merchant ID</th>
+                        <th>Store Name</th>
+                        <th>Store ID</th>
+                        <th>Promo Codes</th>
+                        <th>Promo Type</th>
+                        <th>Claim ID</th>
+                        <th>Gross Sale</th>
+                        <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
-                    <?php displayCategory($merchant_id); ?>
+                    <?php displayOffers($store_id); ?>
                     </tbody>
                 </table>
             </div>
@@ -199,23 +196,6 @@ updateStatus($merchant_id);
 <script src="./js/script.js"></script>
 <script>
 $(document).ready(function() {
-    $('#checkAll').change(function() {
-        $('.store-checkbox').prop('checked', $(this).prop('checked'));
-        toggleCheckReportButton();
-    });
-
-    $('.store-checkbox').change(function() {
-        toggleCheckReportButton();
-    });
-
-    function toggleCheckReportButton() {
-        if ($('.store-checkbox:checked').length > 0) {
-            $('.check-report').show();
-        } else {
-            $('.check-report').hide();
-        }
-    }
-
     if ($.fn.DataTable.isDataTable('#example')) {
         $('#example').DataTable().destroy();
     }

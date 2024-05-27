@@ -16,7 +16,6 @@ function displayOffers($merchant_id) {
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['merchant_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['offer_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['offer_details'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['offer_quantity'] . "</td>";
@@ -24,9 +23,9 @@ function displayOffers($merchant_id) {
             echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_type'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['vat_type'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['commision_rate'] . "</td>";
+            echo "<td style='text-align:center;'>" . ($row['commission_rate'] * 100) . "%" . "</td>";
             echo "<td style='text-align:center;'>";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['offer_id'] . "\")'>View History</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['offer_id'] . "\")'>View History</button> ";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['offer_id'] . "\")'>Renew</button> ";
             echo "</td>";
             echo "</tr>";
@@ -165,11 +164,10 @@ function displayOffers($merchant_id) {
                 <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Promo</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                <table id="example" class="table bord" style="width:100%;">
+                <table id="example" class="table bord" style="width:120%;">
                     <thead>
                         <tr>
-                            <th>Offer ID</th>
-                            <th>Merchant ID</th>
+                            <th>Promo ID</th>
                             <th>Offer Name</th>
                             <th>Offer Details</th>
                             <th>Offer Quantity</th>
@@ -178,7 +176,7 @@ function displayOffers($merchant_id) {
                             <th>Promo Type</th>
                             <th>VAT Type</th>
                             <th>Commission Rate</th>
-                            <th>Action</th>
+                            <th style='width:200px;'>Action</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">

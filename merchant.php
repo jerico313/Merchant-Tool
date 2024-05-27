@@ -72,6 +72,7 @@ function displayMerchant() {
     .modal-title{
       font-size:15px;
     }
+
   </style>
 </head>
 <body>
