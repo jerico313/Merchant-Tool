@@ -169,7 +169,7 @@ function displayPGFeeRate() {
   
   <div class="add-btns">
     <p class="title">Payment Gateway Fee Page</p>
-    <button type="button" class="btn btn-danger add-merchant"><i class="fa-solid fa-plus"></i> Add PG Fee Rate</button>
+    <a href="upload_pg_fee_rate.php"><button type="button" class="btn btn-danger add-merchant"><i class="fa-solid fa-plus"></i> Add PG Fee Rate</button></a>
 </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">

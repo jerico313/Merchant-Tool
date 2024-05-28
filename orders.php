@@ -17,22 +17,16 @@ function displayOffers($merchant_id) {
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<td>" . $row['transaction_id'] . "</td>";
-            echo "<td>" . $row['transaction_date'] . "</td>";
-            echo "<td>" . $row['customer_name'] . "</td>";
             echo "<td>" . $row['customer_id'] . "</td>";
-            echo "<td>" . $row['payment_status'] . "</td>";
-            echo "<td>" . $row['payment'] . "</td>";
-            echo "<td>" . $row['merchant_name'] . "</td>";
-            echo "<td>" . $row['merchant_id'] . "</td>";
-            echo "<td>" . $row['store_name'] . "</td>";
-            echo "<td>" . $row['store_id'] . "</td>";
+            echo "<td>" . $row['customer_name'] . "</td>";
+            echo "<td>" . $row['transaction_date'] . "</td>";
             echo "<td>" . $row['promo_codes'] . "</td>";
-            echo "<td>" . $row['promo_type'] . "</td>";
-            echo "<td>" . $row['claim_id'] . "</td>";
-            echo "<td style='text-align:center;'>";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['offer_id'] . "\")'>View History</button> ";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['offer_id'] . "\")'>Renew</button> ";
-            echo "</td>";
+            echo "<td>" . $row['gross_sales'] . "</td>";
+            echo "<td>" . $row['voucher_price'] . "</td>";
+            echo "<td>" . $row['mode_of_payment'] . "</td>";
+            echo "<td>" . $row['payment_status'] . "</td>";
+            echo "<td>" . $row['pg_fee_id'] . "</td>";
+            echo "<td>" . $row['store_id'] . "</td>";
             echo "</tr>";
         }
     }
@@ -52,6 +46,11 @@ function displayOffers($merchant_id) {
     <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="style.css">
     <style>
         body {
@@ -158,28 +157,32 @@ function displayOffers($merchant_id) {
                     </nav>
                     <p class="title_store" style="font-size:30px;"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
-                <button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
-                <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Promo</button>
+                <button type="button" class="btn btn-warning check-report">Coupled</button>
+                <button type="button" class="btn btn-warning add-merchant">Decoupled</button>
+                <button type="button" class="btn gcash" style="background-color:#007DFE !important; border:solid 2px #007DFE !important; display: flex;">
+                <img src="images/gcash.png" style="width:25px; height:20px; margin-right: 1.80vw;" alt="gcash">
+                <span>GCash</span>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                <table id="example" class="table bord" style="width:120%;">
+                <table id="example" class="table bord" style="width:250%;">
                     <thead>
                         <tr>
-                        <th>Order ID</th>
-                        <th>Transaction Date</th>
-                        <th>Customer Name</th>
+                        <th>Transaction ID</th>
                         <th>Customer ID</th>
-                        <th>Payment Status</th>
-                        <th>Payment</th>
-                        <th>Merchant Name</th>
-                        <th>Merchant ID</th>
-                        <th>Store Name</th>
-                        <th>Store ID</th>
+                        <th>Customer Name</th>
+                        <th>Transaction Date</th>
                         <th>Promo Codes</th>
-                        <th>Promo Type</th>
-                        <th>Claim ID</th>
+                        <th>Promo Price</th>
                         <th>Gross Sale</th>
-                        <th>Action</th>
+                        <th>Discount</th>
+                        <th>Net Amount</th>
+                        <th>Mode of Payment</th>
+                        <th>Payment Status</th>
+                        <th>Commission Rate</th>
+                        <th>Commission Amount</th>
+                        <th>PG Fee Rate</th>
+                        <th>PG Fee Amount</th>
+                        <th>Amount to be Disbursed</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
@@ -203,6 +206,15 @@ $(document).ready(function() {
     $('#example').DataTable({
         scrollX: true
     });
+});
+</script>
+<script>
+$(function() {
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left'
+  }, function(start, end, label) {
+    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+  });
 });
 </script>
 </body>

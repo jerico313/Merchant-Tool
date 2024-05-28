@@ -74,8 +74,8 @@
     <a href="transaction.php"><p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p></a>
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
-        <p class="title">Upload Transactions</p>
-        <form id="uploadForm" action="upload_transaction_process.php" method="post" enctype="multipart/form-data">
+        <p class="title">Upload PG Fee Rate</p>
+        <form id="uploadForm" action="upload_pg_fee_rate_process.php" method="post" enctype="multipart/form-data">
       </div>
 
       <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -104,7 +104,7 @@
   document.getElementById('fileToUpload').addEventListener('change', function() {
     const filenameElement = document.querySelector('.filename');
     const filename = this.files[0].name;
-    filenameElement.textContent = `Selected file: ${filename}`;
+    filenameElement.textContent = `${filename}`;
 
     // Preview the file content
     const previewArea = document.querySelector('.file-preview');

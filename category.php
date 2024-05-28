@@ -164,9 +164,15 @@ updateStatus($merchant_id);
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                             <li class="breadcrumb-item"><a href="merchant.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
-                            <li class="breadcrumb-item"><a href="store.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
-                            <li class="breadcrumb-item"><a href="offer.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Promo</a></li>
-                            <li class="breadcrumb-item"><a href="category.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Category</a></li>
+                            <li class="breadcrumb-item dropdown">
+                                <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E96529;font-size:14px;">
+                                Category
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="storeDropdown">
+                                    <li><a class="dropdown-item" href="store.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Store</a></li>
+                                    <li><a class="dropdown-item" href="offer.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Promo</a></li>
+                                </ul>
+                            </li>
                         </ol>
                     </nav>
                     <p class="title_store" style="font-size:30px;"><?php echo htmlspecialchars($merchant_name); ?></p>

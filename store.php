@@ -27,7 +27,7 @@ function displayStore($merchant_id) {
             echo "<td style='text-align:center;'>" . $row['store_address'] . "</td>";
             echo "<td style='text-align:center;'>";
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\")'>View Order</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
             echo "</td>";
             echo "</tr>";
