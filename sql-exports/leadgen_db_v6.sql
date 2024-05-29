@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2024 at 04:07 AM
+-- Generation Time: May 16, 2024 at 08:11 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -78,6 +78,29 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `legal_entity_name`
+--
+
+CREATE TABLE `legal_entity_name` (
+  `legal_entity_id` varchar(36) NOT NULL,
+  `legal_entity_name` varchar(250) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Triggers `legal_entity_name`
+--
+DELIMITER $$
+CREATE TRIGGER `generate_legal_entity_id` BEFORE INSERT ON `legal_entity_name` FOR EACH ROW BEGIN
+    SET NEW.legal_entity_id = UUID(); 
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `merchant`
 --
 
@@ -91,13 +114,6 @@ CREATE TABLE `merchant` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `merchant`
---
-
-INSERT INTO `merchant` (`merchant_id`, `merchant_name`, `merchant_partnership_type`, `business_address`, `email_address`, `created_at`, `updated_at`) VALUES
-('3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Angel\'s Pizza', 'Primary', 'Somewhere St.', 'angelspizza@gmail.com', '2024-05-28 07:16:32', '2024-05-28 07:16:32');
-
 -- --------------------------------------------------------
 
 --
@@ -110,7 +126,7 @@ CREATE TABLE `offer` (
   `offer_name` varchar(100) NOT NULL,
   `offer_details` text NOT NULL,
   `offer_quantity` int(11) NOT NULL,
-  `voucher_price` decimal(10,2) NOT NULL,
+  `offer_price` decimal(10,2) NOT NULL,
   `promo_code` varchar(100) NOT NULL,
   `promo_type` enum('Booky','Gcash','Unionbank') NOT NULL,
   `vat_type` enum('Vat Inc','Vat Ex') NOT NULL,
@@ -118,13 +134,6 @@ CREATE TABLE `offer` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `offer`
---
-
-INSERT INTO `offer` (`offer_id`, `merchant_id`, `offer_name`, `offer_details`, `offer_quantity`, `voucher_price`, `promo_code`, `promo_type`, `vat_type`, `commission_rate`, `created_at`, `updated_at`) VALUES
-('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B1T1 Pizza', 'Buy 1 Take 1 Pizza', 50, '500.00', 'ANGELB1T1', 'Gcash', 'Vat Inc', '5.0000', '2024-05-28 07:24:22', '2024-05-28 07:24:22');
 
 --
 -- Triggers `offer`
@@ -171,24 +180,13 @@ DELIMITER ;
 
 CREATE TABLE `pg_fee_rate` (
   `pg_fee_id` varchar(36) NOT NULL,
-  `merchant_id` varchar(36) NOT NULL,
-  `mode_of_payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya','lead gen') NOT NULL,
+  `mode_of_payment` enum('cod','Paymaya','Gcash','Gcash_miniapp','Card Payment','Maya_checkout') NOT NULL,
   `rate` decimal(6,4) NOT NULL,
   `effective_date` date NOT NULL,
   `status` enum('Active','Expired') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pg_fee_rate`
---
-
-INSERT INTO `pg_fee_rate` (`pg_fee_id`, `merchant_id`, `mode_of_payment`, `rate`, `effective_date`, `status`, `created_at`, `updated_at`) VALUES
-('02f361d3-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'gcash_miniapp', '2.0000', '2024-05-01', 'Active', '2024-05-28 07:22:16', '2024-05-28 07:22:16'),
-('42b4eda5-1cc5-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'gcash', '6.0000', '2024-05-28', 'Active', '2024-05-28 07:38:22', '2024-05-28 07:38:22'),
-('dd887e2d-1cc2-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'paymaya_credit_card', '2.5000', '2024-05-01', 'Active', '2024-05-28 07:21:13', '2024-05-28 07:21:13'),
-('f24a467d-1cc2-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'gcash', '2.0000', '2024-05-01', 'Expired', '2024-05-28 07:21:48', '2024-05-28 07:21:48');
 
 --
 -- Triggers `pg_fee_rate`
@@ -209,19 +207,12 @@ DELIMITER ;
 CREATE TABLE `store` (
   `store_id` varchar(36) NOT NULL,
   `merchant_id` varchar(36) NOT NULL,
-  `legal_entity_name` varchar(100) NOT NULL,
+  `legal_entity_id` varchar(36) NOT NULL,
   `store_name` varchar(100) NOT NULL,
   `store_address` varchar(250) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `store`
---
-
-INSERT INTO `store` (`store_id`, `merchant_id`, `legal_entity_name`, `store_name`, `store_address`, `created_at`, `updated_at`) VALUES
-('8946759b-1cc2-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Angel Legal Name', 'Angel\'s Pizza - Mandaluyong', 'Anywhere St.', '2024-05-28 07:18:52', '2024-05-28 07:18:52');
 
 -- --------------------------------------------------------
 
@@ -235,20 +226,16 @@ CREATE TABLE `transaction` (
   `offer_id` varchar(36) NOT NULL,
   `customer_id` varchar(36) NOT NULL,
   `customer_name` varchar(100) NOT NULL,
+  `claim_id` varchar(36) NOT NULL,
   `transaction_date` datetime NOT NULL,
   `gross_sales` decimal(10,2) NOT NULL,
-  `mode_of_payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya','lead gen') NOT NULL,
+  `voucher_price` decimal(10,2) NOT NULL,
+  `mode_of_payment` enum('cod','gcash','gcash_miniapp','maya','maya_checkout','maya_credit_card','paymaya') NOT NULL,
   `payment_status` enum('success','disbursed') NOT NULL,
+  `pg_fee_id` varchar(36) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `transaction`
---
-
-INSERT INTO `transaction` (`transaction_id`, `store_id`, `offer_id`, `customer_id`, `customer_name`, `transaction_date`, `gross_sales`, `mode_of_payment`, `payment_status`, `created_at`, `updated_at`) VALUES
-('8d1552bf-1cc3-11ef-8abb-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'customer123', 'Person A', '2024-05-28 09:25:43', '1000.00', 'gcash', 'success', '2024-05-28 07:26:08', '2024-05-28 07:26:08');
 
 -- --------------------------------------------------------
 
@@ -344,6 +331,12 @@ ALTER TABLE `category_history`
   ADD KEY `merchant_id` (`merchant_id`);
 
 --
+-- Indexes for table `legal_entity_name`
+--
+ALTER TABLE `legal_entity_name`
+  ADD PRIMARY KEY (`legal_entity_id`);
+
+--
 -- Indexes for table `merchant`
 --
 ALTER TABLE `merchant`
@@ -367,15 +360,15 @@ ALTER TABLE `offer_renewal`
 -- Indexes for table `pg_fee_rate`
 --
 ALTER TABLE `pg_fee_rate`
-  ADD PRIMARY KEY (`pg_fee_id`),
-  ADD KEY `pg_fee_rate_ibfk_1` (`merchant_id`);
+  ADD PRIMARY KEY (`pg_fee_id`);
 
 --
 -- Indexes for table `store`
 --
 ALTER TABLE `store`
   ADD PRIMARY KEY (`store_id`),
-  ADD KEY `merchant_id` (`merchant_id`);
+  ADD KEY `merchant_id` (`merchant_id`),
+  ADD KEY `store_ibfk_2` (`legal_entity_id`);
 
 --
 -- Indexes for table `transaction`
@@ -383,7 +376,8 @@ ALTER TABLE `store`
 ALTER TABLE `transaction`
   ADD PRIMARY KEY (`transaction_id`),
   ADD KEY `store_id` (`store_id`),
-  ADD KEY `offer_id` (`offer_id`);
+  ADD KEY `offer_id` (`offer_id`),
+  ADD KEY `pg_fee_id` (`pg_fee_id`);
 
 --
 -- Indexes for table `user`
@@ -420,23 +414,19 @@ ALTER TABLE `offer_renewal`
   ADD CONSTRAINT `offer_renewal_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`);
 
 --
--- Constraints for table `pg_fee_rate`
---
-ALTER TABLE `pg_fee_rate`
-  ADD CONSTRAINT `pg_fee_rate_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
-
---
 -- Constraints for table `store`
 --
 ALTER TABLE `store`
-  ADD CONSTRAINT `store_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
+  ADD CONSTRAINT `store_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`),
+  ADD CONSTRAINT `store_ibfk_2` FOREIGN KEY (`legal_entity_id`) REFERENCES `legal_entity_name` (`legal_entity_id`);
 
 --
 -- Constraints for table `transaction`
 --
 ALTER TABLE `transaction`
   ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
-  ADD CONSTRAINT `transaction_ibfk_2` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`);
+  ADD CONSTRAINT `transaction_ibfk_2` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`),
+  ADD CONSTRAINT `transaction_ibfk_3` FOREIGN KEY (`pg_fee_id`) REFERENCES `pg_fee_rate` (`pg_fee_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
