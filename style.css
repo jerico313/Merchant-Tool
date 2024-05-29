@@ -18,7 +18,7 @@
   padding:30px;
   align-items: center;
 }
-  
+
 .dropdown-menu li a {
   width: auto;
   display: block;
@@ -133,6 +133,13 @@ th{
   border-radius: 20px;
   cursor: pointer;
   margin-top:15px;
+}
+
+.gcash{
+  color:#fff;
+  width:150px !important;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 .upload-btn {
@@ -309,4 +316,19 @@ li.paginate_button.page-item{
 td{
   background-color:transparent !important;
   border-bottom: 1px solid #808080 !important;
+}
+
+th.month{
+  background-color: transparent !important;
+  color:#E96529 !important;
+}
+
+th.prev.available{
+  background-color: transparent !important;
+  color:#E96529 !important;
+}
+
+th.next.available{
+  background-color: transparent !important;
+  color:#E96529 !important;
 }

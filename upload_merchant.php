@@ -166,7 +166,7 @@
                                 </div>
                             </div>
                             <div class="mb-3" style="text-align:right;">
-                                <button type="button" class="btn btn-danger remove-field">Remove</button>
+                                <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
                             </div>
                         </div>
                     </div>
@@ -236,7 +236,7 @@
                                 </div>
                             </div>
                             <div class="mb-3" style="text-align:right;">
-                                <button type="button" class="btn btn-danger remove-field">Remove</button>
+                                <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
                             </div>
                         </div>
         `;
