@@ -52,6 +52,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a></li>
                         <li><a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                        <li><a class="dropdown-item" href="activity_history.php"><i class="fa-solid fa-bell"></i> Activity History</a></li>
                     </ul>
                 </li>
             </ul>
