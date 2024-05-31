@@ -1,9 +1,10 @@
 <?php include("header.php")?>
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
+$store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
-function displayOffers($merchant_id) {
+function displayOffers($merchant_id, $merchant_name) {
     include("inc/config.php");
 
     $sql = "SELECT * FROM offer WHERE merchant_id = ?";
@@ -14,18 +15,19 @@ function displayOffers($merchant_id) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             echo "<tr>";
             echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['offer_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['offer_details'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['offer_quantity'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_price'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['voucher_price'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_type'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['vat_type'] . "</td>";
-            echo "<td style='text-align:center;'>" . ($row['commission_rate'] * 100) . "%" . "</td>";
+            echo "<td style='text-align:center;'>" . $row['commission_rate'] . "</td>";
             echo "<td style='text-align:center;'>";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['offer_id'] . "\")'>View History</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['offer_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['offer_id'] . "\")'>View History</button> ";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['offer_id'] . "\")'>Renew</button> ";
             echo "</td>";
             echo "</tr>";
@@ -34,12 +36,11 @@ function displayOffers($merchant_id) {
 
     $conn->close();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
@@ -180,7 +181,7 @@ function displayOffers($merchant_id) {
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
-                    <?php displayOffers($merchant_id); ?>
+                    <?php displayOffers($merchant_id, $merchant_name); ?>
                     </tbody>
                 </table>
             </div>
@@ -201,6 +202,10 @@ $(document).ready(function() {
         scrollX: true
     });
 });
+
+function viewHistory(storeId, merchantName, offerId) {
+    window.location.href = 'history.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&offer_id=' + encodeURIComponent(offerId);
+}
 </script>
 </body>
 </html>

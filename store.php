@@ -6,12 +6,10 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 function displayStore($merchant_id) {
     include("inc/config.php");
 
-    $sql = "SELECT store.*, legal_entity_name.legal_entity_name, merchant.merchant_name
-    FROM store
-    JOIN legal_entity_name ON store.legal_entity_id = legal_entity_name.legal_entity_id
-    JOIN merchant ON store.merchant_id = merchant.merchant_id
-    WHERE store.merchant_id = ?
-    ";
+    $sql = "SELECT store.*, merchant.merchant_name
+            FROM store
+            JOIN merchant ON store.merchant_id = merchant.merchant_id
+            WHERE store.merchant_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -23,7 +21,7 @@ function displayStore($merchant_id) {
             echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['store_id'] . "'></center></td>";
             echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>"; // Assuming legal_entity_name is a column in store table now
             echo "<td style='text-align:center;'>" . $row['store_address'] . "</td>";
             echo "<td style='text-align:center;'>";
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');

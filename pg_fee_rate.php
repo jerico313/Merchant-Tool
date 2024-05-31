@@ -1,5 +1,22 @@
 <?php require_once("header.php")?>
+
 <?php
+function updateStatus() {
+  include("inc/config.php");
+
+  // Update status to 'Expired' where end date is today or in the past
+  $sqlExpired = "UPDATE pg_fee_rate SET status = 'Expired' WHERE effective_date < CURDATE()";
+  $stmtExpired = $conn->prepare($sqlExpired);
+  $stmtExpired->execute();
+
+  // Update status to 'Active' where end date is in the future
+  $sqlActive = "UPDATE pg_fee_rate SET status = 'Active' WHERE effective_date >= CURDATE()";
+  $stmtActive = $conn->prepare($sqlActive);
+  $stmtActive->execute();
+
+  $conn->close();
+}
+
 function displayPGFeeRate() {
   include("inc/config.php");
 
@@ -7,21 +24,23 @@ function displayPGFeeRate() {
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
-      $count = 1;
       while ($row = $result->fetch_assoc()) {
           echo "<tr data-id='" . $row['pg_fee_id'] . "'>";
           echo "<td>" . $row['pg_fee_id'] . "</td>";
-          echo "<td>" . $row['payment_method'] . "</td>";
+          echo "<td>" . $row['merchant_id'] . "</td>";
+          echo "<td>" . $row['mode_of_payment'] . "</td>";
           echo "<td>" . $row['rate'] . "</td>";
           echo "<td>" . $row['effective_date'] . "</td>";
-          echo "<td>" . $row['created_at'] . "</td>";
+          $statusColor = $row['status'] == 'Active' ? '#95DD59' : '#E8C0AE';
+          echo "<td><center><div style='background-color: $statusColor !important; padding: 2px; border-radius: 20px;width:70px;'>" . $row['status'] . "</div></center></td>";
           echo "</tr>";
-          $count++;
       }
   }
 
   $conn->close();
 }
+
+updateStatus();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -173,10 +192,11 @@ function displayPGFeeRate() {
 </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-        <table id="example" class="table bord">
+        <table id="example" class="table bord" style="width:100%;">
         <thead>
             <tr>
                 <th>PG Fee ID</th>
+                <th>Merchant Name</th>
                 <th>Mode of Payment</th>
                 <th>PG Fee Rate</th>
                 <th>Effective Date</th>
@@ -194,5 +214,16 @@ function displayPGFeeRate() {
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script src="./js/script.js"></script>
+<script>
+$(document).ready(function() {
+    if ($.fn.DataTable.isDataTable('#example')) {
+        $('#example').DataTable().destroy();
+    }
+    
+    $('#example').DataTable({
+        scrollX: true
+    });
+});
+</script>
 </body>
 </html>

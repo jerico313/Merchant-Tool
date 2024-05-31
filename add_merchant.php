@@ -14,13 +14,14 @@ if ($conn->connect_error) {
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare and bind SQL statement
-    $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, business_address, email_address) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $merchant_id, $merchant_name, $merchant_type, $business_address, $email_address);
+    $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, merchant_type, business_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $merchant_id, $merchant_name, $merchant_partnership_type, $merchant_type, $business_address, $email_address);
 
     // Set parameters and execute
     foreach ($_POST['merchant_id'] as $key => $value) {
         $merchant_id = $_POST['merchant_id'][$key];
         $merchant_name = $_POST['merchant_name'][$key];
+        $merchant_partnership_type = $_POST['merchant_partnership_type'][$key];
         $merchant_type = $_POST['merchant_type'][$key];
         $business_address = $_POST['business_address'][$key];
         $email_address = $_POST['email_address'][$key];

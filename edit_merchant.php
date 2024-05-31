@@ -2,27 +2,24 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("inc/config.php");
 
-    // Retrieve the form data
-    $storeId = $_POST['storeId'];
-    $storeName = $_POST['storeName'];
-    $storeAddress = $_POST['storeAddress'];
     $merchantId = $_POST['merchantId'];
+    $merchantName = $_POST['merchantName'];
+    $merchantPartnershipType = $_POST['merchantPartnershipType'];
+    $merchantType = $_POST['merchantType'];
+    $businessAddress = $_POST['businessAddress'];
+    $emailAddress = $_POST['emailAddress'];
 
-    // Prepare the SQL statement
-    $stmt = $conn->prepare("UPDATE store SET store_name=?, legal_entity_name=? WHERE store_id=?");
-    $stmt->bind_param("ssss", $storeName, $legalEntityName, $storeId);
+    $stmt = $conn->prepare("UPDATE merchant SET merchant_name=?, merchant_partnership_type=?, merchant_type=?,business_address=?, email_address=? WHERE merchant_id=?");
+    $stmt->bind_param("ssssss", $merchantName, $merchantPartnershipType, $merchantType, $businessAddress, $emailAddress, $merchantId);
 
-    // Execute the statement and check for errors
     if ($stmt->execute()) {
-        // Redirect to the merchant page with the merchant_id after a successful update
-        header("Location: merchant.php?merchant_id=" . urlencode($merchantId));
+        // Redirect to the same page after successful update
+        header("Location: merchant.php");
         exit();
     } else {
-        // Output an error message if something goes wrong
         echo "Error updating record: " . $stmt->error;
     }
 
-    // Close the statement and connection
     $stmt->close();
     $conn->close();
 }

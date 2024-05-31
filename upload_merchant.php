@@ -147,15 +147,23 @@
                                     <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
-                                    <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
-                                        <option value="">-- Select Merchant Type --</option>
+                                    <label for="merchant_partnership_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Partnership Type</label>
+                                    <select class="form-select" id="merchant_partnership_type" name="merchant_partnership_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
+                                        <option value="">-- Select Merchant Partnership Type --</option>
                                         <option value="Primary">Primary</option>
                                         <option value="Secondary">Secondary</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
+                            <div class="mb-3">
+                                    <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
+                                    <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
+                                        <option value="">-- Select Merchant Type --</option>
+                                        <option value="Grab & Go">Grab & Go</option>
+                                        <option value="Casual Dining">Casual Dining</option>
+                                    </select>
+                                </div>
                                 <div class="mb-3">
                                     <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
                                     <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
@@ -164,6 +172,7 @@
                                     <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
                                     <input type="text" class="form-control" name="email_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
                                 </div>
+                                
                             </div>
                             <div class="mb-3" style="text-align:right;">
                                 <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
@@ -217,8 +226,8 @@
                                     <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
-                                    <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
+                                    <label for="merchant_partnership_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
+                                    <select class="form-select" id="merchant_partnership_type" name="merchant_partnership_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
                                         <option value="">-- Select Merchant Type --</option>
                                         <option value="Primary">Primary</option>
                                         <option value="Secondary">Secondary</option>
@@ -226,6 +235,14 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
+                            <div class="mb-3">
+                                    <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
+                                    <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
+                                        <option value="">-- Select Merchant Type --</option>
+                                        <option value="Grab & Go">Grab & Go</option>
+                                        <option value="Casual Dining">Casual Dining</option>
+                                    </select>
+                                </div>
                                 <div class="mb-3">
                                     <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
                                     <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>

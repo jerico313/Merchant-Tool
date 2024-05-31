@@ -14,6 +14,7 @@ function displayMerchant() {
           echo "<td style='text-align:center;'>" . $row['merchant_id'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_partnership_type'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['merchant_type'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['business_address'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['email_address'] . "</td>";
           echo "<td style='text-align:center;'>";
@@ -93,7 +94,9 @@ function displayMerchant() {
                 <th><center><input type="checkbox" style="accent-color:#E96529;" class="store-checkbox" id="checkAll"></center></th>
                 <th>Merchant ID</th>
                 <th style="width:20%;">Merchant Name</th>
+                <th>Merchant Partnership Type</th>
                 <th>Merchant Type</th>
+                
                 <th>Business Address</th>
                 <th>Email Address</th>
                 <th>Action</th>
@@ -123,10 +126,17 @@ function displayMerchant() {
             <input type="text" class="form-control" id="merchantName" name="merchantName">
           </div>
           <div class="mb-3">
-              <label for="merchantType" class="form-label">Merchant Type</label>
-              <select class="form-select" id="merchantType" name="merchantType">
+              <label for="merchantPartnershipType" class="form-label">Merchant Partnership Type</label>
+              <select class="form-select" id="merchantPartnershipType" name="merchantPartnershipType">
                 <option value="Primary">Primary</option>
                 <option value="Secondary">Secondary</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="merchantType" class="form-label">Merchant Type</label>
+              <select class="form-select" id="merchantType" name="merchantType">
+              <option value="Grab & Go">Grab & Go</option>
+              <option value="Casual Dining">Casual Dining</option>
               </select>
             </div>
           <div class="mb-3">
@@ -187,13 +197,15 @@ function editMerchant(merchantUuid) {
     // Fetch the current data of the selected merchant
     var merchantRow = $('#dynamicTableBody').find('tr[data-uuid="' + merchantUuid + '"]');
     var merchantName = merchantRow.find('td:nth-child(3)').text();
-    var merchantType = merchantRow.find('td:nth-child(4)').text();
-    var businessAddress = merchantRow.find('td:nth-child(5)').text();
-    var emailAddress = merchantRow.find('td:nth-child(6)').text();
+    var merchantPartnershipType = merchantRow.find('td:nth-child(4)').text();
+    var merchantType = merchantRow.find('td:nth-child(5)').text();
+    var businessAddress = merchantRow.find('td:nth-child(6)').text();
+    var emailAddress = merchantRow.find('td:nth-child(7)').text();
 
     // Set values in the edit modal
     $('#merchantId').val(merchantUuid);
     $('#merchantName').val(merchantName);
+    $('#merchantPartnershipType').val(merchantPartnershipType);
     $('#merchantType').val(merchantType);
     $('#businessAddress').val(businessAddress);
     $('#emailAddress').val(emailAddress);

@@ -169,11 +169,11 @@ function displayPGFeeRate() {
   <div class="sub" style="text-align:left;">
   
   <div class="add-btns">
-    <p class="title"><i class="fa-solid fa-bell fa-sm"></i> Activity History</p>
+    <p class="title"><i class="fa-solid fa-user-clock fa-sm"></i> Activity History</p>
 </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-        <table id="example" class="table bord">
+        <table id="example" class="table bord" style="width:100%;">
         <thead>
             <tr>
                 <th>Activity ID</th>
@@ -181,7 +181,7 @@ function displayPGFeeRate() {
                 <th>Table Name</th>
                 <th>Table ID</th>
                 <th>Activity Type</th>
-                <th>Description</th>
+                <th style="width:30%;">Description</th>
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
@@ -195,5 +195,17 @@ function displayPGFeeRate() {
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script src="./js/script.js"></script>
+<script>
+  $(document).ready(function() {
+    if ($.fn.DataTable.isDataTable('#example')) {
+        $('#example').DataTable().destroy();
+    }
+    
+    $('#example').DataTable({
+        scrollX: true
+    });
+});
+
+</script>
 </body>
 </html>
