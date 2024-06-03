@@ -216,7 +216,7 @@ function editMerchant(merchantUuid) {
 </script>
 <script>
 function viewMerchant(merchantId, merchantName) {
-    window.location.href = '../store/index.php?merchant_id=' + encodeURIComponent(merchantId) + '&merchant_name=' + encodeURIComponent(merchantName);
+    window.location.href = 'store/index.php?merchant_id=' + encodeURIComponent(merchantId) + '&merchant_name=' + encodeURIComponent(merchantName);
 }
 </script>
 </body>

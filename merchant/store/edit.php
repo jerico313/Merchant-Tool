@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include("inc/config.php");
+    include("../../inc/config.php");
 
     // Retrieve the form data
     $storeId = $_POST['storeId'];
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Execute the statement and check for errors
     if ($stmt->execute()) {
         // Redirect to the store page with the merchant_id and merchant_name after a successful update
-        header("Location: store.php?merchant_id=" . urlencode($merchantId) . "&merchant_name=" . urlencode($merchantName));
+        header("Location: index.php?merchant_id=" . urlencode($merchantId) . "&merchant_name=" . urlencode($merchantName));
         exit();
     } else {
         // Output an error message if something goes wrong

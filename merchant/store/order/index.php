@@ -1,11 +1,11 @@
-<?php include("header.php")?>
+<?php include("../../../header.php")?>
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
 function displayOffers($merchant_id) {
-    include("inc/config.php");
+    include("../../../inc/config.php");
 
     $sql = "SELECT * FROM transaction WHERE store_id = ?";
     $stmt = $conn->prepare($sql);
@@ -45,10 +45,10 @@ function displayOffers($merchant_id) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../../style.css">
     <style>
         body {
-            background-image: url("images/bg_booky.png");
+            background-image: url("../../../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -144,8 +144,8 @@ function displayOffers($merchant_id) {
                 <div class="row pb-2 title" aria-label="breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="merchant.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
-                            <li class="breadcrumb-item"><a href="store.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
+                            <li class="breadcrumb-item"><a href="../../index.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
+                            <li class="breadcrumb-item"><a href="../index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
                             <li class="breadcrumb-item"><a href="#" onclick="location.reload();" style="color:#E96529; font-size:14px;">Transaction Details</a></li>
                         </ol>
                     </nav>
@@ -153,7 +153,7 @@ function displayOffers($merchant_id) {
                 </div>
                 <button type="button" class="btn btn-warning check-report mt-4">Coupled</button>
                 <button type="button" class="btn btn-warning add-merchant mt-4">Decoupled</button>
-                <button type="button" class="btn gcash mt-4" style="background-color:#007DFE !important; border:solid 2px #007DFE !important; display: flex;"><img src="images/gcash.png" style="width:25px; height:20px; margin-right: 1.80vw;" alt="gcash"><span>GCash</span></button>
+                <button type="button" class="btn gcash mt-4" style="background-color:#007DFE !important; border:solid 2px #007DFE !important; display: flex;"><img src="../../../images/gcash.png" style="width:25px; height:20px; margin-right: 1.80vw;" alt="gcash"><span>GCash</span></button>
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle mt-4" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="width:150px;margin-left:10px;border-radius:20px;height:32px;background-color: #E96529;border:solid #E96529 2px;">
                         Select Date Range
