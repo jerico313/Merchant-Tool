@@ -1,11 +1,11 @@
-<?php include("header.php")?>
+<?php include("../../header.php")?>
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $offer_id = isset($_GET['offer_id']) ? $_GET['offer_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
 function displayOfferHistory($offer_id, $merchant_name) {
-    include("inc/config.php");
+    include("../../inc/config.php");
 
     $sql = "SELECT * FROM offer_history WHERE offer_id = ?";
     $stmt = $conn->prepare($sql);
@@ -42,10 +42,10 @@ function displayOfferHistory($offer_id, $merchant_name) {
     <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
     <style>
         body {
-            background-image: url("images/bg_booky.png");
+            background-image: url("../../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -144,8 +144,8 @@ function displayOfferHistory($offer_id, $merchant_name) {
                 <div class="row pb-2 title" aria-label="breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="merchant.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
-                            <li class="breadcrumb-item"><a href="store.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
+                            <li class="breadcrumb-item"><a href="../index.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
+                            <li class="breadcrumb-item"><a href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
                             <li class="breadcrumb-item"><a href="#" onclick="location.reload();" style="color:#E96529; font-size:14px;">History</a></li>
                         </ol>
                     </nav>
