@@ -35,10 +35,10 @@
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
-                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/merchant/index.php"  style="padding-right:10px;padding-left:10px;">Merchant</a>
+                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/merchant/index.php"  style="padding-right:10px;padding-left:10px;">Merchants</a>
                 </li>
                 <li class="nav-item">
-                    <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/transaction.php" style="padding-right:10px;padding-left:10px;">Transaction</a>
+                    <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/transaction.php" style="padding-right:10px;padding-left:10px;">Transactions</a>
                 </li>
                 <li class="nav-item">
                     <a id="pg-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/pg_fee_rate.php" style="padding-right:10px;padding-left:10px;">Payment Gateway</a>

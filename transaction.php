@@ -180,7 +180,7 @@ function displayOrder() {
   <div class="custom-box pt-4">
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
-        <p class="title">Transaction</p>
+        <p class="title">Transactions</p>
         <!-- Form to upload file -->
         
         <a href="upload_transaction.php"><button type="button" class="btn btn-secondary check-report"><i class="fa-solid fa-upload"></i> Upload Orders</button></a>
