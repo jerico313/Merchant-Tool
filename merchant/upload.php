@@ -1,4 +1,4 @@
-<?php include("header.php")?>
+<?php include("../header.php")?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +12,10 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <style>
         body {
-            background-image: url("images/bg_booky.png");
+            background-image: url("../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -92,14 +92,14 @@
 
 <div class="cont-box">
     <div class="custom-box pt-4">
-        <a href="merchant.php">
+        <a href="index.php">
             <p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p>
         </a>
         <div class="upload" style="text-align:left;">
             <div class="add-btns">
                 <p class="title">Upload Merchants</p>
                 <button type="button" class="btn btn-warning check-report" id="addMerchantBtn"><i class="fa-solid fa-plus"></i> Add New Merchant </button>
-                <form id="uploadForm" action="upload_merchant_process.php" method="post" enctype="multipart/form-data">
+                <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
             </div>
 
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -133,7 +133,7 @@
             </div>
 
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-            <form id="dynamic-form" action="add_merchant.php" method="POST">
+            <form id="dynamic-form" action="add.php" method="POST">
                 <div id="form-fields">
                     <div class="form-group">
                         <div class="row">

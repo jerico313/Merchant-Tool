@@ -1,7 +1,8 @@
-<?php include_once("header.php")?>
+<?php include_once("../header.php"); ?>
 <?php
 function displayMerchant() {
-  include("inc/config.php");
+  
+  include_once("../inc/config.php");
 
   $sql = "SELECT * FROM merchant";
   $result = $conn->query($sql);
@@ -44,11 +45,11 @@ function displayMerchant() {
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybB08pRA9KFNJ6i7rtCIL9W8IKOmG4CJoFtI03eZI7Ph9jGxi" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-mQ93qBRaUHnTwhWm6A98qE6pK6DdEDQNl7h4WBC5h85ibG/NHOoxuHV9r+lpazjl" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
 
   <style>
         body {
-      background-image: url("images/bg_booky.png");
+      background-image: url("../images/bg_booky.png");
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -84,7 +85,7 @@ function displayMerchant() {
   <div class="add-btns">
     <p class="title">Merchants</p>
     <button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
-    <a href="upload_merchant.php"><button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Merchant</button></a>
+    <a href="upload.php"><button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Merchant</button></a>
 </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -119,7 +120,7 @@ function displayMerchant() {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="editMerchantForm" action="edit_merchant.php" method="POST">
+        <form id="editMerchantForm" action="edit.php" method="POST">
           <input type="hidden" id="merchantId" name="merchantId">
           <div class="mb-3">
             <label for="merchantName" class="form-label">Merchant Name</label>

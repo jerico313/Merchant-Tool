@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include("inc/config.php");
+    include("../inc/config.php");
 
     $merchantId = $_POST['merchantId'];
     $merchantName = $_POST['merchantName'];
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         // Redirect to the same page after successful update
-        header("Location: merchant.php");
+        header("Location: index.php");
         exit();
     } else {
         echo "Error updating record: " . $stmt->error;
