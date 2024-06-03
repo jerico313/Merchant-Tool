@@ -65,7 +65,7 @@ updateStatus();
     }
 
     .title{
-      font-size: 30px; 
+      font-size: 40px; 
       font-weight: bold; 
       margin-right: auto; 
       padding-left: 5vh;

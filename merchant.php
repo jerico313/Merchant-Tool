@@ -56,7 +56,7 @@ function displayMerchant() {
     }
 
     .title{
-      font-size: 30px; 
+      font-size: 40px; 
       font-weight: bold; 
       margin-right: auto; 
       padding-left: 5vh;
@@ -160,7 +160,6 @@ function displayMerchant() {
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script src="./js/script.js"></script>
-<script src="./js/breadcrumbs.js"></script>
 <script>
   $(document).ready(function(){
     $('#checkAll').change(function(){

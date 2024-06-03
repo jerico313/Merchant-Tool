@@ -9,13 +9,11 @@ function displayPGFeeRate() {
   if ($result->num_rows > 0) {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
-          echo "<tr data-id='" . $row['activity_id'] . "'>";
-          echo "<td>" . $row['activity_id'] . "</td>";
-          echo "<td>" . $row['user_id'] . "</td>";
-          echo "<td>" . $row['table_name'] . "</td>";
-          echo "<td>" . $row['table_id'] . "</td>";
-          echo "<td>" . $row['activity_type'] . "</td>";
-          echo "<td>" . $row['description'] . "</td>";
+          echo "<tr data-id='" . $row['activity_id'] . "' class='message-row'>";
+          echo "<td class='message-cell'>" . $row['activity_id'] . "</td>";
+          echo "<td class='message-cell'>" . $row['user_id'] . "</td>";
+          echo "<td class='message-cell'>" . $row['table_id'] . "</td>";
+          echo "<td class='message-cell'>" . $row['activity_type'] . "</td>";
           echo "</tr>";
           $count++;
       }
@@ -178,10 +176,8 @@ function displayPGFeeRate() {
             <tr>
                 <th>Activity ID</th>
                 <th>User ID</th>
-                <th>Table Name</th>
                 <th>Table ID</th>
                 <th>Activity Type</th>
-                <th style="width:30%;">Description</th>
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
@@ -190,6 +186,19 @@ function displayPGFeeRate() {
     </table>
   </div>
 </div>
+</div>
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="modal-title" id="messageModalLabel" style="font-size:15px;font-weight:bold;">Activity History Details</p>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Message content will be dynamically populated here -->
+            </div>
+        </div>
+    </div>
 </div>
 <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
@@ -204,6 +213,35 @@ function displayPGFeeRate() {
     $('#example').DataTable({
         scrollX: true
     });
+});
+
+</script>
+<script>
+$(document).ready(function() {
+   // DataTable initialization code (already present in your code)
+
+   // Add click event to specific columns (1, 2, 3, and 4)
+   $('#example tbody').on('click', 'td:nth-child(1), td:nth-child(2), td:nth-child(3), td:nth-child(4)', function () {
+      // Access the row from the clicked cell
+      var row = $(this).closest('tr');
+      var activityId = row.data('id');
+      
+      // Fetch subject, message, and date using AJAX
+      $.ajax({
+         url: 'get_activity_history_details.php', // Replace with the actual PHP file to fetch details
+         method: 'POST',
+         data: { activityId: activityId },
+         success: function(response) {
+            // Display the subject, message, and date in the modal
+            $('#messageModal .modal-body').html(response);
+            $('#messageModal').modal('show');
+         },
+         error: function(error) {
+            console.log(error);
+            alert('Error: ' + error.statusText);
+         }
+      });
+   });
 });
 
 </script>

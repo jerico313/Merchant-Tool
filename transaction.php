@@ -18,7 +18,6 @@ function displayOrder() {
             echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['gross_sales'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['mode_of_payment'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['payment_status'] . "</td>";
           echo "</tr>";
           $count++;
       }
@@ -54,7 +53,7 @@ function displayOrder() {
     }
 
     .title{
-      font-size: 30px; 
+      font-size: 40px; 
       font-weight: bold; 
       margin-right: auto; 
       padding-left: 5vh;
@@ -189,7 +188,7 @@ function displayOrder() {
       </div>
       <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
         <div class="table-container">
-          <table id="example" class="table bord" style="width:250%;">
+          <table id="example" class="table bord" style="width:110%;">
             <thead>
               <tr>
               <th>Transaction ID</th>
@@ -200,7 +199,6 @@ function displayOrder() {
               <th>Transaction Date</th>
               <th>Gross Sale</th>
               <th>Mode of Payment</th>
-              <th>Payment Status</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -216,6 +214,7 @@ function displayOrder() {
 <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+<script src="./js/script.js"></script>
 
 <script>
   // JavaScript to display filename and preview

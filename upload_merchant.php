@@ -174,7 +174,7 @@
                                 </div>
                                 
                             </div>
-                            <div class="mb-3" style="text-align:right;">
+                            <div class="mb-3 mt-3" style="text-align:right;">
                                 <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
                             </div>
                         </div>
@@ -252,7 +252,7 @@
                                     <input type="text" class="form-control" name="email_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
                                 </div>
                             </div>
-                            <div class="mb-3" style="text-align:right;">
+                            <div class="mb-3 mt-3" style="text-align:right;">
                                 <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
                             </div>
                         </div>

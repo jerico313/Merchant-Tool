@@ -20,12 +20,10 @@ function displayOffers($merchant_id, $merchant_name) {
             echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['offer_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['offer_details'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_quantity'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['voucher_price'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['offer_details'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_type'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['vat_type'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['commission_rate'] . "</td>";
             echo "<td style='text-align:center;'>";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['offer_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['offer_id'] . "\")'>View History</button> ";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['offer_id'] . "\")'>Renew</button> ";
@@ -62,7 +60,7 @@ function displayOffers($merchant_id, $merchant_name) {
             font-weight: bold; 
             margin-right: auto; 
             padding-left: 5vh;
-            color: #E96529;
+            color: #4BB0B8;
         }
         .voucher-type {
             padding-bottom: 0px; 
@@ -159,10 +157,9 @@ function displayOffers($merchant_id, $merchant_name) {
                             </li>
                         </ol>
                     </nav>
-                    <p class="title_store" style="font-size:30px;"><?php echo htmlspecialchars($merchant_name); ?></p>
+                    <p class="title_store" style="font-size:40px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
-                <button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
-                <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Promo</button>
+                <button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Promo</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:120%;">
@@ -171,12 +168,10 @@ function displayOffers($merchant_id, $merchant_name) {
                             <th>Promo ID</th>
                             <th>Offer Name</th>
                             <th>Offer Details</th>
-                            <th>Offer Quantity</th>
-                            <th>Offer Price</th>
+                            <th>Offer Details</th>
                             <th>Promo Code</th>
                             <th>Promo Type</th>
                             <th>VAT Type</th>
-                            <th>Commission Rate</th>
                             <th style='width:200px;'>Action</th>
                         </tr>
                     </thead>

@@ -78,7 +78,7 @@ updateStatus($merchant_id);
             font-weight: bold; 
             margin-right: auto; 
             padding-left: 5vh;
-            color: #E96529;
+            color: #4BB0B8;
         }
         .voucher-type {
             padding-bottom: 0px; 
@@ -175,10 +175,9 @@ updateStatus($merchant_id);
                             </li>
                         </ol>
                     </nav>
-                    <p class="title_store" style="font-size:30px;"><?php echo htmlspecialchars($merchant_name); ?></p>
+                    <p class="title_store" style="font-size:40px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
-                <button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
-                <button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Category</button>
+                <button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Category</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:100%;">

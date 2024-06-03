@@ -7,7 +7,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 function displayOfferHistory($offer_id, $merchant_name) {
     include("inc/config.php");
 
-    $sql = "SELECT * FROM offer_renewal WHERE offer_id = ?";
+    $sql = "SELECT * FROM offer_history WHERE offer_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $offer_id);
     $stmt->execute();
