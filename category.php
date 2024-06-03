@@ -161,20 +161,21 @@ updateStatus($merchant_id);
         <div class="sub" style="text-align:left;">
             <div class="voucher-type">
                 <div class="row pb-2 title" aria-label="breadcrumb">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="merchant.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
-                            <li class="breadcrumb-item dropdown">
-                                <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E96529;font-size:14px;">
-                                Category
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                    <li><a class="dropdown-item" href="store.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Store</a></li>
-                                    <li><a class="dropdown-item" href="offer.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Promo</a></li>
-                                </ul>
-                            </li>
-                        </ol>
-                    </nav>
+                <nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
+        <li class="breadcrumb-item"><a href="merchant.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
+        <li class="breadcrumb-item dropdown">
+            <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E96529;font-size:14px;">
+                Category
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="storeDropdown">
+                <li><a class="dropdown-item" href="merchant/store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Store">Store</a></li>
+                <li><a class="dropdown-item" href="offer.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Promo</a></li>
+            </ul>
+        </li>
+    </ol>
+</nav>
+
                     <p class="title_store" style="font-size:40px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
                 <button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Category</button>
