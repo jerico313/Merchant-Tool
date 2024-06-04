@@ -1,7 +1,7 @@
 <?php
 // Include the configuration file
-require_once("header.php");
-require_once 'inc/config.php';
+require_once("../header.php");
+require_once '../inc/config.php';
 
 // Create a database connection
 $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
@@ -39,11 +39,11 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Upload Success</title>
     <style>
         body {
-            background-image: url("images/bg_booky.png");
+            background-image: url("../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -108,11 +108,11 @@ $conn->close();
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
         <h2 style="padding-top:10px;color: #4caf50;">Successfully Added!</h2>
-        <a href="merchant.php"><button type="button" class="btn btn-secondary okay">Okay</button></a>
+        <a href="index.php"><button type="button" class="btn btn-secondary okay">Okay</button></a>
     </div>
     <script>
         setTimeout(function(){
-            window.location.href = 'merchant.php';
+            window.location.href = 'index.php';
         }, 3000); // Delay for 3 seconds (3000 milliseconds)
     </script>
 </body>

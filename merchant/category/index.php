@@ -1,13 +1,31 @@
-<?php include("header.php")?>
+<?php include("../../header.php")?>
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
-$store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
-function displayOffers($merchant_id, $merchant_name) {
-    include("inc/config.php");
+function updateStatus($merchant_id) {
+    include("../../inc/config.php");
 
-    $sql = "SELECT * FROM offer WHERE merchant_id = ?";
+    // Update status to 'Expired' where end date is today or in the past
+    $sqlExpired = "UPDATE category_history SET status = 'Expired' WHERE merchant_id = ? AND end_date <= CURDATE()";
+    $stmtExpired = $conn->prepare($sqlExpired);
+    $stmtExpired->bind_param("s", $merchant_id);
+    $stmtExpired->execute();
+
+    // Update status to 'Active' where end date is in the future
+    $sqlActive = "UPDATE category_history SET status = 'Active' WHERE merchant_id = ? AND end_date > CURDATE()";
+    $stmtActive = $conn->prepare($sqlActive);
+    $stmtActive->bind_param("s", $merchant_id);
+    $stmtActive->execute();
+
+    $conn->close();
+}
+
+function displayCategory($merchant_id) {
+    include("../../inc/config.php");
+
+    // Display categories
+    $sql = "SELECT * FROM category_history WHERE merchant_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -15,30 +33,30 @@ function displayOffers($merchant_id, $merchant_name) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             echo "<tr>";
-            echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_details'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_details'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_type'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['vat_type'] . "</td>";
-            echo "<td style='text-align:center;'>";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['offer_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['offer_id'] . "\")'>View History</button> ";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['offer_id'] . "\")'>Renew</button> ";
-            echo "</td>";
+            echo "<td style='text-align:center;'>" . $row['category_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['category_name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
+            $statusColor = $row['status'] == 'Active' ? '#95DD59' : '#E8C0AE';
+            echo "<td><center><div style='background-color: $statusColor !important; padding: 2px; border-radius: 20px;width:70px;'>" . $row['status'] . "</div></center></td>";
             echo "</tr>";
         }
     }
 
     $conn->close();
 }
+
+// Call the function to update status first
+updateStatus($merchant_id);
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
@@ -46,10 +64,10 @@ function displayOffers($merchant_id, $merchant_name) {
     <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
     <style>
         body {
-            background-image: url("images/bg_booky.png");
+            background-image: url("../../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -145,38 +163,35 @@ function displayOffers($merchant_id, $merchant_name) {
                 <div class="row pb-2 title" aria-label="breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="merchant.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
+                            <li class="breadcrumb-item"><a href="../index.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
                             <li class="breadcrumb-item dropdown">
                                 <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E96529;font-size:14px;">
-                                Promo
+                                Category
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                    <li><a class="dropdown-item" href="store.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Store</a></li>
-                                    <li><a class="dropdown-item" href="category.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Category">Category</a></li>
+                                    <li><a class="dropdown-item" href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Store</a></li>
+                                    <li><a class="dropdown-item" href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Promo</a></li>
                                 </ul>
                             </li>
                         </ol>
                     </nav>
                     <p class="title_store" style="font-size:40px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
-                <button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Promo</button>
+                <button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Category</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                <table id="example" class="table bord" style="width:120%;">
+                <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>Promo ID</th>
-                            <th>Offer Name</th>
-                            <th>Offer Details</th>
-                            <th>Offer Details</th>
-                            <th>Promo Code</th>
-                            <th>Promo Type</th>
-                            <th>VAT Type</th>
-                            <th style='width:200px;'>Action</th>
+                            <th>Category ID</th>
+                            <th>Category Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
-                    <?php displayOffers($merchant_id, $merchant_name); ?>
+                    <?php displayCategory($merchant_id); ?>
                     </tbody>
                 </table>
             </div>
@@ -189,6 +204,23 @@ function displayOffers($merchant_id, $merchant_name) {
 <script src="./js/script.js"></script>
 <script>
 $(document).ready(function() {
+    $('#checkAll').change(function() {
+        $('.store-checkbox').prop('checked', $(this).prop('checked'));
+        toggleCheckReportButton();
+    });
+
+    $('.store-checkbox').change(function() {
+        toggleCheckReportButton();
+    });
+
+    function toggleCheckReportButton() {
+        if ($('.store-checkbox:checked').length > 0) {
+            $('.check-report').show();
+        } else {
+            $('.check-report').hide();
+        }
+    }
+
     if ($.fn.DataTable.isDataTable('#example')) {
         $('#example').DataTable().destroy();
     }
@@ -197,10 +229,6 @@ $(document).ready(function() {
         scrollX: true
     });
 });
-
-function viewHistory(storeId, merchantName, offerId) {
-    window.location.href = 'history.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&offer_id=' + encodeURIComponent(offerId);
-}
 </script>
 </body>
 </html>
