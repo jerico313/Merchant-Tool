@@ -57,7 +57,7 @@ function displayMerchant() {
     }
 
     .title{
-      font-size: 40px; 
+      font-size: 30px; 
       font-weight: bold; 
       margin-right: auto; 
       padding-left: 5vh;
@@ -81,18 +81,18 @@ function displayMerchant() {
         right: 0;
         z-index: 2;
         background-color: #F1F1F1 !important;
-        box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
-        -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
-        -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
+        box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+        -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+        -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
     }
 
     table thead th:last-child {
       position: sticky !important; 
       right: 0;
       z-index: 2;
-      box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
-      -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
-      -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
+      box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+      -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+      -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
     }
   </style>
 </head>

@@ -3,11 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/booky1.png" type="image/x-icon" />
+    <link rel="icon" href="/Merchant-Tool/images/booky1.png" type="image/x-icon" />
     <title>Merchant Settlement Tool</title>
     <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
     <style>      
       .navbar a {
@@ -20,13 +23,19 @@
         border-radius: 30px !important;
       } 
       
+      
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark p-3">
     <div class="container-fluid">
         <a class="navbar-brand" href="order.php">
-            <span class="navbar-brand mb-0 mr-2 h1 fs-2" style="font-weight:900 !important;color:#fff;">booky</span>
+        <table style="border:10px;">
+        <tr>
+        <th style="font-weight:900 !important;color:#fff;font-size:23px !important;padding-top:1px;">booky <span style="font-size:25px;font-weight:normal;">|</span></td>
+        <th style="font-size:13px;padding-top:4px;font-family: Nanum Gothic">&nbsp; LEADGEN</td>
+        </tr>
+        </table>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -35,7 +44,7 @@
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
-                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="merchant/index.php"  style="padding-right:10px;padding-left:10px;">Merchant</a>
+                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/merchant/index.php"  style="padding-right:10px;padding-left:10px;">Merchant</a>
                 </li>
                 <li class="nav-item">
                     <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/transaction.php" style="padding-right:10px;padding-left:10px;">Transactions</a>
@@ -52,7 +61,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a></li>
                         <li><a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-                        <li><a class="dropdown-item" href="../../../activity_history.php"><i class="fa-solid fa-user-clock"></i>  Activity History</a></li>
+                        <li><a class="dropdown-item" href="/Merchant-Tool/activity_history.php"><i class="fa-solid fa-user-clock"></i>  Activity History</a></li>
                     </ul>
                 </li>
             </ul>
@@ -71,7 +80,7 @@
         var pgLink = document.getElementById('pg-link');
 
         // Set the active class based on the current page
-        if (currentPage.includes('merchant/index.php') || currentPage.includes('store/index.php') || currentPage.includes('merchant/upload.php') || currentPage.includes('merchant/upload_process.php') || currentPage.includes('order/index.php') || currentPage.includes('promo/index.php') || currentPage.includes('category.php') || currentPage.includes('order/index.php')) {
+        if (currentPage.includes('merchant/') || currentPage.includes('merchant/index.php') || currentPage.includes('store/index.php') || currentPage.includes('merchant/upload.php') || currentPage.includes('merchant/upload_process.php') || currentPage.includes('order/index.php') || currentPage.includes('promo/index.php') || currentPage.includes('category.php') || currentPage.includes('order/index.php')) {
             ordersLink.classList.add('active_nav');
         } else if (currentPage.includes('transaction.php') || currentPage.includes('upload_transaction.php') || currentPage.includes('upload_transaction_process.php')) {
             merchantsLink.classList.add('active_nav');

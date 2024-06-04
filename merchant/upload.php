@@ -67,25 +67,14 @@
             font-size: 13px;
         }
 
-        .or {
-            width: 100%;
-            text-align: center;
-            border-bottom: 1px solid #000;
-            line-height: 0.1em;
-            margin: 10px 0 20px;
-        }
 
-        .table-container {
+
+        .file-preview {
             overflow-x: auto;
             margin-left: auto;
             margin-right: auto;
         }
         
-        hr {
-            border: 0;
-            height: 1px;
-            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-        }
     </style>
 </head>
 <body>
@@ -193,9 +182,8 @@
 <div class="alert-custom alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
     <i class="fa-solid fa-circle-exclamation"></i> Please choose a file to upload!
 </div>
+
 <script src="../js/file_upload.js"></script>
-<script>
-</script>
 <script>
     // Add event listeners to buttons
     document.getElementById('addMerchantBtn').addEventListener('click', function () {

@@ -3,6 +3,7 @@
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 
 function displayOffers($merchant_id) {
     include("../../../inc/config.php");
@@ -149,7 +150,7 @@ function displayOffers($merchant_id) {
                             <li class="breadcrumb-item"><a href="#" onclick="location.reload();" style="color:#E96529; font-size:14px;">Transaction Details</a></li>
                         </ol>
                     </nav>
-                    <p class="title_store" style="font-size:40px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
+                    <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($store_name); ?></p>
                 </div>
                 <button type="button" class="btn btn-warning check-report mt-4">Coupled</button>
                 <button type="button" class="btn btn-warning add-merchant mt-4">Decoupled</button>

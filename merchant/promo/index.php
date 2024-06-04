@@ -75,18 +75,18 @@ function displayOffers($merchant_id, $merchant_name) {
         right: 0;
         z-index: 2;
         background-color: #F1F1F1 !important;
-        box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
-        -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
-        -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
+        box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+        -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+        -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
     }
 
     table thead th:last-child {
       position: sticky !important; 
       right: 0;
       z-index: 2;
-      box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
-      -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
-      -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
+      box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+      -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+      -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
     }
         @media only screen and (max-width: 767px) {
             table,
@@ -177,7 +177,7 @@ function displayOffers($merchant_id, $merchant_name) {
                             </li>
                         </ol>
                     </nav>
-                    <p class="title_store" style="font-size:40px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
+                    <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
                 <button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Promo</button>
             </div>
