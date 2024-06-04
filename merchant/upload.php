@@ -112,6 +112,7 @@
                     here </label>
                 <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
                 <div class="uploadfile" style="text-align:right;">
+                    <button type="button" class="btn btn-danger clear" id="clearButton">Clear</button>
                     <button type="submit" class="btn btn-secondary upload_file" id="submitButton">Submit</button>
                     <div class="loading" id="loadingIndicator"><i class="fas fa-spinner fa-spin"></i> Loading...
                     </div>
@@ -192,7 +193,9 @@
 <div class="alert-custom alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
     <i class="fa-solid fa-circle-exclamation"></i> Please choose a file to upload!
 </div>
-<script src="./js/file_upload.js"></script>
+<script src="../js/file_upload.js"></script>
+<script>
+</script>
 <script>
     // Add event listeners to buttons
     document.getElementById('addMerchantBtn').addEventListener('click', function () {
@@ -209,6 +212,8 @@
         // Trigger input event to generate form for default value
         document.getElementById('MerchantNum').dispatchEvent(new Event('input'));
     });
+
+    
 
     document.getElementById('add-field').addEventListener('click', function() {
         var formFields = document.getElementById('form-fields');

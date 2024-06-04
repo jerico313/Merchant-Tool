@@ -1,11 +1,11 @@
-<?php include("header.php")?>
+<?php include("../../header.php")?>
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
 function displayOffers($merchant_id, $merchant_name) {
-    include("inc/config.php");
+    include("../../inc/config.php");
 
     $sql = "SELECT * FROM offer WHERE merchant_id = ?";
     $stmt = $conn->prepare($sql);
@@ -46,10 +46,10 @@ function displayOffers($merchant_id, $merchant_name) {
     <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
     <style>
         body {
-            background-image: url("images/bg_booky.png");
+            background-image: url("../../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -68,6 +68,26 @@ function displayOffers($merchant_id, $merchant_name) {
             display: flex; 
             align-items: center;
         }
+
+        table.dataTable tbody th:last-child,
+    table.dataTable tbody td:last-child {
+        position: sticky;
+        right: 0;
+        z-index: 2;
+        background-color: #F1F1F1 !important;
+        box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
+        -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
+        -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
+    }
+
+    table thead th:last-child {
+      position: sticky !important; 
+      right: 0;
+      z-index: 2;
+      box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
+      -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
+      -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.29);
+    }
         @media only screen and (max-width: 767px) {
             table,
             thead,
@@ -145,14 +165,14 @@ function displayOffers($merchant_id, $merchant_name) {
                 <div class="row pb-2 title" aria-label="breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="merchant.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
+                            <li class="breadcrumb-item"><a href="../index.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
                             <li class="breadcrumb-item dropdown">
                                 <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E96529;font-size:14px;">
                                 Promo
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                    <li><a class="dropdown-item" href="store.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Store</a></li>
-                                    <li><a class="dropdown-item" href="category.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Category">Category</a></li>
+                                    <li><a class="dropdown-item" href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Store</a></li>
+                                    <li><a class="dropdown-item" href="../category/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Category">Category</a></li>
                                 </ul>
                             </li>
                         </ol>
@@ -172,7 +192,7 @@ function displayOffers($merchant_id, $merchant_name) {
                             <th>Promo Code</th>
                             <th>Promo Type</th>
                             <th>VAT Type</th>
-                            <th style='width:200px;'>Action</th>
+                            <th style='width:150px;'>Action</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">

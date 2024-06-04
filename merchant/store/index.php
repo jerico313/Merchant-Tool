@@ -151,8 +151,8 @@ function displayStore($merchant_id) {
                                 Store
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                    <li><a class="dropdown-item" href="offer.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Promo</a></li>
-                                    <li><a class="dropdown-item" href="category.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">Category</a></li>
+                                    <li><a class="dropdown-item" href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Promo</a></li>
+                                    <li><a class="dropdown-item" href="../category/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">Category</a></li>
                                 </ul>
                             </li>
                         </ol>
@@ -160,7 +160,7 @@ function displayStore($merchant_id) {
                     <p class="title_store" style="font-size:40px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
                 <button type="button" class="btn btn-warning check-report mt-4" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
-                <button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Store</button>
+                <a href="upload.php"><button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Store</button></a>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:100%;">
@@ -198,6 +198,10 @@ function displayStore($merchant_id) {
     <div class="mb-3">
         <label for="storeName" class="form-label">Store Name</label>
         <input type="text" class="form-control" id="storeName" name="storeName">
+    </div>
+    <div class="mb-3">
+        <label for="legalEntityName" class="form-label">Legal Entity Name</label>
+        <input type="text" class="form-control" id="legalEntityName" name="legalEntityName">
     </div>
     <div class="mb-3">
         <label for="storeAddress" class="form-label">Store Address</label>
@@ -244,6 +248,7 @@ function editStore(storeId) {
     // Fetch the current data of the selected store
     var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
     var storeName = storeRow.find('td:nth-child(3)').text();
+    var legalEntityName = storeRow.find('td:nth-child(4)').text();
     var storeAddress = storeRow.find('td:nth-child(5)').text();
     var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>"; // Set from PHP
     var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; // Set from PHP
@@ -252,6 +257,7 @@ function editStore(storeId) {
     $('#storeId').val(storeId);
     $('#storeName').val(storeName);
     $('#storeAddress').val(storeAddress);
+    $('#legalEntityName').val(legalEntityName);
     $('#merchantId').val(merchantId);
     $('#merchantName').val(merchantName);
 

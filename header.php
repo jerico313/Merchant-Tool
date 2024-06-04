@@ -35,7 +35,7 @@
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
-                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="merchant.php"  style="padding-right:10px;padding-left:10px;">Merchant</a>
+                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="merchant/index.php"  style="padding-right:10px;padding-left:10px;">Merchant</a>
                 </li>
                 <li class="nav-item">
                     <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/transaction.php" style="padding-right:10px;padding-left:10px;">Transactions</a>
@@ -52,7 +52,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a></li>
                         <li><a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-                        <li><a class="dropdown-item" href="activity_history.php"><i class="fa-solid fa-bell"></i> Activity History</a></li>
+                        <li><a class="dropdown-item" href="../../../activity_history.php"><i class="fa-solid fa-user-clock"></i>  Activity History</a></li>
                     </ul>
                 </li>
             </ul>
@@ -71,7 +71,7 @@
         var pgLink = document.getElementById('pg-link');
 
         // Set the active class based on the current page
-        if (currentPage.includes('merchant.php') || currentPage.includes('store.php') || currentPage.includes('upload_merchant.php') || currentPage.includes('upload_merchant_process.php') || currentPage.includes('store.php') || currentPage.includes('offer.php') || currentPage.includes('category.php') || currentPage.includes('orders.php')) {
+        if (currentPage.includes('merchant/index.php') || currentPage.includes('store/index.php') || currentPage.includes('merchant/upload.php') || currentPage.includes('merchant/upload_process.php') || currentPage.includes('order/index.php') || currentPage.includes('promo/index.php') || currentPage.includes('category.php') || currentPage.includes('order/index.php')) {
             ordersLink.classList.add('active_nav');
         } else if (currentPage.includes('transaction.php') || currentPage.includes('upload_transaction.php') || currentPage.includes('upload_transaction_process.php')) {
             merchantsLink.classList.add('active_nav');

@@ -10,10 +10,10 @@ function displayPGFeeRate() {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
           echo "<tr data-id='" . $row['activity_id'] . "' class='message-row'>";
-          echo "<td class='message-cell'>" . $row['activity_id'] . "</td>";
-          echo "<td class='message-cell'>" . $row['user_id'] . "</td>";
-          echo "<td class='message-cell'>" . $row['table_id'] . "</td>";
-          echo "<td class='message-cell'>" . $row['activity_type'] . "</td>";
+          echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_id'] . "</td>";
+          echo "<td class='message-cell' style='text-align:center;'>" . $row['user_id'] . "</td>";
+          echo "<td class='message-cell' style='text-align:center;'>" . $row['table_id'] . "</td>";
+          echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_type'] . "</td>";
           echo "</tr>";
           $count++;
       }
@@ -57,6 +57,12 @@ function displayPGFeeRate() {
       padding-right: 5vh; 
       display: flex; 
       align-items: center;
+    }
+
+    tr:hover {
+    background-color:#e0e0e0 !important;
+    color:white !important;
+    cursor:pointer;
     }
 
     @media only screen and (max-width: 767px) {
@@ -189,7 +195,7 @@ function displayPGFeeRate() {
 </div>
 <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content" style="border-radius:20px;">
             <div class="modal-header">
                 <p class="modal-title" id="messageModalLabel" style="font-size:15px;font-weight:bold;">Activity History Details</p>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
