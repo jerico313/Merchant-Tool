@@ -67,6 +67,7 @@ CREATE TABLE `fee` (
   `merchant_id` varchar(36) NOT NULL,
   `paymaya_credit_card` decimal(4,2) NOT NULL,
   `paymaya` decimal(4,2) NOT NULL,
+  `paymaya` decimal(4,2) NOT NULL,
   `gcash` decimal(4,2) NOT NULL,
   `gcash_miniapp` decimal(4,2) NOT NULL,
   `maya_checkout` decimal(4,2) NOT NULL,
@@ -83,10 +84,26 @@ CREATE TABLE `fee` (
 
 INSERT INTO `fee` (`fee_id`, `merchant_id`, `paymaya_credit_card`, `paymaya`, `gcash`, `gcash_miniapp`, `maya_checkout`, `maya`, `lead_gen_commission`, `commission_type`, `created_at`, `updated_at`) VALUES
 ('02f361d3-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', '2.75', '2.50', '3.00', '3.00', '2.75', '2.50', '5.00', 'VAT Inc', '2024-05-28 07:22:16', '2024-06-04 04:34:38');
+INSERT INTO `fee` (`fee_id`, `merchant_id`, `paymaya_credit_card`, `paymaya`, `gcash`, `gcash_miniapp`, `maya_checkout`, `maya`, `lead_gen_commission`, `commission_type`, `created_at`, `updated_at`) VALUES
+('02f361d3-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', '2.75', '2.50', '3.00', '3.00', '2.75', '2.50', '5.00', 'VAT Inc', '2024-05-28 07:22:16', '2024-06-04 04:34:38');
 
 --
 -- Triggers `fee`
 --
+DELIMITER $$
+CREATE TRIGGER `before_insert_fee` BEFORE INSERT ON `fee` FOR EACH ROW BEGIN
+  SET NEW.maya_checkout = NEW.paymaya_credit_card;
+  SET NEW.paymaya = NEW.maya;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `before_update_fee` BEFORE UPDATE ON `fee` FOR EACH ROW BEGIN
+  SET NEW.maya_checkout = NEW.paymaya_credit_card;
+  SET NEW.paymaya = NEW.maya;
+END
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `before_insert_fee` BEFORE INSERT ON `fee` FOR EACH ROW BEGIN
   SET NEW.maya_checkout = NEW.paymaya_credit_card;
@@ -178,8 +195,14 @@ INSERT INTO `fee_history` (`fee_history_id`, `fee_id`, `column_name`, `old_value
 ('66638ca3-2241-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya', '2.00', '2.50', '2024-06-04', NULL),
 ('6c0f2a25-2310-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya', '2.00', '2.50', '2024-06-05', NULL),
 ('6c0f3167-2310-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'maya', '2.00', '2.50', '2024-06-05', NULL),
+('6c0f2a25-2310-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya', '2.00', '2.50', '2024-06-05', NULL),
+('6c0f3167-2310-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'maya', '2.00', '2.50', '2024-06-05', NULL),
 ('9469bad9-2241-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'lead_gen_commission', '10.00', '5.00', '2024-06-04', NULL),
 ('9469bebf-2241-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'commission_type', 'VAT Exc', 'VAT Inc', '2024-06-04', NULL),
+('b538bee7-224a-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya_credit_card', '2.00', '5.00', '2024-06-01', NULL),
+('f49f03e3-230f-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya_credit_card', '5.00', '2.75', '2024-06-05', NULL),
+('f49f1115-230f-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya', '2.50', '2.00', '2024-06-05', NULL),
+('f49f1af1-230f-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'maya_checkout', '2.00', '2.75', '2024-06-05', NULL);
 ('b538bee7-224a-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya_credit_card', '2.00', '5.00', '2024-06-01', NULL),
 ('f49f03e3-230f-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya_credit_card', '5.00', '2.75', '2024-06-05', NULL),
 ('f49f1115-230f-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya', '2.50', '2.00', '2024-06-05', NULL),
@@ -247,6 +270,7 @@ CREATE TABLE `promo` (
 
 INSERT INTO `promo` (`promo_id`, `merchant_id`, `promo_code`, `promo_amount`, `promo_type`, `promo_group`, `promo_details`, `start_date`, `end_date`, `billable_date`, `status`, `created_at`, `updated_at`) VALUES
 ('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', 100, 'Coupled', 'Gcash', 'Booky sample promo', '2024-04-01', '2024-05-31', '2024-06-04', 'Pre-trial', '2024-06-04 02:34:19', '2024-06-04 02:34:49');
+('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', 100, 'Coupled', 'Gcash', 'Booky sample promo', '2024-04-01', '2024-05-31', '2024-06-04', 'Pre-trial', '2024-06-04 02:34:19', '2024-06-04 02:34:49');
 
 --
 -- Triggers `promo`
@@ -292,11 +316,13 @@ CREATE TABLE `transaction` (
   `store_id` varchar(36) NOT NULL,
   `promo_id` varchar(36) NOT NULL,
   `customer_id` varchar(12) NOT NULL,
+  `customer_id` varchar(12) NOT NULL,
   `customer_name` varchar(100) DEFAULT NULL,
   `transaction_date` datetime NOT NULL,
   `gross_amount` decimal(10,2) NOT NULL,
   `discount` decimal(10,2) NOT NULL,
   `amount_discounted` decimal(10,2) NOT NULL,
+  `payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya','lead gen') NOT NULL,
   `payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya','lead gen') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -310,20 +336,29 @@ INSERT INTO `transaction` (`transaction_id`, `store_id`, `promo_id`, `customer_i
 ('1bc0f5fe-224b-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639121234345', 'Maria Demo', '2024-05-15 16:17:58', '20760.00', '5190.00', '15570.00', 'paymaya_credit_card', '2024-06-01 08:17:58', '2024-06-05 03:42:49'),
 ('8d1552bf-1cc3-11ef-8abb-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639123456789', 'Juan Person', '2024-05-28 09:25:43', '1484.00', '594.00', '890.00', 'gcash', '2024-05-28 07:26:08', '2024-05-28 07:26:08'),
 ('e881c2e7-224a-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639987654321', 'Anna Human', '2024-06-06 10:16:20', '15570.00', '3114.00', '12456.00', 'paymaya_credit_card', '2024-06-04 08:17:39', '2024-06-04 08:17:39');
+INSERT INTO `transaction` (`transaction_id`, `store_id`, `promo_id`, `customer_id`, `customer_name`, `transaction_date`, `gross_amount`, `discount`, `amount_discounted`, `payment`, `created_at`, `updated_at`) VALUES
+('1bc0f5fe-224b-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639121234345', 'Maria Demo', '2024-05-15 16:17:58', '20760.00', '5190.00', '15570.00', 'paymaya_credit_card', '2024-06-01 08:17:58', '2024-06-05 03:42:49'),
+('8d1552bf-1cc3-11ef-8abb-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639123456789', 'Juan Person', '2024-05-28 09:25:43', '1484.00', '594.00', '890.00', 'gcash', '2024-05-28 07:26:08', '2024-05-28 07:26:08'),
+('e881c2e7-224a-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639987654321', 'Anna Human', '2024-06-06 10:16:20', '15570.00', '3114.00', '12456.00', 'paymaya_credit_card', '2024-06-04 08:17:39', '2024-06-04 08:17:39');
 
 -- --------------------------------------------------------
 
 --
 -- Stand-in structure for view `transaction_summary_view`
+-- Stand-in structure for view `transaction_summary_view`
 -- (See below for the actual view)
 --
+CREATE TABLE `transaction_summary_view` (
+`Transaction ID` varchar(8)
 CREATE TABLE `transaction_summary_view` (
 `Transaction ID` varchar(8)
 ,`Transaction Date` datetime
 ,`Store Name` varchar(100)
 ,`Merchant Name` varchar(100)
 ,`Customer ID` varchar(12)
+,`Customer ID` varchar(12)
 ,`Customer Name` varchar(100)
+,`Promo ID` varchar(8)
 ,`Promo ID` varchar(8)
 ,`Promo Code` varchar(100)
 ,`Promo Group` enum('Booky','Gcash','Unionbank','Gcash/Booky','UB/Booky')
@@ -331,6 +366,14 @@ CREATE TABLE `transaction_summary_view` (
 ,`Gross Amount` decimal(10,2)
 ,`Discount` decimal(10,2)
 ,`Amount Discounted` decimal(10,2)
+,`Payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya','lead gen')
+,`Commission Type` varchar(50)
+,`Commission Rate` varchar(51)
+,`Commission Amount` double(19,2)
+,`Total Billing` double(19,2)
+,`PG Fee Rate` varchar(51)
+,`PG Fee Amount` double(19,2)
+,`Amount to be Disbursed` double(19,2)
 ,`Payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya','lead gen')
 ,`Commission Type` varchar(50)
 ,`Commission Rate` varchar(51)
@@ -427,7 +470,9 @@ DELIMITER ;
 
 --
 -- Structure for view `transaction_summary_view`
+-- Structure for view `transaction_summary_view`
 --
+DROP TABLE IF EXISTS `transaction_summary_view`;
 DROP TABLE IF EXISTS `transaction_summary_view`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transaction_summary_view`  AS SELECT substr(`t`.`transaction_id`,1,8) AS `Transaction ID`, `t`.`transaction_date` AS `Transaction Date`, `s`.`store_name` AS `Store Name`, `m`.`merchant_name` AS `Merchant Name`, `t`.`customer_id` AS `Customer ID`, `t`.`customer_name` AS `Customer Name`, substr(`p`.`promo_id`,1,8) AS `Promo ID`, `p`.`promo_code` AS `Promo Code`, `p`.`promo_group` AS `Promo Group`, `p`.`promo_type` AS `Promo Type`, `t`.`gross_amount` AS `Gross Amount`, `t`.`discount` AS `Discount`, `t`.`amount_discounted` AS `Amount Discounted`, `t`.`payment` AS `Payment`, coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) AS `Commission Type`, coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`lead_gen_commission`,'%')) AS `Commission Rate`, round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) AS `Commission Amount`, CASE WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) END AS `Total Billing`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya_credit_card`,'%'))) WHEN `t`.`payment` = 'gcash' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash`,'%'))) WHEN `t`.`payment` = 'gcash_miniapp' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash_miniapp`,'%'))) WHEN `t`.`payment` = 'paymaya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya`,'%'))) WHEN `t`.`payment` = 'maya_checkout' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya_checkout`,'%'))) WHEN `t`.`payment` = 'maya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya`,'%'))) END AS `PG Fee Rate`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) WHEN `t`.`payment` = 'gcash' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) WHEN `t`.`payment` = 'gcash_miniapp' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) WHEN `t`.`payment` = 'paymaya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) WHEN `t`.`payment` = 'maya_checkout' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) WHEN `t`.`payment` = 'maya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) END AS `PG Fee Amount`, round(`t`.`amount_discounted` - case when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) end - case when `t`.`payment` = 'paymaya_credit_card' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) when `t`.`payment` = 'gcash' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) when `t`.`payment` = 'gcash_miniapp' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) when `t`.`payment` = 'paymaya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) when `t`.`payment` = 'maya_checkout' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) when `t`.`payment` = 'maya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) end,2) AS `Amount to be Disbursed` FROM ((((`transaction` `t` join `store` `s` on(`t`.`store_id` = `s`.`store_id`)) join `merchant` `m` on(`m`.`merchant_id` = `s`.`merchant_id`)) join `promo` `p` on(`p`.`merchant_id` = `m`.`merchant_id`)) join `fee` `f` on(`f`.`merchant_id` = `m`.`merchant_id`)) ORDER BY `t`.`transaction_date` ASC  ;
