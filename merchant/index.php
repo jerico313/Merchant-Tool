@@ -10,9 +10,10 @@ function displayMerchant() {
   if ($result->num_rows > 0) {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
+          $shortMerchantId = substr($row['merchant_id'], 0, 8);
           echo "<tr data-uuid='" . $row['merchant_id'] . "'>";
           echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['merchant_id'] . "'></center></td>";
-          echo "<td style='text-align:center;'>" . $row['merchant_id'] . "</td>";
+          echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_partnership_type'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_type'] . "</td>";

@@ -7,7 +7,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 function displayOffers($merchant_id, $merchant_name) {
     include("../../inc/config.php");
 
-    $sql = "SELECT * FROM offer WHERE merchant_id = ?";
+    $sql = "SELECT * FROM promo WHERE merchant_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -17,16 +17,19 @@ function displayOffers($merchant_id, $merchant_name) {
         while ($row = $result->fetch_assoc()) {
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             echo "<tr>";
-            echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_details'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_details'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['promo_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['promo_amount'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_type'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['vat_type'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['promo_group'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['promo_details'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['billable_date'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['status'] . "</td>";
             echo "<td style='text-align:center;'>";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['offer_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['offer_id'] . "\")'>View History</button> ";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['offer_id'] . "\")'>Renew</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\")'>View History</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['promo_id'] . "\")'>Renew</button> ";
             echo "</td>";
             echo "</tr>";
         }
@@ -186,12 +189,15 @@ function displayOffers($merchant_id, $merchant_name) {
                     <thead>
                         <tr>
                             <th>Promo ID</th>
-                            <th>Offer Name</th>
-                            <th>Offer Details</th>
-                            <th>Offer Details</th>
                             <th>Promo Code</th>
+                            <th>Promo Amount</th>
                             <th>Promo Type</th>
-                            <th>VAT Type</th>
+                            <th>Promo Group</th>
+                            <th>Promo Details</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Billable Date</th>
+                            <th>Status</th>
                             <th style='width:150px;'>Action</th>
                         </tr>
                     </thead>

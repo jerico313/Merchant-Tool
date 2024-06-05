@@ -1,6 +1,6 @@
 <?php
-require_once("header.php");
-require_once("inc/config.php");
+require_once("../header.php");
+require_once("../inc/config.php");
 
 // Check if the file is uploaded
 if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != ''){
@@ -48,7 +48,7 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     <title>Upload Success</title>
     <style>
       body {
-      background-image: url("images/bg_booky.png");
+      background-image: url("../images/bg_booky.png");
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;

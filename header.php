@@ -24,7 +24,22 @@
         border-radius: 30px !important;
       } 
       
-      
+
+@keyframes roll {
+    0% { transform: translateX(0) rotate(0deg); }
+    20% { transform: translateX(50px) rotate(90deg); }
+    40% { transform: translateX(100px) rotate(180deg); }
+    60% { transform: translateX(150px) rotate(270deg); }
+    80% { transform: translateX(200px) rotate(360deg); }
+    100% { transform: translateX(0px) rotate(450deg); }
+}
+
+.animated-egg {
+    font-size: 15px;
+    color: #fff;
+    display: inline-block;
+    animation: roll 8s linear infinite;
+}
     </style>
 </head>
 <body>
@@ -34,7 +49,7 @@
         <table style="border:10px;">
         <tr>
         <th style="font-weight:900 !important;color:#fff;font-size:23px !important;padding-top:1px;">booky <span style="font-size:25px;font-weight:normal;">|</span></td>
-        <th style="font-size:13px;padding-top:4px;font-family: Nanum Gothic">&nbsp; LEADGEN <i class="fa-solid fa-egg"></i></td>
+        <th style="font-size:13px;padding-top:4px;font-family: Nanum Gothic">&nbsp; LEADGEN <i class="fa-solid fa-egg animated-egg"></i></td>
         </tr>
         </table>
         </a>
@@ -45,13 +60,13 @@
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto ">
                 <li class="nav-item">
-                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/merchant/index.php"  style="padding-right:10px;padding-left:10px;">Merchant</a>
+                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/merchant/"  style="padding-right:10px;padding-left:10px;">Merchant</a>
                 </li>
                 <li class="nav-item">
-                    <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/transaction.php" style="padding-right:10px;padding-left:10px;">Transactions</a>
+                    <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/transaction/" style="padding-right:10px;padding-left:10px;">Transactions</a>
                 </li>
                 <li class="nav-item">
-                    <a id="pg-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/pg_fee_rate.php" style="padding-right:10px;padding-left:10px;">Payment Gateway</a>
+                    <a id="pg-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/fee/" style="padding-right:10px;padding-left:10px;">Payment Gateway</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
@@ -62,7 +77,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="#"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a></li>
                         <li><a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-                        <li><a class="dropdown-item" href="/Merchant-Tool/activity_history.php"><i class="fa-solid fa-user-clock"></i>  Activity History</a></li>
+                        <li><a class="dropdown-item" href="/Merchant-Tool/activity_history/"><i class="fa-solid fa-user-clock"></i>  Activity History</a></li>
                     </ul>
                 </li>
             </ul>
@@ -83,9 +98,9 @@
         // Set the active class based on the current page
         if (currentPage.includes('merchant/') || currentPage.includes('merchant/index.php') || currentPage.includes('store/index.php') || currentPage.includes('merchant/upload.php') || currentPage.includes('merchant/upload_process.php') || currentPage.includes('order/index.php') || currentPage.includes('promo/index.php') || currentPage.includes('category.php') || currentPage.includes('order/index.php')) {
             ordersLink.classList.add('active_nav');
-        } else if (currentPage.includes('transaction.php') || currentPage.includes('upload_transaction.php') || currentPage.includes('upload_transaction_process.php')) {
+        } else if (currentPage.includes('transaction/') || currentPage.includes('transaction/upload_transaction.php') || currentPage.includes('upload_transaction_process.php')) {
             merchantsLink.classList.add('active_nav');
-        } else if (currentPage.includes('pg_fee_rate.php')) {
+        } else if (currentPage.includes('fee/')) {
             pgLink.classList.add('active_nav');
         }
 

@@ -17,9 +17,10 @@ function displayStore($merchant_id) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $shortStoreId = substr($row['store_id'], 0, 8);
             echo "<tr data-uuid='" . $row['store_id'] . "'>";
             echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['store_id'] . "'></center></td>";
-            echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
             echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>"; // Assuming legal_entity_name is a column in store table now
             echo "<td style='text-align:center;'>" . $row['store_address'] . "</td>";

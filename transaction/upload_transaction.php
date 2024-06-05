@@ -1,4 +1,4 @@
-<?php include_once("header.php")?>
+<?php include_once("../header.php")?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +11,10 @@
 <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../style.css">
 <style>
     body {
-      background-image: url("images/bg_booky.png");
+      background-image: url("../images/bg_booky.png");
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;

@@ -16,14 +16,19 @@ function displayOffers($merchant_id) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $shortTransactiontId = substr($row['transaction_id'], 0, 8);
+            $shortStoreId = substr($row['store_id'], 0, 8);
+            $shortPromoId = substr($row['promo_id'], 0, 8);
             echo "<tr>";
-            echo "<td style='text-align:center;'>" . $row['transaction_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $shortTransactiontId . "</td>";
+            echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
+            echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
             echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['gross_sales'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['gross_amount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['discount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['amount_discounted'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['mode_of_payment'] . "</td>";
             echo "</tr>";
         }
@@ -179,11 +184,13 @@ function displayOffers($merchant_id) {
                         <tr>
                             <th>Transaction ID</th>
                             <th>Store ID</th>
-                            <th>Offer ID</th>
+                            <th>Promo ID</th>
                             <th>Customer ID</th>
                             <th>Customer Name</th>
                             <th>Transaction Date</th>
-                            <th>Gross Sale</th>
+                            <th>Gross Amount</th>
+                            <th>Discount</th>
+                            <th>Amount Discounted</th>
                             <th>Mode of Payment</th>
                         </tr>
                     </thead>

@@ -1,5 +1,5 @@
 <?php
-require_once('inc/config.php');
+require_once('../inc/config.php');
 
 if (isset($_POST['activityId'])) {
     $activityId = $_POST['activityId'];
