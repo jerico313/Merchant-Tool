@@ -2,34 +2,33 @@
 require_once("../../header.php");
 require_once("../../inc/config.php");
 
-if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != ''){
+if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
     $file_name = $_FILES['fileToUpload']['name'];
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
+    $merchant_id = isset($_POST['merchant_id']) ? $_POST['merchant_id'] : '';
 
     $file_name_parts = explode('.', $_FILES['fileToUpload']['name']);
     $file_ext = strtolower(end($file_name_parts));
     $extensions = array("csv");
 
-    if(in_array($file_ext,$extensions) === false){
+    if (in_array($file_ext, $extensions) === false) {
         echo "Extension not allowed, please choose a CSV file.";
         exit();
     }
 
-    move_uploaded_file($file_tmp,"uploads/".$file_name);
+    move_uploaded_file($file_tmp, "uploads/" . $file_name);
 
     // Process CSV file and insert data into MySQL
-    $csvFile = "uploads/".$file_name;
+    $csvFile = "uploads/" . $file_name;
     $handle = fopen($csvFile, "r");
     $header = fgetcsv($handle); // Skip header row
 
-    // Prepare MySQL statement for the first table
+    // Prepare MySQL statement for the store table
     $stmt = $conn->prepare("INSERT INTO store (merchant_id, store_id, store_name, legal_entity_name, store_address) VALUES (?, ?, ?, ?, ?)");
 
-
     while (($data = fgetcsv($handle)) !== FALSE) {
-
-        // Insert into the first table
-        $stmt->bind_param("sssss", $data[0], $data[1], $data[2], $data[3], $data[4] );
+        // Bind parameters and execute the statement
+        $stmt->bind_param("sssss", $merchant_id, $data[0], $data[1], $data[2], $data[3]);
         $stmt->execute();
     }
 
@@ -42,7 +41,7 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     <title>Upload Success</title>
     <style>
         body {
-            background-image: url("../images/bg_booky.png");
+            background-image: url("../../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -107,11 +106,11 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
         <h2 style="padding-top:10px;color: #4caf50;">Successfully uploaded!</h2>
-        <a href="index.php"><button type="button" class="btn btn-secondary okay">Okay</button></a>
+        <a href="index.php?merchant_id=<?php echo $merchant_id; ?>"><button type="button" class="btn btn-secondary okay">Okay</button></a>
     </div>
     <script>
         setTimeout(function(){
-            window.location.href = 'index.php';
+            window.location.href = 'index.php?merchant_id=<?php echo $merchant_id; ?>';
         }, 3000); // Delay for 3 seconds (3000 milliseconds)
     </script>
 </body>
@@ -119,6 +118,6 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
 
 <?php
 } else {
-  echo "No file uploaded.";
+    echo "No file uploaded.";
 }
 ?>

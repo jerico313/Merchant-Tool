@@ -81,13 +81,18 @@
 
 <div class="cont-box">
     <div class="custom-box pt-4">
-        <a href="javascript:history.back()">
+    <a href="javascript:history.back()">
             <p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p>
         </a>
         <div class="upload" style="text-align:left;">
             <div class="add-btns">
                 <p class="title">Upload Stores</p>
+                <?php
+                $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
+                ?>
                 <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
+                    <!-- Hidden input for merchant_id -->
+                    <input type="hidden" name="merchant_id" value="<?php echo htmlspecialchars($merchant_id); ?>">
             </div>
 
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -114,10 +119,10 @@
             </div>
         </div>
 
-       
 <div class="alert-custom alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
     <i class="fa-solid fa-circle-exclamation"></i> Please choose a file to upload!
 </div>
 <script src="../../js/file_upload.js"></script>
 </body>
 </html>
+
