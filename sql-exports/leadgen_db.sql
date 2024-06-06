@@ -67,7 +67,6 @@ CREATE TABLE `fee` (
   `merchant_id` varchar(36) NOT NULL,
   `paymaya_credit_card` decimal(4,2) NOT NULL,
   `paymaya` decimal(4,2) NOT NULL,
-  `paymaya` decimal(4,2) NOT NULL,
   `gcash` decimal(4,2) NOT NULL,
   `gcash_miniapp` decimal(4,2) NOT NULL,
   `maya_checkout` decimal(4,2) NOT NULL,
