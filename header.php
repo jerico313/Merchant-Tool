@@ -45,11 +45,11 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark p-3">
     <div class="container-fluid">
-        <a class="navbar-brand" href="order.php">
+        <a class="navbar-brand" href="/Merchant-tool/merchant/">
         <table style="border:10px;">
         <tr>
-        <th style="font-weight:900 !important;color:#fff;font-size:23px !important;padding-top:1px;">booky <span style="font-size:25px;font-weight:normal;">|</span></td>
-        <th style="font-size:13px;padding-top:4px;font-family: Nanum Gothic">&nbsp; LEADGEN <i class="fa-solid fa-egg animated-egg"></i></td>
+        <th style="font-weight:900 !important;color:#fff;font-size:23px !important;padding-top:1px;">booky <span style="font-size:25px;font-weight:normal;">|</span></th>
+        <th style="font-size:13px;padding-top:4px;font-family: Nanum Gothic">&nbsp; LEADGEN <i class="fa-solid fa-egg animated-egg"></i><t/h>
         </tr>
         </table>
         </a>

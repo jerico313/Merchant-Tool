@@ -104,7 +104,7 @@ function displayMerchant() {
   
   <div class="add-btns">
     <p class="title">Merchants</p>
-    <button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
+    <a href="settlement_report.php"><button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button></a>
     <a href="upload.php"><button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Merchant</button></a>
 </div>
 

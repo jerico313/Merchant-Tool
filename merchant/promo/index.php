@@ -16,8 +16,9 @@ function displayOffers($merchant_id, $merchant_name) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
+            $shortPromoId = substr($row['promo_id'], 0, 8);
             echo "<tr>";
-            echo "<td style='text-align:center;'>" . $row['promo_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_amount'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_type'] . "</td>";

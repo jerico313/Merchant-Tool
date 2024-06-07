@@ -29,7 +29,7 @@ function displayOffers($merchant_id) {
             echo "<td style='text-align:center;'>" . $row['gross_amount'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['discount'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['amount_discounted'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['mode_of_payment'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
             echo "</tr>";
         }
     }
@@ -179,7 +179,7 @@ function displayOffers($merchant_id) {
                 </div>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                <table id="example" class="table bord" style="width:110%;">
+                <table id="example" class="table bord" style="width:120%;">
                     <thead>
                         <tr>
                             <th>Transaction ID</th>
@@ -191,7 +191,7 @@ function displayOffers($merchant_id) {
                             <th>Gross Amount</th>
                             <th>Discount</th>
                             <th>Amount Discounted</th>
-                            <th>Mode of Payment</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">

@@ -183,7 +183,7 @@ function displayPGFeeRate() {
         <thead>
             <tr>
                 <th>Fee ID</th>
-                <th>Merchant ID</th>
+                <th>Merchant Name</th>
                 <th>Paymaya Credit Card</th>
                 <th>GCash</th>
                 <th>GCash Miniapp</th>
@@ -212,7 +212,11 @@ $(document).ready(function() {
     }
     
     $('#example').DataTable({
-        scrollX: true
+        scrollX: true,
+        columnDefs: [
+          { orderable: false, targets: [ 2, 3, 4, 5, 6, 7, 8, 9] }    // Disable sorting for the first column
+        ],
+        order: []  // Ensure no initial ordering
     });
 });
 </script>
