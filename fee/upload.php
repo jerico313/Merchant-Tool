@@ -71,7 +71,7 @@
 <body>
 <div class="cont-box">
   <div class="custom-box pt-4">
-    <a href="transaction.php"><p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p></a>
+    <a href="index.php"><p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p></a>
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
         <p class="title">Upload PG Fee Rate</p>
