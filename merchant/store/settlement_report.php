@@ -1,3 +1,10 @@
+<?php
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
+$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
+$legal_entity_name = isset($_GET['legal_entity_name']) ? $_GET['legal_entity_name'] : '';
+$store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +33,7 @@
       box-shadow: 1px 2px 6px 2px rgba(0,0,0,0.50);
       -webkit-box-shadow: 1px 2px 6px 2px rgba(0,0,0,0.50);
       -moz-box-shadow: 1px 2px 6px 2px rgba(0,0,0,0.50);
-      height:1120px;
+      height:1100px;
       width:850px;
       margin-top:120px;
       margin-bottom:50px;
@@ -79,16 +86,16 @@
 </nav>
 
   
-  <div class="container" style="padding:70px;" id="container">
+  <div class="container" style="padding:70px;" id="content">
   <p style="text-align:center;font-size:20px;font-weight:900;">SETTLEMENT REPORT</p>
     <p class="text-right" style="font-weight:bold;font-size:40px;">
       <img src="../../images/booky2.png" alt="booky" width="150" height="50">
     </p>
     <div class="row">
       <div class="col-8">
-        <p>Business Name: <span style="margin-left:5px;font-weight:bold;">Epicurean Partners Exchange Inc.</span></p>
-        <p>Brand Name: <span style="margin-left:20px;font-weight:bold;">Kenny Rogers</span></p>
-        <p>Address: <span style="margin-left:40px;font-weight:bold;">10th Floor Lepanto Building Paseo De Roxas Bel-Air, Makati City</span></p>
+        <p>Business Name: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($legal_entity_name); ?></span></p>
+        <p>Brand Name: <span style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($store_name); ?></span></p>
+        <p>Address: <span style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($store_address); ?></span></p>
       </div>
       <div class="col-4">
         <p>Settlement Date: <span style="margin-left:25px;font-weight:bold;">June 30, 2023</span></p>
@@ -121,7 +128,7 @@
         <p style="padding-left:80px;">Commission fee rate</p>
         <p style="padding-left:80px;font-weight:bold;">Total</p>
       </div>
-      <div class="col pt-3 text-right" style="padding-right:90px;">
+      <div class="col text-right" style="padding-right:90px;">
         <p>.</p>
         <p>800.00</p>
         <p>10%</p>
@@ -139,7 +146,7 @@
         <p style="padding-left:80px;">GCash</p>
         <p style="padding-left:80px;font-weight:bold;">Total Payment Gateway Fees</p>
       </div>
-      <div class="col pt-3 text-right" style="padding-right:90px;">
+      <div class="col text-right" style="padding-right:90px;">
         <p style="font-weight:bold;">89.60 PHP</p>
         <p>.</p>
         <br>
@@ -163,7 +170,7 @@
         <br>
         <p style="font-weight:bold;">Total Amount Paid Out</p>
       </div>
-      <div class="col pt-3 text-right" style="padding-right:90px;">
+      <div class="col text-right" style="padding-right:90px;">
         <p>800.00 PHP</p>
         <p>89.60 PHP</p>
         <p>24.00 PHP</p>
@@ -183,16 +190,33 @@
     <p>San Rafael St. cor. Boni Avenue Bgy. Plainview Mandaluyong City 1550 Philippines</p>			
     <p>T: (632) 34917659	</p>	
   </div>
-  <script>
-  document.getElementById('downloadBtn').addEventListener('click', function () {
-    var container = document.getElementById('container');
-    var originalContents = document.body.innerHTML;
-    var printContents = container.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
+  <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js">
+    </script>
+
+<script>
+  const download_button = document.getElementById('downloadBtn');
+  const content = document.getElementById('content');
+
+  download_button.addEventListener('click', async function () {
+    // Set the filename dynamically based on the store name
+    const filename = '<?php echo htmlspecialchars($store_name) ?>.pdf';
+
+    try {
+      const opt = {
+        margin: [-1.5, -0.2, 0, 0], // Top, left, bottom, right margins
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      await html2pdf().set(opt).from(content).save();
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
   });
 </script>
+
 
 </body>
 </html>

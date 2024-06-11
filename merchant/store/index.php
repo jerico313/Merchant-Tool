@@ -27,8 +27,11 @@ function displayStore($merchant_id) {
             echo "<td style='text-align:center;'>";
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
             $escapedStoreName = htmlspecialchars($row['store_name'], ENT_QUOTES, 'UTF-8');
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")'>View</button> ";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
+            $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
+            $escapedStoreAddress = htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;padding:4px;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")'>View</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;padding:4px;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress. "\")'>Check Report</button> ";
             echo "</td>";
             echo "</tr>";
         }
@@ -174,7 +177,7 @@ function displayStore($merchant_id) {
                             <th>Store Name</th>
                             <th>Legal Entity Name</th>
                             <th>Store Address</th>
-                            <th style='width:200px;'>Action</th>
+                            <th style='width:280px;'>Action</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
@@ -185,7 +188,6 @@ function displayStore($merchant_id) {
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="editStoreModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="editStoreModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="border-radius:20px;">
@@ -271,6 +273,10 @@ function editStore(storeId) {
 <script>
 function viewOrder(storeId, merchantName, storeName) {
     window.location.href = 'order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
+}
+
+function checkReport(storeId, merchantName, storeName, legalEntityName, storeAddress) {
+    window.location.href = 'settlement_report.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&store_id=' + encodeURIComponent(storeId) + '&merchant_name=' + encodeURIComponent(merchantName) + '&store_name=' + encodeURIComponent(storeName) + '&legal_entity_name=' + encodeURIComponent(legalEntityName) + '&store_address=' + encodeURIComponent(storeAddress);
 }
 </script>
 </body>
