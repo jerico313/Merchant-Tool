@@ -1,10 +1,10 @@
     document.getElementById('fileToUpload').addEventListener('change', function () {
     const filenameElement = document.querySelector('.filename');
     const filename = this.files[0].name;
-    filenameElement.textContent = `Selected file: ${filename}`;
+    filenameElement.textContent = `${filename}`;
 
     // Preview the file content
-    const previewArea = document.querySelector('.file-preview .table-container');
+    const previewArea = document.querySelector('.file-preview');
     previewArea.innerHTML = ''; // Clear previous preview
     const file = this.files[0];
 
@@ -15,7 +15,7 @@
             complete: function(results) {
                 const data = results.data;
                 const table = document.createElement('table');
-                table.classList.add('table', 'table-bordered', 'table-striped', 'mt-3', 'mb-5', 'table-transparent', 'table-responsive');
+                table.classList.add('table', 'table-bordered', 'table-striped', 'mt-3', 'mb-5', 'table-transparent');
                 const thead = document.createElement('thead');
                 const tbody = document.createElement('tbody');
                 
@@ -100,6 +100,13 @@
         }, 8000); // 60000 milliseconds = 1 minute
     });
 
+    document.getElementById('clearButton').addEventListener('click', function() {
+        const fileInput = document.getElementById('fileToUpload');
+        fileInput.value = ''; // Clear file input
+        document.querySelector('.filename').textContent = ''; // Clear filename display
+        document.querySelector('.file-preview').innerHTML = ''; // Clear file preview
+    });
+    
     // JavaScript for drag and drop functionality
     const uploadBtn = document.getElementById('uploadBtn');
 
@@ -132,3 +139,5 @@
         const event = new Event('change');
         document.getElementById('fileToUpload').dispatchEvent(event);
     });
+
+    

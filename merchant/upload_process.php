@@ -1,6 +1,9 @@
 <?php
 require_once("../header.php");
 require_once("../inc/config.php");
+require_once '../vendor/autoload.php'; // Include the Composer autoload file
+
+use Ramsey\Uuid\Uuid;
 
 if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != ''){
     $file_name = $_FILES['fileToUpload']['name'];
@@ -17,36 +20,39 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
 
     move_uploaded_file($file_tmp,"uploads/".$file_name);
 
+    // Create a database connection
+    $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
     // Process CSV file and insert data into MySQL
     $csvFile = "uploads/".$file_name;
     $handle = fopen($csvFile, "r");
     $header = fgetcsv($handle); // Skip header row
 
     // Prepare MySQL statement for the first table
-    $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, business_address, email_address) VALUES (?, ?, ?, ?, ?)");
-
-    // Prepare MySQL statement for the second table
-    $stmt2 = $conn->prepare("INSERT INTO category_history (category_id, merchant_id, category_name, start_date, end_date, status) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, merchant_type, business_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
 
+        // Generate a UUID for merchant_id
+        $merchant_id = Uuid::uuid4()->toString();
+
         // Insert into the first table
-        $stmt->bind_param("sssss", $data[0], $data[1], $data[12], $data[17], $data[18]);
+        $stmt->bind_param("ssssss", $merchant_id, $data[0], $data[1], $data[2], $data[3], $data[4]);
         $stmt->execute();
-
-        // Generate a UUID for category_id
-        $category_id = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
-
-        // Format date from mm/dd/yyyy to yyyy-mm-dd
-        $start_date = !empty($data[13]) ? date('Y-m-d', strtotime($data[13])) : '';
-        $end_date = !empty($data[14]) ? date('Y-m-d', strtotime($data[14])) : '';
-
-        // Insert into the second table
-        $stmt2->bind_param("ssssss", $category_id, $data[0], $data[11], $start_date, $end_date, $data[19]);
-        $stmt2->execute();
     }
 
     fclose($handle);
+
+    // Close statements
+    $stmt->close();
+
+    // Close connection
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html>

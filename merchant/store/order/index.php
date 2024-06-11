@@ -3,6 +3,7 @@
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 
 function displayOffers($merchant_id) {
     include("../../../inc/config.php");
@@ -15,15 +16,20 @@ function displayOffers($merchant_id) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $shortTransactiontId = substr($row['transaction_id'], 0, 8);
+            $shortStoreId = substr($row['store_id'], 0, 8);
+            $shortPromoId = substr($row['promo_id'], 0, 8);
             echo "<tr>";
-            echo "<td style='text-align:center;'>" . $row['transaction_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $shortTransactiontId . "</td>";
+            echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
+            echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
             echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['gross_sales'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['mode_of_payment'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['gross_amount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['discount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['amount_discounted'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
             echo "</tr>";
         }
     }
@@ -149,7 +155,7 @@ function displayOffers($merchant_id) {
                             <li class="breadcrumb-item"><a href="#" onclick="location.reload();" style="color:#E96529; font-size:14px;">Transaction Details</a></li>
                         </ol>
                     </nav>
-                    <p class="title_store" style="font-size:40px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
+                    <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($store_name); ?></p>
                 </div>
                 <button type="button" class="btn btn-warning check-report mt-4">Coupled</button>
                 <button type="button" class="btn btn-warning add-merchant mt-4">Decoupled</button>
@@ -173,17 +179,19 @@ function displayOffers($merchant_id) {
                 </div>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                <table id="example" class="table bord" style="width:110%;">
+                <table id="example" class="table bord" style="width:120%;">
                     <thead>
                         <tr>
                             <th>Transaction ID</th>
                             <th>Store ID</th>
-                            <th>Offer ID</th>
+                            <th>Promo ID</th>
                             <th>Customer ID</th>
                             <th>Customer Name</th>
                             <th>Transaction Date</th>
-                            <th>Gross Sale</th>
-                            <th>Mode of Payment</th>
+                            <th>Gross Amount</th>
+                            <th>Discount</th>
+                            <th>Amount Discounted</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">

@@ -17,16 +17,21 @@ function displayStore($merchant_id) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $shortStoreId = substr($row['store_id'], 0, 8);
             echo "<tr data-uuid='" . $row['store_id'] . "'>";
             echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['store_id'] . "'></center></td>";
-            echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
             echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>"; // Assuming legal_entity_name is a column in store table now
             echo "<td style='text-align:center;'>" . $row['store_address'] . "</td>";
             echo "<td style='text-align:center;'>";
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
+            $escapedStoreName = htmlspecialchars($row['store_name'], ENT_QUOTES, 'UTF-8');
+            $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
+            $escapedStoreAddress = htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;padding:4px;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")'>View</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;padding:4px;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress. "\")'>Check Report</button> ";
             echo "</td>";
             echo "</tr>";
         }
@@ -157,10 +162,11 @@ function displayStore($merchant_id) {
                             </li>
                         </ol>
                     </nav>
-                    <p class="title_store" style="font-size:40px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
+                    <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
-                <button type="button" class="btn btn-warning check-report mt-4" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
-                <a href="upload_store.php"><button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Store</button></a>
+
+                <a href="settlement_report.php"><button type="button" class="btn btn-warning check-report mt-4" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button></a>
+                <a href="upload.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"><button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Store</button></a>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:100%;">
@@ -171,7 +177,7 @@ function displayStore($merchant_id) {
                             <th>Store Name</th>
                             <th>Legal Entity Name</th>
                             <th>Store Address</th>
-                            <th style='width:200px;'>Action</th>
+                            <th style='width:280px;'>Action</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
@@ -182,7 +188,6 @@ function displayStore($merchant_id) {
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="editStoreModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="editStoreModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="border-radius:20px;">
@@ -198,6 +203,10 @@ function displayStore($merchant_id) {
     <div class="mb-3">
         <label for="storeName" class="form-label">Store Name</label>
         <input type="text" class="form-control" id="storeName" name="storeName">
+    </div>
+    <div class="mb-3">
+        <label for="legalEntityName" class="form-label">Legal Entity Name</label>
+        <input type="text" class="form-control" id="legalEntityName" name="legalEntityName">
     </div>
     <div class="mb-3">
         <label for="storeAddress" class="form-label">Store Address</label>
@@ -244,6 +253,7 @@ function editStore(storeId) {
     // Fetch the current data of the selected store
     var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
     var storeName = storeRow.find('td:nth-child(3)').text();
+    var legalEntityName = storeRow.find('td:nth-child(4)').text();
     var storeAddress = storeRow.find('td:nth-child(5)').text();
     var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>"; // Set from PHP
     var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; // Set from PHP
@@ -252,6 +262,7 @@ function editStore(storeId) {
     $('#storeId').val(storeId);
     $('#storeName').val(storeName);
     $('#storeAddress').val(storeAddress);
+    $('#legalEntityName').val(legalEntityName);
     $('#merchantId').val(merchantId);
     $('#merchantName').val(merchantName);
 
@@ -260,9 +271,15 @@ function editStore(storeId) {
 }
 </script>
 <script>
-function viewOrder(storeId, merchantName) {
-    window.location.href = 'order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId);
+function viewOrder(storeId, merchantName, storeName) {
+    window.location.href = 'order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
+}
+
+function checkReport(storeId, merchantName, storeName, legalEntityName, storeAddress) {
+    window.location.href = 'settlement_report.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&store_id=' + encodeURIComponent(storeId) + '&merchant_name=' + encodeURIComponent(merchantName) + '&store_name=' + encodeURIComponent(storeName) + '&legal_entity_name=' + encodeURIComponent(legalEntityName) + '&store_address=' + encodeURIComponent(storeAddress);
 }
 </script>
 </body>
 </html>
+
+

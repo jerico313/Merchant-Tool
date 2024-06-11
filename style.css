@@ -124,6 +124,18 @@ th{
   margin-top:15px;
 }
 
+.clear{
+  display: inline-block;
+  color: black;
+  background-color: #E8C0AE;
+  border:solid  #E8C0AE 2px;
+  width:150px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top:15px;
+  margin-right:10px;
+}
+
 .add_merchant{
   display: inline-block;
   background-color: #4BB0B8;

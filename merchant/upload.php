@@ -67,25 +67,14 @@
             font-size: 13px;
         }
 
-        .or {
-            width: 100%;
-            text-align: center;
-            border-bottom: 1px solid #000;
-            line-height: 0.1em;
-            margin: 10px 0 20px;
-        }
 
-        .table-container {
+
+        .file-preview {
             overflow-x: auto;
             margin-left: auto;
             margin-right: auto;
         }
         
-        hr {
-            border: 0;
-            height: 1px;
-            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-        }
     </style>
 </head>
 <body>
@@ -112,6 +101,7 @@
                     here </label>
                 <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
                 <div class="uploadfile" style="text-align:right;">
+                    <button type="button" class="btn btn-danger clear" id="clearButton">Clear</button>
                     <button type="submit" class="btn btn-secondary upload_file" id="submitButton">Submit</button>
                     <div class="loading" id="loadingIndicator"><i class="fas fa-spinner fa-spin"></i> Loading...
                     </div>
@@ -139,10 +129,6 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
-                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
-                                </div>
-                                <div class="mb-3">
                                     <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
                                     <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
                                 </div>
@@ -154,9 +140,7 @@
                                         <option value="Secondary">Secondary</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                            <div class="mb-3">
+                                <div class="mb-3">
                                     <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
                                     <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
                                         <option value="">-- Select Merchant Type --</option>
@@ -164,6 +148,9 @@
                                         <option value="Casual Dining">Casual Dining</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                            
                                 <div class="mb-3">
                                     <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
                                     <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
@@ -192,7 +179,8 @@
 <div class="alert-custom alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
     <i class="fa-solid fa-circle-exclamation"></i> Please choose a file to upload!
 </div>
-<script src="./js/file_upload.js"></script>
+
+<script src="../js/file_upload.js"></script>
 <script>
     // Add event listeners to buttons
     document.getElementById('addMerchantBtn').addEventListener('click', function () {
@@ -210,6 +198,8 @@
         document.getElementById('MerchantNum').dispatchEvent(new Event('input'));
     });
 
+    
+
     document.getElementById('add-field').addEventListener('click', function() {
         var formFields = document.getElementById('form-fields');
         var newField = document.createElement('div');
@@ -217,10 +207,6 @@
         newField.innerHTML = `
         <div class="row">
                             <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
-                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
-                                </div>
                                 <div class="mb-3">
                                     <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
                                     <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
@@ -233,9 +219,7 @@
                                         <option value="Secondary">Secondary</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                            <div class="mb-3">
+                                <div class="mb-3">
                                     <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
                                     <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
                                         <option value="">-- Select Merchant Type --</option>
@@ -243,6 +227,9 @@
                                         <option value="Casual Dining">Casual Dining</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                            
                                 <div class="mb-3">
                                     <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
                                     <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>

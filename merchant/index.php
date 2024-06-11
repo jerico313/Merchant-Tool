@@ -10,11 +10,12 @@ function displayMerchant() {
   if ($result->num_rows > 0) {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
-          echo "<tr data-uuid='" . $row['merchant_id'] . "'>";
+          $shortMerchantId = substr($row['merchant_id'], 0, 8);
+          echo "<tr data-uuid='" . $row['merchant_id'] . "' data-partnership-type='" . strtolower($row['merchant_partnership_type']) . "'>";
           echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['merchant_id'] . "'></center></td>";
-          echo "<td style='text-align:center;'>" . $row['merchant_id'] . "</td>";
+          echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['merchant_partnership_type'] . "</td>";
+          echo "<td style='text-align:center;' class='partnership-type'>" . $row['merchant_partnership_type'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_type'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['business_address'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['email_address'] . "</td>";
@@ -48,7 +49,7 @@ function displayMerchant() {
   <link rel="stylesheet" href="../style.css">
 
   <style>
-        body {
+    body {
       background-image: url("../images/bg_booky.png");
       background-position: center;
       background-repeat: no-repeat;
@@ -56,25 +57,58 @@ function displayMerchant() {
       background-attachment: fixed;
     }
 
-    .title{
-      font-size: 40px; 
+    .title {
+      font-size: 30px; 
       font-weight: bold; 
       margin-right: auto; 
       padding-left: 5vh;
-      color: #E96529;"
+      color: #E96529;
     }
 
-    .add-btns{
+    .add-btns {
       padding-bottom: 0px; 
       padding-right: 5vh; 
       display: flex; 
       align-items: center;
     }
 
-    .modal-title{
-      font-size:15px;
+    .modal-title {
+      font-size: 15px;
     }
 
+    table.dataTable tbody th:last-child,
+    table.dataTable tbody td:last-child {
+        position: sticky;
+        right: 0;
+        z-index: 2;
+        background-color: #F1F1F1 !important;
+        box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+        -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+        -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+    }
+
+    table thead th:last-child {
+      position: sticky !important; 
+      right: 0;
+      z-index: 2;
+      box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+      -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+      -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+    }
+
+    select {
+      background: transparent;
+      border: 1px solid #ccc;
+      padding: 5px;
+      border-radius: 5px;
+      color: #333;
+      width:80px;
+    }
+
+    select:focus {
+      outline: none;
+      box-shadow: none;
+    }
   </style>
 </head>
 <body>
@@ -84,9 +118,9 @@ function displayMerchant() {
   
   <div class="add-btns">
     <p class="title">Merchants</p>
-    <button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
+    <a href="settlement_report.php"><button type="button" class="btn btn-warning check-report" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button></a>
     <a href="upload.php"><button type="button" class="btn btn-warning add-merchant"><i class="fa-solid fa-plus"></i> Add Merchant</button></a>
-</div>
+  </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
         <table id="example" class="table bord" style="width:110%;">
@@ -97,7 +131,6 @@ function displayMerchant() {
                 <th style="width:20%;">Merchant Name</th>
                 <th>Merchant Partnership Type</th>
                 <th>Merchant Type</th>
-                
                 <th>Business Address</th>
                 <th>Email Address</th>
                 <th>Action</th>
@@ -105,14 +138,13 @@ function displayMerchant() {
         </thead>
         <tbody id="dynamicTableBody">
         <?php displayMerchant(); ?>
-        <!-- Edit Modal -->        
         </tbody>
     </table>
   </div>
 </div>
 </div>
-        <!-- Edit Modal -->
-        <div class="modal fade" id="editMerchantModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="editMerchantModalLabel" aria-hidden="true">
+<!-- Edit Modal -->        
+<div class="modal fade" id="editMerchantModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="editMerchantModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="border-radius:20px;">
       <div class="modal-header border-0">
@@ -151,12 +183,13 @@ function displayMerchant() {
         
       </div>
       <div class="modal-footer border-0">
-        <button type="submit" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px; ">Save changes</button>
+        <button type="submit" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
       </div>
       </form>
     </div>
   </div>
 </div>
+
 <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
@@ -218,6 +251,21 @@ function editMerchant(merchantUuid) {
 function viewMerchant(merchantId, merchantName) {
     window.location.href = 'store/index.php?merchant_id=' + encodeURIComponent(merchantId) + '&merchant_name=' + encodeURIComponent(merchantName);
 }
+</script>
+<script>
+$(document).ready(function() {
+    if ($.fn.DataTable.isDataTable('#example')) {
+        $('#example').DataTable().destroy();
+    }
+    
+    $('#example').DataTable({
+        scrollX: true,
+        columnDefs: [
+          { orderable: false, targets: [ 3, 4] }    // Disable sorting for the first column
+        ],
+        order: []  // Ensure no initial ordering
+    });
+});
 </script>
 </body>
 </html>
