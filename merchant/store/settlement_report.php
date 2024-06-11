@@ -108,9 +108,9 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
       <div class="col">
         <p>Total Number of Successful Orders</p>
         <br>
-        <p>Total Restaurant Sales via Booky</p>
-        <p>Total Amount Already Received</p>
-        <p style="font-weight:bold;">Total Amount Outstanding Amount</p>
+        <p>Total Gross Sales</p>
+        <p>Total Discount</p>
+        <p style="font-weight:bold;">Totals Outstanding Amount</p>
       </div>
       <div class="col text-right">
         <p style="font-weight:bold;padding-right:80px;">34 order/s</p>
