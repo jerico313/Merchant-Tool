@@ -164,8 +164,7 @@ function displayStore($merchant_id) {
                     </nav>
                     <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
-
-                <a href="settlement_report.php"><button type="button" class="btn btn-warning check-report mt-4" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button></a>
+                <button type="button" class="btn btn-warning check-report mt-4" style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button>
                 <a href="upload.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"><button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Store</button></a>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -245,7 +244,11 @@ $(document).ready(function() {
     }
     
     $('#example').DataTable({
-        scrollX: true
+        scrollX: true,
+        columnDefs: [
+          { orderable: false, targets: [ 3, 4, 5] }    // Disable sorting for the first column
+        ],
+        order: []  // Ensure no initial ordering
     });
 });
 

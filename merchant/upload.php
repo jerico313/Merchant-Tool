@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
-                                    <input type="text" class="form-control" name="email_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                    <textarea class="form-control" rows="5" name="email_address[]" style="border-radius:20px;padding:15px 15px;border:none;" required></textarea>
                                 </div>
                                 
                             </div>
@@ -236,7 +236,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
-                                    <input type="text" class="form-control" name="email_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                    <textarea class="form-control" rows="5" name="email_address[]" style="border-radius:20px;padding:15px 15px;border:none;" required></textarea>
                                 </div>
                             </div>
                             <div class="mb-3 mt-3" style="text-align:right;">

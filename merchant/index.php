@@ -261,7 +261,7 @@ $(document).ready(function() {
     $('#example').DataTable({
         scrollX: true,
         columnDefs: [
-          { orderable: false, targets: [ 3, 4] }    // Disable sorting for the first column
+          { orderable: false, targets: [ 3, 4, 5, 6, 7] }    // Disable sorting for the first column
         ],
         order: []  // Ensure no initial ordering
     });

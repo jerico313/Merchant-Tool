@@ -8,7 +8,7 @@ $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 function displayOffers($merchant_id) {
     include("../../../inc/config.php");
 
-    $sql = "SELECT * FROM transaction WHERE store_id = ?";
+    $sql = "SELECT * FROM transaction_summary_view WHERE store_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();

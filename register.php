@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE-edge">
   <link rel="icon" href="/Merchant-Tool/images/booky1.png" type="image/x-icon" />
+  <meta http-equiv="X-UA-Compatible" content="IE-edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0 ">
   <title> Login Form Merchant Tool</title>
   <link rel="stylesheet" href="style.css">
@@ -17,13 +17,13 @@
   }
   body {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url('images/homebg.png') no-repeat;
+  background: url('images/registerbg.png') no-repeat;
   background-size: cover;
   background-position: center;
-  padding-left: 385px;  
+    
 
 }
 .wrapper{
@@ -74,6 +74,19 @@
 
 }
 
+.option {
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 40px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #2A3240;
+  padding: 12px 55px 12px 18px;
+
+}
+
 .input-box input::placeholder{
 color: #2A3240;
 
@@ -85,7 +98,7 @@ color: #2A3240;
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
-}
+  }
 
 
 .wrapper .remember-forgot{
@@ -154,10 +167,6 @@ color: #2A3240;
   text-decoration: underline;
 }
 
-
-
-
-
 </style>
 
 
@@ -167,24 +176,25 @@ color: #2A3240;
     <form action="">
       <h3 class="text-center mb-4"><img src="images/bookylog.png" alt="booky" height="98" width="180"></h3>
       <h1>Merchant Settlement Tool</h1>
-      <h2>Login</h2>
+      <h2>Register Account</h2>
       <div class="input-box">
         <input type="text" placeholder="Username" required>
       </div>
       <div class="input-box">
-        <input type="text" placeholder="Password" required>
+        <input type="text" placeholder="Position" value="User" required>
+      </div>
+      <div class="input-box">
+        <input type="text" placeholder="Create new password" required>
         <i class= 'bx bxs-lock-alt'></i>  
       </div>
-
-      <div class="remember-forgot">
-        <label><input type="checkbox"> Remember me</label>
-        <a href="#"> Forgot password? </a>
-      </div>  
-
-        <button type="submit" class="btn">Login</button>
+      <div class="input-box">
+        <input type="text" placeholder="Confirm new password" required>
+        <i class= 'bx bxs-lock-alt'></i>  
+      </div>
+        <button type="submit" class="btn">Submit</button>
 
         <div class="register-link">
-         <p>Don't have an account?<a href="register.php"> Register</a></p> 
+         <p>Already have an account? <a href="index.php"> Login</a></p> 
       </div>
     </form>
 </div>
