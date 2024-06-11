@@ -1,10 +1,7 @@
 Merchant ID,Merchant Name,Legal Entity Name,Store ids,Store Name,Offer ID,Offer Name,Offer Details,Offer Amount,Commission Rate,Vat Inc/Vat Ex,Voucher Type/Offer Type,Merchant Type,Start Date,End Date,Billable Date,Fulfillment Types,Business Address,Email Address
-89aeb19e-e193-4763-ad04-57f88ac71195,Izakaya Sensu,"Foodparks By Raintree, Inc.",5e22b6db-0075-421f-a9be-24d14e02ef02,Izakaya Sensu BGC,izakayasensu,izakayasensu,"
-₱500 off + 2 Pepsi Cans with a min spend of ₱2500. Available daily. Offer can only be availed by new Booky users. Exclusive for Unionbank Credit Card/Debit Card holders. Available daily from 11am-2pm only",,0%,VAT Ex,Coupled,secondary,2/28/2024,,8/28/2024,#N/A,"345 AGUIRRE AVENUE BF HOMES, PQUE CITY",IzakayaSensu@booky.com
+319c36bd-e110-40f9-b2e5-f83d942f2746,Soi Thai ,MARISSA R. MONTELIBANO,e7cd47eb-8e17-4b90-b6c6-22a185af8e65,Soi Thai SM Iloilo,SOITHAI700,SOITHAI700,"Free Mango Sticky Rice for every Php 700 minimum purchase, single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,
+c1c377ec-429a-4130-bbbe-41f903a0a595,Tsurumaru ,TSURUMARU JAPANESE RESTAURANT INC.,f1ce962e-7d13-4440-b21f-ddd9f7d734c8,Tsurumaru SM Grand Central,FREEGYOZA,FREEGYOZA,"Free GYOZA for every Php 600 minimum purchase, single receipt.",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,
+95d2bebb-43dd-420f-b086-8b2740f79986,3M ,Pinoy 888 Pizza Franchise Corp.,af7ec249-417a-49a1-9c48-5dd06ce132ef,3M Pizza Banawe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,
 e7efbbd3-f785-4884-94b2-177c5d2c7e47,Daniel's Bakery Cafe,Oven Project Inc,f3c0ede0-3182-48c5-ad65-ecd811a5064d,Daniel's Bakery Cafe Holy Spirit,DANIELS10OFF,DANIELS10OFF,"10% Off on Total Bill, No Minimum Spend 
 
-*Availability: Monday-Sunday, 10AM-5PM",,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,"MAPS, Pepsi",1691 Evangelista St. Brgy Bangkal Makati,daniels@booky.com
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,Kenny Rogers,Foodscapes Ventures Corporation,763a5da5-e0ea-4fdd-9d4a-12bc015bda23,Kenny Rogers SM Sucat,,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE","Unit 4024, 4/f Shangrila Mall, Mandaluyong City",kenny@booky.com
-cea81ff3-834b-4841-9aa0-f27149330dc1,Cyma ,Tessera Cyma Greek Estiatorio Corp,9a767b27-5e19-4c4c-ba19-cdeaa440f459,Cyma Trinoma,300CYMA,300CYMA,"P300 off subject to P3,000 min. spend
-unlimited redemption
-Mon-Fri, 2-5PM",,6%,VAT Ex,Coupled,secondary,03/01/2024,,06/01/2024,"LEAD GEN , MAPS","G/F Ardan Bldg. No.2 Meralco Avenue cor. Gen. Araneta st, Pasig City",cyma@booky.com
+*Availability: Monday-Sunday, 10AM-5PM",,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,"MAPS, Pepsi",,

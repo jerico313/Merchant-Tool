@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2024 at 07:50 AM
+-- Generation Time: Jun 11, 2024 at 07:11 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -518,16 +518,6 @@ CREATE TABLE `merchant` (
 INSERT INTO `merchant` (`merchant_id`, `merchant_name`, `merchant_partnership_type`, `merchant_type`, `business_address`, `email_address`, `created_at`, `updated_at`) VALUES
 ('3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Merchant', 'Primary', 'Grab & Go', 'Somewhere St.', 'merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph', '2024-05-28 07:16:32', '2024-06-04 02:49:53');
 
---
--- Triggers `merchant`
---
-DELIMITER $$
-CREATE TRIGGER `generate_merchant_id` BEFORE INSERT ON `merchant` FOR EACH ROW BEGIN
-    SET NEW.merchant_id = UUID();
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -560,8 +550,8 @@ INSERT INTO `promo` (`promo_id`, `merchant_id`, `promo_code`, `promo_amount`, `p
 -- Triggers `promo`
 --
 DELIMITER $$
-CREATE TRIGGER `generate_promo_id` BEFORE INSERT ON `promo` FOR EACH ROW BEGIN
-    SET NEW.promo_id = UUID(); 
+CREATE TRIGGER `generate_offer_id` BEFORE INSERT ON `promo` FOR EACH ROW BEGIN
+    SET NEW.offer_id = UUID(); 
 END
 $$
 DELIMITER ;
@@ -607,16 +597,6 @@ CREATE TABLE `settlement_report_history_coupled` (
 INSERT INTO `settlement_report_history_coupled` (`coupled_report_id`, `generated_by`, `merchant_id`, `merchant_name`, `store_id`, `store_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_outstanding_amount`, `leadgen_commission_rate_base`, `commission_rate`, `total_commission_fees`, `paymaya_pg_fee`, `paymaya_credit_card_pg_fee`, `maya_pg_fee`, `maya_checkout_pg_fee`, `gcash_miniapp_pg_fee`, `gcash_pg_fee`, `total_payment_gateway_fees`, `created_at`, `updated_at`) VALUES
 ('d421dc6d-27b0-11ef-a232-0a002700000d', NULL, NULL, 'B00KY Demo Merchant', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Store', 'Somewhere St.', '2024-06-01', '2024-06-30', 1, '15570.00', '3114.00', '12456.00', '12456.00', '5.00%', '62280.00', '0.00', '342.54', '0.00', '0.00', '0.00', '0.00', '342.54', '2024-06-11 05:09:49', '2024-06-11 05:09:49');
 
---
--- Triggers `settlement_report_history_coupled`
---
-DELIMITER $$
-CREATE TRIGGER `generate_coupled_report_id` BEFORE INSERT ON `settlement_report_history_coupled` FOR EACH ROW BEGIN
-    SET NEW.coupled_report_id = UUID();
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -638,10 +618,10 @@ CREATE TABLE `settlement_report_history_decoupled` (
   `total_discount` decimal(10,2) NOT NULL,
   `total_net_sales` decimal(10,2) NOT NULL,
   `leadgen_commission_rate_base_pretrial` decimal(10,2) NOT NULL,
-  `commission_rate_1` varchar(10) NOT NULL,
+  `commission_rate_1` decimal(5,2) NOT NULL,
   `total_1` decimal(10,2) NOT NULL,
   `leadgen_commission_rate_base_billable` decimal(10,2) NOT NULL,
-  `commission_rate_2` varchar(10) NOT NULL,
+  `commission_rate_2` decimal(5,2) NOT NULL,
   `total_2` decimal(10,2) NOT NULL,
   `total_commission_fees` decimal(10,2) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -655,16 +635,6 @@ CREATE TABLE `settlement_report_history_decoupled` (
 INSERT INTO `settlement_report_history_decoupled` (`decoupled_report_id`, `generated_by`, `merchant_id`, `merchant_name`, `store_id`, `store_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_net_sales`, `leadgen_commission_rate_base_pretrial`, `commission_rate_1`, `total_1`, `leadgen_commission_rate_base_billable`, `commission_rate_2`, `total_2`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
 ('1a633fcc-27a7-11ef-a232-0a002700000d', NULL, NULL, 'B00KY Demo Merchant', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Store', 'Somewhere St.', '2024-06-01', '2024-06-30', 1, '15570.00', '3114.00', '12456.00', '0.00', '5.00', '0.00', '0.00', '5.00', '0.00', '0.00', '2024-06-11 04:00:12', '2024-06-11 04:00:12'),
 ('d969ecbc-27a6-11ef-a232-0a002700000d', NULL, NULL, 'B00KY Demo Merchant', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Store', 'Somewhere St.', '2024-06-01', '2024-06-30', 1, '15570.00', '3114.00', '12456.00', '0.00', '5.00', '0.00', '0.00', '5.00', '0.00', '0.00', '2024-06-11 03:58:23', '2024-06-11 03:58:23');
-
---
--- Triggers `settlement_report_history_decoupled`
---
-DELIMITER $$
-CREATE TRIGGER `generate_decoupled_report_id` BEFORE INSERT ON `settlement_report_history_decoupled` FOR EACH ROW BEGIN
-    SET NEW.decoupled_report_id = UUID();
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -688,16 +658,6 @@ CREATE TABLE `store` (
 
 INSERT INTO `store` (`store_id`, `merchant_id`, `store_name`, `legal_entity_name`, `store_address`, `created_at`, `updated_at`) VALUES
 ('8946759b-1cc2-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Store', 'Demo Legal Name', 'Anywhere St.', '2024-05-28 07:18:52', '2024-06-04 02:56:04');
-
---
--- Triggers `store`
---
-DELIMITER $$
-CREATE TRIGGER `generate_store_id` BEFORE INSERT ON `store` FOR EACH ROW BEGIN
-    SET NEW.store_id = UUID();
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
