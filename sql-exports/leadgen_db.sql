@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 08:11 AM
+-- Generation Time: Jun 11, 2024 at 07:11 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -21,6 +21,304 @@ SET time_zone = "+00:00";
 -- Database: `leadgen_db`
 --
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_coupled_settlement_report` (IN `merchant_id` VARCHAR(36), IN `start_date` DATE, IN `end_date` DATE)   BEGIN
+    SET @sql_insert = CONCAT('INSERT INTO settlement_report_history_coupled 
+        (coupled_report_id, merchant_id, merchant_name, business_address, settlement_period_start, settlement_period_end, total_successful_orders, total_gross_sales, total_discount, total_outstanding_amount, leadgen_commission_rate_base, commission_rate, total_commission_fees, paymaya_pg_fee, paymaya_credit_card_pg_fee, maya_pg_fee, maya_checkout_pg_fee, gcash_miniapp_pg_fee, gcash_pg_fee, total_payment_gateway_fees)
+        SELECT 
+        UUID(), `Merchant ID`,`Merchant Name`,
+		merchant.business_address AS business_address,
+        "', start_date, '" AS settlement_period_start,
+        "', end_date, '" AS settlement_period_end,
+        COUNT(tsv.`Transaction ID`) AS total_successful_orders,
+        SUM(tsv.`Gross Amount`) AS total_gross_sales,
+        SUM(tsv.`Discount`) AS total_discount,
+        SUM(tsv.`Gross Amount` - tsv.`Discount`) AS total_outstanding_amount,
+        SUM(tsv.`Gross Amount` - tsv.`Discount`) AS leadgen_commission_rate_base,
+        tsv.`Commission Rate` AS commission_rate,
+        CASE
+            WHEN `Commission Type` = ''Vat Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
+            ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
+        END AS total_commission_fees,
+        SUM(CASE WHEN tsv.`Payment` = ''paymaya'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''paymaya_credit_card'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''maya'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''maya_checkout'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''gcash_miniapp'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''gcash'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
+        SUM(tsv.`PG Fee Amount`) AS total_payment_gateway_fees
+    FROM 
+        `transaction_summary_view` tsv
+    JOIN
+        `merchant` ON tsv.`Merchant ID` = merchant.`merchant_id`
+    WHERE 
+        tsv.`Merchant ID` = "', merchant_id, '"
+        AND tsv.`Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+    GROUP BY 
+        tsv.`Merchant ID`');
+
+
+    PREPARE stmt_insert FROM @sql_insert;
+    EXECUTE stmt_insert;
+    DEALLOCATE PREPARE stmt_insert;
+
+    SET @sql_select = CONCAT('SELECT 
+        `Merchant ID`,`Merchant Name`,
+        "', start_date, '" AS settlement_period_start,
+        "', end_date, '" AS settlement_period_end,
+        merchant.business_address AS business_address,
+        COUNT(tsv.`Transaction ID`) AS total_successful_orders,
+        SUM(tsv.`Gross Amount`) AS total_gross_sales,
+        SUM(tsv.`Discount`) AS total_discount,
+        SUM(tsv.`Gross Amount` - tsv.`Discount`) AS total_outstanding_amount,
+        SUM(tsv.`Gross Amount` - tsv.`Discount`) AS leadgen_commission_rate_base,
+        tsv.`Commission Rate` AS commission_rate,
+        CASE
+           WHEN `Commission Type` = ''Vat Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
+           ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
+        END AS total_commission_fees,
+        SUM(CASE WHEN tsv.`Payment` = ''paymaya'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''paymaya_credit_card'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''maya'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''maya_checkout'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''gcash_miniapp'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''gcash'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
+        SUM(tsv.`PG Fee Amount`) AS total_payment_gateway_fees
+    FROM 
+        `transaction_summary_view` tsv
+    JOIN
+        `merchant` ON tsv.`Merchant ID` = merchant.`merchant_id`
+    WHERE 
+        tsv.`Merchant ID` = "', merchant_id, '"
+        AND tsv.`Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+    GROUP BY 
+        tsv.`Merchant ID`');
+
+    PREPARE stmt_select FROM @sql_select;
+    EXECUTE stmt_select;
+    DEALLOCATE PREPARE stmt_select;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_coupled_settlement_report` (IN `store_id` VARCHAR(36), IN `start_date` DATE, IN `end_date` DATE)   BEGIN
+    SET @sql_insert = CONCAT('INSERT INTO settlement_report_history_coupled 
+        (coupled_report_id, store_id, store_name, merchant_name, business_address, settlement_period_start, settlement_period_end, total_successful_orders, total_gross_sales, total_discount, total_outstanding_amount, leadgen_commission_rate_base, commission_rate, total_commission_fees, paymaya_pg_fee, paymaya_credit_card_pg_fee, maya_pg_fee, maya_checkout_pg_fee, gcash_miniapp_pg_fee, gcash_pg_fee, total_payment_gateway_fees)
+        SELECT 
+            UUID(),
+	    `Store ID`,`Store Name`,`Merchant Name`,
+            merchant.business_address AS business_address,
+            "', start_date, '" AS settlement_period_start,
+            "', end_date, '" AS settlement_period_end,
+            COUNT(tsv.`Transaction ID`) AS total_successful_orders,
+            SUM(tsv.`Gross Amount`) AS total_gross_sales,
+            SUM(tsv.`Discount`) AS total_discount,
+            SUM(tsv.`Gross Amount` - tsv.`Discount`) AS total_outstanding_amount,
+            SUM(tsv.`Gross Amount` - tsv.`Discount`) AS leadgen_commission_rate_base,
+            tsv.`Commission Rate` AS commission_rate,
+            CASE
+                WHEN tsv.`Commission Type` = ''Vat Exc'' THEN ROUND(SUM((tsv.`Gross Amount` - tsv.`Discount`) * tsv.`Commission Rate` * 1.12),2)
+                ELSE ROUND(SUM((tsv.`Gross Amount` - tsv.`Discount`) * tsv.`Commission Rate`),2)
+            END AS total_commission_fees,
+
+            SUM(CASE WHEN tsv.`Payment` = ''paymaya'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
+            SUM(CASE WHEN tsv.`Payment` = ''paymaya_credit_card'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
+            SUM(CASE WHEN tsv.`Payment` = ''maya'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
+            SUM(CASE WHEN tsv.`Payment` = ''maya_checkout'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
+            SUM(CASE WHEN tsv.`Payment` = ''gcash_miniapp'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
+            SUM(CASE WHEN tsv.`Payment` = ''gcash'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
+            SUM(tsv.`PG Fee Amount`) AS total_payment_gateway_fees
+        FROM 
+            `transaction_summary_view` tsv
+        JOIN
+            `merchant` ON tsv.`Merchant ID` = merchant.`merchant_id`
+        WHERE 
+            tsv.`Store ID` = "', store_id, '"
+            AND tsv.`Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+        GROUP BY 
+            tsv.`Store ID`');
+
+    PREPARE stmt_insert FROM @sql_insert;
+    EXECUTE stmt_insert;
+    DEALLOCATE PREPARE stmt_insert;
+
+    SET @sql_select = CONCAT('SELECT 
+        `Store ID`,`Store Name`,`Merchant Name`,
+        merchant.business_address AS business_address,
+        "', start_date, '" AS settlement_period_start,
+        "', end_date, '" AS settlement_period_end,
+        COUNT(tsv.`Transaction ID`) AS total_successful_orders,
+        SUM(tsv.`Gross Amount`) AS total_gross_sales,
+        SUM(tsv.`Discount`) AS total_discount,
+        SUM(tsv.`Gross Amount` - tsv.`Discount`) AS total_outstanding_amount,
+        SUM(tsv.`Gross Amount` - tsv.`Discount`) AS leadgen_commission_rate_base,
+        tsv.`Commission Rate` AS commission_rate,
+        CASE
+            WHEN tsv.`Commission Type` = ''Vat Exc'' THEN ROUND(SUM((tsv.`Gross Amount` - tsv.`Discount`) * tsv.`Commission Rate` * 1.12),2)
+            ELSE ROUND(SUM((tsv.`Gross Amount` - tsv.`Discount`) * tsv.`Commission Rate`),2)
+        END AS total_commission_fees,
+
+        SUM(CASE WHEN tsv.`Payment` = ''paymaya'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''paymaya_credit_card'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''maya'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''maya_checkout'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''gcash_miniapp'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
+        SUM(CASE WHEN tsv.`Payment` = ''gcash'' THEN tsv.`PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
+        SUM(tsv.`PG Fee Amount`) AS total_payment_gateway_fees
+    FROM 
+        `transaction_summary_view` tsv
+    JOIN
+        `merchant` ON tsv.`Merchant ID` = merchant.`merchant_id`
+    WHERE 
+        tsv.`Store ID` = "', store_id, '"
+        AND tsv.`Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+    GROUP BY 
+        tsv.`Store ID`');
+
+    PREPARE stmt_select FROM @sql_select;
+    EXECUTE stmt_select;
+    DEALLOCATE PREPARE stmt_select;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_decoupled_settlement_report` (IN `store_id` VARCHAR(36), IN `start_date` DATE, IN `end_date` DATE)   BEGIN
+    SET @sql_insert = CONCAT('INSERT INTO settlement_report_history_decoupled
+        (decoupled_report_id, store_id, store_name, merchant_name, business_address, settlement_period_start, settlement_period_end, total_successful_orders, total_gross_sales, total_discount, total_net_sales, leadgen_commission_rate_base_pretrial, commission_rate_1, total_1, leadgen_commission_rate_base_billable, commission_rate_2, total_2, total_commission_fees)
+        SELECT 
+            UUID(),
+            `Store ID`,`Store Name`,`Merchant Name`,
+            merchant.business_address AS business_address,
+            "', start_date, '" AS settlement_period_start,
+            "', end_date, '" AS settlement_period_end,
+            COUNT(tsv.`Transaction ID`) AS total_successful_orders,
+            SUM(tsv.`Gross Amount`) AS total_gross_sales,
+            SUM(tsv.`Discount`) AS total_discount,
+            SUM(tsv.`Gross Amount` - tsv.`Discount`) AS total_net_sales,
+
+            SUM(CASE
+                WHEN tsv.`Status` = ''PRE-TRIAL'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                ELSE 0
+            END) AS leadgen_commission_rate_base_pretrial,
+            AVG(tsv.`Commission Rate`) AS commission_rate_1,
+            SUM(CASE
+                WHEN tsv.`Commission Type` = ''Vat Exc'' THEN (CASE
+                    WHEN tsv.`Status` = ''PRE-TRIAL'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate` * 1.12
+                ELSE (CASE
+                    WHEN tsv.`Status` = ''PRE-TRIAL'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate`
+            END) AS total_1,
+
+            SUM(CASE
+                WHEN tsv.`Status` = ''BILLABLE'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                ELSE 0
+            END) AS leadgen_commission_rate_base_billable,
+            AVG(tsv.`Commission Rate`) AS commission_rate_2,
+            SUM(CASE
+                WHEN tsv.`Commission Type` = ''Vat Exc'' THEN (CASE
+                    WHEN tsv.`Status` = ''BILLABLE'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate` * 1.12
+                ELSE (CASE
+                    WHEN tsv.`Status` = ''BILLABLE'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate`
+            END) AS total_2,
+
+            SUM(CASE
+                WHEN tsv.`Commission Type` = ''Vat Exc'' THEN (CASE
+                    WHEN tsv.`Status` = ''BILLABLE'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate` * 1.12
+                ELSE (CASE
+                    WHEN tsv.`Status` = ''BILLABLE'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate`
+            END) AS total_commission_fees
+        FROM 
+            `transaction_summary_view` tsv
+        JOIN
+            `merchant` ON tsv.`Merchant ID` = merchant.`merchant_id`
+        WHERE 
+            tsv.`Store ID` = "', store_id, '"
+            AND tsv.`Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+        GROUP BY 
+            tsv.`Store ID`');
+
+    PREPARE stmt_insert FROM @sql_insert;
+    EXECUTE stmt_insert;
+    DEALLOCATE PREPARE stmt_insert;
+
+    SET @sql_select = CONCAT('SELECT 
+            `Store ID`,`Store Name`,`Merchant Name`,
+            merchant.business_address AS business_address,
+            "', start_date, '" AS settlement_period_start,
+            "', end_date, '" AS settlement_period_end,
+            COUNT(tsv.`Transaction ID`) AS total_successful_orders,
+            SUM(tsv.`Gross Amount`) AS total_gross_sales,
+            SUM(tsv.`Discount`) AS total_discount,
+            SUM(tsv.`Gross Amount` - tsv.`Discount`) AS total_net_sales,
+            SUM(CASE
+                WHEN tsv.`Status` = ''PRE-TRIAL'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                ELSE 0
+            END) AS leadgen_commission_rate_base_pretrial,
+            AVG(tsv.`Commission Rate`) AS commission_rate_1,
+            SUM(CASE
+                WHEN tsv.`Commission Type` = ''Vat Exc'' THEN (CASE
+                    WHEN tsv.`Status` = ''PRE-TRIAL'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate` * 1.12
+                ELSE (CASE
+                    WHEN tsv.`Status` = ''PRE-TRIAL'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate`
+            END) AS total_1,
+
+            SUM(CASE
+                WHEN tsv.`Status` = ''BILLABLE'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                ELSE 0
+            END) AS leadgen_commission_rate_base_billable,
+            AVG(tsv.`Commission Rate`) AS commission_rate_2,
+            SUM(CASE
+                WHEN tsv.`Commission Type` = ''Vat Exc'' THEN (CASE
+                    WHEN tsv.`Status` = ''BILLABLE'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate` * 1.12
+                ELSE (CASE
+                    WHEN tsv.`Status` = ''BILLABLE'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate`
+            END) AS total_2,
+
+            SUM(CASE
+                WHEN tsv.`Commission Type` = ''Vat Exc'' THEN (CASE
+                    WHEN tsv.`Status` = ''BILLABLE'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate` * 1.12
+                ELSE (CASE
+                    WHEN tsv.`Status` = ''BILLABLE'' THEN (tsv.`Gross Amount` - tsv.`Discount`)
+                    ELSE 0
+                END) * tsv.`Commission Rate`
+            END) AS total_commission_fees
+        FROM 
+            `transaction_summary_view` tsv
+        JOIN
+            `merchant` ON tsv.`Merchant ID` = merchant.`merchant_id`
+        WHERE 
+            tsv.`Store ID` = "', store_id, '"
+            AND tsv.`Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+        GROUP BY 
+            tsv.`Store ID`');
+
+    PREPARE stmt_select FROM @sql_select;
+    EXECUTE stmt_select;
+    DEALLOCATE PREPARE stmt_select;
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -30,13 +328,22 @@ SET time_zone = "+00:00";
 CREATE TABLE `activity_history` (
   `activity_id` varchar(36) NOT NULL,
   `user_id` varchar(36) DEFAULT NULL,
-  `table_name` int(11) NOT NULL,
-  `table_id` int(11) NOT NULL,
+  `table_name` varchar(50) NOT NULL,
+  `table_id` varchar(36) NOT NULL,
   `activity_type` enum('Add','Update','Delete','Login') NOT NULL,
   `description` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `activity_history`
+--
+
+INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_id`, `activity_type`, `description`, `created_at`, `updated_at`) VALUES
+('08785777-2795-11ef-a232-0a002700000d', NULL, 'user', '08783957-2795-11ef-a232-0a002700000d', 'Add', 'User record added\nemail_address: sample@email.com\npassword: sample123\nname: Sample User\ntype: Admin\nstatus: ', '2024-06-11 01:50:51', '2024-06-11 01:50:51'),
+('3caf218d-1f21-11ef-a08a-48e7dad87c24', NULL, 'user', '3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'Add', 'User record added\nemail_address: admin@bookymail.ph\npassword: admin123\nname: Admin\ntype: Admin\nstatus: Active', '2024-05-31 07:41:48', '2024-05-31 07:41:48'),
+('446c137a-1f21-11ef-a08a-48e7dad87c24', NULL, 'user', '3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'Update', 'User record updated\npassword: admin123 -> admin123booky', '2024-05-31 07:42:01', '2024-05-31 07:42:01');
 
 --
 -- Triggers `activity_history`
@@ -51,26 +358,95 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category_history`
+-- Table structure for table `fee`
 --
 
-CREATE TABLE `category_history` (
-  `category_id` varchar(36) NOT NULL,
-  `merchant_id` varchar(36) DEFAULT NULL,
-  `category_name` enum('Coupled','Decoupled','Gcash') DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL,
-  `status` enum('Active','Expired') DEFAULT NULL,
+CREATE TABLE `fee` (
+  `fee_id` varchar(36) NOT NULL,
+  `merchant_id` varchar(36) NOT NULL,
+  `paymaya_credit_card` decimal(4,2) NOT NULL,
+  `paymaya` decimal(4,2) NOT NULL,
+  `gcash` decimal(4,2) NOT NULL,
+  `gcash_miniapp` decimal(4,2) NOT NULL,
+  `maya_checkout` decimal(4,2) NOT NULL,
+  `maya` decimal(4,2) NOT NULL,
+  `lead_gen_commission` decimal(4,2) NOT NULL,
+  `commission_type` enum('VAT Inc','VAT Exc') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Triggers `category_history`
+-- Dumping data for table `fee`
+--
+
+INSERT INTO `fee` (`fee_id`, `merchant_id`, `paymaya_credit_card`, `paymaya`, `gcash`, `gcash_miniapp`, `maya_checkout`, `maya`, `lead_gen_commission`, `commission_type`, `created_at`, `updated_at`) VALUES
+('02f361d3-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', '2.75', '2.50', '3.00', '3.00', '2.75', '2.50', '5.00', 'VAT Inc', '2024-05-28 07:22:16', '2024-06-04 04:34:38');
+
+--
+-- Triggers `fee`
 --
 DELIMITER $$
-CREATE TRIGGER `generate_category_id` BEFORE INSERT ON `category_history` FOR EACH ROW BEGIN
-    SET NEW.category_id = UUID(); 
+CREATE TRIGGER `before_insert_fee` BEFORE INSERT ON `fee` FOR EACH ROW BEGIN
+  SET NEW.maya_checkout = NEW.paymaya_credit_card;
+  SET NEW.paymaya = NEW.maya;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `before_update_fee` BEFORE UPDATE ON `fee` FOR EACH ROW BEGIN
+  SET NEW.maya_checkout = NEW.paymaya_credit_card;
+  SET NEW.paymaya = NEW.maya;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `generate_fee_id` BEFORE INSERT ON `fee` FOR EACH ROW BEGIN
+    SET NEW.fee_id = UUID(); 
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_fee_log` AFTER UPDATE ON `fee` FOR EACH ROW BEGIN
+  IF OLD.paymaya_credit_card != NEW.paymaya_credit_card THEN
+    INSERT INTO fee_history (fee_history_id, fee_id,column_name, old_value, new_value)
+    VALUES (UUID(), NEW.fee_id, 'paymaya_credit_card', OLD.paymaya_credit_card, NEW.paymaya_credit_card);
+  END IF;
+
+  IF OLD.gcash != NEW.gcash THEN
+    INSERT INTO fee_history (fee_history_id, fee_id, column_name, old_value, new_value)
+    VALUES (UUID(), NEW.fee_id, 'gcash', OLD.gcash, NEW.gcash);
+  END IF;
+
+  IF OLD.gcash_miniapp != NEW.gcash_miniapp THEN
+    INSERT INTO fee_history (fee_history_id, fee_id, column_name, old_value, new_value)
+    VALUES (UUID(), NEW.fee_id, 'gcash_miniapp', OLD.gcash_miniapp, NEW.gcash_miniapp);
+  END IF;
+
+  IF OLD.paymaya != NEW.paymaya THEN
+    INSERT INTO fee_history (fee_history_id, fee_id, column_name, old_value, new_value)
+    VALUES (UUID(), NEW.fee_id, 'paymaya', OLD.paymaya, NEW.paymaya);
+  END IF;
+
+  IF OLD.maya_checkout != NEW.maya_checkout THEN
+    INSERT INTO fee_history (fee_history_id, fee_id, column_name, old_value, new_value)
+    VALUES (UUID(), NEW.fee_id, 'maya_checkout', OLD.maya_checkout, NEW.maya_checkout);
+  END IF;
+
+  IF OLD.maya != NEW.maya THEN
+    INSERT INTO fee_history (fee_history_id, fee_id, column_name, old_value, new_value)
+    VALUES (UUID(), NEW.fee_id, 'maya', OLD.maya, NEW.maya);
+  END IF;
+
+  IF OLD.lead_gen_commission != NEW.lead_gen_commission THEN
+    INSERT INTO fee_history (fee_history_id, fee_id, column_name, old_value, new_value)
+    VALUES (UUID(), NEW.fee_id, 'lead_gen_commission', OLD.lead_gen_commission, NEW.lead_gen_commission);
+  END IF;
+  
+  IF OLD.commission_type != NEW.commission_type THEN
+    INSERT INTO fee_history (fee_history_id, fee_id, column_name, old_value, new_value)
+    VALUES (UUID(), NEW.fee_id, 'commission_type', OLD.commission_type, NEW.commission_type);
+  END IF;
 END
 $$
 DELIMITER ;
@@ -78,22 +454,42 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `legal_entity_name`
+-- Table structure for table `fee_history`
 --
 
-CREATE TABLE `legal_entity_name` (
-  `legal_entity_id` varchar(36) NOT NULL,
-  `legal_entity_name` varchar(250) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+CREATE TABLE `fee_history` (
+  `fee_history_id` varchar(36) NOT NULL,
+  `fee_id` varchar(36) NOT NULL,
+  `column_name` varchar(50) NOT NULL,
+  `old_value` varchar(50) NOT NULL,
+  `new_value` varchar(50) NOT NULL,
+  `changed_at` date NOT NULL DEFAULT current_timestamp(),
+  `changed_by` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Triggers `legal_entity_name`
+-- Dumping data for table `fee_history`
+--
+
+INSERT INTO `fee_history` (`fee_history_id`, `fee_id`, `column_name`, `old_value`, `new_value`, `changed_at`, `changed_by`) VALUES
+('04a53aab-223f-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'gcash', '2.75', '3.00', '2024-06-04', NULL),
+('04a54436-223f-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'gcash_miniapp', '2.75', '3.00', '2024-06-04', NULL),
+('66638ca3-2241-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya', '2.00', '2.50', '2024-06-04', NULL),
+('6c0f2a25-2310-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya', '2.00', '2.50', '2024-06-05', NULL),
+('6c0f3167-2310-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'maya', '2.00', '2.50', '2024-06-05', NULL),
+('9469bad9-2241-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'lead_gen_commission', '10.00', '5.00', '2024-06-04', NULL),
+('9469bebf-2241-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'commission_type', 'VAT Exc', 'VAT Inc', '2024-06-04', NULL),
+('b538bee7-224a-11ef-b01f-48e7dad87c24', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya_credit_card', '2.00', '5.00', '2024-06-01', NULL),
+('f49f03e3-230f-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya_credit_card', '5.00', '2.75', '2024-06-05', NULL),
+('f49f1115-230f-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya', '2.50', '2.00', '2024-06-05', NULL),
+('f49f1af1-230f-11ef-a463-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'maya_checkout', '2.00', '2.75', '2024-06-05', NULL);
+
+--
+-- Triggers `fee_history`
 --
 DELIMITER $$
-CREATE TRIGGER `generate_legal_entity_id` BEFORE INSERT ON `legal_entity_name` FOR EACH ROW BEGIN
-    SET NEW.legal_entity_id = UUID(); 
+CREATE TRIGGER `generate_fee_history_id` BEFORE INSERT ON `fee_history` FOR EACH ROW BEGIN
+    SET NEW.fee_history_id = UUID(); 
 END
 $$
 DELIMITER ;
@@ -106,40 +502,55 @@ DELIMITER ;
 
 CREATE TABLE `merchant` (
   `merchant_id` varchar(36) NOT NULL,
-  `merchant_name` varchar(100) NOT NULL,
+  `merchant_name` varchar(255) NOT NULL,
   `merchant_partnership_type` enum('Primary','Secondary') NOT NULL,
-  `business_address` varchar(250) NOT NULL,
+  `merchant_type` enum('Grab & Go','Casual Dining') NOT NULL,
+  `business_address` text NOT NULL,
   `email_address` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `merchant`
+--
+
+INSERT INTO `merchant` (`merchant_id`, `merchant_name`, `merchant_partnership_type`, `merchant_type`, `business_address`, `email_address`, `created_at`, `updated_at`) VALUES
+('3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Merchant', 'Primary', 'Grab & Go', 'Somewhere St.', 'merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph', '2024-05-28 07:16:32', '2024-06-04 02:49:53');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `offer`
+-- Table structure for table `promo`
 --
 
-CREATE TABLE `offer` (
-  `offer_id` varchar(36) NOT NULL,
+CREATE TABLE `promo` (
+  `promo_id` varchar(36) NOT NULL,
   `merchant_id` varchar(36) NOT NULL,
-  `offer_name` varchar(100) NOT NULL,
-  `offer_details` text NOT NULL,
-  `offer_quantity` int(11) NOT NULL,
-  `offer_price` decimal(10,2) NOT NULL,
   `promo_code` varchar(100) NOT NULL,
-  `promo_type` enum('Booky','Gcash','Unionbank') NOT NULL,
-  `vat_type` enum('Vat Inc','Vat Ex') NOT NULL,
-  `commission_rate` decimal(6,4) NOT NULL,
+  `promo_amount` int(11) NOT NULL,
+  `promo_type` enum('Coupled','Decoupled') NOT NULL,
+  `promo_group` enum('Booky','Gcash','Unionbank','Gcash/Booky','UB/Booky') NOT NULL,
+  `promo_details` text NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `billable_date` date NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Triggers `offer`
+-- Dumping data for table `promo`
+--
+
+INSERT INTO `promo` (`promo_id`, `merchant_id`, `promo_code`, `promo_amount`, `promo_type`, `promo_group`, `promo_details`, `start_date`, `end_date`, `billable_date`, `created_at`, `updated_at`) VALUES
+('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', 100, 'Coupled', 'Gcash', 'Booky sample promo', '2024-04-01', '2024-05-31', '2024-06-04', '2024-06-04 02:34:19', '2024-06-04 02:34:49');
+
+--
+-- Triggers `promo`
 --
 DELIMITER $$
-CREATE TRIGGER `generate_offer_id` BEFORE INSERT ON `offer` FOR EACH ROW BEGIN
+CREATE TRIGGER `generate_offer_id` BEFORE INSERT ON `promo` FOR EACH ROW BEGIN
     SET NEW.offer_id = UUID(); 
 END
 $$
@@ -148,55 +559,82 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `offer_renewal`
+-- Table structure for table `settlement_report_history_coupled`
 --
 
-CREATE TABLE `offer_renewal` (
-  `renewal_id` varchar(36) NOT NULL,
-  `offer_id` varchar(36) DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL,
-  `billable_date` date DEFAULT NULL,
-  `status` enum('Active','Expired') DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Triggers `offer_renewal`
---
-DELIMITER $$
-CREATE TRIGGER `generate_renewal_id` BEFORE INSERT ON `offer_renewal` FOR EACH ROW BEGIN
-    SET NEW.renewal_id = UUID(); 
-END
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pg_fee_rate`
---
-
-CREATE TABLE `pg_fee_rate` (
-  `pg_fee_id` varchar(36) NOT NULL,
-  `mode_of_payment` enum('cod','Paymaya','Gcash','Gcash_miniapp','Card Payment','Maya_checkout') NOT NULL,
-  `rate` decimal(6,4) NOT NULL,
-  `effective_date` date NOT NULL,
-  `status` enum('Active','Expired') NOT NULL,
+CREATE TABLE `settlement_report_history_coupled` (
+  `coupled_report_id` varchar(36) NOT NULL,
+  `generated_by` varchar(36) DEFAULT NULL,
+  `merchant_id` varchar(36) DEFAULT NULL,
+  `merchant_name` varchar(255) NOT NULL,
+  `store_id` varchar(36) DEFAULT NULL,
+  `store_name` varchar(255) DEFAULT NULL,
+  `business_address` text NOT NULL,
+  `settlement_period_start` date NOT NULL,
+  `settlement_period_end` date NOT NULL,
+  `total_successful_orders` int(11) NOT NULL,
+  `total_gross_sales` decimal(10,2) NOT NULL,
+  `total_discount` decimal(10,2) NOT NULL,
+  `total_outstanding_amount` decimal(10,2) NOT NULL,
+  `leadgen_commission_rate_base` decimal(10,2) NOT NULL,
+  `commission_rate` varchar(10) NOT NULL,
+  `total_commission_fees` decimal(10,2) NOT NULL,
+  `paymaya_pg_fee` decimal(10,2) NOT NULL,
+  `paymaya_credit_card_pg_fee` decimal(10,2) NOT NULL,
+  `maya_pg_fee` decimal(10,2) NOT NULL,
+  `maya_checkout_pg_fee` decimal(10,2) NOT NULL,
+  `gcash_miniapp_pg_fee` decimal(10,2) NOT NULL,
+  `gcash_pg_fee` decimal(10,2) NOT NULL,
+  `total_payment_gateway_fees` decimal(10,2) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Triggers `pg_fee_rate`
+-- Dumping data for table `settlement_report_history_coupled`
 --
-DELIMITER $$
-CREATE TRIGGER `generate_pg_fee_rate_id` BEFORE INSERT ON `pg_fee_rate` FOR EACH ROW BEGIN
-    SET NEW.pg_fee_id = UUID(); 
-END
-$$
-DELIMITER ;
+
+INSERT INTO `settlement_report_history_coupled` (`coupled_report_id`, `generated_by`, `merchant_id`, `merchant_name`, `store_id`, `store_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_outstanding_amount`, `leadgen_commission_rate_base`, `commission_rate`, `total_commission_fees`, `paymaya_pg_fee`, `paymaya_credit_card_pg_fee`, `maya_pg_fee`, `maya_checkout_pg_fee`, `gcash_miniapp_pg_fee`, `gcash_pg_fee`, `total_payment_gateway_fees`, `created_at`, `updated_at`) VALUES
+('d421dc6d-27b0-11ef-a232-0a002700000d', NULL, NULL, 'B00KY Demo Merchant', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Store', 'Somewhere St.', '2024-06-01', '2024-06-30', 1, '15570.00', '3114.00', '12456.00', '12456.00', '5.00%', '62280.00', '0.00', '342.54', '0.00', '0.00', '0.00', '0.00', '342.54', '2024-06-11 05:09:49', '2024-06-11 05:09:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settlement_report_history_decoupled`
+--
+
+CREATE TABLE `settlement_report_history_decoupled` (
+  `decoupled_report_id` varchar(36) NOT NULL,
+  `generated_by` varchar(36) DEFAULT NULL,
+  `merchant_id` varchar(36) DEFAULT NULL,
+  `merchant_name` varchar(255) NOT NULL,
+  `store_id` varchar(36) DEFAULT NULL,
+  `store_name` varchar(255) DEFAULT NULL,
+  `business_address` text NOT NULL,
+  `settlement_period_start` date NOT NULL,
+  `settlement_period_end` date NOT NULL,
+  `total_successful_orders` int(11) NOT NULL,
+  `total_gross_sales` decimal(10,2) NOT NULL,
+  `total_discount` decimal(10,2) NOT NULL,
+  `total_net_sales` decimal(10,2) NOT NULL,
+  `leadgen_commission_rate_base_pretrial` decimal(10,2) NOT NULL,
+  `commission_rate_1` decimal(5,2) NOT NULL,
+  `total_1` decimal(10,2) NOT NULL,
+  `leadgen_commission_rate_base_billable` decimal(10,2) NOT NULL,
+  `commission_rate_2` decimal(5,2) NOT NULL,
+  `total_2` decimal(10,2) NOT NULL,
+  `total_commission_fees` decimal(10,2) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `settlement_report_history_decoupled`
+--
+
+INSERT INTO `settlement_report_history_decoupled` (`decoupled_report_id`, `generated_by`, `merchant_id`, `merchant_name`, `store_id`, `store_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_net_sales`, `leadgen_commission_rate_base_pretrial`, `commission_rate_1`, `total_1`, `leadgen_commission_rate_base_billable`, `commission_rate_2`, `total_2`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
+('1a633fcc-27a7-11ef-a232-0a002700000d', NULL, NULL, 'B00KY Demo Merchant', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Store', 'Somewhere St.', '2024-06-01', '2024-06-30', 1, '15570.00', '3114.00', '12456.00', '0.00', '5.00', '0.00', '0.00', '5.00', '0.00', '0.00', '2024-06-11 04:00:12', '2024-06-11 04:00:12'),
+('d969ecbc-27a6-11ef-a232-0a002700000d', NULL, NULL, 'B00KY Demo Merchant', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Store', 'Somewhere St.', '2024-06-01', '2024-06-30', 1, '15570.00', '3114.00', '12456.00', '0.00', '5.00', '0.00', '0.00', '5.00', '0.00', '0.00', '2024-06-11 03:58:23', '2024-06-11 03:58:23');
 
 -- --------------------------------------------------------
 
@@ -207,12 +645,19 @@ DELIMITER ;
 CREATE TABLE `store` (
   `store_id` varchar(36) NOT NULL,
   `merchant_id` varchar(36) NOT NULL,
-  `legal_entity_id` varchar(36) NOT NULL,
   `store_name` varchar(100) NOT NULL,
+  `legal_entity_name` varchar(100) NOT NULL,
   `store_address` varchar(250) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `store`
+--
+
+INSERT INTO `store` (`store_id`, `merchant_id`, `store_name`, `legal_entity_name`, `store_address`, `created_at`, `updated_at`) VALUES
+('8946759b-1cc2-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Store', 'Demo Legal Name', 'Anywhere St.', '2024-05-28 07:18:52', '2024-06-04 02:56:04');
 
 -- --------------------------------------------------------
 
@@ -223,19 +668,60 @@ CREATE TABLE `store` (
 CREATE TABLE `transaction` (
   `transaction_id` varchar(36) NOT NULL,
   `store_id` varchar(36) NOT NULL,
-  `offer_id` varchar(36) NOT NULL,
-  `customer_id` varchar(36) NOT NULL,
-  `customer_name` varchar(100) NOT NULL,
-  `claim_id` varchar(36) NOT NULL,
+  `promo_id` varchar(36) NOT NULL,
+  `customer_id` varchar(12) NOT NULL,
+  `customer_name` varchar(100) DEFAULT NULL,
   `transaction_date` datetime NOT NULL,
-  `gross_sales` decimal(10,2) NOT NULL,
-  `voucher_price` decimal(10,2) NOT NULL,
-  `mode_of_payment` enum('cod','gcash','gcash_miniapp','maya','maya_checkout','maya_credit_card','paymaya') NOT NULL,
-  `payment_status` enum('success','disbursed') NOT NULL,
-  `pg_fee_id` varchar(36) DEFAULT NULL,
+  `gross_amount` decimal(10,2) NOT NULL,
+  `discount` decimal(10,2) NOT NULL,
+  `amount_discounted` decimal(10,2) NOT NULL,
+  `payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya') NOT NULL,
+  `status` enum('PRE-TRIAL','BILLABLE','NOT BILLABLE') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`transaction_id`, `store_id`, `promo_id`, `customer_id`, `customer_name`, `transaction_date`, `gross_amount`, `discount`, `amount_discounted`, `payment`, `status`, `created_at`, `updated_at`) VALUES
+('1bc0f5fe-224b-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639121234345', 'Maria Demo', '2024-05-15 16:17:58', '20760.00', '5190.00', '15570.00', 'paymaya_credit_card', 'PRE-TRIAL', '2024-06-01 08:17:58', '2024-06-05 03:42:49'),
+('8d1552bf-1cc3-11ef-8abb-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639123456789', 'Juan Person', '2024-05-28 09:25:43', '1484.00', '594.00', '890.00', 'gcash', 'BILLABLE', '2024-05-28 07:26:08', '2024-05-28 07:26:08'),
+('e881c2e7-224a-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639987654321', 'Anna Human', '2024-06-06 10:16:20', '15570.00', '3114.00', '12456.00', 'paymaya_credit_card', 'NOT BILLABLE', '2024-06-04 08:17:39', '2024-06-04 08:17:39');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `transaction_summary_view`
+-- (See below for the actual view)
+--
+CREATE TABLE `transaction_summary_view` (
+`Transaction ID` varchar(8)
+,`Transaction Date` datetime
+,`Merchant ID` varchar(36)
+,`Merchant Name` varchar(255)
+,`Store ID` varchar(36)
+,`Store Name` varchar(100)
+,`Customer ID` varchar(12)
+,`Customer Name` varchar(100)
+,`Promo ID` varchar(8)
+,`Promo Code` varchar(100)
+,`Promo Group` enum('Booky','Gcash','Unionbank','Gcash/Booky','UB/Booky')
+,`Promo Type` enum('Coupled','Decoupled')
+,`Status` enum('PRE-TRIAL','BILLABLE','NOT BILLABLE')
+,`Gross Amount` decimal(10,2)
+,`Discount` decimal(10,2)
+,`Amount Discounted` decimal(10,2)
+,`Payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya')
+,`Commission Type` varchar(50)
+,`Commission Rate` varchar(51)
+,`Commission Amount` double(19,2)
+,`Total Billing` double(19,2)
+,`PG Fee Rate` varchar(51)
+,`PG Fee Amount` double(19,2)
+,`Amount to be Disbursed` double(19,2)
+);
 
 -- --------------------------------------------------------
 
@@ -248,11 +734,18 @@ CREATE TABLE `user` (
   `email_address` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `type` enum('Admin','User_full','User_partial') NOT NULL,
-  `status` enum('Active','Inactive') NOT NULL,
+  `type` enum('Admin','User') NOT NULL DEFAULT 'User',
+  `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `email_address`, `password`, `name`, `type`, `status`, `created_at`, `updated_at`) VALUES
+('3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'admin@bookymail.ph', 'admin123booky', 'Admin', 'Admin', 'Active', '2024-05-31 07:41:48', '2024-05-31 07:41:48');
 
 --
 -- Triggers `user`
@@ -306,11 +799,20 @@ CREATE TRIGGER `user_update_log` AFTER UPDATE ON `user` FOR EACH ROW BEGIN
   -- Remove the trailing '\n' from the description
   SET description = LEFT(description, LENGTH(description) - 1);
   
-  INSERT INTO table_log (tableName, tableID, logType, description)
+  INSERT INTO activity_history (table_name, table_id, activity_type, description)
   VALUES ('user', NEW.user_id, 'Update', description);
 END
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `transaction_summary_view`
+--
+DROP TABLE IF EXISTS `transaction_summary_view`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transaction_summary_view`  AS SELECT substr(`t`.`transaction_id`,1,8) AS `Transaction ID`, `t`.`transaction_date` AS `Transaction Date`, `m`.`merchant_id` AS `Merchant ID`, `m`.`merchant_name` AS `Merchant Name`, `s`.`store_id` AS `Store ID`, `s`.`store_name` AS `Store Name`, `t`.`customer_id` AS `Customer ID`, `t`.`customer_name` AS `Customer Name`, substr(`p`.`promo_id`,1,8) AS `Promo ID`, `p`.`promo_code` AS `Promo Code`, `p`.`promo_group` AS `Promo Group`, `p`.`promo_type` AS `Promo Type`, `t`.`status` AS `Status`, `t`.`gross_amount` AS `Gross Amount`, `t`.`discount` AS `Discount`, `t`.`amount_discounted` AS `Amount Discounted`, `t`.`payment` AS `Payment`, coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) AS `Commission Type`, coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`lead_gen_commission`,'%')) AS `Commission Rate`, round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) AS `Commission Amount`, CASE WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) END AS `Total Billing`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya_credit_card`,'%'))) WHEN `t`.`payment` = 'gcash' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash`,'%'))) WHEN `t`.`payment` = 'gcash_miniapp' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash_miniapp`,'%'))) WHEN `t`.`payment` = 'paymaya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya`,'%'))) WHEN `t`.`payment` = 'maya_checkout' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya_checkout`,'%'))) WHEN `t`.`payment` = 'maya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya`,'%'))) END AS `PG Fee Rate`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) WHEN `t`.`payment` = 'gcash' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) WHEN `t`.`payment` = 'gcash_miniapp' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) WHEN `t`.`payment` = 'paymaya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) WHEN `t`.`payment` = 'maya_checkout' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) WHEN `t`.`payment` = 'maya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) END AS `PG Fee Amount`, round(`t`.`amount_discounted` - case when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) end - case when `t`.`payment` = 'paymaya_credit_card' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) when `t`.`payment` = 'gcash' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) when `t`.`payment` = 'gcash_miniapp' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) when `t`.`payment` = 'paymaya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) when `t`.`payment` = 'maya_checkout' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) when `t`.`payment` = 'maya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) end,2) AS `Amount to be Disbursed` FROM ((((`transaction` `t` join `store` `s` on(`t`.`store_id` = `s`.`store_id`)) join `merchant` `m` on(`m`.`merchant_id` = `s`.`merchant_id`)) join `promo` `p` on(`p`.`merchant_id` = `m`.`merchant_id`)) join `fee` `f` on(`f`.`merchant_id` = `m`.`merchant_id`)) ORDER BY `t`.`transaction_date` ASC  ;
 
 --
 -- Indexes for dumped tables
@@ -324,17 +826,18 @@ ALTER TABLE `activity_history`
   ADD KEY `activity_history_ibfk_1` (`user_id`);
 
 --
--- Indexes for table `category_history`
+-- Indexes for table `fee`
 --
-ALTER TABLE `category_history`
-  ADD PRIMARY KEY (`category_id`),
-  ADD KEY `merchant_id` (`merchant_id`);
+ALTER TABLE `fee`
+  ADD PRIMARY KEY (`fee_id`),
+  ADD UNIQUE KEY `pg_fee_rate_ibfk_1` (`merchant_id`) USING BTREE;
 
 --
--- Indexes for table `legal_entity_name`
+-- Indexes for table `fee_history`
 --
-ALTER TABLE `legal_entity_name`
-  ADD PRIMARY KEY (`legal_entity_id`);
+ALTER TABLE `fee_history`
+  ADD PRIMARY KEY (`fee_history_id`),
+  ADD KEY `fee_history_ibfk_1` (`fee_id`);
 
 --
 -- Indexes for table `merchant`
@@ -343,32 +846,33 @@ ALTER TABLE `merchant`
   ADD PRIMARY KEY (`merchant_id`);
 
 --
--- Indexes for table `offer`
+-- Indexes for table `promo`
 --
-ALTER TABLE `offer`
-  ADD PRIMARY KEY (`offer_id`),
+ALTER TABLE `promo`
+  ADD PRIMARY KEY (`promo_id`),
   ADD KEY `merchant_id` (`merchant_id`);
 
 --
--- Indexes for table `offer_renewal`
+-- Indexes for table `settlement_report_history_coupled`
 --
-ALTER TABLE `offer_renewal`
-  ADD PRIMARY KEY (`renewal_id`),
-  ADD KEY `offer_id` (`offer_id`);
+ALTER TABLE `settlement_report_history_coupled`
+  ADD PRIMARY KEY (`coupled_report_id`),
+  ADD KEY `settlement_report_history_ibfk1` (`merchant_id`),
+  ADD KEY `settlement_report_history_ibfk2` (`generated_by`),
+  ADD KEY `settlement_report_history_ibfk3` (`store_id`);
 
 --
--- Indexes for table `pg_fee_rate`
+-- Indexes for table `settlement_report_history_decoupled`
 --
-ALTER TABLE `pg_fee_rate`
-  ADD PRIMARY KEY (`pg_fee_id`);
+ALTER TABLE `settlement_report_history_decoupled`
+  ADD PRIMARY KEY (`decoupled_report_id`);
 
 --
 -- Indexes for table `store`
 --
 ALTER TABLE `store`
   ADD PRIMARY KEY (`store_id`),
-  ADD KEY `merchant_id` (`merchant_id`),
-  ADD KEY `store_ibfk_2` (`legal_entity_id`);
+  ADD KEY `merchant_id` (`merchant_id`);
 
 --
 -- Indexes for table `transaction`
@@ -376,8 +880,7 @@ ALTER TABLE `store`
 ALTER TABLE `transaction`
   ADD PRIMARY KEY (`transaction_id`),
   ADD KEY `store_id` (`store_id`),
-  ADD KEY `offer_id` (`offer_id`),
-  ADD KEY `pg_fee_id` (`pg_fee_id`);
+  ADD KEY `offer_id` (`promo_id`);
 
 --
 -- Indexes for table `user`
@@ -396,37 +899,43 @@ ALTER TABLE `activity_history`
   ADD CONSTRAINT `activity_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
--- Constraints for table `category_history`
+-- Constraints for table `fee`
 --
-ALTER TABLE `category_history`
-  ADD CONSTRAINT `category_history_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
+ALTER TABLE `fee`
+  ADD CONSTRAINT `fee_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
 
 --
--- Constraints for table `offer`
+-- Constraints for table `fee_history`
 --
-ALTER TABLE `offer`
-  ADD CONSTRAINT `offer_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
+ALTER TABLE `fee_history`
+  ADD CONSTRAINT `fee_history_ibfk_1` FOREIGN KEY (`fee_id`) REFERENCES `fee` (`fee_id`);
 
 --
--- Constraints for table `offer_renewal`
+-- Constraints for table `promo`
 --
-ALTER TABLE `offer_renewal`
-  ADD CONSTRAINT `offer_renewal_ibfk_1` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`);
+ALTER TABLE `promo`
+  ADD CONSTRAINT `promo_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
+
+--
+-- Constraints for table `settlement_report_history_coupled`
+--
+ALTER TABLE `settlement_report_history_coupled`
+  ADD CONSTRAINT `settlement_report_history_ibfk1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`),
+  ADD CONSTRAINT `settlement_report_history_ibfk2` FOREIGN KEY (`generated_by`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `settlement_report_history_ibfk3` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`);
 
 --
 -- Constraints for table `store`
 --
 ALTER TABLE `store`
-  ADD CONSTRAINT `store_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`),
-  ADD CONSTRAINT `store_ibfk_2` FOREIGN KEY (`legal_entity_id`) REFERENCES `legal_entity_name` (`legal_entity_id`);
+  ADD CONSTRAINT `store_ibfk_1` FOREIGN KEY (`merchant_id`) REFERENCES `merchant` (`merchant_id`);
 
 --
 -- Constraints for table `transaction`
 --
 ALTER TABLE `transaction`
   ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
-  ADD CONSTRAINT `transaction_ibfk_2` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`offer_id`),
-  ADD CONSTRAINT `transaction_ibfk_3` FOREIGN KEY (`pg_fee_id`) REFERENCES `pg_fee_rate` (`pg_fee_id`);
+  ADD CONSTRAINT `transaction_ibfk_2` FOREIGN KEY (`promo_id`) REFERENCES `promo` (`promo_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

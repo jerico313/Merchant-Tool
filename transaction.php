@@ -9,59 +9,15 @@ function displayOrder() {
   if ($result->num_rows > 0) {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
-          echo "<tr data-id='" . $row['order_id'] . "'>";
-          echo "<td>" . $row['order_id'] . "</td>";
-          echo "<td>" . $row['transaction_date'] . "</td>";
-          echo "<td>" . $row['customer_name'] . "</td>";
-          echo "<td>" . $row['customer_id'] . "</td>";
-          echo "<td>" . $row['payment_status'] . "</td>";
-          echo "<td>" . $row['payment'] . "</td>";
-          echo "<td>" . $row['merchant_name'] . "</td>";
-          echo "<td>" . $row['merchant_id'] . "</td>";
-          echo "<td>" . $row['store_name'] . "</td>";
-          echo "<td>" . $row['store_id'] . "</td>";
-          echo "<td>" . $row['promo_codes'] . "</td>";
-          echo "<td>" . $row['promo_type'] . "</td>";
-          echo "<td>" . $row['claim_id'] . "</td>";
-          
-          echo "<td>" . number_format($row['voucher_price'], 2) . "</td>";
-          echo "<td>" . number_format($row['total_actual_sales'], 2) . "</td>";
-          echo "<td style='text-align:center;background-color:transparent;border-bottom: 1px solid #808080;'>";
-          
-          echo "</td>";
-          echo "</tr>";
-          $count++;
-      }
-  }
-
-  $conn->close();
-}
-?>
-<?php
-function displayMerchant() {
-  include("inc/config.php");
-
-  $sql = "SELECT * FROM transaction";
-  $result = $conn->query($sql);
-
-  if ($result->num_rows > 0) {
-      $count = 1;
-      while ($row = $result->fetch_assoc()) {
-          echo "<tr data-uuid='" . $row['transaction_id'] . "'>";
+          echo "<tr data-id='" . $row['transaction_id'] . "'>";
           echo "<td style='text-align:center;'>" . $row['transaction_id'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['claim_id'] . "</td>";
-          echo "<td style='text-align:center;'>" . number_format($row['gross_sale'], 2) . "</td>";
-          echo "<td style='text-align:center;'>" . number_format($row['discount'], 2) . "</td>";
-          echo "<td style='text-align:center;'>" . $row['mode_of_payment'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['payment_status'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['pg_fee_id'] . "</td>";
-          echo "<td style='text-align:center;'>";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='editEmployee(" . $row['transaction_id'] . ")'>View</button> ";
-          echo "</td>";
+            echo "<td style='text-align:center;'>" . $row['store_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['gross_sales'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['mode_of_payment'] . "</td>";
           echo "</tr>";
           $count++;
       }
@@ -97,7 +53,7 @@ function displayMerchant() {
     }
 
     .title{
-      font-size: 30px; 
+      font-size: 40px; 
       font-weight: bold; 
       margin-right: auto; 
       padding-left: 5vh;
@@ -224,7 +180,7 @@ function displayMerchant() {
   <div class="custom-box pt-4">
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
-        <p class="title">Transaction</p>
+        <p class="title">Transactions</p>
         <!-- Form to upload file -->
         
         <a href="upload_transaction.php"><button type="button" class="btn btn-secondary check-report"><i class="fa-solid fa-upload"></i> Upload Orders</button></a>
@@ -232,26 +188,17 @@ function displayMerchant() {
       </div>
       <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
         <div class="table-container">
-          <table id="example" class="table bord" style="width:250%;">
+          <table id="example" class="table bord" style="width:110%;">
             <thead>
               <tr>
-                <th>Order ID</th>
-                <th>Transaction Date</th>
-                <th>Customer Name</th>
-                <th>Customer ID</th>
-                <th>Payment Status</th>
-                <th>Payment</th>
-                <th>Merchant Name</th>
-                <th>Merchant ID</th>
-                <th>Store Name</th>
-                <th>Store ID</th>
-                <th>Promo Codes</th>
-                <th>Promo Type</th>
-                <th>Claim ID</th>
-                <th>Gross Sale</th>
-                <th>Voucher Price</th>
-                <th>Total Actual Sales</th>
-                <th>Action</th>
+              <th>Transaction ID</th>
+              <th>Store ID</th>
+              <th>Offer ID</th>
+              <th>Customer ID</th>
+              <th>Customer Name</th>
+              <th>Transaction Date</th>
+              <th>Gross Sale</th>
+              <th>Mode of Payment</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -267,6 +214,7 @@ function displayMerchant() {
 <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+<script src="./js/script.js"></script>
 
 <script>
   // JavaScript to display filename and preview

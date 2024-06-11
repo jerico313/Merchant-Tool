@@ -20,7 +20,6 @@
   align-items: center;
 }
 
-  
 .dropdown-menu li a {
   width: auto;
   display: block;
@@ -126,6 +125,18 @@ th{
   margin-top:15px;
 }
 
+.clear{
+  display: inline-block;
+  color: black;
+  background-color: #E8C0AE;
+  border:solid  #E8C0AE 2px;
+  width:150px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top:15px;
+  margin-right:10px;
+}
+
 .add_merchant{
   display: inline-block;
   background-color: #4BB0B8;
@@ -135,6 +146,13 @@ th{
   border-radius: 20px;
   cursor: pointer;
   margin-top:15px;
+}
+
+.gcash{
+  color:#fff;
+  width:150px !important;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 .upload-btn {
@@ -313,6 +331,17 @@ td{
   border-bottom: 1px solid #808080 !important;
 }
 
+th.month{
+  background-color: transparent !important;
+  color:#E96529 !important;
+}
 
+th.prev.available{
+  background-color: transparent !important;
+  color:#E96529 !important;
+}
 
-
+th.next.available{
+  background-color: transparent !important;
+  color:#E96529 !important;
+}
