@@ -154,12 +154,12 @@
     <div class="row">
       <div class="col">
         <p>Total Outstanding Ammount</p>
-        <p>Less:<span style="padding-left:50px;">Total Commission Fees</span></p>
+        <p>Less:<span style="padding-left:48px;">Total Commission Fees</span></p>
         <p style="padding-left:75px;">Total Payment Gateway Fees</p>
         <p style="padding-left:75px;">Bank Fees</p>
         <p style="padding-left:75px;">CWT from Gross Sales</p>
         <p>Add:<span style="padding-left:50px;">CWT from Transaction Fees</span></p>
-        <p style="padding-left:80px;">CWT from PG Fees</p>
+        <p style="padding-left:75px;">CWT from PG Fees</p>
         <br>
         <p style="font-weight:bold;">Total Amount Paid Out</p>
       </div>
