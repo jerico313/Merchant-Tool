@@ -12,7 +12,6 @@ function displayMerchant() {
       while ($row = $result->fetch_assoc()) {
           $shortMerchantId = substr($row['merchant_id'], 0, 8);
           echo "<tr data-uuid='" . $row['merchant_id'] . "' data-partnership-type='" . strtolower($row['merchant_partnership_type']) . "'>";
-          echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['merchant_id'] . "'></center></td>";
           echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
           echo "<td style='text-align:center;' class='partnership-type'>" . $row['merchant_partnership_type'] . "</td>";
@@ -23,6 +22,7 @@ function displayMerchant() {
           $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['merchant_id'] . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['merchant_id'] . "\")'>Edit</button> ";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['merchant_id'] . "\")'>Check Report</button> ";
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -94,6 +94,7 @@ function displayMerchant() {
       box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
       -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
       -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
+      width:15% ;
     }
 
     select {
@@ -126,13 +127,12 @@ function displayMerchant() {
         <table id="example" class="table bord" style="width:110%;">
         <thead>
             <tr>
-                <th><center><input type="checkbox" style="accent-color:#E96529;" class="store-checkbox" id="checkAll"></center></th>
                 <th>Merchant ID</th>
-                <th style="width:20%;">Merchant Name</th>
+                <th style="width:30% !importnat;">Merchant Name</th>
                 <th>Merchant Partnership Type</th>
                 <th>Merchant Type</th>
                 <th>Business Address</th>
-                <th>Email Address</th>
+                <th >Email Address</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -229,11 +229,11 @@ $(document).ready(function() {
 function editMerchant(merchantUuid) {
     // Fetch the current data of the selected merchant
     var merchantRow = $('#dynamicTableBody').find('tr[data-uuid="' + merchantUuid + '"]');
-    var merchantName = merchantRow.find('td:nth-child(3)').text();
-    var merchantPartnershipType = merchantRow.find('td:nth-child(4)').text();
-    var merchantType = merchantRow.find('td:nth-child(5)').text();
-    var businessAddress = merchantRow.find('td:nth-child(6)').text();
-    var emailAddress = merchantRow.find('td:nth-child(7)').text();
+    var merchantName = merchantRow.find('td:nth-child(2)').text();
+    var merchantPartnershipType = merchantRow.find('td:nth-child(3)').text();
+    var merchantType = merchantRow.find('td:nth-child(4)').text();
+    var businessAddress = merchantRow.find('td:nth-child(5)').text();
+    var emailAddress = merchantRow.find('td:nth-child(6)').text();
 
     // Set values in the edit modal
     $('#merchantId').val(merchantUuid);
@@ -261,7 +261,7 @@ $(document).ready(function() {
     $('#example').DataTable({
         scrollX: true,
         columnDefs: [
-          { orderable: false, targets: [ 3, 4, 5, 6, 7] }    // Disable sorting for the first column
+          { orderable: false, targets: [ 2, 3, 4, 5, 6] }    // Disable sorting for the first column
         ],
         order: []  // Ensure no initial ordering
     });

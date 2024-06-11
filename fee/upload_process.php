@@ -1,6 +1,6 @@
 <?php
-require_once("header.php");
-require_once("inc/config.php");
+require_once("../header.php");
+require_once("../inc/config.php");
 
 // Check if the file is uploaded
 if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != ''){

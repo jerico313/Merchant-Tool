@@ -19,7 +19,6 @@ function displayStore($merchant_id) {
         while ($row = $result->fetch_assoc()) {
             $shortStoreId = substr($row['store_id'], 0, 8);
             echo "<tr data-uuid='" . $row['store_id'] . "'>";
-            echo "<td><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' value='" . $row['store_id'] . "'></center></td>";
             echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
             echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>"; // Assuming legal_entity_name is a column in store table now
@@ -171,7 +170,6 @@ function displayStore($merchant_id) {
                 <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th><center><input type='checkbox' style='accent-color:#E96529;' class='store-checkbox' id='checkAll'></center></th>
                             <th>Store ID</th>
                             <th>Store Name</th>
                             <th>Legal Entity Name</th>
@@ -246,7 +244,7 @@ $(document).ready(function() {
     $('#example').DataTable({
         scrollX: true,
         columnDefs: [
-          { orderable: false, targets: [ 3, 4, 5] }    // Disable sorting for the first column
+          { orderable: false, targets: [ 2, 3, 4] }    // Disable sorting for the first column
         ],
         order: []  // Ensure no initial ordering
     });
@@ -255,9 +253,9 @@ $(document).ready(function() {
 function editStore(storeId) {
     // Fetch the current data of the selected store
     var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
-    var storeName = storeRow.find('td:nth-child(3)').text();
-    var legalEntityName = storeRow.find('td:nth-child(4)').text();
-    var storeAddress = storeRow.find('td:nth-child(5)').text();
+    var storeName = storeRow.find('td:nth-child(2)').text();
+    var legalEntityName = storeRow.find('td:nth-child(3)').text();
+    var storeAddress = storeRow.find('td:nth-child(4)').text();
     var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>"; // Set from PHP
     var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; // Set from PHP
 
