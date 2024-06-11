@@ -13,11 +13,13 @@
 }
 
 .login-container {
+ 
   width: 300px;
   background-color: none;
   padding:30px;
   align-items: center;
 }
+
   
 .dropdown-menu li a {
   width: auto;
@@ -310,3 +312,7 @@ td{
   background-color:transparent !important;
   border-bottom: 1px solid #808080 !important;
 }
+
+
+
+
