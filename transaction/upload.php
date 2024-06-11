@@ -71,11 +71,11 @@
 <body>
 <div class="cont-box">
   <div class="custom-box pt-4">
-    <a href="transaction.php"><p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p></a>
+    <a href="index.php"><p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p></a>
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
         <p class="title">Upload Transactions</p>
-        <form id="uploadForm" action="upload_transaction_process.php" method="post" enctype="multipart/form-data">
+        <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
       </div>
 
       <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">

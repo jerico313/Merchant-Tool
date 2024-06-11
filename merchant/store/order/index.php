@@ -5,33 +5,45 @@ $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 
-function displayOffers($merchant_id) {
+function displayOffers($store_id) {
     include("../../../inc/config.php");
 
-    $sql = "SELECT * FROM transaction_summary_view WHERE store_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $merchant_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Check if connection was successful
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $shortTransactiontId = substr($row['transaction_id'], 0, 8);
-            $shortStoreId = substr($row['store_id'], 0, 8);
-            $shortPromoId = substr($row['promo_id'], 0, 8);
-            echo "<tr>";
-            echo "<td style='text-align:center;'>" . $shortTransactiontId . "</td>";
-            echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
-            echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['gross_amount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['discount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['amount_discounted'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
-            echo "</tr>";
+    $sql = "SELECT * FROM transaction WHERE store_id = ?";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param("s", $store_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $shortTransactionId = substr($row['transaction_id'], 0, 8);
+                $shortStoreId = substr($row['store_id'], 0, 8);
+                $shortPromoId = substr($row['promo_id'], 0, 8);
+                echo "<tr>";
+                echo "<td style='text-align:center;'>" . htmlspecialchars($shortTransactionId) . "</td>";
+                echo "<td style='text-align:center;'>" . htmlspecialchars($shortStoreId) . "</td>";
+                echo "<td style='text-align:center;'>" . htmlspecialchars($shortPromoId) . "</td>";
+                echo "<td style='text-align:center;'>" . htmlspecialchars($row['customer_id']) . "</td>";
+                echo "<td style='text-align:center;'>" . htmlspecialchars($row['customer_name']) . "</td>";
+                echo "<td style='text-align:center;'>" . htmlspecialchars($row['transaction_date']) . "</td>";
+                echo "<td style='text-align:center;'>" . htmlspecialchars($row['gross_amount']) . "</td>";
+                echo "<td style='text-align:center;'>" . htmlspecialchars($row['discount']) . "</td>";
+                echo "<td style='text-align:center;'>" . htmlspecialchars($row['amount_discounted']) . "</td>";
+                echo "<td style='text-align:center;'>" . htmlspecialchars($row['payment']) . "</td>";
+                echo "</tr>";
+            }
         }
+
+        $stmt->close();
+    } else {
+        echo "Error preparing statement: " . $conn->error;
     }
 
     $conn->close();
