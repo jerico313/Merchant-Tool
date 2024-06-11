@@ -29,8 +29,7 @@ function displayOffers($merchant_id, $merchant_name) {
             echo "<td style='text-align:center;'>" . $row['billable_date'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['status'] . "</td>";
             echo "<td style='text-align:center;'>";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\")'>View History</button> ";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['promo_id'] . "\")'>Renew</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")'>View History</button> ";
             echo "</td>";
             echo "</tr>";
         }
@@ -176,7 +175,6 @@ function displayOffers($merchant_id, $merchant_name) {
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="storeDropdown">
                                     <li><a class="dropdown-item" href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Store</a></li>
-                                    <li><a class="dropdown-item" href="../category/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Category">Category</a></li>
                                 </ul>
                             </li>
                         </ol>
@@ -225,8 +223,8 @@ $(document).ready(function() {
     });
 });
 
-function viewHistory(storeId, merchantName, offerId) {
-    window.location.href = 'history.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&offer_id=' + encodeURIComponent(offerId);
+function viewHistory(storeId, merchantName, offerId, promoCode) {
+    window.location.href = 'history.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&offer_id=' + encodeURIComponent(offerId) + '&promo_code=' + encodeURIComponent(promoCode);
 }
 </script>
 </body>

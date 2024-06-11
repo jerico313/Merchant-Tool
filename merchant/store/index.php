@@ -156,7 +156,6 @@ function displayStore($merchant_id) {
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="storeDropdown">
                                     <li><a class="dropdown-item" href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Promo</a></li>
-                                    <li><a class="dropdown-item" href="../category/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">Category</a></li>
                                 </ul>
                             </li>
                         </ol>

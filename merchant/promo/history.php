@@ -1,15 +1,15 @@
 <?php include("../../header.php")?>
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
-$offer_id = isset($_GET['offer_id']) ? $_GET['offer_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$promo_code = isset($_GET['promo_code']) ? $_GET['promo_code'] : '';
 
 function displayOfferHistory($offer_id, $merchant_name) {
     include("../../inc/config.php");
 
-    $sql = "SELECT * FROM offer_history WHERE offer_id = ?";
+    $sql = "SELECT * FROM promo WHERE promo_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $offer_id);
+    $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -17,13 +17,9 @@ function displayOfferHistory($offer_id, $merchant_name) {
         while ($row = $result->fetch_assoc()) {
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             echo "<tr>";
-            echo "<td style='text-align:center;'>" . $row['renewal_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['offer_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['billable_date'] . "</td>";
-            $statusColor = $row['status'] == 'Active' ? '#95DD59' : '#E8C0AE';
-          echo "<td><center><div style='background-color: $statusColor !important; padding: 2px; border-radius: 20px;width:70px;'>" . $row['status'] . "</div></center></td>";
             echo "</tr>";
         }
     }
@@ -56,7 +52,7 @@ function displayOfferHistory($offer_id, $merchant_name) {
             font-weight: bold; 
             margin-right: auto; 
             padding-left: 5vh;
-            color: #E96529;
+            color: #4BB0B8;
         }
         .voucher-type {
             padding-bottom: 0px; 
@@ -149,23 +145,20 @@ function displayOfferHistory($offer_id, $merchant_name) {
                             <li class="breadcrumb-item"><a href="#" onclick="location.reload();" style="color:#E96529; font-size:14px;">History</a></li>
                         </ol>
                     </nav>
-                    <p class="title_store" style="font-size:30px;"><?php echo htmlspecialchars($merchant_name); ?></p>
+                    <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($promo_code); ?></p>
                 </div>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>Promo ID</th>
-                            <th>Offer ID</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Billable Date</th>
-                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
-                    <?php displayOfferHistory($offer_id, $merchant_name); ?>
+                    <?php displayOfferHistory($merchant_id, $merchant_name); ?>
                     </tbody>
                 </table>
             </div>

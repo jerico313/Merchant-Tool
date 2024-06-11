@@ -75,7 +75,7 @@
                         <i class="fa-solid fa-user fa-lg"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a></li>
+                        <li><a class="dropdown-item" href="/Merchant-Tool/users/"> <i class="fa-solid fa-users"></i> Manage Users</a></li>
                         <li><a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
                         <li><a class="dropdown-item" href="/Merchant-Tool/activity_history/"><i class="fa-solid fa-user-clock"></i>  Activity History</a></li>
                     </ul>

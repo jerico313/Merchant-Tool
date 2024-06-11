@@ -8,42 +8,44 @@ $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 function displayOffers($store_id) {
     include("../../../inc/config.php");
 
-    // Check if connection was successful
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "SELECT * FROM transaction WHERE store_id = ?";
+    $sql = "SELECT * FROM transaction_summary_view WHERE `Store ID` = ?";
     $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $store_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($stmt) {
-        $stmt->bind_param("s", $store_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $shortTransactionId = substr($row['transaction_id'], 0, 8);
-                $shortStoreId = substr($row['store_id'], 0, 8);
-                $shortPromoId = substr($row['promo_id'], 0, 8);
-                echo "<tr>";
-                echo "<td style='text-align:center;'>" . htmlspecialchars($shortTransactionId) . "</td>";
-                echo "<td style='text-align:center;'>" . htmlspecialchars($shortStoreId) . "</td>";
-                echo "<td style='text-align:center;'>" . htmlspecialchars($shortPromoId) . "</td>";
-                echo "<td style='text-align:center;'>" . htmlspecialchars($row['customer_id']) . "</td>";
-                echo "<td style='text-align:center;'>" . htmlspecialchars($row['customer_name']) . "</td>";
-                echo "<td style='text-align:center;'>" . htmlspecialchars($row['transaction_date']) . "</td>";
-                echo "<td style='text-align:center;'>" . htmlspecialchars($row['gross_amount']) . "</td>";
-                echo "<td style='text-align:center;'>" . htmlspecialchars($row['discount']) . "</td>";
-                echo "<td style='text-align:center;'>" . htmlspecialchars($row['amount_discounted']) . "</td>";
-                echo "<td style='text-align:center;'>" . htmlspecialchars($row['payment']) . "</td>";
-                echo "</tr>";
-            }
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $shortStoreId = substr($row['Store ID'], 0, 8);
+            $shortMerchantId = substr($row['Merchant ID'], 0, 8);
+            $shortPromoId = substr($row['Promo ID'], 0, 8);
+            echo "<tr>";
+            echo "<td style='text-align:center;'>" . $row['Transaction ID']. "</td>";
+            echo "<td style='text-align:center;'>" . $row['Transaction Date'] . "</td>";
+            echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Merchant Name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Store Name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Customer ID'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Customer Name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Promo Code'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Promo Group'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Promo Type'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Status'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Gross Amount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Discount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Amount Discounted'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Payment'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Commission Type'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Commission Rate'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Commission Amount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Total Billing'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['PG Fee Rate'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['PG Fee Amount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Amount to be Disbursed'] . "</td>";
+            echo "</tr>";
         }
-
-        $stmt->close();
-    } else {
-        echo "Error preparing statement: " . $conn->error;
     }
 
     $conn->close();
@@ -191,19 +193,33 @@ function displayOffers($store_id) {
                 </div>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                <table id="example" class="table bord" style="width:120%;">
+                <table id="example" class="table bord" style="width:280%;">
                     <thead>
                         <tr>
                             <th>Transaction ID</th>
+                            <th>Transaction Date</th>
+                            <th>Merchant ID</th>
+                            <th>Merchant Name</th>
                             <th>Store ID</th>
-                            <th>Promo ID</th>
+                            <th>Store Name</th>
                             <th>Customer ID</th>
                             <th>Customer Name</th>
-                            <th>Transaction Date</th>
+                            <th>Promo ID</th>
+                            <th>Promo Code</th>
+                            <th>Promo Group</th>
+                            <th>Promo Type</th>
+                            <th>Status</th>
                             <th>Gross Amount</th>
                             <th>Discount</th>
                             <th>Amount Discounted</th>
                             <th>Payment</th>
+                            <th>Commission Type</th>
+                            <th>Commission Rate</th>
+                            <th>Commission Amount</th>
+                            <th>Total Billing</th>
+                            <th>PG Fee Rate</th>
+                            <th>PG Fee Amount</th>
+                            <th>Amount to be Disbursed</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">

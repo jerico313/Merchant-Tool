@@ -1,3 +1,10 @@
+<?php
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
+$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
+$legal_entity_name = isset($_GET['legal_entity_name']) ? $_GET['legal_entity_name'] : '';
+$store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,13 +89,13 @@
   <div class="container" style="padding:70px;" id="content">
   <p style="text-align:center;font-size:20px;font-weight:900;">SETTLEMENT REPORT</p>
     <p class="text-right" style="font-weight:bold;font-size:40px;">
-      <img src="../images/booky2.png" alt="booky" width="150" height="50">
+      <img src="../../images/booky2.png" alt="booky" width="150" height="50">
     </p>
     <div class="row">
       <div class="col-8">
-        <p>Business Name: <span style="margin-left:5px;font-weight:bold;">Epicurean Partners Exchange Inc.</span></p>
-        <p>Brand Name: <span style="margin-left:20px;font-weight:bold;">Kenny Rogers</span></p>
-        <p>Address: <span style="margin-left:40px;font-weight:bold;">10th Floor Lepanto Building Paseo De Roxas Bel-Air, Makati City</span></p>
+        <p>Business Name: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($legal_entity_name); ?></span></p>
+        <p>Brand Name: <span style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($store_name); ?></span></p>
+        <p>Address: <span style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($store_address); ?></span></p>
       </div>
       <div class="col-4">
         <p>Settlement Date: <span style="margin-left:25px;font-weight:bold;">June 30, 2023</span></p>
@@ -101,9 +108,9 @@
       <div class="col">
         <p>Total Number of Successful Orders</p>
         <br>
-        <p>Total Restaurant Sales via Booky</p>
-        <p>Total Amount Already Received</p>
-        <p style="font-weight:bold;">Total Amount Outstanding Amount</p>
+        <p>Total Gross Sales</p>
+        <p>Total Discount</p>
+        <p style="font-weight:bold;">Totals Outstanding Amount</p>
       </div>
       <div class="col text-right">
         <p style="font-weight:bold;padding-right:80px;">34 order/s</p>
@@ -154,11 +161,11 @@
     <div class="row">
       <div class="col">
         <p>Total Outstanding Ammount</p>
-        <p>Less:<span style="padding-left:48px;">Total Commission Fees</span></p>
+        <p>Less:<span style="padding-left:50px;">Total Commission Fees</span></p>
         <p style="padding-left:75px;">Total Payment Gateway Fees</p>
         <p style="padding-left:75px;">Bank Fees</p>
         <p style="padding-left:75px;">CWT from Gross Sales</p>
-        <p>Add:<span style="padding-left:50px;">CWT from Transaction Fees</span></p>
+        <p>Add:<span style="padding-left:54px;">CWT from Transaction Fees</span></p>
         <p style="padding-left:75px;">CWT from PG Fees</p>
         <br>
         <p style="font-weight:bold;">Total Amount Paid Out</p>
@@ -192,7 +199,8 @@
   const content = document.getElementById('content');
 
   download_button.addEventListener('click', async function () {
-    const filename = 'kenny_rogers.pdf';
+    // Set the filename dynamically based on the store name
+    const filename = '<?php echo htmlspecialchars($store_name) ?>.pdf';
 
     try {
       const opt = {
@@ -208,6 +216,7 @@
     }
   });
 </script>
+
 
 </body>
 </html>

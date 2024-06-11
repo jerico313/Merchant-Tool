@@ -4,6 +4,7 @@ function displayOrder() {
   include("../inc/config.php");
 
   $sql = "SELECT * FROM transaction";
+  
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {

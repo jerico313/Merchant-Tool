@@ -1,17 +1,28 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $userId = $_POST['userId'];
-  $status = $_POST['status'];
+include("../inc/config.php");
 
-  include("../inc/config.php");
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $userId = $_POST['userId'];
+    $status = $_POST['status'];
 
-  $sql = "UPDATE user SET status = '$status' WHERE user_id = '$userId'";
-  if ($conn->query($sql) === TRUE) {
-      echo "Status updated successfully";
-  } else {
-      echo "Error updating status: " . $conn->error;
-  }
+    // Ensure the status is either 'active' or 'inactive'
+    if (!in_array($status, ['active', 'inactive'])) {
+        echo json_encode(['error' => 'Invalid status value']);
+        exit;
+    }
 
-  $conn->close();
+    // Prepare and bind
+    $stmt = $conn->prepare("UPDATE user SET status = ? WHERE user_id = ?");
+    $stmt->bind_param("ss", $status, $userId);
+
+    if ($stmt->execute()) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['error' => 'Failed to update status']);
+    }
+
+    $stmt->close();
 }
+
+$conn->close();
 ?>

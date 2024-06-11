@@ -94,7 +94,7 @@ function displayMerchant() {
       box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
       -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
       -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
-      width:15% ;
+      width:20% ;
     }
 
     select {
@@ -178,7 +178,7 @@ function displayMerchant() {
           </div>
           <div class="mb-3">
             <label for="emailAddress" class="form-label">Email Address</label>
-            <input type="email" class="form-control" id="emailAddress" name="emailAddress">
+            <input type="text" class="form-control" id="emailAddress" name="emailAddress">
           </div>
         
       </div>
@@ -251,6 +251,10 @@ function editMerchant(merchantUuid) {
 function viewMerchant(merchantId, merchantName) {
     window.location.href = 'store/index.php?merchant_id=' + encodeURIComponent(merchantId) + '&merchant_name=' + encodeURIComponent(merchantName);
 }
+
+function checkReport(storeId, merchantName, storeName, legalEntityName, storeAddress) {
+    window.location.href = 'settlement_report.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&store_id=' + encodeURIComponent(storeId) + '&merchant_name=' + encodeURIComponent(merchantName) + '&store_name=' + encodeURIComponent(storeName) + '&legal_entity_name=' + encodeURIComponent(legalEntityName) + '&store_address=' + encodeURIComponent(storeAddress);
+}
 </script>
 <script>
 $(document).ready(function() {
@@ -266,6 +270,8 @@ $(document).ready(function() {
         order: []  // Ensure no initial ordering
     });
 });
+
+
 </script>
 </body>
 </html>

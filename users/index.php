@@ -10,20 +10,18 @@ function displayUser() {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
           $shortUserId = substr($row['user_id'], 0, 8);
+          $checked = $row['status'] == 'Active' ? 'checked' : '';
           echo "<tr data-id='" . $row['user_id'] . "'>";
           echo "<td style='text-align:center;'>" . $shortUserId . "</td>";
           echo "<td style='text-align:center;'>" . $row['name'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['email_address'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['type'] . "</td>";
-          if ($row['status'] == '') {
-            // Display two buttons in a column if status is blank
-            echo "<td style='text-align:center;'>
-                    <button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='changeStatus(\"" . $row['user_id'] . "\", \"Active\")'>Active</button>
-                    <button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='changeStatus(\"" . $row['user_id'] . "\", \"Inactive\")'>Inactive</button>
-                  </td>";
-        } else {
-            echo "<td style='text-align:center;'>". $row['status'] . "</td>";
-        }
+          echo "<td style='text-align:center;'>" . ucfirst($row['status']) . "</td>";
+          echo "<td style='text-align:center;'>";
+          echo "<div class='form-check form-switch form-switch-lg' style='display: flex; justify-content: center; accent-color: red;'>";
+          echo "<input class='form-check-input' type='checkbox' role='switch' id='flexSwitchCheckChecked' $checked>";
+          echo "</div>";
+          echo "</td>";
           echo "</tr>";
           $count++;
       }
@@ -31,9 +29,7 @@ function displayUser() {
 
   $conn->close();
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,164 +62,135 @@ function displayUser() {
       padding-left: 5vh;
       color: #E96529;
     }
+    
+    .form-switch.form-switch-lg .form-check-input {
+  height: 2rem;
+  width: calc(3rem + 0.75rem);
+  border-radius: 4rem;
+}
 
+.form-check-input:checked {
+    background-color: #28a745; /* Change this color to your desired checked color */
+    border-color: #28a745; /* Change this color to your desired checked color */
+  }
     .add-btns{
       padding-bottom: 0px; 
       padding-right: 5vh; 
       display: flex; 
       align-items: center;
     }
-
-
-    @media only screen and (max-width: 767px) {
-    table,
-    thead,
-    tbody,
-    th,
-    td,
-    tr {
-      display: block;
-      text-align:left !important;
-    }
-
-    thead tr,
-    tfoot tr {
-      position: absolute;
-      top: -9999px;
-      left: -9999px;
-    }
-
-    td {
-      border: none;
-      border-bottom: 1px solid #eee;
-      position: relative;
-      padding-left: 50% !important;
-    }
-
-    td:before {
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      width: 45%;
-      padding-right: 10px;
-      white-space: nowrap;
-      text-align:left !important;
-      font-weight:bold;
-    }
-
-    .table td:nth-child(1) {
-      background: #E96529;
-      height: 100%;
-      top: 0;
-      left: 0;
-      font-weight: bold;
-      color:#fff;
-    }
-
-    td:nth-of-type(1):before {
-      content: "Merchant ID";
-    }
-
-    td:nth-of-type(2):before {
-      content: "Merchant Name";
-    }
-
-    td:nth-of-type(3):before {
-      content: "Merchant Type";
-    }
-
-    td:nth-of-type(4):before {
-      content: "Legal Entity Name";
-    }
-
-    td:nth-of-type(5):before {
-      content: "Fullfillment Type";
-    }
-
-    .dataTables_length {
-      display: none;
-    }
-
-    .title{
-      font-size: 25px;
-      padding-left: 2vh;
-      padding-top:10px;
-    }
-  
-    .add-btns{
-      padding-right: 2vh;
-      padding-bottom: 10px;
-    }
-  }
 </style>
 </head>
 <body>
-<div class="cont-box">
-  <div class="custom-box pt-4">
-    <div class="sub" style="text-align:left;">
-      <div class="add-btns">
-        <p class="title">Users</p>
-        <!-- Form to upload file -->
-        
-        
-      </div>
-      <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-        <div class="table-container">
-          <table id="example" class="table bord" style="width:100%;">
-            <thead>
-              <tr>
-              <th>User ID</th>
-              <th>Name</th>
-              <th>Email Address</th>
-              <th>Type</th>
-              <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="dynamicTableBody">
-              <?php displayUser(); ?>
-            </tbody>
-          </table>
+  <div class="cont-box">
+    <div class="custom-box pt-4">
+      <div class="sub" style="text-align:left;">
+        <div class="add-btns">
+          <p class="title"> <i class="fa-solid fa-user-gear fa-sm"></i> Manage Users</p>
+        </div>
+        <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+          <div class="table-container">
+            <table id="example" class="table bord" style="width:100%;">
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Email Address</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="dynamicTableBody">
+                <?php displayUser(); ?>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
-<script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
-<script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
-<script src="./js/script.js"></script>
-<script>
-$(document).ready(function() {
-  if ( $.fn.DataTable.isDataTable('#example') ) {
-    $('#example').DataTable().destroy();
-  }
-  
-  $('#example').DataTable({
-    scrollX: true
-  });
-});
+  <!-- Modal -->
+  <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="backdrop-filter: blur(16px) saturate(180%);-webkit-backdrop-filter: blur(16px) saturate(180%);background-color: rgba(255, 255, 255, 0.40);border-radius: 12px;border: 1px solid rgba(209, 213, 219, 0.3);">
+   
+        <div class="modal-body text-center pt-5 pb-5" id="modalBody">
+          <!-- Content will be inserted by JavaScript -->
+        </div>
+        <div class="modal-footer text-center">
+                <button type="button" class="btn" data-bs-dismiss="modal" style="background-color:transparent;margin: 0 auto;">Cancel</button>
+                <button type="button" class="btn" id="confirmButton" style="background-color:transparent;margin: 0 auto;color: red;">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-function changeStatus(userId, status) {
-  // Make an AJAX call to update the status in the database
-  $.ajax({
-    type: 'POST',
-    url: 'update_status.php', // Create a PHP file to handle the status update
-    data: { userId: userId, status: status },
-    success: function(response) {
-      // Update the status in the table immediately after the button click
-      if (status === 'Active') {
-        $(`tr[data-id='${userId}'] td:nth-child(5)`).text('Active');
-      } else if (status === 'Inactive') {
-        $(`tr[data-id='${userId}'] td:nth-child(5)`).text('Inactive');
+  <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
+  <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
+  <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+  <script src="./js/script.js"></script>
+  <script>
+    $(document).ready(function() {
+      if ( $.fn.DataTable.isDataTable('#example') ) {
+        $('#example').DataTable().destroy();
       }
-    },
-    error: function(xhr, status, error) {
-      console.error('Error updating status: ' + error);
-    }
-  });
-}
-</script>
+
+      $('#example').DataTable({
+        scrollX: true
+      });
+
+      let selectedUserId;
+      let newStatus;
+      let originalChecked;
+
+      $('.form-check-input').on('change', function() {
+        selectedUserId = $(this).closest('tr').data('id');
+        newStatus = this.checked ? 'active' : 'inactive';
+        originalChecked = this.checked;
+        $('#modalBody').text(`Are you sure you want to make this user ${newStatus}?`);
+        $('#statusModal').modal('show');
+      });
+
+      $('#confirmButton').on('click', function() {
+        $('#statusModal').modal('hide');
+        changeStatus(selectedUserId, newStatus, originalChecked);
+      });
+
+      $('#statusModal').on('hidden.bs.modal', function () {
+        if ($('#confirmButton').data('confirmed') !== true) {
+          $('.form-check-input').each(function() {
+            if ($(this).closest('tr').data('id') === selectedUserId) {
+              $(this).prop('checked', !originalChecked);
+            }
+          });
+        }
+        $('#confirmButton').data('confirmed', false);
+      });
+
+      function changeStatus(userId, status, originalChecked) {
+        // Make an AJAX call to update the status in the database
+        $.ajax({
+          type: 'POST',
+          url: 'update_status.php', // Create a PHP file to handle the status update
+          data: { userId: userId, status: status },
+          success: function(response) {
+            $('#confirmButton').data('confirmed', true);
+            $(`tr[data-id='${userId}'] td:nth-child(5)`).text(status.charAt(0).toUpperCase() + status.slice(1));
+          },
+          error: function(xhr, status, error) {
+            console.error('Error updating status: ' + error);
+            $('.form-check-input').each(function() {
+              if ($(this).closest('tr').data('id') === userId) {
+                $(this).prop('checked', !originalChecked);
+              }
+            });
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
 
