@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2024 at 07:44 AM
+-- Generation Time: Jun 11, 2024 at 07:50 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -729,16 +729,6 @@ INSERT INTO `transaction` (`transaction_id`, `store_id`, `promo_id`, `customer_i
 ('1bc0f5fe-224b-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639121234345', 'Maria Demo', '2024-05-15 16:17:58', '20760.00', '5190.00', '15570.00', 'paymaya_credit_card', 'PRE-TRIAL', '2024-06-01 08:17:58', '2024-06-05 03:42:49'),
 ('8d1552bf-1cc3-11ef-8abb-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639123456789', 'Juan Person', '2024-05-28 09:25:43', '1484.00', '594.00', '890.00', 'gcash', 'BILLABLE', '2024-05-28 07:26:08', '2024-05-28 07:26:08'),
 ('e881c2e7-224a-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '639987654321', 'Anna Human', '2024-06-06 10:16:20', '15570.00', '3114.00', '12456.00', 'paymaya_credit_card', 'NOT BILLABLE', '2024-06-04 08:17:39', '2024-06-04 08:17:39');
-
---
--- Triggers `transaction`
---
-DELIMITER $$
-CREATE TRIGGER `generate_transaction_id` BEFORE INSERT ON `transaction` FOR EACH ROW BEGIN
-    SET NEW.transaction_id = UUID();
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
