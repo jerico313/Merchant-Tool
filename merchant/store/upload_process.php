@@ -2,17 +2,6 @@
 require_once("../../header.php");
 require_once("../../inc/config.php"); 
 
-// Function to generate a UUID
-function generateUUID() {
-    return sprintf(
-        '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-        mt_rand(0, 0xffff), mt_rand(0, 0xffff), // 32 bits for "time_low"
-        mt_rand(0, 0xffff), // 16 bits for "time_mid"
-        mt_rand(0, 0x0fff) | 0x4000, // 16 bits for "time_hi_and_version", four most significant bits holds version number 4
-        mt_rand(0, 0x3fff) | 0x8000, // 16 bits, 8 bits for "clk_seq_hi_res", 8 bits for "clk_seq_low", two most significant bits hold zero and one for variant DCE1.1
-        mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff) // 48 bits for "node"
-    );
-}
 
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
     $file_name = $_FILES['fileToUpload']['name'];
@@ -39,11 +28,9 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $stmt = $conn->prepare("INSERT INTO store (merchant_id, store_id, store_name, legal_entity_name, store_address) VALUES (?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        // Generate UUID for store_id
-        $store_id = generateUUID();
 
         // Bind parameters and execute the statement
-        $stmt->bind_param("sssss", $merchant_id, $store_id, $data[0], $data[1], $data[2]);
+        $stmt->bind_param("sssss", $merchant_id, $data[3], $data[2], $data[4], $data[5]);
         $stmt->execute();
     }
 

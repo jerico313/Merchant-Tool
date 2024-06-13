@@ -22,7 +22,7 @@ function displayMerchant() {
           $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['merchant_id'] . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['merchant_id'] . "\")'>Edit</button> ";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['merchant_id'] . "\")'>Check Report</button> ";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;'>Check Report</button> ";
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -250,10 +250,6 @@ function editMerchant(merchantUuid) {
 <script>
 function viewMerchant(merchantId, merchantName) {
     window.location.href = 'store/index.php?merchant_id=' + encodeURIComponent(merchantId) + '&merchant_name=' + encodeURIComponent(merchantName);
-}
-
-function checkReport(storeId, merchantName, storeName, legalEntityName, storeAddress) {
-    window.location.href = 'settlement_report.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&store_id=' + encodeURIComponent(storeId) + '&merchant_name=' + encodeURIComponent(merchantName) + '&store_name=' + encodeURIComponent(storeName) + '&legal_entity_name=' + encodeURIComponent(legalEntityName) + '&store_address=' + encodeURIComponent(storeAddress);
 }
 </script>
 <script>
