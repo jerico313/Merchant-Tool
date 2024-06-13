@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2024 at 10:10 AM
+-- Generation Time: Jun 13, 2024 at 10:26 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -865,9 +865,10 @@ CREATE TABLE `promo` (
   `promo_id` varchar(36) NOT NULL,
   `merchant_id` varchar(36) NOT NULL,
   `promo_code` varchar(100) NOT NULL,
-  `promo_amount` int(11) NOT NULL,
-  `promo_type` enum('Coupled','Decoupled') NOT NULL,
+  `promo_amount` int(11) NOT NULL DEFAULT 0,
+  `promo_fulfillment_type` enum('Coupled','Decoupled') NOT NULL,
   `promo_group` enum('Booky','Gcash','Unionbank','Gcash/Booky','UB/Booky') NOT NULL,
+  `promo_type` enum('% off','FREE','bundle','bogo','price off') NOT NULL,
   `promo_details` text NOT NULL,
   `remarks` text DEFAULT NULL,
   `bill_status` enum('PRE-TRIAL','BILLABLE','NOT BILLABLE') NOT NULL,
@@ -881,8 +882,8 @@ CREATE TABLE `promo` (
 -- Dumping data for table `promo`
 --
 
-INSERT INTO `promo` (`promo_id`, `merchant_id`, `promo_code`, `promo_amount`, `promo_type`, `promo_group`, `promo_details`, `remarks`, `bill_status`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
-('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', 100, 'Coupled', 'Gcash', 'Booky sample promo', '', 'BILLABLE', '2024-04-01', '2024-07-31', '2024-06-04 02:34:19', '2024-06-04 02:34:49');
+INSERT INTO `promo` (`promo_id`, `merchant_id`, `promo_code`, `promo_amount`, `promo_fulfillment_type`, `promo_group`, `promo_type`, `promo_details`, `remarks`, `bill_status`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
+('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', 100, 'Coupled', 'Gcash', 'bundle', 'Booky sample promo', '', 'BILLABLE', '2024-04-01', '2024-07-31', '2024-06-04 02:34:19', '2024-06-04 02:34:49');
 
 --
 -- Triggers `promo`
@@ -1123,7 +1124,7 @@ CREATE TABLE `transaction_summary_view` (
 ,`Promo ID` varchar(8)
 ,`Promo Code` varchar(100)
 ,`Promo Group` enum('Booky','Gcash','Unionbank','Gcash/Booky','UB/Booky')
-,`Promo Type` enum('Coupled','Decoupled')
+,`Promo Type` enum('% off','FREE','bundle','bogo','price off')
 ,`Gross Amount` decimal(10,2)
 ,`Discount` decimal(10,2)
 ,`Amount Discounted` decimal(10,2)
