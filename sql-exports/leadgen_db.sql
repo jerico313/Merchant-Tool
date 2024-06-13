@@ -1151,7 +1151,7 @@ CREATE TABLE `user` (
   `password` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `type` enum('Admin','User') NOT NULL DEFAULT 'User',
-  `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
+  `status` enum('Active','Inactive') NOT NULL DEFAULT 'Inactive',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
