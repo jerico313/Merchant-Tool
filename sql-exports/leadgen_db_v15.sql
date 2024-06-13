@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2024 at 10:57 AM
+-- Generation Time: Jun 13, 2024 at 10:26 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -253,7 +253,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_decoupled_report`
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Promo Fulfillment Type` = ''Decoupled''
         GROUP BY 
             `Merchant ID`');
 
@@ -327,7 +326,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_decoupled_report`
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Promo Fulfillment Type` = ''Decoupled''
         GROUP BY 
             `Merchant ID`');
 
@@ -563,7 +561,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_decoupled_report` (I
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Promo Fulfillment Type` = ''Decoupled''
         GROUP BY 
             `Store ID`');
 
@@ -637,321 +634,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_decoupled_report` (I
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Promo Fulfillment Type` = ''Decoupled''
         GROUP BY 
             `Store ID`');
-
-    PREPARE stmt_select FROM @sql_select;
-    EXECUTE stmt_select;
-    DEALLOCATE PREPARE stmt_select;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `merchant_coupled_report` (IN `merchant_id` VARCHAR(36), IN `start_date` DATE, IN `end_date` DATE)   BEGIN
-
-    DECLARE v_uuid VARCHAR(36);
-    SET v_uuid = UUID();
-
-    SET @sql_insert = CONCAT('INSERT INTO settlement_report_history_coupled 
-        (coupled_report_id, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_number, total_successful_orders, total_gross_sales, total_discount, total_outstanding_amount_1, leadgen_commission_rate_base, commission_rate, total_commission_fees_1, paymaya_pg_fee, paymaya_credit_card_pg_fee, maya_pg_fee, maya_checkout_pg_fee, gcash_miniapp_pg_fee, gcash_pg_fee, total_payment_gateway_fees_1, total_outstanding_amount_2, total_commission_fees_2, total_payment_gateway_fees_2, bank_fees, cwt_from_gross_sales, cwt_from_transaction_fees, cwt_from_pg_fees,total_amount_paid_out)
-        SELECT 
-            "', v_uuid, '" AS coupled_report_id, 
-	    `Merchant ID` AS merchant_id, 
-            merchant.legal_entity_name AS merchant_business_name, 
-            `Merchant Name` AS merchant_brand_name,
-            merchant.business_address AS business_address,
-            "', start_date, '" AS settlement_period_start,
-            "', end_date, '" AS settlement_period_end,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
-            COUNT(`Transaction ID`) AS total_successful_orders,
-            SUM(`Gross Amount`) AS total_gross_sales,
-            SUM(`Discount`) AS total_discount,
-            SUM(`Gross Amount` - `Discount`) AS total_outstanding_amount_1,
-            SUM(`Gross Amount` - `Discount`) AS leadgen_commission_rate_base,
-            `Commission Rate` AS commission_rate,
-            CASE
-                WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-                ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-            END AS total_commission_fees_1,
-            SUM(CASE WHEN `Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
-            SUM(CASE WHEN `Payment` = ''paymaya_credit_card'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
-            SUM(CASE WHEN `Payment` = ''maya'' THEN `PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
-            SUM(CASE WHEN `Payment` = ''maya_checkout'' THEN `PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
-            SUM(CASE WHEN `Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
-            SUM(CASE WHEN `Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
-            SUM(`PG Fee Amount`) AS total_payment_gateway_fees_1,
-            SUM(`Gross Amount` - `Discount`) AS total_outstanding_amount_2,
-	    CASE
-                WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-                ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-            END AS total_commission_fees_2,
-            SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
-	    10.00 AS bank_fees,
-    	    ROUND((SUM(`Gross Amount`)-SUM(`PG Fee Amount`)) / 2 * 0.01,2) AS cwt_from_gross_sales,
-	    CASE
-                WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
-	ROUND(SUM(`Gross Amount` - `Discount`)
-	- CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-            ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-        END
-	- SUM(`PG Fee Amount`)
-	- 10.00
-	- ROUND((SUM(`Gross Amount`)-SUM(`PG Fee Amount`)) / 2 * 0.01,2)
-	+ CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END
-	+ CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END,2) AS total_amount_paid_out
-        FROM 
-            `transaction_summary_view`
-	JOIN
-        `merchant` ON `Merchant ID` = merchant.`merchant_id`
-        WHERE 
-            `Merchant ID` = "', merchant_id, '"
-            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Promo Fulfillment Type` = ''Coupled''
-        GROUP BY 
-            `Merchant ID`');
-
-    PREPARE stmt_insert FROM @sql_insert;
-    EXECUTE stmt_insert;
-    DEALLOCATE PREPARE stmt_insert;
-
-    SET @sql_select = CONCAT('SELECT 
-        "', v_uuid, '" AS coupled_report_id,
-	`Merchant ID` AS merchant_id, 
-        merchant.legal_entity_name AS merchant_business_name, 
-        `Merchant Name` AS merchant_brand_name,
-        merchant.business_address AS business_address,
-        "', start_date, '" AS settlement_period_start,
-        "', end_date, '" AS settlement_period_end,
-	CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
-        COUNT(`Transaction ID`) AS total_successful_orders,
-        SUM(`Gross Amount`) AS total_gross_sales,
-        SUM(`Discount`) AS total_discount,
-        SUM(`Gross Amount` - `Discount`) AS total_outstanding_amount_1,
-        SUM(`Gross Amount` - `Discount`) AS leadgen_commission_rate_base,
-        `Commission Rate` AS commission_rate,
-        CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-            ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-        END AS total_commission_fees_1,
-
-        SUM(CASE WHEN `Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
-        SUM(CASE WHEN `Payment` = ''paymaya_credit_card'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
-        SUM(CASE WHEN `Payment` = ''maya'' THEN `PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
-        SUM(CASE WHEN `Payment` = ''maya_checkout'' THEN `PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
-        SUM(CASE WHEN `Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
-        SUM(CASE WHEN `Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
-        SUM(`PG Fee Amount`) AS total_payment_gateway_fees_1,
-
-	SUM(`Gross Amount` - `Discount`) AS total_outstanding_amount_2,
-	CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-            ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-        END AS total_commission_fees_2,
-        SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
-        10.00 AS bank_fees,
-	ROUND((SUM(`Gross Amount`)-SUM(`PG Fee Amount`)) / 2 * 0.01,2) AS cwt_from_gross_sales,
-	CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END AS cwt_from_transaction_fees,
-        CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END AS cwt_from_pg_fees,
-	ROUND(SUM(`Gross Amount` - `Discount`)
-	- CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-            ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-        END
-	- SUM(`PG Fee Amount`)
-	- 10.00
-	- ROUND((SUM(`Gross Amount`)-SUM(`PG Fee Amount`)) / 2 * 0.01,2)
-	+ CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END
-	+ CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END,2) AS total_amount_paid_out
-    FROM 
-        `transaction_summary_view` tsv
-    JOIN
-        `merchant` ON `Merchant ID` = merchant.`merchant_id`
-    WHERE 
-        `Merchant ID` = "', merchant_id, '"
-        AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	AND `Promo Fulfillment Type` = ''Coupled''
-    GROUP BY 
-        `Merchant ID`');
-
-    PREPARE stmt_select FROM @sql_select;
-    EXECUTE stmt_select;
-    DEALLOCATE PREPARE stmt_select;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `store_coupled_report` (IN `store_id` VARCHAR(36), IN `start_date` DATE, IN `end_date` DATE)   BEGIN
-
-    DECLARE v_uuid VARCHAR(36);
-    SET v_uuid = UUID();
-
-    SET @sql_insert = CONCAT('INSERT INTO settlement_report_history_coupled 
-        (coupled_report_id, store_id, store_business_name, store_brand_name, address, settlement_period_start, settlement_period_end, total_successful_orders, total_gross_sales, total_discount, total_outstanding_amount_1, leadgen_commission_rate_base, commission_rate, total_commission_fees_1, paymaya_pg_fee, paymaya_credit_card_pg_fee, maya_pg_fee, maya_checkout_pg_fee, gcash_miniapp_pg_fee, gcash_pg_fee, total_payment_gateway_fees_1, total_outstanding_amount_2, total_commission_fees_2, total_payment_gateway_fees_2, bank_fees, cwt_from_gross_sales, cwt_from_transaction_fees, cwt_from_pg_fees,total_amount_paid_out)
-        SELECT 
-            "', v_uuid, '" AS coupled_report_id, 
-	    `Store ID` AS store_id, 
-            store.legal_entity_name AS store_business_name, 
-            `Store Name` AS store_brand_name,
-            store.store_address AS business_address,
-            "', start_date, '" AS settlement_period_start,
-            "', end_date, '" AS settlement_period_end,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
-            COUNT(`Transaction ID`) AS total_successful_orders,
-            SUM(`Gross Amount`) AS total_gross_sales,
-            SUM(`Discount`) AS total_discount,
-            SUM(`Gross Amount` - `Discount`) AS total_outstanding_amount_1,
-            SUM(`Gross Amount` - `Discount`) AS leadgen_commission_rate_base,
-            `Commission Rate` AS commission_rate,
-            CASE
-                WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-                ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-            END AS total_commission_fees_1,
-            SUM(CASE WHEN `Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
-            SUM(CASE WHEN `Payment` = ''paymaya_credit_card'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
-            SUM(CASE WHEN `Payment` = ''maya'' THEN `PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
-            SUM(CASE WHEN `Payment` = ''maya_checkout'' THEN `PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
-            SUM(CASE WHEN `Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
-            SUM(CASE WHEN `Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
-            SUM(`PG Fee Amount`) AS total_payment_gateway_fees_1,
-            SUM(`Gross Amount` - `Discount`) AS total_outstanding_amount_2,
-	    CASE
-                WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-                ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-            END AS total_commission_fees_2,
-            SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
-	    10.00 AS bank_fees,
-    	    ROUND((SUM(`Gross Amount`)-SUM(`PG Fee Amount`)) / 2 * 0.01,2) AS cwt_from_gross_sales,
-	    CASE
-                WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
-	ROUND(SUM(`Gross Amount` - `Discount`)
-	- CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-            ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-        END
-	- SUM(`PG Fee Amount`)
-	- 10.00
-	- ROUND((SUM(`Gross Amount`)-SUM(`PG Fee Amount`)) / 2 * 0.01,2)
-	+ CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END
-	+ CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END,2) AS total_amount_paid_out
-        FROM 
-            `transaction_summary_view`
-	JOIN
-        `store` ON `Store ID` = store.`store_id`
-        WHERE 
-            `Store ID` = "', store_id, '"
-            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Promo Fulfillment Type` = ''Coupled''
-        GROUP BY 
-            `Store ID`');
-
-    PREPARE stmt_insert FROM @sql_insert;
-    EXECUTE stmt_insert;
-    DEALLOCATE PREPARE stmt_insert;
-
-    SET @sql_select = CONCAT('SELECT 
-        "', v_uuid, '" AS coupled_report_id,
-	`Store ID` AS store_id, 
-        store.legal_entity_name AS store_business_name, 
-        `Store Name` AS store_brand_name,
-        store.store_address AS business_address,
-        "', start_date, '" AS settlement_period_start,
-        "', end_date, '" AS settlement_period_end,
-	CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
-        COUNT(`Transaction ID`) AS total_successful_orders,
-        SUM(`Gross Amount`) AS total_gross_sales,
-        SUM(`Discount`) AS total_discount,
-        SUM(`Gross Amount` - `Discount`) AS total_outstanding_amount_1,
-        SUM(`Gross Amount` - `Discount`) AS leadgen_commission_rate_base,
-        `Commission Rate` AS commission_rate,
-        CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-            ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-        END AS total_commission_fees_1,
-
-        SUM(CASE WHEN `Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
-        SUM(CASE WHEN `Payment` = ''paymaya_credit_card'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
-        SUM(CASE WHEN `Payment` = ''maya'' THEN `PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
-        SUM(CASE WHEN `Payment` = ''maya_checkout'' THEN `PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
-        SUM(CASE WHEN `Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
-        SUM(CASE WHEN `Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
-        SUM(`PG Fee Amount`) AS total_payment_gateway_fees_1,
-
-	SUM(`Gross Amount` - `Discount`) AS total_outstanding_amount_2,
-	CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-            ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-        END AS total_commission_fees_2,
-        SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
-        10.00 AS bank_fees,
-	ROUND((SUM(`Gross Amount`)-SUM(`PG Fee Amount`)) / 2 * 0.01,2) AS cwt_from_gross_sales,
-	CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END AS cwt_from_transaction_fees,
-        CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END AS cwt_from_pg_fees,
-	ROUND(SUM(`Gross Amount` - `Discount`)
-	- CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12),2)
-            ELSE ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100)),2)
-        END
-	- SUM(`PG Fee Amount`)
-	- 10.00
-	- ROUND((SUM(`Gross Amount`)-SUM(`PG Fee Amount`)) / 2 * 0.01,2)
-	+ CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM((`Gross Amount` - `Discount`) * (`Commission Rate` / 100) * 1.12) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END
-	+ CASE
-            WHEN `Commission Type` = ''VAT Exc'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-            ELSE 0.00
-        END,2) AS total_amount_paid_out
-    FROM 
-        `transaction_summary_view` tsv
-    JOIN
-        `store` ON `Store ID` = store.`store_id`
-    WHERE 
-        `Store ID` = "', store_id, '"
-        AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	AND `Promo Fulfillment Type` = ''Coupled''
-    GROUP BY 
-        `Store ID`');
 
     PREPARE stmt_select FROM @sql_select;
     EXECUTE stmt_select;
@@ -1439,7 +1123,6 @@ CREATE TABLE `transaction_summary_view` (
 ,`Customer Name` varchar(100)
 ,`Promo ID` varchar(8)
 ,`Promo Code` varchar(100)
-,`Promo Fulfillment Type` enum('Coupled','Decoupled')
 ,`Promo Group` enum('Booky','Gcash','Unionbank','Gcash/Booky','UB/Booky')
 ,`Promo Type` enum('% off','FREE','bundle','bogo','price off')
 ,`Gross Amount` decimal(10,2)
@@ -1545,7 +1228,7 @@ DELIMITER ;
 --
 DROP TABLE IF EXISTS `transaction_summary_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transaction_summary_view`  AS SELECT substr(`t`.`transaction_id`,1,8) AS `Transaction ID`, `t`.`transaction_date` AS `Transaction Date`, `m`.`merchant_id` AS `Merchant ID`, `m`.`merchant_name` AS `Merchant Name`, `s`.`store_id` AS `Store ID`, `s`.`store_name` AS `Store Name`, `t`.`customer_id` AS `Customer ID`, `t`.`customer_name` AS `Customer Name`, substr(`p`.`promo_id`,1,8) AS `Promo ID`, `p`.`promo_code` AS `Promo Code`, `p`.`promo_fulfillment_type` AS `Promo Fulfillment Type`, `p`.`promo_group` AS `Promo Group`, `p`.`promo_type` AS `Promo Type`, `t`.`gross_amount` AS `Gross Amount`, `t`.`discount` AS `Discount`, `t`.`amount_discounted` AS `Amount Discounted`, `t`.`payment` AS `Payment`, `t`.`bill_status` AS `Bill Status`, coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) AS `Commission Type`, coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`lead_gen_commission`,'%')) AS `Commission Rate`, round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) AS `Commission Amount`, CASE WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) END AS `Total Billing`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya_credit_card`,'%'))) WHEN `t`.`payment` = 'gcash' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash`,'%'))) WHEN `t`.`payment` = 'gcash_miniapp' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash_miniapp`,'%'))) WHEN `t`.`payment` = 'paymaya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya`,'%'))) WHEN `t`.`payment` = 'maya_checkout' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya_checkout`,'%'))) WHEN `t`.`payment` = 'maya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya`,'%'))) END AS `PG Fee Rate`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) WHEN `t`.`payment` = 'gcash' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) WHEN `t`.`payment` = 'gcash_miniapp' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) WHEN `t`.`payment` = 'paymaya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) WHEN `t`.`payment` = 'maya_checkout' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) WHEN `t`.`payment` = 'maya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) END AS `PG Fee Amount`, round(`t`.`amount_discounted` - case when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) end - case when `t`.`payment` = 'paymaya_credit_card' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) when `t`.`payment` = 'gcash' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) when `t`.`payment` = 'gcash_miniapp' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) when `t`.`payment` = 'paymaya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) when `t`.`payment` = 'maya_checkout' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) when `t`.`payment` = 'maya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) end,2) AS `Amount to be Disbursed` FROM ((((`transaction` `t` join `store` `s` on(`t`.`store_id` = `s`.`store_id`)) join `merchant` `m` on(`m`.`merchant_id` = `s`.`merchant_id`)) join `promo` `p` on(`p`.`merchant_id` = `m`.`merchant_id`)) join `fee` `f` on(`f`.`merchant_id` = `m`.`merchant_id`)) ORDER BY `t`.`transaction_date` ASC  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transaction_summary_view`  AS SELECT substr(`t`.`transaction_id`,1,8) AS `Transaction ID`, `t`.`transaction_date` AS `Transaction Date`, `m`.`merchant_id` AS `Merchant ID`, `m`.`merchant_name` AS `Merchant Name`, `s`.`store_id` AS `Store ID`, `s`.`store_name` AS `Store Name`, `t`.`customer_id` AS `Customer ID`, `t`.`customer_name` AS `Customer Name`, substr(`p`.`promo_id`,1,8) AS `Promo ID`, `p`.`promo_code` AS `Promo Code`, `p`.`promo_group` AS `Promo Group`, `p`.`promo_type` AS `Promo Type`, `t`.`gross_amount` AS `Gross Amount`, `t`.`discount` AS `Discount`, `t`.`amount_discounted` AS `Amount Discounted`, `t`.`payment` AS `Payment`, `t`.`bill_status` AS `Bill Status`, coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) AS `Commission Type`, coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`lead_gen_commission`,'%')) AS `Commission Rate`, round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) AS `Commission Amount`, CASE WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) END AS `Total Billing`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya_credit_card`,'%'))) WHEN `t`.`payment` = 'gcash' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash`,'%'))) WHEN `t`.`payment` = 'gcash_miniapp' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash_miniapp`,'%'))) WHEN `t`.`payment` = 'paymaya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya`,'%'))) WHEN `t`.`payment` = 'maya_checkout' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya_checkout`,'%'))) WHEN `t`.`payment` = 'maya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya`,'%'))) END AS `PG Fee Rate`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) WHEN `t`.`payment` = 'gcash' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) WHEN `t`.`payment` = 'gcash_miniapp' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) WHEN `t`.`payment` = 'paymaya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) WHEN `t`.`payment` = 'maya_checkout' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) WHEN `t`.`payment` = 'maya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) END AS `PG Fee Amount`, round(`t`.`amount_discounted` - case when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) end - case when `t`.`payment` = 'paymaya_credit_card' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) when `t`.`payment` = 'gcash' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) when `t`.`payment` = 'gcash_miniapp' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) when `t`.`payment` = 'paymaya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) when `t`.`payment` = 'maya_checkout' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) when `t`.`payment` = 'maya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) end,2) AS `Amount to be Disbursed` FROM ((((`transaction` `t` join `store` `s` on(`t`.`store_id` = `s`.`store_id`)) join `merchant` `m` on(`m`.`merchant_id` = `s`.`merchant_id`)) join `promo` `p` on(`p`.`merchant_id` = `m`.`merchant_id`)) join `fee` `f` on(`f`.`merchant_id` = `m`.`merchant_id`)) ORDER BY `t`.`transaction_date` ASC  ;
 
 --
 -- Indexes for dumped tables
