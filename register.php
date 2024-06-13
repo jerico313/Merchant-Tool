@@ -1,3 +1,36 @@
+<?php
+require 'inc/config.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $conn->real_escape_string($_POST['name']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $type = $conn->real_escape_string($_POST['type']);
+
+    $password = $conn->real_escape_string($_POST['password']);
+    $confirm_password = $conn->real_escape_string($_POST['confirm_password']);
+
+    if ($password === $confirm_password) {
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+        $stmt = $conn->prepare("INSERT INTO user (name, email_address, type, password) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $name, $email, $type, $hashed_password);
+
+        if ($stmt->execute()) {
+          echo "<script>alert('Record added successfully'); window.location = 'index.php';</script>";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
+    } else {
+        echo "Passwords do not match";
+    }
+
+    $conn->close();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +38,7 @@
   <link rel="icon" href="/Merchant-Tool/images/booky1.png" type="image/x-icon" />
   <meta http-equiv="X-UA-Compatible" content="IE-edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0 ">
-  <title> Login Form Merchant Tool</title>
+  <title> Register Account</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <style>
@@ -167,28 +200,55 @@ color: #2A3240;
   text-decoration: underline;
 }
 
+@media (max-width: 600px) {
+  body {
+    padding: 20px; /* Maintain padding for smaller screens */
+  }
+
+  .wrapper {
+    padding: 20px;
+    margin-left: 10px; /* Reduce margin for smaller screens */
+  }
+
+  .input-box input {
+    padding: 15px 15px 15px 40px;
+  }
+
+  .input-box i {
+    font-size: 1rem;
+  }
+
+  .wrapper h1, .wrapper h2, .wrapper h3 {
+    font-size: 1.25rem;
+  }
+}
+
+
 </style>
 
 
 
 <body>
   <div class="wrapper">
-    <form action="">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  method="POST"  >
       <h3 class="text-center mb-4"><img src="images/bookylog.png" alt="booky" height="98" width="180"></h3>
       <h1>Merchant Settlement Tool</h1>
       <h2>Register Account</h2>
       <div class="input-box">
-        <input type="text" placeholder="Username" required>
+        <input type="text" placeholder="Email" name="email"required>
       </div>
       <div class="input-box">
-        <input type="text" placeholder="Position" value="User" required>
+        <input type="text" placeholder="Name" name="name"required>
       </div>
       <div class="input-box">
-        <input type="text" placeholder="Create new password" required>
+        <input type="text" placeholder="Position" value="User" name="type" readonly required>
+      </div>
+      <div class="input-box">
+        <input type="password" placeholder="Create password" name="password" required>
         <i class= 'bx bxs-lock-alt'></i>  
       </div>
       <div class="input-box">
-        <input type="text" placeholder="Confirm new password" required>
+        <input type="password" placeholder="Confirm password" name="confirm_password" required>
         <i class= 'bx bxs-lock-alt'></i>  
       </div>
         <button type="submit" class="btn">Submit</button>
