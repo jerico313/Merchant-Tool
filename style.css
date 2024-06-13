@@ -209,6 +209,22 @@ input[type="file"] {
   border:solid  #4BB0B8 2px;
 }
 
+.gcash:hover{
+  background-color: transparent !important;
+  color: #007DFE !important;
+  border:solid  #007DFE 2px !important;
+}
+
+.gcash{
+  background-color:#007DFE !important; 
+  border:solid 2px #007DFE !important; 
+  display: flex;
+}
+
+.gcash.img:hover{
+  background-color:#007DFE !important; 
+}
+
 ::-webkit-scrollbar {
   width: 15px;
   height: 15px;
@@ -344,4 +360,20 @@ th.prev.available{
 th.next.available{
   background-color: transparent !important;
   color:#E96529 !important;
+}
+
+.download-csv{
+  background-color: #0E864A;
+  border-radius: 20px; 
+  width: 150px;
+  color:#fff;
+  border:solid  #0E864A 2px;
+  margin-left:10px;
+  cursor: pointer;
+}
+
+.download-csv:hover{
+  background-color: transparent;
+  color: #0E864A ;
+  border:solid  #0E864A  2px;
 }

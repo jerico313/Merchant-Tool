@@ -1,4 +1,7 @@
 <?php include("../../header.php")?>
+<?php 
+$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,18 +84,17 @@
 
 <div class="cont-box">
     <div class="custom-box pt-4">
-    <a href="javascript:history.back()">
+        <a href="javascript:history.back()">
             <p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p>
         </a>
         <div class="upload" style="text-align:left;">
             <div class="add-btns">
-                <p class="title">Upload Stores</p>
+                <p class="title">Upload Store</p>
                 <?php
                 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                 ?>
+                <button type="button" class="btn btn-warning check-report" id="addStoreBtn"><i class="fa-solid fa-plus"></i> Add New Store </button>
                 <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
-                    <!-- Hidden input for merchant_id -->
-                    <input type="hidden" name="merchant_id" value="<?php echo htmlspecialchars($merchant_id); ?>">
             </div>
 
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -119,10 +121,129 @@
             </div>
         </div>
 
+        <div class="form" style="text-align:left;display:none;">
+            <div class="add-btns">
+                <p class="title">Store Details</p>
+                <button type="button" class="btn btn-warning check-report" id="uploadStoreBtn"><i class="fa-solid fa-upload"></i> Upload Store </button>
+                <button type="button" class="btn btn-success" id="add-field"><i class="fa-solid fa-plus"></i> Add More </button>
+            </div>
+
+            <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+            <form id="dynamic-form" action="add.php" method="POST">
+                <div id="form-fields">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="store_id" class="form-label" style="font-size:15px;font-weight:bold;">Store ID</label>
+                                    <input type="text" class="form-control" name="store_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
+                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($merchant_name); ?>" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;background-color:#d3d3d3;" readonly required>
+                                    <input type="hidden" class="form-control" value="<?php echo htmlspecialchars($merchant_id); ?>" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;background-color:#d3d3d3;" readonly required>
+ 
+                                </div>
+                                <div class="mb-3">
+                                    <label for="store_name" class="form-label" style="font-size:15px;font-weight:bold;">Store Name</label>
+                                    <input type="text" class="form-control" name="store_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="legal_entity_name" class="form-label" style="font-size:15px;font-weight:bold;">Legal Entity Name</label>
+                                    <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="store_address" class="form-label" style="font-size:15px;font-weight:bold;">Store Address</label>
+                                    <input type="text" class="form-control" name="store_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                            </div>
+                            <div class="mb-3 mt-3" style="text-align:right;">
+                                <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="" style="text-align:right;margin:10px 0px;">
+                <button type="submit" class="check-report">Submit</button>
+    </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="alert-custom alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
     <i class="fa-solid fa-circle-exclamation"></i> Please choose a file to upload!
 </div>
+
 <script src="../../js/file_upload.js"></script>
+<script>
+    // Add event listeners to buttons
+    document.getElementById('addStoreBtn').addEventListener('click', function () {
+        document.querySelector('.form').style.display = 'block';
+        document.querySelector('.upload').style.display = 'none';
+    });
+
+    document.getElementById('uploadStoreBtn').addEventListener('click', function () {
+        document.querySelector('.form').style.display = 'none';
+        document.querySelector('.upload').style.display = 'block';
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Trigger input event to generate form for default value
+        document.getElementById('StoreNum').dispatchEvent(new Event('input'));
+    });
+
+    
+
+    document.getElementById('add-field').addEventListener('click', function() {
+        var formFields = document.getElementById('form-fields');
+        var newField = document.createElement('div');
+        newField.classList.add('form-group');
+        newField.innerHTML = `
+        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="store_id" class="form-label" style="font-size:15px;font-weight:bold;">Store ID</label>
+                                    <input type="text" class="form-control" name="store_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
+                                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($merchant_name); ?>" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;background-color:#d3d3d3;" readonly required>
+                                    <input type="hidden" class="form-control" value="<?php echo htmlspecialchars($merchant_id); ?>" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;background-color:#d3d3d3;" readonly required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="store_name" class="form-label" style="font-size:15px;font-weight:bold;">Store Name</label>
+                                    <input type="text" class="form-control" name="store_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="legal_entity_name" class="form-label" style="font-size:15px;font-weight:bold;">Legal Entity Name</label>
+                                    <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="store_address" class="form-label" style="font-size:15px;font-weight:bold;">Store Address</label>
+                                    <input type="text" class="form-control" name="store_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
+                            </div>
+                            <div class="mb-3 mt-3" style="text-align:right;">
+                                <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
+                            </div>
+                        </div>
+        `;
+        formFields.appendChild(newField);
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('remove-field')) {
+            e.target.closest('.form-group').remove();
+        }
+    });
+</script>
 </body>
 </html>
-

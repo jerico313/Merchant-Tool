@@ -50,7 +50,6 @@ function displayOffers($store_id) {
 
     $conn->close();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -158,7 +157,7 @@ function displayOffers($store_id) {
 </head>
 <body>
 <div class="cont-box">
-    <div class="custom-box pt-4">
+    <div class="custom-box pt-4">_
         <div class="sub" style="text-align:left;">
             <div class="voucher-type">
                 <div class="row pb-2 title" aria-label="breadcrumb">
@@ -171,13 +170,14 @@ function displayOffers($store_id) {
                     </nav>
                     <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($store_name); ?></p>
                 </div>
-                <button type="button" class="btn btn-warning check-report mt-4">Coupled</button>
-                <button type="button" class="btn btn-warning add-merchant mt-4">Decoupled</button>
-                <button type="button" class="btn gcash mt-4" style="background-color:#007DFE !important; border:solid 2px #007DFE !important; display: flex;"><img src="../../../images/gcash.png" style="width:25px; height:20px; margin-right: 1.80vw;" alt="gcash"><span>GCash</span></button>
+                <button type="button" class="btn btn-warning check-report mt-4" id="btnCoupled">Coupled</button>
+                <button type="button" class="btn btn-warning add-merchant mt-4" id="btnDecoupled">Decoupled</button>
+                <button type="button" class="btn gcash mt-4" id="btnGCash"><img src="../../../images/gcash.png" style="width:25px; height:20px; margin-right: 1.80vw;" alt="gcash"><span>GCash</span></button>
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle mt-4" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="width:150px;margin-left:10px;border-radius:20px;height:32px;background-color: #E96529;border:solid #E96529 2px;">
                         Select Date Range
                     </button>
+                    
                     <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton">
                         <form>
                             <div class="form-group">
@@ -191,6 +191,7 @@ function displayOffers($store_id) {
                         </form>
                     </div>
                 </div>
+                <button type="button" onclick="downloadTables()" class="btn btn-warning download-csv mt-4"><i class="fa-solid fa-download"></i> Download CSV</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:280%;">
@@ -225,6 +226,11 @@ function displayOffers($store_id) {
                     <tbody id="dynamicTableBody">
                     <?php displayOffers($store_id); ?>
                     </tbody>
+                    <tfoot>
+                        <tr id="noDataMessage" style="display: none;">
+                            <td colspan="24" class="pl-5" style="margin-left:20px;">No data available in table</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -238,18 +244,108 @@ function displayOffers($store_id) {
 <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
+function downloadTables() {
+    // Get current date and format it for the file name
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString().replace(/\//g, "-"); // Format date for file name
+
+    // Assuming you have initialized DataTable on #example
+    const tableData = $('#example').DataTable().rows().data().toArray();
+
+    // Function to format customer ID if needed
+    function formatDataForCSV(row) {
+        return [
+            row[0], row[1], row[2], row[3], row[4], row[5], 
+            `'${row[6]}`, row[7], row[8], row[9], row[10], 
+            row[11], row[12], row[13], row[14], row[15], 
+            row[16], row[17], row[18], row[19], row[20], 
+            row[21], row[22], row[23]
+        ];
+    }
+
+    // Extracting all columns data and formatting customer ID
+    const filteredData = tableData.map(row => formatDataForCSV(row));
+
+    // Add headers for CSV file
+    filteredData.unshift([
+        'Transaction ID', 'Transaction Date', 'Merchant ID', 'Merchant Name', 'Store ID', 'Store Name',
+        'Customer ID', 'Customer Name', 'Promo ID', 'Promo Code', 'Promo Group', 'Promo Type', 'Status',
+        'Gross Amount', 'Discount', 'Amount Discounted', 'Payment', 'Commission Type', 'Commission Rate',
+        'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
+    ]);
+
+    const csvContent = "data:text/csv;charset=utf-8," + filteredData.map(row => row.join(",")).join("\n");
+    const encodedUri = encodeURI(csvContent);
+
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `transaction_${formattedDate}.csv`);
+    document.body.appendChild(link);
+
+    link.click(); // Trigger the download
+    document.body.removeChild(link);
+}
+</script>
+
+<script>
 $(document).ready(function() {
-    $('#example').DataTable({
-        scrollX: true
+    // Initialize DataTable
+    var table = $('#example').DataTable({
+        scrollX: true, // Enable horizontal scrolling
+        language: {
+            emptyTable: "No data available in table"
+        }
     });
 
+    // Datepicker initialization
     $("#startDate").datepicker({
         dateFormat: "yy-mm-dd"
     });
     $("#endDate").datepicker({
         dateFormat: "yy-mm-dd"
     });
+
+    // Function to filter rows based on promo type
+    function filterRows(promoType) {
+        table.rows().every(function() {
+            var row = this.data();
+            if (row[11] === promoType) { // Column index 11 is Promo Type
+                $(this.node()).show();
+            } else {
+                $(this.node()).hide();
+            }
+        });
+
+        // Show "No data available" message if all rows are hidden
+        if (table.rows(':visible').count() === 0) {
+            $('#noDataMessage').show();
+        } else {
+            $('#noDataMessage').hide();
+        }
+    }
+
+    // Event handlers for filter buttons
+    $('#btnCoupled').on('click', function() {
+        filterRows('Coupled');
+    });
+
+    $('#btnDecoupled').on('click', function() {
+        filterRows('Decoupled');
+    });
+
+    $('#btnGCash').on('click', function() {
+        filterRows('GCash');
+    });
+
+    // Attach the download function to the button
+    $('.download-csv').on('click', function() {
+        downloadTables();
+    });
+
+    // Initially hide the message
+    $('#noDataMessage').hide();
 });
+
 </script>
 </body>
 </html>
