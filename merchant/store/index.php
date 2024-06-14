@@ -30,7 +30,7 @@ function displayStore($merchant_id) {
             $escapedStoreAddress = htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;padding:4px;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")'>View</button> ";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;padding:4px;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress. "\")'>Check Report</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")'>Check Report</button> ";
             echo "</td>";
             echo "</tr>";
         }
@@ -184,6 +184,7 @@ function displayStore($merchant_id) {
         </div>
     </div>
 </div>
+<!-- Modal for Editing Store Details -->
 <div class="modal fade" id="editStoreModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="editStoreModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="border-radius:20px;">
@@ -192,24 +193,59 @@ function displayStore($merchant_id) {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form id="editStoreForm" action="edit.php" method="POST">
-    <input type="hidden" id="storeId" name="storeId">
-    <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
-    <input type="hidden" id="merchantName" name="merchantName" value="<?php echo htmlspecialchars($merchant_name); ?>">
-    <div class="mb-3">
-        <label for="storeName" class="form-label">Store Name</label>
-        <input type="text" class="form-control" id="storeName" name="storeName">
+        <form id="editStoreForm" action="edit.php" method="POST">
+            <input type="hidden" id="storeId" name="storeId">
+            <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
+            <input type="hidden" id="merchantName" name="merchantName" value="<?php echo htmlspecialchars($merchant_name); ?>">
+            <div class="mb-3">
+                <label for="storeName" class="form-label">Store Name</label>
+                <input type="text" class="form-control" id="storeName" name="storeName">
+            </div>
+            <div class="mb-3">
+                <label for="legalEntityName" class="form-label">Legal Entity Name</label>
+                <input type="text" class="form-control" id="legalEntityName" name="legalEntityName">
+            </div>
+            <div class="mb-3">
+                <label for="storeAddress" class="form-label">Store Address</label>
+                <input type="text" class="form-control" id="storeAddress" name="storeAddress">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
+        </form>
+      </div>
     </div>
-    <div class="mb-3">
-        <label for="legalEntityName" class="form-label">Legal Entity Name</label>
-        <input type="text" class="form-control" id="legalEntityName" name="legalEntityName">
-    </div>
-    <div class="mb-3">
-        <label for="storeAddress" class="form-label">Store Address</label>
-        <input type="text" class="form-control" id="storeAddress" name="storeAddress">
-    </div>
-    <button type="submit" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
-</form>
+  </div>
+</div>
+<!-- Modal for Checking Report -->
+<div class="modal fade" id="checkReportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="checkReportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:20px;">
+      <div class="modal-header border-0">
+        <p class="modal-title" id="checkReportModalLabel">Check Report</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="checkReportForm">
+            <input type="hidden" id="reportStoreId">
+            <div class="mb-3">
+                <label for="reportType" class="form-label">Report Type</label>
+                <select class="form-select" id="reportType" required>
+                    <option value="">-- Select Report Type --</option>
+                    <option value="Coupled">Coupled</option>
+                    <option value="Decouple">Decouple</option>
+                    <option value="GCash">GCash</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="startDate" required>
+            </div>
+            <div class="mb-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="endDate" required>
+            </div>
+            <button type="button" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;" onclick="submitReport()">Submit</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -269,17 +305,35 @@ function editStore(storeId) {
     // Open the edit modal
     $('#editStoreModal').modal('show');
 }
-</script>
-<script>
+
 function viewOrder(storeId, merchantName, storeName) {
     window.location.href = 'order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
 }
 
 function checkReport(storeId, merchantName, storeName, legalEntityName, storeAddress) {
-    window.location.href = 'settlement_report.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&store_id=' + encodeURIComponent(storeId) + '&merchant_name=' + encodeURIComponent(merchantName) + '&store_name=' + encodeURIComponent(storeName) + '&legal_entity_name=' + encodeURIComponent(legalEntityName) + '&store_address=' + encodeURIComponent(storeAddress);
+    // Set values in the check report modal
+    $('#reportStoreId').val(storeId);
+    $('#reportType').val(""); // Reset the report type
+
+    // Open the check report modal
+    $('#checkReportModal').modal('show');
+}
+
+function submitReport() {
+    var storeId = $('#reportStoreId').val();
+    var reportType = $('#reportType').val();
+    var startDate = $('#startDate').val();
+    var endDate = $('#endDate').val();
+
+    // Perform any necessary actions with the collected data
+    console.log("Store ID: " + storeId);
+    console.log("Report Type: " + reportType);
+    console.log("Start Date: " + startDate);
+    console.log("End Date: " + endDate);
+
+    // Close the modal
+    $('#checkReportModal').modal('hide');
 }
 </script>
 </body>
 </html>
-
-

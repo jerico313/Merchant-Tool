@@ -3,23 +3,24 @@
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 $promo_code = isset($_GET['promo_code']) ? $_GET['promo_code'] : '';
+$promo_id = isset($_GET['promo_id']) ? $_GET['promo_id'] : '';
 
-function displayOfferHistory($offer_id, $merchant_name) {
+function displayOfferHistory($promo_id, $merchant_name) {
     include("../../inc/config.php");
 
-    $sql = "SELECT * FROM promo WHERE promo_id = ?";
+    $sql = "SELECT * FROM promo_history WHERE promo_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $merchant_id);
+    $stmt->bind_param("s", $promo_id); // Corrected variable name
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
+            $shortPromoHistoryId = substr($row['promo_history_id'], 0, 8);
             echo "<tr>";
-            echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['billable_date'] . "</td>";
+            echo "<td style='text-align:center;'>" .$shortPromoHistoryId . "</td>";
+            echo "<td style='text-align:center;'>" .$row['old_bill_status'] . "</td>";
+            echo "<td style='text-align:center;'>" .$row['new_bill_status'] . "</td>";
             echo "</tr>";
         }
     }
@@ -104,19 +105,10 @@ function displayOfferHistory($offer_id, $merchant_name) {
                 content: "Promo ID";
             }
             td:nth-of-type(2):before {
-                content: "Offer ID";
+                content: "Old Bill Status";
             }
             td:nth-of-type(3):before {
-                content: "Start Date";
-            }
-            td:nth-of-type(4):before {
-                content: "End Date";
-            }
-            td:nth-of-type(5):before {
-                content: "Billable Date";
-            }
-            td:nth-of-type(6):before {
-                content: "Status";
+                content: "New Bill Status";
             }
             .dataTables_length {
                 display: none;
@@ -152,13 +144,13 @@ function displayOfferHistory($offer_id, $merchant_name) {
                 <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Billable Date</th>
+                            <th>Promo ID</th>
+                            <th>Old Bill Status</th>
+                            <th>New Bill Status</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
-                    <?php displayOfferHistory($merchant_id, $merchant_name); ?>
+                    <?php displayOfferHistory($promo_id, $merchant_name); ?>
                     </tbody>
                 </table>
             </div>

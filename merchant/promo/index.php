@@ -26,8 +26,7 @@ function displayOffers($merchant_id, $merchant_name) {
             echo "<td style='text-align:center;'>" . $row['promo_details'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['billable_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['status'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
             echo "<td style='text-align:center;'>";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")'>View History</button> ";
             echo "</td>";
@@ -195,8 +194,7 @@ function displayOffers($merchant_id, $merchant_name) {
                             <th>Promo Details</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Billable Date</th>
-                            <th>Status</th>
+                            <th>Bill Status</th>
                             <th style='width:150px;'>Action</th>
                         </tr>
                     </thead>
@@ -223,8 +221,8 @@ $(document).ready(function() {
     });
 });
 
-function viewHistory(storeId, merchantName, offerId, promoCode) {
-    window.location.href = 'history.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&offer_id=' + encodeURIComponent(offerId) + '&promo_code=' + encodeURIComponent(promoCode);
+function viewHistory(storeId, merchantName, promoId, promoCode) {
+    window.location.href = 'history.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&promo_id=' + encodeURIComponent(promoId) + '&promo_code=' + encodeURIComponent(promoCode);
 }
 </script>
 </body>

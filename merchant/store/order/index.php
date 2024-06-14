@@ -29,14 +29,15 @@ function displayOffers($store_id) {
             echo "<td style='text-align:center;'>" . $row['Customer ID'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Customer Name'] . "</td>";
             echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Promo Code'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Promo Code'] . "</td>";       
+            echo "<td style='text-align:center;'>" . $row['Promo Fulfillment Type'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Promo Group'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Promo Type'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Status'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Promo Type'] . "</td>";     
             echo "<td style='text-align:center;'>" . $row['Gross Amount'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Discount'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Amount Discounted'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Payment'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Bill Status'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Commission Type'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Commission Rate'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Commission Amount'] . "</td>";
@@ -207,20 +208,21 @@ function displayOffers($store_id) {
                             <th>Customer Name</th>
                             <th>Promo ID</th>
                             <th>Promo Code</th>
+                            <th>Promo Fulfillment Type</th>
                             <th>Promo Group</th>
-                            <th>Promo Type</th>
-                            <th>Status</th>
+                            <th>Promo Type</th>           
                             <th>Gross Amount</th>
                             <th>Discount</th>
                             <th>Amount Discounted</th>
                             <th>Payment</th>
+                            <th>Bill Status</th>
                             <th>Commission Type</th>
                             <th>Commission Rate</th>
                             <th>Commission Amount</th>
                             <th>Total Billing</th>
                             <th>PG Fee Rate</th>
                             <th>PG Fee Amount</th>
-                            <th>Amount to be Disbursed</th>
+                            <th style="width:80px;">Amount to be Disbursed</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
@@ -259,7 +261,7 @@ function downloadTables() {
             `'${row[6]}`, row[7], row[8], row[9], row[10], 
             row[11], row[12], row[13], row[14], row[15], 
             row[16], row[17], row[18], row[19], row[20], 
-            row[21], row[22], row[23]
+            row[21], row[22], row[23], row[24]
         ];
     }
 
@@ -269,8 +271,8 @@ function downloadTables() {
     // Add headers for CSV file
     filteredData.unshift([
         'Transaction ID', 'Transaction Date', 'Merchant ID', 'Merchant Name', 'Store ID', 'Store Name',
-        'Customer ID', 'Customer Name', 'Promo ID', 'Promo Code', 'Promo Group', 'Promo Type', 'Status',
-        'Gross Amount', 'Discount', 'Amount Discounted', 'Payment', 'Commission Type', 'Commission Rate',
+        'Customer ID', 'Customer Name', 'Promo ID', 'Promo Code', 'Promo Fullfillment Type','Promo Group', 'Promo Type',
+        'Gross Amount', 'Discount', 'Amount Discounted', 'Payment', 'Bill Status', 'Commission Type', 'Commission Rate',
         'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
     ]);
 
@@ -309,7 +311,7 @@ $(document).ready(function() {
     function filterRows(promoType) {
         table.rows().every(function() {
             var row = this.data();
-            if (row[11] === promoType) { // Column index 11 is Promo Type
+            if (row[10] === promoType) { // Column index 11 is Promo Type
                 $(this.node()).show();
             } else {
                 $(this.node()).hide();
