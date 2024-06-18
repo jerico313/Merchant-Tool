@@ -128,6 +128,7 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
+<<<<<<< HEAD:merchant/store/settlement_report.php
     <table style="width:100% !important;">
       <tr>
           <td>Commission Fees</td>
@@ -223,6 +224,71 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
       </tr>
 </table>
 
+=======
+    <div class="row">
+      <div class="col">
+        <p>Commission Fees</p>
+        <p style="padding-left:80px;">Leadgen Commission rate base</p>
+        <p style="padding-left:80px;">Commission fee rate</p>
+        <p style="padding-left:80px;font-weight:bold;">Total</p>
+      </div>
+      <div class="col text-right" style="padding-right:90px;">
+        <p>.</p>
+        <p>800.00</p>
+        <p>10%</p>
+        <p style="font-weight:bold;">39,395.00 PHP</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p style="font-weight:bold;">Total Commision Fees</p>
+        <p style="padding-left:80px;">Payment Gateway Fees:</p>
+        <br>
+        <p style="padding-left:80px;">Paymaya</p>
+        <p style="padding-left:80px;">Paymaya_credit_card</p>
+        <p style="padding-left:80px;">Maya</p>
+        <p style="padding-left:80px;">Maya_checkout</p>
+        <p style="padding-left:80px;">Gcash_miniapp</p>
+        <p style="padding-left:80px;">GCash</p>
+        <p style="padding-left:80px;font-weight:bold;">Total Payment Gateway Fees</p>
+      </div>
+      <div class="col text-right" style="padding-right:90px;">
+        <p style="font-weight:bold;">89.60 PHP</p>
+        <p>.</p>
+        <br>
+        <p>24.00</p>
+        <p>0.00</p>
+        <p>0.00</p>
+        <p>0.00</p>
+        <p style="font-weight:bold;">24.00 PHP</p>
+      </div>
+    </div>
+    <hr style="border: 1px solid #3b3b3b !important;">
+    <div class="row">
+      <div class="col">
+        <p>Total Outstanding Amount</p>
+        <p>Less:<span style="padding-left:50px;">Total Commission Fees</span></p>
+        <p style="padding-left:75px;">Total Payment Gateway Fees</p>
+        <p style="padding-left:75px;">Bank Fees</p>
+        <p style="padding-left:75px;">CWT from Gross Sales</p>
+        <p>Add:<span style="padding-left:54px;">CWT from Transaction Fees</span></p>
+        <p style="padding-left:75px;">CWT from PG Fees</p>
+        <br>
+        <p style="font-weight:bold;">Total Amount Paid Out</p>
+      </div>
+      <div class="col text-right" style="padding-right:90px;">
+        <p>800.00 PHP</p>
+        <p>89.60 PHP</p>
+        <p>24.00 PHP</p>
+        <p>10 PHP</p>
+        <p>0.88 PHP</p>
+        <p>1.60</p>
+        <p>0.43</p>
+        <br>
+        <p style="font-weight:bold;">677.55 PHP</p>
+      </div>
+    </div>
+>>>>>>> 8eefc47eee98138a0791d3da5a1d366b5a6c282d:merchant/store/coupled_settlement_report.php
     <hr style="border: 1px solid #3b3b3b;">
     <p>This is a system generated report and doesn't require a signature. If you have questions feel free to contact us at 632-34917659 loc. 7663 or email us at accounting@phonebooky.com</p>
     <br>
