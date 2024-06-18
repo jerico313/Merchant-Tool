@@ -1,4 +1,32 @@
 <?php
+include("../../inc/config.php");
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $store_id = isset($_POST['store_id']) ? $_POST['store_id'] : '';
+    $start_date = isset($_POST['start_date']) ? $_POST['start_date'] : '';
+    $end_date = isset($_POST['end_date']) ? $_POST['end_date'] : '';
+    $report_type = isset($_POST['report_type']) ? $_POST['report_type'] : '';
+
+    // Prepare and execute the stored procedure
+    $sql = "CALL generate_store_coupled_report(?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $store_id, $start_date, $end_date);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Fetch the results and send them back as JSON
+    $data = [];
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    echo json_encode($data);
+}
+?>
+<?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
@@ -21,12 +49,17 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
   <style>
     *{
   font-family: "Nunito", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   margin:0;
   padding:0;
 }
     body{
       background-color:	#636363;
+    }
+
+    td{
+      padding-top:2px;
+      padding-bottom:2px;
     }
     .container {
       background-color:	#fff;
@@ -91,97 +124,90 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
     <p class="text-right" style="font-weight:bold;font-size:40px;">
       <img src="../../images/booky2.png" alt="booky" width="150" height="50">
     </p>
-    <div class="row">
-      <div class="col-8">
-        <p>Business Name: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($legal_entity_name); ?></span></p>
-        <p>Brand Name: <span style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($store_name); ?></span></p>
-        <p>Address: <span style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($store_address); ?></span></p>
-      </div>
-      <div class="col-4">
-        <p>Settlement Date: <span style="margin-left:25px;font-weight:bold;">June 30, 2023</span></p>
-        <p>Settlement Number: <span style="margin-left:5px;font-weight:bold;">2023-06-30-1</span></p>
-        <p>Settlement Period: <span style="margin-left:15px;font-weight:bold;">June 29, 2023</span></p>
-      </div>
-    </div>
+    <table style="width:100% !important;">
+      <tr >
+          <td>Business Name: <span style="margin-left:5px;font-weight:bold;">Kenny Roger</span></td>
+          <td style="width:30%;">Settlement Date: <span style="margin-left:25px;font-weight:bold;">June 30, 2023</span></td>
+      </tr>
+      <tr>
+          <td>Brand Name: <span style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($store_name); ?></span></td>
+          <td>Settlement Number: <span style="margin-left:5px;font-weight:bold;">2023-06-30-1</span></td>
+      </tr>
+      <tr>
+          <td>Business Address: <span style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($store_address); ?></span></span></td>
+          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;">June 29, 2023</span></td>
+      </tr>
+    </table>
     <hr style="border: 1px solid #3b3b3b;">
-    <div class="row">
-      <div class="col">
-        <p>Total Number of Successful Orders</p>
-        <br>
-        <p>Total Gross Sales</p>
-        <p>Total Discount</p>
-        <p style="font-weight:bold;">Totals Outstanding Amount</p>
-      </div>
-      <div class="col text-right">
-        <p style="font-weight:bold;padding-right:80px;">34 order/s</p>
-        <br>
-        <p style="padding-right:80px;">70,591.00 PHP</p>
-        <p style="padding-right:80px;">31,196.00 PHP</p>
-        <p style="font-weight:bold;padding-right:80px;">39,395.00 PHP</p>
-      </div>
-    </div>
+    <table style="width:100% !important;">
+      <tr>
+          <td>Total Number of Successful Orders</td>
+          <td style="width:30%;text-align:center;">34 order/s</td>
+      </tr>
+    </table>
+    <br>
+    <table style="width:100% !important;">
+      <tr>
+          <td>Total Gross Sales</td>
+          <td style="width:30%;text-align:center;">70,591.00 PHP</td>
+      </tr>
+      <tr>
+          <td>Total Discount</td>
+          <td style="width:30%;text-align:center;">31,196.00 PHP</td>
+      </tr>
+      <tr>
+          <td style="font-weight:bold;">Total Net Sales:</td>
+          <td style="font-weight:bold;text-align:center;">39,395.00 PHP</td>
+      </tr>
+    </table>
     <hr style="border: 1px solid #3b3b3b;">
-    <div class="row">
-      <div class="col">
-        <p>Commission Fees</p>
-        <p style="padding-left:80px;">Leadgen Commission rate base</p>
-        <p style="padding-left:80px;">Commission fee rate</p>
-        <p style="padding-left:80px;font-weight:bold;">Total</p>
-      </div>
-      <div class="col text-right" style="padding-right:90px;">
-        <p>.</p>
-        <p>800.00</p>
-        <p>10%</p>
-        <p style="font-weight:bold;">39,395.00 PHP</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <p style="font-weight:bold;">Total Commision Fees</p>
-        <p style="padding-left:80px;">Payment Gateway Fees:</p>
-        <br>
-        <p style="padding-left:80px;">Card Payment</p>
-        <p style="padding-left:80px;">Paymaya</p>
-        <p style="padding-left:80px;">Gcash_miniapp</p>
-        <p style="padding-left:80px;">GCash</p>
-        <p style="padding-left:80px;font-weight:bold;">Total Payment Gateway Fees</p>
-      </div>
-      <div class="col text-right" style="padding-right:90px;">
-        <p style="font-weight:bold;">89.60 PHP</p>
-        <p>.</p>
-        <br>
-        <p>24.00</p>
-        <p>0.00</p>
-        <p>0.00</p>
-        <p>0.00</p>
-        <p style="font-weight:bold;">24.00 PHP</p>
-      </div>
-    </div>
-    <hr style="border: 1px solid #3b3b3b !important;">
-    <div class="row">
-      <div class="col">
-        <p>Total Outstanding Ammount</p>
-        <p>Less:<span style="padding-left:50px;">Total Commission Fees</span></p>
-        <p style="padding-left:75px;">Total Payment Gateway Fees</p>
-        <p style="padding-left:75px;">Bank Fees</p>
-        <p style="padding-left:75px;">CWT from Gross Sales</p>
-        <p>Add:<span style="padding-left:54px;">CWT from Transaction Fees</span></p>
-        <p style="padding-left:75px;">CWT from PG Fees</p>
-        <br>
-        <p style="font-weight:bold;">Total Amount Paid Out</p>
-      </div>
-      <div class="col text-right" style="padding-right:90px;">
-        <p>800.00 PHP</p>
-        <p>89.60 PHP</p>
-        <p>24.00 PHP</p>
-        <p>10 PHP</p>
-        <p>0.88 PHP</p>
-        <p>1.60</p>
-        <p>0.43</p>
-        <br>
-        <p style="font-weight:bold;">677.55 PHP</p>
-      </div>
-    </div>
+
+    <table style="width:100% !important;">
+      <tr>
+          <td>Commission Fees</td>
+          <td></td>
+      </tr>
+    </table>
+
+    <table style="width:100% !important;">
+      <tr>
+          <td style="padding-left:85px;">Leadgen  Commission rate base(Pre-Trial)</td>
+          <td style="width:30%;text-align:right;padding-right:85px;">800.00</td>
+      </tr>
+      <tr>
+          <td style="padding-left:85px;">Commission fee rate</td>
+          <td style="text-align:right;padding-right:85px;">10%</td>
+      </tr>
+      <tr>
+          <td style="font-weight:bold;padding-left:85px;">Total</td>
+          <td style="font-weight:bold;text-align:right;padding-right:85px;">39,395.00 PHP</td>
+      </tr>
+    </table>
+    <br>      
+  
+<table style="width:100% !important;">
+      <tr>
+          <td style="padding-left:85px;">Leadgen  Commission rate base(Billable)</td>
+          <td style="text-align:right;padding-right:85px;">24.00</td>
+      </tr>
+      <tr>
+          <td style="padding-left:85px;">Commission fee rate</td>
+          <td style="text-align:right;padding-right:85px;">00.00</td>
+      </tr>
+      <tr>
+          <td style="font-weight:bold;padding-left:85px;">Total</td>
+          <td style="text-align:right;padding-right:85px;font-weight:bold;">00.00</td>
+      </tr>
+    </table>
+    <br>
+    <table style="width:100% !important;">
+      <tr>
+          <td style="font-weight:bold;">Payment Gateway Fees:</td>
+          <td style="font-weight:bold;text-align:right;padding-right:85px;">89.60 PHP</td>
+      </tr>
+</table>  
+  
+
     <hr style="border: 1px solid #3b3b3b;">
     <p>This is a system generated report and doesn't require a signature. If you have questions feel free to contact us at 632-34917659 loc. 7663 or email us at accounting@phonebooky.com</p>
     <br>

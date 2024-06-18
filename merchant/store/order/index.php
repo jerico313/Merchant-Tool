@@ -158,7 +158,7 @@ function displayOffers($store_id) {
 </head>
 <body>
 <div class="cont-box">
-    <div class="custom-box pt-4">_
+    <div class="custom-box pt-4">
         <div class="sub" style="text-align:left;">
             <div class="voucher-type">
                 <div class="row pb-2 title" aria-label="breadcrumb">

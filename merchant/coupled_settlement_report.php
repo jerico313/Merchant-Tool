@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo json_encode($data);
 }
 ?>
-
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
@@ -135,7 +134,7 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
           <td>Settlement Number: <span style="margin-left:5px;font-weight:bold;">2023-06-30-1</span></td>
       </tr>
       <tr>
-          <td>Business Address: <span style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($store_address); ?></span></span></td>
+          <td>Address: <span style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($store_address); ?></span></span></td>
           <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;">June 29, 2023</span></td>
       </tr>
     </table>

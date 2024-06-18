@@ -229,7 +229,7 @@ function displayStore($merchant_id) {
             <div class="mb-3">
                 <label for="reportType" class="form-label">Report Type</label>
                 <select class="form-select" id="reportType" required>
-                    <option value="">-- Select Report Type --</option>
+                    <option value="" disabled>-- Select Report Type --</option>
                     <option value="Coupled">Coupled</option>
                     <option value="Decouple">Decouple</option>
                     <option value="GCash">GCash</option>
@@ -243,7 +243,7 @@ function displayStore($merchant_id) {
                 <label for="endDate" class="form-label">End Date</label>
                 <input type="date" class="form-control" id="endDate" required>
             </div>
-            <button type="button" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;" onclick="submitReport()">Submit</button>
+            <button type="button" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;" onclick="submitReport()">Generate Report</button>
         </form>
       </div>
     </div>
@@ -255,23 +255,6 @@ function displayStore($merchant_id) {
 <script src="./js/script.js"></script>
 <script>
 $(document).ready(function() {
-    $('#checkAll').change(function() {
-        $('.store-checkbox').prop('checked', $(this).prop('checked'));
-        toggleCheckReportButton();
-    });
-
-    $('.store-checkbox').change(function() {
-        toggleCheckReportButton();
-    });
-
-    function toggleCheckReportButton() {
-        if ($('.store-checkbox:checked').length > 0) {
-            $('.check-report').show();
-        } else {
-            $('.check-report').hide();
-        }
-    }
-
     if ($.fn.DataTable.isDataTable('#example')) {
         $('#example').DataTable().destroy();
     }

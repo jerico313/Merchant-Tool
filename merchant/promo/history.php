@@ -134,6 +134,7 @@ function displayOfferHistory($promo_id, $merchant_name) {
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                             <li class="breadcrumb-item"><a href="../index.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
                             <li class="breadcrumb-item"><a href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
+                            <li class="breadcrumb-item"><a href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Promo</a></li>
                             <li class="breadcrumb-item"><a href="#" onclick="location.reload();" style="color:#E96529; font-size:14px;">History</a></li>
                         </ol>
                     </nav>

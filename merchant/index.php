@@ -22,7 +22,7 @@ function displayMerchant() {
           $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['merchant_id'] . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['merchant_id'] . "\")'>Edit</button> ";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;'>Check Report</button> ";
+          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['merchant_id'] . "\", \"" . $escapedMerchantName . "\"  )'>Check Report</button> ";
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -94,7 +94,7 @@ function displayMerchant() {
       box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
       -webkit-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
       -moz-box-shadow: -4px 0px 5px 0px rgba(0,0,0,0.12);
-      width:20% ;
+      width:15%;
     }
 
     select {
@@ -124,15 +124,15 @@ function displayMerchant() {
   </div>
 
     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-        <table id="example" class="table bord" style="width:110%;">
+        <table id="example" class="table bord" style="width:150%;">
         <thead>
             <tr>
                 <th>Merchant ID</th>
-                <th style="width:30% !importnat;">Merchant Name</th>
+                <th>Merchant Name</th>
                 <th>Merchant Partnership Type</th>
                 <th>Merchant Type</th>
                 <th>Business Address</th>
-                <th >Email Address</th>
+                <th>Email Address</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -189,31 +189,45 @@ function displayMerchant() {
     </div>
   </div>
 </div>
+<!-- Modal for Checking Report -->
+<div class="modal fade" id="checkReportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="checkReportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:20px;">
+      <div class="modal-header border-0">
+        <p class="modal-title" id="checkReportModalLabel">Check Report</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="checkReportForm">
+            <input type="hidden" id="reportMerchantId">
+            <div class="mb-3">
+                <label for="reportType" class="form-label">Report Type</label>
+                <select class="form-select" id="reportType" required>
+                    <option value="" disabled>-- Select Report Type --</option>
+                    <option value="Coupled">Coupled</option>
+                    <option value="Decouple">Decouple</option>
+                    <option value="GCash">GCash</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="startDate" required>
+            </div>
+            <div class="mb-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="endDate" required>
+            </div>
+            <button type="button" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;" onclick="submitReport()">Generate Report</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script src="./js/script.js"></script>
-<script>
-  $(document).ready(function(){
-    $('#checkAll').change(function(){
-      $('.store-checkbox').prop('checked', $(this).prop('checked'));
-      toggleCheckReportButton();
-    });
-
-    $('.store-checkbox').change(function(){
-      toggleCheckReportButton();
-    });
-
-    function toggleCheckReportButton() {
-      if ($('.store-checkbox:checked').length > 0) {
-        $('.check-report').show();
-      } else {
-        $('.check-report').hide();
-      }
-    }
-  });
-</script>
 <script>
 $(document).ready(function() {
   if ( $.fn.DataTable.isDataTable('#example') ) {
@@ -267,7 +281,14 @@ $(document).ready(function() {
     });
 });
 
+function checkReport(merchantId, merchantName) {
+    // Set values in the check report modal
+    $('#reportMerchantId').val(merchantId);
+    $('#reportType').val(""); // Reset the report type
 
+    // Open the check report modal
+    $('#checkReportModal').modal('show');
+}
 </script>
 </body>
 </html>
