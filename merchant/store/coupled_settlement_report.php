@@ -140,8 +140,10 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
         <p style="font-weight:bold;">Total Commision Fees</p>
         <p style="padding-left:80px;">Payment Gateway Fees:</p>
         <br>
-        <p style="padding-left:80px;">Card Payment</p>
         <p style="padding-left:80px;">Paymaya</p>
+        <p style="padding-left:80px;">Paymaya_credit_card</p>
+        <p style="padding-left:80px;">Maya</p>
+        <p style="padding-left:80px;">Maya_checkout</p>
         <p style="padding-left:80px;">Gcash_miniapp</p>
         <p style="padding-left:80px;">GCash</p>
         <p style="padding-left:80px;font-weight:bold;">Total Payment Gateway Fees</p>
@@ -160,7 +162,7 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
     <hr style="border: 1px solid #3b3b3b !important;">
     <div class="row">
       <div class="col">
-        <p>Total Outstanding Ammount</p>
+        <p>Total Outstanding Amount</p>
         <p>Less:<span style="padding-left:50px;">Total Commission Fees</span></p>
         <p style="padding-left:75px;">Total Payment Gateway Fees</p>
         <p style="padding-left:75px;">Bank Fees</p>
