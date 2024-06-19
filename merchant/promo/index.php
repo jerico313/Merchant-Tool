@@ -21,9 +21,17 @@ function displayOffers($merchant_id, $merchant_name) {
             echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_amount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_type'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['promo_fulfillment_type'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_group'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['bogo'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['bundle'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['fixed_discount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['free_item'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['percent_discount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['x_for_y'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_details'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['remarks'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
@@ -183,19 +191,27 @@ function displayOffers($merchant_id, $merchant_name) {
                 <button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Promo</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                <table id="example" class="table bord" style="width:120%;">
+                <table id="example" class="table bord" style="width:200%;">
                     <thead>
                         <tr>
                             <th>Promo ID</th>
                             <th>Promo Code</th>
                             <th>Promo Amount</th>
-                            <th>Promo Type</th>
+                            <th>Promo Fullfillment Type</th>
                             <th>Promo Group</th>
+                            <th>BOGO</th>
+                            <th>Bundle</th>
+                            <th>Fixed Discount</th>
+                            <th>Free Item</th>
+                            <th>Percent Discount</th>
+                            <th>X For Y</th>
                             <th>Promo Details</th>
+                            <th>Remarks</th>
+                            <th>Bill Status</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Bill Status</th>
-                            <th style='width:150px;'>Action</th>
+                            <th style='width:50px;'>Action</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">

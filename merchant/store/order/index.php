@@ -35,7 +35,7 @@ function displayOffers($store_id) {
             echo "<td style='text-align:center;'>" . $row['Promo Type'] . "</td>";     
             echo "<td style='text-align:center;'>" . $row['Gross Amount'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Discount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Amount Discounted'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Net Amount'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Payment'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Bill Status'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Commission Type'] . "</td>";
@@ -213,7 +213,7 @@ function displayOffers($store_id) {
                             <th>Promo Type</th>           
                             <th>Gross Amount</th>
                             <th>Discount</th>
-                            <th>Amount Discounted</th>
+                            <th>Net Amount</th>
                             <th>Payment</th>
                             <th>Bill Status</th>
                             <th>Commission Type</th>

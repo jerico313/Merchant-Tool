@@ -1,16 +1,15 @@
 <?php
-include("../../inc/config.php");
+include("../inc/config.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $store_id = isset($_POST['store_id']) ? $_POST['store_id'] : '';
+    $merchant_id = isset($_POST['merchant_id']) ? $_POST['merchant_id'] : '';
     $start_date = isset($_POST['start_date']) ? $_POST['start_date'] : '';
     $end_date = isset($_POST['end_date']) ? $_POST['end_date'] : '';
-    $report_type = isset($_POST['report_type']) ? $_POST['report_type'] : '';
 
     // Prepare and execute the stored procedure
-    $sql = "CALL generate_store_coupled_report(?, ?, ?)";
+    $sql = "CALL generate_store_gcash_report(?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $store_id, $start_date, $end_date);
+    $stmt->bind_param("sss", $merchant_id, $start_date, $end_date);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -122,7 +121,7 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
   <div class="container" style="padding:70px;" id="content">
   <p style="text-align:center;font-size:20px;font-weight:900;">SETTLEMENT REPORT</p>
     <p class="text-right" style="font-weight:bold;font-size:40px;">
-      <img src="../../images/booky2.png" alt="booky" width="150" height="50">
+      <img src="../images/booky2.png" alt="booky" width="150" height="50">
     </p>
     <table style="width:100% !important;">
       <tr >
@@ -139,10 +138,14 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
+    <p style="text-align:center;">GCash Lead Generation</p>
+    <hr style="border: 1px solid #3b3b3b;">
     <table style="width:100% !important;">
       <tr>
-          <td>Total Number of Successful Orders</td>
-          <td style="width:30%;text-align:center;">34 order/s</td>
+          <td style="text-align:center;">Items</td>
+          <td style="text-align:center;">Qty Redeemed</td>
+          <td style="text-align:center;">Voucher Value</td>
+          <td style="text-align:center;">Amount</td>
       </tr>
     </table>
     <br>
