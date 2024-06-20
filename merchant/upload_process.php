@@ -1,9 +1,6 @@
 <?php
 require_once("../header.php");
 require_once("../inc/config.php");
-require_once '../vendor/autoload.php'; // Include the Composer autoload file
-
-use Ramsey\Uuid\Uuid;
 
 if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != ''){
     $file_name = $_FILES['fileToUpload']['name'];
@@ -42,7 +39,7 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
         $merchant_id = Uuid::uuid4()->toString();
 
         // Insert into the first table
-        $stmt->bind_param("ssssss", $merchant_id, $data[0], $data[1], $data[2], $data[3], $data[4]);
+        $stmt->bind_param("ssssss",$data[1], $data[0], $data[2], $data[3], $data[4], $data[5]);
         $stmt->execute();
     }
 
