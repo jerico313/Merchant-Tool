@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2024 at 06:56 AM
+-- Generation Time: Jun 18, 2024 at 09:49 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -88,7 +88,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_coupled_report` (
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Voucher Type` = ''Coupled''
+	    AND `Promo Fulfillment Type` = ''Coupled''
         GROUP BY 
             `Merchant ID`');
 
@@ -152,7 +152,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_coupled_report` (
     WHERE 
         `Merchant ID` = "', merchant_id, '"
         AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	AND `Voucher Type` = ''Coupled''
+	AND `Promo Fulfillment Type` = ''Coupled''
     GROUP BY 
         `Merchant ID`');
 
@@ -214,7 +214,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_decoupled_report`
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Voucher Type` = ''Decoupled''
+	    AND `Promo Fulfillment Type` = ''Decoupled''
         GROUP BY 
             `Merchant ID`');
 
@@ -268,7 +268,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_decoupled_report`
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Voucher Type` = ''Decoupled''
+	    AND `Promo Fulfillment Type` = ''Decoupled''
         GROUP BY 
             `Merchant ID`');
 
@@ -443,7 +443,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_coupled_report` (IN 
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Voucher Type` = ''Coupled''
+	    AND `Promo Fulfillment Type` = ''Coupled''
         GROUP BY 
             `Store ID`');
 
@@ -507,7 +507,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_coupled_report` (IN 
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Voucher Type` = ''Coupled''
+	    AND `Promo Fulfillment Type` = ''Coupled''
         GROUP BY 
             `Store ID`');
 
@@ -569,7 +569,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_decoupled_report` (I
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Voucher Type` = ''Decoupled''
+	    AND `Promo Fulfillment Type` = ''Decoupled''
         GROUP BY 
             `Store ID`');
 
@@ -623,7 +623,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_decoupled_report` (I
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	    AND `Voucher Type` = ''Decoupled''
+	    AND `Promo Fulfillment Type` = ''Decoupled''
         GROUP BY 
             `Store ID`');
 
@@ -649,7 +649,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `s
             store.store_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
         FROM 
             `transaction_summary_view`
         JOIN
@@ -672,7 +672,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `s
             store.store_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
         FROM 
             `transaction_summary_view`
         JOIN
@@ -723,7 +723,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `s
         JOIN
             `promo` p ON `Promo Code` = p.promo_code
         WHERE 
-            `Store ID` = "', store_id, '"
+            `Store ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
             AND `Payment` = ''gcash''
         GROUP BY 
@@ -759,49 +759,20 @@ CREATE TABLE `activity_history` (
 --
 
 INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_id`, `activity_type`, `description`, `created_at`, `updated_at`) VALUES
-('016bdbbe-2eb7-11ef-abc9-48e7dad87c24', NULL, 'transaction', 'a6673ec0-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Transaction record updated\npromo_id: 8504f541-2d50-11ef-a4d2-48e7dad87c24 -> GCA5H', '2024-06-20 03:41:40', '2024-06-20 03:41:40'),
 ('08785777-2795-11ef-a232-0a002700000d', NULL, 'user', '08783957-2795-11ef-a232-0a002700000d', 'Add', 'User record added\nemail_address: sample@email.com\npassword: sample123\nname: Sample User\ntype: Admin\nstatus: ', '2024-06-11 01:50:51', '2024-06-11 01:50:51'),
-('0bc19da2-2eb8-11ef-abc9-48e7dad87c24', NULL, 'transaction', 'e881c2e7-224a-11ef-b01f-48e7dad87c24', 'Update', 'Transaction record updated', '2024-06-20 03:49:07', '2024-06-20 03:49:07'),
 ('24c431d2-2d47-11ef-a4d2-48e7dad87c24', NULL, 'store', '24c4128f-2d47-11ef-a4d2-48e7dad87c24', 'Add', 'Store record added\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nstore_name: sample11\nlegal_entity_name: legal11\nstore_address: address11', '2024-06-18 07:48:25', '2024-06-18 07:48:25'),
 ('3caf218d-1f21-11ef-a08a-48e7dad87c24', NULL, 'user', '3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'Add', 'User record added\nemail_address: admin@bookymail.ph\npassword: admin123\nname: Admin\ntype: Admin\nstatus: Active', '2024-05-31 07:41:48', '2024-05-31 07:41:48'),
 ('41a37f61-2d28-11ef-a7c7-0a002700000d', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_fulfillment_type: Coupled -> Decoupled', '2024-06-18 04:07:19', '2024-06-18 04:07:19'),
 ('446c137a-1f21-11ef-a08a-48e7dad87c24', NULL, 'user', '3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'Update', 'User record updated\npassword: admin123 -> admin123booky', '2024-05-31 07:42:01', '2024-05-31 07:42:01'),
-('44c1bfb4-2d51-11ef-a4d2-48e7dad87c24', NULL, 'report_history_coupled', '44c1a44d-2d51-11ef-a4d2-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-44c085\ntotal_successful_orders: 3\ntotal_gross_sales: 24044.00\ntotal_discount: 5984.00\ntotal_net_sales: 18060.00\nleadgen_commission_rate_base_pretrial: 2490.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 278.88\nleadgen_commission_rate_base_billable: 15570.00\ncommission_rate_billable: 10.00%\ntotal_billable: 1743.84\ntotal_commission_fees: 1743.84', '2024-06-18 09:00:54', '2024-06-18 09:00:54'),
-('494a3736-2ebc-11ef-abc9-48e7dad87c24', NULL, 'fee', '494a1d41-2ebc-11ef-abc9-48e7dad87c24', 'Add', 'Fee record added\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\npaymaya_credit_card: 0.00\npaymaya: 0.00\ngcash: 0.00\ngcash_miniapp: 0.00\nmaya_checkout: 0.00\nmaya: 0.00\nlead_gen_commission: 0.00\ncommission_type: VAT Inc', '2024-06-20 04:19:29', '2024-06-20 04:19:29'),
-('599dd82f-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', '599d1847-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-599d18', '2024-06-18 08:54:19', '2024-06-18 08:54:19'),
-('59a03527-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_body', '599d1847-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: 599d1847-2d50-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 1\nvoucher_value: 100.00\namount: 100.00', '2024-06-18 08:54:19', '2024-06-18 08:54:19'),
 ('6b5975be-2d27-11ef-a7c7-0a002700000d', NULL, 'settlement_report_history_coupled', '6b5956c6-2d27-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-6b581a\ntotal_successful_orders: 2\ntotal_gross_sales: 22244.00\ntotal_discount: 5784.00\ntotal_outstanding_amount_1: 16460.00\nleadgen_commission_rate_base: 16460.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 1843.52\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 778.50\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 802.98\ntotal_outstanding_amount_2: 16460.00\ntotal_commission_fees_2: 1843.52\ntotal_payment_gateway_fees_2: 802.98\nbank_fees: 10.00\ncwt_from_gross_sales: 107.21\ncwt_from_transaction_fees: 32.92\ncwt_from_pg_fees: 14.34\ntotal_amount_paid_out: 13743.55', '2024-06-18 04:01:19', '2024-06-18 04:01:19'),
 ('6e0aca8a-2d3e-11ef-a4d2-48e7dad87c24', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nfixed_discount: 0 -> 1\nfree_item: 0 -> 1', '2024-06-18 06:46:02', '2024-06-18 06:46:02'),
 ('74b3c994-2d22-11ef-a7c7-0a002700000d', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_fulfillment_type: Decoupled -> Coupled', '2024-06-18 03:25:48', '2024-06-18 03:25:48'),
 ('770a5f73-2d22-11ef-a7c7-0a002700000d', NULL, 'settlement_report_history_coupled', '770a0718-2d22-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-7708ad\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 2466.32\nleadgen_commission_rate_base: 2466.32\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2268.80\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 1121.04\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 1145.52\ntotal_outstanding_amount_2: 2466.32\ntotal_commission_fees_2: 2268.80\ntotal_payment_gateway_fees_2: 1145.52\nbank_fees: 10.00\ncwt_from_gross_sales: 12.33\ncwt_from_transaction_fees: 4.31\ncwt_from_pg_fees: 20.46\ntotal_amount_paid_out: -945.56', '2024-06-18 03:25:52', '2024-06-18 03:25:52'),
 ('7d48141a-2d22-11ef-a7c7-0a002700000d', NULL, 'settlement_report_history_coupled', '7d47f605-2d22-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-7d46e9\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 28916.00\nleadgen_commission_rate_base: 28916.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2541.06\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 1121.04\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 1145.52\ntotal_outstanding_amount_2: 28916.00\ntotal_commission_fees_2: 2541.06\ntotal_payment_gateway_fees_2: 1145.52\nbank_fees: 10.00\ncwt_from_gross_sales: 183.34\ncwt_from_transaction_fees: 45.38\ncwt_from_pg_fees: 20.46\ntotal_amount_paid_out: 25101.92', '2024-06-18 03:26:02', '2024-06-18 03:26:02'),
-('828b4bc6-2eb6-11ef-abc9-48e7dad87c24', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_amount: 100.00 -> 120.00', '2024-06-20 03:38:08', '2024-06-20 03:38:08'),
-('85051eec-2d50-11ef-a4d2-48e7dad87c24', NULL, 'promo', '8504f541-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Promo record added\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\npromo_code: GCA5H\npromo_amount: 200.00\npromo_fulfillment_type: Coupled\npromo_group: Gcash\nbogo: 0\nbundle: 0\nfixed_discount: 1\nfree_item: 0\npercent_discount: 0\nx_for_y: 0\npromo_details: gcash promo details\nremarks: N/A\nbill_status: PRE-TRIAL\nstart_date: 2024-03-01\nend_date: 2024-07-31', '2024-06-18 08:55:32', '2024-06-18 08:55:32'),
 ('8b553d09-2d26-11ef-a7c7-0a002700000d', NULL, 'settlement_report_history_coupled', '8b552490-2d26-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-8b540d\ntotal_successful_orders: 2\ntotal_gross_sales: 22244.00\ntotal_discount: 5784.00\ntotal_outstanding_amount_1: 16460.00\nleadgen_commission_rate_base: 16460.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 1843.52\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 778.50\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 802.98\ntotal_outstanding_amount_2: 16460.00\ntotal_commission_fees_2: 1843.52\ntotal_payment_gateway_fees_2: 802.98\nbank_fees: 10.00\ncwt_from_gross_sales: 107.21\ncwt_from_transaction_fees: 32.92\ncwt_from_pg_fees: 14.34\ntotal_amount_paid_out: 13743.55', '2024-06-18 03:55:04', '2024-06-18 03:55:04'),
-('97e42414-2ebe-11ef-abc9-48e7dad87c24', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_type: 0 -> Free item, Fixed discount', '2024-06-20 04:35:59', '2024-06-20 04:35:59'),
 ('a2f1259c-2d24-11ef-a7c7-0a002700000d', NULL, 'settlement_report_history_coupled', 'a2f101ad-2d24-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-a2f018\ntotal_successful_orders: 2\ntotal_gross_sales: 22244.00\ntotal_discount: 5784.00\ntotal_outstanding_amount_1: 16460.00\nleadgen_commission_rate_base: 16460.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 1843.52\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 778.50\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 802.98\ntotal_outstanding_amount_2: 16460.00\ntotal_commission_fees_2: 1843.52\ntotal_payment_gateway_fees_2: 802.98\nbank_fees: 10.00\ncwt_from_gross_sales: 107.21\ncwt_from_transaction_fees: 32.92\ncwt_from_pg_fees: 14.34\ntotal_amount_paid_out: 13743.55', '2024-06-18 03:41:24', '2024-06-18 03:41:24'),
-('a3d1d89c-2ebe-11ef-abc9-48e7dad87c24', NULL, 'promo', '8504f541-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Promo record updated\npromo_type: 0 -> BOGO', '2024-06-20 04:36:19', '2024-06-20 04:36:19'),
-('a667cc4e-2d50-11ef-a4d2-48e7dad87c24', NULL, 'transaction', 'a6673ec0-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Transaction record added\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\npromo_id: 8504f541-2d50-11ef-a4d2-48e7dad87c24\ncustomer_id: \"638572947601\"\ntransaction_date: 2024-06-18 10:55:41\ngross_amount: 1800.00\ndiscount: 200.00\namount_discounted: 1600.00\npayment: gcash\nbill_status: PRE-TRIAL', '2024-06-18 08:56:28', '2024-06-18 08:56:28'),
-('af210407-2ebe-11ef-abc9-48e7dad87c24', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nremarks:  -> not billable \"forever\"', '2024-06-20 04:36:38', '2024-06-20 04:36:38'),
-('b0ad6776-2eb8-11ef-abc9-48e7dad87c24', NULL, 'report_history_coupled', 'b0acea51-2eb8-11ef-abc9-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-b0ab5e\ntotal_successful_orders: 3\ntotal_gross_sales: 24044.00\ntotal_discount: 5984.00\ntotal_outstanding_amount_1: 18060.00\nleadgen_commission_rate_base: 18060.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2022.72\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 778.50\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 68.48\ntotal_payment_gateway_fees_1: 846.98\ntotal_outstanding_amount_2: 18060.00\ntotal_commission_fees_2: 2022.72\ntotal_payment_gateway_fees_2: 846.98\nbank_fees: 10.00\ncwt_from_gross_sales: 115.99\ncwt_from_transaction_fees: 36.12\ncwt_from_pg_fees: 15.12\ntotal_amount_paid_out: 15115.55', '2024-06-20 03:53:44', '2024-06-20 03:53:44'),
-('b42ef62c-2d4e-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', 'b42ddf53-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-b42ddf', '2024-06-18 08:42:32', '2024-06-18 08:42:32'),
-('b430d7f0-2d4e-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_body', 'b42ddf53-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: b42ddf53-2d4e-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 1\nvoucher_value: 100.00\namount: 100.00', '2024-06-18 08:42:32', '2024-06-18 08:42:32'),
-('b5d55419-2d50-11ef-a4d2-48e7dad87c24', NULL, 'transaction', 'a6673ec0-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Transaction record updated\ntransaction_date: 2024-06-18 10:55:41 -> 2024-05-18 10:55:41', '2024-06-18 08:56:54', '2024-06-18 08:56:54'),
-('bb92c21d-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', 'bb91e9e6-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-bb91e9', '2024-06-18 08:57:03', '2024-06-18 08:57:03'),
-('bc030dcd-2eb6-11ef-abc9-48e7dad87c24', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nbill_status: BILLABLE -> PRE-TRIAL', '2024-06-20 03:39:44', '2024-06-20 03:39:44'),
-('bc031474-2eb6-11ef-abc9-48e7dad87c24', NULL, 'promo_history', 'bc03116e-2eb6-11ef-abc9-48e7dad87c24', 'Add', 'Promo history record added\npromo_code: B00KYDEMO\nold_bill_status: BILLABLE\nnew_bill_status: PRE-TRIAL\nchanged_at: 2024-06-20\nchanged_by: N/A', '2024-06-20 03:39:44', '2024-06-20 03:39:44'),
 ('bcd83021-2927-11ef-8b55-0a002700000d', NULL, 'user', '3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'Update', 'User record updated\nname: Admin -> Booky Admin', '2024-06-13 01:53:32', '2024-06-13 01:53:32'),
-('bd9a1e69-2d1e-11ef-a7c7-0a002700000d', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_fulfillment_type: Coupled -> Decoupled', '2024-06-18 02:59:12', '2024-06-18 02:59:12'),
-('cf1512db-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', 'cf141684-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-cf1416', '2024-06-18 08:57:36', '2024-06-18 08:57:36'),
-('cf17118f-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_body', 'cf141684-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: cf141684-2d50-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 4\nvoucher_value: 100.00\namount: 400.00', '2024-06-18 08:57:36', '2024-06-18 08:57:36'),
-('e4bc7553-2d4e-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', 'e4bbda63-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-e4bbda', '2024-06-18 08:43:54', '2024-06-18 08:43:54'),
-('e4c02508-2d4e-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_body', 'e4bbda63-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: e4bbda63-2d4e-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 1\nvoucher_value: 100.00\namount: 100.00', '2024-06-18 08:43:54', '2024-06-18 08:43:54'),
-('e5a31a2a-2eb6-11ef-abc9-48e7dad87c24', NULL, 'transaction', '1bc0f5fe-224b-11ef-b01f-48e7dad87c24', 'Update', 'Transaction record updated\npromo_id: 4e3030a7-1cc3-11ef-8abb-48e7dad87c24 -> B00KYDEMO', '2024-06-20 03:40:54', '2024-06-20 03:40:54'),
-('eb6d338b-2d4e-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', 'eb6c4798-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-eb6c47', '2024-06-18 08:44:05', '2024-06-18 08:44:05'),
-('eb6e79d2-2d4e-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_body', 'eb6c4798-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: eb6c4798-2d4e-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 1\nvoucher_value: 100.00\namount: 100.00', '2024-06-18 08:44:05', '2024-06-18 08:44:05'),
-('f15b0edb-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', 'f15a327b-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-f15a32', '2024-06-18 08:58:34', '2024-06-18 08:58:34'),
-('f70bc8b5-2eb6-11ef-abc9-48e7dad87c24', NULL, 'transaction', '8d1552bf-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Transaction record updated\npromo_id: 4e3030a7-1cc3-11ef-8abb-48e7dad87c24 -> B00KYDEMO', '2024-06-20 03:41:23', '2024-06-20 03:41:23'),
-('f70bdc1c-2eb6-11ef-abc9-48e7dad87c24', NULL, 'transaction', 'e881c2e7-224a-11ef-b01f-48e7dad87c24', 'Update', 'Transaction record updated\npromo_id: 4e3030a7-1cc3-11ef-8abb-48e7dad87c24 -> B00KYDEMO', '2024-06-20 03:41:23', '2024-06-20 03:41:23');
+('bd9a1e69-2d1e-11ef-a7c7-0a002700000d', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_fulfillment_type: Coupled -> Decoupled', '2024-06-18 02:59:12', '2024-06-18 02:59:12');
 
 --
 -- Triggers `activity_history`
@@ -822,13 +793,13 @@ DELIMITER ;
 CREATE TABLE `fee` (
   `fee_id` varchar(36) NOT NULL,
   `merchant_id` varchar(36) NOT NULL,
-  `paymaya_credit_card` decimal(4,2) NOT NULL DEFAULT 0.00,
-  `paymaya` decimal(4,2) NOT NULL DEFAULT 0.00,
-  `gcash` decimal(4,2) NOT NULL DEFAULT 0.00,
-  `gcash_miniapp` decimal(4,2) NOT NULL DEFAULT 0.00,
-  `maya_checkout` decimal(4,2) NOT NULL DEFAULT 0.00,
-  `maya` decimal(4,2) NOT NULL DEFAULT 0.00,
-  `lead_gen_commission` decimal(4,2) NOT NULL DEFAULT 0.00,
+  `paymaya_credit_card` decimal(4,2) NOT NULL,
+  `paymaya` decimal(4,2) NOT NULL,
+  `gcash` decimal(4,2) NOT NULL,
+  `gcash_miniapp` decimal(4,2) NOT NULL,
+  `maya_checkout` decimal(4,2) NOT NULL,
+  `maya` decimal(4,2) NOT NULL,
+  `lead_gen_commission` decimal(4,2) NOT NULL,
   `commission_type` enum('VAT Inc','VAT Exc') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -933,7 +904,7 @@ END
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_fee_value` AFTER UPDATE ON `fee` FOR EACH ROW BEGIN
+CREATE TRIGGER `update_fee_log` AFTER UPDATE ON `fee` FOR EACH ROW BEGIN
   IF OLD.paymaya_credit_card != NEW.paymaya_credit_card THEN
     INSERT INTO fee_history (fee_history_id, fee_id,column_name, old_value, new_value)
     VALUES (UUID(), NEW.fee_id, 'paymaya_credit_card', OLD.paymaya_credit_card, NEW.paymaya_credit_card);
@@ -1082,7 +1053,8 @@ DELIMITER ;
 CREATE TABLE `merchant` (
   `merchant_id` varchar(36) NOT NULL,
   `merchant_name` varchar(255) NOT NULL,
-  `merchant_partnership_type` enum('Primary','Secondary') DEFAULT NULL,
+  `merchant_partnership_type` enum('Primary','Secondary') NOT NULL,
+  `merchant_type` enum('Grab & Go','Casual Dining') NOT NULL,
   `legal_entity_name` varchar(255) DEFAULT NULL,
   `business_address` text DEFAULT NULL,
   `email_address` text NOT NULL,
@@ -1094,17 +1066,15 @@ CREATE TABLE `merchant` (
 -- Dumping data for table `merchant`
 --
 
-INSERT INTO `merchant` (`merchant_id`, `merchant_name`, `merchant_partnership_type`, `legal_entity_name`, `business_address`, `email_address`, `created_at`, `updated_at`) VALUES
-('3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Merchant', 'Primary', 'Merchant Legal Name', 'Somewhere St.', 'merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph', '2024-05-28 07:16:32', '2024-06-04 02:49:53');
+INSERT INTO `merchant` (`merchant_id`, `merchant_name`, `merchant_partnership_type`, `merchant_type`, `legal_entity_name`, `business_address`, `email_address`, `created_at`, `updated_at`) VALUES
+('3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Merchant', 'Primary', 'Grab & Go', 'Merchant Legal Name', 'Somewhere St.', 'merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph, merchantdemo@booky.ph', '2024-05-28 07:16:32', '2024-06-04 02:49:53');
 
 --
 -- Triggers `merchant`
 --
 DELIMITER $$
 CREATE TRIGGER `generate_merchant_id` BEFORE INSERT ON `merchant` FOR EACH ROW BEGIN
-    IF NEW.merchant_id IS NULL OR NEW.merchant_id = '' THEN
-        SET NEW.merchant_id = UUID();
-    END IF;
+    SET NEW.merchant_id = UUID();
 END
 $$
 DELIMITER ;
@@ -1170,13 +1140,17 @@ DELIMITER ;
 
 CREATE TABLE `promo` (
   `promo_id` varchar(36) NOT NULL,
-  `promo_code` varchar(100) NOT NULL,
   `merchant_id` varchar(36) NOT NULL,
-  `promo_amount` int(11) NOT NULL DEFAULT 0,
-  `voucher_type` enum('Coupled','Decoupled') NOT NULL,
-  `promo_category` enum('Grab & Go','Casual Dining') DEFAULT NULL,
+  `promo_code` varchar(100) NOT NULL,
+  `promo_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `promo_fulfillment_type` enum('Coupled','Decoupled') NOT NULL,
   `promo_group` enum('Booky','Gcash','Unionbank','Gcash/Booky','UB/Booky') NOT NULL,
-  `promo_type` varchar(255) NOT NULL,
+  `bogo` tinyint(1) NOT NULL,
+  `bundle` tinyint(1) NOT NULL,
+  `fixed_discount` tinyint(1) NOT NULL,
+  `free_item` tinyint(1) NOT NULL,
+  `percent_discount` tinyint(1) NOT NULL,
+  `x_for_y` tinyint(1) NOT NULL,
   `promo_details` text NOT NULL,
   `remarks` text DEFAULT NULL,
   `bill_status` enum('PRE-TRIAL','BILLABLE','NOT BILLABLE') NOT NULL,
@@ -1190,9 +1164,8 @@ CREATE TABLE `promo` (
 -- Dumping data for table `promo`
 --
 
-INSERT INTO `promo` (`promo_id`, `promo_code`, `merchant_id`, `promo_amount`, `voucher_type`, `promo_category`, `promo_group`, `promo_type`, `promo_details`, `remarks`, `bill_status`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
-('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 120, 'Decoupled', 'Grab & Go', 'Gcash', 'Free item, Fixed discount', 'Booky sample promo', 'not billable \"forever\"', 'PRE-TRIAL', '2024-04-01', '2024-07-31', '2024-06-04 02:34:19', '2024-06-20 04:35:59'),
-('8504f541-2d50-11ef-a4d2-48e7dad87c24', 'GCA5H', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 200, 'Coupled', 'Casual Dining', 'Gcash', 'BOGO', 'gcash promo details', NULL, 'PRE-TRIAL', '2024-03-01', '2024-07-31', '2024-06-18 08:55:32', '2024-06-20 04:36:19');
+INSERT INTO `promo` (`promo_id`, `merchant_id`, `promo_code`, `promo_amount`, `promo_fulfillment_type`, `promo_group`, `bogo`, `bundle`, `fixed_discount`, `free_item`, `percent_discount`, `x_for_y`, `promo_details`, `remarks`, `bill_status`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
+('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '100.00', 'Decoupled', 'Gcash', 0, 0, 1, 1, 0, 0, 'Booky sample promo', '', 'BILLABLE', '2024-04-01', '2024-07-31', '2024-06-04 02:34:19', '2024-06-18 02:59:12');
 
 --
 -- Triggers `promo`
@@ -1207,13 +1180,17 @@ DELIMITER $$
 CREATE TRIGGER `promo_insert_log` AFTER INSERT ON `promo` FOR EACH ROW BEGIN
   DECLARE description TEXT;
   SET description = CONCAT('Promo record added\n',
+  'merchant_id: ', IFNULL(NEW.merchant_id, 'N/A'), 
   '\n','promo_code: ', IFNULL(NEW.promo_code, 'N/A'), 
-  '\n','merchant_id: ', IFNULL(NEW.merchant_id, 'N/A'),
   '\n','promo_amount: ', IFNULL(NEW.promo_amount, 'N/A'), 
-  '\n','voucher_type: ', IFNULL(NEW.voucher_type, 'N/A'),
-  '\n','promo_category: ', IFNULL(NEW.promo_category, 'N/A'), 
+  '\n','promo_fulfillment_type: ', IFNULL(NEW.promo_fulfillment_type, 'N/A'),
   '\n','promo_group: ', IFNULL(NEW.promo_group, 'N/A'),
-  '\n','promo_type: ', IFNULL(NEW.promo_type, 'N/A'),
+  '\n','bogo: ', IFNULL(NEW.bogo, 'N/A'),
+  '\n','bundle: ', IFNULL(NEW.bundle, 'N/A'),
+  '\n','fixed_discount: ', IFNULL(NEW.fixed_discount, 'N/A'),
+  '\n','free_item: ', IFNULL(NEW.free_item, 'N/A'),
+  '\n','percent_discount: ', IFNULL(NEW.percent_discount, 'N/A'),
+  '\n','x_for_y: ', IFNULL(NEW.x_for_y, 'N/A'),
   '\n','promo_details: ', IFNULL(NEW.promo_details, 'N/A'),
   '\n','remarks: ', IFNULL(NEW.remarks, 'N/A'),
   '\n','bill_status: ', IFNULL(NEW.bill_status, 'N/A'),
@@ -1230,32 +1207,44 @@ CREATE TRIGGER `promo_update_log` AFTER UPDATE ON `promo` FOR EACH ROW BEGIN
   DECLARE description TEXT;
   SET description = 'Promo record updated\n';
 
-  IF OLD.promo_code != NEW.promo_code THEN
-    SET description = CONCAT(description, 'promo_code: ', OLD.promo_code, ' -> ', NEW.promo_code, '\n');
-  END IF;
-  
   IF OLD.merchant_id != NEW.merchant_id THEN
     SET description = CONCAT(description, 'merchant_id: ', OLD.merchant_id, ' -> ', NEW.merchant_id, '\n');
+  END IF;
+
+  IF OLD.promo_code != NEW.promo_code THEN
+    SET description = CONCAT(description, 'promo_code: ', OLD.promo_code, ' -> ', NEW.promo_code, '\n');
   END IF;
 
   IF OLD.promo_amount != NEW.promo_amount THEN
     SET description = CONCAT(description, 'promo_amount: ', OLD.promo_amount, ' -> ', NEW.promo_amount, '\n');
   END IF;
 
-  IF OLD.voucher_type != NEW.voucher_type THEN
-    SET description = CONCAT(description, 'voucher_type: ', OLD.voucher_type, ' -> ', NEW.voucher_type, '\n');
-  END IF;
-  
-  IF OLD.promo_category != NEW.promo_category THEN
-    SET description = CONCAT(description, 'promo_category: ', OLD.promo_category, ' -> ', NEW.promo_category, '\n');
+  IF OLD.promo_fulfillment_type != NEW.promo_fulfillment_type THEN
+    SET description = CONCAT(description, 'promo_fulfillment_type: ', OLD.promo_fulfillment_type, ' -> ', NEW.promo_fulfillment_type, '\n');
   END IF;
   
   IF OLD.promo_group != NEW.promo_group THEN
     SET description = CONCAT(description, 'promo_group: ', OLD.promo_group, ' -> ', NEW.promo_group, '\n');
   END IF;
   
-  IF OLD.promo_type != NEW.promo_type THEN
-    SET description = CONCAT(description, 'promo_type: ', OLD.promo_type, ' -> ', NEW.promo_type, '\n');
+  IF OLD.bogo != NEW.bogo THEN
+    SET description = CONCAT(description, 'bogo: ', OLD.bogo, ' -> ', NEW.bogo, '\n');
+  END IF;
+  
+  IF OLD.bundle != NEW.bundle THEN
+    SET description = CONCAT(description, 'bundle: ', OLD.bundle, ' -> ', NEW.bundle, '\n');
+  END IF;
+  
+  IF OLD.fixed_discount != NEW.fixed_discount THEN
+    SET description = CONCAT(description, 'fixed_discount: ', OLD.fixed_discount, ' -> ', NEW.fixed_discount, '\n');
+  END IF;
+  
+  IF OLD.free_item != NEW.free_item THEN
+    SET description = CONCAT(description, 'free_item: ', OLD.free_item, ' -> ', NEW.free_item, '\n');
+  END IF;
+  
+  IF OLD.x_for_y != NEW.x_for_y THEN
+    SET description = CONCAT(description, 'x_for_y: ', OLD.x_for_y, ' -> ', NEW.x_for_y, '\n');
   END IF;
   
   IF OLD.promo_details != NEW.promo_details THEN
@@ -1287,10 +1276,10 @@ END
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `update_bill_status` AFTER UPDATE ON `promo` FOR EACH ROW BEGIN
+CREATE TRIGGER `update_promo_log` AFTER UPDATE ON `promo` FOR EACH ROW BEGIN
   IF OLD.bill_status != NEW.bill_status THEN
-    INSERT INTO promo_history (promo_history_id, promo_code, old_bill_status, new_bill_status)
-    VALUES (UUID(), NEW.promo_code, OLD.bill_status, NEW.bill_status);
+    INSERT INTO promo_history (promo_history_id, promo_id, old_bill_status, new_bill_status)
+    VALUES (UUID(), NEW.promo_id, OLD.bill_status, NEW.bill_status);
   END IF;
 END
 $$
@@ -1304,7 +1293,7 @@ DELIMITER ;
 
 CREATE TABLE `promo_history` (
   `promo_history_id` varchar(36) NOT NULL,
-  `promo_code` varchar(100) NOT NULL,
+  `promo_id` varchar(36) NOT NULL,
   `old_bill_status` enum('PRE-TRIAL','BILLABLE','NOT BILLABLE') NOT NULL,
   `new_bill_status` enum('PRE-TRIAL','BILLABLE','NOT BILLABLE') NOT NULL,
   `changed_at` date NOT NULL DEFAULT current_timestamp(),
@@ -1315,8 +1304,8 @@ CREATE TABLE `promo_history` (
 -- Dumping data for table `promo_history`
 --
 
-INSERT INTO `promo_history` (`promo_history_id`, `promo_code`, `old_bill_status`, `new_bill_status`, `changed_at`, `changed_by`) VALUES
-('bc03116e-2eb6-11ef-abc9-48e7dad87c24', 'B00KYDEMO', 'BILLABLE', 'PRE-TRIAL', '2024-06-20', NULL);
+INSERT INTO `promo_history` (`promo_history_id`, `promo_id`, `old_bill_status`, `new_bill_status`, `changed_at`, `changed_by`) VALUES
+('1bee95d1-294c-11ef-8b55-0a002700000d', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'PRE-TRIAL', 'BILLABLE', '2024-06-13', NULL);
 
 --
 -- Triggers `promo_history`
@@ -1331,7 +1320,7 @@ DELIMITER $$
 CREATE TRIGGER `promo_history_insert_log` AFTER INSERT ON `promo_history` FOR EACH ROW BEGIN
   DECLARE description TEXT;
   SET description = CONCAT('Promo history record added\n',
-  'promo_code: ', IFNULL(NEW.promo_code, 'N/A'), 
+  'promo_id: ', IFNULL(NEW.promo_id, 'N/A'), 
   '\n','old_bill_status: ', IFNULL(NEW.old_bill_status, 'N/A'), 
   '\n','new_bill_status: ', IFNULL(NEW.new_bill_status, 'N/A'), 
   '\n','changed_at: ', IFNULL(NEW.changed_at, 'N/A'),
@@ -1347,8 +1336,8 @@ CREATE TRIGGER `promo_history_update_log` AFTER UPDATE ON `promo_history` FOR EA
   DECLARE description TEXT;
   SET description = 'Promo history record updated\n';
 
-  IF OLD.promo_code != NEW.promo_code THEN
-    SET description = CONCAT(description, 'promo_code: ', OLD.promo_code, ' -> ', NEW.promo_code, '\n');
+  IF OLD.promo_id != NEW.promo_id THEN
+    SET description = CONCAT(description, 'promo_id: ', OLD.promo_id, ' -> ', NEW.promo_id, '\n');
   END IF;
 
   IF OLD.old_bill_status != NEW.old_bill_status THEN
@@ -1427,8 +1416,7 @@ CREATE TABLE `report_history_coupled` (
 
 INSERT INTO `report_history_coupled` (`coupled_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_number`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_outstanding_amount_1`, `leadgen_commission_rate_base`, `commission_rate`, `total_commission_fees_1`, `paymaya_pg_fee`, `paymaya_credit_card_pg_fee`, `maya_pg_fee`, `maya_checkout_pg_fee`, `gcash_miniapp_pg_fee`, `gcash_pg_fee`, `total_payment_gateway_fees_1`, `total_outstanding_amount_2`, `total_commission_fees_2`, `total_payment_gateway_fees_2`, `bank_fees`, `cwt_from_gross_sales`, `cwt_from_transaction_fees`, `cwt_from_pg_fees`, `total_amount_paid_out`, `created_at`, `updated_at`) VALUES
 ('6b5956c6-2d27-11ef-a7c7-0a002700000d', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-6b581a', 2, '22244.00', '5784.00', '16460.00', '16460.00', '10.00%', '1843.52', '0.00', '778.50', '0.00', '0.00', '0.00', '24.48', '802.98', '16460.00', '1843.52', '802.98', '10.00', '107.21', '32.92', '14.34', '13743.55', '2024-06-18 04:01:19', '2024-06-18 04:01:19'),
-('a2f101ad-2d24-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-a2f018', 2, '22244.00', '5784.00', '16460.00', '16460.00', '10.00%', '1843.52', '0.00', '778.50', '0.00', '0.00', '0.00', '24.48', '802.98', '16460.00', '1843.52', '802.98', '10.00', '107.21', '32.92', '14.34', '13743.55', '2024-06-18 03:41:24', '2024-06-18 03:41:24'),
-('b0acea51-2eb8-11ef-abc9-48e7dad87c24', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-b0ab5e', 3, '24044.00', '5984.00', '18060.00', '18060.00', '10.00%', '2022.72', '0.00', '778.50', '0.00', '0.00', '0.00', '68.48', '846.98', '18060.00', '2022.72', '846.98', '10.00', '115.99', '36.12', '15.12', '15115.55', '2024-06-20 03:53:44', '2024-06-20 03:53:44');
+('a2f101ad-2d24-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-a2f018', 2, '22244.00', '5784.00', '16460.00', '16460.00', '10.00%', '1843.52', '0.00', '778.50', '0.00', '0.00', '0.00', '24.48', '802.98', '16460.00', '1843.52', '802.98', '10.00', '107.21', '32.92', '14.34', '13743.55', '2024-06-18 03:41:24', '2024-06-18 03:41:24');
 
 --
 -- Triggers `report_history_coupled`
@@ -1669,7 +1657,6 @@ CREATE TABLE `report_history_decoupled` (
 
 INSERT INTO `report_history_decoupled` (`decoupled_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_number`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_net_sales`, `leadgen_commission_rate_base_pretrial`, `commission_rate_pretrial`, `total_pretrial`, `leadgen_commission_rate_base_billable`, `commission_rate_billable`, `total_billable`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
 ('1a5573ae-2d38-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-1a5420', 2, '22244.00', '5784.00', '16460.00', '890.00', '10.00%', '99.68', '15570.00', '10.00%', '1743.84', '1743.84', '2024-06-18 06:00:45', '2024-06-18 06:00:45'),
-('44c1a44d-2d51-11ef-a4d2-48e7dad87c24', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-44c085', 3, '24044.00', '5984.00', '18060.00', '2490.00', '10.00%', '278.88', '15570.00', '10.00%', '1743.84', '1743.84', '2024-06-18 09:00:54', '2024-06-18 09:00:54'),
 ('4856ac81-2d28-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-4855c7', 2, '22244.00', '5784.00', '16460.00', '890.00', '10.00%', '99.68', '15570.00', '10.00%', '1743.84', '1743.84', '2024-06-18 04:07:30', '2024-06-18 04:07:30'),
 ('e5d4e73c-2d28-11ef-a7c7-0a002700000d', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-e5d410', 2, '22244.00', '5784.00', '16460.00', '890.00', '10.00%', '99.68', '15570.00', '10.00%', '1743.84', '1743.84', '2024-06-18 04:11:54', '2024-06-18 04:11:54'),
 ('fe7b7173-2d36-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-fe7a24', 2, '22244.00', '5784.00', '16460.00', '890.00', '10.00%', '99.68', '15570.00', '10.00%', '1743.84', '1743.84', '2024-06-18 05:52:49', '2024-06-18 05:52:49');
@@ -1841,13 +1828,8 @@ CREATE TABLE `report_history_gcash_body` (
 
 INSERT INTO `report_history_gcash_body` (`gcash_report_body_id`, `gcash_report_id`, `item`, `quantity_redeemed`, `voucher_value`, `amount`, `created_at`, `updated_at`) VALUES
 ('24ba4071-2d38-11ef-a7c7-0a002700000d', '24ba4052-2d38-11ef-a7c7-0a002700000d', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 07:25:43', '2024-06-18 07:25:43'),
-('599d185b-2d50-11ef-a4d2-48e7dad87c24', '599d1847-2d50-11ef-a4d2-48e7dad87c24', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 08:54:19', '2024-06-18 08:54:19'),
 ('5c97343a-2d38-11ef-a7c7-0a002700000d', '5c973414-2d38-11ef-a7c7-0a002700000d', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 07:25:43', '2024-06-18 07:25:43'),
-('b31d6bb8-2d37-11ef-a7c7-0a002700000d', 'b31d6b9d-2d37-11ef-a7c7-0a002700000d', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 07:25:43', '2024-06-18 07:25:43'),
-('b42ddf65-2d4e-11ef-a4d2-48e7dad87c24', 'b42ddf53-2d4e-11ef-a4d2-48e7dad87c24', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 08:42:32', '2024-06-18 08:42:32'),
-('cf14169b-2d50-11ef-a4d2-48e7dad87c24', 'cf141684-2d50-11ef-a4d2-48e7dad87c24', 'B00KYDEMO', 4, '100.00', '400.00', '2024-06-18 08:57:36', '2024-06-18 08:57:36'),
-('e4bbda73-2d4e-11ef-a4d2-48e7dad87c24', 'e4bbda63-2d4e-11ef-a4d2-48e7dad87c24', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 08:43:54', '2024-06-18 08:43:54'),
-('eb6c47b2-2d4e-11ef-a4d2-48e7dad87c24', 'eb6c4798-2d4e-11ef-a4d2-48e7dad87c24', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 08:44:05', '2024-06-18 08:44:05');
+('b31d6bb8-2d37-11ef-a7c7-0a002700000d', 'b31d6b9d-2d37-11ef-a7c7-0a002700000d', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 07:25:43', '2024-06-18 07:25:43');
 
 --
 -- Triggers `report_history_gcash_body`
@@ -1919,31 +1901,17 @@ CREATE TABLE `report_history_gcash_head` (
   `business_address` text NOT NULL,
   `settlement_period_start` date NOT NULL,
   `settlement_period_end` date NOT NULL,
-  `settlement_number` varchar(20) NOT NULL,
-  `total_amount` decimal(10,2) DEFAULT NULL,
-  `commission_rate` decimal(6,4) DEFAULT NULL,
-  `commission_amount` decimal(10,2) DEFAULT NULL,
-  `vat_amount` decimal(10,2) DEFAULT NULL,
-  `total_commission_fees` decimal(10,2) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `settlement_number` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `report_history_gcash_head`
 --
 
-INSERT INTO `report_history_gcash_head` (`gcash_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_number`, `total_amount`, `commission_rate`, `commission_amount`, `vat_amount`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
-('24ba4052-2d38-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-24ba40', '0.00', '0.0000', '0.00', '0.00', '0.00', '2024-06-18 08:24:18', '2024-06-18 08:24:18'),
-('599d1847-2d50-11ef-a4d2-48e7dad87c24', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-599d18', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:54:19', '2024-06-18 08:54:19'),
-('5c973414-2d38-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-5c9734', '0.00', '0.0000', '0.00', '0.00', '0.00', '2024-06-18 08:24:18', '2024-06-18 08:24:18'),
-('b31d6b9d-2d37-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-b31d6b', '0.00', '0.0000', '0.00', '0.00', '0.00', '2024-06-18 08:24:18', '2024-06-18 08:24:18'),
-('b42ddf53-2d4e-11ef-a4d2-48e7dad87c24', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-b42ddf', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:42:32', '2024-06-18 08:42:32'),
-('bb91e9e6-2d50-11ef-a4d2-48e7dad87c24', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-bb91e9', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:57:03', '2024-06-18 08:57:03'),
-('cf141684-2d50-11ef-a4d2-48e7dad87c24', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-cf1416', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:57:36', '2024-06-18 08:57:36'),
-('e4bbda63-2d4e-11ef-a4d2-48e7dad87c24', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-e4bbda', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:43:54', '2024-06-18 08:43:54'),
-('eb6c4798-2d4e-11ef-a4d2-48e7dad87c24', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-eb6c47', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:44:05', '2024-06-18 08:44:05'),
-('f15a327b-2d50-11ef-a4d2-48e7dad87c24', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-f15a32', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:58:34', '2024-06-18 08:58:34');
+INSERT INTO `report_history_gcash_head` (`gcash_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_number`) VALUES
+('24ba4052-2d38-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-24ba40'),
+('5c973414-2d38-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-5c9734'),
+('b31d6b9d-2d37-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-b31d6b');
 
 --
 -- Triggers `report_history_gcash_head`
@@ -2055,7 +2023,7 @@ INSERT INTO `store` (`store_id`, `merchant_id`, `store_name`, `legal_entity_name
 --
 DELIMITER $$
 CREATE TRIGGER `generate_store_id` BEFORE INSERT ON `store` FOR EACH ROW BEGIN
-    IF NEW.store_id IS NULL OR NEW.store_id = '' THEN
+    IF NEW.store_id IS NULL THEN
         SET NEW.store_id = UUID();
     END IF;
 END
@@ -2114,14 +2082,14 @@ DELIMITER ;
 CREATE TABLE `transaction` (
   `transaction_id` varchar(36) NOT NULL,
   `store_id` varchar(36) NOT NULL,
-  `promo_code` varchar(100) NOT NULL,
+  `promo_id` varchar(36) NOT NULL,
   `customer_id` varchar(14) NOT NULL,
   `customer_name` varchar(100) DEFAULT NULL,
   `transaction_date` datetime NOT NULL,
-  `gross_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `discount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `amount_discounted` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya') DEFAULT NULL,
+  `gross_amount` decimal(10,2) NOT NULL,
+  `discount` decimal(10,2) NOT NULL,
+  `amount_discounted` decimal(10,2) NOT NULL,
+  `payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya') NOT NULL,
   `bill_status` enum('PRE-TRIAL','BILLABLE','NOT BILLABLE') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -2131,11 +2099,10 @@ CREATE TABLE `transaction` (
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`transaction_id`, `store_id`, `promo_code`, `customer_id`, `customer_name`, `transaction_date`, `gross_amount`, `discount`, `amount_discounted`, `payment`, `bill_status`, `created_at`, `updated_at`) VALUES
-('1bc0f5fe-224b-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '\"639121234345\"', 'Maria Demo', '2024-05-15 16:17:58', '20760.00', '5190.00', '15570.00', 'paymaya_credit_card', 'BILLABLE', '2024-06-01 08:17:58', '2024-06-05 03:42:49'),
-('8d1552bf-1cc3-11ef-8abb-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '\"639123456789\"', 'Juan Person', '2024-05-28 09:25:43', '1484.00', '594.00', '890.00', 'gcash', 'PRE-TRIAL', '2024-05-28 07:26:08', '2024-05-28 07:26:08'),
-('a6673ec0-2d50-11ef-a4d2-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'GCA5H', '\"638572947601\"', 'Custom Er', '2024-05-18 10:55:41', '1800.00', '200.00', '1600.00', 'gcash', 'PRE-TRIAL', '2024-06-18 08:56:28', '2024-06-18 08:56:28'),
-('e881c2e7-224a-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '\"639987654321\"', 'Anya Human', '2024-06-06 10:16:20', '15570.00', '3114.00', '12456.00', 'paymaya_credit_card', 'PRE-TRIAL', '2024-06-04 08:17:39', '2024-06-04 08:17:39');
+INSERT INTO `transaction` (`transaction_id`, `store_id`, `promo_id`, `customer_id`, `customer_name`, `transaction_date`, `gross_amount`, `discount`, `amount_discounted`, `payment`, `bill_status`, `created_at`, `updated_at`) VALUES
+('1bc0f5fe-224b-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '\"639121234345\"', 'Maria Demo', '2024-05-15 16:17:58', '20760.00', '5190.00', '15570.00', 'paymaya_credit_card', 'BILLABLE', '2024-06-01 08:17:58', '2024-06-05 03:42:49'),
+('8d1552bf-1cc3-11ef-8abb-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '\"639123456789\"', 'Juan Person', '2024-05-28 09:25:43', '1484.00', '594.00', '890.00', 'gcash', 'PRE-TRIAL', '2024-05-28 07:26:08', '2024-05-28 07:26:08'),
+('e881c2e7-224a-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', '\"639987654321\"', 'Anna Human', '2024-06-06 10:16:20', '15570.00', '3114.00', '12456.00', 'paymaya_credit_card', 'PRE-TRIAL', '2024-06-04 08:17:39', '2024-06-04 08:17:39');
 
 --
 -- Triggers `transaction`
@@ -2153,7 +2120,7 @@ CREATE TRIGGER `transaction_insert_log` AFTER INSERT ON `transaction` FOR EACH R
   DECLARE description TEXT;
   SET description = CONCAT('Transaction record added\n',
   'store_id: ', IFNULL(NEW.store_id, 'N/A'), 
-  '\n','promo_code: ', IFNULL(NEW.promo_code, 'N/A'), 
+  '\n','promo_id: ', IFNULL(NEW.promo_id, 'N/A'), 
   '\n','customer_id: ', IFNULL(NEW.customer_id, 'N/A'), 
   '\n','transaction_date: ', IFNULL(NEW.transaction_date, 'N/A'),
   '\n','gross_amount: ', IFNULL(NEW.gross_amount, 'N/A'), 
@@ -2176,8 +2143,8 @@ CREATE TRIGGER `transaction_update_log` AFTER UPDATE ON `transaction` FOR EACH R
     SET description = CONCAT(description, 'store_id: ', OLD.store_id, ' -> ', NEW.store_id, '\n');
   END IF;
 
-  IF OLD.promo_code != NEW.promo_code THEN
-    SET description = CONCAT(description, 'promo_code: ', OLD.promo_code, ' -> ', NEW.promo_code, '\n');
+  IF OLD.promo_id != NEW.promo_id THEN
+    SET description = CONCAT(description, 'promo_id: ', OLD.promo_id, ' -> ', NEW.promo_id, '\n');
   END IF;
 
   IF OLD.customer_id != NEW.customer_id THEN
@@ -2224,6 +2191,31 @@ DELIMITER ;
 -- (See below for the actual view)
 --
 CREATE TABLE `transaction_summary_view` (
+`Transaction ID` varchar(8)
+,`Transaction Date` datetime
+,`Merchant ID` varchar(36)
+,`Merchant Name` varchar(255)
+,`Store ID` varchar(36)
+,`Store Name` varchar(100)
+,`Customer ID` varchar(14)
+,`Customer Name` varchar(100)
+,`Promo ID` varchar(8)
+,`Promo Code` varchar(100)
+,`Promo Fulfillment Type` enum('Coupled','Decoupled')
+,`Promo Group` enum('Booky','Gcash','Unionbank','Gcash/Booky','UB/Booky')
+,`Promo Type` varchar(66)
+,`Gross Amount` decimal(10,2)
+,`Discount` decimal(10,2)
+,`Net Amount` decimal(11,2)
+,`Payment` enum('paymaya_credit_card','gcash','gcash_miniapp','paymaya','maya_checkout','maya')
+,`Bill Status` enum('PRE-TRIAL','BILLABLE','NOT BILLABLE')
+,`Commission Type` varchar(50)
+,`Commission Rate` varchar(51)
+,`Commission Amount` double(19,2)
+,`Total Billing` double(19,2)
+,`PG Fee Rate` varchar(51)
+,`PG Fee Amount` double(19,2)
+,`Amount to be Disbursed` double(19,2)
 );
 
 -- --------------------------------------------------------
@@ -2315,7 +2307,7 @@ DELIMITER ;
 --
 DROP TABLE IF EXISTS `transaction_summary_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transaction_summary_view`  AS SELECT substr(`t`.`transaction_id`,1,8) AS `Transaction ID`, `t`.`transaction_date` AS `Transaction Date`, `m`.`merchant_id` AS `Merchant ID`, `m`.`merchant_name` AS `Merchant Name`, `s`.`store_id` AS `Store ID`, `s`.`store_name` AS `Store Name`, `t`.`customer_id` AS `Customer ID`, `t`.`customer_name` AS `Customer Name`, `p`.`promo_code` AS `Promo Code`, `p`.`merchant_category` AS `Merchant Category`, `p`.`voucher_type` AS `Voucher Type`, `p`.`promo_group` AS `Promo Group`, `p`.`promo_type` AS `Promo Type`, `t`.`gross_amount` AS `Gross Amount`, `t`.`discount` AS `Discount`, round(`t`.`gross_amount` - `t`.`discount`,2) AS `Net Amount`, `t`.`payment` AS `Payment`, `t`.`bill_status` AS `Bill Status`, coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) AS `Commission Type`, coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`lead_gen_commission`,'%')) AS `Commission Rate`, round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) AS `Commission Amount`, CASE WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) END AS `Total Billing`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya_credit_card`,'%'))) WHEN `t`.`payment` = 'gcash' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash`,'%'))) WHEN `t`.`payment` = 'gcash_miniapp' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash_miniapp`,'%'))) WHEN `t`.`payment` = 'paymaya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya`,'%'))) WHEN `t`.`payment` = 'maya_checkout' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya_checkout`,'%'))) WHEN `t`.`payment` = 'maya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya`,'%'))) END AS `PG Fee Rate`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) WHEN `t`.`payment` = 'gcash' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) WHEN `t`.`payment` = 'gcash_miniapp' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) WHEN `t`.`payment` = 'paymaya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) WHEN `t`.`payment` = 'maya_checkout' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) WHEN `t`.`payment` = 'maya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) END AS `PG Fee Amount`, round(`t`.`amount_discounted` - case when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) end - case when `t`.`payment` = 'paymaya_credit_card' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) when `t`.`payment` = 'gcash' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) when `t`.`payment` = 'gcash_miniapp' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) when `t`.`payment` = 'paymaya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) when `t`.`payment` = 'maya_checkout' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) when `t`.`payment` = 'maya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) end,2) AS `Amount to be Disbursed` FROM ((((`transaction` `t` join `store` `s` on(`t`.`store_id` = `s`.`store_id`)) join `merchant` `m` on(`m`.`merchant_id` = `s`.`merchant_id`)) join `promo` `p` on(`p`.`promo_code` = `t`.`promo_code`)) join `fee` `f` on(`f`.`merchant_id` = `m`.`merchant_id`)) ORDER BY `t`.`transaction_date` ASC  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transaction_summary_view`  AS SELECT substr(`t`.`transaction_id`,1,8) AS `Transaction ID`, `t`.`transaction_date` AS `Transaction Date`, `m`.`merchant_id` AS `Merchant ID`, `m`.`merchant_name` AS `Merchant Name`, `s`.`store_id` AS `Store ID`, `s`.`store_name` AS `Store Name`, `t`.`customer_id` AS `Customer ID`, `t`.`customer_name` AS `Customer Name`, substr(`p`.`promo_id`,1,8) AS `Promo ID`, `p`.`promo_code` AS `Promo Code`, `p`.`promo_fulfillment_type` AS `Promo Fulfillment Type`, `p`.`promo_group` AS `Promo Group`, trim(both ', ' from concat_ws(', ',case when `p`.`bogo` = 1 then 'BOGO' else NULL end,case when `p`.`bundle` = 1 then 'Bundle' else NULL end,case when `p`.`fixed_discount` = 1 then 'Fixed discount' else NULL end,case when `p`.`free_item` = 1 then 'Free item' else NULL end,case when `p`.`percent_discount` = 1 then 'Percent discount' else NULL end,case when `p`.`x_for_y` = 1 then 'X for Y' else NULL end)) AS `Promo Type`, `t`.`gross_amount` AS `Gross Amount`, `t`.`discount` AS `Discount`, round(`t`.`gross_amount` - `t`.`discount`,2) AS `Net Amount`, `t`.`payment` AS `Payment`, `t`.`bill_status` AS `Bill Status`, coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) AS `Commission Type`, coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`lead_gen_commission`,'%')) AS `Commission Rate`, round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) AS `Commission Amount`, CASE WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) WHEN coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` AND `fh`.`column_name` = 'commission_type' AND `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' THEN round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) END AS `Total Billing`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya_credit_card`,'%'))) WHEN `t`.`payment` = 'gcash' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash`,'%'))) WHEN `t`.`payment` = 'gcash_miniapp' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`gcash_miniapp`,'%'))) WHEN `t`.`payment` = 'paymaya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`paymaya`,'%'))) WHEN `t`.`payment` = 'maya_checkout' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya_checkout`,'%'))) WHEN `t`.`payment` = 'maya' THEN (select coalesce((select concat(`fh`.`old_value`,'%') from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),concat(`f`.`maya`,'%'))) END AS `PG Fee Rate`, CASE WHEN `t`.`payment` = 'paymaya_credit_card' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) WHEN `t`.`payment` = 'gcash' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) WHEN `t`.`payment` = 'gcash_miniapp' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) WHEN `t`.`payment` = 'paymaya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) WHEN `t`.`payment` = 'maya_checkout' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) WHEN `t`.`payment` = 'maya' THEN round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) END AS `PG Fee Amount`, round(`t`.`amount_discounted` - case when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Exc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100 * 1.12,2) when coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) = 'Vat Inc' then round(`t`.`amount_discounted` * coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) / 100,2) end - case when `t`.`payment` = 'paymaya_credit_card' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya_credit_card' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya_credit_card`)) / 100,2) when `t`.`payment` = 'gcash' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash`)) / 100,2) when `t`.`payment` = 'gcash_miniapp' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'gcash_miniapp' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`gcash_miniapp`)) / 100,2) when `t`.`payment` = 'paymaya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'paymaya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`paymaya`)) / 100,2) when `t`.`payment` = 'maya_checkout' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya_checkout' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya_checkout`)) / 100,2) when `t`.`payment` = 'maya' then round(`t`.`amount_discounted` * (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'maya' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`maya`)) / 100,2) end,2) AS `Amount to be Disbursed` FROM ((((`transaction` `t` join `store` `s` on(`t`.`store_id` = `s`.`store_id`)) join `merchant` `m` on(`m`.`merchant_id` = `s`.`merchant_id`)) join `promo` `p` on(`p`.`merchant_id` = `m`.`merchant_id`)) join `fee` `f` on(`f`.`merchant_id` = `m`.`merchant_id`)) ORDER BY `t`.`transaction_date` ASC  ;
 
 --
 -- Indexes for dumped tables
@@ -2333,7 +2325,7 @@ ALTER TABLE `activity_history`
 --
 ALTER TABLE `fee`
   ADD PRIMARY KEY (`fee_id`),
-  ADD KEY `fee_ibfk_1` (`merchant_id`);
+  ADD UNIQUE KEY `pg_fee_rate_ibfk_1` (`merchant_id`) USING BTREE;
 
 --
 -- Indexes for table `fee_history`
@@ -2352,7 +2344,7 @@ ALTER TABLE `merchant`
 -- Indexes for table `promo`
 --
 ALTER TABLE `promo`
-  ADD PRIMARY KEY (`promo_code`) USING BTREE,
+  ADD PRIMARY KEY (`promo_id`),
   ADD KEY `merchant_id` (`merchant_id`);
 
 --
@@ -2360,7 +2352,7 @@ ALTER TABLE `promo`
 --
 ALTER TABLE `promo_history`
   ADD PRIMARY KEY (`promo_history_id`),
-  ADD KEY `promo_history_ibfk_1` (`promo_code`);
+  ADD KEY `promo_history_ibfk_1` (`promo_id`);
 
 --
 -- Indexes for table `report_history_coupled`
@@ -2406,7 +2398,7 @@ ALTER TABLE `store`
 ALTER TABLE `transaction`
   ADD PRIMARY KEY (`transaction_id`),
   ADD KEY `store_id` (`store_id`),
-  ADD KEY `transaction_ibfk_2` (`promo_code`);
+  ADD KEY `offer_id` (`promo_id`);
 
 --
 -- Indexes for table `user`
@@ -2446,7 +2438,7 @@ ALTER TABLE `promo`
 -- Constraints for table `promo_history`
 --
 ALTER TABLE `promo_history`
-  ADD CONSTRAINT `promo_history_ibfk_1` FOREIGN KEY (`promo_code`) REFERENCES `promo` (`promo_code`);
+  ADD CONSTRAINT `promo_history_ibfk_1` FOREIGN KEY (`promo_id`) REFERENCES `promo` (`promo_id`);
 
 --
 -- Constraints for table `report_history_coupled`
@@ -2481,7 +2473,7 @@ ALTER TABLE `store`
 --
 ALTER TABLE `transaction`
   ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
-  ADD CONSTRAINT `transaction_ibfk_2` FOREIGN KEY (`promo_code`) REFERENCES `promo` (`promo_code`);
+  ADD CONSTRAINT `transaction_ibfk_2` FOREIGN KEY (`promo_id`) REFERENCES `promo` (`promo_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
