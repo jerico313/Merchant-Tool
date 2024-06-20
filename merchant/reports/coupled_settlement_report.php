@@ -137,7 +137,7 @@ $conn->close();
           <td style="width:30%;text-align:center;"><?php echo htmlspecialchars($data['total_discount']); ?> PHP</td>
       </tr>
       <tr>
-          <td style="font-weight:bold;">Total Outstanding Amount:</td>
+          <td style="font-weight:bold;">Total Outstanding Amount</td>
           <td style="font-weight:bold;text-align:center;"><?php echo htmlspecialchars($data['total_outstanding_amount_1']); ?> PHP</td>
       </tr>
     </table>
