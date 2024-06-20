@@ -2,12 +2,12 @@
 // Include the configuration file
 include('../../inc/config.php');
 
-$gcash_report_id = isset($_GET['gcash_report_id']) ? $_GET['gcash_report_id'] : '';
+$coupled_report_id = isset($_GET['coupled_report_id']) ? $_GET['coupled_report_id'] : '';
 
 // Fetch data from the database
-$sql = "SELECT * FROM report_history_gcash_head WHERE gcash_report_id = ?";
+$sql = "SELECT * FROM report_history_coupled WHERE coupled_report_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $gcash_report_id);
+$stmt->bind_param("s", $coupled_report_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_assoc();
@@ -39,8 +39,8 @@ $conn->close();
     }
 
     td{
-      padding-top:2px;
-      padding-bottom:2px;
+      padding-top:1px;
+      padding-bottom:1px;
     }
     .container {
       background-color:	#fff;
@@ -107,45 +107,38 @@ $conn->close();
     </p>
     <table style="width:100% !important;">
       <tr >
-          <td>Business Name: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span></td>
-          <td style="width:30%;">Settlement Date: <span style="margin-left:25px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period_start']); ?></span></td>
+          <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span></td>
+          <td style="width:30%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period_start']); ?></span></td>
       </tr>
       <tr>
-          <td>Brand Name: <span style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span></td>
+          <td>Brand Name: <span style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span></td>
           <td>Settlement Number: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span></td>
       </tr>
       <tr>
-          <td>Address: <span style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></td>
+          <td>Business Address: <span style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></td>
           <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period_end']); ?></span></td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
-    <p style="text-align:center;">GCash Lead Generation</p>
-    <hr style="border: 1px solid #3b3b3b;">
     <table style="width:100% !important;">
       <tr>
-          <td style="text-align:center;">Items</td>
-          <td style="text-align:center;">Qty Redeemed</td>
-          <td style="text-align:center;">Voucher Value</td>
-          <td style="text-align:center;">Amount</td>
+          <td>Total Number of Successful Orders</td>
+          <td style="width:30%;text-align:center;"><?php echo htmlspecialchars($data['total_successful_orders']); ?> order/s</td>
       </tr>
     </table>
-
-
-    
     <br>
     <table style="width:100% !important;">
       <tr>
           <td>Total Gross Sales</td>
-          <td style="width:30%;text-align:center;">70,591.00 PHP</td>
+          <td style="width:30%;text-align:center;"><?php echo htmlspecialchars($data['total_gross_sales']); ?> PHP</td>
       </tr>
       <tr>
           <td>Total Discount</td>
-          <td style="width:30%;text-align:center;">31,196.00 PHP</td>
+          <td style="width:30%;text-align:center;"><?php echo htmlspecialchars($data['total_discount']); ?> PHP</td>
       </tr>
       <tr>
           <td style="font-weight:bold;">Total Outstanding Amount:</td>
-          <td style="font-weight:bold;text-align:center;">39,395.00 PHP</td>
+          <td style="font-weight:bold;text-align:center;"><?php echo htmlspecialchars($data['total_outstanding_amount_1']); ?> PHP</td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
@@ -159,16 +152,16 @@ $conn->close();
 
     <table style="width:100% !important;">
       <tr>
-          <td style="padding-left:85px;">Total Discount</td>
-          <td style="width:30%;text-align:right;padding-right:85px;">800.00</td>
+          <td style="padding-left:85px;">Leadgen Commission rate base</td>
+          <td style="width:30%;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['leadgen_commission_rate_base']); ?></td>
       </tr>
       <tr>
           <td style="padding-left:85px;">Commission fee rate</td>
-          <td style="text-align:right;padding-right:85px;">10%</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['commission_rate']); ?></td>
       </tr>
       <tr>
           <td style="font-weight:bold;padding-left:85px;">Total</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">39,395.00 PHP</td>
+          <td style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['total_commission_fees_1']); ?> PHP</td>
       </tr>
     </table>
     <br>
@@ -183,65 +176,77 @@ $conn->close();
     <table style="width:100% !important;">
       <tr>
           <td style="padding-left:85px;">Payment Gateway Fees:</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">89.60 PHP</td>
+          <td style="font-weight:bold;text-align:right;padding-right:85px;"></td>
       </tr>
 </table>
 <br>
 <table style="width:100% !important;">
       <tr>
-          <td style="padding-left:85px;">Card Payment</td>
-          <td style="text-align:right;padding-right:85px;">24.00</td>
+          <td style="padding-left:85px;">Paymaya</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['paymaya_pg_fee']); ?></td>
       </tr>
       <tr>
-          <td style="padding-left:85px;">Paymaya</td>
-          <td style="text-align:right;padding-right:85px;">00.00</td>
+          <td style="padding-left:85px;">Paymaya_credit_card</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['paymaya_credit_card_pg_fee']); ?></td>
+      </tr>
+      <tr>
+          <td style="padding-left:85px;">Maya</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['maya_pg_fee']); ?></td>
+      </tr>
+      <tr>
+          <td style="padding-left:85px;">Maya_checkout</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['maya_checkout_pg_fee']); ?></td>
       </tr>
       <tr>
           <td style="padding-left:85px;">Gcash_miniapp</td>
-          <td style="text-align:right;padding-right:85px;">00.00</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['gcash_miniapp_pg_fee']); ?></td>
+      </tr>
+      <tr>
+          <td style="padding-left:85px;">GCash</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['gcash_pg_fee']); ?></td>
       </tr>
       <tr>
           <td style="font-weight:bold;padding-left:85px;">Total Payment Gateway Fees</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">24.00 PHP</td>
+          <td style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['total_payment_gateway_fees_1']); ?> PHP</td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b !important;">
     <table style="width:100% !important;">
       <tr>
           <td>Total Outstanding Amount</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">89.60 PHP</td>
+          <td style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['total_outstanding_amount_2']); ?> PHP</td>
       </tr>
       <table style="width:100% !important;">
       <tr>
           <td>Less<span style="padding-left:65px;">Total Commission Fees</span></td>
-          <td style="text-align:right;padding-right:85px;">24.00</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['total_commission_fees_2']); ?></td>
       </tr>
       <tr>
           <td style="padding-left:85px;">Total Payment Gateway Fees</td>
-          <td style="text-align:right;padding-right:85px;">00.00</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['total_payment_gateway_fees_2']); ?>00.00</td>
       </tr>
       <tr>
           <td style="padding-left:85px;">Bank Fees</td>
-          <td style="text-align:right;padding-right:85px;">00.00</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['bank_fees']); ?></td>
       </tr>
       <tr>
           <td style="font-weight:bold;padding-left:85px;">CWT from Gross Sales</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">24.00 PHP</td>
+          <td style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['cwt_from_gross_sales']); ?> PHP</td>
       </tr>
       <tr>
           <td>Add<span style="padding-left:65px;">CWT from Transaction Fees</span></td>
-          <td style="text-align:right;padding-right:85px;">24.00</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['cwt_from_transaction_fees']); ?></td>
       </tr>
       <tr>
           <td style="padding-left:85px;">CWT from PG Fees</td>
-          <td style="text-align:right;padding-right:85px;">00.00</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['cwt_from_pg_fees']); ?></td>
       </tr>
     </table>
     <br>
     <table style="width:100% !important;">
       <tr>
           <td>Payment Gateway Fees:</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">89.60 PHP</td>
+          <td style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['total_amount_paid_out']); ?> PHP</td>
       </tr>
 </table>
 
@@ -263,7 +268,7 @@ $conn->close();
 
   download_button.addEventListener('click', async function () {
     // Set the filename dynamically based on the store name
-    const filename = '<?php echo htmlspecialchars($store_name) ?>.pdf';
+    const filename = '<?php echo htmlspecialchars($data['merchant_business_name']); ?>_<?php echo htmlspecialchars($data['settlement_number']); ?>.pdf';
 
     try {
       const opt = {

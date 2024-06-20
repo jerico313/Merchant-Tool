@@ -31,6 +31,7 @@ function displayStore($merchant_id) {
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;padding:4px;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")'>View</button> ";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;padding:4px;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")'>Check Report</button> ";
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#E31C21;color:#fff;padding:4px;' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")'>View Report</button> ";
             echo "</td>";
             echo "</tr>";
         }
@@ -72,6 +73,17 @@ function displayStore($merchant_id) {
             display: flex; 
             align-items: center;
         }
+        #alertContainer {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            margin-top: 15%;
+            width: 300px;
+            padding: 15px;
+            font-size: 13px;
+        } 
         @media only screen and (max-width: 767px) {
             table,
             thead,
@@ -173,7 +185,7 @@ function displayStore($merchant_id) {
                             <th>Store Name</th>
                             <th>Legal Entity Name</th>
                             <th>Store Address</th>
-                            <th style='width:280px;'>Action</th>
+                            <th style='width:350px;'>Action</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
@@ -226,10 +238,12 @@ function displayStore($merchant_id) {
       <div class="modal-body">
         <form id="checkReportForm">
             <input type="hidden" id="reportStoreId">
+            <input type="hidden" id="reportStoreId" name="storetId">
+          <input type="hidden" id="reportStoreName" name="storeName">
             <div class="mb-3">
                 <label for="reportType" class="form-label">Report Type</label>
                 <select class="form-select" id="reportType" required>
-                    <option value="" disabled>-- Select Report Type --</option>
+                    <option value="" selected disabled>-- Select Report Type --</option>
                     <option value="Coupled">Coupled</option>
                     <option value="Decouple">Decouple</option>
                     <option value="GCash">GCash</option>
@@ -243,12 +257,13 @@ function displayStore($merchant_id) {
                 <label for="endDate" class="form-label">End Date</label>
                 <input type="date" class="form-control" id="endDate" required>
             </div>
-            <button type="button" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;" onclick="submitReport()">Generate Report</button>
+            <button type="button" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;" id="submitReport">Generate Report</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+<div id="alertContainer"></div>
 <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
@@ -293,41 +308,64 @@ function viewOrder(storeId, merchantName, storeName) {
     window.location.href = 'order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
 }
 
-function checkReport(storeId, merchantName, storeName, legalEntityName, storeAddress) {
-    // Set values in the check report modal
+function viewReport(storeId, merchantName, storeName) {
+    window.location.href = 'settlement_reports.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
+}
+</script>
+<script>
+function checkReport(storeId, storeName, storeName, legalEntityName, storeAddress) {
     $('#reportStoreId').val(storeId);
-    $('#reportType').val(""); // Reset the report type
-
-    // Open the check report modal
+    $('#reportStoreName').val(storeName); 
+    // Show the correct modal (checkReportModal)
     $('#checkReportModal').modal('show');
 }
 
-function submitReport() {
+$('#submitReport').on('click', function () {
+    var storeId = $('#reportStoreId').val();
     var reportType = $('#reportType').val();
-    var merchantId = $('#reportMerchantId').val();
     var startDate = $('#startDate').val();
     var endDate = $('#endDate').val();
+    var url;
 
-    // Determine the URL based on the report type
-    var url = "";
-    switch (reportType) {
-        case "Coupled":
-            url = "coupled_settlement_report.php";
-            break;
-        case "Decouple":
-            url = "decoupled_settlement_report.php";
-            break;
-        case "GCash":
-            url = "gcash_settlement_report.php";
-            break;
-        default:
-            alert("Please select a report type.");
-            return;
+    if (reportType === 'Coupled') {
+        url = 'coupled_generate_report.php';
+    } else if (reportType === 'Decouple') {
+        url = 'decoupled_generate_report.php';
+    } else if (reportType === 'GCash') {
+        url = 'gcash_generate_report.php';
     }
 
-    // Redirect to the appropriate URL
-    window.location.href = url + "?merchant_id=" + encodeURIComponent(merchantId) + "&start_date=" + encodeURIComponent(startDate) + "&end_date=" + encodeURIComponent(endDate);
-}
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: { store_id: storeId, start_date: startDate, end_date: endDate },
+        success: function (response) {
+            console.log(response);
+
+            // Hide the modal first
+            $('#checkReportModal').modal('hide'); // Correct modal ID
+
+            var customAlert = $('<div class="alert-custom alert alert-success" role="alert" style="height:250px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top:30px;">' +
+                          '<span><i class="fa-solid fa-circle-check fa-xl" style="font-size:80px;"></i></span>' +
+                          '<span><p style="padding-top:50px; font-size:15px;">Report generated successfully!</p></span>' +
+                          '</div>');
+
+      // Append the custom alert to a specific location, e.g., at the top of the page or a specific container
+      $('#alertContainer').append(customAlert);
+
+      var storeName = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]').find('td:nth-child(2)').text();
+            
+            // Redirect after a short delay
+            setTimeout(function() {
+                window.location.href = 'settlement_reports.php?store_id=' + storeId + '&store_name=' + encodeURIComponent(storeName);
+            }, 3000); // Delay of 3 seconds before redirection
+        },
+        error: function (xhr, status, error) {
+            console.error('Error:', error);
+            $('#checkReportModal').modal('hide'); // Correct modal ID
+        }
+    });
+});
 </script>
 </body>
 </html>

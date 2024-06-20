@@ -1,37 +1,18 @@
 <?php
-include("../../inc/config.php");
+// Include the configuration file
+include('../../inc/config.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $store_id = isset($_POST['store_id']) ? $_POST['store_id'] : '';
-    $start_date = isset($_POST['start_date']) ? $_POST['start_date'] : '';
-    $end_date = isset($_POST['end_date']) ? $_POST['end_date'] : '';
-    $report_type = isset($_POST['report_type']) ? $_POST['report_type'] : '';
+$gcash_report_id = isset($_GET['gcash_report_id']) ? $_GET['gcash_report_id'] : '';
 
-    // Prepare and execute the stored procedure
-    $sql = "CALL generate_store_coupled_report(?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $store_id, $start_date, $end_date);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Fetch the results and send them back as JSON
-    $data = [];
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
-
-    $stmt->close();
-    $conn->close();
-
-    echo json_encode($data);
-}
-?>
-<?php
-$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
-$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
-$store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
-$legal_entity_name = isset($_GET['legal_entity_name']) ? $_GET['legal_entity_name'] : '';
-$store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
+// Fetch data from the database
+$sql = "SELECT * FROM report_history_gcash_head WHERE gcash_report_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $gcash_report_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
+$stmt->close();
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html>
@@ -126,16 +107,16 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
     </p>
     <table style="width:100% !important;">
       <tr >
-          <td>Business Name: <span style="margin-left:5px;font-weight:bold;">Kenny Roger</span></td>
-          <td style="width:30%;">Settlement Date: <span style="margin-left:25px;font-weight:bold;">June 30, 2023</span></td>
+          <td>Business Name: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span></td>
+          <td style="width:30%;">Settlement Date: <span style="margin-left:25px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period_start']); ?></span></td>
       </tr>
       <tr>
-          <td>Brand Name: <span style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($store_name); ?></span></td>
-          <td>Settlement Number: <span style="margin-left:5px;font-weight:bold;">2023-06-30-1</span></td>
+          <td>Brand Name: <span style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span></td>
+          <td>Settlement Number: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span></td>
       </tr>
       <tr>
-          <td>Address: <span style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($store_address); ?></span></span></td>
-          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;">June 29, 2023</span></td>
+          <td>Address: <span style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></td>
+          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period_end']); ?></span></td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
@@ -149,6 +130,9 @@ $store_address = isset($_GET['store_address']) ? $_GET['store_address'] : '';
           <td style="text-align:center;">Amount</td>
       </tr>
     </table>
+
+
+    
     <br>
     <table style="width:100% !important;">
       <tr>

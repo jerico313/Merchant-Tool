@@ -1,25 +1,25 @@
-<?php include("../../header.php") ?>
+<?php include("../../../header.php") ?>
 <?php
-$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
-$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
+$store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 
-function displayDecoupled($merchant_id, $merchant_name) {
-    include_once("../../inc/config.php");
+function displayDecoupled($store_id, $store_name) {
+    include_once("../../../inc/config.php");
 
-    $sql = "SELECT h.gcash_report_id, h.merchant_business_name, h.settlement_number, b.created_at
+    $sql = "SELECT h.gcash_report_id, h.store_business_name, h.settlement_number, b.created_at
             FROM report_history_gcash_head h
             JOIN report_history_gcash_body b ON h.gcash_report_id = b.gcash_report_id
-            WHERE h.merchant_id = ?";
+            WHERE h.store_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $merchant_id);
+    $stmt->bind_param("s", $store_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
+            $escapedMerchantName = htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8');
             $shortGcashId = substr($row['gcash_report_id'], 0, 8);
-            echo "<tr class='clickable-row' data-href='gcash_settlement_report.php?gcash_report_id=" . $row['gcash_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "'>";
+            echo "<tr class='clickable-row' data-href='gcash_settlement_report.php?gcash_report_id=" . $row['gcash_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "'>";
             echo "<td style='text-align:center;'>" . $shortGcashId . "</td>";
             echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['merchant_business_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
             echo "<td style='text-align:center;'>" . $row['created_at'] . "</td>";
@@ -44,10 +44,10 @@ function displayDecoupled($merchant_id, $merchant_name) {
         <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <link rel="stylesheet" href="../../style.css">
+        <link rel="stylesheet" href="../../../style.css">
         <style>
             body {
-                background-image: url("../../images/bg_booky.png");
+                background-image: url("../../../images/bg_booky.png");
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -148,12 +148,12 @@ function displayDecoupled($merchant_id, $merchant_name) {
                     <div class="row pb-2 title" aria-label="breadcrumb">
                     <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                                <li class="breadcrumb-item"><a href="../../merchant/index.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
-                                <li class="breadcrumb-item"><a href="../settlement_reports.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Settlement Report</a></li>    
+                                <li class="breadcrumb-item"><a href="../../merchant/index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>" style="color:#E96529; font-size:14px;">Merchant</a></li>
+                                <li class="breadcrumb-item"><a href="../settlement_reports.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>" style="color:#E96529; font-size:14px;">Settlement Report</a></li>    
                                 <li class="breadcrumb-item"><a href="#" style="color:#E96529; font-size:14px;">Decoupled</a></li>                            
                             </ol>
                         </nav> 
-                        <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8'); ?></p>
+                        <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?></p>
                     </div>
                 </div>
                 <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -166,7 +166,7 @@ function displayDecoupled($merchant_id, $merchant_name) {
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
-                            <?php displayDecoupled($merchant_id, $merchant_name); ?>
+                            <?php displayDecoupled($store_id, $store_name); ?>
                         </tbody>
                     </table>
                 </div>

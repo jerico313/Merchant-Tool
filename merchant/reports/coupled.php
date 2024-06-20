@@ -67,9 +67,6 @@ function displayCoupled($merchant_id, $merchant_name) {
             background-color: #e0e0e0 !important;
             color: white !important;
             cursor: pointer;
-            box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.30);
-            -webkit-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.30);
-            -moz-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.30);
         }
         @media only screen and (max-width: 767px) {
             table,
@@ -148,7 +145,7 @@ function displayCoupled($merchant_id, $merchant_name) {
                 <div class="row pb-2 title" aria-label="breadcrumb">
                 <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="../../merchant/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Merchant</a></li>
+                            <li class="breadcrumb-item"><a href="../../merchant/index.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
                             <li class="breadcrumb-item"><a href="../settlement_reports.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Settlement Report</a></li>    
                             <li class="breadcrumb-item"><a href="#" style="color:#E96529; font-size:14px;">Coupled</a></li>                            
                         </ol>
