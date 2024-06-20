@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2024 at 06:56 AM
+-- Generation Time: Jun 20, 2024 at 07:57 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -1114,7 +1114,6 @@ CREATE TRIGGER `merchant_insert_log` AFTER INSERT ON `merchant` FOR EACH ROW BEG
   SET description = CONCAT('Merchant record added\n',
   'merchant_name: ', IFNULL(NEW.merchant_name, 'N/A'), 
   '\n','merchant_partnership_type: ', IFNULL(NEW.merchant_partnership_type, 'N/A'), 
-  '\n','merchant_type: ', IFNULL(NEW.merchant_type, 'N/A'), 
   '\n','legal_entity_name: ', IFNULL(NEW.legal_entity_name, 'N/A'),
   '\n','business_address: ', IFNULL(NEW.business_address, 'N/A'),
   '\n','email_address: ', IFNULL(NEW.email_address, 'N/A'));
@@ -1135,10 +1134,6 @@ CREATE TRIGGER `merchant_update_log` AFTER UPDATE ON `merchant` FOR EACH ROW BEG
 
   IF OLD.merchant_partnership_type != NEW.merchant_partnership_type THEN
     SET description = CONCAT(description, 'merchant_partnership_type: ', OLD.merchant_partnership_type, ' -> ', NEW.merchant_partnership_type, '\n');
-  END IF;
-
-  IF OLD.merchant_type != NEW.merchant_type THEN
-    SET description = CONCAT(description, 'merchant_type: ', OLD.merchant_type, ' -> ', NEW.merchant_type, '\n');
   END IF;
 
   IF OLD.legal_entity_name != NEW.legal_entity_name THEN
