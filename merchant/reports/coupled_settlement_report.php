@@ -218,7 +218,7 @@ $conn->close();
       </tr>
       <table style="width:100% !important;">
       <tr>
-          <td>Less<span style="padding-left:65px;">Total Commission Fees</span></td>
+          <td>Less:<span style="padding-left:65px;">Total Commission Fees</span></td>
           <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['total_commission_fees_2']); ?></td>
       </tr>
       <tr>
@@ -230,11 +230,11 @@ $conn->close();
           <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['bank_fees']); ?></td>
       </tr>
       <tr>
-          <td style="font-weight:bold;padding-left:85px;">CWT from Gross Sales</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['cwt_from_gross_sales']); ?> PHP</td>
+          <td style="padding-left:85px;">CWT from Gross Sales</td>
+          <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['cwt_from_gross_sales']); ?> PHP</td>
       </tr>
       <tr>
-          <td>Add<span style="padding-left:65px;">CWT from Transaction Fees</span></td>
+          <td>Add:<span style="padding-left:65px;">CWT from Transaction Fees</span></td>
           <td style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['cwt_from_transaction_fees']); ?></td>
       </tr>
       <tr>
@@ -245,7 +245,7 @@ $conn->close();
     <br>
     <table style="width:100% !important;">
       <tr>
-          <td>Payment Gateway Fees:</td>
+          <td style="font-weight:bold;">Total Amount Paid Out</td>
           <td style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['total_amount_paid_out']); ?> PHP</td>
       </tr>
 </table>
