@@ -30,7 +30,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     while (($data = fgetcsv($handle)) !== FALSE) {
 
         // Bind parameters and execute the statement
-        $stmt->bind_param("sssss", $merchant_id, $data[3], $data[2], $data[4], $data[5]);
+        $stmt->bind_param("sssss", $data[1], $data[3], $data[2], $data[4], $data[5]);
         $stmt->execute();
     }
 
