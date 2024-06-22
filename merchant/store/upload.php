@@ -95,6 +95,8 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                 ?>
                 <button type="button" class="btn btn-warning check-report" id="addStoreBtn"><i class="fa-solid fa-plus"></i> Add New Store </button>
                 <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="merchant_id" value="<?php echo htmlspecialchars($merchant_id); ?>">
+                <input type="hidden" name="merchant_name" value="<?php echo htmlspecialchars($merchant_name); ?>">
             </div>
 
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">

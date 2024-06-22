@@ -2,6 +2,8 @@
 require_once("../../header.php");
 require_once("../../inc/config.php"); 
 
+$merchant_id = isset($_POST['merchant_id']) ? htmlspecialchars($_POST['merchant_id']) : '';
+$merchant_name = isset($_POST['merchant_name']) ? htmlspecialchars($_POST['merchant_name']) : '';
 
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
     $file_name = $_FILES['fileToUpload']['name'];
@@ -108,11 +110,11 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
         <h2 style="padding-top:10px;color: #4caf50;">Successfully uploaded!</h2>
-        <a href="index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"><button type="button" class="btn btn-secondary okay">Okay</button></a>
+        <a href="../store/index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"><button type="button" class="btn btn-secondary okay">Okay</button></a>
     </div>
     <script>
         setTimeout(function(){
-            window.location.href = 'index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
+            window.location.href = '../store/index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
         }, 3000); // Delay for 3 seconds (3000 milliseconds)
     </script>
 </body>

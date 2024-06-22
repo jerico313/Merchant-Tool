@@ -2,8 +2,17 @@
 require_once("../header.php");
 require_once("../inc/config.php");
 
+// Function to convert date format
+function convertDateFormat($dateString) {
+    $date = DateTime::createFromFormat('F d, Y h:ia', $dateString);
+    if ($date === false) {
+        return null; // Handle invalid date format gracefully
+    }
+    return $date->format('Y-m-d H:i:s');
+}
+
 // Check if the file is uploaded
-if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != ''){
+if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
     $file_name = $_FILES['fileToUpload']['name'];
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
 
@@ -12,30 +21,31 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     $extensions = array("csv");
 
     // Check if the file extension is allowed
-    if(in_array($file_ext,$extensions) === false){
+    if (in_array($file_ext, $extensions) === false) {
         echo "Extension not allowed, please choose a CSV file.";
         exit();
     }
 
     // Move the uploaded file to the uploads directory
-    move_uploaded_file($file_tmp,"uploads/".$file_name);
+    move_uploaded_file($file_tmp, "uploads/" . $file_name);
 
     // Process CSV file and insert data into MySQL
-    $csvFile = "uploads/".$file_name;
+    $csvFile = "uploads/" . $file_name;
     $handle = fopen($csvFile, "r");
     $header = fgetcsv($handle); // Skip header row
 
     // Prepare MySQL statement for first table
-    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, offer_id, customer_id, customer_name, claim_id, gross_sale, discount, mode_of_payment, payment_status, pg_fee_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, payment, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        // Remove commas from numeric values
-        $data[6] = str_replace(',', '', $data[6]); // gross_sale
-        $data[7] = str_replace(',', '', $data[7]); // discount
+        // Remove double quotes from column 23
+        $data[23] = str_replace('"', '', $data[23]);
+        
+        // Convert date format for column 6 (transaction_date)
+        $transaction_date = convertDateFormat($data[6]);
 
         // Bind and execute for first table
-        $stmt1->bind_param("sssssssssss", $data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10]);
+        $stmt1->bind_param("sssssssssss", $data[5], $data[1], $data[4], $data[3], $data[2], $transaction_date, $data[9], $data[10], $data[11], $data[23], $data[25]);
         $stmt1->execute();
     }
 
@@ -44,7 +54,7 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Upload Success</title>
     <style>
       body {
@@ -113,11 +123,11 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
         <h2 style="padding-top:10px;color: #4caf50;">Successfully uploaded!</h2>
-        <a href="transaction.php"><button type="button" class="btn btn-secondary okay">Okay</button></a>
+        <a href="index.php"><button type="button" class="btn btn-secondary okay">Okay</button></a>
     </div>
     <script>
         setTimeout(function(){
-            window.location.href = 'transaction.php';
+            window.location.href = 'index.php';
         }, 3000); // Delay for 3 seconds (3000 milliseconds)
     </script>
 </body>
@@ -125,6 +135,6 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
 
 <?php
 } else {
-  echo "No file uploaded.";
+    echo "No file uploaded.";
 }
 ?>

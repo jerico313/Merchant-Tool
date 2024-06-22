@@ -15,7 +15,6 @@ function displayMerchant() {
           echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
           echo "<td style='text-align:center;' class='partnership-type'>" . $row['merchant_partnership_type'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['merchant_type'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['business_address'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['email_address'] . "</td>";
           echo "<td style='text-align:center;'>";
@@ -145,7 +144,6 @@ function displayMerchant() {
                 <th>Merchant ID</th>
                 <th>Merchant Name</th>
                 <th>Merchant Partnership Type</th>
-                <th>Merchant Type</th>
                 <th>Business Address</th>
                 <th>Email Address</th>
                 <th style="width:220px;">Action</th>
@@ -180,10 +178,6 @@ function displayMerchant() {
                 <option value="Secondary">Secondary</option>
               </select>
             </div>
-          <div class="mb-3">
-            <label for="merchantType" class="form-label">Merchant Type</label>
-            <input type="text" class="form-control" id="merchantType" name="merchantType">
-          </div>
           <div class="mb-3">
             <label for="businessAddress" class="form-label">Business Address</label>
             <input type="text" class="form-control" id="businessAddress" name="businessAddress">
@@ -303,15 +297,13 @@ function editMerchant(merchantUuid) {
     var merchantRow = $('#dynamicTableBody').find('tr[data-uuid="' + merchantUuid + '"]');
     var merchantName = merchantRow.find('td:nth-child(2)').text();
     var merchantPartnershipType = merchantRow.find('td:nth-child(3)').text();
-    var merchantType = merchantRow.find('td:nth-child(4)').text();
-    var businessAddress = merchantRow.find('td:nth-child(5)').text();
-    var emailAddress = merchantRow.find('td:nth-child(6)').text();
+    var businessAddress = merchantRow.find('td:nth-child(4)').text();
+    var emailAddress = merchantRow.find('td:nth-child(5)').text();
 
     // Set values in the edit modal
     $('#merchantId').val(merchantUuid);
     $('#merchantName').val(merchantName);
     $('#merchantPartnershipType').val(merchantPartnershipType);
-    $('#merchantType').val(merchantType);
     $('#businessAddress').val(businessAddress);
     $('#emailAddress').val(emailAddress);
 

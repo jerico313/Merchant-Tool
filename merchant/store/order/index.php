@@ -18,7 +18,6 @@ function displayOffers($store_id) {
         while ($row = $result->fetch_assoc()) {
             $shortStoreId = substr($row['Store ID'], 0, 8);
             $shortMerchantId = substr($row['Merchant ID'], 0, 8);
-            $shortPromoId = substr($row['Promo ID'], 0, 8);
             echo "<tr>";
             echo "<td style='text-align:center;'>" . $row['Transaction ID']. "</td>";
             echo "<td style='text-align:center;'>" . $row['Transaction Date'] . "</td>";
@@ -28,9 +27,9 @@ function displayOffers($store_id) {
             echo "<td style='text-align:center;'>" . $row['Store Name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Customer ID'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Customer Name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Promo Code'] . "</td>";       
-            echo "<td style='text-align:center;'>" . $row['Promo Fulfillment Type'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Promo Code'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Voucher Type'] . "</td>";         
+            echo "<td style='text-align:center;'>" . $row['Promo Category'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Promo Group'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Promo Type'] . "</td>";     
             echo "<td style='text-align:center;'>" . $row['Gross Amount'] . "</td>";
@@ -206,9 +205,9 @@ function displayOffers($store_id) {
                             <th>Store Name</th>
                             <th>Customer ID</th>
                             <th>Customer Name</th>
-                            <th>Promo ID</th>
                             <th>Promo Code</th>
-                            <th>Promo Fulfillment Type</th>
+                            <th>Voucher Type</th>
+                            <th>Promo Category</th>
                             <th>Promo Group</th>
                             <th>Promo Type</th>           
                             <th>Gross Amount</th>
@@ -271,7 +270,7 @@ function downloadTables() {
     // Add headers for CSV file
     filteredData.unshift([
         'Transaction ID', 'Transaction Date', 'Merchant ID', 'Merchant Name', 'Store ID', 'Store Name',
-        'Customer ID', 'Customer Name', 'Promo ID', 'Promo Code', 'Promo Fullfillment Type','Promo Group', 'Promo Type',
+        'Customer ID', 'Customer Name', 'Promo Code', 'Voucher Type','Promo Category', 'Promo Group', 'Promo Type',
         'Gross Amount', 'Discount', 'Amount Discounted', 'Payment', 'Bill Status', 'Commission Type', 'Commission Rate',
         'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
     ]);
@@ -311,7 +310,7 @@ $(document).ready(function() {
     function filterRows(promoType) {
         table.rows().every(function() {
             var row = this.data();
-            if (row[10] === promoType) { // Column index 11 is Promo Type
+            if (row[9] === promoType) { // Column index 11 is Promo Type
                 $(this.node()).show();
             } else {
                 $(this.node()).hide();

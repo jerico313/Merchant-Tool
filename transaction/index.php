@@ -12,11 +12,10 @@ function displayOrder() {
       while ($row = $result->fetch_assoc()) {
         $shortTransactiontId = substr($row['transaction_id'], 0, 8);
             $shortStoreId = substr($row['store_id'], 0, 8);
-            $shortPromoId = substr($row['promo_id'], 0, 8);
           echo "<tr data-id='" . $row['transaction_id'] . "'>";
           echo "<td style='text-align:center;'>" . $shortTransactiontId . "</td>";
           echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
-          echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
+          echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
@@ -175,11 +174,6 @@ function displayOrder() {
     }
   }
 </style>
-<script>
-  function editEmployee(id) {
-    window.location = "edit_order.php?order_id=" + id;
-  }
-</script>
 </head>
 <body>
 <div class="cont-box">
@@ -199,7 +193,7 @@ function displayOrder() {
               <tr>
               <th>Transaction ID</th>
               <th>Store ID</th>
-              <th>Promo ID</th>
+              <th>Promo Code</th>
               <th>Customer ID</th>
               <th>Customer Name</th>
               <th>Transaction Date</th>
