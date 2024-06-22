@@ -13,6 +13,15 @@ $result = $stmt->get_result();
 $data = $result->fetch_assoc();
 $stmt->close();
 $conn->close();
+
+$date = new DateTime($data['created_at']);
+$formattedDate = $date->format('F d, Y'); 
+
+$date = new DateTime($data['settlement_period_start']);
+$startDate = $date->format('F d-'); 
+
+$date = new DateTime($data['settlement_period_end']);
+$endDate = $date->format('d, Y'); 
 ?>
 <!DOCTYPE html>
 <html>
@@ -106,17 +115,17 @@ $conn->close();
       <img src="../../images/booky2.png" alt="booky" width="150" height="50">
     </p>
     <table style="width:100% !important;">
-      <tr >
-          <td>Business Name: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span></td>
-          <td style="width:30%;">Settlement Date: <span style="margin-left:25px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period_start']); ?></span></td>
+    <tr >
+          <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span></td>
+          <td style="width:30%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo $formattedDate; ?></span></td>
       </tr>
       <tr>
-          <td>Brand Name: <span style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span></td>
+          <td>Brand Name: <span style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span></td>
           <td>Settlement Number: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span></td>
       </tr>
       <tr>
-          <td>Address: <span style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></td>
-          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period_end']); ?></span></td>
+          <td>Business Address: <span style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></td>
+          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo $startDate; ?><?php echo $endDate; ?></span></td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">

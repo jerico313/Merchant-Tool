@@ -2,9 +2,11 @@
 <?php
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
+$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 
-function displayDecoupled($store_id, $store_name) {
-    include_once("../../../inc/config.php");
+function displayGcash($store_id, $store_name) {
+    include("../../../inc/config.php");
 
     $sql = "SELECT h.gcash_report_id, h.store_business_name, h.settlement_number, b.created_at
             FROM report_history_gcash_head h
@@ -17,19 +19,17 @@ function displayDecoupled($store_id, $store_name) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $escapedMerchantName = htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8');
             $shortGcashId = substr($row['gcash_report_id'], 0, 8);
+            $date = new DateTime($row['created_at']);
+            $formattedDate = $date->format('F d, Y g:i:s A');
             echo "<tr class='clickable-row' data-href='gcash_settlement_report.php?gcash_report_id=" . $row['gcash_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "'>";
             echo "<td style='text-align:center;'>" . $shortGcashId . "</td>";
-            echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['merchant_business_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
-            echo "<td style='text-align:center;'>" . $row['created_at'] . "</td>";
+            echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['store_business_name']."_". $row['settlement_number']. ".pdf</td>";
+            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
             echo "</tr>";
         }
-    } else {
-        echo "<tr><td colspan='3' style='text-align:center;'>No records found</td></tr>";
     }
 
-    $stmt->close();
     $conn->close();
 }
 ?>
@@ -148,9 +148,9 @@ function displayDecoupled($store_id, $store_name) {
                     <div class="row pb-2 title" aria-label="breadcrumb">
                     <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                                <li class="breadcrumb-item"><a href="../../merchant/index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>" style="color:#E96529; font-size:14px;">Merchant</a></li>
-                                <li class="breadcrumb-item"><a href="../settlement_reports.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>" style="color:#E96529; font-size:14px;">Settlement Report</a></li>    
-                                <li class="breadcrumb-item"><a href="#" style="color:#E96529; font-size:14px;">Decoupled</a></li>                            
+                                <li class="breadcrumb-item"><a href="../../store/index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
+                                <li class="breadcrumb-item"><a href="../settlement_reports.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>" style="color:#E96529; font-size:14px;">Settlement Report</a></li>    
+                                <li class="breadcrumb-item"><a href="#" style="color:#E96529; font-size:14px;">GCash</a></li>                            
                             </ol>
                         </nav> 
                         <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?></p>
@@ -166,7 +166,7 @@ function displayDecoupled($store_id, $store_name) {
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
-                            <?php displayDecoupled($store_id, $store_name); ?>
+                            <?php displayGcash($store_id, $store_name); ?>
                         </tbody>
                     </table>
                 </div>
@@ -178,8 +178,9 @@ function displayDecoupled($store_id, $store_name) {
     <script>
         $(document).ready(function () {
             $('#example').DataTable({
-                scrollX: true
-            });
+            scrollX: true,
+            order: [[2, 'desc']] // Default sort by the 'Created At' column in descending order
+        });
 
             // Bind click event to all rows
             $('#example tbody').on('click', 'tr', function() {

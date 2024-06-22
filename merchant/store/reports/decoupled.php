@@ -2,11 +2,13 @@
 <?php
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
+$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 
 function displayDecoupled($store_id, $store_name) {
-    include_once("../../../inc/config.php");
+    include("../../../inc/config.php");
 
-    $sql = "SELECT * FROM report_history_decoupled WHERE store_id = ?";
+    $sql = "SELECT * FROM report_history_decoupled WHERE store_id = ? ORDER BY created_at DESC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $store_id);
     $stmt->execute();
@@ -14,19 +16,17 @@ function displayDecoupled($store_id, $store_name) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $escapedMerchantName = htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8');
             $shortDecoupledId = substr($row['decoupled_report_id'], 0, 8);
+            $date = new DateTime($row['created_at']);
+            $formattedDate = $date->format('F d, Y g:i:s A');
             echo "<tr class='clickable-row' data-href='decoupled_settlement_report.php?decoupled_report_id=" . $row['decoupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "'>";
             echo "<td style='text-align:center;'>" . $shortDecoupledId . "</td>";
             echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['store_business_name']."_". $row['settlement_number']. ".pdf</td>";
-            echo "<td style='text-align:center;'>" . $row['created_at'] . "</td>";
+            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
             echo "</tr>";
         }
-    } else {
-        echo "<tr><td colspan='3' style='text-align:center;'>No records found</td></tr>";
     }
 
-    $stmt->close();
     $conn->close();
 }
 ?>
@@ -145,8 +145,8 @@ function displayDecoupled($store_id, $store_name) {
                 <div class="row pb-2 title" aria-label="breadcrumb">
                 <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="../../store/index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
-                            <li class="breadcrumb-item"><a href="../settlement_reports.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>" style="color:#E96529; font-size:14px;">Settlement Report</a></li>    
+                            <li class="breadcrumb-item"><a href="../../store/index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
+                            <li class="breadcrumb-item"><a href="../settlement_reports.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>" style="color:#E96529; font-size:14px;">Settlement Report</a></li>    
                             <li class="breadcrumb-item"><a href="#" style="color:#E96529; font-size:14px;">Decoupled</a></li>                            
                         </ol>
                     </nav> 
@@ -175,7 +175,8 @@ function displayDecoupled($store_id, $store_name) {
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
-            scrollX: true
+            scrollX: true,
+            order: [[2, 'desc']] // Default sort by the 'Created At' column in descending order
         });
 
         // Bind click event to all rows

@@ -13,6 +13,24 @@ $result = $stmt->get_result();
 $data = $result->fetch_assoc();
 $stmt->close();
 $conn->close();
+
+$date = new DateTime($data['created_at']);
+$formattedDate = $date->format('F d, Y'); 
+
+$date = new DateTime($data['settlement_period_start']);
+$startDate = $date->format('F d-'); 
+
+$date = new DateTime($data['settlement_period_end']);
+$endDate = $date->format('d, Y'); 
+
+$totalGrossSales = number_format($data['total_gross_sales'], 2);
+$totalDiscount = number_format($data['total_discount'], 2);
+$totalNetSales = number_format($data['total_net_sales'], 2);
+$leadgenCommissionRateBasePretrial = number_format($data['leadgen_commission_rate_base_pretrial'], 2); 
+$leadgenCommissionRateBaseBillable = number_format($data['leadgen_commission_rate_base_billable'], 2); 
+$totalPretrial = number_format($data['total_pretrial'], 2);
+$totalBillable = number_format($data['total_billable'], 2);
+$totalCommissionFees = number_format($data['total_commission_fees'], 2);
 ?>
 <!DOCTYPE html>
 <html>
@@ -106,39 +124,39 @@ $conn->close();
       <img src="../../images/booky2.png" alt="booky" width="150" height="50">
     </p>
     <table style="width:100% !important;">
-      <tr >
-          <td>Business Name: <span id="merchant_business_name" style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span></td>
-          <td style="width:30%;">Settlement Date: <span id="settlement_period_start" style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period_start']); ?></span></td>
+    <tr >
+          <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span></td>
+          <td style="width:30%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo $formattedDate; ?></span></td>
       </tr>
       <tr>
-          <td>Brand Name: <span id="merchant_brand_name" style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span></td>
-          <td>Settlement Number: <span id="settlement_number" style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span></td>
+          <td>Brand Name: <span style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span></td>
+          <td>Settlement Number: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span></td>
       </tr>
       <tr>
-          <td>Business Address: <span id="business_address" style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></span></td>
-          <td>Settlement Period: <span id="settlement_period_end" style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period_end']); ?></span></td>
+          <td>Business Address: <span style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></td>
+          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo $startDate; ?><?php echo $endDate; ?></span></td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
     <table style="width:100% !important;">
       <tr>
           <td>Total Number of Successful Orders</td>
-          <td id="total_successful_orders" style="width:30%;text-align:center;"><?php echo htmlspecialchars($data['total_successful_orders']); ?></td>
+          <td id="total_successful_orders" style="width:30%;text-align:center;"><?php echo htmlspecialchars($data['total_successful_orders']); ?> order/s</td>
       </tr>
     </table>
     <br>
     <table style="width:100% !important;">
       <tr>
           <td>Total Gross Sales</td>
-          <td id="total_gross_sales" style="width:30%;text-align:center;"><?php echo htmlspecialchars($data['total_gross_sales']); ?> PHP</td>
+          <td id="total_gross_sales" style="width:30%;text-align:center;"><?php  echo $totalGrossSales; ?> PHP</td>
       </tr>
       <tr>
           <td>Total Discount</td>
-          <td id="total_discount" style="width:30%;text-align:center;"><?php echo htmlspecialchars($data['total_discount']); ?> PHP</td>
+          <td id="total_discount" style="width:30%;text-align:center;"><?php  echo $totalDiscount; ?> PHP</td>
       </tr>
       <tr>
           <td style="font-weight:bold;">Total Net Sales:</td>
-          <td id="total_net_sales" style="font-weight:bold;text-align:center;"><?php echo htmlspecialchars($data['total_net_sales']); ?> PHP</td>
+          <td id="total_net_sales" style="font-weight:bold;text-align:center;"><?php  echo $totalNetSales; ?> PHP</td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
@@ -153,7 +171,7 @@ $conn->close();
     <table style="width:100% !important;">
       <tr>
           <td style="padding-left:85px;">Leadgen  Commission rate base(Pre-Trial)</td>
-          <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['leadgen_commission_rate_base_pretrial']); ?></td>
+          <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;"><?php echo $leadgenCommissionRateBasePretrial; ?></td>
       </tr>
       <tr>
           <td style="padding-left:85px;">Commission fee rate</td>
@@ -161,7 +179,7 @@ $conn->close();
       </tr>
       <tr>
           <td style="font-weight:bold;padding-left:85px;">Total</td>
-          <td id="total_pretrial" style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['total_pretrial']); ?> PHP</td>
+          <td id="total_pretrial" style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo $totalPretrial; ?> PHP</td>
       </tr>
     </table>
     <br>      
@@ -169,7 +187,7 @@ $conn->close();
 <table style="width:100% !important;">
       <tr>
           <td style="padding-left:85px;">Leadgen  Commission rate base(Billable)</td>
-          <td id="leadgen_commission_rate_base_billable" style="text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['leadgen_commission_rate_base_billable']); ?></td>
+          <td id="leadgen_commission_rate_base_billable" style="text-align:right;padding-right:85px;"><?php echo $leadgenCommissionRateBaseBillable; ?></td>
       </tr>
       <tr>
           <td style="padding-left:85px;">Commission fee rate</td>
@@ -177,14 +195,14 @@ $conn->close();
       </tr>
       <tr>
           <td style="font-weight:bold;padding-left:85px;">Total</td>
-          <td id="total_billable" style="text-align:right;padding-right:85px;font-weight:bold;"><?php echo htmlspecialchars($data['total_billable']); ?></td>
+          <td id="total_billable" style="text-align:right;padding-right:85px;font-weight:bold;"><?php echo $totalBillable; ?></td>
       </tr>
     </table>
     <br>
     <table style="width:100% !important;">
       <tr>
           <td style="font-weight:bold;">Total Commision Fees:</td>
-          <td id="total_commission_fees" style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo htmlspecialchars($data['total_commission_fees']); ?> PHP</td>
+          <td id="total_commission_fees" style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo $totalCommissionFees; ?> PHP</td>
       </tr>
 </table>  
   

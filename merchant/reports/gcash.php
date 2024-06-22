@@ -3,8 +3,8 @@
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
-function displayDecoupled($merchant_id, $merchant_name) {
-    include_once("../../inc/config.php");
+function displayGcash($merchant_id, $merchant_name) {
+    include("../../inc/config.php");
 
     $sql = "SELECT h.gcash_report_id, h.merchant_business_name, h.settlement_number, b.created_at
             FROM report_history_gcash_head h
@@ -19,17 +19,16 @@ function displayDecoupled($merchant_id, $merchant_name) {
         while ($row = $result->fetch_assoc()) {
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             $shortGcashId = substr($row['gcash_report_id'], 0, 8);
+            $date = new DateTime($row['created_at']);
+            $formattedDate = $date->format('F d, Y g:i:s A');
             echo "<tr class='clickable-row' data-href='gcash_settlement_report.php?gcash_report_id=" . $row['gcash_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "'>";
             echo "<td style='text-align:center;'>" . $shortGcashId . "</td>";
             echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['merchant_business_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
-            echo "<td style='text-align:center;'>" . $row['created_at'] . "</td>";
+            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
             echo "</tr>";
         }
-    } else {
-        echo "<tr><td colspan='3' style='text-align:center;'>No records found</td></tr>";
     }
 
-    $stmt->close();
     $conn->close();
 }
 ?>
@@ -166,7 +165,7 @@ function displayDecoupled($merchant_id, $merchant_name) {
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
-                            <?php displayDecoupled($merchant_id, $merchant_name); ?>
+                            <?php displayGCash($merchant_id, $merchant_name); ?>
                         </tbody>
                     </table>
                 </div>
@@ -178,8 +177,9 @@ function displayDecoupled($merchant_id, $merchant_name) {
     <script>
         $(document).ready(function () {
             $('#example').DataTable({
-                scrollX: true
-            });
+            scrollX: true,
+            order: [[2, 'desc']] // Default sort by the 'Created At' column in descending order
+        });
 
             // Bind click event to all rows
             $('#example tbody').on('click', 'tr', function() {
