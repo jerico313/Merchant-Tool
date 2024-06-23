@@ -128,6 +128,10 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
+                            <div class="mb-3">
+                                    <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
+                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
                                 <div class="mb-3">
                                     <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
                                     <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
@@ -138,14 +142,6 @@
                                         <option value="">-- Select Merchant Partnership Type --</option>
                                         <option value="Primary">Primary</option>
                                         <option value="Secondary">Secondary</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
-                                    <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
-                                        <option value="">-- Select Merchant Type --</option>
-                                        <option value="Grab & Go">Grab & Go</option>
-                                        <option value="Casual Dining">Casual Dining</option>
                                     </select>
                                 </div>
                             </div>
@@ -207,6 +203,10 @@
         newField.innerHTML = `
         <div class="row">
                             <div class="col-md-6">
+                            <div class="mb-3">
+                                    <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
+                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
                                 <div class="mb-3">
                                     <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
                                     <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
@@ -217,14 +217,6 @@
                                         <option value="">-- Select Merchant Type --</option>
                                         <option value="Primary">Primary</option>
                                         <option value="Secondary">Secondary</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
-                                    <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
-                                        <option value="">-- Select Merchant Type --</option>
-                                        <option value="Grab & Go">Grab & Go</option>
-                                        <option value="Casual Dining">Casual Dining</option>
                                     </select>
                                 </div>
                             </div>

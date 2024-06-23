@@ -184,7 +184,7 @@ function displayMerchant() {
           </div>
           <div class="mb-3">
             <label for="emailAddress" class="form-label">Email Address</label>
-            <input type="email" class="form-control" id="emailAddress" name="emailAddress">
+            <textarea class="form-control" rows="3" id ="emailAddress" name="emailAddress" style="padding:5px 5px;" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
         </form>
