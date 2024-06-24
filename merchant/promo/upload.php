@@ -1,6 +1,7 @@
-<?php include("../header.php")?>
+<?php include("../../header.php")?>
 <?php 
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,10 +16,10 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../style.css">
     <style>
         body {
-            background-image: url("../images/bg_booky.png");
+            background-image: url("../../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -70,8 +71,6 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
             font-size: 13px;
         }
 
-
-
         .file-preview {
             overflow-x: auto;
             margin-left: auto;
@@ -89,8 +88,11 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
         </a>
         <div class="upload" style="text-align:left;">
             <div class="add-btns">
-                <p class="title">Upload Transactions</p>
+                <p class="title">Upload Promo</p>
                 <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
+                    <!-- Add hidden input fields for merchant_id and merchant_name -->
+                    <input type="hidden" name="merchant_id" value="<?php echo htmlspecialchars($merchant_id); ?>">
+                    <input type="hidden" name="merchant_name" value="<?php echo htmlspecialchars($merchant_name); ?>">
             </div>
 
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -123,7 +125,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
     <i class="fa-solid fa-circle-exclamation"></i> Please choose a file to upload!
 </div>
 
-<script src="../js/file_upload.js"></script>
+<script src="../../js/file_upload.js"></script>
 <script>
     // Add event listeners to buttons
     document.getElementById('addStoreBtn').addEventListener('click', function () {

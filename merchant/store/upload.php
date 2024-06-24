@@ -1,6 +1,7 @@
 <?php include("../../header.php")?>
 <?php 
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,6 +96,8 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                 ?>
                 <button type="button" class="btn btn-warning check-report" id="addStoreBtn"><i class="fa-solid fa-plus"></i> Add New Store </button>
                 <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="merchant_id" value="<?php echo htmlspecialchars($merchant_id); ?>">
+                <input type="hidden" name="merchant_name" value="<?php echo htmlspecialchars($merchant_name); ?>">
             </div>
 
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -129,7 +132,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
             </div>
 
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-            <form id="dynamic-form" action="add.php" method="POST">
+            <form id="dynamic-form" action="add.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" method="POST">
                 <div id="form-fields">
                     <div class="form-group">
                         <div class="row">

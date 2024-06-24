@@ -1,4 +1,6 @@
 <?php
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
+$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 // Include the configuration file
 require_once("../../header.php");
 require_once '../../inc/config.php';
@@ -108,11 +110,11 @@ $conn->close();
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
         <h2 style="padding-top:10px;color: #4caf50;">Successfully Added!</h2>
-        <a href="index.php"><button type="button" class="btn btn-secondary okay">Okay</button></a>
+        <a href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"><button type="button" class="btn btn-secondary okay">Okay</button></a>
     </div>
     <script>
         setTimeout(function(){
-            window.location.href = 'index.php';
+            window.location.href = 'index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
         }, 3000); // Delay for 3 seconds (3000 milliseconds)
     </script>
 </body>

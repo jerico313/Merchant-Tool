@@ -9,11 +9,17 @@ function displayPGFeeRate() {
   if ($result->num_rows > 0) {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
+          $shortActivityId = substr($row['activity_id'], 0, 8);
+          $shortUserId = substr($row['user_id'], 0, 8);
+          $shortTableId = substr($row['table_id'], 0, 8);
+          $date = new DateTime($row['created_at']);
+          $formattedDate = $date->format('F d, Y g:i:s A'); 
           echo "<tr data-id='" . $row['activity_id'] . "' class='message-row'>";
-          echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_id'] . "</td>";
-          echo "<td class='message-cell' style='text-align:center;'>" . $row['user_id'] . "</td>";
-          echo "<td class='message-cell' style='text-align:center;'>" . $row['table_id'] . "</td>";
+          echo "<td class='message-cell' style='text-align:center;'>" . $shortActivityId . "</td>";
+          echo "<td class='message-cell' style='text-align:center;'>" . $shortUserId . "</td>";
+          echo "<td class='message-cell' style='text-align:center;'>" . $shortTableId . "</td>";
           echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_type'] . "</td>";
+          echo "<td class='message-cell' style='text-align:center;'>" . $formattedDate . "</td>";
           echo "</tr>";
           $count++;
       }
@@ -184,6 +190,7 @@ function displayPGFeeRate() {
                 <th>User ID</th>
                 <th>Table ID</th>
                 <th>Activity Type</th>
+                <th>Created At</th>
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
@@ -227,7 +234,7 @@ $(document).ready(function() {
    // DataTable initialization code (already present in your code)
 
    // Add click event to specific columns (1, 2, 3, and 4)
-   $('#example tbody').on('click', 'td:nth-child(1), td:nth-child(2), td:nth-child(3), td:nth-child(4)', function () {
+   $('#example tbody').on('click', 'td:nth-child(1), td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5)', function () {
       // Access the row from the clicked cell
       var row = $(this).closest('tr');
       var activityId = row.data('id');

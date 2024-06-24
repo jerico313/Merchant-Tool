@@ -15,7 +15,7 @@ function displayMerchant() {
           echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
           echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
           echo "<td style='text-align:center;' class='partnership-type'>" . $row['merchant_partnership_type'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['merchant_type'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['business_address'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['email_address'] . "</td>";
           echo "<td style='text-align:center;'>";
@@ -145,7 +145,7 @@ function displayMerchant() {
                 <th>Merchant ID</th>
                 <th>Merchant Name</th>
                 <th>Merchant Partnership Type</th>
-                <th>Merchant Type</th>
+                <th>Legal Entity Name</th>
                 <th>Business Address</th>
                 <th>Email Address</th>
                 <th style="width:220px;">Action</th>
@@ -180,9 +180,9 @@ function displayMerchant() {
                 <option value="Secondary">Secondary</option>
               </select>
             </div>
-          <div class="mb-3">
-            <label for="merchantType" class="form-label">Merchant Type</label>
-            <input type="text" class="form-control" id="merchantType" name="merchantType">
+            <div class="mb-3">
+            <label for="legalEntityName" class="form-label">Legal Entity Name</label>
+            <input type="text" class="form-control" id="legalEntityName" name="legalEntityName">
           </div>
           <div class="mb-3">
             <label for="businessAddress" class="form-label">Business Address</label>
@@ -190,7 +190,7 @@ function displayMerchant() {
           </div>
           <div class="mb-3">
             <label for="emailAddress" class="form-label">Email Address</label>
-            <input type="email" class="form-control" id="emailAddress" name="emailAddress">
+            <textarea class="form-control" rows="3" id ="emailAddress" name="emailAddress" style="padding:5px 5px;" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
         </form>
@@ -303,7 +303,7 @@ function editMerchant(merchantUuid) {
     var merchantRow = $('#dynamicTableBody').find('tr[data-uuid="' + merchantUuid + '"]');
     var merchantName = merchantRow.find('td:nth-child(2)').text();
     var merchantPartnershipType = merchantRow.find('td:nth-child(3)').text();
-    var merchantType = merchantRow.find('td:nth-child(4)').text();
+    var legalEntityName = merchantRow.find('td:nth-child(4)').text();
     var businessAddress = merchantRow.find('td:nth-child(5)').text();
     var emailAddress = merchantRow.find('td:nth-child(6)').text();
 
@@ -311,7 +311,7 @@ function editMerchant(merchantUuid) {
     $('#merchantId').val(merchantUuid);
     $('#merchantName').val(merchantName);
     $('#merchantPartnershipType').val(merchantPartnershipType);
-    $('#merchantType').val(merchantType);
+    $('#legalEntityName').val(legalEntityName);
     $('#businessAddress').val(businessAddress);
     $('#emailAddress').val(emailAddress);
 

@@ -4,9 +4,9 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
 function displayCoupled($merchant_id, $merchant_name) {
-    include_once("../../inc/config.php");
+    include("../../inc/config.php");
 
-    $sql = "SELECT * FROM report_history_coupled WHERE merchant_id = ?";
+    $sql = "SELECT * FROM report_history_coupled WHERE merchant_id = ? ORDER BY created_at DESC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -16,20 +16,20 @@ function displayCoupled($merchant_id, $merchant_name) {
         while ($row = $result->fetch_assoc()) {
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             $shortCoupledId = substr($row['coupled_report_id'], 0, 8);
+            $date = new DateTime($row['created_at']);
+            $formattedDate = $date->format('F d, Y g:i:s A');
             echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "'>";
             echo "<td style='text-align:center;'>" . $shortCoupledId . "</td>";
             echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['merchant_business_name']."_". $row['settlement_number']. ".pdf</td>";
-            echo "<td style='text-align:center;'>" . $row['created_at'] . "</td>";
+            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
             echo "</tr>";
         }
-    } else {
-        echo "<tr><td colspan='3' style='text-align:center;'>No records found</td></tr>";
     }
 
-    $stmt->close();
     $conn->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -175,7 +175,8 @@ function displayCoupled($merchant_id, $merchant_name) {
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
-            scrollX: true
+            scrollX: true,
+            order: [[2, 'desc']] // Default sort by the 'Created At' column in descending order
         });
 
         // Bind click event to all rows

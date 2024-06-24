@@ -17,24 +17,21 @@ function displayOffers($merchant_id, $merchant_name) {
         while ($row = $result->fetch_assoc()) {
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             $shortPromoId = substr($row['promo_id'], 0, 8);
+            $promo_amount = number_format($row['promo_amount'], 2);
+
             echo "<tr>";
             echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_amount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_fulfillment_type'] . "</td>";
+            echo "<td style='text-align:center;'>" . $promo_amount . "</td>";
+            echo "<td style='text-align:center;'>" . $row['voucher_type'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['promo_category'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_group'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['bogo'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['bundle'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['fixed_discount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['free_item'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['percent_discount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['x_for_y'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['promo_type'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_details'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['remarks'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
             echo "<td style='text-align:center;'>";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")'>View History</button> ";
             echo "</td>";
@@ -188,7 +185,7 @@ function displayOffers($merchant_id, $merchant_name) {
                     </nav>
                     <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
-                <button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Promo</button>
+                <a href="upload.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>""><button type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add Promo</button></a>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:200%;">
@@ -197,20 +194,15 @@ function displayOffers($merchant_id, $merchant_name) {
                             <th>Promo ID</th>
                             <th>Promo Code</th>
                             <th>Promo Amount</th>
-                            <th>Promo Fullfillment Type</th>
+                            <th>Voucher Type</th>
+                            <th>Promo Category</th>
                             <th>Promo Group</th>
-                            <th>BOGO</th>
-                            <th>Bundle</th>
-                            <th>Fixed Discount</th>
-                            <th>Free Item</th>
-                            <th>Percent Discount</th>
-                            <th>X For Y</th>
+                            <th>Promo Type</th>
                             <th>Promo Details</th>
                             <th>Remarks</th>
                             <th>Bill Status</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Bill Status</th>
                             <th style='width:50px;'>Action</th>
                         </tr>
                     </thead>

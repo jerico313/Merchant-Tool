@@ -128,6 +128,10 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
+                            <div class="mb-3">
+                                    <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
+                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
                                 <div class="mb-3">
                                     <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
                                     <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
@@ -141,12 +145,8 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
-                                    <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
-                                        <option value="">-- Select Merchant Type --</option>
-                                        <option value="Grab & Go">Grab & Go</option>
-                                        <option value="Casual Dining">Casual Dining</option>
-                                    </select>
+                                    <label for="legal_entity_name" class="form-label" style="font-size:15px;font-weight:bold;">Legal Entity Name</label>
+                                    <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
-                                    <textarea class="form-control" rows="5" name="email_address[]" style="border-radius:20px;padding:15px 15px;border:none;" required></textarea>
+                                    <textarea class="form-control" rows="9" name="email_address[]" style="border-radius:20px;padding:15px 15px;border:none;" required></textarea>
                                 </div>
                                 
                             </div>
@@ -207,6 +207,10 @@
         newField.innerHTML = `
         <div class="row">
                             <div class="col-md-6">
+                            <div class="mb-3">
+                                    <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
+                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                </div>
                                 <div class="mb-3">
                                     <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
                                     <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
@@ -220,12 +224,8 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="merchant_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
-                                    <select class="form-select" id="merchant_type" name="merchant_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
-                                        <option value="">-- Select Merchant Type --</option>
-                                        <option value="Grab & Go">Grab & Go</option>
-                                        <option value="Casual Dining">Casual Dining</option>
-                                    </select>
+                                    <label for="legal_entity_name" class="form-label" style="font-size:15px;font-weight:bold;">Legal Entity Name</label>
+                                    <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -236,7 +236,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
-                                    <textarea class="form-control" rows="5" name="email_address[]" style="border-radius:20px;padding:15px 15px;border:none;" required></textarea>
+                                    <textarea class="form-control" rows="9" name="email_address[]" style="border-radius:20px;padding:15px 15px;border:none;" required></textarea>
                                 </div>
                             </div>
                             <div class="mb-3 mt-3" style="text-align:right;">

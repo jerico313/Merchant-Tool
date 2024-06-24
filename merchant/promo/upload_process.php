@@ -1,9 +1,16 @@
 <?php
-require_once("../header.php");
-require_once("../inc/config.php");
+require_once("../../header.php");
+require_once("../../inc/config.php");
+require_once '../../vendor/autoload.php'; // Include the Composer autoload file
+
+use Ramsey\Uuid\Uuid;
+
+// Get the merchant_id and merchant_name from the POST data
+$merchant_id = isset($_POST['merchant_id']) ? htmlspecialchars($_POST['merchant_id']) : '';
+$merchant_name = isset($_POST['merchant_name']) ? htmlspecialchars($_POST['merchant_name']) : '';
 
 // Check if the file is uploaded
-if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != ''){
+if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
     $file_name = $_FILES['fileToUpload']['name'];
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
 
@@ -12,30 +19,44 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     $extensions = array("csv");
 
     // Check if the file extension is allowed
-    if(in_array($file_ext,$extensions) === false){
+    if (in_array($file_ext, $extensions) === false) {
         echo "Extension not allowed, please choose a CSV file.";
         exit();
     }
 
     // Move the uploaded file to the uploads directory
-    move_uploaded_file($file_tmp,"uploads/".$file_name);
+    move_uploaded_file($file_tmp, "uploads/" . $file_name);
 
     // Process CSV file and insert data into MySQL
-    $csvFile = "uploads/".$file_name;
+    $csvFile = "uploads/" . $file_name;
     $handle = fopen($csvFile, "r");
     $header = fgetcsv($handle); // Skip header row
 
     // Prepare MySQL statement for first table
-    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, offer_id, customer_id, customer_name, claim_id, gross_sale, discount, mode_of_payment, payment_status, pg_fee_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+    $stmt1 = $conn->prepare("INSERT INTO promo (promo_id, merchant_id, promo_code, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        // Remove commas from numeric values
-        $data[6] = str_replace(',', '', $data[6]); // gross_sale
-        $data[7] = str_replace(',', '', $data[7]); // discount
+        $data[3] = str_replace(',', '', $data[3]);
+$start_date = !empty($data[11]) ? DateTime::createFromFormat('m/d/Y', $data[11]) : null;
+$end_date = !empty($data[12]) ? DateTime::createFromFormat('m/d/Y', $data[12]) : null;
+
+// Check if createFromFormat failed
+if ($start_date instanceof DateTime) {
+    $start_date = $start_date->format('Y-m-d');
+} else {
+    $start_date = null; // or handle the error condition as needed
+}
+
+if ($end_date instanceof DateTime) {
+    $end_date = $end_date->format('Y-m-d');
+} else {
+    $end_date = null; // or handle the error condition as needed
+}
+
 
         // Bind and execute for first table
-        $stmt1->bind_param("sssssssssss", $data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10]);
+        $promo_id = Uuid::uuid4()->toString();
+        $stmt1->bind_param("sssssssssssss", $promo_id, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $start_date, $end_date);
         $stmt1->execute();
     }
 
@@ -44,16 +65,16 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
     <title>Upload Success</title>
     <style>
-      body {
-      background-image: url("../images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-    }
+        body {
+            background-image: url("../../images/bg_booky.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
 
         .container {
             position: fixed;
@@ -113,11 +134,11 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
         <h2 style="padding-top:10px;color: #4caf50;">Successfully uploaded!</h2>
-        <a href="transaction.php"><button type="button" class="btn btn-secondary okay">Okay</button></a>
+        <a href="../promo/index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"><button type="button" class="btn btn-secondary okay">Okay</button></a>
     </div>
     <script>
         setTimeout(function(){
-            window.location.href = 'transaction.php';
+            window.location.href = '../promo/index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
         }, 3000); // Delay for 3 seconds (3000 milliseconds)
     </script>
 </body>
@@ -125,6 +146,6 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
 
 <?php
 } else {
-  echo "No file uploaded.";
+    echo "Please choose a file to upload.";
 }
 ?>

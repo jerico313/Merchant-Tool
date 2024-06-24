@@ -2,6 +2,8 @@
 <?php
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
+$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,11 +48,6 @@ $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
         }
 
 </style>
-<script>
-  function editEmployee(id) {
-    window.location = "edit_order.php?order_id=" + id;
-  }
-</script>
 </head>
 <body>
 <div class="cont-box">
@@ -59,7 +56,7 @@ $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
                 <div class="row pb-2 title" aria-label="breadcrumb">
                 <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="../store/index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
+                            <li class="breadcrumb-item"><a href="../store/index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
                             <li class="breadcrumb-item"><a href="#" style="color:#E96529; font-size:14px;"><?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?>  </a></li>                               
                         </ol>
                     </nav> 
@@ -73,19 +70,19 @@ $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
       <div class="text-center" style="text-align:center;" style="width:100%;">
   <div class="row">
   <div class="col">
-  <a href="reports/coupled.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>"><div class="btn" style="background-color:#4BB0B8; height:100px; border-radius:20px; margin:5px; display: flex; justify-content: center; align-items: center;">
+  <a href="reports/coupled.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>"><div class="btn" style="background-color:#4BB0B8; height:100px; border-radius:20px; margin:5px; display: flex; justify-content: center; align-items: center;">
   <span style="font-size:20px;color:#fff;padding-top:15px"><i class="fa-solid fa-folder fa-2xl"></i><span>  
     <p style="padding-top:5px;font-size:15px;">Coupled</p>
   </div></a>
   </div>
     <div class="col">
-    <a href="reports/decoupled.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>"><div class="btn" style="background-color:#4BB0B8; height:100px; border-radius:20px; margin:5px; display: flex; justify-content: center; align-items: center;">
+    <a href="reports/decoupled.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>"><div class="btn" style="background-color:#4BB0B8; height:100px; border-radius:20px; margin:5px; display: flex; justify-content: center; align-items: center;">
   <span style="font-size:20px;color:#fff;padding-top:15px"><i class="fa-solid fa-folder fa-2xl"></i><span>  
     <p style="padding-top:5px;font-size:15px;">Decoupled</p>
   </div></a>
     </div>
     <div class="col">
-    <a href="reports/gcash.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>"><div class="btn" style="background-color:#4BB0B8; height:100px; border-radius:20px; margin:5px; display: flex; justify-content: center; align-items: center;">
+    <a href="reports/gcash.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>"><div class="btn" style="background-color:#4BB0B8; height:100px; border-radius:20px; margin:5px; display: flex; justify-content: center; align-items: center;">
   <span style="font-size:20px;color:#fff;padding-top:15px"><i class="fa-solid fa-folder fa-2xl"></i><span>  
     <p style="padding-top:5px;font-size:15px;">GCash</p>
   </div></a>

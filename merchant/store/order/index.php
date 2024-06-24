@@ -5,12 +5,32 @@ $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 
-function displayOffers($store_id) {
+function displayOffers($store_id, $startDate = null, $endDate = null, $voucherType = null) {
     include("../../../inc/config.php");
 
     $sql = "SELECT * FROM transaction_summary_view WHERE `Store ID` = ?";
+    $params = array($store_id);
+
+    // Append date range condition if start date and end date are provided
+    if ($startDate && $endDate) {
+        // Convert start and end dates to timestamps
+        $startTimestamp = strtotime($startDate);
+        $endTimestamp = strtotime($endDate);
+
+        // Adjust SQL query to compare timestamps
+        $sql .= " AND UNIX_TIMESTAMP(`Transaction Date`) BETWEEN ? AND ?";
+        $params[] = $startTimestamp;
+        $params[] = $endTimestamp;
+    }
+
+    // Append voucher type filter if specified
+    if ($voucherType) {
+        $sql .= " AND `Voucher Type` = ?";
+        $params[] = $voucherType;
+    }
+
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $store_id);
+    $stmt->bind_param(str_repeat("s", count($params)), ...$params);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -18,33 +38,42 @@ function displayOffers($store_id) {
         while ($row = $result->fetch_assoc()) {
             $shortStoreId = substr($row['Store ID'], 0, 8);
             $shortMerchantId = substr($row['Merchant ID'], 0, 8);
-            $shortPromoId = substr($row['Promo ID'], 0, 8);
-            echo "<tr>";
+            $GrossAmount = number_format($row['Gross Amount'], 2);
+            $Discount = number_format($row['Discount'], 2);
+            $NetAmount = number_format($row['Net Amount'], 2);
+            $CommissionAmount = number_format($row['Commission Amount'], 2);
+            $TotalBilling = number_format($row['Total Billing'], 2);
+            $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
+            $AmounttobeDisbursed = number_format($row['Amount to be Disbursed'], 2);
+
+            $date = new DateTime($row['Transaction Date']);
+            $formattedDate = $date->format('F d, Y g:i:s A'); 
+            echo "<tr style='padding:10px;'>";
             echo "<td style='text-align:center;'>" . $row['Transaction ID']. "</td>";
-            echo "<td style='text-align:center;'>" . $row['Transaction Date'] . "</td>";
+            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
             echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
             echo "<td style='text-align:center;'>" . $row['Merchant Name'] . "</td>";
             echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
             echo "<td style='text-align:center;'>" . $row['Store Name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Customer ID'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Customer Name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Promo Code'] . "</td>";       
-            echo "<td style='text-align:center;'>" . $row['Promo Fulfillment Type'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Promo Code'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['Voucher Type'] . "</td>";         
+            echo "<td style='text-align:center;'>" . $row['Promo Category'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Promo Group'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Promo Type'] . "</td>";     
-            echo "<td style='text-align:center;'>" . $row['Gross Amount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Discount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Net Amount'] . "</td>";
+            echo "<td style='text-align:center;'>" . $GrossAmount . "</td>";
+            echo "<td style='text-align:center;'>" . $Discount . "</td>";
+            echo "<td style='text-align:center;'>" . $NetAmount . "</td>";
             echo "<td style='text-align:center;'>" . $row['Payment'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Bill Status'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Commission Type'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['Commission Rate'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Commission Amount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Total Billing'] . "</td>";
+            echo "<td style='text-align:center;'>" . $CommissionAmount . "</td>";
+            echo "<td style='text-align:center;'>" . $TotalBilling . "</td>";
             echo "<td style='text-align:center;'>" . $row['PG Fee Rate'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['PG Fee Amount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Amount to be Disbursed'] . "</td>";
+            echo "<td style='text-align:center;'>" . $PGFeeAmount . "</td>";
+            echo "<td style='text-align:center;'>" . $AmounttobeDisbursed . "</td>";
             echo "</tr>";
         }
     }
@@ -52,6 +81,8 @@ function displayOffers($store_id) {
     $conn->close();
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -171,9 +202,19 @@ function displayOffers($store_id) {
                     </nav>
                     <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($store_name); ?></p>
                 </div>
-                <button type="button" class="btn btn-warning check-report mt-4" id="btnCoupled">Coupled</button>
-                <button type="button" class="btn btn-warning add-merchant mt-4" id="btnDecoupled">Decoupled</button>
-                <button type="button" class="btn gcash mt-4" id="btnGCash"><img src="../../../images/gcash.png" style="width:25px; height:20px; margin-right: 1.80vw;" alt="gcash"><span>GCash</span></button>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle mt-4" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="width:150px;margin-left:10px;border-radius:20px;height:32px;background-color: #4BB0B8;border:solid #4BB0B8 2px;">
+                    <i class="fa-solid fa-filter"></i> Filters
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-center p-4" aria-labelledby="dropdownMenuButton">
+                        <form>
+                        <button type="button" class="btn btn-warning all mt-2" id="btnShowAll">All</button>
+                        <button type="button" class="btn btn-warning coupled mt-2" id="btnCoupled">Coupled</button>
+                        <button type="button" class="btn btn-warning decoupled mt-2" id="btnDecoupled">Decoupled</button>
+                        <button type="button" class="btn gcash mt-2" id="btnGCash"><img src="../../../images/gcash.png" style="width:25px; height:20px; margin-right: 1.20vw;" alt="gcash"><span>GCash</span></button>
+                        </form>
+                    </div>
+                </div>
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle mt-4" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="width:150px;margin-left:10px;border-radius:20px;height:32px;background-color: #E96529;border:solid #E96529 2px;">
                         Select Date Range
@@ -189,13 +230,14 @@ function displayOffers($store_id) {
                                 <label for="endDate">End Date</label>
                                 <input type="text" class="form-control" id="endDate" placeholder="Select end date">
                             </div>
+                            <button type="button" class="btn btn-warning mt-2" id="search"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
                         </form>
                     </div>
                 </div>
                 <button type="button" onclick="downloadTables()" class="btn btn-warning download-csv mt-4"><i class="fa-solid fa-download"></i> Download CSV</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                <table id="example" class="table bord" style="width:280%;">
+                <table id="example" class="table bord" style="width:320%;">
                     <thead>
                         <tr>
                             <th>Transaction ID</th>
@@ -206,9 +248,9 @@ function displayOffers($store_id) {
                             <th>Store Name</th>
                             <th>Customer ID</th>
                             <th>Customer Name</th>
-                            <th>Promo ID</th>
                             <th>Promo Code</th>
-                            <th>Promo Fulfillment Type</th>
+                            <th>Voucher Type</th>
+                            <th>Promo Category</th>
                             <th>Promo Group</th>
                             <th>Promo Type</th>           
                             <th>Gross Amount</th>
@@ -228,11 +270,6 @@ function displayOffers($store_id) {
                     <tbody id="dynamicTableBody">
                     <?php displayOffers($store_id); ?>
                     </tbody>
-                    <tfoot>
-                        <tr id="noDataMessage" style="display: none;">
-                            <td colspan="24" class="pl-5" style="margin-left:20px;">No data available in table</td>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>
@@ -244,59 +281,64 @@ function displayOffers($store_id) {
 <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 
 <script>
 function downloadTables() {
     // Get current date and format it for the file name
     const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleDateString().replace(/\//g, "-"); // Format date for file name
+    const formattedDate = currentDate.toISOString().split('T')[0]; // Format date for file name
 
     // Assuming you have initialized DataTable on #example
     const tableData = $('#example').DataTable().rows().data().toArray();
 
     // Function to format customer ID if needed
-    function formatDataForCSV(row) {
-        return [
-            row[0], row[1], row[2], row[3], row[4], row[5], 
-            `'${row[6]}`, row[7], row[8], row[9], row[10], 
-            row[11], row[12], row[13], row[14], row[15], 
-            row[16], row[17], row[18], row[19], row[20], 
-            row[21], row[22], row[23], row[24]
-        ];
-    }
+    function formatDataForExcel(row) {
+    // Replace any HTML entities with their respective characters
+    const promoCategory = row[10].replace(/&amp;/g, '&'); // Replace &amp; with &
+    
+    return [
+        row[0], row[1], row[2], row[3], row[4], row[5], 
+        `${row[6]}`, row[7], row[8], row[9], `${promoCategory}`, 
+        row[11], row[12], row[13], row[14], row[15], 
+        row[16], row[17], row[18], row[19], row[20], 
+        row[21], row[22], row[23], row[24]
+    ];
+}
 
     // Extracting all columns data and formatting customer ID
-    const filteredData = tableData.map(row => formatDataForCSV(row));
+    const filteredData = tableData.map(row => formatDataForExcel(row));
 
-    // Add headers for CSV file
+    // Add headers for Excel file
     filteredData.unshift([
         'Transaction ID', 'Transaction Date', 'Merchant ID', 'Merchant Name', 'Store ID', 'Store Name',
-        'Customer ID', 'Customer Name', 'Promo ID', 'Promo Code', 'Promo Fullfillment Type','Promo Group', 'Promo Type',
-        'Gross Amount', 'Discount', 'Amount Discounted', 'Payment', 'Bill Status', 'Commission Type', 'Commission Rate',
+        'Customer ID', 'Customer Name', 'Promo Code', 'Voucher Type','Promo Category', 'Promo Group', 'Promo Type',
+        'Gross Amount', 'Discount', 'Net Amount', 'Payment', 'Bill Status', 'Commission Type', 'Commission Rate',
         'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
     ]);
 
-    const csvContent = "data:text/csv;charset=utf-8," + filteredData.map(row => row.join(",")).join("\n");
-    const encodedUri = encodeURI(csvContent);
+    // Create a new workbook and add the data to the first sheet
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(filteredData);
+    XLSX.utils.book_append_sheet(wb, ws, "Transactions");
 
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `transaction_${formattedDate}.csv`);
-    document.body.appendChild(link);
-
-    link.click(); // Trigger the download
-    document.body.removeChild(link);
+    // Generate the Excel file and trigger the download
+    XLSX.writeFile(wb, `<?php echo htmlspecialchars($store_name); ?>_${formattedDate}.xlsx`);
 }
 </script>
 
 <script>
 $(document).ready(function() {
-    // Initialize DataTable
     var table = $('#example').DataTable({
-        scrollX: true, // Enable horizontal scrolling
+        scrollX: true,
         language: {
             emptyTable: "No data available in table"
-        }
+        },
+        columnDefs: [
+            { orderable: false, targets: [0, 2, 4, 6, 9, 10, 12, 13, 14, 15, 19, 20, 21, 22, 23, 24] }, // Disable sorting for columns 2, 3, and 4/ Disable search/filter for columns 0, 1, 5, 6
+        ],
+        order: [] // Disable default sorting
     });
 
     // Datepicker initialization
@@ -307,46 +349,53 @@ $(document).ready(function() {
         dateFormat: "yy-mm-dd"
     });
 
-    // Function to filter rows based on promo type
-    function filterRows(promoType) {
-        table.rows().every(function() {
-            var row = this.data();
-            if (row[10] === promoType) { // Column index 11 is Promo Type
-                $(this.node()).show();
-            } else {
-                $(this.node()).hide();
-            }
-        });
+    // Date range search button click event
+    $('#search').on('click', function() {
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
 
-        // Show "No data available" message if all rows are hidden
-        if (table.rows(':visible').count() === 0) {
-            $('#noDataMessage').show();
-        } else {
-            $('#noDataMessage').hide();
-        }
-    }
+        var startTimestamp = new Date(startDate).getTime() / 1000; // Convert to seconds
+        var endTimestamp = new Date(endDate).getTime() / 1000; // Convert to seconds
 
-    // Event handlers for filter buttons
+        table.search('').columns().search('').draw();
+        table.columns(1).search(startTimestamp + ' to ' + endTimestamp, true, false).draw();
+    });
+
+    // Function to clear date range filter
+    $('#clearDates').on('click', function() {
+        $('#startDate, #endDate').val('');
+        table.search('').columns().search('').draw();
+    });
+
+    // Voucher Type filter buttons click events
     $('#btnCoupled').on('click', function() {
-        filterRows('Coupled');
+        table.search('').columns().search('').draw(); // Clear existing search
+
+        // Apply exact search for 'Coupled' voucher type
+        table.column(9).search('^Coupled$', true, false).draw();
     });
 
     $('#btnDecoupled').on('click', function() {
-        filterRows('Decoupled');
+        table.search('').columns().search('').draw(); // Clear existing search
+
+        // Apply exact search for 'Decoupled' voucher type
+        table.column(9).search('^Decoupled$', true, false).draw();
     });
 
     $('#btnGCash').on('click', function() {
-        filterRows('GCash');
+        table.search('').columns().search('').draw(); // Clear existing search
+
+        // Apply exact search for 'GCash' voucher type
+        table.column(9).search('^GCash$', true, false).draw();
     });
 
-    // Attach the download function to the button
-    $('.download-csv').on('click', function() {
-        downloadTables();
+    // Show All button click event
+    $('#btnShowAll').on('click', function() {
+        $('#startDate, #endDate').val('');
+        table.search('').columns().search('').draw();
     });
-
-    // Initially hide the message
-    $('#noDataMessage').hide();
 });
+
 
 </script>
 </body>

@@ -1,6 +1,6 @@
 <?php
 // Include the configuration file
-include('../../inc/config.php');
+include('../../../inc/config.php');
 
 $gcash_report_id = isset($_GET['gcash_report_id']) ? $_GET['gcash_report_id'] : '';
 
@@ -103,15 +103,15 @@ $conn->close();
   <div class="container" style="padding:70px;" id="content">
   <p style="text-align:center;font-size:20px;font-weight:900;">SETTLEMENT REPORT</p>
     <p class="text-right" style="font-weight:bold;font-size:40px;">
-      <img src="../../images/booky2.png" alt="booky" width="150" height="50">
+      <img src="../../../images/booky2.png" alt="booky" width="150" height="50">
     </p>
     <table style="width:100% !important;">
       <tr >
-          <td>Business Name: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span></td>
+          <td>Business Name: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['store_business_name']); ?></span></td>
           <td style="width:30%;">Settlement Date: <span style="margin-left:25px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period_start']); ?></span></td>
       </tr>
       <tr>
-          <td>Brand Name: <span style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span></td>
+          <td>Brand Name: <span style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($data['store_brand_name']); ?></span></td>
           <td>Settlement Number: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span></td>
       </tr>
       <tr>

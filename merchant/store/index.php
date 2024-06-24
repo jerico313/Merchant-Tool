@@ -181,7 +181,7 @@ function displayStore($merchant_id) {
                 <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>Store ID</th>
+                            <th style="width:50px;">Store ID</th>
                             <th>Store Name</th>
                             <th>Legal Entity Name</th>
                             <th>Store Address</th>
@@ -245,7 +245,7 @@ function displayStore($merchant_id) {
                 <select class="form-select" id="reportType" required>
                     <option value="" selected disabled>-- Select Report Type --</option>
                     <option value="Coupled">Coupled</option>
-                    <option value="Decouple">Decouple</option>
+                    <option value="Decoupled">Decoupled</option>
                     <option value="GCash">GCash</option>
                 </select>
             </div>
@@ -329,7 +329,7 @@ $('#submitReport').on('click', function () {
 
     if (reportType === 'Coupled') {
         url = 'coupled_generate_report.php';
-    } else if (reportType === 'Decouple') {
+    } else if (reportType === 'Decoupled') {
         url = 'decoupled_generate_report.php';
     } else if (reportType === 'GCash') {
         url = 'gcash_generate_report.php';
