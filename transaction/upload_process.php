@@ -39,13 +39,15 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         // Remove double quotes from column 23
-        $data[23] = str_replace('"', '', $data[23]);
-        
+        $data[25] = str_replace('"', '', $data[25]);
+        $data[11] = str_replace(',', '', $data[11]);
+        $data[12] = str_replace(',', '', $data[12]);
+        $data[13] = str_replace(',', '', $data[13]);
         // Convert date format for column 6 (transaction_date)
-        $transaction_date = convertDateFormat($data[6]);
+        $transaction_date = convertDateFormat($data[8]);
 
         // Bind and execute for first table
-        $stmt1->bind_param("sssssssssss", $data[5], $data[1], $data[4], $data[3], $data[2], $transaction_date, $data[9], $data[10], $data[11], $data[23], $data[25]);
+        $stmt1->bind_param("sssssssssss", $data[7], $data[3], $data[6], $data[5], $data[4], $transaction_date, $data[11], $data[12], $data[13], $data[25], $data[27]);
         $stmt1->execute();
     }
 

@@ -36,9 +36,23 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $stmt1 = $conn->prepare("INSERT INTO promo (promo_id, merchant_id, promo_code, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        // Convert date formats
-        $start_date = DateTime::createFromFormat('m/d/Y', $data[11])->format('Y-m-d');
-        $end_date = DateTime::createFromFormat('m/d/Y', $data[12])->format('Y-m-d');
+        $data[3] = str_replace(',', '', $data[3]);
+$start_date = !empty($data[11]) ? DateTime::createFromFormat('m/d/Y', $data[11]) : null;
+$end_date = !empty($data[12]) ? DateTime::createFromFormat('m/d/Y', $data[12]) : null;
+
+// Check if createFromFormat failed
+if ($start_date instanceof DateTime) {
+    $start_date = $start_date->format('Y-m-d');
+} else {
+    $start_date = null; // or handle the error condition as needed
+}
+
+if ($end_date instanceof DateTime) {
+    $end_date = $end_date->format('Y-m-d');
+} else {
+    $end_date = null; // or handle the error condition as needed
+}
+
 
         // Bind and execute for first table
         $promo_id = Uuid::uuid4()->toString();

@@ -3,7 +3,13 @@
 function displayOrder() {
   include("../inc/config.php");
 
-  $sql = "SELECT * FROM transaction";
+  // Modified SQL query to join transaction and store tables
+  $sql = "
+    SELECT t.transaction_id, s.store_name, t.promo_code, t.customer_id, t.customer_name, 
+           t.transaction_date, t.gross_amount, t.discount, t.amount_discounted, t.payment
+    FROM transaction t
+    JOIN store s ON t.store_id = s.store_id
+  ";
   
   $result = $conn->query($sql);
 
@@ -11,17 +17,19 @@ function displayOrder() {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
         $shortTransactiontId = substr($row['transaction_id'], 0, 8);
-            $shortStoreId = substr($row['store_id'], 0, 8);
+        $gross_amount = number_format($row['gross_amount'], 2);
+            $amount_discounted = number_format($row['amount_discounted'], 2);
+            $discount = number_format($row['discount'], 2);
           echo "<tr data-id='" . $row['transaction_id'] . "'>";
           echo "<td style='text-align:center;'>" . $shortTransactiontId . "</td>";
-          echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
+          echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>"; // Display store name
           echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['gross_amount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['discount'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['amount_discounted'] . "</td>";
+            echo "<td style='text-align:center;'>" . $gross_amount . "</td>";
+            echo "<td style='text-align:center;'>" . $discount . "</td>";
+            echo "<td style='text-align:center;'>" . $discount . "</td>";
             echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
           echo "</tr>";
           $count++;
@@ -31,6 +39,7 @@ function displayOrder() {
   $conn->close();
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -188,11 +197,11 @@ function displayOrder() {
       </div>
       <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
         <div class="table-container">
-          <table id="example" class="table bord" style="width:120%;">
+          <table id="example" class="table bord" style="width:180%;">
             <thead>
               <tr>
               <th>Transaction ID</th>
-              <th>Store ID</th>
+              <th>Store Name</th>
               <th>Promo Code</th>
               <th>Customer ID</th>
               <th>Customer Name</th>
