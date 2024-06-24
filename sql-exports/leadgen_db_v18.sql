@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2024 at 09:33 AM
+-- Generation Time: Jun 20, 2024 at 08:04 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -31,7 +31,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_coupled_report` (
     SET v_uuid = UUID();
 
     SET @sql_insert = CONCAT('INSERT INTO report_history_coupled 
-        (coupled_report_id, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, total_successful_orders, total_gross_sales, total_discount, total_outstanding_amount_1, leadgen_commission_rate_base, commission_rate, total_commission_fees_1, card_payment_pg_fee, paymaya_pg_fee, gcash_miniapp_pg_fee, gcash_pg_fee, total_payment_gateway_fees_1, total_outstanding_amount_2, total_commission_fees_2, total_payment_gateway_fees_2, bank_fees, cwt_from_gross_sales, cwt_from_transaction_fees, cwt_from_pg_fees,total_amount_paid_out)
+        (coupled_report_id, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_number, total_successful_orders, total_gross_sales, total_discount, total_outstanding_amount_1, leadgen_commission_rate_base, commission_rate, total_commission_fees_1, paymaya_pg_fee, paymaya_credit_card_pg_fee, maya_pg_fee, maya_checkout_pg_fee, gcash_miniapp_pg_fee, gcash_pg_fee, total_payment_gateway_fees_1, total_outstanding_amount_2, total_commission_fees_2, total_payment_gateway_fees_2, bank_fees, cwt_from_gross_sales, cwt_from_transaction_fees, cwt_from_pg_fees,total_amount_paid_out)
         SELECT 
             "', v_uuid, '" AS coupled_report_id, 
 	    `Merchant ID` AS merchant_id, 
@@ -40,9 +40,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_coupled_report` (
             merchant.business_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-            DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
             COUNT(`Transaction ID`) AS total_successful_orders,
             SUM(`Gross Amount`) AS total_gross_sales,
             SUM(`Discount`) AS total_discount,
@@ -50,10 +48,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_coupled_report` (
             SUM(`Net Amount`) AS leadgen_commission_rate_base,
             `Commission Rate` AS commission_rate,
             SUM(`Total Billing`) AS total_commission_fees_1,
-
-            SUM(CASE WHEN `Payment` IN (''paymaya_credit_card'', ''maya'', ''maya_checkout'') THEN `PG Fee Amount` ELSE 0 END) AS card_payment,
-
             SUM(CASE WHEN `Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
+            SUM(CASE WHEN `Payment` = ''paymaya_credit_card'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
+            SUM(CASE WHEN `Payment` = ''maya'' THEN `PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
+            SUM(CASE WHEN `Payment` = ''maya_checkout'' THEN `PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
             SUM(CASE WHEN `Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
             SUM(CASE WHEN `Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_1,
@@ -106,9 +104,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_coupled_report` (
         merchant.business_address AS business_address,
         "', start_date, '" AS settlement_period_start,
         "', end_date, '" AS settlement_period_end,
-        DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-        CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-        CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
+	CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
         COUNT(`Transaction ID`) AS total_successful_orders,
             SUM(`Gross Amount`) AS total_gross_sales,
             SUM(`Discount`) AS total_discount,
@@ -116,8 +112,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_coupled_report` (
             SUM(`Net Amount`) AS leadgen_commission_rate_base,
             `Commission Rate` AS commission_rate,
             SUM(`Total Billing`) AS total_commission_fees_1,
-            SUM(CASE WHEN `Payment` IN (''paymaya_credit_card'', ''maya'', ''maya_checkout'') THEN `PG Fee Amount` ELSE 0 END) AS card_payment,
             SUM(CASE WHEN `Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
+            SUM(CASE WHEN `Payment` = ''paymaya_credit_card'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
+            SUM(CASE WHEN `Payment` = ''maya'' THEN `PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
+            SUM(CASE WHEN `Payment` = ''maya_checkout'' THEN `PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
             SUM(CASE WHEN `Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
             SUM(CASE WHEN `Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_1,
@@ -169,7 +167,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_decoupled_report`
     SET v_uuid = UUID();
     
     SET @sql_insert = CONCAT('INSERT INTO report_history_decoupled
-        (decoupled_report_id, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, total_successful_orders, total_gross_sales, total_discount, total_net_sales, leadgen_commission_rate_base_pretrial, commission_rate_pretrial, total_pretrial, leadgen_commission_rate_base_billable, commission_rate_billable, total_billable, total_commission_fees)
+        (decoupled_report_id, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_number, total_successful_orders, total_gross_sales, total_discount, total_net_sales, leadgen_commission_rate_base_pretrial, commission_rate_pretrial, total_pretrial, leadgen_commission_rate_base_billable, commission_rate_billable, total_billable, total_commission_fees)
         SELECT 
             "', v_uuid, '" AS decoupled_report_id,
             `Merchant ID` AS merchant_id,
@@ -178,9 +176,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_decoupled_report`
             merchant.business_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-	    DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
             
 	    COUNT(`Transaction ID`) AS total_successful_orders,
             SUM(`Gross Amount`) AS total_gross_sales,
@@ -234,9 +230,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_decoupled_report`
             merchant.business_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-	    DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
 
             COUNT(`Transaction ID`) AS total_successful_orders,
             SUM(`Gross Amount`) AS total_gross_sales,
@@ -286,26 +280,21 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_gcash_report` (IN `merchant_id` VARCHAR(36), IN `start_date` DATE, IN `end_date` DATE)   BEGIN
     
     DECLARE v_uuid VARCHAR(36);
+    DECLARE v_uuid_1 VARCHAR(36);
     SET v_uuid = UUID();
+    SET v_uuid_1 = UUID();
     
     SET @sql_insert = CONCAT('INSERT INTO report_history_gcash_head
-        (gcash_report_id, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, total_amount, commission_rate,commission_amount, vat_amount, total_commission_fees)
+        (gcash_report_id, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_number)
         SELECT 
             "', v_uuid, '" AS gcash_report_id,
             `Merchant ID` AS merchant_id,
             merchant.legal_entity_name AS merchant_business_name,
-	    `Merchant Name` AS merchant_brand_name,
+            `Merchant Name` AS merchant_brand_name,
             merchant.business_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-            DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
-	    SUM(`Net Amount`) AS total_amount,
-	    `Commission Rate` AS commission_rate,
-	    SUM(`Commission Amount`) AS commission_amount,
-	    SUM(`Commission Amount`) * 0.12 AS vat_amount,
-	    SUM(`Total Billing`) AS total_commission_fees
+            CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number
         FROM 
             `transaction_summary_view`
         JOIN
@@ -313,7 +302,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_gcash_report` (IN
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
         GROUP BY 
             `Merchant ID`');
 
@@ -322,21 +310,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_gcash_report` (IN
     DEALLOCATE PREPARE stmt_insert;
 
     SET @sql_select = CONCAT('SELECT
-	    "', v_uuid, '" AS gcash_report_id, 
+            "', v_uuid, '" AS gcash_report_id, 
             `Merchant ID` AS merchant_id,
             merchant.legal_entity_name AS merchant_business_name,
-	    `Merchant Name` AS merchant_brand_name,
+            `Merchant Name` AS merchant_brand_name,
             merchant.business_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-	    DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
-	    SUM(`Net Amount`) AS total_amount,
-	    `Commission Rate` AS commission_rate,
-	    SUM(`Commission Amount`) AS commission_amount,
-	    SUM(`Commission Amount`) * 0.12 AS vat_amount,
-	    SUM(`Total Billing`) AS total_commission_fees
+            CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number
         FROM 
             `transaction_summary_view`
         JOIN
@@ -344,7 +325,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_gcash_report` (IN
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
         GROUP BY 
             `Merchant ID`');
 
@@ -353,12 +333,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_gcash_report` (IN
     DEALLOCATE PREPARE stmt_select;
 
     SET @sql_insert1 = CONCAT('INSERT INTO report_history_gcash_body
-        (gcash_report_id, item, quantity_redeemed, net_amount)
+        (gcash_report_body_id, gcash_report_id, item, quantity_redeemed, voucher_value, amount)
         SELECT 
+            "', v_uuid_1, '" AS gcash_report_body_id,
             "', v_uuid, '"  AS gcash_report_id,
             p.promo_code as item,
             COUNT(`Transaction ID`) AS quantity_redeemed,
-	    SUM(`Net Amount`) AS net_amount
+            p.promo_amount AS voucher_value,
+            ROUND(COUNT(`Transaction ID`) * p.promo_amount, 2) AS amount
         FROM 
             `transaction_summary_view`
         JOIN
@@ -368,17 +350,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_gcash_report` (IN
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
             AND `Payment` = ''gcash''
         GROUP BY 
-            `Promo Code`');
+            p.promo_code, p.promo_amount');
 
     PREPARE stmt_insert1 FROM @sql_insert1;
     EXECUTE stmt_insert1;
     DEALLOCATE PREPARE stmt_insert1;
 
     SET @sql_select1 = CONCAT('SELECT 
+            "', v_uuid_1, '" AS gcash_report_body_id,
             "', v_uuid, '"  AS gcash_report_id,
             p.promo_code as item,
             COUNT(`Transaction ID`) AS quantity_redeemed,
-	    SUM(`Net Amount`) AS net_amount
+            p.promo_amount AS voucher_value,
+            ROUND(COUNT(`Transaction ID`) * p.promo_amount, 2) AS amount
         FROM 
             `transaction_summary_view`
         JOIN
@@ -388,7 +372,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_gcash_report` (IN
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
             AND `Payment` = ''gcash''
         GROUP BY 
-            `Promo Code`');
+            p.promo_code, p.promo_amount');
 
     PREPARE stmt_select1 FROM @sql_select1;
     EXECUTE stmt_select1;
@@ -402,7 +386,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_coupled_report` (IN 
     SET v_uuid = UUID();
 
     SET @sql_insert = CONCAT('INSERT INTO report_history_coupled 
-        (coupled_report_id, store_id, store_business_name, store_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, total_successful_orders, total_gross_sales, total_discount, total_outstanding_amount_1, leadgen_commission_rate_base, commission_rate, total_commission_fees_1, card_payment_pg_fee, paymaya_pg_fee, gcash_miniapp_pg_fee, gcash_pg_fee, total_payment_gateway_fees_1, total_outstanding_amount_2, total_commission_fees_2, total_payment_gateway_fees_2, bank_fees, cwt_from_gross_sales, cwt_from_transaction_fees, cwt_from_pg_fees,total_amount_paid_out)
+        (coupled_report_id, store_id, store_business_name, store_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_number, total_successful_orders, total_gross_sales, total_discount, total_outstanding_amount_1, leadgen_commission_rate_base, commission_rate, total_commission_fees_1, paymaya_pg_fee, paymaya_credit_card_pg_fee, maya_pg_fee, maya_checkout_pg_fee, gcash_miniapp_pg_fee, gcash_pg_fee, total_payment_gateway_fees_1, total_outstanding_amount_2, total_commission_fees_2, total_payment_gateway_fees_2, bank_fees, cwt_from_gross_sales, cwt_from_transaction_fees, cwt_from_pg_fees,total_amount_paid_out)
         SELECT 
             "', v_uuid, '" AS coupled_report_id, 
 	    `Store ID` AS store_id, 
@@ -411,11 +395,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_coupled_report` (IN 
             store.store_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-
-	    DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
-
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
             COUNT(`Transaction ID`) AS total_successful_orders,
             SUM(`Gross Amount`) AS total_gross_sales,
             SUM(`Discount`) AS total_discount,
@@ -423,8 +403,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_coupled_report` (IN 
             SUM(`Net Amount`) AS leadgen_commission_rate_base,
             `Commission Rate` AS commission_rate,
             SUM(`Total Billing`) AS total_commission_fees_1,
-            SUM(CASE WHEN `Payment` IN (''paymaya_credit_card'', ''maya'', ''maya_checkout'') THEN `PG Fee Amount` ELSE 0 END) AS card_payment,
             SUM(CASE WHEN `Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
+            SUM(CASE WHEN `Payment` = ''paymaya_credit_card'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
+            SUM(CASE WHEN `Payment` = ''maya'' THEN `PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
+            SUM(CASE WHEN `Payment` = ''maya_checkout'' THEN `PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
             SUM(CASE WHEN `Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
             SUM(CASE WHEN `Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_1,
@@ -477,11 +459,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_coupled_report` (IN 
             store.store_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-
-	    DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
-
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
             COUNT(`Transaction ID`) AS total_successful_orders,
             SUM(`Gross Amount`) AS total_gross_sales,
             SUM(`Discount`) AS total_discount,
@@ -489,8 +467,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_coupled_report` (IN 
             SUM(`Net Amount`) AS leadgen_commission_rate_base,
             `Commission Rate` AS commission_rate,
             SUM(`Total Billing`) AS total_commission_fees_1,
-            SUM(CASE WHEN `Payment` IN (''paymaya_credit_card'', ''maya'', ''maya_checkout'') THEN `PG Fee Amount` ELSE 0 END) AS card_payment,
             SUM(CASE WHEN `Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
+            SUM(CASE WHEN `Payment` = ''paymaya_credit_card'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_credit_card_pg_fee,
+            SUM(CASE WHEN `Payment` = ''maya'' THEN `PG Fee Amount` ELSE 0 END) AS maya_pg_fee,
+            SUM(CASE WHEN `Payment` = ''maya_checkout'' THEN `PG Fee Amount` ELSE 0 END) AS maya_checkout_pg_fee,
             SUM(CASE WHEN `Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
             SUM(CASE WHEN `Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_1,
@@ -542,7 +522,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_decoupled_report` (I
     SET v_uuid = UUID();
     
     SET @sql_insert = CONCAT('INSERT INTO report_history_decoupled
-        (decoupled_report_id, store_id, store_business_name, store_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, total_successful_orders, total_gross_sales, total_discount, total_net_sales, leadgen_commission_rate_base_pretrial, commission_rate_pretrial, total_pretrial, leadgen_commission_rate_base_billable, commission_rate_billable, total_billable, total_commission_fees)
+        (decoupled_report_id, store_id, store_business_name, store_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_number, total_successful_orders, total_gross_sales, total_discount, total_net_sales, leadgen_commission_rate_base_pretrial, commission_rate_pretrial, total_pretrial, leadgen_commission_rate_base_billable, commission_rate_billable, total_billable, total_commission_fees)
         SELECT 
             "', v_uuid, '" AS decoupled_report_id,
             `Store ID` AS store_id,
@@ -551,9 +531,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_decoupled_report` (I
             store.store_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-	    DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
             
 	    COUNT(`Transaction ID`) AS total_successful_orders,
             SUM(`Gross Amount`) AS total_gross_sales,
@@ -607,9 +585,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_decoupled_report` (I
             store.store_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-	    DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number,
 
             COUNT(`Transaction ID`) AS total_successful_orders,
             SUM(`Gross Amount`) AS total_gross_sales,
@@ -659,10 +635,12 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `store_id` VARCHAR(36), IN `start_date` DATE, IN `end_date` DATE)   BEGIN
     
     DECLARE v_uuid VARCHAR(36);
+    DECLARE v_uuid_1 VARCHAR(36);
     SET v_uuid = UUID();
+    SET v_uuid_1 = UUID();
     
     SET @sql_insert = CONCAT('INSERT INTO report_history_gcash_head
-        (gcash_report_id, store_id, store_business_name, store_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, total_amount, commission_rate,commission_amount, vat_amount, total_commission_fees)
+        (gcash_report_id, store_id, store_business_name, store_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_number)
         SELECT 
             "', v_uuid, '" AS gcash_report_id,
             `Store ID` AS store_id,
@@ -671,14 +649,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `s
             store.store_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-            DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
-	    SUM(`Net Amount`) AS total_amount,
-	    `Commission Rate` AS commission_rate,
-	    SUM(`Commission Amount`) AS commission_amount,
-	    SUM(`Commission Amount`) * 0.12 AS vat_amount,
-	    SUM(`Total Billing`) AS total_commission_fees
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number
         FROM 
             `transaction_summary_view`
         JOIN
@@ -686,7 +657,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `s
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
         GROUP BY 
             `Store ID`');
 
@@ -702,14 +672,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `s
             store.store_address AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-            DATE_FORMAT(NOW(), "%b %e, %Y") AS settlement_date,
-	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), '' - '', DATE_FORMAT("', end_date, '", ''%b %e, %Y'')) AS settlement_period,
-	    SUM(`Net Amount`) AS total_amount,
-	    `Commission Rate` AS commission_rate,
-	    SUM(`Commission Amount`) AS commission_amount,
-	    SUM(`Commission Amount`) * 0.12 AS vat_amount,
-	    SUM(`Total Billing`) AS total_commission_fees
+	    CONCAT(DATE_FORMAT("', end_date, '", "%Y%m"), ''-'', LEFT("', v_uuid, '", 6)) AS settlement_number
         FROM 
             `transaction_summary_view`
         JOIN
@@ -717,7 +680,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `s
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
         GROUP BY 
             `Store ID`');
 
@@ -726,12 +688,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `s
     DEALLOCATE PREPARE stmt_select;
 
     SET @sql_insert1 = CONCAT('INSERT INTO report_history_gcash_body
-        (gcash_report_id, item, quantity_redeemed, net_amount)
+        (gcash_report_body_id, gcash_report_id, item, quantity_redeemed, voucher_value, amount)
         SELECT 
+            "', v_uuid_1, '" AS gcash_report_body_id,
             "', v_uuid, '"  AS gcash_report_id,
             p.promo_code as item,
             COUNT(`Transaction ID`) AS quantity_redeemed,
-	    SUM(`Net Amount`) AS net_amount
+	    p.promo_amount AS voucher_value,
+            ROUND(COUNT(`Transaction ID`)*p.promo_amount,2) AS amount
         FROM 
             `transaction_summary_view`
         JOIN
@@ -741,17 +705,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `s
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
             AND `Payment` = ''gcash''
         GROUP BY 
-            `Promo Code`');
+            `Store ID`');
 
     PREPARE stmt_insert1 FROM @sql_insert1;
     EXECUTE stmt_insert1;
     DEALLOCATE PREPARE stmt_insert1;
 
     SET @sql_select1 = CONCAT('SELECT 
+            "', v_uuid_1, '" AS gcash_report_body_id,
             "', v_uuid, '"  AS gcash_report_id,
             p.promo_code as item,
             COUNT(`Transaction ID`) AS quantity_redeemed,
-	    SUM(`Net Amount`) AS net_amount
+	    p.promo_amount AS voucher_value,
+            ROUND(COUNT(`Transaction ID`)*p.promo_amount,2) AS amount
         FROM 
             `transaction_summary_view`
         JOIN
@@ -761,7 +727,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `s
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
             AND `Payment` = ''gcash''
         GROUP BY 
-            `Promo Code`');
+            `Store ID`');
 
     PREPARE stmt_select1 FROM @sql_select1;
     EXECUTE stmt_select1;
@@ -794,82 +760,40 @@ CREATE TABLE `activity_history` (
 
 INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_id`, `activity_type`, `description`, `created_at`, `updated_at`) VALUES
 ('016bdbbe-2eb7-11ef-abc9-48e7dad87c24', NULL, 'transaction', 'a6673ec0-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Transaction record updated\npromo_id: 8504f541-2d50-11ef-a4d2-48e7dad87c24 -> GCA5H', '2024-06-20 03:41:40', '2024-06-20 03:41:40'),
-('0743f147-31f8-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_head', '07430231-31f8-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: Jun 24, 2024\nsettlement_number: 202406-07430231\nsettlement_period: May 1 - Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 1.20\ntotal_commission_fees: 11.20', '2024-06-24 07:04:41', '2024-06-24 07:04:41'),
-('07461dba-31f8-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', '07430231-31f8-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 07430231-31f8-11ef-a30f-0a002700000d\nitem: B00KYDEMO\nquantity_redeemed: 2\nnet_amount: 15570.00\namount: 31140.00', '2024-06-24 07:04:41', '2024-06-24 07:04:41'),
-('07462182-31f8-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', '07430231-31f8-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 07430231-31f8-11ef-a30f-0a002700000d\nitem: GCA5H\nquantity_redeemed: 1\nnet_amount: 1600.00\namount: 1600.00', '2024-06-24 07:04:41', '2024-06-24 07:04:41'),
 ('08785777-2795-11ef-a232-0a002700000d', NULL, 'user', '08783957-2795-11ef-a232-0a002700000d', 'Add', 'User record added\nemail_address: sample@email.com\npassword: sample123\nname: Sample User\ntype: Admin\nstatus: ', '2024-06-11 01:50:51', '2024-06-11 01:50:51'),
 ('0bc19da2-2eb8-11ef-abc9-48e7dad87c24', NULL, 'transaction', 'e881c2e7-224a-11ef-b01f-48e7dad87c24', 'Update', 'Transaction record updated', '2024-06-20 03:49:07', '2024-06-20 03:49:07'),
-('0d693fae-31f4-11ef-a30f-0a002700000d', NULL, 'promo', '8504f541-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Promo record updated\nvoucher_type: Coupled -> Decoupled', '2024-06-24 06:36:13', '2024-06-24 06:36:13'),
-('157b709f-31f4-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', '157b5bac-31f4-11ef-a30f-0a002700000d', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-157ab0f9\ntotal_successful_orders: 1\ntotal_gross_sales: 1800.00\ntotal_discount: 200.00\ntotal_net_sales: 1600.00\nleadgen_commission_rate_base_pretrial: 1600.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 179.20\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees: 0.00', '2024-06-24 06:36:27', '2024-06-24 06:36:27'),
-('1c3ad6cf-31f2-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', '1c3abfde-31f2-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-1c39d6\ntotal_successful_orders: 4\ntotal_gross_sales: 39614.00\ntotal_discount: 9098.00\ntotal_outstanding_amount_1: 30516.00\nleadgen_commission_rate_base: 30516.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2645.52\ncard_payment_pg_fee: 1121.04\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 1189.52\ntotal_outstanding_amount_2: 30516.00\ntotal_commission_fees_2: 2645.52\ntotal_payment_gateway_fees_2: 1189.52\nbank_fees: 10.00\ncwt_from_gross_sales: 192.12\ncwt_from_transaction_fees: 47.24\ncwt_from_pg_fees: 21.24\ntotal_amount_paid_out: 26548.66', '2024-06-24 06:22:19', '2024-06-24 06:22:19'),
 ('24c431d2-2d47-11ef-a4d2-48e7dad87c24', NULL, 'store', '24c4128f-2d47-11ef-a4d2-48e7dad87c24', 'Add', 'Store record added\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nstore_name: sample11\nlegal_entity_name: legal11\nstore_address: address11', '2024-06-18 07:48:25', '2024-06-18 07:48:25'),
-('2715561d-31f4-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', '27153ce8-31f4-11ef-a30f-0a002700000d', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-2713761c\ntotal_successful_orders: 1\ntotal_gross_sales: 1800.00\ntotal_discount: 200.00\ntotal_net_sales: 1600.00\nleadgen_commission_rate_base_pretrial: 1600.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 179.20\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees: 0.00', '2024-06-24 06:36:56', '2024-06-24 06:36:56'),
-('2bb64213-31fb-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_head', '2bb4d85b-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: Jun 24, 2024\nsettlement_number: 202406-2bb4d85b\nsettlement_period: May 1 - Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 216.72\ntotal_commission_fees: 2022.72', '2024-06-24 07:27:11', '2024-06-24 07:27:11'),
-('2bb7b24b-31fb-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', '2bb4d85b-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 2bb4d85b-31fb-11ef-a30f-0a002700000d\nitem: B00KYDEMO\nquantity_redeemed: 2\nnet_amount: 16460.00', '2024-06-24 07:27:11', '2024-06-24 07:27:11'),
-('2bb80317-31fb-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', '2bb4d85b-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 2bb4d85b-31fb-11ef-a30f-0a002700000d\nitem: GCA5H\nquantity_redeemed: 1\nnet_amount: 1600.00', '2024-06-24 07:27:11', '2024-06-24 07:27:11'),
-('2ec2656b-31f3-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', '2ec24d91-31f3-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-2ec0997c\ntotal_successful_orders: 4\ntotal_gross_sales: 39614.00\ntotal_discount: 9098.00\ntotal_outstanding_amount_1: 30516.00\nleadgen_commission_rate_base: 30516.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2645.52\ncard_payment_pg_fee: 1121.04\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 1189.52\ntotal_outstanding_amount_2: 30516.00\ntotal_commission_fees_2: 2645.52\ntotal_payment_gateway_fees_2: 1189.52\nbank_fees: 10.00\ncwt_from_gross_sales: 192.12\ncwt_from_transaction_fees: 48.58\ncwt_from_pg_fees: 21.24\ntotal_amount_paid_out: 26547.32', '2024-06-24 06:30:00', '2024-06-24 06:30:00'),
-('3c942c76-31f3-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', '3c941093-31f3-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-3c92ce35\ntotal_successful_orders: 4\ntotal_gross_sales: 39614.00\ntotal_discount: 9098.00\ntotal_outstanding_amount_1: 30516.00\nleadgen_commission_rate_base: 30516.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2645.52\ncard_payment_pg_fee: 1121.04\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 1189.52\ntotal_outstanding_amount_2: 30516.00\ntotal_commission_fees_2: 2645.52\ntotal_payment_gateway_fees_2: 1189.52\nbank_fees: 10.00\ncwt_from_gross_sales: 192.12\ncwt_from_transaction_fees: 47.24\ncwt_from_pg_fees: 21.24\ntotal_amount_paid_out: 26548.66', '2024-06-24 06:30:23', '2024-06-24 06:30:23'),
 ('3caf218d-1f21-11ef-a08a-48e7dad87c24', NULL, 'user', '3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'Add', 'User record added\nemail_address: admin@bookymail.ph\npassword: admin123\nname: Admin\ntype: Admin\nstatus: Active', '2024-05-31 07:41:48', '2024-05-31 07:41:48'),
 ('41a37f61-2d28-11ef-a7c7-0a002700000d', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_fulfillment_type: Coupled -> Decoupled', '2024-06-18 04:07:19', '2024-06-18 04:07:19'),
-('421419bb-31f7-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_head', '4212c6cf-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_date: \nsettlement_number: 202405-4212c6\nsettlement_period: \ntotal_amount: N/A\ncommission_rate: N/A\nvat_amount: N/A\ntotal_commission_fees: N/A', '2024-06-24 06:59:10', '2024-06-24 06:59:10'),
 ('446c137a-1f21-11ef-a08a-48e7dad87c24', NULL, 'user', '3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'Update', 'User record updated\npassword: admin123 -> admin123booky', '2024-05-31 07:42:01', '2024-05-31 07:42:01'),
 ('44c1bfb4-2d51-11ef-a4d2-48e7dad87c24', NULL, 'report_history_coupled', '44c1a44d-2d51-11ef-a4d2-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-44c085\ntotal_successful_orders: 3\ntotal_gross_sales: 24044.00\ntotal_discount: 5984.00\ntotal_net_sales: 18060.00\nleadgen_commission_rate_base_pretrial: 2490.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 278.88\nleadgen_commission_rate_base_billable: 15570.00\ncommission_rate_billable: 10.00%\ntotal_billable: 1743.84\ntotal_commission_fees: 1743.84', '2024-06-18 09:00:54', '2024-06-18 09:00:54'),
 ('494a3736-2ebc-11ef-abc9-48e7dad87c24', NULL, 'fee', '494a1d41-2ebc-11ef-abc9-48e7dad87c24', 'Add', 'Fee record added\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\npaymaya_credit_card: 0.00\npaymaya: 0.00\ngcash: 0.00\ngcash_miniapp: 0.00\nmaya_checkout: 0.00\nmaya: 0.00\nlead_gen_commission: 0.00\ncommission_type: VAT Inc', '2024-06-20 04:19:29', '2024-06-20 04:19:29'),
-('538256ba-31fa-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_head', '53818781-31fa-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: Jun 24, 2024\nsettlement_number: 202406-53818781\nsettlement_period: May 1 - Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 1.20\ntotal_commission_fees: 11.20', '2024-06-24 07:21:08', '2024-06-24 07:21:08'),
-('5384285f-31fa-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', '53818781-31fa-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 53818781-31fa-11ef-a30f-0a002700000d\nitem: B00KYDEMO\nquantity_redeemed: 2\nnet_amount: 16460.00', '2024-06-24 07:21:08', '2024-06-24 07:21:08'),
-('5384315e-31fa-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', '53818781-31fa-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 53818781-31fa-11ef-a30f-0a002700000d\nitem: GCA5H\nquantity_redeemed: 1\nnet_amount: 1600.00', '2024-06-24 07:21:08', '2024-06-24 07:21:08'),
 ('599dd82f-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', '599d1847-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-599d18', '2024-06-18 08:54:19', '2024-06-18 08:54:19'),
 ('59a03527-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_body', '599d1847-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: 599d1847-2d50-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 1\nvoucher_value: 100.00\namount: 100.00', '2024-06-18 08:54:19', '2024-06-18 08:54:19'),
-('61af7a9b-31ef-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', '61af61a6-31ef-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-61ae33\ntotal_successful_orders: 3\ntotal_gross_sales: 24044.00\ntotal_discount: 5984.00\ntotal_outstanding_amount_1: 18060.00\nleadgen_commission_rate_base: 18060.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2022.72\ncard_payment_pg_fee: 778.50\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 846.98\ntotal_outstanding_amount_2: 18060.00\ntotal_commission_fees_2: 2022.72\ntotal_payment_gateway_fees_2: 846.98\nbank_fees: 10.00\ncwt_from_gross_sales: 115.99\ncwt_from_transaction_fees: 36.12\ncwt_from_pg_fees: 15.12\ntotal_amount_paid_out: 15115.55', '2024-06-24 06:02:47', '2024-06-24 06:02:47'),
-('63f30570-31f7-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_head', '63f1b962-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_date: Jun 24, 2024\nsettlement_number: 202405-63f1b962\nsettlement_period: May 1 - May 31, 2024\ntotal_amount: 1600.00\ncommission_rate: 10.00%\nvat_amount: 1.20\ntotal_commission_fees: 11.20', '2024-06-24 07:00:07', '2024-06-24 07:00:07'),
-('63f531cb-31f7-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', '63f1b962-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 63f1b962-31f7-11ef-a30f-0a002700000d\nitem: GCA5H\nquantity_redeemed: 1\nnet_amount: 1600.00\namount: 1600.00', '2024-06-24 07:00:07', '2024-06-24 07:00:07'),
-('6990aac1-31ee-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', '69909518-31ee-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-698f4d\ntotal_successful_orders: 1\ntotal_gross_sales: 1800.00\ntotal_discount: 200.00\ntotal_outstanding_amount_1: 1600.00\nleadgen_commission_rate_base: 1600.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 179.20\ncard_payment_pg_fee: 0.00\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 44.00\ntotal_outstanding_amount_2: 1600.00\ntotal_commission_fees_2: 179.20\ntotal_payment_gateway_fees_2: 44.00\nbank_fees: 10.00\ncwt_from_gross_sales: 8.78\ncwt_from_transaction_fees: 3.20\ncwt_from_pg_fees: 0.79\ntotal_amount_paid_out: 1362.01', '2024-06-24 05:55:51', '2024-06-24 05:55:51'),
 ('6b5975be-2d27-11ef-a7c7-0a002700000d', NULL, 'settlement_report_history_coupled', '6b5956c6-2d27-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-6b581a\ntotal_successful_orders: 2\ntotal_gross_sales: 22244.00\ntotal_discount: 5784.00\ntotal_outstanding_amount_1: 16460.00\nleadgen_commission_rate_base: 16460.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 1843.52\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 778.50\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 802.98\ntotal_outstanding_amount_2: 16460.00\ntotal_commission_fees_2: 1843.52\ntotal_payment_gateway_fees_2: 802.98\nbank_fees: 10.00\ncwt_from_gross_sales: 107.21\ncwt_from_transaction_fees: 32.92\ncwt_from_pg_fees: 14.34\ntotal_amount_paid_out: 13743.55', '2024-06-18 04:01:19', '2024-06-18 04:01:19'),
-('6b8a3a3c-2ed7-11ef-bafd-48e7dad87c24', NULL, 'user', '6b8a15bf-2ed7-11ef-bafd-48e7dad87c24', 'Add', 'User record added\nemail_address: cookie@booky.ph\npassword: $2y$10$xXT7USa7PPtpQJm4g1xq8O..A2cKtV4/YbW.aJiKx0R2fobDZUa3m\nname: Cookie\ntype: User\nstatus: Inactive', '2024-06-20 07:33:42', '2024-06-20 07:33:42'),
 ('6e0aca8a-2d3e-11ef-a4d2-48e7dad87c24', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nfixed_discount: 0 -> 1\nfree_item: 0 -> 1', '2024-06-18 06:46:02', '2024-06-18 06:46:02'),
-('74ad52f2-31f7-11ef-a30f-0a002700000d', NULL, 'transaction', '1bc0f5fe-224b-11ef-b01f-48e7dad87c24', 'Update', 'Transaction record updated\npayment: paymaya_credit_card -> gcash', '2024-06-24 07:00:35', '2024-06-24 07:00:35'),
 ('74b3c994-2d22-11ef-a7c7-0a002700000d', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_fulfillment_type: Decoupled -> Coupled', '2024-06-18 03:25:48', '2024-06-18 03:25:48'),
-('74b5ff0a-31f7-11ef-a30f-0a002700000d', NULL, 'transaction', '8d1552bf-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Transaction record updated\npayment: gcash_miniapp -> gcash', '2024-06-24 07:00:35', '2024-06-24 07:00:35'),
 ('770a5f73-2d22-11ef-a7c7-0a002700000d', NULL, 'settlement_report_history_coupled', '770a0718-2d22-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-7708ad\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 2466.32\nleadgen_commission_rate_base: 2466.32\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2268.80\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 1121.04\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 1145.52\ntotal_outstanding_amount_2: 2466.32\ntotal_commission_fees_2: 2268.80\ntotal_payment_gateway_fees_2: 1145.52\nbank_fees: 10.00\ncwt_from_gross_sales: 12.33\ncwt_from_transaction_fees: 4.31\ncwt_from_pg_fees: 20.46\ntotal_amount_paid_out: -945.56', '2024-06-18 03:25:52', '2024-06-18 03:25:52'),
-('7a4cca3d-31f7-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_head', '7a45e8c3-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: Jun 24, 2024\nsettlement_number: 202406-7a45e8c3\nsettlement_period: May 1 - Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 1.20\ntotal_commission_fees: 11.20', '2024-06-24 07:00:44', '2024-06-24 07:00:44'),
-('7ab1ac90-31f7-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', '7a45e8c3-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 7a45e8c3-31f7-11ef-a30f-0a002700000d\nitem: B00KYDEMO\nquantity_redeemed: 3\nnet_amount: 15570.00\namount: 46710.00', '2024-06-24 07:00:45', '2024-06-24 07:00:45'),
 ('7d48141a-2d22-11ef-a7c7-0a002700000d', NULL, 'settlement_report_history_coupled', '7d47f605-2d22-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-7d46e9\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 28916.00\nleadgen_commission_rate_base: 28916.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2541.06\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 1121.04\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 1145.52\ntotal_outstanding_amount_2: 28916.00\ntotal_commission_fees_2: 2541.06\ntotal_payment_gateway_fees_2: 1145.52\nbank_fees: 10.00\ncwt_from_gross_sales: 183.34\ncwt_from_transaction_fees: 45.38\ncwt_from_pg_fees: 20.46\ntotal_amount_paid_out: 25101.92', '2024-06-18 03:26:02', '2024-06-18 03:26:02'),
-('81d181ba-31f2-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', '81d155ed-31f2-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-81d08642\ntotal_successful_orders: 4\ntotal_gross_sales: 39614.00\ntotal_discount: 9098.00\ntotal_outstanding_amount_1: 30516.00\nleadgen_commission_rate_base: 30516.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2645.52\ncard_payment_pg_fee: 1121.04\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 1189.52\ntotal_outstanding_amount_2: 30516.00\ntotal_commission_fees_2: 2645.52\ntotal_payment_gateway_fees_2: 1189.52\nbank_fees: 10.00\ncwt_from_gross_sales: 192.12\ncwt_from_transaction_fees: 47.24\ncwt_from_pg_fees: 21.24\ntotal_amount_paid_out: 26548.66', '2024-06-24 06:25:10', '2024-06-24 06:25:10'),
 ('828b4bc6-2eb6-11ef-abc9-48e7dad87c24', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_amount: 100.00 -> 120.00', '2024-06-20 03:38:08', '2024-06-20 03:38:08'),
 ('85051eec-2d50-11ef-a4d2-48e7dad87c24', NULL, 'promo', '8504f541-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Promo record added\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\npromo_code: GCA5H\npromo_amount: 200.00\npromo_fulfillment_type: Coupled\npromo_group: Gcash\nbogo: 0\nbundle: 0\nfixed_discount: 1\nfree_item: 0\npercent_discount: 0\nx_for_y: 0\npromo_details: gcash promo details\nremarks: N/A\nbill_status: PRE-TRIAL\nstart_date: 2024-03-01\nend_date: 2024-07-31', '2024-06-18 08:55:32', '2024-06-18 08:55:32'),
 ('8b553d09-2d26-11ef-a7c7-0a002700000d', NULL, 'settlement_report_history_coupled', '8b552490-2d26-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-8b540d\ntotal_successful_orders: 2\ntotal_gross_sales: 22244.00\ntotal_discount: 5784.00\ntotal_outstanding_amount_1: 16460.00\nleadgen_commission_rate_base: 16460.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 1843.52\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 778.50\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 802.98\ntotal_outstanding_amount_2: 16460.00\ntotal_commission_fees_2: 1843.52\ntotal_payment_gateway_fees_2: 802.98\nbank_fees: 10.00\ncwt_from_gross_sales: 107.21\ncwt_from_transaction_fees: 32.92\ncwt_from_pg_fees: 14.34\ntotal_amount_paid_out: 13743.55', '2024-06-18 03:55:04', '2024-06-18 03:55:04'),
-('8fad4d33-31ee-11ef-a30f-0a002700000d', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nvoucher_type: Decoupled -> Coupled', '2024-06-24 05:56:55', '2024-06-24 05:56:55'),
 ('97e42414-2ebe-11ef-abc9-48e7dad87c24', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_type: 0 -> Free item, Fixed discount', '2024-06-20 04:35:59', '2024-06-20 04:35:59'),
-('99f84246-31ee-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', '99f82de1-31ee-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-99f763\ntotal_successful_orders: 3\ntotal_gross_sales: 24044.00\ntotal_discount: 5984.00\ntotal_outstanding_amount_1: 18060.00\nleadgen_commission_rate_base: 18060.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2022.72\ncard_payment_pg_fee: 778.50\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 68.48\ntotal_payment_gateway_fees_1: 846.98\ntotal_outstanding_amount_2: 18060.00\ntotal_commission_fees_2: 2022.72\ntotal_payment_gateway_fees_2: 846.98\nbank_fees: 10.00\ncwt_from_gross_sales: 115.99\ncwt_from_transaction_fees: 36.12\ncwt_from_pg_fees: 15.12\ntotal_amount_paid_out: 15115.55', '2024-06-24 05:57:12', '2024-06-24 05:57:12'),
 ('a2f1259c-2d24-11ef-a7c7-0a002700000d', NULL, 'settlement_report_history_coupled', 'a2f101ad-2d24-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-a2f018\ntotal_successful_orders: 2\ntotal_gross_sales: 22244.00\ntotal_discount: 5784.00\ntotal_outstanding_amount_1: 16460.00\nleadgen_commission_rate_base: 16460.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 1843.52\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 778.50\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 802.98\ntotal_outstanding_amount_2: 16460.00\ntotal_commission_fees_2: 1843.52\ntotal_payment_gateway_fees_2: 802.98\nbank_fees: 10.00\ncwt_from_gross_sales: 107.21\ncwt_from_transaction_fees: 32.92\ncwt_from_pg_fees: 14.34\ntotal_amount_paid_out: 13743.55', '2024-06-18 03:41:24', '2024-06-18 03:41:24'),
 ('a3d1d89c-2ebe-11ef-abc9-48e7dad87c24', NULL, 'promo', '8504f541-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Promo record updated\npromo_type: 0 -> BOGO', '2024-06-20 04:36:19', '2024-06-20 04:36:19'),
 ('a667cc4e-2d50-11ef-a4d2-48e7dad87c24', NULL, 'transaction', 'a6673ec0-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Transaction record added\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\npromo_id: 8504f541-2d50-11ef-a4d2-48e7dad87c24\ncustomer_id: \"638572947601\"\ntransaction_date: 2024-06-18 10:55:41\ngross_amount: 1800.00\ndiscount: 200.00\namount_discounted: 1600.00\npayment: gcash\nbill_status: PRE-TRIAL', '2024-06-18 08:56:28', '2024-06-18 08:56:28'),
-('abc213d1-31f7-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_head', 'abc1668b-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: Jun 24, 2024\nsettlement_number: 202406-abc1668b\nsettlement_period: May 1 - Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 1.20\ntotal_commission_fees: 11.20', '2024-06-24 07:02:08', '2024-06-24 07:02:08'),
 ('af210407-2ebe-11ef-abc9-48e7dad87c24', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nremarks:  -> not billable \"forever\"', '2024-06-20 04:36:38', '2024-06-20 04:36:38'),
 ('b0ad6776-2eb8-11ef-abc9-48e7dad87c24', NULL, 'report_history_coupled', 'b0acea51-2eb8-11ef-abc9-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-b0ab5e\ntotal_successful_orders: 3\ntotal_gross_sales: 24044.00\ntotal_discount: 5984.00\ntotal_outstanding_amount_1: 18060.00\nleadgen_commission_rate_base: 18060.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2022.72\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 778.50\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 68.48\ntotal_payment_gateway_fees_1: 846.98\ntotal_outstanding_amount_2: 18060.00\ntotal_commission_fees_2: 2022.72\ntotal_payment_gateway_fees_2: 846.98\nbank_fees: 10.00\ncwt_from_gross_sales: 115.99\ncwt_from_transaction_fees: 36.12\ncwt_from_pg_fees: 15.12\ntotal_amount_paid_out: 15115.55', '2024-06-20 03:53:44', '2024-06-20 03:53:44'),
-('b115b12c-31f2-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', 'b1159c73-31f2-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-b11440c7\ntotal_successful_orders: 4\ntotal_gross_sales: 39614.00\ntotal_discount: 9098.00\ntotal_outstanding_amount_1: 30516.00\nleadgen_commission_rate_base: 30516.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2645.52\ncard_payment_pg_fee: 1121.04\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 1189.52\ntotal_outstanding_amount_2: 30516.00\ntotal_commission_fees_2: 2645.52\ntotal_payment_gateway_fees_2: 1189.52\nbank_fees: 10.00\ncwt_from_gross_sales: 192.12\ncwt_from_transaction_fees: 48.58\ncwt_from_pg_fees: 21.24\ntotal_amount_paid_out: 26547.32', '2024-06-24 06:26:29', '2024-06-24 06:26:29'),
-('b123f325-31fa-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_head', 'b1230378-31fa-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: Jun 24, 2024\nsettlement_number: 202406-b1230378\nsettlement_period: May 1 - Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 1.20\ntotal_commission_fees: 11.20', '2024-06-24 07:23:45', '2024-06-24 07:23:45'),
-('b125cb0e-31fa-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', 'b1230378-31fa-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: b1230378-31fa-11ef-a30f-0a002700000d\nitem: B00KYDEMO\nquantity_redeemed: 2\nnet_amount: 16460.00', '2024-06-24 07:23:45', '2024-06-24 07:23:45'),
-('b125cdfb-31fa-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', 'b1230378-31fa-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: b1230378-31fa-11ef-a30f-0a002700000d\nitem: GCA5H\nquantity_redeemed: 1\nnet_amount: 1600.00', '2024-06-24 07:23:45', '2024-06-24 07:23:45'),
 ('b42ef62c-2d4e-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', 'b42ddf53-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-b42ddf', '2024-06-18 08:42:32', '2024-06-18 08:42:32'),
 ('b430d7f0-2d4e-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_body', 'b42ddf53-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: b42ddf53-2d4e-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 1\nvoucher_value: 100.00\namount: 100.00', '2024-06-18 08:42:32', '2024-06-18 08:42:32'),
 ('b5d55419-2d50-11ef-a4d2-48e7dad87c24', NULL, 'transaction', 'a6673ec0-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Transaction record updated\ntransaction_date: 2024-06-18 10:55:41 -> 2024-05-18 10:55:41', '2024-06-18 08:56:54', '2024-06-18 08:56:54'),
-('b7843bb5-31f1-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', 'b7842860-31f1-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-b78352\ntotal_successful_orders: 3\ntotal_gross_sales: 24044.00\ntotal_discount: 5984.00\ntotal_outstanding_amount_1: 18060.00\nleadgen_commission_rate_base: 18060.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2022.72\ncard_payment_pg_fee: 778.50\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 846.98\ntotal_outstanding_amount_2: 18060.00\ntotal_commission_fees_2: 2022.72\ntotal_payment_gateway_fees_2: 846.98\nbank_fees: 10.00\ncwt_from_gross_sales: 115.99\ncwt_from_transaction_fees: 36.12\ncwt_from_pg_fees: 15.12\ntotal_amount_paid_out: 15115.55', '2024-06-24 06:19:30', '2024-06-24 06:19:30'),
 ('bb92c21d-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', 'bb91e9e6-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-bb91e9', '2024-06-18 08:57:03', '2024-06-18 08:57:03'),
 ('bc030dcd-2eb6-11ef-abc9-48e7dad87c24', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nbill_status: BILLABLE -> PRE-TRIAL', '2024-06-20 03:39:44', '2024-06-20 03:39:44'),
 ('bc031474-2eb6-11ef-abc9-48e7dad87c24', NULL, 'promo_history', 'bc03116e-2eb6-11ef-abc9-48e7dad87c24', 'Add', 'Promo history record added\npromo_code: B00KYDEMO\nold_bill_status: BILLABLE\nnew_bill_status: PRE-TRIAL\nchanged_at: 2024-06-20\nchanged_by: N/A', '2024-06-20 03:39:44', '2024-06-20 03:39:44'),
 ('bcd83021-2927-11ef-8b55-0a002700000d', NULL, 'user', '3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'Update', 'User record updated\nname: Admin -> Booky Admin', '2024-06-13 01:53:32', '2024-06-13 01:53:32'),
-('bd900b46-31fb-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_head', 'bd8ef28d-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: Jun 24, 2024\nsettlement_number: 202406-bd8ef28d\nsettlement_period: May 1 - Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 216.72\ntotal_commission_fees: 2022.72', '2024-06-24 07:31:15', '2024-06-24 07:31:15'),
-('bd91f740-31fb-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', 'bd8ef28d-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: bd8ef28d-31fb-11ef-a30f-0a002700000d\nitem: B00KYDEMO\nquantity_redeemed: 2\nnet_amount: 16460.00', '2024-06-24 07:31:15', '2024-06-24 07:31:15'),
-('bd91fb26-31fb-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', 'bd8ef28d-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: bd8ef28d-31fb-11ef-a30f-0a002700000d\nitem: GCA5H\nquantity_redeemed: 1\nnet_amount: 1600.00', '2024-06-24 07:31:15', '2024-06-24 07:31:15'),
 ('bd9a1e69-2d1e-11ef-a7c7-0a002700000d', NULL, 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_fulfillment_type: Coupled -> Decoupled', '2024-06-18 02:59:12', '2024-06-18 02:59:12'),
 ('cf1512db-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', 'cf141684-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-cf1416', '2024-06-18 08:57:36', '2024-06-18 08:57:36'),
 ('cf17118f-2d50-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_body', 'cf141684-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: cf141684-2d50-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 4\nvoucher_value: 100.00\namount: 400.00', '2024-06-18 08:57:36', '2024-06-18 08:57:36'),
-('cfb99b97-31ee-11ef-a30f-0a002700000d', NULL, 'transaction', '8d1552bf-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Transaction record updated\npayment: gcash -> gcash_miniapp', '2024-06-24 05:58:42', '2024-06-24 05:58:42'),
-('d450e7af-31fb-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_head', 'd4502354-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: Jun 24, 2024\nsettlement_number: 202406-d4502354\nsettlement_period: May 1 - Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 216.72\ntotal_commission_fees: 2022.72', '2024-06-24 07:31:54', '2024-06-24 07:31:54'),
-('d45289a1-31fb-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', 'd4502354-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: d4502354-31fb-11ef-a30f-0a002700000d\nitem: B00KYDEMO\nquantity_redeemed: 2\nnet_amount: 16460.00', '2024-06-24 07:31:54', '2024-06-24 07:31:54'),
-('d4528daf-31fb-11ef-a30f-0a002700000d', NULL, 'report_history_gcash_body', 'd4502354-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: d4502354-31fb-11ef-a30f-0a002700000d\nitem: GCA5H\nquantity_redeemed: 1\nnet_amount: 1600.00', '2024-06-24 07:31:54', '2024-06-24 07:31:54'),
-('d9221845-31ee-11ef-a30f-0a002700000d', NULL, 'report_history_coupled', 'd9220200-31ee-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-d920d1\ntotal_successful_orders: 3\ntotal_gross_sales: 24044.00\ntotal_discount: 5984.00\ntotal_outstanding_amount_1: 18060.00\nleadgen_commission_rate_base: 18060.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2022.72\ncard_payment_pg_fee: 778.50\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 846.98\ntotal_outstanding_amount_2: 18060.00\ntotal_commission_fees_2: 2022.72\ntotal_payment_gateway_fees_2: 846.98\nbank_fees: 10.00\ncwt_from_gross_sales: 115.99\ncwt_from_transaction_fees: 36.12\ncwt_from_pg_fees: 15.12\ntotal_amount_paid_out: 15115.55', '2024-06-24 05:58:58', '2024-06-24 05:58:58'),
 ('e4bc7553-2d4e-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_head', 'e4bbda63-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-e4bbda', '2024-06-18 08:43:54', '2024-06-18 08:43:54'),
 ('e4c02508-2d4e-11ef-a4d2-48e7dad87c24', NULL, 'report_history_gcash_body', 'e4bbda63-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: e4bbda63-2d4e-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 1\nvoucher_value: 100.00\namount: 100.00', '2024-06-18 08:43:54', '2024-06-18 08:43:54'),
 ('e5a31a2a-2eb6-11ef-abc9-48e7dad87c24', NULL, 'transaction', '1bc0f5fe-224b-11ef-b01f-48e7dad87c24', 'Update', 'Transaction record updated\npromo_id: 4e3030a7-1cc3-11ef-8abb-48e7dad87c24 -> B00KYDEMO', '2024-06-20 03:40:54', '2024-06-20 03:40:54'),
@@ -1262,8 +1186,8 @@ CREATE TABLE `promo` (
 --
 
 INSERT INTO `promo` (`promo_id`, `promo_code`, `merchant_id`, `promo_amount`, `voucher_type`, `promo_category`, `promo_group`, `promo_type`, `promo_details`, `remarks`, `bill_status`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
-('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 120, 'Coupled', 'Grab & Go', 'Gcash', 'Free item, Fixed discount', 'Booky sample promo', 'not billable \"forever\"', 'PRE-TRIAL', '2024-04-01', '2024-07-31', '2024-06-04 02:34:19', '2024-06-20 04:35:59'),
-('8504f541-2d50-11ef-a4d2-48e7dad87c24', 'GCA5H', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 200, 'Decoupled', 'Casual Dining', 'Gcash', 'BOGO', 'gcash promo details', NULL, 'PRE-TRIAL', '2024-03-01', '2024-07-31', '2024-06-18 08:55:32', '2024-06-20 04:36:19');
+('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 120, 'Decoupled', 'Grab & Go', 'Gcash', 'Free item, Fixed discount', 'Booky sample promo', 'not billable \"forever\"', 'PRE-TRIAL', '2024-04-01', '2024-07-31', '2024-06-04 02:34:19', '2024-06-20 04:35:59'),
+('8504f541-2d50-11ef-a4d2-48e7dad87c24', 'GCA5H', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 200, 'Coupled', 'Casual Dining', 'Gcash', 'BOGO', 'gcash promo details', NULL, 'PRE-TRIAL', '2024-03-01', '2024-07-31', '2024-06-18 08:55:32', '2024-06-20 04:36:19');
 
 --
 -- Triggers `promo`
@@ -1465,9 +1389,7 @@ CREATE TABLE `report_history_coupled` (
   `business_address` text NOT NULL,
   `settlement_period_start` date NOT NULL,
   `settlement_period_end` date NOT NULL,
-  `settlement_date` varchar(30) NOT NULL,
   `settlement_number` varchar(20) NOT NULL,
-  `settlement_period` varchar(30) NOT NULL,
   `total_successful_orders` int(11) NOT NULL,
   `total_gross_sales` decimal(10,2) NOT NULL,
   `total_discount` decimal(10,2) NOT NULL,
@@ -1475,8 +1397,10 @@ CREATE TABLE `report_history_coupled` (
   `leadgen_commission_rate_base` decimal(10,2) NOT NULL,
   `commission_rate` varchar(10) NOT NULL,
   `total_commission_fees_1` decimal(10,2) NOT NULL,
-  `card_payment_pg_fee` decimal(10,2) NOT NULL,
   `paymaya_pg_fee` decimal(10,2) NOT NULL,
+  `paymaya_credit_card_pg_fee` decimal(10,2) NOT NULL,
+  `maya_pg_fee` decimal(10,2) NOT NULL,
+  `maya_checkout_pg_fee` decimal(10,2) NOT NULL,
   `gcash_miniapp_pg_fee` decimal(10,2) NOT NULL,
   `gcash_pg_fee` decimal(10,2) NOT NULL,
   `total_payment_gateway_fees_1` decimal(10,2) NOT NULL,
@@ -1496,13 +1420,20 @@ CREATE TABLE `report_history_coupled` (
 -- Dumping data for table `report_history_coupled`
 --
 
-INSERT INTO `report_history_coupled` (`coupled_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_date`, `settlement_number`, `settlement_period`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_outstanding_amount_1`, `leadgen_commission_rate_base`, `commission_rate`, `total_commission_fees_1`, `card_payment_pg_fee`, `paymaya_pg_fee`, `gcash_miniapp_pg_fee`, `gcash_pg_fee`, `total_payment_gateway_fees_1`, `total_outstanding_amount_2`, `total_commission_fees_2`, `total_payment_gateway_fees_2`, `bank_fees`, `cwt_from_gross_sales`, `cwt_from_transaction_fees`, `cwt_from_pg_fees`, `total_amount_paid_out`, `created_at`, `updated_at`) VALUES
-('2ec24d91-31f3-11ef-a30f-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-06-30', 'Jun 24, 2024', '202406-2ec0997c', 'May 1 - Jun 30, 2024', 4, '39614.00', '9098.00', '30516.00', '30516.00', '10.00%', '2645.52', '1121.04', '0.00', '24.48', '44.00', '1189.52', '30516.00', '2645.52', '1189.52', '10.00', '192.12', '48.58', '21.24', '26547.32', '2024-06-24 06:30:00', '2024-06-24 06:30:00'),
-('3c941093-31f3-11ef-a30f-0a002700000d', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-06-30', 'Jun 24, 2024', '202406-3c92ce35', 'May 1 - Jun 30, 2024', 4, '39614.00', '9098.00', '30516.00', '30516.00', '10.00%', '2645.52', '1121.04', '0.00', '24.48', '44.00', '1189.52', '30516.00', '2645.52', '1189.52', '10.00', '192.12', '47.24', '21.24', '26548.66', '2024-06-24 06:30:23', '2024-06-24 06:30:23');
+INSERT INTO `report_history_coupled` (`coupled_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_number`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_outstanding_amount_1`, `leadgen_commission_rate_base`, `commission_rate`, `total_commission_fees_1`, `paymaya_pg_fee`, `paymaya_credit_card_pg_fee`, `maya_pg_fee`, `maya_checkout_pg_fee`, `gcash_miniapp_pg_fee`, `gcash_pg_fee`, `total_payment_gateway_fees_1`, `total_outstanding_amount_2`, `total_commission_fees_2`, `total_payment_gateway_fees_2`, `bank_fees`, `cwt_from_gross_sales`, `cwt_from_transaction_fees`, `cwt_from_pg_fees`, `total_amount_paid_out`, `created_at`, `updated_at`) VALUES
+('6b5956c6-2d27-11ef-a7c7-0a002700000d', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-6b581a', 2, '22244.00', '5784.00', '16460.00', '16460.00', '10.00%', '1843.52', '0.00', '778.50', '0.00', '0.00', '0.00', '24.48', '802.98', '16460.00', '1843.52', '802.98', '10.00', '107.21', '32.92', '14.34', '13743.55', '2024-06-18 04:01:19', '2024-06-18 04:01:19'),
+('a2f101ad-2d24-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-a2f018', 2, '22244.00', '5784.00', '16460.00', '16460.00', '10.00%', '1843.52', '0.00', '778.50', '0.00', '0.00', '0.00', '24.48', '802.98', '16460.00', '1843.52', '802.98', '10.00', '107.21', '32.92', '14.34', '13743.55', '2024-06-18 03:41:24', '2024-06-18 03:41:24'),
+('b0acea51-2eb8-11ef-abc9-48e7dad87c24', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-b0ab5e', 3, '24044.00', '5984.00', '18060.00', '18060.00', '10.00%', '2022.72', '0.00', '778.50', '0.00', '0.00', '0.00', '68.48', '846.98', '18060.00', '2022.72', '846.98', '10.00', '115.99', '36.12', '15.12', '15115.55', '2024-06-20 03:53:44', '2024-06-20 03:53:44');
 
 --
 -- Triggers `report_history_coupled`
 --
+DELIMITER $$
+CREATE TRIGGER `generate_coupled_report_id` BEFORE INSERT ON `report_history_coupled` FOR EACH ROW BEGIN
+    SET NEW.coupled_report_id = UUID();
+END
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `report_history_coupled_insert_log` AFTER INSERT ON `report_history_coupled` FOR EACH ROW BEGIN
   DECLARE description TEXT;
@@ -1526,8 +1457,10 @@ CREATE TRIGGER `report_history_coupled_insert_log` AFTER INSERT ON `report_histo
   '\n','leadgen_commission_rate_base: ', IFNULL(NEW.leadgen_commission_rate_base, 'N/A'),
   '\n','commission_rate: ', IFNULL(NEW.commission_rate, 'N/A'),
   '\n','total_commission_fees_1: ', IFNULL(NEW.total_commission_fees_1, 'N/A'),
-  '\n','card_payment_pg_fee: ', IFNULL(NEW.card_payment_pg_fee, 'N/A'),
   '\n','paymaya_pg_fee: ', IFNULL(NEW.paymaya_pg_fee, 'N/A'),
+  '\n','paymaya_credit_card_pg_fee: ', IFNULL(NEW.paymaya_credit_card_pg_fee, 'N/A'),
+  '\n','maya_pg_fee: ', IFNULL(NEW.maya_pg_fee, 'N/A'),
+  '\n','maya_checkout_pg_fee: ', IFNULL(NEW.maya_checkout_pg_fee, 'N/A'),
   '\n','gcash_miniapp_pg_fee: ', IFNULL(NEW.gcash_miniapp_pg_fee, 'N/A'),
   '\n','gcash_pg_fee: ', IFNULL(NEW.gcash_pg_fee, 'N/A'),
   '\n','total_payment_gateway_fees_1: ', IFNULL(NEW.total_payment_gateway_fees_1, 'N/A'),
@@ -1622,12 +1555,20 @@ CREATE TRIGGER `report_history_coupled_update_log` AFTER UPDATE ON `report_histo
     SET description = CONCAT(description, 'total_commission_fees_1: ', OLD.total_commission_fees_1, ' -> ', NEW.total_commission_fees_1, '\n');
   END IF;
   
-  IF OLD.card_payment_pg_fee != NEW.card_payment_pg_fee THEN
-    SET description = CONCAT(description, 'card_payment_pg_fee: ', OLD.card_payment_pg_fee, ' -> ', NEW.card_payment_pg_fee, '\n');
-  END IF;
-  
   IF OLD.paymaya_pg_fee != NEW.paymaya_pg_fee THEN
     SET description = CONCAT(description, 'paymaya_pg_fee: ', OLD.paymaya_pg_fee, ' -> ', NEW.paymaya_pg_fee, '\n');
+  END IF;
+  
+  IF OLD.paymaya_credit_card_pg_fee != NEW.paymaya_credit_card_pg_fee THEN
+    SET description = CONCAT(description, 'paymaya_credit_card_pg_fee: ', OLD.paymaya_credit_card_pg_fee, ' -> ', NEW.paymaya_credit_card_pg_fee, '\n');
+  END IF;
+  
+  IF OLD.maya_pg_fee != NEW.maya_pg_fee THEN
+    SET description = CONCAT(description, 'maya_pg_fee: ', OLD.maya_pg_fee, ' -> ', NEW.maya_pg_fee, '\n');
+  END IF;
+  
+  IF OLD.maya_checkout_pg_fee != NEW.maya_checkout_pg_fee THEN
+    SET description = CONCAT(description, 'maya_checkout_pg_fee: ', OLD.maya_checkout_pg_fee, ' -> ', NEW.maya_checkout_pg_fee, '\n');
   END IF;
   
   IF OLD.gcash_miniapp_pg_fee != NEW.gcash_miniapp_pg_fee THEN
@@ -1701,9 +1642,7 @@ CREATE TABLE `report_history_decoupled` (
   `business_address` text NOT NULL,
   `settlement_period_start` date NOT NULL,
   `settlement_period_end` date NOT NULL,
-  `settlement_date` varchar(30) NOT NULL,
   `settlement_number` varchar(20) NOT NULL,
-  `settlement_period` varchar(30) NOT NULL,
   `total_successful_orders` int(11) NOT NULL,
   `total_gross_sales` decimal(10,2) NOT NULL,
   `total_discount` decimal(10,2) NOT NULL,
@@ -1723,13 +1662,22 @@ CREATE TABLE `report_history_decoupled` (
 -- Dumping data for table `report_history_decoupled`
 --
 
-INSERT INTO `report_history_decoupled` (`decoupled_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_date`, `settlement_number`, `settlement_period`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_net_sales`, `leadgen_commission_rate_base_pretrial`, `commission_rate_pretrial`, `total_pretrial`, `leadgen_commission_rate_base_billable`, `commission_rate_billable`, `total_billable`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
-('157b5bac-31f4-11ef-a30f-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-06-30', 'Jun 24, 2024', '202406-157ab0f9', 'May 1 - Jun 30, 2024', 1, '1800.00', '200.00', '1600.00', '1600.00', '10.00%', '179.20', '0.00', '10.00%', '0.00', '0.00', '2024-06-24 06:36:27', '2024-06-24 06:36:27'),
-('27153ce8-31f4-11ef-a30f-0a002700000d', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-06-30', 'Jun 24, 2024', '202406-2713761c', 'May 1 - Jun 30, 2024', 1, '1800.00', '200.00', '1600.00', '1600.00', '10.00%', '179.20', '0.00', '10.00%', '0.00', '0.00', '2024-06-24 06:36:56', '2024-06-24 06:36:56');
+INSERT INTO `report_history_decoupled` (`decoupled_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_number`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_net_sales`, `leadgen_commission_rate_base_pretrial`, `commission_rate_pretrial`, `total_pretrial`, `leadgen_commission_rate_base_billable`, `commission_rate_billable`, `total_billable`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
+('1a5573ae-2d38-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-1a5420', 2, '22244.00', '5784.00', '16460.00', '890.00', '10.00%', '99.68', '15570.00', '10.00%', '1743.84', '1743.84', '2024-06-18 06:00:45', '2024-06-18 06:00:45'),
+('44c1a44d-2d51-11ef-a4d2-48e7dad87c24', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-44c085', 3, '24044.00', '5984.00', '18060.00', '2490.00', '10.00%', '278.88', '15570.00', '10.00%', '1743.84', '1743.84', '2024-06-18 09:00:54', '2024-06-18 09:00:54'),
+('4856ac81-2d28-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-4855c7', 2, '22244.00', '5784.00', '16460.00', '890.00', '10.00%', '99.68', '15570.00', '10.00%', '1743.84', '1743.84', '2024-06-18 04:07:30', '2024-06-18 04:07:30'),
+('e5d4e73c-2d28-11ef-a7c7-0a002700000d', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-e5d410', 2, '22244.00', '5784.00', '16460.00', '890.00', '10.00%', '99.68', '15570.00', '10.00%', '1743.84', '1743.84', '2024-06-18 04:11:54', '2024-06-18 04:11:54'),
+('fe7b7173-2d36-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-fe7a24', 2, '22244.00', '5784.00', '16460.00', '890.00', '10.00%', '99.68', '15570.00', '10.00%', '1743.84', '1743.84', '2024-06-18 05:52:49', '2024-06-18 05:52:49');
 
 --
 -- Triggers `report_history_decoupled`
 --
+DELIMITER $$
+CREATE TRIGGER `generate_decoupled_report_id` BEFORE INSERT ON `report_history_decoupled` FOR EACH ROW BEGIN
+    SET NEW.decoupled_report_id = UUID();
+END
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `report_history_decoupled_insert_log` AFTER INSERT ON `report_history_decoupled` FOR EACH ROW BEGIN
   DECLARE description TEXT;
@@ -1744,10 +1692,8 @@ CREATE TRIGGER `report_history_decoupled_insert_log` AFTER INSERT ON `report_his
   '\n','business_address: ', IFNULL(NEW.business_address, 'N/A'),
   '\n','settlement_period_start: ', IFNULL(NEW.settlement_period_start, 'N/A'),
   '\n','settlement_period_end: ', IFNULL(NEW.settlement_period_end, 'N/A'),
-  '\n','settlement_date: ', IFNULL(NEW.settlement_date, 'N/A'),
   '\n','settlement_number: ', IFNULL(NEW.settlement_number, 'N/A'),
-  '\n','settlement_period: ', IFNULL(NEW.settlement_period, 'N/A'),
-                           
+                          
   '\n','total_successful_orders: ', IFNULL(NEW.total_successful_orders, 'N/A'),
   '\n','total_gross_sales: ', IFNULL(NEW.total_gross_sales, 'N/A'),
   '\n','total_discount: ', IFNULL(NEW.total_discount, 'N/A'),
@@ -1810,16 +1756,8 @@ CREATE TRIGGER `report_history_decoupled_update_log` AFTER UPDATE ON `report_his
     SET description = CONCAT(description, 'settlement_period_end: ', OLD.settlement_period_end, ' -> ', NEW.settlement_period_end, '\n');
   END IF;
   
-  IF OLD.settlement_date != NEW.settlement_date THEN
-    SET description = CONCAT(description, 'settlement_date: ', OLD.settlement_date, ' -> ', NEW.settlement_date, '\n');
-  END IF;
-  
   IF OLD.settlement_number != NEW.settlement_number THEN
     SET description = CONCAT(description, 'settlement_number: ', OLD.settlement_number, ' -> ', NEW.settlement_number, '\n');
-  END IF;
-  
-  IF OLD.settlement_period != NEW.settlement_period THEN
-    SET description = CONCAT(description, 'settlement_period: ', OLD.settlement_period, ' -> ', NEW.settlement_period, '\n');
   END IF;
   
   IF OLD.total_successful_orders != NEW.total_successful_orders THEN
@@ -1886,7 +1824,8 @@ CREATE TABLE `report_history_gcash_body` (
   `gcash_report_id` varchar(36) NOT NULL,
   `item` varchar(100) NOT NULL,
   `quantity_redeemed` int(11) NOT NULL,
-  `net_amount` decimal(10,2) NOT NULL,
+  `voucher_value` decimal(10,2) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1895,21 +1834,19 @@ CREATE TABLE `report_history_gcash_body` (
 -- Dumping data for table `report_history_gcash_body`
 --
 
-INSERT INTO `report_history_gcash_body` (`gcash_report_body_id`, `gcash_report_id`, `item`, `quantity_redeemed`, `net_amount`, `created_at`, `updated_at`) VALUES
-('2bb7a111-31fb-11ef-a30f-0a002700000d', '2bb4d85b-31fb-11ef-a30f-0a002700000d', 'B00KYDEMO', 2, '16460.00', '2024-06-24 07:27:11', '2024-06-24 07:27:11'),
-('2bb7febc-31fb-11ef-a30f-0a002700000d', '2bb4d85b-31fb-11ef-a30f-0a002700000d', 'GCA5H', 1, '1600.00', '2024-06-24 07:27:11', '2024-06-24 07:27:11'),
-('d4526d35-31fb-11ef-a30f-0a002700000d', 'd4502354-31fb-11ef-a30f-0a002700000d', 'B00KYDEMO', 2, '16460.00', '2024-06-24 07:31:54', '2024-06-24 07:31:54'),
-('d4528b14-31fb-11ef-a30f-0a002700000d', 'd4502354-31fb-11ef-a30f-0a002700000d', 'GCA5H', 1, '1600.00', '2024-06-24 07:31:54', '2024-06-24 07:31:54');
+INSERT INTO `report_history_gcash_body` (`gcash_report_body_id`, `gcash_report_id`, `item`, `quantity_redeemed`, `voucher_value`, `amount`, `created_at`, `updated_at`) VALUES
+('24ba4071-2d38-11ef-a7c7-0a002700000d', '24ba4052-2d38-11ef-a7c7-0a002700000d', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 07:25:43', '2024-06-18 07:25:43'),
+('599d185b-2d50-11ef-a4d2-48e7dad87c24', '599d1847-2d50-11ef-a4d2-48e7dad87c24', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 08:54:19', '2024-06-18 08:54:19'),
+('5c97343a-2d38-11ef-a7c7-0a002700000d', '5c973414-2d38-11ef-a7c7-0a002700000d', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 07:25:43', '2024-06-18 07:25:43'),
+('b31d6bb8-2d37-11ef-a7c7-0a002700000d', 'b31d6b9d-2d37-11ef-a7c7-0a002700000d', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 07:25:43', '2024-06-18 07:25:43'),
+('b42ddf65-2d4e-11ef-a4d2-48e7dad87c24', 'b42ddf53-2d4e-11ef-a4d2-48e7dad87c24', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 08:42:32', '2024-06-18 08:42:32'),
+('cf14169b-2d50-11ef-a4d2-48e7dad87c24', 'cf141684-2d50-11ef-a4d2-48e7dad87c24', 'B00KYDEMO', 4, '100.00', '400.00', '2024-06-18 08:57:36', '2024-06-18 08:57:36'),
+('e4bbda73-2d4e-11ef-a4d2-48e7dad87c24', 'e4bbda63-2d4e-11ef-a4d2-48e7dad87c24', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 08:43:54', '2024-06-18 08:43:54'),
+('eb6c47b2-2d4e-11ef-a4d2-48e7dad87c24', 'eb6c4798-2d4e-11ef-a4d2-48e7dad87c24', 'B00KYDEMO', 1, '100.00', '100.00', '2024-06-18 08:44:05', '2024-06-18 08:44:05');
 
 --
 -- Triggers `report_history_gcash_body`
 --
-DELIMITER $$
-CREATE TRIGGER `generate_gcash_report_body_id` BEFORE INSERT ON `report_history_gcash_body` FOR EACH ROW BEGIN
-    SET NEW.gcash_report_body_id = UUID();
-END
-$$
-DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `report_history_gcash_body_insert_log` AFTER INSERT ON `report_history_gcash_body` FOR EACH ROW BEGIN
   DECLARE description TEXT;
@@ -1917,7 +1854,8 @@ CREATE TRIGGER `report_history_gcash_body_insert_log` AFTER INSERT ON `report_hi
   'gcash_report_id: ', IFNULL(NEW.gcash_report_id, 'N/A'), 
   '\n','item: ', IFNULL(NEW.item, 'N/A'), 
   '\n','quantity_redeemed: ', IFNULL(NEW.quantity_redeemed, 'N/A'), 
-  '\n','net_amount: ', IFNULL(NEW.net_amount, 'N/A'));
+  '\n','voucher_value: ', IFNULL(NEW.voucher_value, 'N/A'),
+  '\n','amount: ', IFNULL(NEW.amount, 'N/A'));
                             
   INSERT INTO activity_history (table_name, table_id, activity_type, description)
   VALUES ('report_history_gcash_body', NEW.gcash_report_id, 'Add', description);
@@ -1941,8 +1879,12 @@ CREATE TRIGGER `report_history_gcash_body_update_log` AFTER UPDATE ON `report_hi
     SET description = CONCAT(description, 'quantity_redeemed: ', OLD.quantity_redeemed, ' -> ', NEW.quantity_redeemed, '\n');
   END IF;
 
-  IF OLD.net_amount != NEW.net_amount THEN
-    SET description = CONCAT(description, 'net_amount: ', OLD.net_amount, ' -> ', NEW.net_amount, '\n');
+  IF OLD.voucher_value != NEW.voucher_value THEN
+    SET description = CONCAT(description, 'voucher_value: ', OLD.voucher_value, ' -> ', NEW.voucher_value, '\n');
+  END IF;
+  
+  IF OLD.amount != NEW.amount THEN
+    SET description = CONCAT(description, 'amount: ', OLD.amount, ' -> ', NEW.amount, '\n');
   END IF;
   
   -- Remove the trailing '\n' from the description
@@ -1972,11 +1914,9 @@ CREATE TABLE `report_history_gcash_head` (
   `business_address` text NOT NULL,
   `settlement_period_start` date NOT NULL,
   `settlement_period_end` date NOT NULL,
-  `settlement_date` varchar(30) NOT NULL,
   `settlement_number` varchar(20) NOT NULL,
-  `settlement_period` varchar(30) NOT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
-  `commission_rate` varchar(10) DEFAULT NULL,
+  `commission_rate` decimal(6,4) DEFAULT NULL,
   `commission_amount` decimal(10,2) DEFAULT NULL,
   `vat_amount` decimal(10,2) DEFAULT NULL,
   `total_commission_fees` decimal(10,2) DEFAULT NULL,
@@ -1988,9 +1928,17 @@ CREATE TABLE `report_history_gcash_head` (
 -- Dumping data for table `report_history_gcash_head`
 --
 
-INSERT INTO `report_history_gcash_head` (`gcash_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_date`, `settlement_number`, `settlement_period`, `total_amount`, `commission_rate`, `commission_amount`, `vat_amount`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
-('2bb4d85b-31fb-11ef-a30f-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-06-30', 'Jun 24, 2024', '202406-2bb4d85b', 'May 1 - Jun 30, 2024', '18060.00', '10.00%', '1806.00', '216.72', '2022.72', '2024-06-24 07:27:11', '2024-06-24 07:27:11'),
-('d4502354-31fb-11ef-a30f-0a002700000d', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-06-30', 'Jun 24, 2024', '202406-d4502354', 'May 1 - Jun 30, 2024', '18060.00', '10.00%', '1806.00', '216.72', '2022.72', '2024-06-24 07:31:54', '2024-06-24 07:31:54');
+INSERT INTO `report_history_gcash_head` (`gcash_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_number`, `total_amount`, `commission_rate`, `commission_amount`, `vat_amount`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
+('24ba4052-2d38-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-24ba40', '0.00', '0.0000', '0.00', '0.00', '0.00', '2024-06-18 08:24:18', '2024-06-18 08:24:18'),
+('599d1847-2d50-11ef-a4d2-48e7dad87c24', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-599d18', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:54:19', '2024-06-18 08:54:19'),
+('5c973414-2d38-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-5c9734', '0.00', '0.0000', '0.00', '0.00', '0.00', '2024-06-18 08:24:18', '2024-06-18 08:24:18'),
+('b31d6b9d-2d37-11ef-a7c7-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-b31d6b', '0.00', '0.0000', '0.00', '0.00', '0.00', '2024-06-18 08:24:18', '2024-06-18 08:24:18'),
+('b42ddf53-2d4e-11ef-a4d2-48e7dad87c24', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-b42ddf', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:42:32', '2024-06-18 08:42:32'),
+('bb91e9e6-2d50-11ef-a4d2-48e7dad87c24', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-bb91e9', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:57:03', '2024-06-18 08:57:03'),
+('cf141684-2d50-11ef-a4d2-48e7dad87c24', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-cf1416', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:57:36', '2024-06-18 08:57:36'),
+('e4bbda63-2d4e-11ef-a4d2-48e7dad87c24', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-e4bbda', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:43:54', '2024-06-18 08:43:54'),
+('eb6c4798-2d4e-11ef-a4d2-48e7dad87c24', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-05-31', '202405-eb6c47', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:44:05', '2024-06-18 08:44:05'),
+('f15a327b-2d50-11ef-a4d2-48e7dad87c24', NULL, NULL, NULL, NULL, '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'Demo Legal Name', 'B00KY Demo Store', 'Anywhere St.', '2024-05-01', '2024-05-31', '202405-f15a32', NULL, NULL, NULL, NULL, NULL, '2024-06-18 08:58:34', '2024-06-18 08:58:34');
 
 --
 -- Triggers `report_history_gcash_head`
@@ -2009,13 +1957,7 @@ CREATE TRIGGER `report_history_gcash_head_insert_log` AFTER INSERT ON `report_hi
   '\n','business_address: ', IFNULL(NEW.business_address, 'N/A'),
   '\n','settlement_period_start: ', IFNULL(NEW.settlement_period_start, 'N/A'),
   '\n','settlement_period_end: ', IFNULL(NEW.settlement_period_end, 'N/A'),
-  '\n','settlement_date: ', IFNULL(NEW.settlement_date, 'N/A'),
-  '\n','settlement_number: ', IFNULL(NEW.settlement_number, 'N/A'),
-  '\n','settlement_period: ', IFNULL(NEW.settlement_period, 'N/A'),
-  '\n','total_amount: ', IFNULL(NEW.total_amount, 'N/A'),
-  '\n','commission_rate: ', IFNULL(NEW.commission_rate, 'N/A'),
-  '\n','vat_amount: ', IFNULL(NEW.vat_amount, 'N/A'),
-  '\n','total_commission_fees: ', IFNULL(NEW.total_commission_fees, 'N/A'));
+  '\n','settlement_number: ', IFNULL(NEW.settlement_number, 'N/A'));
                             
   INSERT INTO activity_history (table_name, table_id, activity_type, description)
   VALUES ('report_history_gcash_head', NEW.gcash_report_id, 'Add', description);
@@ -2067,32 +2009,8 @@ CREATE TRIGGER `report_history_gcash_head_update_log` AFTER UPDATE ON `report_hi
     SET description = CONCAT(description, 'settlement_period_end: ', OLD.settlement_period_end, ' -> ', NEW.settlement_period_end, '\n');
   END IF;
   
-  IF OLD.settlement_date != NEW.settlement_date THEN
-    SET description = CONCAT(description, 'settlement_date: ', OLD.settlement_date, ' -> ', NEW.settlement_date, '\n');
-  END IF;
-  
   IF OLD.settlement_number != NEW.settlement_number THEN
     SET description = CONCAT(description, 'settlement_number: ', OLD.settlement_number, ' -> ', NEW.settlement_number, '\n');
-  END IF;
-  
-  IF OLD.settlement_period != NEW.settlement_period THEN
-    SET description = CONCAT(description, 'settlement_period: ', OLD.settlement_period, ' -> ', NEW.settlement_period, '\n');
-  END IF;
-  
-  IF OLD.total_amount != NEW.total_amount THEN
-    SET description = CONCAT(description, 'total_amount: ', OLD.total_amount, ' -> ', NEW.total_amount, '\n');
-  END IF;
-  
-  IF OLD.commission_rate != NEW.commission_rate THEN
-    SET description = CONCAT(description, 'commission_rate: ', OLD.commission_rate, ' -> ', NEW.commission_rate, '\n');
-  END IF;
-  
-  IF OLD.vat_amount != NEW.vat_amount THEN
-    SET description = CONCAT(description, 'vat_amount: ', OLD.vat_amount, ' -> ', NEW.vat_amount, '\n');
-  END IF;
-  
-  IF OLD.total_commission_fees != NEW.total_commission_fees THEN
-    SET description = CONCAT(description, 'total_commission_fees: ', OLD.total_commission_fees, ' -> ', NEW.total_commission_fees, '\n');
   END IF;
   
   -- Remove the trailing '\n' from the description
@@ -2209,7 +2127,7 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`transaction_id`, `store_id`, `promo_code`, `customer_id`, `customer_name`, `transaction_date`, `gross_amount`, `discount`, `amount_discounted`, `payment`, `bill_status`, `created_at`, `updated_at`) VALUES
-('1bc0f5fe-224b-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '\"639121234345\"', 'Maria Demo', '2024-05-15 16:17:58', '20760.00', '5190.00', '15570.00', 'gcash', 'BILLABLE', '2024-06-01 08:17:58', '2024-06-05 03:42:49'),
+('1bc0f5fe-224b-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '\"639121234345\"', 'Maria Demo', '2024-05-15 16:17:58', '20760.00', '5190.00', '15570.00', 'paymaya_credit_card', 'BILLABLE', '2024-06-01 08:17:58', '2024-06-05 03:42:49'),
 ('8d1552bf-1cc3-11ef-8abb-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '\"639123456789\"', 'Juan Person', '2024-05-28 09:25:43', '1484.00', '594.00', '890.00', 'gcash', 'PRE-TRIAL', '2024-05-28 07:26:08', '2024-05-28 07:26:08'),
 ('a6673ec0-2d50-11ef-a4d2-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'GCA5H', '\"638572947601\"', 'Custom Er', '2024-05-18 10:55:41', '1800.00', '200.00', '1600.00', 'gcash', 'PRE-TRIAL', '2024-06-18 08:56:28', '2024-06-18 08:56:28'),
 ('e881c2e7-224a-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '\"639987654321\"', 'Anya Human', '2024-06-06 10:16:20', '15570.00', '3114.00', '12456.00', 'paymaya_credit_card', 'PRE-TRIAL', '2024-06-04 08:17:39', '2024-06-04 08:17:39');
@@ -2350,8 +2268,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `email_address`, `password`, `name`, `type`, `status`, `created_at`, `updated_at`) VALUES
-('3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'admin@bookymail.ph', 'admin123booky', 'Booky Admin', 'Admin', 'Active', '2024-05-31 07:41:48', '2024-05-31 07:41:48'),
-('6b8a15bf-2ed7-11ef-bafd-48e7dad87c24', 'cookie@booky.ph', '$2y$10$xXT7USa7PPtpQJm4g1xq8O..A2cKtV4/YbW.aJiKx0R2fobDZUa3m', 'Cookie', 'User', 'Inactive', '2024-06-20 07:33:42', '2024-06-20 07:33:42');
+('3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'admin@bookymail.ph', 'admin123booky', 'Booky Admin', 'Admin', 'Active', '2024-05-31 07:41:48', '2024-05-31 07:41:48');
 
 --
 -- Triggers `user`
