@@ -9,25 +9,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email_address'];
     $password = $_POST['password'];
 
-    // Modify the query to include the status check
-    $sql = "SELECT user_id, password, status FROM user WHERE email_address = '$email'";
-    $result = $conn->query($sql);
+    // Query to fetch user data
+    $sql = "SELECT user_id, email_address, password, status FROM user WHERE email_address = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        if ($row['status'] != 'active') {
-            $error = "Your account is inactive. Please contact support.";
-        } elseif (password_verify($password, $row['password'])) {
-            $_SESSION['user_id'] = $row['user_id'];
-            $_SESSION['email_address'] = $row['email_address'];
-            header("Location: merchant/index.php");
-            exit();
+        if (password_verify($password, $row['password'])) {
+            if ($row['status'] == 'Active') {
+                $_SESSION['user_id'] = $row['user_id'];
+                $_SESSION['email_address'] = $row['email_address'];
+
+                // Debugging statement
+                error_log("User authenticated and session variables set. Redirecting...");
+
+                header("Location: merchant/index.php");
+                exit();
+            } else {
+                $error = "Your account is inactive. Please contact support.";
+            }
         } else {
             $error = "Incorrect password.";
         }
     } else {
         $error = "Email not found.";
     }
+    $stmt->close();
+    $conn->close();
 }
 ?>
 
@@ -54,8 +65,9 @@ body {
   display: flex;
   justify-content: flex-start; /* Align content to the left */
   align-items: center;
-  min-height: 100vh;
   background: url('images/homebg.png') no-repeat center center/cover;
+  background-size: cover; /* Ensure the background covers the entire element */
+  height: 100vh; /
   padding: 20px; /* Add padding for spacing */
   padding-left: 245px;
 }
@@ -198,6 +210,33 @@ body {
   margin-right: 10px;
 }
 
+.input-box {
+  position: relative;
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px; /* Adjust the position of the icon */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999; /* Adjust the color of the icon */
+  pointer-events: none; /* Ensures the icon does not interfere with input */
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px; /* Adjust the position of the icon */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999; /* Adjust the color of the icon */
+  pointer-events: none; /* Ensures the icon does not interfere with input */
+}
+
+.toggle-password:hover {
+  color: #666; /* Adjust the color when hovered */
+}
+
 @media (max-width: 600px) {
   body {
     padding: 20px; /* Maintain padding for smaller screens */
@@ -219,6 +258,7 @@ body {
   .wrapper h1, .wrapper h2, .wrapper h3 {
     font-size: 1.25rem;
   }
+
 }
 </style>
 
@@ -234,12 +274,15 @@ body {
         </div>
       <?php endif; ?>
       <div class="input-box">
-        <input type="text" placeholder="Enter your Email" name="email_address" required>
-      </div>
-      <div class="input-box"> 
-        <input type="password" placeholder="Password" name="password" required>
-        <i class='bx bxs-lock-alt'></i>
-      </div>
+  <i class="fa-solid fa-user input-icon" style="margin-left:10px;"></i>
+  <input type="text" style="padding-left: 50px !important;"placeholder="Enter your Email" name="email_address" required>
+</div>
+
+<div class="input-box">
+  <i class="fa-solid fa-lock input-icon"  style="margin-left:10px;"></i>
+  <input type="password" placeholder="Password" name="password" id="password" required>
+</div>
+
       <div class="remember-forgot">
         <label><input type="checkbox"> Remember me</label>
         <a href="#">Forgot password?</a>
@@ -250,5 +293,6 @@ body {
       </div>
     </form>
   </div>
+
 </body>
 </html>

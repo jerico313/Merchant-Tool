@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /Merchant-Tool/");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
