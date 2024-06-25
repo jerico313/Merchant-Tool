@@ -64,7 +64,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
             </div>
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
-        <p class="title">Settlement Report(s)</p>
+        <p class="title">Settlement Reports</p>
       </div>
       <div class="content" style="margin:25px;">
       <div class="text-center" style="text-align:center;" style="width:100%;">
