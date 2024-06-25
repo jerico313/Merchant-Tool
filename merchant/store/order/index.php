@@ -234,7 +234,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                         </form>
                     </div>
                 </div>
-                <button type="button" onclick="downloadTables()" class="btn btn-warning download-csv mt-4"><i class="fa-solid fa-download"></i> Download CSV</button>
+                <button type="button" onclick="downloadTables()" class="btn btn-warning download-csv mt-4"><i class="fa-solid fa-download"></i> Download</button>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:320%;">

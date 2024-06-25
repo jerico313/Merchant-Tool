@@ -31,23 +31,7 @@ if (!isset($_SESSION['user_id'])) {
         border:solid #4BB0B8 2px !important ;
         border-radius: 30px !important;
       } 
-      
-
-@keyframes roll {
-    0% { transform: translateX(0) rotate(0deg); }
-    20% { transform: translateX(50px) rotate(90deg); }
-    40% { transform: translateX(100px) rotate(180deg); }
-    60% { transform: translateX(150px) rotate(270deg); }
-    80% { transform: translateX(200px) rotate(360deg); }
-    100% { transform: translateX(0px) rotate(450deg); }
-}
-
-.animated-egg {
-    font-size: 15px;
-    color: #fff;
-    display: inline-block;
-    animation: roll 8s linear infinite;
-}
+    
     </style>
 </head>
 <body>
@@ -57,7 +41,7 @@ if (!isset($_SESSION['user_id'])) {
         <table style="border:10px;">
         <tr>
         <th style="font-weight:900 !important;color:#fff;font-size:23px !important;padding-top:1px;">booky <span style="font-size:25px;font-weight:normal;">|</span></th>
-        <th style="font-size:13px;padding-top:4px;font-family: Nanum Gothic">&nbsp; LEADGEN <i class="fa-solid fa-egg animated-egg"><t/h>
+        <th style="font-size:13px;padding-top:4px;font-family: Nanum Gothic">&nbsp; LEADGEN<t/h>
         </tr>
         </table>
         </a>

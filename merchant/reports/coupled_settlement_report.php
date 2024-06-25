@@ -14,24 +14,13 @@ $data = $result->fetch_assoc();
 $stmt->close();
 $conn->close();
 
-$date = new DateTime($data['created_at']);
-$formattedDate = $date->format('F d, Y'); 
-
-$date = new DateTime($data['settlement_period_start']);
-$startDate = $date->format('F d-'); 
-
-$date = new DateTime($data['settlement_period_end']);
-$endDate = $date->format('d, Y'); 
-
 $totalGrossSales = number_format($data['total_gross_sales'], 2);
 $totalDiscount = number_format($data['total_discount'], 2);
 $totalOutstandingAmount1 = number_format($data['total_outstanding_amount_1'], 2);
 $totalCommissionFees1 = number_format($data['total_commission_fees_1'], 2);
 $leadgenCommissionRateBase = number_format($data['leadgen_commission_rate_base'], 2);
 $paymayaPgFee = number_format($data['paymaya_pg_fee'], 2);
-$paymayaCreditCardPgFee = number_format($data['paymaya_credit_card_pg_fee'], 2);
-$mayaPgFee = number_format($data['maya_pg_fee'], 2);
-$mayaCheckoutPgFee = number_format($data['maya_checkout_pg_fee'], 2);
+$cardPaymentPGFee = number_format($data['card_payment_pg_fee'], 2);
 $gcashMiniappPgFee = number_format($data['gcash_miniapp_pg_fee'], 2);
 $gcashPgFee = number_format($data['gcash_pg_fee'], 2);
 $totalPaymentGatewayFees1 = number_format($data['total_payment_gateway_fees_1'], 2);
@@ -138,7 +127,7 @@ $totalAmountPaidOut = number_format($data['total_amount_paid_out'], 2);
     <table style="width:100% !important;">
       <tr >
           <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span></td>
-          <td style="width:30%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo $formattedDate; ?></span></td>
+          <td style="width:40%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span></td>
       </tr>
       <tr>
           <td>Brand Name: <span style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span></td>
@@ -146,7 +135,7 @@ $totalAmountPaidOut = number_format($data['total_amount_paid_out'], 2);
       </tr>
       <tr>
           <td>Business Address: <span style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></td>
-          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo $startDate; ?><?php echo $endDate; ?></span></td>
+          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period']); ?></span></td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
@@ -211,22 +200,14 @@ $totalAmountPaidOut = number_format($data['total_amount_paid_out'], 2);
 </table>
 <br>
 <table style="width:100% !important;">
+<tr>
+          <td style="padding-left:85px;">Card Payment</td>
+          <td style="text-align:right;padding-right:85px;"><?php  echo $cardPaymentPGFee; ?></td>
+      </tr>
       <tr>
           <td style="padding-left:85px;">Paymaya</td>
           <td style="text-align:right;padding-right:85px;"><?php  echo $paymayaPgFee; ?></td>
 
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Paymaya_credit_card</td>
-          <td style="text-align:right;padding-right:85px;"><?php  echo $paymayaCreditCardPgFee; ?></td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Maya</td>
-          <td style="text-align:right;padding-right:85px;"><?php  echo $mayaPgFee; ?></td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Maya_checkout</td>
-          <td style="text-align:right;padding-right:85px;"><?php  echo $mayaCheckoutPgFee; ?></td>
       </tr>
       <tr>
           <td style="padding-left:85px;">Gcash_miniapp</td>

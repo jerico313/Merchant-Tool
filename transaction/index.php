@@ -192,7 +192,7 @@ function displayOrder() {
         <p class="title">Transactions</p>
         <!-- Form to upload file -->
         
-        <a href="upload.php"><button type="button" class="btn btn-secondary check-report"><i class="fa-solid fa-upload"></i> Upload Orders</button></a>
+        <a href="upload.php"><button type="button" class="btn btn-secondary check-report" style="width:170px;"><i class="fa-solid fa-upload"></i> Upload Transactions</button></a>
         
       </div>
       <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">

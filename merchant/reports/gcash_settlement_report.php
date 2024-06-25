@@ -1,9 +1,53 @@
 <?php
-// Include the configuration file
 include('../../inc/config.php');
 
 $gcash_report_id = isset($_GET['gcash_report_id']) ? $_GET['gcash_report_id'] : '';
 
+function displayReportHistoryGcashBody($gcash_report_id) {
+  include("../../inc/config.php");
+
+  $sql = "SELECT * FROM report_history_gcash_body WHERE gcash_report_id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s", $gcash_report_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+          $netAmount = number_format($row['net_amount'], 2);
+          echo "<tr>";
+          echo "<td style='text-align:center;'>" . $row['item'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['quantity_redeemed'] . "</td>";
+          echo "<td style='text-align:center;'>" . $netAmount . "</td>";
+          echo "</tr>";
+      }
+  }
+
+  $conn->close();
+}
+
+function displayQuantity($gcash_report_id) {
+  include("../../inc/config.php");
+
+  $sql = "SELECT * FROM report_history_gcash_body WHERE gcash_report_id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s", $gcash_report_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+          $netAmount = number_format($row['net_amount'], 2);
+          echo "<tr>";
+          echo "<td style='text-align:center;'>" . $row['item'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['quantity_redeemed'] . "</td>";
+          echo "<td style='text-align:center;display:none;'>" . $netAmount . "</td>";
+          echo "</tr>";
+      }
+  }
+
+  $conn->close();
+}
 // Fetch data from the database
 $sql = "SELECT * FROM report_history_gcash_head WHERE gcash_report_id = ?";
 $stmt = $conn->prepare($sql);
@@ -14,14 +58,11 @@ $data = $result->fetch_assoc();
 $stmt->close();
 $conn->close();
 
-$date = new DateTime($data['created_at']);
-$formattedDate = $date->format('F d, Y'); 
 
-$date = new DateTime($data['settlement_period_start']);
-$startDate = $date->format('F d-'); 
-
-$date = new DateTime($data['settlement_period_end']);
-$endDate = $date->format('d, Y'); 
+$totalAmount = number_format($data['total_amount'], 2);
+$commissionAmount = number_format($data['commission_amount'], 2);
+$vatAmount = number_format($data['vat_amount'], 2);
+$totalCommissionFees = number_format($data['total_commission_fees'], 2);
 ?>
 <!DOCTYPE html>
 <html>
@@ -117,7 +158,7 @@ $endDate = $date->format('d, Y');
     <table style="width:100% !important;">
     <tr >
           <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span></td>
-          <td style="width:30%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo $formattedDate; ?></span></td>
+          <td style="width:40%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span></td>
       </tr>
       <tr>
           <td>Brand Name: <span style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span></td>
@@ -125,134 +166,69 @@ $endDate = $date->format('d, Y');
       </tr>
       <tr>
           <td>Business Address: <span style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></td>
-          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo $startDate; ?><?php echo $endDate; ?></span></td>
+          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period']); ?></span></td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
-    <p style="text-align:center;">GCash Lead Generation</p>
+    <p style="text-align:center;font-weight:bold;">GCash Lead Generation</p>
     <hr style="border: 1px solid #3b3b3b;">
-    <table style="width:100% !important;">
-      <tr>
-          <td style="text-align:center;">Items</td>
-          <td style="text-align:center;">Qty Redeemed</td>
-          <td style="text-align:center;">Voucher Value</td>
-          <td style="text-align:center;">Amount</td>
-      </tr>
-    </table>
-
-
-    
-    <br>
-    <table style="width:100% !important;">
-      <tr>
-          <td>Total Gross Sales</td>
-          <td style="width:30%;text-align:center;">70,591.00 PHP</td>
-      </tr>
-      <tr>
-          <td>Total Discount</td>
-          <td style="width:30%;text-align:center;">31,196.00 PHP</td>
-      </tr>
-      <tr>
-          <td style="font-weight:bold;">Total Outstanding Amount:</td>
-          <td style="font-weight:bold;text-align:center;">39,395.00 PHP</td>
-      </tr>
+      <table id="example" style="width:100%;">
+        <thead>
+            <tr>
+              <td style="text-align:center;font-weight:bold;">Items</td>
+              <td style="text-align:center;font-weight:bold;">Qty Redeemed</td>
+              <td style="text-align:center;font-weight:bold;">Net Total</td>
+            </tr>
+        </thead>
+        <tbody id="dynamicTableBody">
+              <?php displayReportHistoryGcashBody($gcash_report_id); ?>
+        </tbody>
+        <tfoot>
+        <tr>
+              <td style="text-align:center;font-weight:bold;"></td>
+              <td style="text-align:center;font-weight:bold;"></td>
+              <td style="text-align:center;font-weight:bold;"><?php echo $totalAmount; ?></td>
+        </tr>
+              
+        </tfoot>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
-
-    <table style="width:100% !important;">
-      <tr>
-          <td>Commission Fees</td>
-          <td></td>
-      </tr>
+    <table id="example" style="width:100%;">
+        <thead>
+            <tr>
+              <td style="text-align:center;font-weight:bold;">Items</td>
+              <td style="text-align:center;font-weight:bold;">Qty Redeemed</td>
+              <td style="text-align:center;font-weight:bold;width:27.5%;"></td>
+            </tr>
+        </thead>
+        <tbody id="dynamicTableBody">
+              <?php displayQuantity($gcash_report_id); ?>
+        </tbody>
     </table>
-
-    <table style="width:100% !important;">
-      <tr>
-          <td style="padding-left:85px;">Total Discount</td>
-          <td style="width:30%;text-align:right;padding-right:85px;">800.00</td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Commission fee rate</td>
-          <td style="text-align:right;padding-right:85px;">10%</td>
-      </tr>
-      <tr>
-          <td style="font-weight:bold;padding-left:85px;">Total</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">39,395.00 PHP</td>
-      </tr>
-    </table>
-    <br>
-    <table style="width:100% !important;">
-      <tr>
-          <td style="font-weight:bold;">Total Commission Fees</td>
-          <td></td>
-      </tr>
-    </table>
-
-      
-    <table style="width:100% !important;">
-      <tr>
-          <td style="padding-left:85px;">Payment Gateway Fees:</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">89.60 PHP</td>
-      </tr>
-</table>
-<br>
 <table style="width:100% !important;">
       <tr>
-          <td style="padding-left:85px;">Card Payment</td>
-          <td style="text-align:right;padding-right:85px;">24.00</td>
+          <td style="width:31%;"></td>
+          <td style="text-align:right;width:28%;">Commission (<?php echo htmlspecialchars($data['commission_rate']); ?>)</td>
+          <td style="text-align:right;width:41%;padding-right:70px;"><?php echo $commissionAmount; ?></td>
       </tr>
       <tr>
-          <td style="padding-left:85px;">Paymaya</td>
-          <td style="text-align:right;padding-right:85px;">00.00</td>
+          <td></td>
+          <td style="text-align:right;width:24%;">VAT (12.00%)</td>
+          <td style="text-align:right;padding-right:70px;"><?php echo $vatAmount; ?></td>
       </tr>
       <tr>
-          <td style="padding-left:85px;">Gcash_miniapp</td>
-          <td style="text-align:right;padding-right:85px;">00.00</td>
-      </tr>
-      <tr>
-          <td style="font-weight:bold;padding-left:85px;">Total Payment Gateway Fees</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">24.00 PHP</td>
-      </tr>
-    </table>
-    <hr style="border: 1px solid #3b3b3b !important;">
-    <table style="width:100% !important;">
-      <tr>
-          <td>Total Outstanding Amount</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">89.60 PHP</td>
-      </tr>
-      <table style="width:100% !important;">
-      <tr>
-          <td>Less<span style="padding-left:65px;">Total Commission Fees</span></td>
-          <td style="text-align:right;padding-right:85px;">24.00</td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Total Payment Gateway Fees</td>
-          <td style="text-align:right;padding-right:85px;">00.00</td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Bank Fees</td>
-          <td style="text-align:right;padding-right:85px;">00.00</td>
-      </tr>
-      <tr>
-          <td style="font-weight:bold;padding-left:85px;">CWT from Gross Sales</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">24.00 PHP</td>
-      </tr>
-      <tr>
-          <td>Add<span style="padding-left:65px;">CWT from Transaction Fees</span></td>
-          <td style="text-align:right;padding-right:85px;">24.00</td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">CWT from PG Fees</td>
-          <td style="text-align:right;padding-right:85px;">00.00</td>
+          <td></td>
+          <td style="text-align:right;width:24%;"></td>
+          <td style="text-align:right;font-weight:bold;padding-right:70px;"><?php echo $totalCommissionFees; ?></td>
       </tr>
     </table>
     <br>
     <table style="width:100% !important;">
       <tr>
-          <td>Payment Gateway Fees:</td>
-          <td style="font-weight:bold;text-align:right;padding-right:85px;">89.60 PHP</td>
+          <td style="text-align:left;font-weight:bold;">Total Commission Fees</td>
+          <td style="text-align:right;font-weight:bold;padding-right:70px;"><?php echo $totalCommissionFees; ?></td>
       </tr>
-</table>
+    </table>
 
     <hr style="border: 1px solid #3b3b3b;">
     <p>This is a system generated report and doesn't require a signature. If you have questions feel free to contact us at 632-34917659 loc. 7663 or email us at accounting@phonebooky.com</p>
@@ -272,7 +248,7 @@ $endDate = $date->format('d, Y');
 
   download_button.addEventListener('click', async function () {
     // Set the filename dynamically based on the store name
-    const filename = '<?php echo htmlspecialchars($store_name) ?>.pdf';
+    const filename = '<?php echo htmlspecialchars($data['merchant_business_name']); ?>_<?php echo htmlspecialchars($data['settlement_number']); ?>.pdf';
 
     try {
       const opt = {

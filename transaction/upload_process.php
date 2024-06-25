@@ -1,3 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../style.css">
+    <title>Upload Success</title>
+    <style>
+      body {
+      background-image: url("../images/bg_booky.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    </style>
+</head>
 <?php
 require_once("../header.php");
 require_once("../inc/config.php");
@@ -53,10 +68,8 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     fclose($handle);
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="../style.css">
+<body>
+<link rel="stylesheet" href="../style.css">
     <title>Upload Success</title>
     <style>
       body {
@@ -117,8 +130,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
             }
         }
     </style>
-</head>
-<body>
     <div class="container">
         <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
             <circle class="checkmark__circle" cx="26" cy="26" r="25"/>

@@ -126,7 +126,7 @@ $totalCommissionFees = number_format($data['total_commission_fees'], 2);
     <table style="width:100% !important;">
     <tr >
           <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['store_business_name']); ?></span></td>
-          <td style="width:30%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo $formattedDate; ?></span></td>
+          <td style="width:40%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span></td>
       </tr>
       <tr>
           <td>Brand Name: <span style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['store_brand_name']); ?></span></td>
@@ -134,7 +134,7 @@ $totalCommissionFees = number_format($data['total_commission_fees'], 2);
       </tr>
       <tr>
           <td>Business Address: <span style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></td>
-          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo $startDate; ?><?php echo $endDate; ?></span></td>
+          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period']); ?></span></td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">

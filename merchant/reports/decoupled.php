@@ -15,11 +15,10 @@ function displayDecoupled($merchant_id, $merchant_name) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
-            $shortDecoupledId = substr($row['decoupled_report_id'], 0, 8);
             $date = new DateTime($row['created_at']);
             $formattedDate = $date->format('F d, Y g:i:s A');
             echo "<tr class='clickable-row' data-href='decoupled_settlement_report.php?decoupled_report_id=" . $row['decoupled_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "'>";
-            echo "<td style='text-align:center;'>" . $shortDecoupledId . "</td>";
+            echo "<td style='text-align:center;'>" . $row['settlement_number'] . "</td>";
             echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['merchant_business_name']."_". $row['settlement_number']. ".pdf</td>";
             echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
             echo "</tr>";
@@ -156,7 +155,7 @@ function displayDecoupled($merchant_id, $merchant_name) {
                 <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>Coupled Report ID</th>
+                            <th>Settlement Number</th>
                             <th>Filename</th>
                             <th>Created At</th>
                         </tr>
