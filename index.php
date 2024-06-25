@@ -240,6 +240,7 @@ body {
 @media (max-width: 600px) {
   body {
     padding: 20px; /* Maintain padding for smaller screens */
+    background: #E96529; 
   }
 
   .wrapper {
@@ -283,9 +284,9 @@ body {
   <input type="password" placeholder="Password" name="password" id="password" required>
 </div>
 
-      <div class="remember-forgot">
+      <div class="remember-forgot" style= "display:none">
         <label><input type="checkbox"> Remember me</label>
-        <a href="#">Forgot password?</a>
+        <a href="#" style= "display:none">Forgot password? </a>
       </div>
       <button type="submit" class="btn" name="login">Login</button>
       <div class="register-link">
