@@ -6,7 +6,9 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $name = $_SESSION['name'] ?? '';
+
 include_once($_SERVER['DOCUMENT_ROOT'] . '/Merchant-Tool/inc/config.php');
+
 
 if (isset($_SESSION['user_id'])) {
   $user_id = $_SESSION['user_id'];
@@ -19,6 +21,7 @@ if (isset($_SESSION['user_id'])) {
   if ($result && mysqli_num_rows($result) > 0) {
       $user_data = mysqli_fetch_assoc($result);
       $type = $user_data['type'];
+      $name = $user_data['name'];
   } else {
       $type = 'type';
   }
