@@ -181,7 +181,7 @@ function displayOfferHistory($promo_code, $merchant_name)
                                     </ul>
                                 </li>
                                 <li class="breadcrumb-item"><a href="#" onclick="location.reload();"
-                                        style="color:#E96529; font-size:14px;">Promo History</a></li>
+                                        style="color:#E96529; font-size:14px;">History</a></li>
                             </ol>
                         </nav>
                         <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">

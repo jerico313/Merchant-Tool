@@ -11,13 +11,13 @@ function displayMerchant() {
         while ($row = $result->fetch_assoc()) {
             $shortMerchantId = substr($row['merchant_id'], 0, 8);
             echo "<tr data-uuid='" . htmlspecialchars($row['merchant_id']) . "' data-partnership-type='" . strtolower($row['merchant_partnership_type']) . "'>";
-            echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
-            echo "<td style='text-align:center;'>" . htmlspecialchars($row['merchant_name']) . "</td>";
-            echo "<td style='text-align:center;' class='partnership-type'>" . htmlspecialchars($row['merchant_partnership_type']) . "</td>";
-            echo "<td style='text-align:center;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
-            echo "<td style='text-align:center;'>" . htmlspecialchars($row['business_address']) . "</td>";
-            echo "<td style='text-align:center;'>" . htmlspecialchars($row['email_address']) . "</td>";
-            echo "<td style='text-align:center;'>";
+            echo "<td style='text-align:center;width:6%;'>" . $shortMerchantId . "</td>";
+            echo "<td style='text-align:center;width:13%;'>" . htmlspecialchars($row['merchant_name']) . "</td>";
+            echo "<td style='text-align:center;width:8%;' class='partnership-type'>" . htmlspecialchars($row['merchant_partnership_type']) . "</td>";
+            echo "<td style='text-align:center;width:13%;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
+            echo "<td style='text-align:center;width:15%;'>" . htmlspecialchars($row['business_address']) . "</td>";
+            echo "<td style='text-align:center;width:30%;'>" . htmlspecialchars($row['email_address']) . "</td>";
+            echo "<td style='text-align:center;width:13%;'>";
 
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
 
@@ -151,7 +151,7 @@ function displayMerchant() {
             <tr>
                 <th>Merchant ID</th>
                 <th>Merchant Name</th>
-                <th>Merchant Partnership Type</th>
+                <th>Partnership Type</th>
                 <th>Legal Entity Name</th>
                 <th>Business Address</th>
                 <th>Email Address</th>

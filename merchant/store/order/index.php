@@ -238,7 +238,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                     </ul>
                                 </li>
                                 <li class="breadcrumb-item"><a href="#" onclick="location.reload();"
-                                        style="color:#E96529; font-size:14px;">Transaction Details</a></li>
+                                        style="color:#E96529; font-size:14px;">Transactions</a></li>
                             </ol>
                         </nav>
                         <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
