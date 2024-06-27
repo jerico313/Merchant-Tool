@@ -261,7 +261,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                 <button type="button" class="btn gcash mt-2" id="btnGCash"><img
                                         src="../../../images/gcash.png"
                                         style="width:25px; height:20px; margin-right: 1.20vw;"
-                                        alt="gcash"><span>GCash</span></button>
+                                        alt="gcash"><span>Gcash</span></button>
                             </form>
                         </div>
                     </div>
@@ -436,7 +436,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 table.search('').columns().search('').draw(); // Clear existing search
 
                 // Apply exact search for 'GCash' voucher type
-                table.column(7).search('^GCash$', true, false).draw();
+                table.column(7).search('^Gcash$', true, false).draw();
             });
 
             // Show All button click event
