@@ -1,10 +1,11 @@
-<?php include("../../header.php") ?>
+<?php include ("../../header.php") ?>
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
-function displayCoupled($merchant_id, $merchant_name) {
-    include("../../inc/config.php");
+function displayCoupled($merchant_id, $merchant_name)
+{
+    include ("../../inc/config.php");
 
     $sql = "SELECT * FROM report_history_coupled WHERE merchant_id = ? ORDER BY created_at DESC";
     $stmt = $conn->prepare($sql);
@@ -20,7 +21,7 @@ function displayCoupled($merchant_id, $merchant_name) {
             $formattedDate = $date->format('F d, Y g:i:s A');
             echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "'>";
             echo "<td style='text-align:center;'>" . $shortCoupledId . "</td>";
-            echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['merchant_business_name']."_". $row['settlement_number']. ".pdf</td>";
+            echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['merchant_business_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
             echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
             echo "</tr>";
         }
@@ -32,10 +33,12 @@ function displayCoupled($merchant_id, $merchant_name) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
     <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
     <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
@@ -50,25 +53,34 @@ function displayCoupled($merchant_id, $merchant_name) {
             background-size: cover;
             background-attachment: fixed;
         }
+
         .title {
-            font-size: 30px; 
-            font-weight: bold; 
-            margin-right: auto; 
+            font-size: 30px;
+            font-weight: bold;
+            margin-right: auto;
             padding-left: 5vh;
             color: #4BB0B8;
         }
+
         .voucher-type {
-            padding-bottom: 0px; 
-            padding-right: 5vh; 
-            display: flex; 
+            padding-bottom: 0px;
+            padding-right: 5vh;
+            display: flex;
             align-items: center;
         }
+
         tr:hover {
             background-color: #e0e0e0 !important;
             color: white !important;
             cursor: pointer;
         }
+
+        .dropdown-item {
+            font-weight: bold;
+        }
+
         @media only screen and (max-width: 767px) {
+
             table,
             thead,
             tbody,
@@ -78,18 +90,21 @@ function displayCoupled($merchant_id, $merchant_name) {
                 display: block;
                 text-align: left !important;
             }
+
             thead tr,
             tfoot tr {
                 position: absolute;
                 top: -9999px;
                 left: -9999px;
             }
+
             td {
                 border: none;
                 border-bottom: 1px solid #eee;
                 position: relative;
                 padding-left: 50% !important;
             }
+
             td:before {
                 position: absolute;
                 top: 6px;
@@ -100,6 +115,7 @@ function displayCoupled($merchant_id, $merchant_name) {
                 font-weight: bold;
                 text-align: left !important;
             }
+
             .table td:nth-child(1) {
                 background: #E96529;
                 height: 100%;
@@ -108,85 +124,121 @@ function displayCoupled($merchant_id, $merchant_name) {
                 font-weight: bold;
                 color: #fff;
             }
+
             td:nth-of-type(1):before {
                 content: "Store ID";
             }
+
             td:nth-of-type(2):before {
                 content: "Merchant ID";
             }
+
             td:nth-of-type(3):before {
                 content: "Store Name";
             }
+
             td:nth-of-type(4):before {
                 content: "Store Address";
             }
+
             td:nth-of-type(5):before {
                 content: "Action";
             }
+
             .dataTables_length {
                 display: none;
             }
+
             .title {
                 font-size: 25px;
                 padding-left: 2vh;
                 padding-top: 10px;
             }
+
             .voucher-type {
-                padding-right: 2vh; 
+                padding-right: 2vh;
             }
         }
     </style>
 </head>
+
 <body>
-<div class="cont-box">
-    <div class="custom-box pt-4">
-        <div class="sub" style="text-align:left;">
-            <div class="voucher-type">
-                <div class="row pb-2 title" aria-label="breadcrumb">
-                <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="../../merchant/index.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
-                            <li class="breadcrumb-item"><a href="../settlement_reports.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Settlement Report</a></li>    
-                            <li class="breadcrumb-item"><a href="#" style="color:#E96529; font-size:14px;">Coupled</a></li>                            
-                        </ol>
-                    </nav> 
-                    <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8'); ?></p>
+    <div class="cont-box">
+        <div class="custom-box pt-4">
+            <div class="sub" style="text-align:left;">
+                <div class="voucher-type">
+                    <div class="row pb-2 title" aria-label="breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
+                                <li class="breadcrumb-item"><a href="../../merchant/index.php"
+                                        style="color:#E96529; font-size:14px;">Merchants</a>
+                                </li>
+                                <li class="breadcrumb-item dropdown">
+                                    <a href="#" class="dropdown-toggle" role="button" id="storeDropdown"
+                                        data-bs-toggle="dropdown" aria-expanded="false"
+                                        style="color:#E96529;font-size:14px;">
+                                        Settlement Reports
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="storeDropdown">
+                                        <li><a class="dropdown-item"
+                                                href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers">Stores</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers">Promos</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers" style="color:#4BB0B8;">Settlement Reports</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#"
+                                        style="color:#E96529; font-size:14px;">Coupled</a>
+                                </li>
+                            </ol>
+                        </nav>
+                        <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
+                            <?php echo htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8'); ?>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                <table id="example" class="table bord" style="width:100%;">
-                    <thead>
-                        <tr>
-                            <th>Coupled Report ID</th>
-                            <th>Filename</th>
-                            <th>Created At</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dynamicTableBody">
-                        <?php displayCoupled($merchant_id, $merchant_name); ?>
-                    </tbody>
-                </table>
+                <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+                    <table id="example" class="table bord" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Coupled Report ID</th>
+                                <th>Filename</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dynamicTableBody">
+                            <?php displayCoupled($merchant_id, $merchant_name); ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable({
-            scrollX: true,
-            order: [[2, 'desc']] // Default sort by the 'Created At' column in descending order
-        });
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                scrollX: true,
+                order: [[2, 'desc']] // Default sort by the 'Created At' column in descending order
+            });
 
-        // Bind click event to all rows
-        $('#example tbody').on('click', 'tr', function() {
-            var href = $(this).attr('data-href');
-            if (href) {
-                window.location = href;
-            }
+            // Bind click event to all rows
+            $('#example tbody').on('click', 'tr', function () {
+                var href = $(this).attr('data-href');
+                if (href) {
+                    window.location = href;
+                }
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>

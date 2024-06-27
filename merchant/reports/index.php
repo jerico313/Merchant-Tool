@@ -46,6 +46,10 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
       padding-left: 5vh;
       color: #E96529;
     }
+
+    .dropdown-item {
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -56,8 +60,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
         <div class="row pb-2 title" aria-label="breadcrumb">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-              <li class="breadcrumb-item"><a href="../index.php" style="color:#E96529; font-size:14px;">Merchants</a>
-              </li>
+              <li class="breadcrumb-item"><a href="../index.php" style="color:#E96529; font-size:14px;">Merchants</a></li>
               <li class="breadcrumb-item dropdown">
                 <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown"
                   aria-expanded="false" style="color:#E96529;font-size:14px;">
@@ -71,6 +74,10 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                   <li><a class="dropdown-item"
                       href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                       data-breadcrumb="Offers">Promos</a>
+                  </li>
+                  <li><a class="dropdown-item"
+                      href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                      data-breadcrumb="Offers" style="color:#4BB0B8;">Settlement Reports</a>
                   </li>
                 </ul>
               </li>

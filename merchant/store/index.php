@@ -102,6 +102,10 @@ function displayStore($merchant_id)
             font-size: 13px;
         }
 
+        .dropdown-item {
+            font-weight: bold;
+        }
+
         @media only screen and (max-width: 767px) {
 
             table,
@@ -125,6 +129,7 @@ function displayStore($merchant_id)
                 border: none;
                 border-bottom: 1px solid #eee;
                 position: relative;
+                font-weight: 400;
                 padding-left: 50% !important;
             }
 
@@ -203,6 +208,10 @@ function displayStore($merchant_id)
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="storeDropdown">
                                         <li><a class="dropdown-item"
+                                                href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers" style="color:#4BB0B8;">Stores</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
                                                 href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
                                         </li>
@@ -215,7 +224,8 @@ function displayStore($merchant_id)
                             </ol>
                         </nav>
                         <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
-                            <?php echo htmlspecialchars($merchant_name); ?></p>
+                            <?php echo htmlspecialchars($merchant_name); ?>
+                        </p>
                     </div>
                     <button type="button" class="btn btn-warning check-report mt-4" style="display:none;"><i
                             class="fa-solid fa-print"></i> Check Report</button>
