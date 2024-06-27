@@ -113,6 +113,15 @@ function displayOffers($merchant_id, $merchant_name)
             font-weight: bold;
         }
 
+        .modal-title {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
         @media only screen and (max-width: 767px) {
 
             table,
@@ -302,7 +311,7 @@ function displayOffers($merchant_id, $merchant_name)
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="voucherType" class="form-label">Voucher Type</label>
-                                <select class="form-select" id="voucherType" required>
+                                <select class="form-select" id="voucherType"  name="voucherType" required>
                                     <option value="Coupled">Coupled</option>
                                     <option value="Decoupled">Decoupled</option>
                                 </select>
@@ -333,20 +342,15 @@ function displayOffers($merchant_id, $merchant_name)
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="promoType" class="form-label">Promo Type</label>
-                                <div class="mt-1">
-                                    <input type="checkbox" id="BOGO" name="BOGO" value="BOGO">
-                                    <label for="BOGO"> BOGO</label><br>
-                                    <input type="checkbox" id="Free item" name="Free_item" value="Free item">
-                                    <label for="Free item"> Free Item</label><br>
-                                    <input type="checkbox" id="Fixed_discount" name="Fixed_discount"
-                                        value="Fixed discount">
-                                    <label for="Fixed_discount"> Fixed Discount</label><br>
-                                    <input type="checkbox" id="Percent_discount" name="Percent_discount"
-                                        value="Percent discount">
-                                    <label for="Percent_discount"> Percent Discount</label><br>
-                                    <input type="checkbox" id="Bundle" name="Bundle" value="Bundle">
-                                    <label for="Bundle"> Bundle</label><br>
-                                </div>
+                                <select class="form-select" id="promoType" name="promoType" required>
+                                    <option value="BOGO">BOGO</option>
+                                    <option value="Bundle">Bundle</option>
+                                    <option value="Fixed discount">Fixed discount</option>
+                                    <option value="Free item">Free item</option>
+                                    <option value="Fixed discount, Free item">Fixed discount, Free item</option>
+                                    <option value="Percent discount">Percent discount</option>
+                                    <option value="X for Y">X for Y</option>
+                                </select>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="mb-3">
@@ -417,30 +421,6 @@ function displayOffers($merchant_id, $merchant_name)
             $('#promoType').val(promoType);
             $('#startDate').val(startDate);
             $('#endDate').val(endDate);
-
-            // Check checkboxes based on promo_type
-            var promoTypesArray = promoType.split(',').map(item => item.trim());
-            promoTypesArray.forEach(type => {
-                switch (type) {
-                    case 'BOGO':
-                        $('#BOGO').prop('checked', true);
-                        break;
-                    case 'Free Item':
-                        $('#Free item').prop('checked', true);
-                        break;
-                    case 'Fixed Discount':
-                        $('#Fixed_discount').prop('checked', true);
-                        break;
-                    case 'Percent Discount':
-                        $('#Percent_discount').prop('checked', true);
-                        break;
-                    case 'Bundle':
-                        $('#Bundle').prop('checked', true);
-                        break;
-                    default:
-                        break;
-                }
-            });
 
             // Open the edit modal
             $('#editStoreModal').modal('show');
