@@ -81,10 +81,8 @@
 
 <div class="cont-box">
     <div class="custom-box pt-4">
-        <a href="index.php">
-            <p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p>
-        </a>
-        <div class="upload" style="text-align:left;">
+        <span><a href="index.php"><span class="back"><i class="fa-regular fa-circle-left fa-lg"></i></span></a>
+        <div class="upload pt-3" style="text-align:left;">
             <div class="add-btns">
                 <p class="title">Upload Merchants</p>
                 <button type="button" class="btn btn-warning check-report" id="addMerchantBtn"><i class="fa-solid fa-plus"></i> Add New Merchant </button>
@@ -162,7 +160,7 @@
                                 
                             </div>
                             <div class="mb-3 mt-3" style="text-align:right;">
-                                <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
+                                
                             </div>
                         </div>
                     </div>

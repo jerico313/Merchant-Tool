@@ -15,7 +15,7 @@ function displayFeeHistory($fee_id) {
         while ($row = $result->fetch_assoc()) {
             $shortFeeId = substr($row['fee_history_id'], 0, 8);
             $date = new DateTime($row['changed_at']);
-            $formattedDate = $date->format('F d, Y g:i:s A');
+            $formattedDate = $date->format('F d, Y');
             echo "<tr>";
             echo "<td style='text-align:center;'>" .$shortFeeId . "</td>";
             echo "<td style='text-align:center;'>" .$row['column_name'] . "</td>";
@@ -172,7 +172,8 @@ $(document).ready(function() {
     }
     
     $('#example').DataTable({
-        scrollX: true
+        scrollX: true,
+        order: [[4, 'desc']] // Default sort by the 'Created At' column in descending order
     });
 });
 </script>

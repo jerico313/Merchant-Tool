@@ -84,9 +84,9 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 <div class="cont-box">
     <div class="custom-box pt-4">
         <a href="javascript:history.back()">
-            <p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p>
+        <span class="back"><i class="fa-regular fa-circle-left fa-lg"></i></span>
         </a>
-        <div class="upload" style="text-align:left;">
+        <div class="upload pt-3" style="text-align:left;">
             <div class="add-btns">
                 <p class="title">Upload Promo</p>
                 <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">

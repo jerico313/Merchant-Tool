@@ -22,6 +22,7 @@ if (isset($_SESSION['user_id'])) {
       $user_data = mysqli_fetch_assoc($result);
       $type = $user_data['type'];
       $name = $user_data['name'];
+      $user_id = $user_data['user_id'];
   } else {
       $type = 'type';
   }

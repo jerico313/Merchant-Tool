@@ -2,16 +2,19 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("../inc/config.php");
 
-    $merchantId = $_POST['merchantId'];
+    $feeId = $_POST['feeId'];
     $paymayaCreditCard = $_POST['paymayaCreditCard'];
     $gcash = $_POST['gcash'];
     $gcashMiniapp = $_POST['gcashMiniapp'];
     $paymaya = $_POST['paymaya'];
     $mayaCheckout = $_POST['mayaCheckout'];
     $maya = $_POST['maya'];
+    $leadgenCommission = $_POST['leadgenCommission'];
+    $commissionType = $_POST['commissionType'];
+    $userId = $_POST['userId'];
 
-    $stmt = $conn->prepare("UPDATE merchant SET merchant_name=?, merchant_partnership_type=?, legal_entity_name=?, business_address=?, email_address=? WHERE merchant_id=?");
-    $stmt->bind_param("ssssss", $merchantName, $merchantPartnershipType, $legalEntityName, $businessAddress, $emailAddress, $merchantId);
+    $stmt = $conn->prepare("UPDATE fee SET paymaya_credit_card=?, gcash=?, gcash_miniapp=?, paymaya=?, maya_checkout=?, maya=?, lead_gen_commission=?, commission_type=? WHERE fee_id=?");
+    $stmt->bind_param("sssssssss", $paymayaCreditCard, $gcash, $gcashMiniapp, $paymaya, $mayaCheckout, $maya, $leadgenCommission, $commissionType, $feeId);
 
     if ($stmt->execute()) {
         // Redirect to the same page after successful update

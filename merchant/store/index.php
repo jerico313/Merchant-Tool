@@ -348,14 +348,13 @@ function displayStore($merchant_id)
             });
         });
 
-        function editStore(storeId) {
-            // Fetch the current data of the selected store
-            var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
-            var storeName = storeRow.find('td:nth-child(2)').text();
-            var legalEntityName = storeRow.find('td:nth-child(3)').text();
-            var storeAddress = storeRow.find('td:nth-child(4)').text();
-            var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>"; // Set from PHP
-            var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; // Set from PHP
+function editStore(storeId) {
+    var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
+    var storeName = storeRow.find('td:nth-child(2)').text();
+    var legalEntityName = storeRow.find('td:nth-child(3)').text();
+    var storeAddress = storeRow.find('td:nth-child(4)').text();
+    var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>";
+    var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; // Set from PHP
 
             // Set values in the edit modal
             $('#storeId').val(storeId);

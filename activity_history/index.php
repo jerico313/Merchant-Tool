@@ -3,7 +3,7 @@
 function displayPGFeeRate() {
   include("../inc/config.php");
 
-  $sql = "SELECT * FROM activity_history";
+  $sql = "SELECT * FROM activity_history ORDER BY created_at DESC";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
@@ -224,7 +224,8 @@ function displayPGFeeRate() {
     }
     
     $('#example').DataTable({
-        scrollX: true
+        scrollX: true,
+        order: [[4, 'desc']] 
     });
 });
 
