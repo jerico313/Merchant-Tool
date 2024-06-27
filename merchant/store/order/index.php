@@ -29,6 +29,9 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
         $params[] = $voucherType;
     }
 
+    // Order by Transaction Date in descending order (latest to oldest)
+    $sql .= " ORDER BY `Transaction Date` DESC";
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(str_repeat("s", count($params)), ...$params);
     $stmt->execute();

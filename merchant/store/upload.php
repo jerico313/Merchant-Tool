@@ -86,9 +86,9 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 <div class="cont-box">
     <div class="custom-box pt-4">
         <a href="javascript:history.back()">
-            <p class="back"><i class="fa-regular fa-circle-left fa-lg"></i></p>
+        <span class="back"><i class="fa-regular fa-circle-left fa-lg"></i></span>
         </a>
-        <div class="upload" style="text-align:left;">
+        <div class="upload pt-3" style="text-align:left;">
             <div class="add-btns">
                 <p class="title">Upload Store</p>
                 <?php
@@ -164,7 +164,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                 </div>
                             </div>
                             <div class="mb-3 mt-3" style="text-align:right;">
-                                <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
+                               
                             </div>
                         </div>
                     </div>
