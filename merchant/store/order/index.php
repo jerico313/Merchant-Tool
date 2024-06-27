@@ -49,27 +49,27 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             $date = new DateTime($row['Transaction Date']);
             $formattedDate = $date->format('F d, Y g:i A');
             echo "<tr style='padding:10px;'>";
-            echo "<td style='text-align:center;'>" . $row['Transaction ID'] . "</td>";
-            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Customer ID'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Customer Name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Promo Code'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Voucher Type'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Promo Category'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Promo Group'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Promo Type'] . "</td>";
-            echo "<td style='text-align:center;'>" . $GrossAmount . "</td>";
-            echo "<td style='text-align:center;'>" . $Discount . "</td>";
-            echo "<td style='text-align:center;'>" . $CartAmount . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Payment'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Bill Status'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Commission Type'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['Commission Rate'] . "</td>";
-            echo "<td style='text-align:center;'>" . $CommissionAmount . "</td>";
-            echo "<td style='text-align:center;'>" . $TotalBilling . "</td>";
-            echo "<td style='text-align:center;'>" . $row['PG Fee Rate'] . "</td>";
-            echo "<td style='text-align:center;'>" . $PGFeeAmount . "</td>";
-            echo "<td style='text-align:center;'>" . $AmounttobeDisbursed . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
+            echo "<td style='text-align:center;width:7%;'>" . $formattedDate . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
+            echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
+            echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
+            echo "<td style='text-align:center;width:3%;'>" . $row['Voucher Type'] . "</td>";
+            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Category'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Promo Group'] . "</td>";
+            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Type'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $GrossAmount . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $Discount . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $CartAmount . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Payment'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $CommissionAmount . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $TotalBilling . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $PGFeeAmount . "</td>";
+            echo "<td style='text-align:center;width:5%;'>" . $AmounttobeDisbursed . "</td>";
             echo "</tr>";
         }
     }
@@ -292,7 +292,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                             class="fa-solid fa-download"></i> Download</button>
                 </div>
                 <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                    <table id="example" class="table bord" style="width:300%;">
+                    <table id="example" class="table bord" style="width:250%;">
                         <thead>
                             <tr>
                                 <th>Transaction ID</th>
@@ -315,7 +315,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                 <th>Total Billing</th>
                                 <th>PG Fee Rate</th>
                                 <th>PG Fee Amount</th>
-                                <th style="width:80px;">Amount to be Disbursed</th>
+                                <th>Amount to be Disbursed</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
