@@ -225,7 +225,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                     <ul class="dropdown-menu" aria-labelledby="storeDropdown">
                                         <li><a class="dropdown-item"
                                                 href="../index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Stores</a>
+                                                data-breadcrumb="Offers" style="color:#4BB0B8;">Stores</a>
                                         </li>
                                         <li><a class="dropdown-item"
                                                 href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
@@ -233,7 +233,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                         </li>
                                         <li><a class="dropdown-item"
                                                 href="../../reports/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers" style="color:#4BB0B8;">Settlement Reports</a>
+                                                data-breadcrumb="Offers">Settlement Reports</a>
                                         </li>
                                     </ul>
                                 </li>

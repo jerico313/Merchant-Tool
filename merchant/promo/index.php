@@ -109,6 +109,10 @@ function displayOffers($merchant_id, $merchant_name)
             -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
         }
 
+        .dropdown-item {
+            font-weight: bold;
+        }
+
         @media only screen and (max-width: 767px) {
 
             table,
@@ -212,6 +216,10 @@ function displayOffers($merchant_id, $merchant_name)
                                         <li><a class="dropdown-item"
                                                 href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Stores</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers" style="color:#4BB0B8;">Promos</a>
                                         </li>
                                         <li><a class="dropdown-item"
                                                 href="../reports/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
