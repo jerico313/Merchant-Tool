@@ -115,7 +115,6 @@ function displayStore($merchant_id)
             font-weight: bold;
         }
 
-
         @media only screen and (max-width: 767px) {
 
             table,
