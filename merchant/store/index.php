@@ -1,10 +1,11 @@
-<?php include("../../header.php")?>
-<?php
+<?php 
+include_once("../../header.php");
+
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
 function displayStore($merchant_id) {
-    include("../../inc/config.php");
+    global $conn, $type;
 
     $sql = "SELECT store.*, merchant.merchant_name
             FROM store
@@ -24,12 +25,21 @@ function displayStore($merchant_id) {
             echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>"; // Assuming legal_entity_name is a column in store table now
             echo "<td style='text-align:center;'>" . $row['store_address'] . "</td>";
             echo "<td style='text-align:center;'>";
+
+            // Initialize variables for HTML output
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
             $escapedStoreName = htmlspecialchars($row['store_name'], ENT_QUOTES, 'UTF-8');
             $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
             $escapedStoreAddress = htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;padding:4px;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")'>View</button> ";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;padding:4px;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
+
+            // Display buttons based on user type
+            if ($type !== 'User') {
+                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;padding:4px;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")'>View</button> ";
+                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;padding:4px;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
+            } else {
+                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;padding:4px;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")'>View</button> ";
+            }
+
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")'>Check Report</button> ";
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#E31C21;color:#fff;padding:4px;' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")'>View Report</button> ";
             echo "</td>";
@@ -37,9 +47,10 @@ function displayStore($merchant_id) {
         }
     }
 
-    $conn->close();
+    $stmt->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

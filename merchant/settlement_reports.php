@@ -46,11 +46,6 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
         }
 
 </style>
-<script>
-  function editEmployee(id) {
-    window.location = "edit_order.php?order_id=" + id;
-  }
-</script>
 </head>
 <body>
 <div class="cont-box">

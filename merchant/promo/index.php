@@ -1,12 +1,13 @@
-<?php include("../../header.php")?>
-<?php
+<?php 
+include_once("../../header.php");
+
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
-function displayOffers($merchant_id, $merchant_name) {
-    include("../../inc/config.php");
 
+function displayOffers($merchant_id, $merchant_name) {
+    global $conn, $type;
     $sql = "SELECT * FROM promo WHERE merchant_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
@@ -32,7 +33,12 @@ function displayOffers($merchant_id, $merchant_name) {
             echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
             echo "<td style='text-align:center;'>";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#95DD59;color:black;' onclick='editPromo(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")'>Edit</button> ";
+
+            // Check if user type is 'user' to hide edit button
+            if ($type !== 'User') {
+                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#95DD59;color:black;' onclick='editPromo(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")'>Edit</button> ";
+            }
+            
             echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")'>View History</button> ";
             echo "</td>";
             echo "</tr>";
@@ -42,6 +48,8 @@ function displayOffers($merchant_id, $merchant_name) {
     $conn->close();
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -219,11 +227,11 @@ function displayOffers($merchant_id, $merchant_name) {
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content" style="border-radius:20px;">
       <div class="modal-header border-0">
-        <p class="modal-title" id="editStoreModalLabel">Edit Promo Details</p>
+        <p class="modal-title" id="editPromoModalLabel" style="font-size:15px;font-weight:bold;">Edit Promo Details</p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="editStoreForm" action="edit.php" method="POST">
+        <form id="editPromoForm" action="edit.php" method="POST">
             <input type="hidden" id="promoId" name="promoId">
             <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
             <input type="hidden" id="merchantName" name="merchantName" value="<?php echo htmlspecialchars($merchant_name); ?>">
@@ -234,7 +242,7 @@ function displayOffers($merchant_id, $merchant_name) {
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="promoDetails" class="form-label">Promo Details</label>
-                    <textarea class="form-control" rows="3" id ="emailAddress" name="promoDetails" style="padding:5px 5px;" required></textarea>
+                    <textarea class="form-control" rows="2" id ="promoDetails" name="promoDetails" style="padding:5px 5px;" required></textarea>
                 </div>
 
                 <div class="col-md-6 mb-3">
@@ -281,8 +289,8 @@ function displayOffers($merchant_id, $merchant_name) {
                     <div class="mt-1">
                         <input type="checkbox" id="BOGO" name="BOGO" value="BOGO">
                         <label for="BOGO"> BOGO</label><br>
-                        <input type="checkbox" id="Free_item" name="Free_item" value="Free item">
-                        <label for="Free_item"> Free Item</label><br>
+                        <input type="checkbox" id="Free item" name="Free_item" value="Free item">
+                        <label for="Free item"> Free Item</label><br>
                         <input type="checkbox" id="Fixed_discount" name="Fixed_discount" value="Fixed discount">
                         <label for="Fixed_discount"> Fixed Discount</label><br>
                         <input type="checkbox" id="Percent_discount" name="Percent_discount" value="Percent discount">
@@ -329,19 +337,20 @@ function viewHistory(storeId, merchantName, promoId, promoCode) {
 }
 </script>
 <script>
-    function editPromo(promoId) {
-    // Fetch the current data of the selected store
-    var promoRow = $('#dynamicTableBody').find('tr[data-uuid="' + promoId + '"]');
+function editPromo(promoId) {
+    // Fetch the current data of the selected promo
+    var promoRow = $('#dynamicTableBody').find('tr[data-id="' + promoId + '"]');
     var promoCode = promoRow.find('td:nth-child(2)').text();
     var promoAmount = promoRow.find('td:nth-child(3)').text();
     var voucherType = promoRow.find('td:nth-child(4)').text();
     var promoCategory = promoRow.find('td:nth-child(5)').text();
-    var promoType = promoRow.find('td:nth-child(6)').text();
-    var promoDetails = promoRow.find('td:nth-child(7)').text();
-    var remarks = promoRow.find('td:nth-child(8)').text();
-    var billStatus = promoRow.find('td:nth-child(9)').text();
-    var startDate = promoRow.find('td:nth-child(10)').text();
-    var endDate = promoRow.find('td:nth-child(11)').text();
+    var promoGroup = promoRow.find('td:nth-child(6)').text();
+    var promoType = promoRow.find('td:nth-child(7)').text();
+    var promoDetails = promoRow.find('td:nth-child(8)').text();
+    var remarks = promoRow.find('td:nth-child(9)').text();
+    var billStatus = promoRow.find('td:nth-child(10)').text();
+    var startDate = promoRow.find('td:nth-child(11)').text();
+    var endDate = promoRow.find('td:nth-child(12)').text();
     var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>"; // Set from PHP
     var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; // Set from PHP
 
@@ -358,9 +367,34 @@ function viewHistory(storeId, merchantName, promoId, promoCode) {
     $('#startDate').val(startDate);
     $('#endDate').val(endDate);
 
+    // Check checkboxes based on promo_type
+    var promoTypesArray = promoType.split(',').map(item => item.trim());
+    promoTypesArray.forEach(type => {
+        switch (type) {
+            case 'BOGO':
+                $('#BOGO').prop('checked', true);
+                break;
+            case 'Free Item':
+                $('#Free item').prop('checked', true);
+                break;
+            case 'Fixed Discount':
+                $('#Fixed_discount').prop('checked', true);
+                break;
+            case 'Percent Discount':
+                $('#Percent_discount').prop('checked', true);
+                break;
+            case 'Bundle':
+                $('#Bundle').prop('checked', true);
+                break;
+            default:
+                break;
+        }
+    });
+
     // Open the edit modal
     $('#editStoreModal').modal('show');
 }
+
 </script>
 </body>
 </html>

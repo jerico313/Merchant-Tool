@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($_POST['store_id'] as $key => $value) {
         $store_id = $_POST['store_id'][$key];
         $merchant_id = $_POST['merchant_id'][$key];
-        $store_name = $_POST['store_id'][$key];
+        $store_name = $_POST['store_name'][$key];
         $legal_entity_name = $_POST['legal_entity_name'][$key];
         $store_address = $_POST['store_address'][$key];
         $stmt->execute();

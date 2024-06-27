@@ -1,37 +1,45 @@
-<?php include_once("../header.php"); ?>
 <?php
+include_once("../header.php");
+
 function displayMerchant() {
-  
-  include_once("../inc/config.php");
+    global $conn, $type;
+    $sql = "SELECT * FROM merchant";
+    $result = $conn->query($sql);
 
-  $sql = "SELECT * FROM merchant";
-  $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $count = 1;
+        while ($row = $result->fetch_assoc()) {
+            $shortMerchantId = substr($row['merchant_id'], 0, 8);
+            echo "<tr data-uuid='" . htmlspecialchars($row['merchant_id']) . "' data-partnership-type='" . strtolower($row['merchant_partnership_type']) . "'>";
+            echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
+            echo "<td style='text-align:center;'>" . htmlspecialchars($row['merchant_name']) . "</td>";
+            echo "<td style='text-align:center;' class='partnership-type'>" . htmlspecialchars($row['merchant_partnership_type']) . "</td>";
+            echo "<td style='text-align:center;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
+            echo "<td style='text-align:center;'>" . htmlspecialchars($row['business_address']) . "</td>";
+            echo "<td style='text-align:center;'>" . htmlspecialchars($row['email_address']) . "</td>";
+            echo "<td style='text-align:center;'>";
 
-  if ($result->num_rows > 0) {
-      $count = 1;
-      while ($row = $result->fetch_assoc()) {
-          $shortMerchantId = substr($row['merchant_id'], 0, 8);
-          echo "<tr data-uuid='" . $row['merchant_id'] . "' data-partnership-type='" . strtolower($row['merchant_partnership_type']) . "'>";
-          echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
-          echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
-          echo "<td style='text-align:center;' class='partnership-type'>" . $row['merchant_partnership_type'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['business_address'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['email_address'] . "</td>";
-          echo "<td style='text-align:center;'>";
-          $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['merchant_id'] . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['merchant_id'] . "\")'>Edit</button> ";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['merchant_id'] . "\", \"" . $escapedMerchantName . "\"  )'>Check Report</button> ";
-          echo "</td>";
-          echo "</tr>";
-          $count++;
-      }
-  }
+            $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
 
-  $conn->close();
+            if ($type !== 'User') {
+                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
+                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\")'>Edit</button> ";
+            } else {
+                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
+            }
+
+            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\", \"" . $escapedMerchantName . "\"  )'>Check Report</button> ";
+            echo "</td>";
+            echo "</tr>";
+            $count++;
+        }
+    }
+
+    $conn->close();
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">

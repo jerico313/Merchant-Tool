@@ -11,17 +11,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $merchantName = $_POST['merchantName'];
 
     // Prepare the SQL statement
-    $stmt = $conn->prepare("UPDATE store SET store_name=?, store_id=?, merchant_id=?, legal_entity_name=? ,store_address=? WHERE store_id=?");
-    $stmt->bind_param("sssss", $storeName, $storeId, $merchantId, $legalEntityName, $storeAddress);
+    $stmt = $conn->prepare("UPDATE store SET store_name=?, merchant_id=?, legal_entity_name=?, store_address=? WHERE store_id=?");
+    $stmt->bind_param("sssss", $storeName, $merchantId, $legalEntityName, $storeAddress, $storeId);
 
     // Execute the statement and check for errors 
     if ($stmt->execute()) {
         // Redirect to the store page with the merchant_id and merchant_name after a successful update
-        header("Location: index.php");
+        header("Location: index.php?merchant_id=" . htmlspecialchars($merchantId) . "&merchant_name=" . htmlspecialchars($merchantName));
         exit();
     } else {
-        // Output an error message if something goes wrong
-        echo "Error updating record: " . $stmt->error;
+        // Log error message
+        error_log("Error updating record: " . $stmt->error);
+        echo "An error occurred while updating the record. Please try again later.";
     }
 
     // Close the statement and connection

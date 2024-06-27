@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Debugging statement
                 error_log("User authenticated and session variables set. Redirecting...");
 
-                header("Location: merchant/index.php");
+                header("Location: merchant/");
                 exit();
             } else {
                 $error = "Your account is inactive. Please contact support.";

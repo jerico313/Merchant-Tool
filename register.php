@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssss", $name, $email, $type, $hashed_password);
 
         if ($stmt->execute()) {
-          echo "<script>alert('Record added successfully'); window.location = 'index.php';</script>";
+          header("Location: /Merchant-Tool/");
         } else {
             echo "Error: " . $stmt->error;
         }
