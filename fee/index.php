@@ -21,6 +21,8 @@ function displayPGFeeRate() {
           echo "<td style='text-align:center;'>" . $row['maya'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['lead_gen_commission'] . "</td>";
           echo "<td style='text-align:center;'>" . $row['commission_type'] . "</td>";
+          $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
+          echo "<td style='text-align:center;'><button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['fee_id'] . "\", \"" . $escapedMerchantName . "\")'>View History</button></td>";
           echo "</tr>";
       }
   }
@@ -166,7 +168,6 @@ function displayPGFeeRate() {
     }
 }
     </style>
-  </style>
 </head>
 <body>
 <div class="cont-box">
@@ -192,6 +193,7 @@ function displayPGFeeRate() {
                 <th>Maya</th>
                 <th>Leadgen Commission</th>
                 <th>Commission Type</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
@@ -214,11 +216,16 @@ $(document).ready(function() {
     $('#example').DataTable({
         scrollX: true,
         columnDefs: [
-          { orderable: false, targets: [ 2, 3, 4, 5, 6, 7, 8, 9] }    // Disable sorting for the first column
+          { orderable: false, targets: [ 2, 3, 4, 5, 6, 7, 8, 9, 10 ] }    // Disable sorting for the specified columns
         ],
         order: []  // Ensure no initial ordering
     });
 });
+
+function viewHistory(fee_id, merchant_name) {
+    window.location.href = 'history.php?fee_id=' + encodeURIComponent(fee_id) + '&merchant_name=' + encodeURIComponent(merchant_name);
+}
+
 </script>
 </body>
 </html>

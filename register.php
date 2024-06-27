@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $stmt->close();
     } else {
-        echo "Passwords do not match";
+        $error = "Passwords do not match";
     }
 
     $conn->close();
@@ -130,7 +130,7 @@ color: #2A3240;
   right: 20px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 20px;
+  font-size: 1.5rem;
   }
 
 
@@ -212,6 +212,7 @@ color: #2A3240;
 
   .input-box input {
     padding: 15px 15px 15px 40px;
+    
   }
 
   .input-box i {
@@ -221,6 +222,20 @@ color: #2A3240;
   .wrapper h1, .wrapper h2, .wrapper h3 {
     font-size: 1.25rem;
   }
+}
+
+.alert-custom {
+  border-left: solid 3px #f01e2c;
+  padding: 10px;
+  background-color: #f8d7da;
+  color: #721c24;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.alert-custom i {
+  margin-right: 10px;
 }
 
 
@@ -240,8 +255,8 @@ color: #2A3240;
       <div class="input-box">
         <input type="text" placeholder="Name" name="name"required>
       </div>
-      <div class="input-box">
-        <input type="text" placeholder="Position" value="User" name="type" readonly required>
+      <div class="input-box" style= "display:none">
+        <input type="text" placeholder="Position" value="User" name="type" readonly required >
       </div>
       <div class="input-box">
         <input type="password" placeholder="Create password" name="password" required>
@@ -251,6 +266,11 @@ color: #2A3240;
         <input type="password" placeholder="Confirm password" name="confirm_password" required>
         <i class= 'bx bxs-lock-alt'></i>  
       </div>
+      <?php if (!empty($error)): ?>
+        <div class="alert-custom alert alert-danger" role="alert">
+            <i class="fa-solid fa-circle-exclamation"></i> <?php echo $error; ?>
+        </div>
+      <?php endif; ?>
         <button type="submit" class="btn">Submit</button>
 
         <div class="register-link">

@@ -23,7 +23,6 @@ function displayMerchant() {
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . $row['merchant_id'] . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . $row['merchant_id'] . "\")'>Edit</button> ";
           echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['merchant_id'] . "\", \"" . $escapedMerchantName . "\"  )'>Check Report</button> ";
-          echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#E31C21;color:#fff;padding:4px;' onclick='viewReport(\"" . $row['merchant_id'] . "\", \"" . $escapedMerchantName . "\"  )'>View Report</button> ";
           echo "</td>";
           echo "</tr>";
           $count++;
@@ -148,7 +147,7 @@ function displayMerchant() {
                 <th>Legal Entity Name</th>
                 <th>Business Address</th>
                 <th>Email Address</th>
-                <th style="width:220px;">Action</th>
+                <th style="width:160px;">Action</th>
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
