@@ -180,13 +180,14 @@ function displayOffers($merchant_id, $merchant_name) {
                 <div class="row pb-2 title" aria-label="breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="../index.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
+                            <li class="breadcrumb-item"><a href="../index.php" style="color:#E96529; font-size:14px;">Merchants</a></li>
                             <li class="breadcrumb-item dropdown">
                                 <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E96529;font-size:14px;">
-                                Promo
+                                Promos
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                    <li><a class="dropdown-item" href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Store</a></li>
+                                    <li><a class="dropdown-item" href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Stores</a></li>
+                                    <li><a class="dropdown-item" href="../settlement_reports.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" data-breadcrumb="Offers">Settlement Reports</a></li>
                                 </ul>
                             </li>
                         </ol>
