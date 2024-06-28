@@ -106,6 +106,15 @@ function displayStore($merchant_id)
             font-weight: bold;
         }
 
+        .modal-title {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
         @media only screen and (max-width: 767px) {
 
             table,
@@ -348,13 +357,13 @@ function displayStore($merchant_id)
             });
         });
 
-function editStore(storeId) {
-    var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
-    var storeName = storeRow.find('td:nth-child(2)').text();
-    var legalEntityName = storeRow.find('td:nth-child(3)').text();
-    var storeAddress = storeRow.find('td:nth-child(4)').text();
-    var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>";
-    var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; // Set from PHP
+        function editStore(storeId) {
+            var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
+            var storeName = storeRow.find('td:nth-child(2)').text();
+            var legalEntityName = storeRow.find('td:nth-child(3)').text();
+            var storeAddress = storeRow.find('td:nth-child(4)').text();
+            var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>";
+            var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; // Set from PHP
 
             // Set values in the edit modal
             $('#storeId').val(storeId);

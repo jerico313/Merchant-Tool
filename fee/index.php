@@ -83,6 +83,15 @@ function displayPGFeeRate()
       align-items: center;
     }
 
+    .modal-title {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
     @media only screen and (max-width: 767px) {
 
       table,
@@ -237,35 +246,35 @@ function displayPGFeeRate()
               <input type="hidden" id="feeId" name="feeId">
               <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
               <input type="hidden" id="merchantId" name="merchantId">
-                  <div class="mb-3">
-                    <label for="paymayaCreditCard" class="form-label">Paymaya Credit Card, Maya Checkout, & Maya</label>
-                    <input type="text" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard">
-                  </div>
-                  <div class="mb-3">
-                    <label for="gcash" class="form-label">GCash</label>
-                    <input type="text" class="form-control" id="gcash" name="gcash">
-                  </div>
-                  <div class="mb-3">
-                    <label for="gcashMiniapp" class="form-label">GCash Miniapp</label>
-                    <input type="text" class="form-control" id="gcashMiniapp" name="gcashMiniapp">
-                  </div>
-                  <div class="mb-3">
-                    <label for="paymaya" class="form-label">Paymaya</label>
-                    <input class="form-control" rows="3" id="paymaya" name="paymaya" style="padding:5px 5px;"
-                      required></textarea>
-                  </div>
-                  <div class="mb-3">
-                    <label for="leadgenCommission" class="form-label">Leadgen Commission</label>
-                    <input class="form-control" rows="3" id="leadgenCommission" name="leadgenCommission"
-                      style="padding:5px 5px;" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="commissionType" class="form-label">Commission Type</label>
-                    <select class="form-select" id="commissionType" name="commissionType" required>
-                      <option value="VAT Inc">VAT Inc</option>
-                      <option value="VAT Exc">VAT Exc</option>
-                    </select>
-                  </div>
+              <div class="mb-3">
+                <label for="paymayaCreditCard" class="form-label">Paymaya Credit Card, Maya Checkout, & Maya</label>
+                <input type="text" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard">
+              </div>
+              <div class="mb-3">
+                <label for="gcash" class="form-label">GCash</label>
+                <input type="text" class="form-control" id="gcash" name="gcash">
+              </div>
+              <div class="mb-3">
+                <label for="gcashMiniapp" class="form-label">GCash Miniapp</label>
+                <input type="text" class="form-control" id="gcashMiniapp" name="gcashMiniapp">
+              </div>
+              <div class="mb-3">
+                <label for="paymaya" class="form-label">Paymaya</label>
+                <input class="form-control" rows="3" id="paymaya" name="paymaya" style="padding:5px 5px;"
+                  required></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="leadgenCommission" class="form-label">Leadgen Commission</label>
+                <input class="form-control" rows="3" id="leadgenCommission" name="leadgenCommission"
+                  style="padding:5px 5px;" required>
+              </div>
+              <div class="mb-3">
+                <label for="commissionType" class="form-label">Commission Type</label>
+                <select class="form-select" id="commissionType" name="commissionType" required>
+                  <option value="VAT Inc">VAT Inc</option>
+                  <option value="VAT Exc">VAT Exc</option>
+                </select>
+              </div>
               <button type="submit" class="btn btn-primary"
                 style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
             </form>
@@ -310,7 +319,7 @@ function displayPGFeeRate()
         var leadgenCommission = feeRow.find('td:nth-child(9)').text();
         var commissionType = feeRow.find('td:nth-child(10)').text();
         var merchantId = feeRow.find('td:nth-child(11)').text();
-        
+
         // Set values in the edit modal
         $('#feeId').val(feeUuid);
         $('#paymayaCreditCard').val(paymayaCreditCard);
@@ -327,22 +336,22 @@ function displayPGFeeRate()
         $('#editFeeModal').modal('show');
       }
     </script>
-     <script>
-        // Get all inputs that need conversion
-        const inputs = document.querySelectorAll('#paymayaCreditCard, #gcash, #gcashMiniapp, #paymaya, #leadgenCommission');
+    <script>
+      // Get all inputs that need conversion
+      const inputs = document.querySelectorAll('#paymayaCreditCard, #gcash, #gcashMiniapp, #paymaya, #leadgenCommission');
 
-        // Add event listeners to each input
-        inputs.forEach(input => {
-            input.addEventListener('blur', function() {
-                let value = this.value;
+      // Add event listeners to each input
+      inputs.forEach(input => {
+        input.addEventListener('blur', function () {
+          let value = this.value;
 
-                // Check if the value is a number and if it's a whole number
-                if (!isNaN(value) && Number.isInteger(parseFloat(value))) {
-                    // Convert the whole number to a decimal
-                    this.value = parseFloat(value).toFixed(2);
-                }
-            });
+          // Check if the value is a number and if it's a whole number
+          if (!isNaN(value) && Number.isInteger(parseFloat(value))) {
+            // Convert the whole number to a decimal
+            this.value = parseFloat(value).toFixed(2);
+          }
         });
+      });
     </script>
 </body>
 
