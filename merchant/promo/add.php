@@ -1,0 +1,132 @@
+<?php
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
+$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+
+require_once("../../header.php");
+require_once '../../inc/config.php';
+require_once '../../vendor/autoload.php'; // Include the Composer autoload file
+
+use Ramsey\Uuid\Uuid;
+
+// Create a database connection
+$conn = new mysqli($db_host, $db_user, $db_password, $db_name);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Prepare and bind SQL statement
+    $stmt = $conn->prepare("INSERT INTO promo (promo_id, promo_code, merchant_id, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssssssss", $promo_id, $promo_code, $merchant_id, $promo_amount, $voucher_type, $promo_category, $promo_group, $promo_type, $promo_details, $remarks, $bill_status, $start_date, $end_date);
+
+    // Set parameters and execute
+    foreach ($_POST['promo_code'] as $key => $value) {
+        $promo_id = Uuid::uuid4()->toString();
+        $promo_code = $_POST['promo_code'][$key];
+        $merchant_id = $_POST['merchant_id'][$key];
+        $promo_amount = $_POST['promo_amount'][$key];
+        $voucher_type = $_POST['voucher_type'][$key];
+        $promo_category = $_POST['promo_category'][$key];
+        $promo_group = $_POST['promo_group'][$key];
+        $promo_type = $_POST['promo_type'][$key];
+        $promo_details = $_POST['promo_details'][$key];
+        $remarks = $_POST['remarks'][$key];
+        $bill_status = $_POST['bill_status'][$key];
+        $start_date = $_POST['start_date'][$key];
+        $end_date = $_POST['end_date'][$key];
+        
+        $stmt->execute();
+    }
+
+    // Close statement
+    $stmt->close();
+}
+
+// Close connection
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../style.css">
+    <title>Upload Success</title>
+    <style>
+        body {
+            background-image: url("../../images/bg_booky.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            border: solid #fff 2px;
+            border-radius:10px;
+            width:250px;
+            height:350px;
+            padding-top:70px;
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.40);
+            border-radius: 12px;
+            border: 1px solid rgba(209, 213, 219, 0.3);
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+        }
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto;
+        }
+        .checkmark__circle {
+            stroke-width: 4;
+            stroke-miterlimit: 10;
+            stroke: #4caf50;
+            fill: none;
+        }
+        .checkmark__check {
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-miterlimit: 10;
+            stroke: #4caf50;
+            fill: none;
+            animation: draw 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        @keyframes draw {
+            0% {
+                stroke-dashoffset: 48;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark__circle" cx="26" cy="26" r="25"/>
+            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+        <h2 style="padding-top:10px;color: #4caf50;">Successfully Added!</h2>
+        <a href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"><button type="button" class="btn btn-secondary okay">Okay</button></a>
+    </div>
+    <script>
+        setTimeout(function(){
+            window.location.href = 'index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
+        }, 3000); // Delay for 3 seconds (3000 milliseconds)
+    </script>
+</body>
+</html>

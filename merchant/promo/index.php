@@ -20,6 +20,9 @@ function displayOffers($merchant_id, $merchant_name)
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             $shortPromoId = substr($row['promo_id'], 0, 8);
             $promo_amount = number_format($row['promo_amount'], 2);
+            $start_date = ($row['start_date'] === '0000-00-00') ? 'No Start Date' : $row['start_date'];
+            $end_date = ($row['end_date'] === '0000-00-00') ? 'No End Date' : $row['end_date'];
+
             echo "<tr data-id='" . $row['promo_id'] . "'>";
             echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
             echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
@@ -31,8 +34,8 @@ function displayOffers($merchant_id, $merchant_name)
             echo "<td style='text-align:center;'>" . $row['promo_details'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['remarks'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['start_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['end_date'] . "</td>";
+            echo "<td style='text-align:center;'>" . $start_date . "</td>";
+            echo "<td style='text-align:center;'>" . $end_date . "</td>";
             echo "<td style='text-align:center;'>";
 
             // Check if user type is 'user' to hide edit button
