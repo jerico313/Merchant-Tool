@@ -1,33 +1,41 @@
 <?php require_once("../header.php")?>
 <?php
 function displayPGFeeRate() {
-  include("../inc/config.php");
+    global $conn, $type;
 
-  $sql = "SELECT * FROM activity_history ORDER BY created_at DESC";
-  $result = $conn->query($sql);
+    $sql = "SELECT ah.*, u.name AS user_name 
+            FROM activity_history AS ah 
+            LEFT JOIN user AS u ON ah.user_id = u.user_id 
+            ORDER BY ah.created_at DESC";
+    $result = $conn->query($sql);
 
-  if ($result->num_rows > 0) {
-      $count = 1;
-      while ($row = $result->fetch_assoc()) {
-          $shortActivityId = substr($row['activity_id'], 0, 8);
-          $shortUserId = substr($row['user_id'], 0, 8);
-          $shortTableId = substr($row['table_id'], 0, 8);
-          $date = new DateTime($row['created_at']);
-          $formattedDate = $date->format('F d, Y g:i:s A'); 
-          echo "<tr data-id='" . $row['activity_id'] . "' class='message-row'>";
-          echo "<td class='message-cell' style='text-align:center;'>" . $shortActivityId . "</td>";
-          echo "<td class='message-cell' style='text-align:center;'>" . $shortUserId . "</td>";
-          echo "<td class='message-cell' style='text-align:center;'>" . $shortTableId . "</td>";
-          echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_type'] . "</td>";
-          echo "<td class='message-cell' style='text-align:center;'>" . $formattedDate . "</td>";
-          echo "</tr>";
-          $count++;
-      }
-  }
+    if ($result->num_rows > 0) {
+        $count = 1;
+        while ($row = $result->fetch_assoc()) {
+            // Output for debugging
+            echo "<!-- Debug: created_at=" . $row['created_at'] . " -->";
 
-  $conn->close();
+            $shortActivityId = substr($row['activity_id'], 0, 8);
+            $userName = $row['user_name']; // Fetch the user's name directly
+            $shortTableId = substr($row['table_id'], 0, 8);
+            $date = new DateTime($row['created_at']);
+            $formattedDate = $date->format('F d, Y g:i:s A'); 
+            echo "<tr data-id='" . $row['activity_id'] . "' class='message-row'>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $shortActivityId . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $userName . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $shortTableId . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_type'] . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $formattedDate . "</td>";
+            echo "</tr>";
+            $count++;
+        }
+    }
+
+    $conn->close();
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -187,7 +195,7 @@ function displayPGFeeRate() {
         <thead>
             <tr>
                 <th>Activity ID</th>
-                <th>User ID</th>
+                <th>Name</th>
                 <th>Table ID</th>
                 <th>Activity Type</th>
                 <th>Created At</th>

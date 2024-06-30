@@ -21,7 +21,7 @@ function displayCoupled($merchant_id, $merchant_name)
             $formattedDate = $date->format('F d, Y g:i:s A');
             echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "'>";
             echo "<td style='text-align:center;'>" . $shortCoupledId . "</td>";
-            echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['merchant_business_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
+            echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['merchant_business_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
             echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
             echo "</tr>";
         }

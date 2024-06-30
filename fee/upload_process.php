@@ -7,7 +7,6 @@ use Ramsey\Uuid\Uuid;
 
 // Check if the file is uploaded
 if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != ''){
-    $file_name = $_FILES['fileToUpload']['name'];
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
 
     $file_name_parts = explode('.', $_FILES['fileToUpload']['name']);
@@ -20,26 +19,22 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
         exit();
     }
 
-    // Move the uploaded file to the uploads directory
-    move_uploaded_file($file_tmp,"uploads/".$file_name);
-
     // Process CSV file and insert data into MySQL
-    $csvFile = "uploads/".$file_name;
-    $handle = fopen($csvFile, "r");
+    $handle = fopen($file_tmp, "r");
     $header = fgetcsv($handle); // Skip header row
 
     // Prepare MySQL statement for first table
     $stmt1 = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-
     while (($data = fgetcsv($handle)) !== FALSE) {
-        // Bind and execute for first table
+        // Bind parameters and execute for first table
         $fee_id = Uuid::uuid4()->toString();
         $stmt1->bind_param("ssssssssss", $fee_id, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9]);
         $stmt1->execute();
     }
 
     fclose($handle);
+
 ?>
 <!DOCTYPE html>
 <html>

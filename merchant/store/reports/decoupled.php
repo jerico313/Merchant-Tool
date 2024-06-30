@@ -20,7 +20,7 @@ function displayDecoupled($store_id, $store_name) {
             $formattedDate = $date->format('F d, Y g:i:s A');
             echo "<tr class='clickable-row' data-href='decoupled_settlement_report.php?decoupled_report_id=" . $row['decoupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "'>";
             echo "<td style='text-align:center;'>" . $row['settlement_number'] . "</td>";
-            echo "<td style='text-align:center;'><i class='fa-solid fa-file' style='color:#4BB0B8'></i> " . $row['store_business_name']."_". $row['settlement_number']. ".pdf</td>";
+            echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['store_business_name']."_". $row['settlement_number']. ".pdf</td>";
             echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
             echo "</tr>";
         }

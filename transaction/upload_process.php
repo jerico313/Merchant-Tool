@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Upload Success</title>
     <style>
       body {
@@ -28,7 +28,6 @@ function convertDateFormat($dateString) {
 
 // Check if the file is uploaded
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
-    $file_name = $_FILES['fileToUpload']['name'];
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
 
     $file_name_parts = explode('.', $_FILES['fileToUpload']['name']);
@@ -41,12 +40,8 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         exit();
     }
 
-    // Move the uploaded file to the uploads directory
-    move_uploaded_file($file_tmp, "uploads/" . $file_name);
-
     // Process CSV file and insert data into MySQL
-    $csvFile = "uploads/" . $file_name;
-    $handle = fopen($csvFile, "r");
+    $handle = fopen($file_tmp, "r");
     $header = fgetcsv($handle); // Skip header row
 
     // Prepare MySQL statement for first table
@@ -69,67 +64,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     fclose($handle);
 ?>
 <body>
-<link rel="stylesheet" href="../style.css">
-    <title>Upload Success</title>
-    <style>
-      body {
-      background-image: url("../images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-
-        .container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            border: solid #fff 2px;
-            border-radius:10px;
-            width:250px;
-            height:350px;
-            padding-top:70px;
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            background-color: rgba(255, 255, 255, 0.40);
-            border-radius: 12px;
-            border: 1px solid rgba(209, 213, 219, 0.3);
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-        }
-        .checkmark {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: block;
-            margin: 0 auto;
-        }
-        .checkmark__circle {
-            stroke-width: 4;
-            stroke-miterlimit: 10;
-            stroke: #4caf50;
-            fill: none;
-        }
-        .checkmark__check {
-            stroke-dasharray: 48;
-            stroke-dashoffset: 48;
-            stroke-width: 4;
-            stroke-linecap: round;
-            stroke-miterlimit: 10;
-            stroke: #4caf50;
-            fill: none;
-            animation: draw 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-        }
-        @keyframes draw {
-            0% {
-                stroke-dashoffset: 48;
-            }
-            100% {
-                stroke-dashoffset: 0;
-            }
-        }
-    </style>
     <div class="container">
         <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
             <circle class="checkmark__circle" cx="26" cy="26" r="25"/>

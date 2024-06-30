@@ -3,7 +3,6 @@ require_once("../header.php");
 require_once("../inc/config.php");
 
 if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != ''){
-    $file_name = $_FILES['fileToUpload']['name'];
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
 
     $file_name_parts = explode('.', $_FILES['fileToUpload']['name']);
@@ -15,8 +14,6 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
         exit();
     }
 
-    move_uploaded_file($file_tmp,"uploads/".$file_name);
-
     // Create a database connection
     $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
@@ -26,15 +23,13 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     }
 
     // Process CSV file and insert data into MySQL
-    $csvFile = "uploads/".$file_name;
-    $handle = fopen($csvFile, "r");
+    $handle = fopen($file_tmp, "r");
     $header = fgetcsv($handle); // Skip header row
 
     // Prepare MySQL statement for the first table
     $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, legal_entity_name, business_address, email_address) VALUES ( ?, ?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-
         // Insert into the first table
         $stmt->bind_param("ssssss",$data[1], $data[0], $data[2], $data[3], $data[4], $data[5]);
         $stmt->execute();

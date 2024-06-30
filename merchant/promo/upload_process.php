@@ -11,7 +11,6 @@ $merchant_name = isset($_POST['merchant_name']) ? htmlspecialchars($_POST['merch
 
 // Check if the file is uploaded
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
-    $file_name = $_FILES['fileToUpload']['name'];
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
 
     $file_name_parts = explode('.', $_FILES['fileToUpload']['name']);
@@ -24,43 +23,42 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         exit();
     }
 
-    // Move the uploaded file to the uploads directory
-    move_uploaded_file($file_tmp, "uploads/" . $file_name);
-
     // Process CSV file and insert data into MySQL
-    $csvFile = "uploads/" . $file_name;
-    $handle = fopen($csvFile, "r");
+    $handle = fopen($file_tmp, "r");
     $header = fgetcsv($handle); // Skip header row
 
     // Prepare MySQL statement for first table
     $stmt1 = $conn->prepare("INSERT INTO promo (promo_id, merchant_id, promo_code, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
+        // Handle date formatting
         $data[3] = str_replace(',', '', $data[3]);
-$start_date = !empty($data[11]) ? DateTime::createFromFormat('m/d/Y', $data[11]) : null;
-$end_date = !empty($data[12]) ? DateTime::createFromFormat('m/d/Y', $data[12]) : null;
+        $start_date = !empty($data[11]) ? DateTime::createFromFormat('m/d/Y', $data[11]) : null;
+        $end_date = !empty($data[12]) ? DateTime::createFromFormat('m/d/Y', $data[12]) : null;
 
-// Check if createFromFormat failed
-if ($start_date instanceof DateTime) {
-    $start_date = $start_date->format('Y-m-d');
-} else {
-    $start_date = null; // or handle the error condition as needed
-}
+        // Check if createFromFormat failed
+        if ($start_date instanceof DateTime) {
+            $start_date = $start_date->format('Y-m-d');
+        } else {
+            $start_date = null; // or handle the error condition as needed
+        }
 
-if ($end_date instanceof DateTime) {
-    $end_date = $end_date->format('Y-m-d');
-} else {
-    $end_date = null; // or handle the error condition as needed
-}
+        if ($end_date instanceof DateTime) {
+            $end_date = $end_date->format('Y-m-d');
+        } else {
+            $end_date = null; // or handle the error condition as needed
+        }
 
-
-        // Bind and execute for first table
+        // Bind parameters and execute for first table
         $promo_id = Uuid::uuid4()->toString();
         $stmt1->bind_param("sssssssssssss", $promo_id, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $start_date, $end_date);
         $stmt1->execute();
     }
 
     fclose($handle);
+
+    // Close statement
+    $stmt1->close();
 ?>
 <!DOCTYPE html>
 <html>

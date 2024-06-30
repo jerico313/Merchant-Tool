@@ -1,4 +1,4 @@
-<?php include("../header.php")?>
+<?php include ("../header.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +54,7 @@
             display: none;
         }
 
-        .alert-custom {
+        .alert-custom, .alert-custom-filename, .alert-custom-filetype {
             display: none;
             position: fixed;
             top: 0;
@@ -67,22 +67,20 @@
             font-size: 13px;
         }
 
-
-
         .file-preview {
             overflow-x: auto;
             margin-left: auto;
             margin-right: auto;
         }
-        
+
     </style>
 </head>
 <body>
 
 <div class="cont-box">
     <div class="custom-box pt-4">
-        <span><a href="index.php"><span class="back"><i class="fa-regular fa-circle-left fa-lg"></i></span></a>
-        <div class="upload pt-3" style="text-align:left;">
+    <span><a href="javascript:history.back()"><span class="back"><i class="fa-regular fa-circle-left fa-lg"></i><span style="font-size:17px;color:grey;cursor:pointer;"> Back to Merchants</span></span></a>
+        <div class="upload pt-4" style="text-align:left;">
             <div class="add-btns">
                 <p class="title">Upload Merchants</p>
                 <button type="button" class="btn btn-warning check-report" id="addMerchantBtn"><i class="fa-solid fa-plus"></i> Add New Merchant </button>
@@ -95,14 +93,11 @@
                 </div>
                 <label for="fileToUpload" style="background-color:#fff;font-size:20px;" class="upload-btn"
                        id="uploadBtn"><i class="fa-solid fa-cloud-arrow-up fa-2xl"
-                                         style="font-size:40px;padding-bottom:30px;"></i><br>Choose a File or Drag it
-                    here </label>
+                                         style="font-size:40px;padding-bottom:30px;"></i><br>Choose a File</label>
                 <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
                 <div class="uploadfile" style="text-align:right;">
                     <button type="button" class="btn btn-danger clear" id="clearButton">Clear</button>
-                    <button type="submit" class="btn btn-secondary upload_file" id="submitButton">Submit</button>
-                    <div class="loading" id="loadingIndicator"><i class="fas fa-spinner fa-spin"></i> Loading...
-                    </div>
+                    <button type="submit" class="btn btn-secondary upload_file" id="submitButton"><span>Submit</span></button>
                 </div>
                 <div class="file-preview" style="margin-top:20px;">
                     <div class="table-container">
@@ -114,7 +109,7 @@
         </div>
 
         <div class="form" style="text-align:left;display:none;">
-            <div class="add-btns">
+            <div class="add-btns pt-4">
                 <p class="title">Merchant Details</p>
                 <button type="button" class="btn btn-warning check-report" id="uploadMerchantBtn"><i class="fa-solid fa-upload"></i> Upload Merchants </button>
                 <button type="button" class="btn btn-success" id="add-field"><i class="fa-solid fa-plus"></i> Add More </button>
@@ -128,15 +123,15 @@
                             <div class="col-md-6">
                             <div class="mb-3">
                                     <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
-                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
-                                    <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                    <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="merchant_partnership_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Partnership Type</label>
-                                    <select class="form-select" id="merchant_partnership_type" name="merchant_partnership_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
+                                    <select class="form-select" id="merchant_partnership_type" name="merchant_partnership_type[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
                                         <option value="">-- Select Merchant Partnership Type --</option>
                                         <option value="Primary">Primary</option>
                                         <option value="Secondary">Secondary</option>
@@ -144,18 +139,18 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="legal_entity_name" class="form-label" style="font-size:15px;font-weight:bold;">Legal Entity Name</label>
-                                    <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                    <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                             
                                 <div class="mb-3">
                                     <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
-                                    <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
+                                    <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
-                                    <textarea class="form-control" rows="9" name="email_address[]" style="border-radius:20px;padding:15px 15px;border:none;" required></textarea>
+                                    <textarea class="form-control" rows="9" name="email_address[]" style="border-radius:20px;padding:15px 15px;border: 2px dashed #928a89;" required></textarea>
                                 </div>
                                 
                             </div>
@@ -166,7 +161,7 @@
                     </div>
                 </div>
                 <div class="" style="text-align:right;margin:10px 0px;">
-                <button type="submit" class="check-report">Submit</button>
+                <button class="check-report">Submit</button>
     </div>
             </form>
             </div>
@@ -178,9 +173,15 @@
     <i class="fa-solid fa-circle-exclamation"></i> Please choose a file to upload!
 </div>
 
-<script src="../js/file_upload.js"></script>
+<div class="alert-custom-filename alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
+    <i class="fa-solid fa-circle-exclamation"></i> Please upload the correct file named "Merchant Listing.csv" !
+</div>
+
+<div class="alert-custom-filetype alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
+    <i class="fa-solid fa-circle-exclamation"></i> Please upload a file with .csv extension only!
+</div>
+
 <script>
-    // Add event listeners to buttons
     document.getElementById('addMerchantBtn').addEventListener('click', function () {
         document.querySelector('.form').style.display = 'block';
         document.querySelector('.upload').style.display = 'none';
@@ -192,55 +193,52 @@
     });
 
     document.addEventListener("DOMContentLoaded", function() {
-        // Trigger input event to generate form for default value
         document.getElementById('MerchantNum').dispatchEvent(new Event('input'));
     });
-
-    
 
     document.getElementById('add-field').addEventListener('click', function() {
         var formFields = document.getElementById('form-fields');
         var newField = document.createElement('div');
         newField.classList.add('form-group');
         newField.innerHTML = `
-        <div class="row">
-                            <div class="col-md-6">
-                            <div class="mb-3">
-                                    <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
-                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
-                                    <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="merchant_partnership_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
-                                    <select class="form-select" id="merchant_partnership_type" name="merchant_partnership_type[]" style="border-radius:20px;padding:11px 20px;border:none;" required>
-                                        <option value="">-- Select Merchant Type --</option>
-                                        <option value="Primary">Primary</option>
-                                        <option value="Secondary">Secondary</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="legal_entity_name" class="form-label" style="font-size:15px;font-weight:bold;">Legal Entity Name</label>
-                                    <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                            
-                                <div class="mb-3">
-                                    <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
-                                    <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border:none;" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
-                                    <textarea class="form-control" rows="9" name="email_address[]" style="border-radius:20px;padding:15px 15px;border:none;" required></textarea>
-                                </div>
-                            </div>
-                            <div class="mb-3 mt-3" style="text-align:right;">
-                                <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
-                            </div>
-                        </div>
+            <div class="row">
+            <hr style="border: 1px solid #3b3b3b;">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
+                        <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
+                        <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="merchant_partnership_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
+                        <select class="form-select" id="merchant_partnership_type" name="merchant_partnership_type[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
+                            <option value="">-- Select Merchant Type --</option>
+                            <option value="Primary">Primary</option>
+                            <option value="Secondary">Secondary</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="legal_entity_name" class="form-label" style="font-size:15px;font-weight:bold;">Legal Entity Name</label>
+                        <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
+                        <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
+                        <textarea class="form-control" rows="9" name="email_address[]" style="border-radius:20px;padding:15px 15px;border: 2px dashed #928a89;" required></textarea>
+                    </div>
+                </div>
+                <div class="mb-3 mt-3" style="text-align:right;">
+                    <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
+                </div>
+            </div>
         `;
         formFields.appendChild(newField);
     });
@@ -250,6 +248,56 @@
             e.target.closest('.form-group').remove();
         }
     });
+
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Check if file name is 'Merchant Listing.csv'
+    var fileInput = document.getElementById('fileToUpload');
+    var fileName = fileInput.value.split('\\').pop(); // Get the file name without path
+
+    if (fileName === '') {
+        document.querySelector('.alert-custom').style.display = 'block'; // Show empty file alert
+        setTimeout(function() {
+            document.querySelector('.alert-custom').style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
+        return; // Prevent form submission
+    }
+
+    if (fileName !== 'Merchant Listing.csv') {
+        document.querySelector('.alert-custom-filename').style.display = 'block'; // Show filename alert
+        setTimeout(function() {
+            document.querySelector('.alert-custom-filename').style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
+        return; // Prevent form submission
+    }
+
+    // Check file type
+    if (!fileName.endsWith('.csv')) {
+        document.querySelector('.alert-custom-filetype').style.display = 'block'; // Show file type alert
+        setTimeout(function() {
+            document.querySelector('.alert-custom-filetype').style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
+        return; // Prevent form submission
+    }
+
+    // Get the file size in bytes
+    var fileSize = fileInput.files[0].size; 
+
+    // Update the submit button text with file size and show loading spinner
+    var submitButton = document.getElementById('submitButton');
+    var fileSizeKB = (fileSize / 1024).toFixed(2); // Convert bytes to KB
+    submitButton.innerHTML = `<div class="spinner-border spinner-border-sm" role="status"></div><span> Uploading (${fileSizeKB} KB)...</span>`;
+
+    // If valid, simulate loading time based on file size and submit the form
+    var loadingTime = fileSize / 1024; // Simulate loading time in seconds based on file size
+    setTimeout(function() {
+        document.getElementById('uploadForm').submit();
+    }, loadingTime * 1000);
+});
+
+
 </script>
+<script src="../js/file_upload.js"></script>
 </body>
 </html>

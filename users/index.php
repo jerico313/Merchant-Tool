@@ -87,6 +87,7 @@ function displayUser() {
       <div class="sub" style="text-align:left;">
         <div class="add-btns">
           <p class="title"> <i class="fa-solid fa-user-gear fa-sm"></i> Manage Users</p>
+          <a href="add_account.php"><button type="button" class="btn add-merchant"><i class="fa-solid fa-user-plus"></i> Create Account</button></a>
         </div>
         <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
           <div class="table-container">

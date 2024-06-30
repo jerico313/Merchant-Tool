@@ -256,10 +256,10 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                         </button>
                         <div class="dropdown-menu dropdown-menu-center p-4" aria-labelledby="dropdownMenuButton">
                             <form>
-                                <button type="button" class="btn btn-warning all mt-2" id="btnShowAll">All</button>
-                                <button type="button" class="btn btn-warning coupled mt-2"
+                                <button type="button" class="btn all mt-2" id="btnShowAll">All</button>
+                                <button type="button" class="btn coupled mt-2"
                                     id="btnCoupled">Coupled</button>
-                                <button type="button" class="btn btn-warning decoupled mt-2"
+                                <button type="button" class="btn decoupled mt-2"
                                     id="btnDecoupled">Decoupled</button>
                                 <button type="button" class="btn gcash mt-2" id="btnGCash"><img
                                         src="../../../images/gcash.png"
@@ -291,8 +291,8 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                             </form>
                         </div>
                     </div>
-                    <button type="button" onclick="downloadTables()" class="btn btn-warning download-csv mt-4"><i
-                            class="fa-solid fa-download"></i> Download</button>
+                    <button type="button" onclick="downloadTables()" class="btn btn-warning download-csv mt-4">
+                        <i class="fa-solid fa-file-excel"></i> Download</button>
                 </div>
                 <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                     <table id="example" class="table bord" style="width:250%;">

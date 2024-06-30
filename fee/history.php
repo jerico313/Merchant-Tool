@@ -2,10 +2,14 @@
 <?php
 $fee_id = isset($_GET['fee_id']) ? $_GET['fee_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
-function displayFeeHistory($fee_id) {
-    include("../inc/config.php");
 
-    $sql = "SELECT * FROM fee_history WHERE fee_id = ?";
+function displayFeeHistory($fee_id) {
+    global $conn, $type;
+
+    $sql = "SELECT fh.*, u.name AS changed_by_name
+            FROM fee_history AS fh
+            LEFT JOIN user AS u ON fh.changed_by = u.user_id
+            WHERE fh.fee_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $fee_id);
     $stmt->execute();
@@ -17,12 +21,12 @@ function displayFeeHistory($fee_id) {
             $date = new DateTime($row['changed_at']);
             $formattedDate = $date->format('F d, Y');
             echo "<tr>";
-            echo "<td style='text-align:center;'>" .$shortFeeId . "</td>";
-            echo "<td style='text-align:center;'>" .$row['column_name'] . "</td>";
-            echo "<td style='text-align:center;'>" .$row['old_value'] . "</td>";
-            echo "<td style='text-align:center;'>" .$row['new_value'] . "</td>";
-            echo "<td style='text-align:center;'>" .$formattedDate . "</td>";
-            echo "<td style='text-align:center;'>" .$row['changed_by'] . "</td>";
+            echo "<td style='text-align:center;'>" . $shortFeeId . "</td>";
+            echo "<td style='text-align:center;'>" . $row['column_name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['old_value'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['new_value'] . "</td>";
+            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
+            echo "<td style='text-align:center;'>" . $row['changed_by_name'] . "</td>"; // Display user name instead of user ID
             echo "</tr>";
         }
     }
@@ -30,6 +34,7 @@ function displayFeeHistory($fee_id) {
     $conn->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

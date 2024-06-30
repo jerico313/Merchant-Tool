@@ -1,8 +1,7 @@
-<?php include("../header.php")?>
-<?php 
+<?php include ("../header.php") ?>
+<?php
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 ?>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -57,7 +56,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
             display: none;
         }
 
-        .alert-custom {
+        .alert-custom, .alert-custom-filename, .alert-custom-filetype {
             display: none;
             position: fixed;
             top: 0;
@@ -70,23 +69,19 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
             font-size: 13px;
         }
 
-
-
         .file-preview {
             overflow-x: auto;
             margin-left: auto;
             margin-right: auto;
         }
-        
+
     </style>
 </head>
 <body>
 
 <div class="cont-box">
     <div class="custom-box pt-4">
-        <a href="javascript:history.back()">
-        <span class="back"><i class="fa-regular fa-circle-left fa-lg"></i></span>
-        </a>
+    <span><a href="javascript:history.back()"><span class="back"><i class="fa-regular fa-circle-left fa-lg"></i><span style="font-size:17px;color:grey;cursor:pointer;"> Back to Transactions</span></span></a>
         <div class="upload pt-3" style="text-align:left;">
             <div class="add-btns">
                 <p class="title">Upload Transactions</p>
@@ -99,14 +94,11 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                 </div>
                 <label for="fileToUpload" style="background-color:#fff;font-size:20px;" class="upload-btn"
                        id="uploadBtn"><i class="fa-solid fa-cloud-arrow-up fa-2xl"
-                                         style="font-size:40px;padding-bottom:30px;"></i><br>Choose a File or Drag it
-                    here </label>
+                                         style="font-size:40px;padding-bottom:30px;"></i><br>Choose a File</label>
                 <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
                 <div class="uploadfile" style="text-align:right;">
                     <button type="button" class="btn btn-danger clear" id="clearButton">Clear</button>
-                    <button type="submit" class="btn btn-secondary upload_file" id="submitButton">Submit</button>
-                    <div class="loading" id="loadingIndicator"><i class="fas fa-spinner fa-spin"></i> Loading...
-                    </div>
+                    <button type="submit" class="btn btn-secondary upload_file" id="submitButton"><span>Submit</span></button>
                 </div>
                 <div class="file-preview" style="margin-top:20px;">
                     <div class="table-container">
@@ -116,31 +108,67 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                 </form>
             </div>
         </div>
-    </div>
-</div>
 
 <div class="alert-custom alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
     <i class="fa-solid fa-circle-exclamation"></i> Please choose a file to upload!
 </div>
 
-<script src="../js/file_upload.js"></script>
+<div class="alert-custom-filename alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
+    <i class="fa-solid fa-circle-exclamation"></i> Please upload the correct file named "Transaction Listing.csv" !
+</div>
+
+<div class="alert-custom-filetype alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
+    <i class="fa-solid fa-circle-exclamation"></i> Please upload a file with .csv extension only!
+</div>
+
 <script>
-    // Add event listeners to buttons
-    document.getElementById('addStoreBtn').addEventListener('click', function () {
-        document.querySelector('.form').style.display = 'block';
-        document.querySelector('.upload').style.display = 'none';
-    });
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-    document.getElementById('uploadStoreBtn').addEventListener('click', function () {
-        document.querySelector('.form').style.display = 'none';
-        document.querySelector('.upload').style.display = 'block';
-    });
+    // Check if file name is 'Merchant Listing.csv'
+    var fileInput = document.getElementById('fileToUpload');
+    var fileName = fileInput.value.split('\\').pop(); // Get the file name without path
 
-    document.addEventListener("DOMContentLoaded", function() {
-        // Trigger input event to generate form for default value
-        document.getElementById('StoreNum').dispatchEvent(new Event('input'));
-    });
+    if (fileName === '') {
+        document.querySelector('.alert-custom').style.display = 'block'; // Show empty file alert
+        setTimeout(function() {
+            document.querySelector('.alert-custom').style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
+        return; // Prevent form submission
+    }
 
+    if (fileName !== 'Transactio Listing.csv') {
+        document.querySelector('.alert-custom-filename').style.display = 'block'; // Show filename alert
+        setTimeout(function() {
+            document.querySelector('.alert-custom-filename').style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
+        return; // Prevent form submission
+    }
+
+    // Check file type
+    if (!fileName.endsWith('.csv')) {
+        document.querySelector('.alert-custom-filetype').style.display = 'block'; // Show file type alert
+        setTimeout(function() {
+            document.querySelector('.alert-custom-filetype').style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
+        return; // Prevent form submission
+    }
+
+    // Get the file size in bytes
+    var fileSize = fileInput.files[0].size; 
+
+    // Update the submit button text with file size and show loading spinner
+    var submitButton = document.getElementById('submitButton');
+    var fileSizeKB = (fileSize / 1024).toFixed(2); // Convert bytes to KB
+    submitButton.innerHTML = `<div class="spinner-border spinner-border-sm" role="status"></div><span> Uploading (${fileSizeKB} KB)...</span>`;
+
+    // If valid, simulate loading time based on file size and submit the form
+    var loadingTime = fileSize / 1024; // Simulate loading time in seconds based on file size
+    setTimeout(function() {
+        document.getElementById('uploadForm').submit();
+    }, loadingTime * 1000);
+});
 </script>
+<script src="../js/file_upload.js"></script>
 </body>
 </html>

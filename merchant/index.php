@@ -191,6 +191,7 @@ function displayMerchant()
           <div class="modal-body">
             <form id="editMerchantForm" action="edit.php" method="POST">
               <input type="hidden" id="merchantId" name="merchantId">
+              <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
               <div class="mb-3">
                 <label for="merchantName" class="form-label">Merchant Name</label>
                 <input type="text" class="form-control" id="merchantName" name="merchantName">

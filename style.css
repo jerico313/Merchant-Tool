@@ -12,6 +12,21 @@
   background-color: #E96529;
 }
 
+
+
+a.dropdown-item:hover{
+  color:#fff !important;
+  padding-left: 15px;
+  background-color: #E96529;
+  border-radius: 7px;
+  margin:0 5px;
+}
+
+.dropdown-menu{
+  width: 170px !important;
+  border-radius: 10px;
+}
+
 .login-container {
  
   width: 300px;
@@ -119,7 +134,7 @@ th{
   background-color: #4BB0B8;
   color:#fff;
   border:solid  #4BB0B8 2px;
-  width:150px;
+  width:180px;
   border-radius: 20px;
   cursor: pointer;
   margin-top:15px;
@@ -170,7 +185,7 @@ th{
   width: 100%;
   height: 120px;
   border-radius: 10px;
-  border: 1px dashed grey;
+  border: 3px dashed #928a89 !important;
   cursor: pointer;
   color: grey;
   text-align: center;
@@ -191,9 +206,15 @@ th{
 }
 
 .upload_file:active {
-  background-color: transparent;
+  background: #fff;
   color: #4BB0B8;
-  border:solid  #4BB0B8 2px;
+  border: solid #fff 2px;
+}
+
+.btn:active {
+  background-color: transparent !important;
+  color: #4BB0B8 !important;
+  border:solid  #4BB0B8 2px !important ;
 }
 
 input[type="file"] {
@@ -206,6 +227,12 @@ input[type="file"] {
   color: #fff; 
   border:solid  #4BB0B8 2px;
   width: 120px !important;
+}
+
+.coupled:active, .decoupled:active, .gcash:active  {
+  background-color: transparent;
+  color: #4BB0B8;
+  border:solid  #4BB0B8 2px;
 }
 
 button#dropdownMenuButton.btn.btn-primary.dropdown-toggle.mt-4::after{

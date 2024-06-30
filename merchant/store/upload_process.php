@@ -6,9 +6,7 @@ $merchant_id = isset($_POST['merchant_id']) ? htmlspecialchars($_POST['merchant_
 $merchant_name = isset($_POST['merchant_name']) ? htmlspecialchars($_POST['merchant_name']) : '';
 
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
-    $file_name = $_FILES['fileToUpload']['name'];
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
-    $merchant_id = isset($_POST['merchant_id']) ? $_POST['merchant_id'] : '';
 
     $file_name_parts = explode('.', $_FILES['fileToUpload']['name']);
     $file_ext = strtolower(end($file_name_parts));
@@ -19,24 +17,23 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         exit();
     }
 
-    move_uploaded_file($file_tmp, "uploads/" . $file_name);
-
     // Process CSV file and insert data into MySQL
-    $csvFile = "uploads/" . $file_name;
-    $handle = fopen($csvFile, "r");
+    $handle = fopen($file_tmp, "r");
     $header = fgetcsv($handle); // Skip header row
 
     // Prepare MySQL statement for the store table
     $stmt = $conn->prepare("INSERT INTO store (merchant_id, store_id, store_name, legal_entity_name, store_address) VALUES (?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-
         // Bind parameters and execute the statement
         $stmt->bind_param("sssss", $data[1], $data[3], $data[2], $data[4], $data[5]);
         $stmt->execute();
     }
 
     fclose($handle);
+
+    // Close statement
+    $stmt->close();
 ?>
 <!DOCTYPE html>
 <html>

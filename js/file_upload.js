@@ -70,74 +70,11 @@
         return values;
     }
 
-    document.getElementById('uploadForm').addEventListener('submit', function (event) {
-        // Prevent default form submission
-        event.preventDefault();
-
-        // Check if a file has been selected
-        const fileInput = document.getElementById('fileToUpload');
-        if (fileInput.files.length === 0) {
-            $('.alert-custom').fadeIn();
-            setTimeout(function () {
-                $('.alert-custom').fadeOut();
-            }, 3000); // Hide the alert after 3 seconds
-            return;
-        }
-
-        // Show loading indicator inside the submit button
-        const submitButton = document.getElementById('submitButton');
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-        submitButton.disabled = true;
-
-        // Delay form submission for one minute
-        setTimeout(function () {
-            // Restore submit button state
-            submitButton.innerHTML = 'Submit';
-            submitButton.disabled = false;
-
-            // Submit the form
-            document.getElementById('uploadForm').submit();
-        }, 8000); // 60000 milliseconds = 1 minute
-    });
-
     document.getElementById('clearButton').addEventListener('click', function() {
         const fileInput = document.getElementById('fileToUpload');
         fileInput.value = ''; // Clear file input
         document.querySelector('.filename').textContent = ''; // Clear filename display
         document.querySelector('.file-preview').innerHTML = ''; // Clear file preview
-    });
-    
-    // JavaScript for drag and drop functionality
-    const uploadBtn = document.getElementById('uploadBtn');
-
-    uploadBtn.addEventListener('dragenter', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        uploadBtn.classList.add('dragover');
-    });
-
-    uploadBtn.addEventListener('dragover', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        uploadBtn.classList.add('dragover');
-    });
-
-    uploadBtn.addEventListener('dragleave', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        uploadBtn.classList.remove('dragover');
-    });
-
-    uploadBtn.addEventListener('drop', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        uploadBtn.classList.remove('dragover');
-
-        const files = e.dataTransfer.files;
-        document.getElementById('fileToUpload').files = files;
-        // Trigger change event to handle the file
-        const event = new Event('change');
-        document.getElementById('fileToUpload').dispatchEvent(event);
     });
 
     

@@ -1,1081 +1,0 @@
-Merchant ID,Merchant Name,Legal Entity Name,Store ids,Store Name,Offer ID,Offer Name,Offer Details,Offer Amount,Commission Rate,Vat Inc/Vat Ex,Voucher Type/Offer Type,Merchant Type,Start Date,End Date,Billable Date,Fulfillment Types,Business Address,Email Address,Status,
-89aeb19e-e193-4763-ad04-57f88ac71195,Izakaya Sensu,"Foodparks By Raintree, Inc.",5e22b6db-0075-421f-a9be-24d14e02ef02,Izakaya Sensu BGC,izakayasensu,izakayasensu,"
-₱500 off + 2 Pepsi Cans with a min spend of ₱2500. Available daily. Offer can only be availed by new Booky users. Exclusive for Unionbank Credit Card/Debit Card holders. Available daily from 11am-2pm only",,0%,VAT Ex,Coupled,secondary,2/28/2024,,8/28/2024,#N/A,,,,
-e7efbbd3-f785-4884-94b2-177c5d2c7e47,Daniel's Bakery Cafe,Oven Project Inc,f3c0ede0-3182-48c5-ad65-ecd811a5064d,Daniel's Bakery Cafe Holy Spirit,DANIELS10OFF,DANIELS10OFF,"10% Off on Total Bill, No Minimum Spend 
-
-*Availability: Monday-Sunday, 10AM-5PM",,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,"MAPS, Pepsi",,,,
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,Kenny Rogers,Foodscapes Ventures Corporation,763a5da5-e0ea-4fdd-9d4a-12bc015bda23,Kenny Rogers SM Sucat,,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",,,,
-cea81ff3-834b-4841-9aa0-f27149330dc1,Cyma ,Tessera Cyma Greek Estiatorio Corp,9a767b27-5e19-4c4c-ba19-cdeaa440f459,Cyma Trinoma,300CYMA,300CYMA,"P300 off subject to P3,000 min. spend
-unlimited redemption
-Mon-Fri, 2-5PM",,6%,VAT Ex,Coupled,secondary,03/01/2024,,06/01/2024,"LEAD GEN , MAPS",,, , 
-95d2bebb-43dd-420f-b086-8b2740f79986,3M ,Pinoy 888 Pizza Franchise Corp.,af7ec249-417a-49a1-9c48-5dd06ce132ef,3M Pizza Banawe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-95d2bebb-43dd-420f-b086-8b2740f79986,3M Pizza ,Pinoy 888 Pizza Franchise Corp.,410ac7d2-fd1c-434f-8293-86f7ba92f5cf,3M Pizza Visayas QC,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-95d2bebb-43dd-420f-b086-8b2740f79986,3M Pizza ,Pinoy 888 Pizza Franchise Corp.,29118565-7c5e-4aff-a075-25f9f362f11e,3M Pizza New Manila QC,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-cea81ff3-834b-4841-9aa0-f27149330dc1,Cyma Eastwood,Ektos Cyma Greek Taverna Corp,e8acd1d8-8314-4335-b4af-ccff6b08dd4d,Cyma Eastwood,300CYMA,300CYMA,"P300 off subject to P3,000 min. spend
-unlimited redemption
-Mon-Fri, 2-5PM",,6%,VAT Ex,Coupled,secondary,03/01/2024,,06/01/2024,"LEAD GEN , MAPS",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen (CO),Banh Mi Kitchen Services Inc.,"e229da36-2679-4ca2-904d-8a2dbc0871fe,1a6e2cf9-cd44-4a1d-bc86-44ced97c16b1,fb14b7c1-739c-4fb1-aa48-194eb2eec0db,d863d6b4-4ab1-4fa6-ad10-5a39a031ff63",Banh Mi Kitchen (CO),"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen Ayala Feliz,Bitecrunch Inc.,781cc418-5450-47ab-86ca-531be8c9ca09,Banh Mi Kitchen Ayala Feliz,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,Kenny Rogers Xentromall Antipolo,Antipolo Casa Rotisseur Corporation,c5da8401-0c58-4b82-987f-81c12706e423,Kenny Rogers Xentromall Antipolo,,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",,,,
-e908b20f-a891-4fee-b01f-a12fc708ee93,Gram Cafe and Pancakes Serendra,"Making Fine Beverages, Corp. ",5a2b3056-e107-4965-9119-0bbdbe67ec34,Gram Cafe and Pancakes Serendra,,,,,,,"LEAD GEN , MAPS",secondary,,,,"LEAD GEN , MAPS",,,,
-17c90d47-39cd-4c8a-813b-32226b3fef59,Crisostomo,,"4c975ee-c1af-4886-a8f6-21e26c310834,a1bb89d7-c667-4d3f-967c-47047a42bd14,65847a55-e66f-489e-81f2-b35fae8fa6ba,f5b1c3fe-1771-4408-9f5d-520ad5e42cca,442c9341-d73d-4db7-afba-9251b570497c,4bcf5181-f936-4037-a2a2-56774601d8f5,c96840f1-1f49-4369-ae04-c9eac8c4ad73,c90df380-7d42-4bd9-a432-0791442f26ea,f711fbac-2a20-4331-99ba-25a3ef3616c2,3d8cdcda-98a6-44d9-b024-bdbd5d967102,493f09c6-fd8b-4399-a795-2c8a06be8a9f,757a35ee-7fcf-4e17-9acf-1f8c542caaef",Crisostomo,Unionbank-Exclusive: P300 off of your Filipono Feast,Unionbank-Exclusive: P300 off of your Filipono Feast,"300 of minimum P,500 2-5 pm only . Exclusive to Unionbank ( Not applicable on holidays)",,8%,,Coupled,secondary,,,,"LEAD GEN , MAPS",,,,
-a597e4a6-a6d4-457b-a2f3-820c95f62211,Nikkei Robata,NIKKEI NEWPORT INC,39bb7fd3-850f-4043-b9bd-c697a1955387,Nikkei Robata,,,"25% Off on Ala Carte Regular Menu Items
-Valid from Monday - Thursday from 11am-4pm
-Exclusive to Unionbank and Citibank Card Holders
-Can only be claimed in Nikkei Robata Newport branch",,10%,VAT Ex,Coupled,secondary,2/28/2024,,5/28/2024,"LEAD GEN , MAPS",,,,
-0b314f59-f118-49fe-92a7-aea26a497d05,Big Belly Burgers,BARCELONA BURGER INC,f6ac17c5-bf96-4eae-9335-0c51b8cd6c02,Big Belly Burgers,,,"25% Off on Ala Carte Regular Menu Items
-
-Valid from Monday - Thursday from 3pm-6pm
-Exclusive to Unionbank and Citibank Card Holders
-5% Transaction Fee is waived for the first three months
-For Payment MDR, Booky will match with our existing Card Terminal
-Can only be claimed in their BGC branch",,10%,VAT Ex,Coupled,secondary,2/28/2024,,5/28/2024,"LEAD GEN , MAPS",,,,
-cdb535fd-45fe-4a41-8080-4e6714801503,Terroir Wine Quezon City,Terroir Wine Merchant Corporation,2a78bc44-28ff-4026-a7dc-cf695f237ea4,Terroir Wine Quezon City,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-4c4614c2-5c0b-4356-b9ca-3f3ae2d4b49e,Lemon J,Lemon J,06c2eac0-6f7b-4603-b3eb-e5f8db421991,Lemon J,,,,,,,TAKEOUT,secondary,,,,TAKEOUT,,,,
-0498b25b-6d9d-4d69-8bfe-fbcddaabba66,Frank and Dean,Frank and Dean,3d86021e-8e21-421a-82c1-f3a799852dcd,Frank and Dean,,,,,,,TAKEOUT,secondary,,,,TAKEOUT,,,,
-64bbcb55-41ed-45cd-ba69-3d2bbfeb057c,Ginza Gyu Quezon City,Raspberry Kitchen Group Inc.,9a8a3f85-1535-468a-8b64-f5b5da366bb2,Ginza Gyu Quezon City,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-d0c33f01-4c33-4b56-a01c-005fed33401d,Señorita Sunae,Asian Cantina Inc.,c382b646-5c80-4422-af51-fcf863ce2736,Señorita Sunae,SUNAE25OFF,SUNAE25OFF,"25% Off on Ala Carte Regular Menu Items
-
-Valid from Monday - Thursday from 12nn-4pm
-Exclusive to Unionbank and Citibank Card Holders
-5% Transaction Fee is waived for the first three months
-For Payment MDR, Booky will match with our existing Card Terminal
-Can only be claimed in their BGC branch",,10%,VAT Ex,Coupled,secondary,2/28/2024,,5/28/2024,"PEPSI, LEAD GEN , MAPS",,,,
-bf5a4569-5827-401d-b308-52e8423cd52b,Jones All Day,"FOOD PARKS BY RAINTREE, INC.",1a7112e0-0a1c-4e71-bcc8-3c3520743433,Jones All Day,JONESALLDAY500,JONESALLDAY500,"
-₱500 off + 2 Pepsi Cans with a min spend of ₱2500. Available daily. Offer can only be availed by new Booky users. Exclusive for Unionbank Credit Card/Debit Card holders. Available daily from 11am-2pm only",,0%,VAT Ex,Coupled,secondary,2/28/2024,,8/28/2024,"PEPSI, LEAD GEN , MAPS",,,,
-ae5d4bc4-ae24-4be3-9f4c-8bb76f00f046,Saboten,"FOOD PARKS BY RAINTREE, INC.",f2bc152c-6d3c-4b8e-9e98-777c81fecace,Saboten Serendra,Saboten500off,Saboten500off,"
-₱500 off + 2 Pepsi Cans with a min spend of ₱2500. Available daily. Offer can only be availed by new Booky users. Exclusive for Unionbank Credit Card/Debit Card holders. Available daily from 2-5pm only.",,0%,VAT Ex,Coupled,secondary,2/28/2024,,8/28/2024,"MAPS, LEADGEN",,,,
-319c36bd-e110-40f9-b2e5-f83d942f2746,Soi Thai ,MARISSA R. MONTELIBANO,e7cd47eb-8e17-4b90-b6c6-22a185af8e65,Soi Thai SM Iloilo,SOITHAI700,SOITHAI700,"Free Mango Sticky Rice for every Php 700 minimum purchase, single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-319c36bd-e110-40f9-b2e5-f83d942f2746,Soi Thai ,THAI SHAFT CORP.,c4a53372-7b69-4df5-a59c-ce0c3e282062,Soi Thai Robinsons Manila,SOITHAI700,SOITHAI700,"Free Mango Sticky Rice for every Php 700 minimum purchase, single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-319c36bd-e110-40f9-b2e5-f83d942f2746,Soi Thai ,THAIPHIL CUISINE CORP.,86bb935f-6802-415b-ac1c-8f06ae2a302d,Soi Thai Glorietta,SOITHAI700,SOITHAI700,"Free Mango Sticky Rice for every Php 700 minimum purchase, single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-319c36bd-e110-40f9-b2e5-f83d942f2746,Soi Thai ,THAI RILM CORP.,cfd99487-84bb-45e0-95a2-3e79e65f99f4,Soi Thai SM Mall of Asia,SOITHAI700,SOITHAI700,"Free Mango Sticky Rice for every Php 700 minimum purchase, single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-c1c377ec-429a-4130-bbbe-41f903a0a595,Tsurumaru ,TSURUMARU JAPANESE RESTAURANT INC.,f1ce962e-7d13-4440-b21f-ddd9f7d734c8,Tsurumaru SM Grand Central,FREEGYOZA,FREEGYOZA,"Free GYOZA for every Php 600 minimum purchase, single receipt.",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-c1c377ec-429a-4130-bbbe-41f903a0a595,Tsurumaru ,TSURUMARU JAPANESE RESTAURANT INC.,3c1a96ca-74f4-4c53-96c9-ffb039cf4072,Tsurumaru Eastwood,FREEGYOZA,FREEGYOZA,"Free GYOZA for every Php 600 minimum purchase, single receipt.",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-c1c377ec-429a-4130-bbbe-41f903a0a595,Tsurumaru ,TSURUMARU FINEST FOOD INC,baad34af-aaaf-4684-b6e9-ef00254112da,Tsurumaru SM North EDSA,FREEGYOZA,FREEGYOZA,"Free GYOZA for every Php 600 minimum purchase, single receipt.",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-c1c377ec-429a-4130-bbbe-41f903a0a595,Tsurumaru ,TSURUMARU JAPANESE RESTAURANT INC.,01d9074c-a0b9-4317-88ed-9d8717120355,Tsurumaru Robinsons Place Manila,FREEGYOZA,FREEGYOZA,"Free GYOZA for every Php 600 minimum purchase, single receipt.",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-c1c377ec-429a-4130-bbbe-41f903a0a595,Tsurumaru ,TSURUMARU JAPANESE RESTAURANT INC.,5be352b4-f0c7-46d4-aa2f-33f9c244ec84,Tsurumaru SM Mall of Asia,FREEGYOZA,FREEGYOZA,"Free GYOZA for every Php 600 minimum purchase, single receipt.",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-7c01decb-debf-481e-9a9e-589a615e8673,Mangan SM Sto. Tomas,RVGS CORPORATION,79c3c83d-ffd7-4231-9a6f-a761672cac65,Mangan SM Sto. Tomas,FREEBIBINGKA,FREEBIBINGKA,"Free Bibingka Regular
--Get a Free Bibingka Regular for every Php 1000 minimum purchase, 
-single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-7c01decb-debf-481e-9a9e-589a615e8673,Mangan Gateway 2,MANGAN AND COMPANY INC.,e94c012e-cb37-4cb9-b3e2-51293f622647,Mangan Gateway 2,FREEBIBINGKA,FREEBIBINGKA,"Free Bibingka Regular
--Get a Free Bibingka Regular for every Php 1000 minimum purchase, 
-single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-7c01decb-debf-481e-9a9e-589a615e8673,Mangan Glorietta 2,MANGAN AND COMPANY INC.,1d1180a6-b869-4dd6-85d5-a64332ee8685,Mangan Glorietta 2,FREEBIBINGKA,FREEBIBINGKA,"Free Bibingka Regular
--Get a Free Bibingka Regular for every Php 1000 minimum purchase, 
-single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-7c01decb-debf-481e-9a9e-589a615e8673,Mangan SM North EDSA,MANGAN AND COMPANY INC.,1ae2c4e4-4227-4405-a672-82e83e15a61e,Mangan SM North EDSA,FREEBIBINGKA,FREEBIBINGKA,"Free Bibingka Regular
--Get a Free Bibingka Regular for every Php 1000 minimum purchase, 
-single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-7c01decb-debf-481e-9a9e-589a615e8673,Mangan SM Megamall,MANGAN AND COMPANY INC.,72675173-20c3-43da-b3e8-12f6ca2ef003,Mangan SM Megamall,FREEBIBINGKA,FREEBIBINGKA,"Free Bibingka Regular
--Get a Free Bibingka Regular for every Php 1000 minimum purchase, 
-single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-7c01decb-debf-481e-9a9e-589a615e8673,Mangan Robinsons Place Manila,MANGAN AND COMPANY INC.,50db96ae-dcbe-42d7-9f2f-901fea241756,Mangan Robinsons Place Manila,FREEBIBINGKA,FREEBIBINGKA,"Free Bibingka Regular
--Get a Free Bibingka Regular for every Php 1000 minimum purchase, 
-single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-7c01decb-debf-481e-9a9e-589a615e8673,Mangan Robinsons Galleria,MANGAN AND COMPANY INC.,6b05903c-82ba-4608-ae79-1879efd7d9f3,Mangan Robinsons Galleria,FREEBIBINGKA,FREEBIBINGKA,"Free Bibingka Regular
--Get a Free Bibingka Regular for every Php 1000 minimum purchase, 
-single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-7c01decb-debf-481e-9a9e-589a615e8673,Mangan Ayala Malls Manila Bay,Manila Bay Food Corp.,3709570a-d986-4e32-97e0-fd337f9ddac1,Mangan Ayala Malls Manila Bay,FREEBIBINGKA,FREEBIBINGKA,"Free Bibingka Regular
--Get a Free Bibingka Regular for every Php 1000 minimum purchase, 
-single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-7c01decb-debf-481e-9a9e-589a615e8673,Mangan SM Grand Central,Thai Manila Finest Food Corp.,eb345c60-57a0-4aa4-ab7d-95dba22c841b,Mangan SM Grand Central,FREEBIBINGKA,FREEBIBINGKA,"Free Bibingka Regular
--Get a Free Bibingka Regular for every Php 1000 minimum purchase, 
-single receipt",,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f4430916-a444-43e4-bf08-e6ad49f2bab4,Cabalen Plus Robinsons Place Manila,MARIA FRANCES CORP.,00a82bcb-2a1b-4514-a69e-66f725bf5e22,Cabalen Plus Robinsons Place Manila,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f4430916-a444-43e4-bf08-e6ad49f2bab4,Cabalen Plus Glorietta 2,CAPAMPANGAN SPECIALTY RESTAURANT CORPORATION,5fb12688-0ff8-48e5-9441-13a49f157f1f,Cabalen Plus Glorietta 2,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen KCC Zamboanga,CHESTER BUCOY LEGO,aecc0d92-3519-4992-8b3b-a7cb632b1da2,Cabalen KCC Zamboanga,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Robinsons Starmills Pampanga,INT SPECIALTY FOODS INC.,49df4112-c774-4f8e-866e-d5a145e13b6f,Cabalen Robinsons Starmills Pampanga,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Clark,DIME SPECIALTY FOODS INC.,518784ce-ba3d-40f0-9ccc-e5d2c1548273,Cabalen SM Clark,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Robinsons Butuan,CHESTER LEGO,6fd3c950-aa88-4ada-8bc1-bbbffc703d3b,Cabalen Robinsons Butuan,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Marquee Mall,MARQUEE FINEST FOOD VENTURE CORP.,9f5cae9e-bed2-47d5-b952-5be7e1b2ea0e,Cabalen Marquee Mall,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Bacolod,MARISSA R. MONTELIBANO,0ae13c66-1978-4c30-b061-8586c0fcdd57,Cabalen SM Bacolod,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Sta. Rosa,CHARITO DE SANTA ROSA FOODS,729fd6b0-9083-4027-8d39-4c4cd5af0c40,Cabalen SM Sta. Rosa,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Harbor Point Subic,MAROLET INC,d3b43553-3aa2-4940-8197-706284b8cf19,Cabalen Harbor Point Subic,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Cebu,KUSINANG CABALEN INC.,2ab35e11-e576-4b96-8464-b355450b356c,Cabalen SM Cebu,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Lipa,REALICA NIEVERA REALICA COMPANY INC.,5dba6ee9-5f47-4707-be5a-ab3ad19dcf37,Cabalen SM Lipa,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Olongapo,OLONGAPO FINEST FOOD VENTURE INC.,f076e369-ae94-4e19-a898-fd307cfc3d23,Cabalen SM Olongapo,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Pampanga,TIONGSON REALICA DAVID CO. INC.,9044da83-4d21-4f94-a297-d3385f41deed,Cabalen SM Pampanga,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Davao,CAPAMPANGANG DAVAOENO INC.,48e9f044-26de-4687-9248-08253117275d,Cabalen SM Davao,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Lucena,"LUCENA FINEST FOOD VENTURE, INC.",830a28b2-6e9b-48f4-b3ca-6b66a599ed2f,Cabalen SM Lucena,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Bacoor,NIERICA INC.,07b88c01-b5cd-49f4-a719-e8ec00232d64,Cabalen SM Bacoor,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Dasmariñas,CAPAMPANGANG CAVITENO,9e9456bb-143a-4250-b734-af7a1f3f7789,Cabalen SM Dasmariñas,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Festival Mall,FPLN FOOD GROUP INC.,23d1e546-ede8-4b3a-8cfd-ed89a63b3768,Cabalen Festival Mall,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Ayala Malls Manila Bay,BY THE BAY FOOD CORP,5cf2c549-1dfe-47ce-9d6c-47cac288e32c,Cabalen Ayala Malls Manila Bay,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Market Market,MARIA FRANCES CORP.,ed7f3a9f-ed64-4fbd-865f-762cfc518711,Cabalen Market Market,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-69f6020f-60bb-48ce-9f83-f1d93639238f,My Country House,"FOOD PARKS BY RAINTREE, INC.",b13a6d5e-09dd-4461-a7d1-f3827877fc64,My Country House,MCH500off,MCH500off,"
-₱500 off + 2 Pepsi Cans with a min spend of ₱2500. Available daily. Offer can only be availed by new Booky users. Exclusive for Unionbank Credit Card/Debit Card holders. Available daily from 10am-10pm only",,0%,,Coupled,secondary,,,,"PEPSI, LEAD GEN , MAPS",,,,
-f54db629-a824-47d9-8164-f7757e272394,Friends & Family,"FOOD PARKS BY RAINTREE, INC.",58c8e706-aa93-4763-8a9e-1e7e1e3264d0,Friends & Family,,,,,0%,VAT Ex,,secondary,2/28/2024,,8/28/2024,"PEPSI, MAPS",,,,
-95ee14de-5676-49df-af97-3ea0e46e11e3,Timpla,Timpla- H.O.D. Food Hub ( Maria Angelica Secades),0ccfff6a-6a4b-4f70-a337-d1526913e53d,Timpla,"UBTIMPLA300
-UBTIMPLA15","UBTIMPLA300
-UBTIMPLA15","Pesos Off: Php 300 off with a minimum spend of Php 2000 - Available mon-Thurs, opening -closing
-Percent Off: 15% off with a minimum spend of Php 2000 but with a maximum discount of Php 500 - available Fri-Sun, Opening - Closing",,10%,VAT Inc.,Coupled,secondary,2/28/2023,8/28/2023,3/28/2024,"LEAD GEN , MAPS",,,,
-b75f574f-8548-4388-89a4-9a3604b39f60,Noor Manila,Gastro Selects Group Inc,1da6f5ca-5294-4b5c-aab7-49d6b065cfd0,Noor Manila,NOOR500OFF,NOOR500OFF,"Php 500 off with a minimum spend of 2,500",,10%,VAT Inc.,Coupled,secondary,02/01/2024,5/13/2024,,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Southmall,TRECE MARTIRES FINEST FOOD CORP.,7af1f4e8-a6b0-4d69-b304-f46ce7cd6480,Cabalen SM Southmall,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Robinsons Galleria,GALLERIA FINEST FOOD VENTURE CORP.,6bfaa707-c6bf-404a-bb31-6c5affe4d445,Cabalen Robinsons Galleria,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Ayala Malls Feliz,FELIZ FINEST FOOD VENTURE INC.,002ca91a-ecaa-4573-9de6-29a27240079e,Cabalen Ayala Malls Feliz,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM San Lazaro,STA. CRUZ FINEST FOOD CORP.,9d2a4270-2301-4bd8-826d-01742f4f3754,Cabalen SM San Lazaro,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Manila,CAPAMPANGANG MANILENO INC.,8d023baa-5fe2-4e2f-b75e-ce3a9633666e,Cabalen SM Manila,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM North EDSA,EONEOR CORP.,919c5f7e-df46-482c-8465-c743bb45f4ca,Cabalen SM North EDSA,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM Fairview,NIEVERA AND REALICA INC.,f875f6b5-2458-495e-a78b-7942222e2ad7,Cabalen SM Fairview,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Ali Mall,NIEVERA AND REALICA INC,dd81572d-823f-4b91-a110-322abc52b943,Cabalen Ali Mall,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,CABALEN EASTWOOD,EASTERN STYLE FOOD VENTURE INC.,108bdd05-6fe3-4847-b078-1d87f2b819ed,CABALEN EASTWOOD,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-61f10128-1301-4ee3-b47a-57143d496bb3,CASA CABALEN,CABALEN CORP.,2e9ca496-25f4-408d-a6d7-45728ace79e9,CASA CABALEN,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f4430916-a444-43e4-bf08-e6ad49f2bab4,CABALEN SM GRAND CENTRAL,CABALEN CORP.,56cbd05e-0598-422e-8b7f-4a79b0ffd46a,CABALEN SM GRAND CENTRAL,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,CABALEN SM CABANATUAN,CABALEN CORP.,0a9358a2-b799-446c-bbba-aee67f63df68,CABALEN SM CABANATUAN,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen SM San Jose Del Monte,CABALEN CORP,01f42be6-c51c-4a52-9104-245a6b801162,Cabalen SM San Jose Del Monte,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f4430916-a444-43e4-bf08-e6ad49f2bab4,Cabalen Plus West Avenue,CABALEN CORP.,9ae8a1ac-4b71-4907-aebb-5ce10a970374,Cabalen Plus West Avenue,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f4430916-a444-43e4-bf08-e6ad49f2bab4,Cabalen Plus SM Mall of Asia,MIARM INC.,bb363c9d-f247-42e3-9d60-a399878b6099,Cabalen Plus SM Mall of Asia,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Trinoma,MARIA FRANCES CORP.,7c4628ce-78ad-4bf9-aa2e-c5582bd8567f,Cabalen Trinoma,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,Cabalen Robinsons Place Manila,MARIA FRANCES CORP.,3a2b5da6-0a17-457b-b263-4d5e092451d4,Cabalen Robinsons Place Manila,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-f30bf19f-71a5-4f88-a9b2-18ed64f3df52,CABALEN SM MEGAMALL,MARIA FRANCES CORP.,84e1d594-3284-4a2a-b03a-9e50e16d0281,CABALEN SM MEGAMALL,CABALEN5,CABALEN5,4+1 promo (at least 4 paying adults and the 5th person eats free),,8%,VAT Ex,Coupled,secondary,2/14/2024,5/13/2024,05/29/2024,"LEAD GEN , MAPS",,,,
-d930b796-2a3f-46a5-880a-e2a71ccd3274,Frankie's New York Buffalo Wings SM Sta. Mesa,BIGGEST BADDEST WINGS RESTAURANTS INC,80d298d0-3df8-4721-a1ae-92393e435525,Frankie's New York Buffalo Wings SM Sta. Mesa,,,,,,,MAPS,secondary,,,,MAPS,,,,
-b8f82478-dcdb-4c65-ac34-e1f3f7fae3ba,Mantra,Mantra Group Inc.,"a66745cf-28ba-485d-b175-e25be619f5b3,4013427a-15af-49d3-b839-05b2b4c4eeac,d05853bb-8ecd-421a-a9c6-ce0f9a7f80ad",Mantra,,,,,,,MAPS,secondary,,,,MAPS,,,,
-37c5d54e-50da-40d8-8fcb-c9e64a4eaf4d,Avocadoria SM Mall of Asia,AFBI REFRESHMENT STORE CORP,7d2dd61c-4081-41f4-824a-1f53e97b3858,Avocadoria SM Mall of Asia,,,,,,,MAPS,secondary,,,,MAPS,,,,
-37c5d54e-50da-40d8-8fcb-c9e64a4eaf4d,Avocadoria SM City Sky Garden,AFBI REFRESHMENT STORE CORP,f09db56e-a60c-4b88-9238-34899b5103b9,Avocadoria SM City Sky Garden,,,,,,,MAPS,secondary,,,,MAPS,,,,
-37c5d54e-50da-40d8-8fcb-c9e64a4eaf4d,Avocadoria SM City Center,AFBI REFRESHMENT STORE CORP,0bead7ed-fb6b-4580-be3a-d6c5d14f407e,Avocadoria SM City Center,,,,,,,MAPS,secondary,,,,MAPS,,,,
-37c5d54e-50da-40d8-8fcb-c9e64a4eaf4d,Avocadoria SM City Lipa,AFBI REFRESHMENT STORE CORP,7848dffd-e4ca-4ccf-8f30-e68bb70b36b7,Avocadoria SM City Lipa,,,,,,,MAPS,secondary,,,,MAPS,,,,
-37c5d54e-50da-40d8-8fcb-c9e64a4eaf4d,Avocadoria Mitsukoshi Mall,AFBI REFRESHMENT STORE CORP,3d84ff9b-270f-4361-894d-5da741feb93f,Avocadoria Mitsukoshi Mall,,,,,,,MAPS,secondary,,,,MAPS,,,,
-37c5d54e-50da-40d8-8fcb-c9e64a4eaf4d,Avocadoria SM City Grand Central,AFBI REFRESHMENT STORE CORP,a9dc0504-fe59-4b74-81fb-39e27a9487ca,Avocadoria SM City Grand Central,,,,,,,MAPS,secondary,,,,MAPS,,,,
-37c5d54e-50da-40d8-8fcb-c9e64a4eaf4d,Avocadoria SM City Taytay,AFBI REFRESHMENT STORE CORP,72b6b237-e8e4-42c2-948f-0b21e43a59cb,Avocadoria SM City Taytay,,,,,,,MAPS,secondary,,,,MAPS,,,,
-37c5d54e-50da-40d8-8fcb-c9e64a4eaf4d,Avocadoria UP Town Center Katipunan,AFBI REFRESHMENT STORE CORP,fcc0cf88-c32e-4380-b058-88fe876d211b,Avocadoria UP Town Center Katipunan,,,,,,,MAPS,secondary,,,,MAPS,,,,
-97a99072-0acf-41f2-abf1-c32cc5994f41,White House Taguig,BAYANI GOURMET CUISINE INC.,d2b4f6a7-ea30-4035-9325-356b33b862b2,White House Taguig,,,,,,,MAPS,secondary,,,,MAPS,,,,
-bf2754b7-c4f0-4ce6-a45f-831a480b2606,Shi Lin,Taipefoods Inc.,"0e3389ad-2c87-46e3-8a54-ba93a62a64f7,5b62f818-aac5-4002-8327-4378c1be0607,a9efe42a-766f-47bc-a57c-8601565f27ae,988c815e-ba58-4600-8e51-f29d64b8b737,2e2e36c6-3b74-41cc-8e05-8974abff54bc,6496dc7b-8434-49f4-9641-7e0c8d7b3a5b,b7efb8e5-7336-428f-96c4-375bd339a872,ac245143-90ed-40dd-8da9-b779b5ddde49,f1f47ff1-13a3-4f2e-8ebb-4c48f4a4ce85,11cf47d1-7f9d-4d4f-b07b-842c3d277a38,3b2746fe-c417-412c-bc8e-11e33c01955a",Shi Lin,SHILIN500,SHILIN500,"500 off, minimum spend 2,000 (Only Valid Monday-Thursday 2-6pm)",,10%,VAT Inc.,Coupled,secondary,2/14/2024,,,"LEAD GEN, ,MAPS",,,,
-2ac46142-cfc9-426c-9643-3a899d90d588,Yuujin,Maeda's Japanese Cuisine Inc.,b20bcc06-aa3c-4088-b15d-9c575ba3bcdb,Yuujin,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-6d2641c1-b5e2-49dd-b650-67e11bb98479,PickUp Sticks,HBros Food Cart ( Jose Mari Haboc),99a0845b-19ed-406c-b5bd-d4b4491618e2,PickUp Sticks,,,,,,,MAPS,secondary,,,,MAPS,,,,
-2c62a816-7f29-42df-92ea-55e553def9a8,Manduca Taberna,Manduca Foods Corp,db24f2e8-2a49-49e5-b350-ecb520c88d8c,Manduca Taberna,,,,,10%,VAT Inc.,Coupled,secondary,,,,"LEAD GEN, MAPS",,,,
-87e26a47-729c-4a55-8bf0-bcd3984aa42e,La Guaja,La Guaja Restaurant ( Mischell Masamayor Alberto),38bef916-95f7-4a76-bd9b-f7da8f6c6925,La Guaja,,,,,10%,VAT Inc.,Coupled,secondary,,,,"LEAD GEN, PEPSI, MAPS",,,,
-1af5e636-1157-4065-884d-0ab4995f4d9a,Jatujak Thai Restaurant SM Aura,SUANLUM CORP,8785bc6b-3730-4e7f-81bb-f0d832c9a941,Jatujak Thai Restaurant SM Aura,UBJATUJAK400,UBJATUJAK400,"
-400 pesos off with min. spend of 2000 pesos (Exclusive to UB card holders and new Booky users only. Available M-F 2-6pm only)",,10%,VAT Inc.,Coupled,primary,2/28/2024,,,"LEAD GEN, PEPSI, MAPS",,,,
-1af5e636-1157-4065-884d-0ab4995f4d9a,Jatujak Thai Restaurant SM Mall of Asia,SALATHIP FOODS INC,21d8501e-e575-41f1-bc9c-2512b473edbe,Jatujak Thai Restaurant SM Mall of Asia,UBJATUJAK400,UBJATUJAK400,"
-400 pesos off with min. spend of 2000 pesos (Exclusive to UB card holders and new Booky users only. Available M-F 2-6pm only)",,10%,VAT Inc.,Coupled,primary,2/28/2024,,,"LEAD GEN, PEPSI, MAPS",,,,
-1af5e636-1157-4065-884d-0ab4995f4d9a,Jatujak Thai Restaurant SM San Lazaro,SILOM FOODS INC,c4a8cade-150a-48e0-a05c-cc5f30ed25e4,Jatujak Thai Restaurant SM San Lazaro,UBJATUJAK400,UBJATUJAK400,"
-400 pesos off with min. spend of 2000 pesos (Exclusive to UB card holders and new Booky users only. Available M-F 2-6pm only)",,10%,VAT Inc.,Coupled,primary,2/28/2024,,,"LEAD GEN, PEPSI, MAPS",,,,
-783c88c2-63ab-4db0-86d0-f85d622009e8,Easy Tiger- Podium,SUANLUM CORP,168cda49-153e-4378-9bed-e94e3ed0a579,Easy Tiger- Podium,"ET200OFF
-ET400UB","ET200OFF
-ET400UB","
-400 pesos off with min. spend of 2000 pesos (Exclusive to UB card holders and new Booky users only. Available M-F 2-6pm only)",,10%,VAT Inc.,Coupled,secondary,2/28/2024,,5/28/2024,"LeadGen, Pepsi, MAPS",,,,
-783c88c2-63ab-4db0-86d0-f85d622009e8,Easy Tiger - Mall of Asia,SALATHIP FOODS INC,0c836cc9-6f89-4de6-8832-99b50a804cc2,Easy Tiger - Mall of Asia,"ET200OFF
-ET400UB","ET200OFF
-ET400UB","
-400 pesos off with min. spend of 2000 pesos (Exclusive to UB card holders and new Booky users only. Available M-F 2-6pm only)",,10%,VAT Inc.,Coupled,secondary,2/28/2024,,5/28/2024,"LeadGen, Pepsi, MAPS",,,,
-783c88c2-63ab-4db0-86d0-f85d622009e8,Easy Tiger - Uptown BGC,SALATHIP FOODS INC,d6cb08dd-5245-4d3f-8a80-2006fc67d0ed,Easy Tiger - Uptown BGC,"ET200OFF
-ET400UB","ET200OFF
-ET400UB","
-400 pesos off with min. spend of 2000 pesos (Exclusive to UB card holders and new Booky users only. Available M-F 2-6pm only)",,10%,VAT Inc.,Coupled,secondary,2/28/2024,,5/28/2024,"LeadGen, Pepsi, MAPS",,,,
-bff22504-49fb-4050-b542-3c8cec68bdc6,BEL Iloco,"Bel Iloco ( Purugganan, Alfonso Dyson	)",a294a488-51e9-42ba-b4b7-0f18c3f8ac26,BEL Iloco,"BELEMPANADA
-BELUBFREE","BELEMPANADA
-BELUBFREE","
- Buy any noodle + empanada, get sago't gulaman for free (Exclusive to UB card holders and new Booky users only. Available M-F 2-6pm only)",,,,Coupled,secondary,2/28/2024,,5/28/2024,"LeadGen, Pepsi, MAPS",,,,
-924027af-f7c9-4ef5-8758-e1b1ee2880de,Kachi Cafe and Collectibles,Kachi Collectibles Cafe Corporation,d14bf2bf-adc1-4340-99b7-10551149bd41,Kachi Cafe and Collectibles,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-e7bd9474-9647-4f24-ae68-408762eb6b0f,Good Pastry Cafe,Good Pastry Chef ( Juliet Bacolor),c8528a13-7aec-4b5d-ac20-3c2a088e2509,Good Pastry Cafe,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-d86b8f9d-9c45-42b5-850d-bab8a316b9fd,Gustaco,Gustacos Restaurant ( Mathew Jan Patrick Javelosa Timario),e72290d1-57bd-4d0b-88f4-0485d3b514f2,Gustaco,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-60ea44f2-660b-4ca3-ab76-f274579445cb,Tonio's Restaurant,"Tonio's Restaurant	 ( Anthony Pascual Cruz)",115dbb7d-80a9-4009-9196-bde104be2e70,Tonio's Restaurant,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-1c3380af-330e-49a4-b139-63fd920c4f8d,Pancake House - Catering,Max's Group Inc,0ba463de-52dd-46e6-a001-481b7204aea5,Pancake House - Catering,,,,,,,MAPS,secondary,,,,MAPS,,,,
-9a6d8c3c-d475-450b-8e32-b7ba131d5dfc,Ae.Cafe La Union,AE Cafe Corporation,9c44067c-d75c-45f5-9ab7-c03653add918,Ae.Cafe La Union,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-9c8d01ba-49ac-4d4a-ad18-ab969412bbc1,Ikigai Ramen,Malou-Maru ice cream Production (Heroein Tenorio Simbulan),4cc09775-2eed-4b70-8509-fe3b34d498c5,Ikigai Ramen,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-9a6d8c3c-d475-450b-8e32-b7ba131d5dfc,Ae Cafe ( Bacoor and Imus),AE Cafe Corporation,"0e76ab4e-ec49-443a-a093-0cee4fc515c1,278e66f5-725c-422d-b9ff-6603ca7ed103",Ae Cafe ( Bacoor and Imus),,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-1daf9dbe-966a-4d7c-910c-3d828e0a775d,Meat'In Place,Jonalyn's Meat in Place Diner ( Jonalyn Cruz Mendoza),36d2e61d-1667-4e22-ba4f-81a1955c8b75,Meat'In Place,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-38818a3f-0b41-4a2f-b4dc-cc78667f733e,IINE Japinoy Fusion Food Store,IINE Japinoy Fusion Food Store ( Adrian Genki M. Seike),1076b610-4be6-4294-be2e-39f2f03b935b,IINE Japinoy Fusion Food Store,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-6b7ab708-2a51-46c6-bbe3-6530b3b3d2ed,Little Tokyo Milk Tea,Little Tokyo Milk Tea Tea House (Brendalyn Abad Mati),97313f9d-6ad5-4364-8b03-2385c0cb3af7,Little Tokyo Milk Tea,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-78f01852-a565-4c40-ad4a-57c0df4ff915,The Bad Burritos,Bad Burritos Fast- Food Chain (Daryl James Badilla),c9ef58bf-f13a-4dc0-90c1-9eaffedaf03b,The Bad Burritos,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-5cbcee43-8b82-46b7-948a-f7fcf3965ecc,Big Guys! Pizza,"BIG GUYS PIZZA PHILS., INC.","d67a0676-b75f-46c4-8be0-4448ad68e594,384e6cef-0f6f-4056-be28-83bec6ae3bdb,5a95821e-a3af-47f1-be2d-911c60f44ec9,170e2ce4-6661-41d0-893f-131f4acca10a,7b9405bd-9013-4106-a753-5da8a4f2f59b,6cc826c7-4b29-4a83-b6fe-44a114803130,6416e0c6-b8f2-4087-85c5-62ffb7fa89e6,a6a1f0b4-3984-4a96-99f2-43b9db3a82ee",Big Guys! Pizza,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-2aba150e-9b0b-41c6-885c-0a909d9d6a4b,Hotties Gourmet Sausages,JK's Hotties (Joseph Kenneth Erispe),d7fc154c-937a-4693-9d31-8510bc07cd1c,Hotties Gourmet Sausages,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-e36f90d1-e799-455c-9eea-9ab7552d7215,Cache Coffee & Cocktails,Cache Collective Inc.,1dee5728-709d-4c94-a1c0-e8d2e44ae993,Cache Coffee & Cocktails,"8AM-11AM - CACHE200AM
-2PM-6PM - CACHE200PM","8AM-11AM - CACHE200AM
-2PM-6PM - CACHE200PM","P500 off for a min spend of P2,500
-Single availment per table only and excludes all bottled hard liquors and other promos
-For Unionbank Credit Card Holders only",,10%,VAT Inc.,,secondary,4/15/2024,8/15/2024,10/15/2024,"MAPS, Pepsi",,,,
-1e5adcbe-bc15-42e7-a9a4-73c8c16ca5cd,Cup N' Shop,Cup ' N' Shop (Rosalia Laderas),2129a73f-07e6-43b4-af13-9555874c52bf,Cup N' Shop,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-df9053ff-dac2-43b2-88be-caf5fe8cca53,Auring's,Auring's Restaurant (Danarae M. Benisano),ddc79ca3-d7de-4af7-89d4-e96f948978fc,Auring's,"AURINGS20OFF
-AURINGS250","AURINGS20OFF
-AURINGS250","Offer 1: 20% off with a minimum spend of P3000 and a maximum discount of P400
-Offer 2: P250 off with a minimum spend of P1500, from Sundays to Thursdays, 1-4PM",,10%,VAT Inc.,,secondary,1/22/2024,2/22/2024,4/21/2024,"LeadGen, Pepsi, MAPS",,,,
-54a1d4c9-2eaa-40ce-b943-4952414dc305,Commune,"B.U. Juan Enterprises, Inc.",9382b013-29bc-4b41-81b0-1a173540728b,Commune,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-6e100609-e2c0-4b66-ab27-de589baa7484,Vitals Coffee & Bread,"Vitals Group, OPC",2e14187c-3529-4b71-bdc3-e7c9ce132234,Vitals Coffee & Bread,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-93ec6bf1-1418-4e54-8a5a-8dd3fc071a13,"G? Unliwings, Ribs & More",G UNLIWINGS RESTAURANT (Neil Adrian Azurin),fbf18645-c599-4bf0-8b10-ee98d27387ac,"G? Unliwings, Ribs & More",,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-0018993e-5d2f-4ea4-acd7-d28d202182dc,Mensakaba Geishu,Mensakaba Geishu Ramen House ( Ma. Alina Hotta),0a225991-e713-4bc0-b510-5f82e76af735,Mensakaba Geishu,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-52a90f7d-d325-4e03-bef5-320619183906,The Hubstop Cafe,CREDEV INC.,"f84e1989-0918-48e7-8fff-fbefd3954a34,9f433766-65c9-4450-9d63-b24dbde66b23,1db9400f-f369-4f18-9762-08fa3a5424c0",The Hubstop Cafe,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-cd336d5b-d007-474e-939b-85ff0b3fb8e1,12/6 Chicken & Pica Pica House,Cristopiy Food House ( Nestor Maraguinot) -12/6 Chicken & Pica Pica House,05600d3e-95b0-4d7f-a760-cec386db39c1,12/6 Chicken & Pica Pica House,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-96714a1c-31fa-47bf-9533-5c30280ff34d,Dos Coffee,Cristopiy Food House ( Nestor Maraguinot) - DOS Coffee,3cdcb3fb-e759-4e17-9106-2decec4b7699,Dos Coffee,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-36ced720-1e08-4f45-a4c0-51d08625120e,Chebi Webbi,SOFTIES ENTERPRISES INC.,469c18f5-a9cb-4e81-b140-e44d501af562,Chebi Webbi,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-39f7fea4-6ec3-42d3-b15e-00cfc5b87c70,The Thai Plate,Thaiplate Restaurant (Warlyn Sookrojnirun),b8a058b0-4649-4066-a9c7-6b9a2cb06574,The Thai Plate,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-f44332c2-47ba-4310-9ddb-0cbfb5137c19,Cafe Pura,Pura Realty and Development Corporation,d440d2c1-600d-4ce6-b701-619a13e86ebe,Cafe Pura,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-2f29e9e6-d019-4dbf-8b3f-ba3894c9bbef,Tadeo Fil Mexican Comfort Food,TadeoFilmex Restaurant (Chino Cayetano),dee7461c-3f31-4f91-bb82-8b5e64e4ca53,Tadeo Fil Mexican Comfort Food,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-c25f8368-5599-4cfd-9b01-26407ce86268,Buddha's Belly,Buddha's Belly Dimsum House (Geoffrey Penaloza Dee Tan),"a4d4640d-25d3-4124-84ee-08c3f13778be,115a11b9-e0ca-496f-971c-c34587f2d7a7",Buddha's Belly,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-41e9652e-bf93-4960-9409-097a3fd30619,Cups of Dawn,Cups of Dawn Coffee Shop ( Naomi Dawn Diezmo),b2473731-1208-4f9c-bb4d-ab4a8847be3f,Cups of Dawn,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-ff958cf1-8081-43e6-b3c0-ca3dc323bd4d,Good Papa Kitchen x Café,Gubby and Hamy Inc.,386e4906-09a5-4e88-93c2-8d297fc83fe1,Good Papa Kitchen x Café,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-1f5cd24b-4385-46b8-9b25-8019c2afbd3d,The Smokery,"Cinco, Lorenzo Milan Adan		",30faae1d-eb0e-4eb5-a4c4-b53498c80b86,The Smokery,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-c8dd9c90-5a7e-4ba0-a632-383de0928565,Kalinaw Coffee Co. West Triangle QC,KALINAW COFFEE CO,d4a5ba4a-eab6-4c53-9de2-dfabadcbfe2d,Kalinaw Coffee Co. West Triangle QC,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-d518f693-fe72-4efb-a3b5-3443ab95e2da,Taste of Czaczacza SM City Southmall,TCCC Cakes and Cafe Inc,5a3c7b9c-c06f-4704-86f7-4b39e4333551,Taste of Czaczacza SM City Southmall,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-d518f693-fe72-4efb-a3b5-3443ab95e2da,Taste of Czaczacza SM City San Mateo 3rd Floor,TCCC Cakes and Cafe Inc,26353780-1593-4359-b65a-648abe55d0a6,Taste of Czaczacza SM City San Mateo 3rd Floor,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-d518f693-fe72-4efb-a3b5-3443ab95e2da,"Taste of Czaczacza SM City North EDSA,  SM City Marikina,SM City Masinag, SM San Mateo GF",TCCC Cakes and Cafe Inc,"d91d4861-73bb-4214-80a0-d53201f7f7d7,1902d77a-d2bc-47e5-b89c-572b49c92b0b,c48c92b9-2f67-4343-a05b-e4758f99efd5,23322e55-43af-4fb4-b0c7-26999bc9a538","Taste of Czaczacza SM City North EDSA,  SM City Marikina,SM City Masinag, SM San Mateo GF",,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-c8dd9c90-5a7e-4ba0-a632-383de0928565,Kalinaw Coffee Co. Pasig,Kalinaw Coffee Shop (Eljay Myca Dela Cruz Dizon),b88afcb1-06fc-4b62-bd0b-e0bba1f71614,Kalinaw Coffee Co. Pasig,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-badf88e8-8a81-4db7-844d-9ea7b7d175c1,Nikki’s Gastropub,Nikki’s Gastropub (Mark Anthony Tam Sultan),0b51377a-9a28-484a-85a4-f07921b55527,Nikki’s Gastropub,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-e782c67d-3f46-4031-8d1b-5b9ac64911e3,The Elephant House,Visum Ventures Inc.,d147c1d7-06b2-4994-b372-e667fdef5d3d,The Elephant House,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-4bb612c0-1571-4b91-a597-5308251db5d1,Bacsilog' Food House,Bacsilog' Food House ( Carlo Alvin De Jesus),e9990dd3-d6e8-4371-abde-1f023244787e,Bacsilog' Food House,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-beaf2592-ff9b-4a76-868f-27c0b5dee665,Arch Shawarma & Zofi Smooteas,Q. Tea & Shawarma Food and Beverage House(Qutife Luab),56e97ff8-07bd-4863-a0ab-20334db78e51,Arch Shawarma & Zofi Smooteas,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-d8609b07-6caa-403a-8ddf-c6aa77b87ca3,Domenic's Japanese Foods,Domenic Ramen House(Domino Salvador),744c755b-8556-4070-8bb5-6cad46954bd4,Domenic's Japanese Foods,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-2b7e8646-3ea9-4904-a26e-e3126d75a79c,Katsu House,"Lauralei Cuisineur Enterprise	( Maria Laura Elaine C. Mejias)",0ba93409-2230-4a6a-a7a2-5399c60c40e0,Katsu House,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-ecc1d3bd-c61e-4c61-ab0d-933ade4ef8d5,Phetron Restaurant,Phetron Restaurant (Rufino Angeles),0d29d1ee-27fc-49df-8c0a-c8934863003e,Phetron Restaurant,,,,,,,MAPS,secondary,,,,MAPS,,,,
-0c30636a-16f0-4706-9cd6-9175ba31118a,Le Fleur Cafe,Le Fleur Cafe ( Chelsea Anne Soriano Quiambao),c57cadd6-df11-48f9-97a7-06035a6d5a34,Le Fleur Cafe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-c1174f83-bf01-401b-a683-d735ad8270e2,Kirakuya Ramen,Kirakuya Ramen Corp.,"973bef61-39cf-426d-a75b-52c3452e840d,d8e47219-1b39-4a6f-b6f1-ee76c9decae0",Kirakuya Ramen,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-1717e22b-6af2-4800-84c1-d8ef5b5136e4,825 Pizzeria,Satiate Inc,2bd49a55-54e8-4dfe-9a76-0a4a2a6a8b13,825 Pizzeria,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-e84763ca-565d-48f7-a914-0fe2a94a945b,Kabsa.ph,Kabsa.PH Food Store (Willy S. Yabes),111afcdf-a3a9-4130-87ea-7f91bd042ada,Kabsa.ph,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-80b30a6b-8dec-4ee9-97a0-e9de15caf55d,Hidden Vietnam Commonwealth,MMELV Food Incorporated,c4ce7bf8-8e32-4707-ae29-710b64321914,Hidden Vietnam Commonwealth,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-e9474463-69aa-42aa-84e1-4e19a4582b4a,Profound + Kitchen,Profound - Kitchen Coffee Shop (Michael Dennis Navarra),00b72aa0-8e9f-43e0-aba7-3663d5312bcd,Profound + Kitchen,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-0a5786d5-7675-468e-93d4-adc98f0c04ed,Kalsada Burger Pembo,Golden 3 Three Franchising Corp,13907c70-5f0d-444d-8993-e35533b939d3,Kalsada Burger Pembo,,,,,,,"Delivery-3PL, MAPS",secondary,,,,"Delivery-3PL, MAPS",,,,
-f8f98a7d-a540-4899-b493-6c49457c8bda,Bored Egg Dasmarinas,CHANTEA PHILIPPINES CORPORATION,7e7caac5-a33a-404d-83af-0af46b433f20,Bored Egg Dasmarinas,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-f8f98a7d-a540-4899-b493-6c49457c8bda,Bored Egg Binondo,CHANTEA PHILIPPINES CORPORATION,b18f7223-aa0b-4d68-85e6-27ab6c2e47c7,Bored Egg Binondo,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-f8f98a7d-a540-4899-b493-6c49457c8bda,Bored Egg BF Homes,CHANTEA PHILIPPINES CORPORATION,1ab2115a-2f9c-4b50-b2f6-dd8ad06b35c2,Bored Egg BF Homes,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-9303e7ad-6734-414f-ba5d-dff023fe2ee0,Czaczacza Cafe,TCCC Cakes and Cafe Inc,bbff658d-1221-4a19-87b1-91d855825efe,Czaczacza Cafe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-d518f693-fe72-4efb-a3b5-3443ab95e2da,Taste of Czaczacza SM Sta. Mesa,TCCC Cakes and Cafe Inc,,Taste of Czaczacza SM Sta. Mesa,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-ef5decfd-b980-41e8-8485-c0becc8cfa4e,Everyday Coffee Roasters ( Hilltop),Everyday Hilltop -Coffee Roasting Services ( Andrea Francesca Tan),"ac85f382-4fad-4442-8d1d-72758ef4e813,a01a4495-e402-43e7-b5d9-a216793930a7,c8fe915f-0eb6-4370-9cf5-c9d4a396852d,722b53f8-161f-4255-a3a6-9e1be2b9a246,c57e7a01-841c-4a6a-9797-b0411f26ec28",Everyday Coffee Roasters ( Hilltop),"ECR100, ECR200","ECR100, ECR200","Offer 1: Las Pinas & Laguna
-Php100 off with a minimum spend of Php550
-
-Offer 2: Laguna & Batangas
-Php100 off with a minimum spend of Php550
-
-Offer 3: Quezon City
-Php200 off with a minimum spend of Php1500",,10%,VAT Inc.,,secondary,9/29/2023,,12/29/2023,"MAPS, PEPSI",,,,
-eebcfc53-b7a6-44ec-827f-4fd37d7482dc,Hermanos Taco Shop,HERMANOS NACHOS AND TACOS FOOD HOUSE ( Rosemarie Bautista),6e806f8e-32bc-4558-a9cf-acf2ff5ee4ef,Hermanos Taco Shop,UB400OFFHTS,UB400OFFHTS,"P400 off with a minimum spend of P2000 
-*Available Everyday, Exclusive to New Booky users only or Unionbank card holders",,10%,VAT Inc.,,secondary,03/01/2024,,06/01/2024,"MAPS, PEPSI",,,,
-52087b92-8f84-4e31-869b-4d35c6390467,70's Kimchi,70s Kimchi Head Office Services ( Brendalyn Ramirez),"d2ba5d3c-8f7c-4067-9e34-818cce1df5e9,",70's Kimchi,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-9626138d-4e94-4185-b262-49156a9af011,Murphy's,FKN VENTURES INC,f2b4b78d-7434-440b-b86d-ded27ac0cb9b,Murphy's,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-bf7f646a-9c37-4762-a4d2-b5126080cd05,Wadough's,ETS Wadoughs Patisserie (Eduardo Tan Siman Jr.),3ca0c447-0143-443f-8903-71750819316e,Wadough's,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-1b5ff1a0-e077-42c3-a53f-4cd9e807d824,Cafe Cristopiy,Cristopiy Food House ( Nestor Maraguinot) - Cafe Cristopiy,77a222d3-4fde-4307-8898-410649cde680,Cafe Cristopiy,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-d3c10032-1580-44f2-bf41-29d4fd2f82ce,Cristopiy Food House,Cristopiy Food House ( Nestor Maraguinot) - Cristopiy Food House,1618366e-d1e1-470f-bcdb-fc93d7bddd4a,Cristopiy Food House,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-c03942e5-6392-426c-a8e4-8bdf7afdc43b,Fantastic Baka,Spectrum Five Food Corp.,"76aa9b68-fa4d-42b2-a475-81fc11797254,0d17e9f9-dd40-4db2-a477-eb35ae5c16e2,e0a6128c-72b1-40ab-ade8-fef4eb8a811c,52bb7788-3638-4566-a7aa-2d02da37c055",Fantastic Baka,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-37c5d54e-50da-40d8-8fcb-c9e64a4eaf4d,Avocadoria SM Batangas and SM Marikina,AFBI REFRESHMENT STORE CORP,"56ba8ff0-8b18-44b9-b60a-b67dac5ac1b3,987cec98-eb32-43f4-ad6c-acc8396807f0",Avocadoria SM Batangas and SM Marikina,,,,,,,MAPS,secondary,,,,MAPS,,,,
-c6ecbe2e-af97-484e-81ca-e1ab717139ae,La Luna Café,Bayani Gourmet Cuisine Inc.,3f1b4b2a-3ad0-498e-bddb-8e81acbfb826,La Luna Café,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-e4bc8052-76a7-486d-a2b4-5a2d1d023d3e,The White Dome Cafe,A&R Cafe (Arthur Avenir),cbc244eb-de91-41d4-a2af-2ef885ddedd3,The White Dome Cafe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-99eb67d8-5ffc-4dad-ad36-621e1f924fd0,Greek To Go Taverna,Ermiones Trading ( Wahlene Espino),ee47e7da-944f-4ec9-ae27-5e4e3ed5f365,Greek To Go Taverna,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-7dbf0660-46d7-464b-a2c7-418a58cba751,The Porch,Casa Verde Food Ventures Inc.,b92e0f4e-6995-482b-b413-180b2da90b7b,The Porch,PORCHFREEBIE,PORCHFREEBIE,Order The Porch Platter and get a free KarlaMares (save 268php) or Beef Taquitos (save 300php)                                                                                  Monday to Thursday only,,10%,VAT Inc.,Coupled,secondary,12/07/2023,09/07/2024,05/07/2024,"LEAD GEN, MAPS",,,,
-d0e37cc2-c591-4e41-abf4-716fad9ca017,FoodHouse by Madla,Food House By Madla Inc.,a37a9de4-067f-4ca0-a369-7d02683cec9f,FoodHouse by Madla,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-5920c99d-10f7-424e-b6ce-a93ece39ebb5,Wadashi,Send Noods Inc,c456bf0e-b46b-4835-9113-656f565b2276,Wadashi,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-c2597907-7b9a-4568-afe3-12339d7002b4,Persaro's Cafe,Persaros Cafe ( Misha Segarra),8353d881-28f6-4c00-841c-b6b1ea5eb91a,Persaro's Cafe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-6343e75c-7643-4ff4-9ecc-6615bc9557ec,PinkHaus,Pink Luna Snack Haus( Jesus Mirandilla Jr.),1758843b-7323-4e29-8027-7af732a0007e,PinkHaus,,,,,,,MAPS,secondary,,,,MAPS,,,,
-db40f9a5-73cf-4825-babf-084058a08c8d,Brooklyn's New York Pizza,Brooklyn NY Flying Elephant Food Corp.,a0c63322-810c-459d-986d-64f3e266708d,Brooklyn's New York Pizza,"BNYP100OFF, BNYP200OFF","BNYP100OFF, BNYP200OFF","Pesos Off: P100 off with a minimum spend of P499
-Pesos Off: P200 off with a minimum spend of P999
-Available all day, everyday",,10%,VAT Inc.,,secondary,11/29/2023,,1/29/2024,MAPS,,,,
-b68300cc-8372-4342-b68f-6c39f76846d1,Good Don,Red White and Blue Restaurant(Caroline N. Chan ),"a48df2f7-814a-43a4-bbe4-4b9d63ba2874,90f0194d-91af-4ec5-a2aa-6b45e4f006a6,3c7cd401-7085-4b70-9fc2-5e9b5f66859e",Good Don,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-44ab02c8-652e-445a-8b1c-8bbd27ac36ba,Hom Fresh Thai Food Sea Residences,Prudente Foodservice Corporation,6ac66995-d9b2-4b29-af1e-d5400dec7886,Hom Fresh Thai Food Sea Residences,,,,,,,"MAPS, PEPSI",primary,,,,"MAPS, PEPSI",,,,
-44ab02c8-652e-445a-8b1c-8bbd27ac36ba,Hom Fresh Thai Food Air Mall,Prudente Foodservice Corporation,406da60d-5adf-4114-b8e4-bfdc5df650d1,Hom Fresh Thai Food Air Mall,,,,,,,"MAPS, PEPSI",primary,,,,"MAPS, PEPSI",,,,
-3a5bbac3-3e9a-409a-9fd0-d599d5cadf0e,James and Daughters,GBB Family Kitchen Corp.,5f3894d2-2271-4ffd-9708-63d9880088ad,James and Daughters,"JAD500OFF, JADWEEKEND","JAD500OFF, JADWEEKEND","Monday to Friday- 500 pesos off for a minimum single receipt of 1500
-Saturday to Sunday -500 pesos off for a minimum single receipt of 2000",,10%,VAT Inc.,,secondary,11/29/2023,4/29/2024,4/29/2024,"MAPS, PEPSI",,,,
-262e405e-19ed-4f11-bce8-98092687a6f8,Main Cors,Pandora Group Unboxed Resto Inc,bd06424b-4abb-4789-b468-ee2fe5e66603,Main Cors,,,,,,,MAPS,secondary,,,,MAPS,,,,
-93a0fc2c-b9ec-48ca-bef4-b4b2f02330cd,Chick En' Wings Cafe,Shella Food House (Shella May Corpuz),b3bcb66c-ccbe-4abc-999f-95355f4bf810,Chick En' Wings Cafe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-401380b3-ac0e-4ac2-8ecc-884b73103056,Recovery Food BGC Stopover,THE FORQUARES INC,e63a0a5a-977c-4901-8c5c-a78c9a9cb4d3,Recovery Food BGC Stopover,RECOVERYFOOD,RECOVERYFOOD,"10% off, minimum spend 1,000",,10%,VAT Inc.,Coupled,secondary,,,,"LEAD GEN, PEPSI, MAPS",,,,
-401380b3-ac0e-4ac2-8ecc-884b73103056,Recovery Food Crossroads,MY MAMOU FOOD CONCEPTS INC,045331ca-f0f8-4923-b542-856b132fe653,Recovery Food Crossroads,,,,,,,"LEAD GEN, PEPSI, MAPS",secondary,,,,"LEAD GEN, PEPSI, MAPS",,,,
-b1e39fd4-b32c-482a-b73e-6f867d50c054,Arce Haus,Pandora Unboxed Resto Inc.,a742023b-fb23-41a1-a8de-1470aca75418,Arce Haus,,,,,,,MAPS,secondary,,,,MAPS,,,,
-57518f7e-bd91-45da-a9e2-a4c1c03bb8c7,Under the Balete,Under The Balete Co.,75801583-fc22-4efb-be76-04eceb51e119,Under the Balete,"UTB500, UTB800, UTB1000","UTB500, UTB800, UTB1000","Offer 1: Php500 off for a minimum spend of Php3200
-Offer 2: Php800 off for a minimum spend of Php6000
-Offer 3: Php1000 off for a minimum spend of Php10000
-
-*Single receipt/transaction
-**Promo not available in conjunction with any promos or discounts including Senior Citizen and PWD discounts",,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,"MAPS, PEPSI",,,,
-d780805c-7ad8-4b00-a8b8-5f951d782d75,Vien's Cakes and Cafe,Vien's Cakes and Cafe (Darly Ann M. Aurigue),9bfdd405-40c6-41e1-ba4a-7a40755f3fad,Vien's Cakes and Cafe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-805f787c-57b2-4127-b246-0fe2a4bda4e2,Benny's Lounge,Benny's Kitchenette(Joseph Benedict Prim),b3bd1d55-d999-4bd1-98ba-4ec99ed33731,Benny's Lounge,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-6467ad2b-c7ec-4b22-bd67-3adb72b486a9,Banh Beo Cafe & Bistro,EXIMIA VENTURUS INC,32d70043-b733-422e-8fc0-40b8c9123278,Banh Beo Cafe & Bistro,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-401380b3-ac0e-4ac2-8ecc-884b73103056,Recovery Food Arkipelago,THE FORQUARES INC,195cb073-6ecd-4372-9dc8-e6581213b631,Recovery Food Arkipelago,RECOVERYFOOD,RECOVERYFOOD,"10% off, minimum spend 1,000",,10%,VAT Inc.,Coupled,secondary,11/29/2024,,11/29/2024,"LEAD GEN, PEPSI, MAPS",,,,
-401380b3-ac0e-4ac2-8ecc-884b73103056,Recovery Food West Kamias,MY MAMOU FOOD CONCEPTS INC,5f3d20aa-b0e7-492b-9c27-589be848cab3,Recovery Food West Kamias,RECOVERYFOOD,RECOVERYFOOD,"10% off, minimum spend 1,000",,10%,VAT Inc.,Coupled,secondary,11/29/2024,,11/29/2024,"LEAD GEN, PEPSI, MAPS",,,,
-401380b3-ac0e-4ac2-8ecc-884b73103056,Recovery Food Alabang Town Center,MY MAMOU FOOD CONCEPTS INC,292bf211-68d3-4a7c-a304-0406fe7c9d44,Recovery Food Alabang Town Center,RECOVERYFOOD,RECOVERYFOOD,"10% off, minimum spend 1,000",,10%,VAT Inc.,Coupled,secondary,11/29/2024,,11/29/2024,"LEAD GEN, PEPSI, MAPS",,,,
-c158e6a8-1e6f-4107-8397-19a685eeb716,Mijo Comfort Food,Abuela Food Concepts Inc.,80f69cc4-3a36-4466-8125-d07a2959295a,Mijo Comfort Food,,,,,10%,,"LEAD GEN, PEPSI, MAPS",secondary,,,,"LEAD GEN, PEPSI, MAPS",,,,
-71e7041f-7247-40af-a6e0-d144f4625ed7,Governor's Cafe,Pandora Unboxed Resto Inc.,91531acf-2399-4586-884b-f960bb332edf,Governor's Cafe,,,,,,,MAPS,secondary,,,,MAPS,,,,
-2ca8b786-3d70-421b-9a85-8b1a8efe6ea2,Rocco's Pizza x New York Over Rice,2RS168 Food Services (Thomas Marlo Redoble),a5962076-7bac-42ac-9940-b584308cdde2,Rocco's Pizza x New York Over Rice,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-28fbb634-ac58-4d2a-9673-2f3d9f27aa87,Monster Wings,TRX Franchising Corp.,f976748b-d022-4f53-93b4-35068ed0b0d6,Monster Wings,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-bf651839-6eca-422d-805b-c75be88aac13,Mismoo Grill,GENERAL MUNCH ENTERPRISE CORPORATION,a73590ab-0def-4fb7-ba7f-a486f6c7cf4a,Mismoo Grill,"MISMOO250, MISMOO500","MISMOO250, MISMOO500","Offer 1: Php250 off if you purchase 2 Sampler Food Trip
-Offer 2: Php500 off if you purchase 3 Sampler Food Trip",,10%,VAT Inc.,,secondary,11/29/2024,,12/29/2023,"MAPS, PEPSI",,,,
-58cc772d-8b9f-460e-8b9c-e9668ec718e9,Staycee's Tea House,Staycee's Tea House ( Phelonita P. Fortes),42251c96-866c-489f-86e5-21bc417b970e,Staycee's Tea House,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-ff927c67-f1e3-43f4-b1d1-f6a42b4104b3,Pares Avenue,Pares Avenue Restaurant ( Marjorie Anne S. Lackar),99f52794-db19-4e68-92cc-e3b722000237,Pares Avenue,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-2edb1071-01af-471f-b928-6242a072999b,Wing Vibe,WV Food Corner ( Cecilia Mei Lee),a28aca27-09f0-4b45-bc94-4091b40ce54d,Wing Vibe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-c3a7fe32-49ff-4cba-9ca5-280c04472821,12C-4 Bread Station,A&K 28 Rich Concepts Ventures Inc,cd72cb54-594f-4640-b81a-097b4c059779,12C-4 Bread Station,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-02e5eb43-5c0f-431f-a593-207e2c239324,Burger 3001,Xose Food Station OPC,ed0b9d07-856b-4549-a943-c4b2e95e7f0f,Burger 3001,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-d77b2d37-3cde-4a25-b3ed-a11bcabb49f9,Le Rêve Pâtisserie,"Angeli Mariz Nasser Pastry Shop	( Angeli Mariz Nasser)",0e11e891-42c1-44ad-867e-757c7d5c2919,Le Rêve Pâtisserie,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-ccd23471-9d9b-41da-84d0-2a732c35bfe6,Sourdough Cafe + Deli QC,Gastronomic Food and Wine Corporation,35899a46-cf3c-447c-8cd5-bc91bc1eab59,Sourdough Cafe + Deli QC,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-7b5b553a-8703-4699-957b-9e6a81282c87,Pablo Bistro,"Picasso Bistro, Inc.",7b5b553a-8703-4699-957b-9e6a81282c87,Pablo Bistro,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-19101848-d28b-45b9-a35e-746873cbb611,Cartel Coffee Deli,"Picasso Bistro, Inc.",ac1197b2-37c0-4ef4-878d-7a8ff5107529,Cartel Coffee Deli,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-a226c767-16b5-425e-8555-663b4e320eff,Tai Koo HK Roast SM City Lucena,4 Brains Management and Consulting Corporation,67f81191-294b-41bf-b3ab-084e84ad5fc2,Tai Koo HK Roast SM City Lucena,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-a226c767-16b5-425e-8555-663b4e320eff,Tai Koo HK Roast Kroma,4 Brains Management and Consulting Corporation,6ec4aaee-0785-4b5b-bd2b-70dc339dd073,Tai Koo HK Roast Kroma,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-0452f835-2710-493f-a0ee-895a50fda9c2,Bl.ck Cafe,Bl.ck Cafe (Judiel T.Torres),f71a4877-ce04-44c3-8cb2-f6dfd3fda10b,Bl.ck Cafe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-cbcaf26c-c813-4970-8599-423557730155,Hot off the Press,Meen Queens Golden Press Inc.,8a82877b-d761-4931-a04d-87526e2de42d,Hot off the Press,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-807c4451-b9eb-422b-b17c-9a294b5cf99f,Karsa,Merg Products & Services Enterprise Corp.,f8f02e9b-1272-4a8f-8752-b6a21655f528,Karsa,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-683c4157-b721-4fad-8ad2-b0b3d841b04c,THE CLAY OVEN,THE CLAY OVEN CO,44acc6d8-7f86-4bf1-9edd-c4e62ea96ae7,THE CLAY OVEN,"UB30TCO
-TCOBIRYANI
-TCODESSERT","UB30TCO
-TCOBIRYANI
-TCODESSERT",P300 off with a minimum spend of P2000,,10%,VAT Ex,,secondary,04/03/2024,10/03/2024,06/03/2024,"MAPS, PEPSI",,,,
-b2270f6d-1fe1-4f94-8abb-a2926eccab3a,Cafe O2,Cafe O2 ( LEVIMARIE ROBLES),904081af-0db4-40fd-bdb1-5e6d3829a7b2,Cafe O2,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen Bohol,A&A Stefanos Alexandra Restaurants Corporation,8895eea9-b8bb-462a-9074-0ff4e05c5053,Banh Mi Kitchen Bohol,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,Vat Inc,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-c7233983-72eb-42e0-a4cf-c095fcab0412,Hanakazu Japanese Restaurant,Hiro Group of Restaurant OPC,fba09c57-63be-4369-9b0f-643ff330680f,Hanakazu Japanese Restaurant,"HKP300, HKP500","HKP300, HKP500","Php500 off minimum spend Php 5000 (Tuesday- Friday);
-Php300 off minimum spend Php 3000 (Saturdays and Sundays)","10%
-
-TF is based on the minimum spend (P3000/P5000) regardless of total bill amount",10%,VAT Inc.,Coupled,secondary,11/29/2023,,01/29/2024,"LEADGEN, PEPSI, MAPS",,,,
-29d08966-7056-4582-b1bf-60347e26e467,Sugared. Cafe,Sugared. Cafe ( Leona Bautista Esparaz),4c098235-3486-4802-9dd7-d7595a12bb95,Sugared. Cafe,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-4159f7f0-d8da-4cf7-b494-89a6bcee2a83,Anix's House of Kare Kare,Anix's House of Kare-Kare ( Celestino C. Lee),b0a5fc21-2e39-4012-a1b3-e0334ed4bc9d,Anix's House of Kare Kare,ANIX250,ANIX250,"Available Daily: Php250 off with a minimum spend of Php2000
-
-*Promo not available in conjunction with any promos or discounts. (Discount is also not applicable for beverages and desserts) 
-**Starting January, promo will only be available on Weekdays",,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,"MAPS, PEPSI",,,,
-4a230426-ace1-47e9-b1f7-f5232ff7534c,Coffee Dojo,Coffee.Dojo Cafe (Eduardo T. Adriano Jr.),1c2b2805-ca7d-423c-bc8b-3d085288fcba,Coffee Dojo,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-89662d84-e87e-4996-8fff-e7e7037430e5,Sea to Eat,STE Seafood Restaurant ( Harison A. Jagto),755d5ae3-470c-4e73-bae9-a4c79acfb987,Sea to Eat,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-46869e80-f73c-42ff-9774-cbfafaa06c17,Chick'n Egg,Crown Nuggets Concept Inc.,9d963bc0-5f48-4efa-af72-49315db15ad4,Chick'n Egg,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-66edabbe-659c-4bde-a45a-76c93a621a89,Ligaya's Fried Chicken,Ligaya's Chicken House(Manilyn Francisco),997650a6-2c6a-41cf-8a99-15eb5a6d0ea2,Ligaya's Fried Chicken,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-b1e161a4-4c55-4c78-ab48-c21763f3a962,TD & Co University Belt,"Beans & Grains Food, Inc.",03d72729-1d05-46b5-8aee-ada2bbccf223,TD & Co University Belt,TDCO500OFF,TDCO500OFF,"Available daily: PHP500 off, minimum spend of PHP3,000 required",,10%,VAT Inc.,,secondary,11/29/2023,,11/29/2023,"MAPS, PEPSI",,,,
-b1e161a4-4c55-4c78-ab48-c21763f3a962,TD & Co Timog,"Beans & Grains Food, Inc.",46754452-b769-45c2-8a03-24d236643fd9,TD & Co Timog,TDCO500OFF,TDCO500OFF,"Available daily: PHP500 off, minimum spend of PHP3,000 required",,10%,VAT Inc.,,secondary,11/29/2023,,11/29/2023,"MAPS, PEPSI",,,,
-660df4c1-7e92-491e-bd33-6932db672cbf,Cafe 408,Cafe Four O Eight ( Nicole Cruz),16e99c7e-ce49-44bc-b511-33881555e888,Cafe 408,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-7d94dcf3-071e-4150-8e15-ab560ae16c8a,Poco Deli,Vitospoco Delicatessen (Jocelyn De Leon),305fdcc2-a921-4e70-b666-497e5a502ec8,Poco Deli,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-bb5136bf-8179-4e3d-b45b-aabc15634281,Shantung Restaurant,Shantung Restaurant (Herminigilda Chang),e8b02687-f81c-439f-903a-3cdae66c825a,Shantung Restaurant,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-f0f6319c-18b9-49c2-879c-911c1914ddf7,Chick'n Bang Bang,"Chik'n Bang Bang Fried Chicken House	(Royanna Patricia Martin)",c77fddda-6043-446d-bc36-eac195e9fc82,Chick'n Bang Bang,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-178a9034-7933-496f-9fe3-654642b8402b,Riot Kid,Terrabite Burger House(JENNIFER M. ROXAS ),cdf62199-35d4-4551-ad03-cd181648a31e,Riot Kid,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-d7983113-a991-436d-8306-23aa812b59b7,INDUS,"Charcoal Food Services, Inc",ae1336c9-5eaa-4fa8-a2d7-bbddd6852026,INDUS,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-0d2c1df7-0b94-4c19-b528-51dac968ed1a,SUSHI Shokunin,MMFBC INC.,f7824216-4746-490d-a86c-3fc8ec08dd5e,SUSHI Shokunin,SHOKUNIN200,SHOKUNIN200,"Available daily: PHP200 off, minimum spend of PHP2,000 required",,10%,VAT Inc.,,secondary,11/29/2023,,3/28/2024,"MAPS, PEPSI",,,,
-0e343a17-5b65-416f-8558-db21f3ca6028,Cafe Margarita,Cafe Margarita (Anne Margaret Chinel),8a56e388-518f-4223-a5a2-3059f5fa7f9b,Cafe Margarita,MARGARITA200,MARGARITA200,Php200 off with a minimum spend of Php1500 ,,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,MAPS,,,,
-6541c81c-d3aa-4182-a4ea-d7bbe3e7c7c0,Megawatt,The Pedru Corporation,6088f6bb-ffde-42fe-8e43-ea94eb2ef795,Megawatt,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-474c6794-f578-44d3-b8ec-777560f99c6b,"Yugi	Yugi Poblacion",YUGIMO FOOD AND BEVERAGE HOUSE(Cesar Agote Robles),907d3e39-1423-49ea-8b0b-2785f3605ad3,"Yugi	Yugi Poblacion",,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-8c0431d5-e282-4ba9-bf58-346b51171053,Steak To One QC Circle,SRJ1 Steakhouse ( Socorro Rachel Jane Imperial),06970b72-6420-40d5-95b4-345b8d76a3ab,Steak To One QC Circle,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-eea1c303-694a-41c7-97ac-2839e5b5a304,Rolando's Slab n Rub,RHD Inc.,f8435587-cf3c-4c9d-9ff8-30bce1cf171f,Rolando's Slab n Rub,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-0dc804f5-7421-4de4-8b35-77daf225352b,Yume No Aji,Yumi No Aji Restaurant Corporation,8bc2312d-9f99-402d-9210-4fc70d8f5726,Yume No Aji,YUME500,YUME500,Unionbank Offer: Php500 off with a minimum spend of Php5000,,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,"MAPS, PEPSI",,,,
-c76dc8ce-26dd-4910-ae1a-63704930e34d,Drunken Pig Gastropub,Drunken Pig Gastropub(Bienvenido A. Quinia Jr.),d4ec2e44-f486-479c-af8a-0a8679272ee0,Drunken Pig Gastropub,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-56b9fd3a-b47a-4fe7-9ce7-03c557de13a0,Feynman Coffee,The Wormhole Company Inc.,d84b95f1-38e7-46b5-8dfe-ac535426b642,Feynman Coffee,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-8c0431d5-e282-4ba9-bf58-346b51171053,Steak To One Maginhawa,SRJ1 Steakhouse ( Socorro Rachel Jane Imperial),bf3fd5b2-630e-4b2c-a764-47fc0e391e36,Steak To One Maginhawa,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-8c0431d5-e282-4ba9-bf58-346b51171053,Steak To One Batasan Hills QC,SRJ1 Steakhouse ( Socorro Rachel Jane Imperial),4ed9de28-4091-4167-b84d-5e7d7cdc327e,Steak To One Batasan Hills QC,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-b38fc137-0960-42d6-996a-d0c21bc2d41d,Wabi Zabi Sushi Bar,Miyua Food Corp.,3f7c655f-328f-457e-ba8c-b9c06b579f16,Wabi Zabi Sushi Bar,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-2d1773ec-6f17-454e-ace8-3b5bab11e7c0,Saigon Corner PH,Wandering Tummies Group Corporation,d06bdc5b-2958-4467-ab75-f4b22850c3e5,Saigon Corner PH,,,,,,,MAPS,secondary,,,,MAPS,,,,
-132523d7-2c6f-4eab-8c5b-11e7847d85d6,BeerBQ PH,Wandering Tummies Group Corporation,6b664890-a686-4a9c-996f-10443aa9f090,BeerBQ PH,,,,,,,MAPS,secondary,,,,MAPS,,,,
-caeb4063-f31d-40cf-ab1b-c6eebf36d93a,Ampersand Bean & Bar,Wandering Tummies Group Corporation,93100093-8cff-4f82-a2db-bc67c84c9546,Ampersand Bean & Bar,,,,,,,MAPS,secondary,,,,MAPS,,,,
-e7cc58b6-d243-4e87-a9fa-4e5f8561c049,i Darts Dash,Hat Trick Darts Inc.,c2c11201-e37b-41a3-ae5c-b6ee2a4edca0,i Darts Dash,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-e7efbbd3-f785-4884-94b2-177c5d2c7e47,Daniel’s Bakery Cafe,Oven Project Inc.,f3c0ede0-3182-48c5-ad65-ecd811a5064d,Daniel’s Bakery Cafe,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-4585c72f-becd-4ba0-8936-85667897ce8a,Founders Donuts,Founder's Café Incorporated,2ae5f818-d828-4d74-9075-bf8ff3e6fadc,Founders Donuts,FOUNDERSFMB,FOUNDERSFMB,"Buy 1 box of donuts (12pcs) worth Php540, Get any of our Milk Beverage (Dark Lava, Strawberry Blush, Ube Velvet, Butter Toffee) for Free (worth Php145) ",,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,"MAPS",,,,
-6626c3d6-e135-4ba7-808e-7d40564e7e8b,Flaming Wings Imus,DIGIJUAN VENTURES OPC,1da841aa-eb5d-4204-8c0a-a979bb48f606,Flaming Wings Imus,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-dfe70cf9-bfcc-48f8-bf3e-c5432abd5fa4,Lugaw ni Lola Atbp.,LNL Food Ventures Ltd. Co,ff7b7f62-9624-420e-a996-387077ed3a20,Lugaw ni Lola Atbp.,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-20eacec3-6b34-4b10-a512-ddeb1deb81ef,Thirsty Wolf,THIRSTYWOLF RESTAURANT (FRANCIS GERARD CEDILLA),026083f9-bce8-44a8-a861-efda070345b7,Thirsty Wolf,"WEEKDAYS500, WEEKENDS500","WEEKDAYS500, WEEKENDS500","500 off total bill, minimum spend 2,500 on weekdays (not applicable to existing promo items)                                                
-500 off total bill minimum 2,000 on weekends (not applicable to existing promo items)",,10%,VAT Inc.,,secondary,11/29/2023,,4/29/2024,"MAPS, Pepsi",,,,
-3057d3e2-2166-4603-9af5-d802582f410d,Crepe Talk Cafe,5 Genius Food Corp.,6288b915-9206-406c-8349-ca0d9f2dae45,Crepe Talk Cafe,,,,,,,"Pepsi, MAPS",secondary,,,,"Pepsi, MAPS",,,,
-25dce074-04d1-40d8-b0e4-4d3b9ad528f1,Aburi Madison Galeries,Aburi Modern Japanese Cuisine Inc.,d7521fc6-5be8-464c-a8c9-8c598e86d7c7,Aburi Madison Galeries,"ABURI1500, ABURI2500","ABURI1500, ABURI2500","Free Spicy Tuna Taco (priced at Php420) for minimum spend of Php1,500
-Free Classic Volcano (priced at Php695) for minimum spend of Php2,500                                                                                
-Cannot be used in conjunction with other discounts (e.g. senior/PWD)
-Applicable for first timers only (one-time use)
-Promo runs for 6 months ",,10%,VAT Inc.,,secondary,11/29/2023,5/29/2024,4/29/2024,"MAPS, Pepsi",,,,
-ab547c63-1696-4dbc-b9a6-5ee3ba8a0e0e,STONS,Stons Food Corner( Jerwin Mark Sunglao),e1a25de5-3ee6-4206-8849-c8bacd8105c5,STONS,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-34dcc65c-de54-444b-aaa1-3b5cc3e1b791,HOB House of Bulalugaw and Bustek Promenade,House of Bulalugaw( Alvin Simpauco Bernales),6894bf0e-976f-4fd9-9a6a-bdc8ba482c22,HOB House of Bulalugaw and Bustek Promenade,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-34dcc65c-de54-444b-aaa1-3b5cc3e1b791,HOB House of Bulalugaw and Bustek Katipunan,House of Bulalugaw( Alvin Simpauco Bernales),1d2a06af-c782-4961-add5-abcab094379e,HOB House of Bulalugaw and Bustek Katipunan,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-35b004bf-a184-4b15-ad66-a139a6c1b601,Narchos,Narchos Food Stall (Ed Joseph Sayawan Rosales),"32167409-e8bb-494a-97ea-0ed1a147913c,5bbef7d3-1c45-4e9a-89bc-5c1519214dec",Narchos,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-7f6edfd7-1db3-4ac0-a80e-9c3a828c8be7,Kale Cafe + Restaurant,NCMKALE BISTRO ( Noelle Cortina Magcale),"46bce711-6f6a-44c7-a37a-968b57ffe615,7b92ad7b-b848-4455-95af-faf903eead0d",Kale Cafe + Restaurant,"KALE15OFF, KALE20OFF","KALE15OFF, KALE20OFF","15% off on Total Bill, No Minimum Spend ",,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,"MAPS, Pepsi",,,,
-3a800e97-48a8-4adc-a34e-76735012aff1,Sumu Cafe,Sumu Cafe ( Jerome Joseph Tapia Ma Guerrero),327a67a5-d269-4927-9e6c-1349c151507d,Sumu Cafe,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-746fd319-7b7f-41f8-b655-dc044e0ddb57,Friuli Trattoria,La Bella Cucina Italia Inc.,c1999c27-e23a-4346-8aeb-982c9969f3d3,Friuli Trattoria,FRIULI200,FRIULI200,Php200 off with a minimum spend of Php1500   redemption limit: 2x monthly,Php200 off,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,"MAPS, Pepsi",,,,
-33e74573-d008-4f57-a142-ecf49929678d,Misfeats Cafe & Bakeshop,Celine Fabian Tamayo (Misfeats Cafe),9c7eb009-3ac7-43d3-a214-21646661ace7,Misfeats Cafe & Bakeshop,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-d0ae62b9-318e-4b90-82a7-cb4cbb5770bd,The Barbarians Cheesesteak,Elvin Mark Albor ( Pat & Flow's Food Services),5c3650da-5a96-4326-86a3-5fb6fbb5c9bb,The Barbarians Cheesesteak,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-e8fb795b-93a6-459f-8726-df417a6b8335,The Barracks,Cusi Food General Trading Company,a3bdcf95-1736-4307-b663-41188f7a9a24,The Barracks,UNLISTEAK,UNLISTEAK,"20% Off Unli Steak with original price of P740/pax. Available from Fri-Sun, all day",,10%,VAT Inc.,,secondary,11/29/2023,,12/29/2023,"MAPS, Pepsi",,,,
-b5f6ac21-d058-43ee-adea-f055f018d551,Ling Chan,Ling Chan Chinese Restaurant Corporation,2e1df1a8-1542-482b-a148-6db35f5a9a98,Ling Chan,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-6626c3d6-e135-4ba7-808e-7d40564e7e8b,Flaming Wings BF Paranaque,Leilani Villamor Salvano ( Flaming Wings),ac558d18-8984-4a2e-b168-fc99b18deae4,Flaming Wings BF Paranaque,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-b6f63374-c99d-4cac-b247-9731335a186d,The Melting Spot,The Melting Spot,397cd41f-1455-4716-9e64-9f1379d7de49,The Melting Spot,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-79bcbd1b-9e51-4215-809a-287530ce95c6,King of Wings,YSRABELLE VENTURES INC.,"a0251bb1-72eb-41cd-a14f-b287b135e4b1,813de8d9-e086-4ee1-ac82-118c451675db,533268b5-f0f8-4c65-a10f-ab4ba3090738,fdb8bf7e-2919-479d-a813-76f0b5c64a2c",King of Wings,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,Kenny Rogers Roasters General Trias,Royal Embassy Foods Corporation,c206a35d-17d4-4f0d-a5bd-fa5b5241bed5,Kenny Rogers Roasters General Trias,,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",,,,
-fb8d704e-bace-4400-9db8-f711f96297b7,Omameshi,Okane Inc.,7ebae15d-e292-421f-913a-75afec2088dd,Omameshi,OMAMESHI10,OMAMESHI10,"10% off minimum Php 2,000.00 and maximum Php 5,000.00",,10%,VAT Inc.,,secondary,11/29/2023,,4/29/2024,"MAPS, Pepsi",,,,
-d8912a42-3ff5-4734-ba84-e348a7cded9d,Nolita Joe's,RESTAURANTE DE POBLACION INC.,f6af9f43-4be4-4594-b885-ff85fa9d440f,Nolita Joe's,NOLITAJOES10,NOLITAJOES10,"10% off, minimum spend 1,000",,10%,VAT Inc.,Coupled,secondary,11/29/2023,,11/29/2023,"LeadGen, Pepsi, MAPS",,,,
-c1e47600-3ea5-4cf3-8dad-59f6f2ce4dba,Crabaholic,PMA Food Corp.,88a84d29-1557-4c8d-86e7-5cf09803c49f,Crabaholic,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-8e1b5b13-14de-4382-b76f-21c1bd9bf252,Salta!,"Tee, Jarina Gem Ang ( Saltai Rotisserie Chicken Bar)",b0d9fcee-af86-4259-a280-679a63fdbf45,Salta!,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-a7ce346c-a0fa-440c-89ca-6d0bfd18c187,Episode Kitchen + Bar,EPISODE RESTO BARS INC.,e37f2b98-3bf3-4672-bdae-53cf797ab1d0,Episode Kitchen + Bar,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-22af2352-c0a8-40a6-9676-263bc7367987,Bite N Go Food Hub,"Espanto, Rochelle Villafuerte ( Bite N' Go Food Hub)",2bf17518-0fc5-461e-a93e-d7a6511811d5,Bite N Go Food Hub,,,,,,,MAPS,secondary,,,,MAPS,,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen Mayfair Tower,JAVO'S FOOD STATION,6e3026a4-4224-4f64-82b8-c7a72830c162,Banh Mi Kitchen Mayfair Tower,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,Vat Inc,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen SM Ecoland,AOMA FOOD CORPORATION,a51abc18-8c0e-40aa-a0d4-41d153b1e7dd,Banh Mi Kitchen SM Ecoland,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,Vat Inc,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-0d694cba-5ae7-4eaf-b7b1-a92cbd0bb07d,717 Deli,717 Deli Food Company,e9f2d489-cf81-41a0-8c0b-5d800fad024d,717 Deli,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-7a6de1f6-1de1-4113-a66c-94f2789a5dc3,Victorino's,Naimas Ylocos Food Corp.,11953981-fa64-45d3-b233-355fd1da9a23,Victorino's,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-082ce1f3-9e2c-44e2-9975-ba30ad61ecc4,Sushi Fix Manila,"Purificacion, Juan Martin Ignacio (Sushi Fix Food Hub)",f2c7104c-acff-44cc-bc21-2e44cd59a5ed,Sushi Fix Manila,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-95f5c2fa-b4ad-4376-a1a6-46a5f04df4db,Cafe Meemaa,Oui-Meemaa Cafe OPC,036a2d64-11af-4ad3-a013-06c2299f360e,Cafe Meemaa,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-ccd23471-9d9b-41da-84d0-2a732c35bfe6,Sourdough Cafe + Lounge Makati,First Premium Lifestyle Cafe Corp.,ecda87ae-e850-4034-a972-de55a5c17622,Sourdough Cafe + Lounge Makati,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-e084a742-31ea-486e-9508-72c94abc18b9,Tako Teiki Smash Burger,"Dela Cruz, Allan Andaya",b5b09920-a4c6-4b8f-b74a-6b0d3a40c065,Tako Teiki Smash Burger,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-79f0ff3f-0a28-46bc-9c22-266c4110a258,Pim's Roasters,Pims Roasters Company,543c3ab4-3da1-4c81-8a25-03de4a75b78c,Pim's Roasters,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-417417e3-605e-4df3-9c19-86c802604a20,Dusadee Thai,Carmen Posadas Tongson (Dusadee Thai Restaurant ),92171b61-1123-427c-a31f-60d5e4c49cd6,Dusadee Thai,,,,,,,"PEPSI, MAPS",primary,,,,"PEPSI, MAPS",,,,
-36c1a4c6-9329-436b-a7ec-426d49d848e8,Nommu Basho,"GUYO, ANNA MARIE DIZON (Yogu Bar and Restaurant)",a275e7b1-07a3-4943-ac71-97b150641e0d,Nommu Basho,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-e54b6de6-ab27-4b20-9cc6-56d814fb5bd6,Wok Alley,Foodgen Fast-Food Chain,"793195cb-a630-4952-9195-ebae013a55b4,77d304b0-8f2d-4d05-bcea-e4e5a69f30eb",Wok Alley,"WOK50OFF
-WOKFREEADDON","WOK50OFF
-WOKFREEADDON","Offer 1: 50% off Wok-Famous Fried Rice
-Choice of SG Fried Rice Classic, SG Fried Rice Grilled Chicken, SG Fried Rice Shrimps, SG Fried Rice Grilled Chicken and SG Fried Rice Chashu.
-Discount limited to one (1) box only per user.
-Applicable for first time user only.
-
-Offer 2: Free Add-On for Every Box
-Get 1 FREE add-on worth for every box purchase. No min. spend.        
-Add-Ons: Nitamago, Fried Egg, Chashu, Luncheon Meat Cubes, Chicken Hotdog, Crispy Fish Fillet
-Applicable when user purchase a minimum of 1 box fried rice or noodles only.
-Applicable for first time user only.",,8%,VAT Inc.,Coupled,secondary,,,2/26/2024,"LEADGEN, PEPSI, MAPS",,,,
-b880306e-8b64-4790-a1e4-b05cb57100b8,Mimi & Bros,32nd Street Prime Diner Inc.,84171540-501d-4cd1-bcb1-6ea24e291434,Mimi & Bros ,MIMI250OFF,MIMI250OFF,"promo only available on weekdays from 2-5PM 
-Php 250 off with minimum spend of Php 1,000",,10%,VAT Inc.,Coupled,secondary,11/29/2023,,11/29/2023,"LEADGEN, PEPSI, MAPS",,,,
-088f3c0d-1fc8-4c0b-a14b-8c5ea05de1d0,Overflowing Cups,Overflowing Cups Coffee and Tea Products Trading,df96ec26-26e2-46d4-afef-798e90a37283,Overflowing Cups,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-86df19d6-41ed-4385-9a37-f73d25987b12,Tin & Kyle Silog Silogan,"Ricamara, Ma. Christina (Tin and Kyle Silog Silogan)","fe5deb67-8078-4ad6-acab-dbd6e54adf4e,cb395215-9eea-46ff-bcbc-ff0c64399f99,0bb59d3c-58a5-465d-a370-9f84077c4a6d",Tin & Kyle Silog Silogan,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-e0fc1e11-d084-4e9d-a9d3-d596e0fb447c,The Black Olive,The Black Olive Restaurateur Inc.,b8be6302-47f3-465e-9089-5f2233ef39cc,The Black Olive,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-37aa8d04-5e11-41bc-95d3-e7fea7ef1f85,Monstera Cafe,Mehrprish Inc,2170ab34-da72-48ae-9976-8ced5c294175,Monstera Cafe,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-fedc9365-9be3-479b-8471-4ae9b1e80bd7,Pomodoro Pizza,POMODORO JV RESTAURANTS CORP,"f004dc61-a573-4276-81bb-58c2ad6a994c,71034bcf-d990-468b-a297-99d6512be459",Pomodoro Pizza,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-f166ae45-64f2-4228-854b-d6edbfe0cfbf,Chef Laudico OK Café,"Laudico, Rolando Perez	(Chef Laudico Culinary Services)",9a7c7a3c-1ad4-47f0-a1e2-56b28cbfb081,Chef Laudico OK Café,"OKCAFESETA, OKCAFESETB","OKCAFESETA, OKCAFESETB","Promo Set A: USE CODE: OKCAFESETA 
-• Good for 5-6 pax
-• Includes: Roast Angus Beef with Mashed & Veg (P1560), Penne Malungay Pesto & Roasted Tomatoes (P1300), Honey Roasted Chicken (P1014), choice of Chocolate or Strawberry Tin Cake (P600)
-• Original Price: 4,474
-• Promo Price: 3,500
-• Save: 974
-
-Promo Set B: USE CODE: OKCAFESETB
-• Good for 5-6 pax
-• Includes: Bellychon (P1350), Penne Bolognese (P1430), Creamy Lengua Estofado (P1521), Adlai Saffron Paella (P1044), choice of Chocolate or Strawberry Tin Cake (P600)
-• Original Price: 5945
-• Promo Price: 4,500
-• Save: 1445",,7%,VAT Inc.,Coupled,secondary,11/29/2023,09/05/2024,11/29/2023,"LEADGEN, PEPSI, MAPS",,,,
-830dbc95-1344-4f35-9b12-f382918c6d78,The Ugly Mug Cafe,Uglymug Cafe,cb065e6b-9489-4c9d-b51d-9782a59a88fd,The Ugly Mug Cafe,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-b81b8482-b257-4723-86b9-1305a98a6e19,Eggstop Jr.,EGGSTOP JUNIOR POBLACION FOOD AND BEVERAGE KIOSK,889c7fc9-25fd-4b40-bb59-c524344c1530,Eggstop Jr.,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-4243fd6e-7669-4189-ba00-afa57c83c4b8,Flossom Kitchen + Cafe,Flossom Kitchen Co. Ltd.,8467f4bc-7f29-4848-b71b-5e208d54fc4c,Flossom Kitchen + Cafe,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-80782a74-e46d-4aee-8fac-4a50fa9f694d,Kanteena,Mamita's Kanteena Co Inc.,c07b174e-241e-476a-a68e-12bff291dba0,Kanteena,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-5243940c-25f9-4f24-a695-f7f3ae4ab918,Gracia's Food From Heaven,Alen V Dragon Corporation,a8d63a17-17d9-45a6-8f3a-7d0ed30cd8fc,Gracia's Food From Heaven,,,,,,,MAPS,secondary,,,,MAPS,,,,
-1ec321a8-65ad-4e43-8dd4-03f7b0fa5151,Oista,Oista Food Stall,5db201d9-599d-4363-82f7-759191d6ebda,Oista,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-6b97c29d-d48a-4186-b8a5-5c416be2ada1,Chinitoboy Barbecue Grill Joint,Chinitoboy Barbecue Grill Joint,902f5215-919d-43da-8f34-fe818c15a339,Chinitoboy Barbecue Grill Joint,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-35d807ca-7612-4bcc-9299-825dbcca2d87,2nd Street Oysters,Terabite Food Corporation,"f1a54310-e181-42d9-8773-194d75bd50d6,ab2f47ac-6202-45e6-8dd5-b6575229820f,85cf48e3-9673-4bd1-b090-16f00b6684a5,2bc12b1e-23ca-4f19-a9a0-5d53ab80e5f3",2nd Street Oysters,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-3bc2c2b6-26a2-4b4e-aa89-341713eb4812,Hashi Donburi,"MANCIO, RIZALDY ABAD(Hashi Donburi Japanese Cuisine)",6a407ce4-e29f-4708-87e0-35bbbcea884b,Hashi Donburi,HASHI20,HASHI20,Php 500 off for a minimum spend of Php 2500 all day from Tuesdays to Thursdays only. Can be redeemed once a month per customer.,,5%,VAT Inc.,Coupled,secondary,11/29/2023,5/29/2024,5/29/2024,"LEADGEN, PEPSI, MAPS",,,,
-645d351e-83bc-4788-b1f9-a2ab33b4f8f4,Doughmain,Doughmain Dessert Shop,"48f545db-d231-4dcb-81b7-a18bc01b266b,fbf51565-d2c3-481d-a33e-11ebe01ff3cc",Doughmain,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-89b51518-6690-4c59-b513-6dc718112971,ONE WORLD DELI,PYC FOODS CORPORATION,"4916a3ec-7a8b-452a-9716-dedb53df759f,31c37bce-3bb4-4a70-9f56-ae04a800f240,54a341ff-cb3e-4c95-9d26-220f191f9bce",ONE WORLD DELI,,,,,,,MAPS,secondary,,,,MAPS,,,,
-82021bbe-0efe-4be1-b322-8e28b7bd8882,Medley Modern Mediterranean,"Doriana Foods, Inc.","4e8da809-317b-41b4-acd0-4437781fb981,c4e61c67-1d10-48a8-a17e-bcfe878c5591",Medley Modern Mediterranean,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-a0f4492b-de0e-4eda-b50c-715e89eeeebd,Momo Egg Drop,Sumuji Food and Beverage Incorporated,"000748bb-245f-4939-9e2f-f4dbd053f998,39d4afbb-6efa-45b6-9a94-9a27d159ba58",Momo Egg Drop,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-b2318858-5e5e-4895-bd21-1b42786c2001,House of Chops Clark Freeport Zone,DC RAANAN CORP.,f3e74688-c8df-4fb2-b98c-8e5c3e0fe318,House of Chops Clark Freeport Zone,CHOPS20,CHOPS20,"20% off for a minimum spend of Php 2000 and maximum discount of Php 2000 from Monday to Thursday, 11AM-9PM. Available in Clark branch only.",,10%,VAT Inc.,Coupled,secondary,11/29/2023,9/29/2024,5/29/2024,"LEADGEN, PEPSI, MAPS",,,,
-82bc01a2-71f9-4942-81d1-aa480b83cf0e,Edible Box Co.,Edible Box Co Food Services,311dc76e-de4c-438f-b2ce-2acd08dec809,Edible Box Co.,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-95fb7648-294b-4558-a278-e366e2a4519e,Dear John Cafe,Engel Eileen Estrada De Guzman,028ed892-ffd0-484e-9c09-63ba6b9680cd,Dear John Cafe,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-065c50e9-d819-4ad4-a8d0-6e4f979a0d9c,Tolit's Peri-Peri,Jomari Dela Cruz Siongco (Tolit's Peri-Peri Mobile Restaurant ),f80ce9f1-abe6-4436-9d02-f3df254dc231,Tolit's Peri-Peri,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-23fa7453-3bef-43f5-9c54-28639784b388,Makaan / Kebabery / Paella & Co,CDR RESTAURANT,2c6647a3-f421-463f-9ab7-f52280b32e45,Makaan / Kebabery / Paella & Co,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-1c97a612-42ea-4f03-8b80-4727b22ab604,Bad Dog ( SM North Edsa ),BAD DOG INC,943c33a5-b858-4c00-ab5a-d89e221baebb,Bad Dog ( SM North Edsa ),,,,,,,MAPS,secondary,,,,MAPS,,,,
-e07bb2a3-030c-405b-8189-11f0598ce3a0,Kuya Tonyo's Wings to Sawa,"DOROPAN, ANTHONY ABILLAR(Kuya Tonyos Restaurant)	",823b12d5-94d8-4394-adaa-8f11a07ac703,Kuya Tonyo's Wings to Sawa,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-0c486ba7-917d-48ff-87fa-cce336959603,Redwood Hawker Center,"Moral, Ryan Christopher Malapira (Redwoodhawkercenter Restaurant	)",4683d95f-564b-4911-9a59-ec7bc78dc145,Redwood Hawker Center,,,,,,,"LEADGEN, PEPSI, MAPS",secondary,,,,"LEADGEN, PEPSI, MAPS",,,,
-4689906a-3f03-4f20-9d89-ab11f6b9cf84,Lo Cocino Pizzeria Cafe,WEDGESTONE INC.,d8eda3ab-b51b-4e36-ba71-231d49f52967,Lo Cocino Pizzeria Cafe,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Cherry Antipolo,KOOMI PHILIPPINES SM CHERRY ANTIPOLO INC,066c66ba-2d30-4b8b-95d8-528fa6cb3930,Koomi Cherry Antipolo,,,,,,,MAPS,secondary,,,,MAPS,,,,
-a4c0b86c-15e6-4928-bde7-46d7559d38c9,Family Bean Cafe,A&I Marketing OPC,81ba1b1f-8104-4afa-b0f0-6b95226b56f2,Family Bean Cafe,VIET78SAFBC,VIET78SAFBC,2 Iced Vietnamese Style Coffee (16oz) for P180,180,7%,VAT Inc.,Coupled,secondary,3/27/2024,,3/27/2024,"LEADGEN, PEPSI, MAPS",,,,
-b9ce62bd-f09e-42af-b5ff-0e0a6f9d925e,Centre Place Cafe,LITTLE MELBOURNE CAFÉ INC.,86f84bf4-e829-4844-bcad-3cf834501390,Centre Place Cafe,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-b09a0bb4-68bb-4ba0-b5d4-83077b164dd3,Crustasia SM City Bataan,SUMNER 9697 FOOD VENTURES INC.,7c6df577-ea19-4f44-8735-c7aba3658592,Crustasia SM City Bataan,,,,,,,MAPS,secondary,,,,MAPS,,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen PITX,Mondo Oro New Business Ventures Inc.,da5b58a6-ece3-4325-9d36-ba2a4b6327c0,Banh Mi Kitchen PITX,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-b9e09d7a-b7ff-4f25-b4a1-9b37b915a81f,LAUAN Restaurant,Lauan Food Corporation,a22f42f3-9e3e-4c91-9590-bcf48a4c3f17,LAUAN Restaurant,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-cb5a8518-2794-4ead-99e2-09139c26bdd8,Papa Diddi's Handcrafted Ice Cream,C. Valley Creamery Corp.,"d64d69eb-13ba-4763-a11a-432b133583d0,9365d21d-1c6b-414d-808c-ee207213018a",Papa Diddi's Handcrafted Ice Cream,,,,,,,"PEPSI, MAPS",secondary,,,,"PEPSI, MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Tarlac,KOOMI PHILIPPINES SM TARLAC INC.,8dc807b4-6692-4cb4-8488-be8f468dbc98,Koomi SM Tarlac,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Trece Martires,KOOMI PHILIPPINES SM TRECE MARTIRES INC,6ffdbf73-a4fc-4f90-9cb5-00dfa55dafe8,Koomi SM Trece Martires,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Robinsons Tuguegarao,JPRIME REALTY AND FOOD INCORPORATED,7116051c-8551-45f7-a4ef-a49a2dec10e3,Koomi Robinsons Tuguegarao,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Ayala Malls 30th,BELLE FORTUNE FOOD AND BEVERAGE CORP.,f4da9f81-8c7c-4bd8-8b1e-063e7ce8998a,Koomi Ayala Malls 30th,,,,,,,MAPS,secondary,,,,MAPS,,,,
-9b8efbcb-5f91-4d3c-a68f-dc6b0638f41b,Kettle Shangri-la Plaza,Meat Plus Specialists Philippines Inc.,f5e308c2-2d9f-4973-baf0-d1645f1b373f,Kettle Shangri-la Plaza,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-3a8a608c-f462-4442-a8d4-5af4c16d0e92,Rob's Newport,ROB'S RIBS OYSTERS & BOURBON SHACK INC.,12f933fe-e231-4330-b677-5c7ed3740d87,Rob's Newport,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-4fc24e12-c715-4e92-a99b-565c44ed0227,Cooper's Coffee Haus,Coopers Coffee Haus and Resto Bars Corp.,"012a8831-66f5-4b1d-b61a-7cbf3936ccb9,a154d09f-e8fc-46d7-a1ba-6fd58dcc7aee,d8ad5aac-5f78-4c7d-8f3b-549acfa934f3,51913001-975f-48f8-809e-fd357ef95ca4",Cooper's Coffee Haus,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi KCC Zamboanga,SEBASTIAN FAMILY INC,849a45a2-2d26-4f4a-a89f-ec5f414bb4f4,Koomi KCC Zamboanga,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Legaspi Village,Triple Purple Venture INC.,2eb05392-72f6-485a-aeaa-4885f0e1c60e,Koomi Legaspi Village,,,,,,,MAPS,secondary,,,,MAPS,,,,
-75935515-239e-494d-9511-eabfed266696,Steak and Wine Unlimited,Steak and Wine Grill and Restauratnt,"310ee662-2378-40ac-a988-d27dc83ad8e8,2d3d49b2-0520-4115-85f9-058c36213164,9f049838-f289-4906-8303-59fb1b9d5041,9a5d8cfe-3cbc-4b1c-940f-98ecc1f92e38,388b83f4-6414-4780-8d0e-3669fee5643d",Steak and Wine Unlimited,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Dagupan,KOOMI PHILIPPINES INC,6c849f00-346b-428f-8fa6-26e8863a20d9,Koomi SM Dagupan,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Tuguegarao,JPRIME REALTY AND FOOD INCORPORATED,df8af33c-46ca-4076-ad33-cb11fdef8940,Koomi SM Tuguegarao,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Robinsons Malolos,VV CORE INC,7645009b-644c-406c-8301-f2c65c8aeac5,Koomi Robinsons Malolos,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Fisher Mall Malabon,TOO GOOD YOGURT CENTRAL FISHERMALL MALABON CORP.,d8cc2bfa-9914-472b-b640-e9c1761ff8c4,Koomi Fisher Mall Malabon,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Robinsons Iligan,VV CORE INC,912c58fe-bed4-4dba-bc11-13d518dc9d23,Koomi Robinsons Iligan,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Ayala Malls Solenad,VV CORE INC,abdddd30-68d9-4104-898e-cb71ac343852,Koomi Ayala Malls Solenad,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Tanza,KOOMI PHILIPPINES INC,57a253a4-75f3-4d52-a9cb-460cf8a0b55d,Koomi SM Tanza,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Robinsons Galleria South,VV CORE INC.,901ed288-b355-4248-b2e1-5f95ad674021,Koomi Robinsons Galleria South,,,,,,,MAPS,secondary,,,,MAPS,,,,
-e9c66c2c-183e-46af-8b1d-103cdaa6bf2b,Tender Bobs,Meat Plus Specialists Philippines Inc.,"10a92386-db84-4fdc-946c-2c2701c387f7,f71ae9fc-33a1-4fe7-9b74-f1db98419e78,8f20f2d5-fd77-4cd8-8eaa-683db64ce21b,cb2ebc91-4d94-4d8c-a6bd-cd382eaa9502,9fa37e4e-58a9-4dbe-9ae4-afe1f9ec2a9d",Tender Bobs,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Double Dragon,AUSTREE FOOD HUB CORPORATION,eaf65edc-49b3-4fca-bd86-9afec688fe31,Koomi Double Dragon,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Grand Central,Philippines Sm Grand Central Inc.,19d1d871-d127-4432-a96b-7ad5c60317e1,Koomi SM Grand Central,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Fisher Mall QC,TOO GOOD YOGURT CENTRAL FISHERMALL QC CORP.,a3dd9213-76ea-4247-b19e-f8130f2bd274,Koomi Fisher Mall QC,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Eton Centris,LEADING EXCELLENCE CORP,a0c7cca3-cc58-467d-9013-a95fa0e7975e,Koomi Eton Centris,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Venice Grand Canal Mall,Yogurt Blends inc.,14811ca1-0142-47a4-b67d-927d12849ab5,Koomi Venice Grand Canal Mall,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi PITX,VV CORE INC,a5e57b5a-5a2e-49b5-a990-9834ba679054,Koomi PITX,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Legazpi,KOOMI PHILIPPINES SM LEGAZPI INC,b3bf74bf-689a-486f-81e9-088bdb309c5a,Koomi SM Legazpi,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Ayala Circuit,LOGOS FOOD INC,382d0efc-3451-4d40-855f-4bb4065629ea,Koomi Ayala Circuit,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Sun Residences,THREE FAY FRIES OPC,fd780423-6038-4d50-997f-30b68d912b07,Koomi Sun Residences,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi White Plains,HEAVENLY YOGURT CORP.,841d6393-67bb-4594-ab9b-28d137894772,Koomi White Plains,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Cash & Carry,LOGOS FOOD INC.,ee191d4d-8475-4841-99cb-7a80adabbb35,Koomi Cash & Carry,,,,,,,MAPS,secondary,,,,MAPS,,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Sta. Maria,Golden Tea Leaf Franchising Inc.,f19c81a1-75f1-4f8a-bc79-b543c0335f2a,Bon Appetea Sta. Maria,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Pandi,Golden Tea Leaf Franchising Inc.,25a41fc2-cbd0-4fbb-9254-61695807c823,Bon Appetea Pandi,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Binan,Golden Tea Leaf Franchising Inc.,312478c9-04ce-4eff-a231-083653b0defc,Bon Appetea Binan,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Habay,Golden Tea Leaf Franchising Inc.,c767ec6f-e0e2-4a25-854e-f480141317bd,Bon Appetea Habay,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Pagadian,Golden Tea Leaf Franchising Inc.,d114d209-759c-4b89-815b-be0414576485,Bon Appetea Pagadian,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Valley 1,Golden Tea Leaf Franchising Inc.,9d6fcfe0-c54e-4cb0-a4cc-daf35b35b422,Bon Appetea Valley 1,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea U.N. Ave.,Golden Tea Leaf Franchising Inc.,c4935d54-838f-47e0-99a4-aea14ed6a068,Bon Appetea U.N. Ave.,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Gensan,Golden Tea Leaf Franchising Inc.,60b628d4-68d6-4c49-be2f-03c40f7bce2d,Bon Appetea Gensan,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Moonwalk,Golden Tea Leaf Franchising Inc.,b058aa96-95ef-4cb5-8626-fe665f32addf,Bon Appetea Moonwalk,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Silang,Golden Tea Leaf Franchising Inc.,1c687591-1999-40f1-ad75-9c432a935228,Bon Appetea Silang,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Pacita,Golden Tea Leaf Franchising Inc.,6629a5f9-d446-4da4-b49a-14a81aaf0fb9,Bon Appetea Pacita,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Tabaco,Golden Tea  Leaf Franchising Inc.,a6d3d6a5-45da-4bb9-a0e4-e47cddf6177b,Bon Appetea Tabaco,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea SM City Ecoland,Golden Tea  Leaf Franchising Inc.,bdee16e0-b735-42b2-bfd6-8ce280db9243,Bon Appetea SM City Ecoland,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Greenwoods,Golden Tea Leaf Franchising Inc.,7fde7f14-a826-4a2c-a933-7dbbf9948690,Bon Appetea Greenwoods,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Escolta,Golden Tea  Leaf Franchising Inc.,5040f8d4-96dc-49ed-8a64-8cbc38d83c9a,Bon Appetea Escolta,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Lancaster,Golden Tea  Leaf Franchising Inc.,f72f33b6-e35f-427f-9e87-9ab620252b3a,Bon Appetea Lancaster,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-524db8e4-da90-4264-9ff9-040b27c06b11,Bon Appetea Meycauayan,Golden Tea  Leaf Franchising Inc.,c14e94e8-e644-402b-8f91-143c313e6a69,Bon Appetea Meycauayan,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen - The infinity,KLM Food and Beverage Kiosk,2cf4a6ea-e4c6-4feb-b1d8-4c9ae99da26c,Banh Mi Kitchen - The infinity,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-64bbcb55-41ed-45cd-ba69-3d2bbfeb057c,Ginza Gyu Makati,Raspberry Kitchen Group Inc.,63ab1dde-5fa9-4baa-a916-ea753e68dbb0,Ginza Gyu Makati,,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,Kenny Rogers Ayala Bacolod,DELIDRAGONS FOOD CORP.,5bcb2058-be8c-478e-a51f-e2a1d9c2eb88,Kenny Rogers Ayala Bacolod,,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",,,,
-bce3c51f-089c-4440-aed1-127bd52344d8,Tango Poblacion,Elans Group Inc.,d5125436-d8cc-4d1e-bf05-5718f6d73fd0,Tango Poblacion,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-b98577dd-0b9f-4757-8200-ebba4f6ce451,Rabbit Room,Curious Concepts Inc.,d59eaf21-36a4-4314-a979-97ac0a67ab14,Rabbit Room,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-a226c767-16b5-425e-8555-663b4e320eff,Tai Koo HK Roast ( Podium and Glorietta),4 Brains Management and Consulting Corporation,"21b82ecc-2e00-4756-afad-4a7676424c1e,4644c3b5-b317-42fa-beb2-5dbedfd1d0de",Tai Koo HK Roast ( Podium and Glorietta),,,,,,,"MAPS, PEPSI",secondary,,,,"MAPS, PEPSI",,,,
-ac4117fa-5c09-451d-8cb3-c0e2d7a920ef,Moon Rabbit,Rex L. Chua,3976df98-02d4-4a0b-8dcb-9ca53697e34e,Moon Rabbit,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen Ayala Solenad,Tastecon Food and Beverage Kiosk,2244d794-758d-4651-b2f5-d9f60f18ec40,Banh Mi Kitchen Ayala Solenad,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-de103467-4a81-4001-a687-076e4d46af77,ZIG Greenhills,ZIG Food Concepts Inc.,f9bc6d20-9eac-44e5-b794-81a9cb405c5b,ZIG Greenhills,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-a3bb96e1-8866-44ca-9d35-93cbac31098c,Everything But Cheese SM Fairview,GOOD EATS RESTAURANT MANAGEMENT SERVICES,47726898-4969-42b4-b271-191faca41a89,Everything But Cheese SM Fairview,,,,,,,"Delivery-3PL, Pick-up",secondary,,,,"Delivery-3PL, Pick-up",,,,
-3a844da7-dfad-4bdd-b2ac-968111d07ef0,Tiger Sugar Robinsons Place Manila,GET IN MY BELLY CORORATION,3333d2a7-9701-4caf-b2d1-d9bdcbe50da0,Tiger Sugar Robinsons Place Manila,,,,,,,"Delivery-3PL, Pick-up",secondary,,,,"Delivery-3PL, Pick-up",,,,
-4252c1f6-b064-4e64-9715-c867ad1b81c8,Tully's Coffee,The Big Chill Inc.,"8d8468d2-b55a-4294-b836-0b9549f40209,230eee6b-6551-4619-b0d0-ccaaf666d25c,22822ddb-f417-4c3a-a9ff-a59a05548186,ea33668a-f96b-4fd6-93f0-0776bbfcf604,88d81ae3-fa31-4f73-8318-c442b6936328",Tully's Coffee,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-21732ee6-a80a-4f74-bddd-c6e03cc048ea,The Big Chill,The Big Chill Inc.,"0a11e7f1-7258-4a80-b9e9-24f89903d76a,68a6f5b6-5b82-49dd-8ca8-d573ebd0e7fc,5ac26394-99cc-4f77-8b95-851c7752df0c,501382dd-1aae-43b7-80d7-58eb72b2014e,64dccaac-a897-41e4-a3b9-4ce7da53178c,80b24a67-17f5-40c6-a4b7-a5164a67d945,b769fca8-c5d3-4bf0-9525-267a12b16e07,9c741355-75b7-4682-84a7-b229187aae94,df194b8a-d222-458b-b163-a0ffe836a97b,9599d1a0-dbe7-4f9b-8107-bf118c04024e,37b4bfde-b3d8-4b4c-a8aa-8c66e479827f,9a7e600f-db29-44dd-8571-b72f47b83a20,e132b8ad-36e4-4e9a-92ca-e5129bf2c34c,90c6f49c-b9d2-427b-b3e0-c843ae050fcc,400e4452-8eaf-4b70-b196-e558fadd1006,f2fd027c-9b12-4ebc-adc4-627403d75007,ad62b897-8b01-499f-8613-b0f70bd1df87,ad0a4b1c-0fe3-4a78-89ea-8aa19ba155f6,859feb7c-25ca-45f2-91a0-a14d00e29862,fc247fb0-52ae-4541-b71e-eec3fc3466d8,c6412f8e-44a1-4b58-be8b-8ca4410d9197,4076c110-9fd4-47a0-8a2e-d51ff91bdf7a,81a67df5-4ee0-4db7-83ef-4a66ee295b1d,f5919c13-699e-4ee9-989d-8af4fd3bea07",The Big Chill,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-c4c14983-dba1-4b3f-9808-ecf187fd1788,Coffee Bean and Tea Leaf,SEVENTY 7 SEEDS Inc.,"6589bac3-36c1-459b-a6a7-2fd67ee94903,e61027e4-b226-447f-b2a4-400714c7b3e2,1f8a4ba8-35eb-4d7d-aff3-0ecb6ed43045,e9819bad-6af2-48fa-b232-b2d796f56edd,6c980a7c-0575-4585-975d-0bc6f5f3ade5,bf99f6db-5f43-4e4b-88a7-af482c21455e,d1c149da-7698-480a-b86c-a470070eeb3f,6589bac3-36c1-459b-a6a7-2fd67ee94903,2b1c6e59-8389-45aa-a316-114cac22ab76,25048e95-edff-4fd3-9f8c-c8407128fec3,dad601b5-315b-4809-ace7-383c08bcd8e8,e5bb002e-90e9-4cbe-a107-83b7c442a448,ef6f89ff-6d37-458b-8b40-2eeed2cff320,6fa95727-b805-4bd6-a3a8-7e9747eec77e,d9074efa-0423-45fb-bad8-6b2f7eb8ceee,0f148ad8-16bf-4abb-a1d5-6a24143cfb5a,18e16a15-5cce-4e3d-9e30-8da299411310,7e7ff91e-0cef-49cb-adfb-e96284fb7885,304ad28d-a7cd-49d1-89e1-2f7c27fbf40b,d5f883ca-b9bc-48db-b64c-af81dc65a027,20f7456a-3c33-4937-b812-04b8dfe4d4d2",Coffee Bean and Tea Leaf,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-2f45c741-a0fa-47d2-b630-2864e2fd6367,Japan Fudo Street,YATAIMURA FOOD CREATIONS INC,"970a96ce-727a-425c-b50f-d7dc55c06360,3e599e46-9413-47f5-b45f-2d910a5f1ac7",Japan Fudo Street,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-b09a0bb4-68bb-4ba0-b5d4-83077b164dd3,Crustasia SM Tanza,SUMNER 9697 FOOD VENTURES INC.,feb4bca2-3892-4da7-a83c-a98ce4d38940,Crustasia SM Tanza,,,,,,,MAPS,secondary,,,,MAPS,,,,
-b09a0bb4-68bb-4ba0-b5d4-83077b164dd3,Crustasia SM North Edsa Sky Garden,3MI FOOD GROUP INC.,3fabbc03-4d58-4fa4-b99b-7c5a2dba6edf,Crustasia SM North Edsa Sky Garden,,,,,,,MAPS,secondary,,,,MAPS,,,,
-d80cfeac-3b49-46d5-be43-76035de86ca6,FRNK Robinsons Magnolia,BRAVEFOODS GLOBAL HOLDINGS CONCEPTS INC,260d588c-099b-466b-b9b3-be2855b55b74,FRNK Robinsons Magnolia,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-d80cfeac-3b49-46d5-be43-76035de86ca6,FRNK,FROSTFIVE INC,"820c9227-f229-4b63-a8cc-0297aa5357d9,bdc5b874-6e48-4296-a9c8-11fb4ba05a7c,29f81f3d-3ffb-48f8-b6cc-0fd04923d774",FRNK,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-37803cb5-609d-4337-8800-b9cb0550a670,BLK 513 ( The Grid),BRAVEFOODS GLOBAL HOLDINGS CONCEPTS INC,4cb0e127-21b7-42d4-bf17-6717c25c25e2,BLK 513 ( The Grid),,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-37803cb5-609d-4337-8800-b9cb0550a670,BLK 513,FROSTFIVE INC,"548fe98a-e265-4fbf-a1d8-b529043e4c2a,152a5f8f-b609-47cc-b201-daf1b9b9cf8f,90a5b399-8f68-40a2-a560-0c9b04b9cdc9,faf22f95-ee1b-4253-b4c7-dad68783b91c",BLK 513,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-de6ab7bd-d11b-4a7c-995b-91dcb35d740a,Bricks & Copper Turkish Cuisine,CANSIVELA VENTURES INC,36f009f4-05b7-423f-861a-874e8de85cb2,Bricks & Copper Turkish Cuisine,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-3e192da3-8553-499a-86ad-c927d2140f9c,Hai Chix & Steaks,"HCS DIVISION 1, INC.","226c8759-8b36-479a-8fb4-223bcd75a4bf,254bb39f-755b-4932-ae52-a2f210be3336,6fa78d93-3af0-45aa-b886-f1c2a1e09d74",Hai Chix & Steaks,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-18e9eee6-3326-4de1-bcb0-ad019f3dc3e8,Caden Handcrafted Donuts,CADEN SWEET CONCEPTS CORP.,"d0025943-b2b0-4463-b04c-f29b027a8fce,6dd4878f-10d7-464d-a14f-24eca774fe7e,61520a26-c6c1-4c3e-a9f4-cd1ba8e677a2,d6779833-0b14-4b59-9e44-f961b9ac5234,448754a3-7745-41e2-b12e-d1b7524c556c,1895300c-e99f-466a-9041-f1f9a56fcc7e,f5d0ae80-1469-4224-aab7-82174990b75f",Caden Handcrafted Donuts,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-18e9eee6-3326-4de1-bcb0-ad019f3dc3e8,"Caden Handcrafted Donuts (MALABON, CLOVERLEAF,QUIRINO)",CADEN SWEET CONCEPTS CORP.,"99670d43-04e0-48a2-bb62-2af4e53b26bf,3e0e1be1-5555-46ee-964f-8d3c07601c68,db5cae75-e4ec-42b6-91b0-8d53de037d2d","Caden Handcrafted Donuts (MALABON, CLOVERLEAF,QUIRINO)",,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-df43f596-e504-4118-ac64-19f6a0dd4773,Blackbeard's Seafood Island Venice Grand Canal Mall,Sofrico Restaurant Group Inc.,83f8de60-dc1a-4723-b21e-22bd704251cb,Blackbeard's Seafood Island Venice Grand Canal Mall,,,,,,,"QR Ordering, MAPS",secondary,,,,"QR Ordering, MAPS",,,,
-598b2333-c104-4065-b0e0-a63dfc235872,Greenwich,Fresh N' Famous Foods Inc.,"d919da30-ec59-433b-9648-f23eda33ce28,72723261-2702-41b2-867a-db1aa38eb3f5,e1a7fcd1-e09a-446d-90e1-e588010d8092,7f48aba9-150e-4330-af50-5b614f29032a,1b70a224-490c-4b15-ba1f-7f9b562b5aaf,d08d3658-a4c7-4e0e-95df-19caa3840209,33d01121-46d2-4525-8c4a-91484bba8b1e,36541f84-e651-4ad9-91dc-2a3050895ea3,60b4bc14-d818-43a6-8cac-3ece86f18e43,0044e577-dc2f-4dd5-acef-70f02df70eea,743b0e47-42ad-45fd-a9be-8000055e1fb7,230240fd-6a14-454b-958d-645298fa30b2,22919e85-43ff-417d-a205-dd574388226f,f96f458f-1def-41d6-8cc5-ff68ccd1d4c6,d5b60270-d219-4159-a601-3f4368458555,ad5fd543-03f4-47c0-a9e4-2d4ad7733dbb,5e8fd025-6c2d-4fd3-8f79-288ed0ed3e2c,70f29536-bd30-45fd-9cfc-abfa4afb8c28,8b2b28a5-93bf-4795-a5c9-59ee48740415,bd0229cd-4657-4b1f-a5d2-791875cf31ba,8917ce7b-003a-42ce-a1e6-1dc664972c65,b21396fc-f663-4c5e-a157-a327cea8bda9,94cbee77-d2aa-4118-b7fd-dcd86751b8cf,770e337a-3d38-46c0-b431-f9fe74f53afa,0c703ea3-a5e7-46ce-a61d-45f0d9f4e346,905cfe80-daf3-4417-9624-a9e4d7ccf403,de28b77b-d52d-481b-8183-59f2988761ca,307b75d3-0002-47c3-84dc-38bcd8ee58ee,f88946a6-48df-4b11-a2ab-d466ac23b0e8,e913c48a-12cb-4640-b939-fb6386d6066d,c4f87224-70d1-4b5c-ba5e-7d5109d56a31,1fea2f83-12d6-405f-9970-6a90ea9cef35,9909d1de-41f9-4b7f-a762-1fad42edb71c,e5401819-af22-4181-8368-8e94dfb181ed,49c87b2c-eea2-461b-8574-24b6dec5311d,81353429-cde2-48a1-8b6e-6854ea226e6a,f4c55435-ae9e-452b-abe5-e12c02a2578a,5b4d7db2-7432-4049-a7a0-6e309dc95ce8,d4e40b5a-7846-4e1b-a0b2-4f16f41cad8e,d11d0c2a-060a-4324-9479-bbe75c1a9903,f339791c-ee97-4180-85a0-74bbe06422f1,20a69c01-d02f-4609-9cd7-ae6680e47536,2755022b-e0ea-4d70-a025-22c026193802,103ac328-2c0b-488a-8731-302d42f37f8d,0a29268e-0152-4901-bd84-13868a69e831,386d7e04-e504-420b-b1a3-2dbfb896f1e1,bb20f9b0-0ea3-42e2-81c7-1a6361ee1d4b,99b8ef95-2f6d-400d-a066-2422c22b1b7b,da87b3b8-43bd-4c57-aaca-4926ed48bd4f,5ecf9883-551f-4fcb-8611-1392c82a93f0,8ed08a52-6af2-40b2-a0cf-e1e3c4676b83",Greenwich,,,,,,,"Delivery-3PL, QRP",secondary,,,,"Delivery-3PL, QRP",,,,
-0f76d20a-a83b-4129-b690-24c88f7e19e7,Shogun La Union,Golden Orient 88888 Corp.,d5e3a1ba-3213-47e6-90b2-00aaa558ac35,Shogun La Union,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-4d7082a9-1fa9-403a-a985-9c62dd24851a,"Oh My Greek (P6 Greenhills , Grand Central, SM San Lazaro, Salcedo, BF Homes)","Oh My Greek Food Concepts, Inc.		","a4d365e6-239f-4dc0-a4a6-bcd245548d89,60bf54f0-6f15-4e75-a420-19c943ff9b46,e8e690bd-4db5-4f22-9e05-2097a0b50033,b6bda895-d038-4332-ac0b-bac473b1c952,03328509-0167-459e-b0f9-63482d715c52","Oh My Greek (P6 Greenhills , Grand Central, SM San Lazaro, Salcedo, BF Homes)",,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-03bcfcf6-1064-4dec-aefe-597c96348286,Wing2x Korean Chicken,Tasteful Palate Inc.,ed4d71ac-f15c-432a-96de-2d0fbe6f5c51,Wing2x Korean Chicken,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-723ab575-09ea-4dc4-ad10-7003ad61bb98,Mando's Wingshack,Mando's Food House Corporation,da637a25-a930-4bfc-b74d-35555d1966c3,Mando's Wingshack,,,,,10%,VAT Inc.,,secondary,,,,"MAPS, Pepsi",,,,
-e8115531-72f0-479f-9702-e16dbe134d0f,Kosumosu,"Square One Hospitality Concepts, Inc.		",eaadb323-8914-46ce-bfd6-f25c12f8a347,Kosumosu,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-04f4c3eb-26ac-4ff5-83a4-16a6a5514ef9,Lunes Everyday Dining,"Square One Hospitality Concepts, Inc.		",39946db7-f03c-49aa-a2a8-7d8edc97f387,Lunes Everyday Dining,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-c8a8fb2e-e7f5-4555-96f8-1b0e90f43cde,Dear Adam/Sweet Lucy,"Square One Hospitality Concepts, Inc.",e700aa69-992a-4c63-867c-1336d4165918,Dear Adam/Sweet Lucy,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-21f313cc-5f4b-465f-9084-b062bd71ffdf,Bad Habits,"Square One Hospitality Concepts, Inc.		",adfbbd84-7f53-4302-9c35-a74170fa62fd,Bad Habits,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Ca Phe SM Batangas,Lilibeth Velasquez Restaurant,de61b1b5-da02-41ce-9f7d-c21dc0084f3f,Banh Mi Ca Phe SM Batangas,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-455e7247-52f3-4ad0-90f7-44b8a2ec11e2,Enzo’s View Bar and Rafa’s Restaurante at Jade Hotel,JADE HOTEL AND SUITES CORPORATION,e8f96980-3c20-4051-a0ea-acbdf4cad3c6,Enzo’s View Bar and Rafa’s Restaurante at Jade Hotel,,,,,10%,VAT Inc.,,secondary,,,,"MAPS, Pepsi",,,,
-aaee1153-da39-408b-b722-2ced5c803523,Dominique's Kitchen,TSQ8 Food Services,389d3cbe-6bd6-442e-ba6f-86f009ba15e5,Dominique's Kitchen,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-bf5a4569-5827-401d-b308-52e8423cd52b,Jones All Day,"FOOD PARKS BY RAINTREE, INC.",1a7112e0-0a1c-4e71-bcc8-3c3520743433,Jones All Day,,,,,,,"PEPSI, LEAD GEN , MAPS",secondary,,,,"PEPSI, LEAD GEN , MAPS",,,,
-4d7082a9-1fa9-403a-a985-9c62dd24851a,Oh My Greek Uptown BGC,"Oh My Greek Food Concepts, Inc.		",b1923ba2-a337-4f96-8dbd-7312be7e7145,Oh My Greek Uptown BGC,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-9faa8728-1ea5-4b69-b129-3d587aebd46f,New York Fries and Dip SM City Seaside Cebu,Modern Tradition Restaurant Group Corp,2d7c154d-dd3b-4556-b389-24579d449355,New York Fries and Dip SM City Seaside Cebu,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-9faa8728-1ea5-4b69-b129-3d587aebd46f,New York Fries and Dip SM City Tuguegarao,Modern Tradition Restaurant Group Corp,c68ee06e-6899-42ad-8779-529f26aa8b50,New York Fries and Dip SM City Tuguegarao,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-db1f52a4-2153-4d37-9948-0c496a2c6eb0,Samurai,MDHPLUS ENTERPRISE,65d1ac05-66c5-448a-ad00-22c2fad111a8,Samurai,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-30b1b57d-fd80-41dc-a365-17649ed7a745,Panco Cafe Podium,Tantan Rami Inc,e03c4016-c82b-4ac8-999a-49481783f849,Panco Cafe Podium,,,,,,,"Delivery-3PL, Pick-up, MAPS, Pepsi",secondary,,,,"Delivery-3PL, Pick-up, MAPS, Pepsi",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen - SM City Pampanga,KLM Food and Beverage Kiosk,8425d6bd-a799-4959-a6d1-3474d9e50320,Banh Mi Kitchen - SM City Pampanga,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-3daaf235-6551-4c0e-b16e-8153a05fd386,Cafe Dominique,TSQ8 Food Services,fa8622dd-d8e6-4d57-afad-685ec4135111,Cafe Dominique,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-3e2b9a3c-a8ae-4f9d-97c0-e7f4b96708c1,Aero Pizza Centrale,Metro Kitchen Innovations Inc.,9a165d6c-bf50-45e4-8e94-071a6c70f4d6,Aero Pizza Centrale,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Seaside,TOO GOOD YOGURT CENTRAL SMDC LIGHT CORP.,bfc38a4a-b591-40ae-9cc3-eea511a28057,Koomi SM Seaside,,,,,,,MAPS,secondary,,,,MAPS,,,,
-de103467-4a81-4001-a687-076e4d46af77,ZIG SM Sta. Rosa,Zig Food Concepts Inc.,c7fa11d0-3d79-4aaf-b788-5e3e0a4b5712,ZIG SM Sta. Rosa,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-5a45d3bf-9a1c-4e8f-87c2-568e83a462b3,Olivia's,RSJ FOOD GROUP CORP.,208d60cd-6149-4d91-a468-7afec8c33b41,Olivia's,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-2a1e1f59-f8b6-4e94-9e23-eaae081a70e2,Sugarhouse,Golden Spatula Corporation,"6be1170e-fb7c-482e-9b49-89406f0a2683,7ce1a765-4e00-46c7-83e2-5409480bd556",Sugarhouse,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-9faa8728-1ea5-4b69-b129-3d587aebd46f,New York Fries and Dip Shangri-La,Modern Tradition Restaurant Group Corp,dfd4dd2c-67af-40ab-b5c6-8ce9153ab814,New York Fries and Dip Shangri-La,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-9faa8728-1ea5-4b69-b129-3d587aebd46f,New York Fries and Dip SM Megamall,Modern Tradition Restaurant Group Corp,c51e0eb3-372b-4f66-acfc-3654a03c2c46,New York Fries and Dip SM Megamall,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Ayala Center Cebu,KOOMI PHILIPPINES AYALA CENTER CEBU INC.,b7e0cb7f-4372-4f70-b050-1457bfed0786,Koomi Ayala Center Cebu,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Olongapo,KOOMI PHILIPPINES SM OLONGAPO INC,e9f30abf-f101-443f-bd09-5e8770935421,Koomi SM Olongapo,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Pampanga,KOOMI PHILIPPINES SM PAMPANGA INC.,804e1dd7-aa2b-4bdd-8d32-7b646a19d0db,Koomi SM Pampanga,,,,,,,MAPS,secondary,,,,MAPS,,,,
-d0123c79-60ca-4a1c-bfe1-3eaacdfa850f,Oniisan Tempura SM Bicutan,ONIISAN TEMPURA FOOD CART,d4573912-0f89-4d8f-9392-0dd08ca72bc6,Oniisan Tempura SM Bicutan,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-9faa8728-1ea5-4b69-b129-3d587aebd46f,New York Fries and Dip SM City Fairview,Modern Tradition Restaurant Group Corp,df5db284-3d17-49ab-b8b7-4795708a0404,New York Fries and Dip SM City Fairview,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-9faa8728-1ea5-4b69-b129-3d587aebd46f,New York Fries and Dip Banawe,Modern Tradition Restaurant Group Corp,0c71858f-9eb0-4875-b7fc-b07990aebb79,New York Fries and Dip Banawe,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-8d276742-889b-4cd3-8b8c-c1365cc2496e,Liang Crispy Roll Banawe,Modern Tradition Restaurant Group Corporation,0b869079-fbc1-431a-91d3-96f91be1987b,Liang Crispy Roll Banawe,,,,,,,MAPS,secondary,,,,MAPS,,,,
-8d276742-889b-4cd3-8b8c-c1365cc2496e,Liang Crispy Roll Lucky Chinatown Mall,Modern Tradition Restaurant Group Corporation,89af9c6d-5055-4bb6-92b9-ab0182c1f41d,Liang Crispy Roll Lucky Chinatown Mall,,,,,,,MAPS,secondary,,,,MAPS,,,,
-8d276742-889b-4cd3-8b8c-c1365cc2496e,Liang Crispy Roll SM City San Lazaro,Modern Tradition Restaurant Group Corporation,3d4b1f16-c5e5-474c-af35-53fd5e32468c,Liang Crispy Roll SM City San Lazaro,,,,,,,MAPS,secondary,,,,MAPS,,,,
-8d276742-889b-4cd3-8b8c-c1365cc2496e,Liang Crispy Roll SM City Fairview,Modern Tradition Restaurant Group Corporation,5e5077a8-e1f3-4dbf-a608-7c1505c9b0be,Liang Crispy Roll SM City Fairview,,,,,,,MAPS,secondary,,,,MAPS,,,,
-8d276742-889b-4cd3-8b8c-c1365cc2496e,Liang Crispy Roll SM North EDSA,Modern Tradition Restaurant Group Corporation,b1f827d9-1bef-453b-a292-7ae3a399a798,Liang Crispy Roll SM North EDSA,,,,,,,MAPS,secondary,,,,MAPS,,,,
-9faa8728-1ea5-4b69-b129-3d587aebd46f,New York Fries and Dip Uptown BGC,Modern Tradition Restaurant Group Corp,6d35e2cc-f9d2-469f-b8d5-8a3eeefab9ac,New York Fries and Dip Uptown BGC,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-8d276742-889b-4cd3-8b8c-c1365cc2496e,Liang Crispy Roll Uptown BGC,Modern Tradition Restaurant Group Corporation,724481a6-89b5-4e93-9572-0f5ad4039ea2,Liang Crispy Roll Uptown BGC,,,,,,,MAPS,secondary,,,,MAPS,,,,
-79ef4efd-8dfd-4a1f-b5c1-2355e0b1b854,Salt and Ice BGC,"SALT AND ICE BAR CONCEPTS, INC",c3489888-1084-4462-8364-b696b48152d2,Salt and Ice BGC,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen Shell Levi 2,MCA FOOD KIOSK,009de4f3-27f4-4c6f-9453-30b69763ee95,Banh Mi Kitchen Shell Levi 2,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-09e9db31-f8af-4117-82eb-3dd5f8a107fc,Candid Coffee,CANDID COFFEE ENTERPRISES OPC,"5ffdf244-d8ec-47fe-b140-3ba51d6bd9b1,d0299486-a34b-4d10-9865-3ee3d6ba296f,4b207be9-667e-43b1-9532-7d9b1baece55,8dbb6c09-d4e7-4c82-92e0-a932bb418e1c,be1d8ff8-f965-486e-aae2-b2dc6188c0bf,77e4dc55-59d1-4dfd-b548-b390390cb58f,a43decf7-dec7-4d09-be93-4965b3b1819d,2dea37da-5813-478d-a123-a4667dbbba4e,ba3c77db-4f7d-496b-bc44-9f3dad31aea7",Candid Coffee,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Lipa,KOOMI PHILIPPINES SM LIPA INC.,53daec9e-7068-4e81-b587-697a9450cb05,Koomi Lipa,,,,,,,MAPS,secondary,,,,MAPS,,,,
-76672cc3-cba9-42f1-b72d-13e2592eaabf,Cinnabon Mamplasan,ROADSIDE ROLLS FOOD CORPORATION,60d61878-628d-440f-bbcf-3234dfa1d5d8,Cinnabon Mamplasan,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Valenzuela,KOOMI PHILIPPINES SM VALENZUELA INC.,91062b9a-b485-4f33-9123-b0918c995340,Koomi SM Valenzuela,,,,,,,MAPS,secondary,,,,MAPS,,,,
-db2306fd-93e4-4ec3-85b0-3ae500286d21,Limjoe Villar Sipag,LIMJOE LEMONY JUICE STATION,1d5a450f-1fd3-46de-992c-f32f990a7fd5,Limjoe Villar Sipag,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-76672cc3-cba9-42f1-b72d-13e2592eaabf,Cinnabon Glorietta 4,LNF FOOD INC,db2034ab-cb5c-4f5a-ab3c-07141291a836,Cinnabon Glorietta 4,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-76672cc3-cba9-42f1-b72d-13e2592eaabf,Cinnabon Alabang Town Center,SWEET STOP STATION INC,22f91c15-536b-4995-aa47-2affd8c24eae,Cinnabon Alabang Town Center,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-76672cc3-cba9-42f1-b72d-13e2592eaabf,Cinnabon SM Lanang,FROSTED BAKED BUNS CORPORATION,3443ce2a-0f92-4bac-b56a-8cd7a6e40072,Cinnabon SM Lanang,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-76672cc3-cba9-42f1-b72d-13e2592eaabf,Cinnabon SM Mindpro,2SWR GROUPS INC,bf82aa27-9e07-4e49-9dfc-39b1022a9fb3,Cinnabon SM Mindpro,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-76672cc3-cba9-42f1-b72d-13e2592eaabf,Cinnabon SM CDO,SYM2PLY DELICOUS FOOD CORPORATION,d6339484-0091-40a3-a26c-5b405fe11d88,Cinnabon SM CDO,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-76672cc3-cba9-42f1-b72d-13e2592eaabf,Cinnabon SM Baguio,IGO WAFU FOOD CORPORATION,ee8758d4-dc4d-4b93-8ada-70ff6f79dd77,Cinnabon SM Baguio,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-76672cc3-cba9-42f1-b72d-13e2592eaabf,Cinnabon ( Canelle Food Corporation),Canelle Food Corporation,"a50d8c2e-3259-473a-bdea-57494c27922b,497cd07a-28f2-4e48-a29c-fe34f7cfa8c5,5e74c420-ca87-43a0-a71c-8875d3abe5c8,ccffb940-a79c-4be8-bd59-b73420b59f7f,fc7f3a95-707c-470b-a022-bd5d78104cbe,20f106ce-98e2-489e-96e5-924d95dc01e9,1cd0fb21-fd8e-4b3c-a9df-64bc796f31eb,b866c608-8b70-48db-ab04-9b66222ad839",Cinnabon ( Canelle Food Corporation),,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-db2306fd-93e4-4ec3-85b0-3ae500286d21,LIMJOE,LIMJOE LEMONY JUICE STATION,"d7146401-6cee-48f9-a121-37508e386989,ac357231-44ee-4be6-be02-e7e4523e625a,7438bb15-57cd-40e7-b776-bfd01ad040bd,bc31941d-5b58-4292-b4d6-d78d2f68604a,3b56a516-59d7-406b-add7-5929f4aa966c",LIMJOE,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-3b92f1c9-b91d-424a-9984-d1acfc83554d,Piz 'n Cone,PIZNCONE FOOD AND BEVERAGE KIOSK,"9c40de7a-8b4b-4a11-9866-20cdea075240,0dfaabe5-1ed4-4fb6-8268-2a0c1c1527bc",Piz 'n Cone,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Naga,TOO GOOD YOGURT SM NAGA INC.,5b60e128-7e5d-4af1-80cc-77e609d0a6b9,Koomi SM Naga,,,,,,,MAPS,secondary,,,,MAPS,,,,
-76672cc3-cba9-42f1-b72d-13e2592eaabf,Cinnabon SM Southmall,FROSTING ON ROLLS INC,1406640d-5a9e-46d4-8852-9a8767f37348,Cinnabon SM Southmall,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-de103467-4a81-4001-a687-076e4d46af77,ZIG Grand Central,Zig Food Concepts Inc.,2cc02e95-161a-4796-bd7c-e8aa7c81d15a,ZIG Grand Central,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-4d7082a9-1fa9-403a-a985-9c62dd24851a,Oh My Greek Tavern Aura,"Oh My Greek Food Concepts, Inc.",457a9b83-8966-447a-9c1f-31b26a3addcb,Oh My Greek Tavern Aura,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM City Cebu,KOOMI PHILIPPINES SM CEBU INC.,aaf95c0d-3fa1-4f97-9707-1412478ff744,Koomi SM City Cebu,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Puerto Princesa,KOOMI PHILIPPINES SM PUERTO PRINCESA INC.,b2888f22-9a6a-4cea-bd1a-1fdea66498cf,Koomi SM Puerto Princesa,,,,,,,MAPS,secondary,,,,MAPS,,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen - Robinsons Manila,HAPPY TASTEBUDS VENTURES CORP.,e1e0df95-5cdf-4c9f-bc5a-6255885d9c5f,Banh Mi Kitchen - Robinsons Manila,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-764acfcb-2e85-4770-b8ca-2638a199f558,Kokofi Collective Cafe,Kokofi Collective Cafe,23a62d12-c0d4-4845-85ed-0bfb1fe6e188,Kokofi Collective Cafe,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Cabanatuan,KOOMI PHILIPPINES SM CABANATUAN INC.,3266fcca-c499-4e39-a6e2-1b39941d9561,Koomi SM Cabanatuan,,,,,,,MAPS,secondary,,,,MAPS,,,,
-fddf894f-d0ff-414f-a4ce-6df62616d676,Kape Sur,CoffeeBros and Co.,"2c75a3b6-b719-4cf4-98c9-894a80be0aff,2e7a7a23-7c59-4fb8-a6c8-e9f12774fce9,c7d2cf73-950e-454b-9f74-d05c1a7af043,ee03ddf7-0c10-4466-95b8-4430e9fa9108,017d2680-d307-4c95-ae29-62b6fba789f5,a117ab71-8d1d-423c-860c-a415105fc49b,fcb7d821-1baf-4a5c-a10e-0b7d272e9a80",Kape Sur,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-5a942dcf-abfd-4e75-a003-9e28ed55f718,Chick and Piggy Open Kitchen Sheridan,Annelain Food services,ce2bc1c4-78e1-49bf-bbc3-72882ef7c026,Chick and Piggy Open Kitchen Sheridan,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Urdaneta,KOOMI PHILIPPINES SM URDANETA INC.,02f59a08-c542-4d27-b02d-f241f2cb71ec,Koomi SM Urdaneta,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Dasmarinas,TOO GOOD YOGURT SOUTH SM CITY DASMARINAS CORP.,1c4b3d14-98a8-495e-bd0d-1f8dcea9c558,Koomi SM Dasmarinas,,,,,,,MAPS,secondary,,,,MAPS,,,,
-985ae9a5-4559-4f9a-b1bd-c863cfe94593,Honolulu Cafe,"HCP, Inc.","65196c62-a2e3-41b3-9119-1266ebe706a0,bc84d190-95d5-4ad3-b308-f28bfc9e11e7,44b95401-e232-4cb6-83c3-f242ade82579",Honolulu Cafe,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen SM City Bacolod,Vermilion Trends Food Store,b094d567-e6a2-4029-a01e-d0e72ad232a6,Banh Mi Kitchen SM City Bacolod,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Lanang,KOOMI PHILIPPINES SM LANANG DAVAO INC.,dcbea788-9bf9-45f6-a1f5-4c0a23235fd9,Koomi SM Lanang,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM CDO Downtown,KOOMI PHILIPPINES SM CDO DOWNTOWN PREMIER INC.,134704d5-fdd6-4a1c-8c2a-28d5e46e0a10,Koomi SM CDO Downtown,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Batangas,KOOMI PHILIPPINES SM BATANGAS INC.,5bf3d0bd-044e-45b8-90b3-d55b3572478d,Koomi SM Batangas,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Robinsons Magnolia,KOOMI PHILIPPINES ROB MAGOLIA INC.,87b552bd-a920-4b70-9a5b-429fccfdd6ff,Koomi Robinsons Magnolia,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Bacolod,KOOMI PHILIPPINES SM BACOLOD INC.,dfe0cde3-11ef-42f1-8c5e-7772c781072b,Koomi SM Bacolod,,,,,,,MAPS,secondary,,,,MAPS,,,,
-d8e6dbbc-5b88-42fc-a5dc-196db983d130,OMO Makati,Omo Diner Resto Bars Corporation,c6dbd55e-90f9-4475-9fb0-3e47db034493,OMO Makati,,,,,,,"Delivery-3PL, MAPS",secondary,,,,"Delivery-3PL, MAPS",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen Lucky Chinatown Mall,Happy Tastebuds Ventures Corp,6a85e89c-dfdd-4f65-b9b7-b33b300e4bf8,Banh Mi Kitchen Lucky Chinatown Mall,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen Shell Lacson Bacolod,Vermilion Trends Food Store,4a69e37f-f75b-4321-884d-a4ebbf9e1c6c,Banh Mi Kitchen Shell Lacson Bacolod,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Mindpro,KOOMI PHILIPPINES SM MINDPRO ZAMBOANGA INC.,78a2490e-bc62-4496-846e-906dd15a3a33,Koomi SM Mindpro,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Davao,KOOMI PHILIPPINES SM DAVAO INC.,428959dd-1af2-4cea-9337-17bd1405af57,Koomi SM Davao,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Iloilo,KOOMI PHILIPPINES SM ILOILO INC.,0b080137-c372-4f0f-a149-f728bcdfa80d,Koomi SM Iloilo,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Telabastagan,KOOMI PHILIPPINES SM TELABASTAGAN INC,895e8e6c-fd28-45fe-9de7-1a00eba83905,Koomi SM Telabastagan,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Sucat,KOOMI PHILIPPINES SM SUCAT INC.,b22ed2a5-9e31-4ed8-9730-4d8a186fe127,Koomi SM Sucat,,,,,,,MAPS,secondary,,,,MAPS,,,,
-6c7f5b73-a8fc-4c78-aa1d-3ddd2b3f9728,CHIZMOZZA,MARYDAE HANNAH MAYARI RAMOS,"93e2689b-ae88-4222-b968-705bdd131037,b03cee53-3654-4200-9a62-32721abf2d59,a166ffff-84d8-4d24-8a64-45d91abe8643,0f2c3c40-ca6c-4fe0-8641-e9022611eebc,f94a5c03-9861-47c7-a13b-65d40a87ef40,272df7c5-1723-422d-92af-ddd7ed7ea927,da3b7173-6cf6-4a6c-9d77-c4b169191168,cc3a6f4e-9516-4c0b-a071-e18bebdab84e,1462da79-7882-4862-93c1-a238c3db3699,d7c499fb-9626-475f-9cb5-9a9fff0f2513,f0a3c2a6-07cf-41e2-b0a1-435de166c824,4735b3e0-bfa5-41fd-a212-3035aec0a0b0,f86355fb-3143-44b0-b0f0-8c39ce687e1c,7ddcd3f2-6fd2-4d08-8d89-dbcaf1e99349,28401a6f-08ce-48cc-9c77-a28917a78ee4,28064e11-0291-4325-a1af-50f859c64335,13faf06f-fffb-4fad-bc51-c053d8ab2caf,72d8e0b9-f52e-4291-8137-5711550511c3,d025ce40-fb45-4f58-adf7-ed9b20b71138,297455ac-3d70-419a-8a77-eed579f526da,b1d7f79b-7165-457a-bc65-65fbd523d6b7,62e73e4e-c825-4ace-ab67-0f9866288388,7daeccb8-77bc-4611-a7f2-12e62993ee64,4980e715-b151-474b-94cd-d3d9d79c296f,bb4b2ff4-0765-41ac-ab65-5d29766dbd73,9a376cd5-68f0-4da3-9c7a-846198fdbd2f,d3ec8c05-8cbb-426d-b409-f138c1d123ff,4df9b415-9c61-46d9-be39-f870843bdff2,4ea10a35-bb8d-45c2-b08b-2d6bb12f9a29,903822fe-cb6c-4308-b8ec-3d8202da8928,0613bab7-f309-4fb2-a99b-3cf8d5f1dc6b,672171b1-99a7-4aa3-bdcd-90440b0700d4,f3037828-ed37-454a-aee5-493724aba077,4dbcebe7-a666-4fcd-aebd-462217cff486,cb27c9bf-3151-4255-b217-ffb23099a1da,2fea9c39-21ed-4146-a752-ab67a8cc4e1c,f1d00aaa-aee5-4101-839b-7341562896e7,f84a95c2-94f0-49e6-bb81-3e8061764ea9,8a28a3f5-ff6a-45ea-bd18-373a5929c0c2,34ccbf68-5ce3-4ef1-a193-29a4fd64816e,a8f3aa36-57fe-442f-b51b-031f1f3dbb8b,a24a9af6-e1a2-40a8-8aa5-4560711365d5,99b925f4-d99e-4b1d-9091-d2ab19cb1499,f036e970-9782-49f4-844e-dfa2bdf9f40b,2005d891-8858-495a-8e75-a1abb25dd4e3,b2d69c5f-e4f3-4502-a4e7-cbb3bac82d86,32e4e358-b305-40fa-9ec7-5c16b1a81477,3f8c820f-a525-4a1f-81db-f1f326dee7a5,24ede55a-d3b9-4956-a646-9717677521e4,705b5df0-d278-4c2e-b5d8-db5a82a4dd03,ce1f880f-1827-4d99-8fcf-e04b58e0f884,562ca8ca-6e52-4146-a12b-78bb32f5510d,0ed8b318-599e-4bf6-b638-e652ad5d8942,d3b4a4f1-8f94-45d2-a08c-3cfefa446a62,a9539ee0-0f19-4eec-bb0e-a6b7ef23e605",CHIZMOZZA,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-b1283408-9d23-4d93-9f7e-5afcb29629e7,Crown Street Kitchen Sante Molito,SANTE MOLITO INC.,58cc1d09-507d-41d8-832b-d719eca9b6d6,Crown Street Kitchen Sante Molito,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-79ef4efd-8dfd-4a1f-b5c1-2355e0b1b854,Salt and Ice Sante Molito,SANTE MOLITO INC.,d05ef79d-534d-4bf4-9b79-9408ff2f0e16,Salt and Ice Sante Molito,,,,,,,"MAPS, Pepsi",secondary,,,,"MAPS, Pepsi",,,,
-2ef269bb-fac0-47c5-96b3-6a4d655e42cc,Moshi Koshi Noodle Boss,METRO KITCHEN INNOVATIONS INC.,"deedb770-ad06-4d92-9161-beb005222d47,423fa95c-a3db-42c4-a785-8fb5f70c230f,52fca4ad-599e-47bb-a944-698011217eba,30fac21a-41e5-4e49-81d2-09a71d74c679",Moshi Koshi Noodle Boss,,,,,,,"Delivery-3PL, Pick-up",secondary,,,,"Delivery-3PL, Pick-up",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Baliwag,KOOMI PHILIPPINES SM BALIWAG INC.,040976d6-af2e-4ceb-969a-32d11cf05401,Koomi SM Baliwag,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Robinsons La Union,KOOMI PHILIPPINES ROBINSONS LA UNION INC.,453da4fe-ea89-4f4f-b991-8e1287b2161d,Koomi Robinsons La Union,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Marilao,KOOMI PHILIPPINES SM MARILAO INC.,be6db603-6c7d-4e9e-933d-6a9845741602,Koomi SM Marilao,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM San Jose Del Monte,KOOMI PHILIPPINES SM SAN JOSE DEL MONTE INC.,a4bc487b-77d7-43b5-adcb-a04ed95b68ff,Koomi SM San Jose Del Monte,,,,,,,MAPS,secondary,,,,MAPS,,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen - SM City Clark,KLM Food and Beverage,0122104e-7149-472a-953b-391957896cd0,Banh Mi Kitchen - SM City Clark,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-c653c9e8-0c36-474b-ba43-85737b2b598a,Harajuku Cafe Estancia Mall,REMINGTON-CARA CAFE,473266d7-23f2-431b-aa8a-227063f5e27a,Harajuku Cafe Estancia Mall,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Bacoor,TOO GOOD YOGURT SOUTH SM CITY BACOOR CORP.,dcb54e7f-6abd-4cf6-9590-2c8be629df0e,Koomi SM Bacoor,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Clark,TOO GOOD YOGURT NORTH SM CITY CLARK CORP.,d9b13e12-9eb9-4059-9ff8-466b4e95ca2f,Koomi SM Clark,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Sta. Rosa,TOO GOOD YOGURT SOUTH SM CITY STA. ROSA CORP.,81050a29-ef5b-45f8-a5e7-7d1fea823f8c,Koomi SM Sta. Rosa,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Baguio,TOO GOOD YOGURT NORTH SM CITY BAGUIO CORP.,ff7ebac7-1274-4351-9388-99475a5d61cc,Koomi SM Baguio,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Calamba,KOOMI PHILIPPINES SM CALAMBA INC.,bbdb28f5-42fa-4bb7-88e5-4a4c5e9ab72e,Koomi SM Calamba,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Skyranch Tagaytay,KOOMI PHILIPPINES INC.,9fe98e68-6127-464e-97f3-987712b85773,Koomi Skyranch Tagaytay,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Southmall,TOO GOOD YOGURT CENTRAL SM CITY SOUTHMALL CORP.,b279fda6-d734-416a-9430-7c87358585ce,Koomi SM Southmall,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Bicutan,TOO GOOD YOGURT SOUTH SM CITY BICUTAN CORP.,37c84cae-bd56-43e1-b458-4fa7954f4b35,Koomi SM Bicutan,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Molino,KOOMI PHILIPPINES SM MOLINO INC.,03e87ddb-c7d0-4882-bb88-1d7c356c4755,Koomi SM Molino,,,,,,,MAPS,secondary,,,,MAPS,,,,
-39ad4630-7aea-4826-bc02-f7c5f1ab70ec,Gong Cha (IDEAL BREAD & TEA CORP.),IDEAL BREAD & TEA CORP.,"8b053d9e-2bc8-4d1a-b8dc-971459ebdce1,5d8e76bf-b611-4752-8f25-1b4240993b6d,422786e8-5c8f-4695-a474-4568a2357c7c,51589ed7-5db9-4f3c-8905-b477b934b259,c61f787d-ee4c-49de-9536-c8a2e97add21",Gong Cha (IDEAL BREAD & TEA CORP.),"Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Promo 1: Less 15% ,  Buy 2 for 187, medium size ((disc. of P33)
-Buy 2  for P213, large size
-(disc. of P37)
-Drinks:
-Grapefruit Tea QQ
-Honey Green Tea
-Promo 2: LESS 20%  - Buy 3  for P260, medium size 
-(disc. of P65)
-Buy 3  for P292, large size
-(disc. of P73)
-
-Drinks:
-Earl Grey Milk Tea
-HS Green Tea
-Lychee Grapefruit Tea
-Promo 3: LESS 25%- Buy 4 for P330, medium size
- (disc. of P110)
-Buy 4 for P368, large size
-(disc. of P122)
-
-Drinks:
-Honey Milk Tea
-HS Earl Grey Tea
-Peach Green Tea
-Passion Fruit GT QQ
-NOTE: 
-Drinks cannot be customized
-",,10%,,Coupled,secondary,,,,"MAPS",,,,
-39ad4630-7aea-4826-bc02-f7c5f1ab70ec,Gong Cha (TEAFIT FOR ROYALTY CORP.),TEAFIT FOR ROYALTY CORP.,e4da1a2d-dd52-496a-88ed-44209362af36,Gong Cha (TEAFIT FOR ROYALTY CORP.),"Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Promo 1: Less 15% ,  Buy 2 for 187, medium size ((disc. of P33)
-Buy 2  for P213, large size
-(disc. of P37)
-Drinks:
-Grapefruit Tea QQ
-Honey Green Tea
-Promo 2: LESS 20%  - Buy 3  for P260, medium size 
-(disc. of P65)
-Buy 3  for P292, large size
-(disc. of P73)
-
-Drinks:
-Earl Grey Milk Tea
-HS Green Tea
-Lychee Grapefruit Tea
-Promo 3: LESS 25%- Buy 4 for P330, medium size
- (disc. of P110)
-Buy 4 for P368, large size
-(disc. of P122)
-
-Drinks:
-Honey Milk Tea
-HS Earl Grey Tea
-Peach Green Tea
-Passion Fruit GT QQ
-NOTE: 
-Drinks cannot be customized
-",,10%,,Coupled,secondary,,,,"MAPS",,,,
-39ad4630-7aea-4826-bc02-f7c5f1ab70ec,Gong Cha (ROYALTEA PHILIPPINES INC.),ROYALTEA PHILIPPINES INC.,"289fcde3-0d66-4368-b547-6ec188553df2,a4d8bd53-461b-4c25-b94c-c9dc0dcaafc7,e4caa8a9-6bff-465e-9215-70d6fa142824,b7acaaf2-4be9-4ea0-aaec-83811c75923a,4dd83948-cb00-45f5-9da6-a431bfaa9123,43900335-ce97-4c97-880d-af7b3fc426f3,c397670b-ed20-4a21-942b-28ec422f4ddd,89a61165-0197-4ea0-a1c3-b41be72baef4",Gong Cha (ROYALTEA PHILIPPINES INC.),"Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Promo 1: Less 15% ,  Buy 2 for 187, medium size ((disc. of P33)
-Buy 2  for P213, large size
-(disc. of P37)
-Drinks:
-Grapefruit Tea QQ
-Honey Green Tea
-Promo 2: LESS 20%  - Buy 3  for P260, medium size 
-(disc. of P65)
-Buy 3  for P292, large size
-(disc. of P73)
-
-Drinks:
-Earl Grey Milk Tea
-HS Green Tea
-Lychee Grapefruit Tea
-Promo 3: LESS 25%- Buy 4 for P330, medium size
- (disc. of P110)
-Buy 4 for P368, large size
-(disc. of P122)
-
-Drinks:
-Honey Milk Tea
-HS Earl Grey Tea
-Peach Green Tea
-Passion Fruit GT QQ
-NOTE: 
-Drinks cannot be customized
-",,10%,,Coupled,secondary,,,,"MAPS",,,,
-39ad4630-7aea-4826-bc02-f7c5f1ab70ec,Gong Cha (TEAMASTERS INC.),TEAMASTERS INC.,"54a79992-d4eb-45e8-9da5-8f519d89963b,67a485c5-e6ee-4190-b44e-892ca36cf3e0,daac640c-37b4-43f8-b8b5-fd08335dab20,70279e82-1a43-4276-9358-80bfd14a154c,053e4f17-59a4-401c-b123-ef662748edcd,6eb7616b-93a2-4d20-a298-8de9e082a4c1,2499b044-ad53-42bd-b13a-3c35298841ab,9607ef09-342a-4b14-a26c-08784c2d11ce,39bca16c-9d76-4b49-a5a8-348a067aeaa6,1afe7e45-310a-4d33-a5eb-ccc286860ae1,3df56c4f-0606-4542-a1e4-767894790b4d",Gong Cha (TEAMASTERS INC.),"Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Promo 1: Less 15% ,  Buy 2 for 187, medium size ((disc. of P33)
-Buy 2  for P213, large size
-(disc. of P37)
-Drinks:
-Grapefruit Tea QQ
-Honey Green Tea
-Promo 2: LESS 20%  - Buy 3  for P260, medium size 
-(disc. of P65)
-Buy 3  for P292, large size
-(disc. of P73)
-
-Drinks:
-Earl Grey Milk Tea
-HS Green Tea
-Lychee Grapefruit Tea
-Promo 3: LESS 25%- Buy 4 for P330, medium size
- (disc. of P110)
-Buy 4 for P368, large size
-(disc. of P122)
-
-Drinks:
-Honey Milk Tea
-HS Earl Grey Tea
-Peach Green Tea
-Passion Fruit GT QQ
-NOTE: 
-Drinks cannot be customized
-",,10%,,Coupled,secondary,,,,"MAPS",,,,
-39ad4630-7aea-4826-bc02-f7c5f1ab70ec,Gong Cha ( TEAHUB CORP.),TEAHUB CORP.,"05541a7d-d964-4537-a760-a8edef1d23cf,ec503766-cc5c-496c-9e6d-fe1859757c7c,1dc1bae7-5ad8-4456-bb52-b8fb9d2dce6c,5e6576e4-98d5-4d89-9555-4416a0dea79e,cec28c5c-136a-4373-8359-d09c3eeff4ae,9b5d7801-9d07-406a-b37a-505b490b63b0,5bbbc360-c770-426f-b09c-5cb3d80bf711,27911ffc-b6ab-4f8c-b1d0-f8ad7a29ff37",Gong Cha ( TEAHUB CORP.),"Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Promo 1: Less 15% ,  Buy 2 for 187, medium size ((disc. of P33)
-Buy 2  for P213, large size
-(disc. of P37)
-Drinks:
-Grapefruit Tea QQ
-Honey Green Tea
-Promo 2: LESS 20%  - Buy 3  for P260, medium size 
-(disc. of P65)
-Buy 3  for P292, large size
-(disc. of P73)
-
-Drinks:
-Earl Grey Milk Tea
-HS Green Tea
-Lychee Grapefruit Tea
-Promo 3: LESS 25%- Buy 4 for P330, medium size
- (disc. of P110)
-Buy 4 for P368, large size
-(disc. of P122)
-
-Drinks:
-Honey Milk Tea
-HS Earl Grey Tea
-Peach Green Tea
-Passion Fruit GT QQ
-NOTE: 
-Drinks cannot be customized
-",,10%,,Coupled,secondary,,,,"MAPS",,,,
-39ad4630-7aea-4826-bc02-f7c5f1ab70ec,Gong Cha (TEAMAKERS CORP.),TEAMAKERS CORP.,"151bdb0f-b16d-40bf-869d-ad79a95fb8b6,a4586c63-ac02-4042-99ce-8aa7a9b32ad2,75a1084f-d9d0-4291-b962-e194cfe38135,8a13229b-db91-49b2-aabc-657b887aa63d,3d643d28-8153-47bf-a103-8f9da83e14e5",Gong Cha (TEAMAKERS CORP.),"Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Promo 1: Less 15% ,  Buy 2 for 187, medium size ((disc. of P33)
-Buy 2  for P213, large size
-(disc. of P37)
-Drinks:
-Grapefruit Tea QQ
-Honey Green Tea
-Promo 2: LESS 20%  - Buy 3  for P260, medium size 
-(disc. of P65)
-Buy 3  for P292, large size
-(disc. of P73)
-
-Drinks:
-Earl Grey Milk Tea
-HS Green Tea
-Lychee Grapefruit Tea
-Promo 3: LESS 25%- Buy 4 for P330, medium size
- (disc. of P110)
-Buy 4 for P368, large size
-(disc. of P122)
-
-Drinks:
-Honey Milk Tea
-HS Earl Grey Tea
-Peach Green Tea
-Passion Fruit GT QQ
-NOTE: 
-Drinks cannot be customized
-",,10%,,Coupled,secondary,,,,"MAPS",,,,
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,Kenny Rogers Lucky Chinatown Mall,Binondo Casa Rotisseur Corporation,"ae4efe21-3956-49e2-a9c0-82b2984699fa,19ecedf9-6fcf-41e8-a07f-9c8c2a80acd9",Kenny Rogers Lucky Chinatown Mall,,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",,,,
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,KENNY ROGERS C. RAYMUNDO,RML SUPERIORE FOODS CORP.,60d38fd6-9cf9-44ab-ac6f-aad80cc4a932,KENNY ROGERS C. RAYMUNDO,,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Angono,KOOMI PHILIPPINES SM ANGONO INC.,9aec4296-3fdf-4285-8594-f469c592d439,Koomi SM Angono,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Taytay,TOO GOOD YOGURT CENTAL SM CITY TAYTAY CORP.,da37c3a3-20ee-4961-9085-59f8824317e3,Koomi SM Taytay,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,KOOMI ROBINSONS ANTIPOLO,KOOMI PHILIPPINES ROBINSONS ANTIPOLO INC.,5663b983-c2dd-48b9-8997-5d122a6bef5f,KOOMI ROBINSONS ANTIPOLO,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,KOOMI P6 GREENHILLS,KOOMI PHILIPPINES GREENHILLS INC.,dc61a93b-8266-44c2-9220-a59234d7690f,KOOMI P6 GREENHILLS,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,KOOMI SM FAIRVIEW,TOO GOOD YOGURT CENTRAL SM CITY FAIRVIEW CORP.,e2d02d1c-1048-49ca-b677-9ca38085e630,KOOMI SM FAIRVIEW,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,KOOMI HEMADY SQUARE,KOOMI PHILIPPINES HEMADY SQUARE NEW MANILA INC.,e159aae6-3710-49b5-91c9-395be8f7e660,KOOMI HEMADY SQUARE,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,KOOMI SM MARIKINA,KOOMI PHILIPPINES SM MARIKINA INC.,9cddd0a6-2e6e-4ec5-b6ff-0f951fdf109e,KOOMI SM MARIKINA,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,KOOMI AYALA FELIZ,OPULENTIA INCORPORATED,0978ee68-6ed5-4724-9295-ce87759ef343,KOOMI AYALA FELIZ,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,KOOMI SM EAST ORTIGAS,KOOMI PHILIPPINES SM EAST ORTIGAS INC.,e8b879a0-e4fd-4a24-b973-7b54fe1012d0,KOOMI SM EAST ORTIGAS,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,KOOMI SM MANILA,TOO GOOD YOGURT CENTRAL SM CITY MANILA CORP.,978917c8-50a0-4e9b-bf23-96f5692ce6dd,KOOMI SM MANILA,,,,,,,MAPS,secondary,,,,MAPS,,,,
-d3ee0b2c-5730-46d1-babb-7f0bfee51b00,Bikers' Cafe SM MOA,"Bayside Seafood International Food Group Inc.,",3cfe07cf-0b84-415e-bf3a-842d655ff7e4,Bikers' Cafe SM MOA,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-df43f596-e504-4118-ac64-19f6a0dd4773,Blackbeard's Seafood Island SM MOA,BAYSIDE SEAFOOD INTERNATIONAL FOOD GROUP INC.,eff49e2e-5643-4ede-a715-1a891439fac0,Blackbeard's Seafood Island SM MOA,,,,,,,"QR Ordering, MAPS",secondary,,,,"QR Ordering, MAPS",,,,
-eb18c32c-60d2-4466-a8c1-50da774afcc4,MAX'S GROUP DELIVERS,Max's Group Inc.,"26ed21b5-2bca-4275-8788-0d815c38b6f1,f9a711d5-905a-43e1-ba52-8a7465e1fdbb,38f6151a-d789-43d7-990a-88194d878d9d,76bf2a4e-b24c-460b-ad17-982457f49cd3,a9aaf4dc-fecc-4ee7-85ea-4f96d26071ab,8c5d866b-d5f5-4319-811a-1e79ad2e3695,0a432baf-526e-4017-963e-38c5d22c06ef,a930f057-96ef-49aa-82c2-f4a94daaa908,aa98edfd-c64f-4a21-8d99-e6e83bd6f2fa,92631906-e7b9-47fc-9cae-4747c742ef6f,c9be3773-bfa1-425c-8a16-58495eb2b074,4faa3cd9-eb6c-442a-83b6-ba42afff9945,ee5def69-a996-429b-81c3-2d36ae6d3981,b4b40d7b-2027-457c-86c4-a00805496328,86c792b0-b4f7-4547-a7b5-788f6b5869da,bccdab44-9d8a-4ebf-ab3a-b22a881ea95e,1c037057-d17e-4f2c-8920-94c214b5d33c,37a9fbf3-958f-4e57-9478-6d629696bcf9",MAX'S GROUP DELIVERS,,,,,,,"QR Ordering, MAPS",secondary,,,,"QR Ordering, MAPS",,,,
-893b5b56-8e67-468e-8ddc-179806e636fa,MAZENDO X CHATIME_CAPITOL COMMONS,ZENORI CORPORATION,0e5afc1a-b92e-447c-8613-e86bd5823b80,MAZENDO X CHATIME_CAPITOL COMMONS,,,,,,,"QR Ordering, MAPS",secondary,,,,"QR Ordering, MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Robinsons Place Manila,KOOMI PHILIPPINES ROBINSONS MANILA INC.,3bc9d51d-361d-467b-aab5-7bf083567137,Koomi Robinsons Place Manila,,,,,,,MAPS,secondary,,,,MAPS,,,,
-d930b796-2a3f-46a5-880a-e2a71ccd3274,Frankie's New York Buffalo Wings,The Chicken Factory Inc.,"570805f7-43fa-4d91-9595-e5090f15c054,c38de9bd-616e-4f80-b158-8a32c79f8991,22da111e-205f-42ce-b6a4-8ae70e4a5c5b,6f9761ba-a103-44ab-a85f-0940b60c0a5d,e2269c4f-4a85-48bf-bdc9-17f833a3df9a",Frankie's New York Buffalo Wings,,,,,,,MAPS,secondary,,,,MAPS,,,,
-26c17d9a-7f6c-4a92-a32d-6e4d50b44380,Mukbang Korean Chicken & Topokki,Mukbang Korean Restaurant,3a6ea5e6-730c-4e77-b997-85d519599f62,Mukbang Korean Chicken & Topokki,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-39ad4630-7aea-4826-bc02-f7c5f1ab70ec,Gong Cha ( DRAGON DYNASTEA INC.),DRAGON DYNASTEA INC.,"82232f58-7ef1-4ae8-9a7f-95c7087b45ae,1db7c3f3-379d-4b6b-8a2c-03174fa1bfa1,a1c22530-a060-43f1-8047-239b31174b82,66a2ee9c-794c-4970-8c6a-c3ef711da71e,cda37236-3217-40b2-acce-4f4e5fc51777,18b67d1f-921b-4eb3-b34f-76947497b8ed,b390b91d-926f-4a9a-b2cc-ce87a2e041b7",Gong Cha ( DRAGON DYNASTEA INC.),"Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Offer 1:
-GC2MED187
-GC2LAR213
-
-Offer 2:
-GC3MED260
-GC3MED292
-
-Offer 3:
-GC4MED330
-GC4LAR368","Promo 1: Less 15% ,  Buy 2 for 187, medium size ((disc. of P33)
-Buy 2  for P213, large size
-(disc. of P37)
-Drinks:
-Grapefruit Tea QQ
-Honey Green Tea
-Promo 2: LESS 20%  - Buy 3  for P260, medium size 
-(disc. of P65)
-Buy 3  for P292, large size
-(disc. of P73)
-
-Drinks:
-Earl Grey Milk Tea
-HS Green Tea
-Lychee Grapefruit Tea
-Promo 3: LESS 25%- Buy 4 for P330, medium size
- (disc. of P110)
-Buy 4 for P368, large size
-(disc. of P122)
-
-Drinks:
-Honey Milk Tea
-HS Earl Grey Tea
-Peach Green Tea
-Passion Fruit GT QQ
-NOTE: 
-Drinks cannot be customized
-",,10%,,"MAPS",secondary,,,,"MAPS",,,,
-2a0ccb19-0281-40b1-9249-6d1165da0790,Lots' A Pizza Cavite City,Matt Louie Food House,3a1dabf8-a2d7-4a40-b7f4-1a7861d5e36f,Lots' A Pizza Cavite City,,,,,,,"Delivery-3PL, MAPS, Pick-up",secondary,,,,"Delivery-3PL, MAPS, Pick-up",,,,
-238b1cf6-ff32-4d3a-ae86-bb2bb5763b7f,Pepeton's Grill and Catering,BAYAN BAYANAN RESTAURANT INC.,9643ae94-700c-4632-8024-b934d051fb39,Pepeton's Grill and Catering,PEPETONS500,PEPETONS500,"Php 500 off for a minimum spend of Php 2500 from Monday to Friday, 10AM-2PM only. Can be redeemed 4x a month per customer and available in Marikina branch only",,5%,VAT Inc.,Coupled,secondary,11/29/2023,5/29/2024,11/29/2023,"LeadGen, Pepsi, MAPS",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,BANH MI KITCHEN SM LANANG PREMIER DAVAO,Murdie Olan,462d4e82-012f-4a02-840d-eeffbf8413f2,BANH MI KITCHEN SM LANANG PREMIER DAVAO,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-0af03150-f6d9-4024-a507-2dcef6efe973,Union Jack Tavern,UJT Gastro Eateries Corporation,46958ae3-0104-4705-b946-0631d3013675,Union Jack Tavern,,,,,,,"Delivery-3PL, MAPS",secondary,,,,"Delivery-3PL, MAPS",,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Glorietta,KOOMI PHILIPPINES GLORIETTA INC.,5e36d064-1563-4960-81c9-4c24c293844f,Koomi Glorietta,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Power Plant Mall,KOOMI POWERPLANT INC.,11d8cdb2-0176-46f4-b484-58213adb7b19,Koomi Power Plant Mall,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM Megamall,KOOMI PHILIPPINES SM MEGAMALL INC.,392e390d-574f-43c5-964c-986cfedf0d5f,Koomi SM Megamall,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Pacific Suites UST,TOO GOOD YOGURT CENTRAL UST DAPITAN CORP.,060614c6-9c4e-497f-aad0-4a38f5515922,Koomi Pacific Suites UST,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Uptown BGC,TOO GOOD YOGURT CENTRAL UPTOWN MALL BGC CORP.,7775f706-5720-47d1-bb4a-ed949d4f0db6,Koomi Uptown BGC,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM MOA,KOOMI PHILIPPINES SM MOA INC.,b72a4bd2-899b-4129-8526-114c0750b71f,Koomi SM MOA,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi Podium,KOOMI PHILIPPINES PODIUM INC.,75385ea1-acde-4dd3-aff4-07f34bac7a59,Koomi Podium,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,KOOMI IKEA,KOOMI MOA SQUARE INC,87617d21-b961-4176-b247-c9badcf37c57,KOOMI IKEA,,,,,,,MAPS,secondary,,,,MAPS,,,,
-58ff50dc-02ef-47db-ad04-4a3e7e3bbb38,Koomi SM San Lazaro,KOOMI PHILIPPINES SM SAN LAZARO INC.,0f2e6c7c-034d-41eb-a2e9-7a11cde2b695,Koomi SM San Lazaro,,,,,,,MAPS,secondary,,,,MAPS,,,,
-97d8af15-fce1-4bd0-8e5e-1a97a590afb8,MAX'S RESTAURANT,Max's Kitchen Inc,"74f7f56b-f51b-4fd7-9a33-1beaf46601de,f06989fa-ab1b-4d6d-aff3-a86c74c86a55",MAX'S RESTAURANT,,,,,,,"QR Ordering, MAPS",secondary,,,,"QR Ordering, MAPS",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Ca Phe SM Grand Central,8RGZ CORPORATION,20e16165-7619-4ee8-88d5-2ed0bedb2aa9,Banh Mi Ca Phe SM Grand Central,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen Central Avenue,GarSo UNITED FOODS INC.,446dc349-e160-4ad3-95f7-644ab74b53b7,Banh Mi Kitchen Central Avenue,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-ddfb7a7a-69f1-48a4-9b2c-e3fb2fe9e335,Figaro Coffee,"Figaro Coffee Systems, Inc.","bebe9f65-f070-4414-9bb0-ac8dcbf52823,840b833a-5209-4422-a39f-35bb04550408,02c929d0-45b6-49a8-b666-101c7a1d2fea,ba308327-53aa-4ede-8bda-09d61f65a2a9,e0f180cb-801a-40ac-b580-94d19acbf807,b7cb36bb-c58c-4d50-942d-68e7aff69e09,c71abf9d-0eb0-497a-8531-d4705f389080,e84a5790-35bd-460e-b348-2139403e6970,abb1c8ad-2fce-4ada-84fb-7505d6d96b61,3f1ee502-909d-4d18-8eaf-b4370ef7c8c1,5c045ff5-248e-4a90-a48c-583d49e2eb88,48e2dcc2-9738-4e36-89bb-213092e8bf3a,75d16a48-ad55-49c8-bcf5-3537c937d15c,076886f3-9d6a-4799-8179-a7abe42f3406,73b2ba16-eb95-42a8-8eca-5fb3d4df48d9,2916c6b7-c31d-4e10-bb38-c9023b14fcf7,890e1f04-c648-401d-820f-2c980218a3cb",Figaro Coffee,,,,,,,"MAPS",secondary,,,,"MAPS",,,,
-a2639d94-a484-4a5b-bb0d-3b1d8c05428f,Lots A Pizza Savana,Awesome Comfort Foods Inc,5f9b5a23-16e0-4d1e-8e6a-80a0c8a987dd,Lots A Pizza Savana,,,,,,,MAPS,secondary,,,,MAPS,,,,
-f04538ac-2008-403b-b0f7-4f4d49a17fda,Angel's Pizza,"Figaro Coffee Systems, Inc.","6cb2f0fe-253d-49c9-b52b-db44354138c8,46b110b3-960e-4eaf-8cad-9af28d0fef93,1e1e3654-80fc-40a8-8012-c80bf4827ad0,49505272-9ec9-4f94-9fcf-3e9070012399,cc5d5e62-a319-4595-ab96-c854d6ac3559,b745e964-eba8-4372-a940-167be6c2c227,b1ffac77-500f-4531-b75c-58e6f8867487,38f111f1-600c-4a96-a119-4d1a5707044b,c0cb913c-a92e-4fb8-82f1-0f2edd0e5586,ee5337a0-9f87-48a4-a912-a29e5e65efa0,ebb3264f-3962-4b84-991b-53675dd49b0e,02b64b57-0224-4490-9f87-6782aa96fb15,a9610fdb-a96e-4415-919f-8e71e1b7659e,6202941e-810b-45f1-a252-94fa86b432d1,4092dd28-dba4-4caa-84b2-001ff64b175e,e421ee28-c44c-44e4-9dd6-1944ed3c385b,75a91933-e3cc-4434-98f8-c4812e0f134c,16ea1ceb-d060-4b60-891d-89e10c7d891e,9bedf3a0-85ef-40b0-a8d1-ab7b630d1203,67789d26-7c0f-4147-9f40-149aca3c0f9a,7e619bdd-b9ef-4fc2-8704-ac223093d447,54ab8ad9-e7c9-4587-8ebb-c699a2f573a5,122ed3c1-6981-44a8-ac6f-5b3b7e5deafa,220cdf38-466c-42d9-a770-6f0524b35cb6,fec50c76-f44d-40ae-b727-76231810b87c,f4ad31ab-530c-4bfd-a1b2-4e3e65723ce2,b2ce0524-02b0-4bfc-b05d-8b637ff52ff5,d61b2260-42e0-4281-be7a-bc3fb3244bd1,abbf1005-6056-4fc2-bde5-5e1aba913e9d",Angel's Pizza,,,,,,,"Delivery-3PL, MAPS, Pick-up",secondary,,,,"Delivery-3PL, MAPS, Pick-up",,,,
-7b475a34-f51d-44ab-b209-9d33b7b9e6ef,Tien Ma's,"Figaro Coffee Systems, Inc.","7f5fe8c1-78de-4e39-9d05-dcd207dee10f,8d619046-5fda-4aea-a363-f50ec969c82c,5d45c85e-66fa-437b-9736-4b365684444a,ca3a5efd-33d0-472d-aacb-4e429d50d8ec,1f6b2d68-0fa0-4a66-bae3-df155f48ed8e,9c1b3795-f347-4c67-aa05-160334594c7c,a7835809-7120-4c45-baa3-f84e4d847150,9d5ad5a7-dbfa-4a0e-9ed9-3e2de89135d8",Tien Ma's,UBTIENMAFREE,UBTIENMAFREE,"Free Hakaw or Siomai
--Get free Hakaw or Siomai for a minimum spend of Php 1000
-
-- This promo cannot be combined with other promos of the store.
-- This promo is valid for dine-in and takeout transactions only.
-- Valid in participating branches only.",,10%,VAT Ex,Decoupled,secondary,04/08/2024,07/08/2024,04/08/2024,"LeadGen, MAPS",,,,
-43f6ebce-3116-4227-8177-57d9e6d90493,PICKUP COFFEE,STARBREAKER CORP.,"36c13c78-fe3c-4324-8c27-79646dbd2a17,cf56f696-6762-49fc-8566-8448597cf662,5968ff21-190f-4174-908a-16a2b37d7dcf,f34b2959-98d3-459d-9dac-ba4a25ea2630,3ce78ada-6b0e-4404-beeb-c786d53ed6a6,edfbb4e5-d5a2-49a2-bd71-729cdc2ba57e,a2ca7f69-3200-4ca8-88de-b26422810705,98d53a0a-7d97-4300-b3de-baa2761a809f,3bf99f0c-a366-463c-8e22-4fdf7207cc12,59531a3f-f67b-4e6f-93dd-bf91b7c25d63,4f5db07a-52d6-4fcd-8d50-71b5e061b1bf,f19c2f7a-a23c-4812-bbeb-f6b7b4091cc1,9908393f-13f9-4ec7-a178-1ef097de9e4c,22b5f3cf-8ece-4b45-a8fb-9a5b52d503f2,75127fff-b241-4efe-b310-d24ed4ba3e7f,89c5ddbb-95b9-45c3-8332-6fc489625762,6c0ed3a1-3490-4161-8d94-4302aabaf8ec,7680de33-5a33-44b2-97a8-0dbab8613859,33780294-3fc7-4d21-914c-bb1164995217,0fff7657-3350-401e-ae87-d01ecbc62ba0,4297d2ac-8de8-43bd-b47d-3b2edf90968e,a4e7c6e7-67a5-48f0-a45a-62bf6293297f,4d5116fa-66b8-4b69-98ba-5c8227ddd0ab,e4982f0d-5579-4a9f-b86d-aba67b17a272,818b1351-d4cf-4e1c-b517-638a28ce9da8,c3fd0c18-3d64-4fce-ae0a-ac9a07d9601b,abfdbf05-629c-4619-8c69-cb46c793b353,d37b6d9b-58f3-4e9e-8b95-8dc8a92a687c,04874841-7a30-4f05-8426-1ecfd4691642,3a33df36-35e5-442b-968a-36d6ee294c3f,916e017d-46d5-4d5a-80cc-fcfef2b1e564,537b6eea-3363-4cd9-92eb-9406681609f0,9010c9f7-afcb-432e-a238-db35d1f68ca4,9bfa5320-5308-4639-a527-8fc822eefeae,33fb9027-c425-4552-a3f6-4f7decd997c0,cb480706-02b1-4e76-b653-f8aea7f7ba92,556f1ba6-653f-4d13-86ac-685dba636152,4e05aade-0dba-4731-a14f-f051ed00047e,fcbb55b6-0be9-4772-865f-32c6f7ea0a27,d4e54b35-99a1-4a48-9cce-07ea1190c005,95b18d25-dd26-4754-82f9-48937583b945,7e2ad744-89f3-4d79-af6b-bb6f91ba6086,fd13dc39-51f6-431b-adba-bb550433f052,8260c952-262d-40f7-b589-df3373cb6fb6,a6f73fea-c19d-4fce-b2e7-57fa61217690,e229a29d-4623-4460-85d2-f1decc62adbe,b82eeeaa-8753-4c6b-b847-dd25e1346113,7c635178-e029-4724-9d36-68afaea00737,95497ba9-b923-49f1-a44c-54362545b50b,ef28ae4e-4e77-4331-9369-14e624b0aa06,32bb1670-dc88-4525-8964-27102792549b,02165ffe-f3e9-429e-af10-5cafd37d665c,9010a152-b4e9-4057-89b2-d48624251cd8,553e328a-3546-4f97-9132-eb8f11cc527b,dddd2be4-9c24-48d9-ae06-fb51c0930854,8a2a956a-b141-4ceb-8ded-1dd5bd8fa961,c2f192ea-906d-470f-bf54-146e52a5f5cc,f5a47e17-4c8a-42e4-8571-546634ba7273,2abc16bc-aaf2-4995-ad79-ab33789a8551,10795cf2-55e1-46c1-81be-e7f7951631da,99d2b6ce-3ab8-4aaf-aa4b-a93c415c6141,91559a8e-a133-45a5-a46a-f2c9512fd75c,1df95fa3-a90b-459d-9bf8-3f2f6cabe3fb,ba932d41-539a-4e86-bf70-acda36951da9,4c3d285a-6daa-4338-9bf8-11cb705ba45c,108f50ac-dbc3-48c8-9eaa-41171288a137,7557bfa6-5fb6-4936-8423-c45a63e8ee54,6e355307-ebc6-4f08-829f-ae4a288b895e,185914d0-3698-4646-8ec1-31f96b9f83d2,ffa6fe89-04f7-43b9-96c0-88cf8108808f,6fc68eef-f9f3-4d4a-ab00-77fa50d69e42,8be4f967-bb67-45ed-9b13-2044b8e99ef6,d50e4cb7-3a03-4ea2-bb33-8641edeaf41f,c3b26827-0e5d-4bd7-9e4b-6c00b8b8bd4f,7f7b3974-ab36-4b2b-a9db-fc1c8931984f,2d4a1be7-24ca-45fb-bf72-0a774ae49cc6,fbd99bc9-528a-4646-af88-5dd511b4de24,7ea816a7-4636-4edf-bd1a-63aec5190682,99545c6e-cff8-43c7-a184-9c9becd59f06,da22d604-1cd7-4bb8-b887-62b93d401ddc,ebefa6e9-6d36-49ca-9860-e6fcef593476,c72e1590-a95e-473d-ad4b-5dbaed56b725,bbed3ec9-cd7a-4ffb-8200-4ddf0c5116da,fa241e57-3301-4f1f-b3de-3afc9293567d,ac693001-e93c-40ba-8e7b-a18a3f844eb2,8e2abf51-b57a-4b4c-a76e-c750bf12eb0e,61d5b33f-3b9e-420c-a21e-e75b3364f481,0101683f-d634-4820-9704-392a5cce1647,40d46bda-a1a7-4376-a0fc-cff654d05a12,b79bddd9-a585-4050-bf54-fe4bc6a6b9d5,aee6a7c9-a05a-40d9-9cb5-beb2785e55ed,34300a9a-8c8e-4924-a7c2-bdab9b8cd55a,04081df6-109b-412b-8dfe-c556ab89a1ae,7212e465-14c2-4c1d-ac79-dc4b2aba7ee1,eacdb524-8b11-4736-a818-9126b143b31b,7705cdb1-87c7-4bc7-9141-c47ddb9b2fdb,9b93e6fc-c6f9-49fb-bb94-0741ac5411ab,9e315de7-9fe2-4f53-8161-217f6f284afd,95f494fb-81d1-45c4-9e84-208c23000b9a,4c758e92-195e-481d-aaa9-9b558b5dd9f8,c131cdae-2be5-4f42-a85a-cbdf2b9298d9,ca17171a-4259-402f-9a0f-528d48c12db9,76bf67af-a4f1-422e-9a25-a32e826ece8d,e435be99-1438-461b-9ea3-6f9e7864ab76,e5712ad5-11a1-4c39-bf30-7e9779c0c8b1,61cb99d2-0fca-43d1-b62d-6931f0c9f358,8558984d-7b82-41ae-820e-d5cef29e6ed6,c8140d4d-f5d9-4122-81cf-f5222a58ee08,309b461f-9b2c-461c-822e-f2be758d7d01,dbcfb885-1ddc-44b0-a5b4-6d24784c7682,7fe3b3e9-5066-4fab-b202-70c39203daab,3570d4e5-4cdc-44fe-aa7d-f6c9f8c2ab29,9e2f01a6-5c0b-4607-9798-fb295965f8c9,ff29c923-c405-4bd7-83de-dd419f45169c,7e9cb7d6-8163-4364-a45c-d823b6765583,a5b19c6c-0770-4c77-bf0f-105987420090,941a0a2f-bb79-484b-b1a9-367f46dfa5de,2637b38b-5628-452d-ba7c-de8da8b2de4b,427a9787-ef8f-4a64-86cd-1e5aade6d5af,8411a054-986a-4ca4-8de0-7478ae775d23,81591a47-e06e-4f76-8e44-8e13eb7161db,a2093fca-f65c-4aa0-a5f1-59ab347569c5,af3d943c-48d7-40c8-b272-178633bdc051,28b93bf6-278b-4d48-8530-c685b70c8486,f8eb1f7d-7e0d-4245-8193-2922d8edbd51,1944474d-59dc-46bb-94a5-648c620cd281,e3f0a6d5-e3e1-4c73-9c58-b8ed83fe267a,6b904cae-44a9-40ea-b90a-b850e148a64f,232c8963-c0ec-4d05-b77d-06d22e1c1653,3984c650-f6af-48ea-b6dd-6f553dcd648b,078b9e7c-cadf-4e96-9589-3bcca1da1280,dcb82ad1-03dd-4ed3-8a6e-477b992545c3,4e449fda-134d-4f20-a461-7b79ccef2c72,fb1ca52f-a263-4842-b22e-d848df1f241a,88694d80-300a-4012-b08a-f4e085985678,8bd40615-aaab-4c9d-b54c-a8baa328376b,19a1ae59-458b-4254-9938-06486f9c7b93,2309f817-4fba-405d-b66b-c421f497694e,cb4703b4-5d8b-41d9-a95f-0dc92704f95e,e698a815-97c4-4406-a21e-ae8a5c30a685,01a1a132-170b-4fee-b513-19b1a1f0967e,26daed33-f308-4bef-8a69-5f5a02d0379f,17a5a5c6-7e0a-44c0-a8a7-4506d21c9e7a,746af494-c0f4-4428-b45e-d5ed6fbe0fc5,caa16c32-b727-482f-9070-11c36cd03ba5,fba400bd-cf9e-4b9c-a8d2-4d7d2f15a1f9,2fb7a722-4083-436a-8717-4b493429aab2,7538e6e7-9fda-447b-9591-24aa04202a2a,21791ab3-c5cf-4b4d-ac01-b2cbe0883a59,dc9b7d7b-1f07-49ce-96af-e3e276afdedc,746baf8f-8f26-48e0-8400-efaaead38439,8d8e1de8-c67b-4434-a7ad-08e613d3eab6,09895bf3-0d1c-4c4b-bdbc-a0a30869f561,ddb181e5-e4f7-49d8-8da4-1732bb3e4c6f,f422ff04-ad8d-4012-a2c5-9ec050f576be,a6983440-8bb0-4646-8629-4acffdb63a88,a97a416e-9cd0-4653-9d02-0faffc4c2375,68d1f87c-99df-42e1-8c51-61b471211832, 52cecd24-0ce0-4cab-a4d9-ae5262ac9c6f,1eba146b-88cd-49b6-af5f-66ab35f3ae8f,435cfad7-d731-42ad-92e6-dced41793476,c24a9e5e-3e96-4b2e-9269-88ac90656c1f,69e0fe96-d052-4d45-a3dc-957e658484f5,cc422a2f-f965-4dbd-987b-d66bb3fdc6b3,dc5ce27a-a734-4a53-a96d-20b0148617b9,8553fc80-2b95-4e1e-ade6-92f1803d6c4a,c1c187e0-3f22-48e0-a2ec-7db509f1da5f,4ddcb517-606b-4470-85f4-df83704e6e8c",PICKUP COFFEE,,,,,,,MAPS,secondary,,,,MAPS,,,,
-783c88c2-63ab-4db0-86d0-f85d622009e8,Easy Tiger,Salathip Foods Inc.,d6cb08dd-5245-4d3f-8a80-2006fc67d0ed,Easy Tiger,"ET200OFF
-ET400UB","ET200OFF
-ET400UB","
-400 pesos off with min. spend of 2000 pesos (Exclusive to UB card holders and new Booky users only. Available M-F 2-6pm only)",,10%,VAT Ex,Coupled,secondary,2/28/2024,,5/28/2024,"LeadGen, Pepsi, MAPS",,,,
-66c6e17e-5ba5-4760-8649-0afb811bbac0,Royal Indian Curry House Makati,EXCELLENT JNGR RESTO FOOD CORP,2931e4a9-0578-414e-a16f-036cfd5f116f,Royal Indian Curry House Makati,,,,,,,"DELIVERY-3PL, QR ORDERING, MAPS",secondary,,,,"DELIVERY-3PL, QR ORDERING, MAPS",,,,
-a3bb96e1-8866-44ca-9d35-93cbac31098c,Everything But Cheese - SM Tanza,QUEZO TANZA CORP.,d37dad3d-21b8-4ef0-b8bf-7c3f5aed204a,Everything But Cheese - SM Tanza,,,,,,,"Delivery-3PL, Pick-up",secondary,,,,"Delivery-3PL, Pick-up",,,,
-2d0c6083-f422-4ec0-9c8a-18eb982b996e,Sante By Zig,"Sante Moa Square, Inc.",ee8e659a-d0a3-401e-bb64-f7d839277f5b,Sante By Zig,,,,,,,QR ORDERING,secondary,,,,QR ORDERING,,,,
-490e0827-819d-4c31-8e1e-5e574ab55c64,Sunnies Cafe,Spoonin sunnies inc.,"15ec7f6b-a321-4878-a95d-881536195bc5,05440b65-448e-46f5-ae00-49d7922503a1",Sunnies Cafe,,,,,,,"QR Ordering, MAPS",secondary,,,,"QR Ordering, MAPS",,,,
-30b1b57d-fd80-41dc-a365-17649ed7a745,Panco Cafe Legazpi Makati,Tantan Rami Inc,aa3a0245-60cb-4db6-bda8-07660ef00a7b,Panco Cafe Legazpi Makati,,,,,,,"Delivery-3PL, Pick-up, MAPS, Pepsi",secondary,,,,"Delivery-3PL, Pick-up, MAPS, Pepsi",,,,
-ad3c3339-5bce-4a60-b310-062c9e9a60ee,Sisig Hooray! McKinley Hill,Awesome Comfort Foods Inc,7da79ab5-ad25-4b93-ac17-242de6e8479c,Sisig Hooray! McKinley Hill,,,,,,,MAPS,secondary,,,,MAPS,,,,
-91a90858-52ce-46a0-bc03-73ee8c6db5ee,Meraki by Oh My Greek MOA Square,"Meraki  MOA Square , Inc.",955c7fc3-fb1e-47d8-84cc-131b29dac661,Meraki by Oh My Greek MOA Square,,,,,,,MAPS,secondary,,,,MAPS,,,,
-7c66fda3-444d-4873-b401-2ac76b451d4b,Pound x Flatterie,Concetti Globali Inc,"d325ebf3-dd39-4b4a-91c2-2526acf738c6,19085b35-6d7f-4659-86c2-58a9fcdad457,72d9db54-5c10-4368-b2bf-dcc9efdfe4e6,431d846f-1c6d-466d-8d1e-8d85960df3a9,7d68aacf-48dd-421e-91a5-2aa8b67ce3fc,956765f3-38b8-4b7d-af9e-e26040ef11c4,ad189b01-d2d9-4df6-b2c1-6b12b12bdcac,1082650c-4a31-474a-bbd2-f031a13e772d,a581e1e7-7644-43f9-960c-2f1c0067ad68,41fdbce0-cceb-4164-95db-4b05edd7c090,efc3f2b1-00d3-4777-9f9c-bacb1b928e4a,19085b35-6d7f-4659-86c2-58a9fcdad457",Pound x Flatterie,POUND6,POUND6,"Get 40% off a group meal for 4 
-For only PHP890 (from Php 1,484)
-PACKAGE INCLUDES: Beef Salad (Groupie), Garlic Rice (Groupie), Boneless Chicken (8pcs), Foodee Iced Tea (4 orders)
-
-Exclusive to Booky x Unionbank                                                                Validity: Dine-in only; not valid on weekends and holidays",,,,Coupled,secondary,3/15/2024,9/14/2024,5/29/2024,"LeadGen, Pepsi, QR Ordering, Takeout, MAPS",,,,
-c32a159a-15a3-4727-91be-56b993d370ae,Sultan Mediterranean Grill Valero Plaza,DCLRB328 FOOD INC.,8f051ded-654d-4123-aa86-87b252232de0,Sultan Mediterranean Grill Valero Plaza,,,,,,,QR Ordering,secondary,,,,QR Ordering,,,,
-81fdb60b-682a-4b4e-96bc-3e0ea41e677e,The Cafe Mediterranean - Podium,The Cafe Mediterranean Corp,29317404-be69-43ce-b476-13aa6e484a64,The Cafe Mediterranean - Podium,,,,,,,"DELIVERY-3PL, QR ORDERING, MAPS, PICK-UP",secondary,,,,"DELIVERY-3PL, QR ORDERING, MAPS, PICK-UP",,,,
-81fdb60b-682a-4b4e-96bc-3e0ea41e677e,The Cafe Mediterranean Greenbelt,The Cafe Mediterranean Corp,31751f90-6b72-4136-8a31-7a16766bd929,The Cafe Mediterranean Greenbelt,,,,,,,"DELIVERY-3PL, QR ORDERING, MAPS, PICK-UP",secondary,,,,"DELIVERY-3PL, QR ORDERING, MAPS, PICK-UP",,,,
-81fdb60b-682a-4b4e-96bc-3e0ea41e677e,Cafe Mediterranean Rockwell,The Cafe Mediterranean Corp,8bf63dbb-6159-43b8-8d16-525458ba0dc5,Cafe Mediterranean Rockwell,,,,,,,"DELIVERY-3PL, QR ORDERING, MAPS, PICK-UP",secondary,,,,"DELIVERY-3PL, QR ORDERING, MAPS, PICK-UP",,,,
-9f8d0113-5719-4994-bb9d-03fea73f8644,Banh Mi Kitchen,BANH MI KITCHEN SERVICES INC.,"235c6606-2e39-4f91-a114-4ce1f8c46ea6,8b58b1a2-7f80-47ab-b724-34f1b52b76e7,64feaced-06b3-4a6e-9eed-4b88d66775a2,141bac50-84c8-4f05-aaa6-1f4012be8dd9,fc7c47bf-bfc4-4375-9e1e-38e8ce98e410,1473abc0-7bcf-406b-b44c-64ea41f17397,8f3ae086-dd88-44f3-957a-25ab9e99973b,12eb1581-0d33-49d5-9c6f-efb1b7f1dbdf,2901d2ec-ada5-45ba-8892-52f7e6926a0f",Banh Mi Kitchen,"BMKN199 , PEPSILECHON","BMKN199 , PEPSILECHON","1.BOGO: Buy One The Classic Full for P199 and Get One Fish Fillet Full the same price. 
-Discounted SRP – P199 + P199 = P398       2. ""Premium Creations Lechon Bánh Mì with Pepsi Lime for P329
-(Spicy Lechon Bánh Mì and Lechon Baka Bánh Mì)""",199 and 329,10%,VAT Inc.,,secondary,,,,"3PL, QR ORDERING, MAPS",,,,
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,Kenny Rogers Eton Centris,JRD Food Corporation,bc4e3723-a48a-410e-a8ca-070f977c331d,Kenny Rogers Eton Centris,,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",,,,
-a3bb96e1-8866-44ca-9d35-93cbac31098c,Everything But Cheese - BF Resort,AECEN ENTERPRISES INC.,5aca53b3-24b1-488c-b962-94a92e915f0f,Everything But Cheese - BF Resort,,,,,,,"Delivery-3PL, Pick-up",secondary,,,,"Delivery-3PL, Pick-up",,,,
-a3bb96e1-8866-44ca-9d35-93cbac31098c,Everything But Cheese RFC Molino,KRIVA QUEIJO CORPORATION,d0b0f1e6-be0b-4a16-92ad-9ac6c97e5b37,Everything But Cheese RFC Molino,,,,,,,"Delivery-3PL, Pick-up",secondary,,,,"Delivery-3PL, Pick-up",,,,
-a3bb96e1-8866-44ca-9d35-93cbac31098c,Everything But Cheese (2021 FOODS INC.),2021 FOODS INC.,"a0151236-fc51-4441-9ba4-4a5884c20f5e,3ed854da-a03f-4a3c-b74c-ceb941d8d3b5,159a0e6b-120a-4d59-b9bf-0180f8fcfa0e,14631d0e-0ff5-47e0-bf04-d735289e7141",Everything But Cheese (2021 FOODS INC.),,,,,,,"Delivery-3PL, Pick-up",secondary,,,,"Delivery-3PL, Pick-up",,,,
-2a0ccb19-0281-40b1-9249-6d1165da0790,Lots' A Pizza Evangelista Makati,Matt Lester Food House,29e11329-9bdb-4993-8570-66cc961ee587,Lots' A Pizza Evangelista Makati,,,,,,,"Delivery-3PL, MAPS, Pick-up",secondary,,,,"Delivery-3PL, MAPS, Pick-up",,,,
-2a0ccb19-0281-40b1-9249-6d1165da0790,Lots' A Pizza Maysilo Mandaluyong,PARTY CUT PIZZA CO.,e387cef5-5257-4156-8da3-85934c1b00fd,Lots' A Pizza Maysilo Mandaluyong,,,,,,,"Delivery-3PL, MAPS, Pick-up",secondary,,,,"Delivery-3PL, MAPS, Pick-up",,,,
-03f26a97-7af0-4cad-98e0-32f37d60897c,PANCAKE HOUSE,Max's Group Inc.,"794386be-51f2-4834-9424-8f95e100cb50,438a4477-0627-4a97-ad5e-a559aa949dc2,33f98ddb-c0b8-4925-803d-210197c7d1a3,9ceaf068-a3fd-4087-8546-3d5bb9fc00b1,bdcdbba5-53de-4fbc-b480-8ccef5d34e5f,e2fc82e5-3a0f-4c69-b943-f43b19c87c9b,7bb6d39d-78ce-4f31-98b1-c120cfa273ea,6605234b-1a9c-4eba-990c-8e382fa4139b,4d998fc0-1e6d-472f-8cfd-0c4bcbbdacdf,23605fd1-d198-4546-98ed-0f9949809b6b,d866317f-f4c0-4425-8274-8ee25fa6469e,7c797e44-5ad6-441b-9e79-12831f03ce2c,84f19031-da97-4039-95d1-3a5dfe92fd19,1deffc9c-be29-473d-8441-530dfd80af8b,932c3acd-e867-4fc9-9853-f2f64ccfbb12,26f8ecfd-5550-4f24-a0d1-f0f016505963,8a71f8ea-2fbe-429b-b276-15ed876a385e,45a8ee79-adbd-4ad4-ac2c-1f645f5a4b41,7528a43e-e22b-4c48-bddf-48767578c42f,f6d0303b-a33e-401d-8ca5-7f4ce77a7394,c91eb564-875f-4ef5-a5cd-5696cf272250,7e8c53a8-27b0-4074-bf8d-4ab862893f5b,fa71b744-e672-4470-8936-00cee0bb4287,812e175c-8370-4b70-9884-701a35dad9bf,687dc4d6-5141-4ef1-824b-e06557a83563,46007139-8128-4e17-baa5-4bd233f0a0db,ab15c9a9-a970-48ae-8707-7558ebd79152,72a23bce-34fd-4985-8189-1d6c3514c133,7b9bd35d-62d0-4ef6-94d5-36fd77d98485,29669c8e-9255-41d8-83c9-7247fc402898,e95942ec-3d6a-4b3f-9bb7-02379a3b9961,f45906f8-6cac-45f1-ad27-2899805e33d1,f6a78e8b-e45c-4f40-8c1a-122337d3f6ee,a0b25bc7-917a-42f0-adc5-07ff7cfc78cf,6b6a0aaf-f4f0-4fc1-819c-f64ccff9fcd7,26b074ca-763c-4213-9b0e-d21fbd99f493",PANCAKE HOUSE,,,,,,,"Delivery-3PL, Pick-up",secondary,,,,"Delivery-3PL, Pick-up",,,,
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,KENNY ROGERS- SM PAMPANGA,RONVIA ROASTERS FOOD CORPORATION,2f853f7a-321f-4b86-bb62-0a8e24e92774,KENNY ROGERS- SM PAMPANGA,,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",,,,
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,Kenny Rogers Calamba Highway (Halang),The Ramekin Calamba Roasters Inc.,d4f71e67-7d2f-49d4-b4b6-213f44cf2390,Kenny Rogers Calamba Highway (Halang),,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",,,,
-8fc6a6b9-424e-4933-99bf-04c5b3338f2b,"Kenny Rogers (Epicurean Partners Exchange, Inc.)",Epicurean Partners Exchange Inc.,"ceb0ac92-d99b-4002-b58b-009eaf4415d5,bfb65c81-b29c-47e5-8cc0-ff6350207b6e,da31d881-f68e-4163-b970-beace5a8f3b5,0f7d50a7-c4fe-43ff-a786-3d8501a61f54,8a234699-5d1d-42fd-937b-8800586ed56d,3816b383-bd3a-4669-aadc-7c28cf2fb66a,7f728182-ee49-451c-8a6c-b586dce265d4,ccc4b2ac-3729-4e20-a565-39796ab6f5d6,6ebfc199-d506-4a2f-8d8f-65e1db224f0e,0e32ef1c-1509-4829-92f2-652d6dd83fd6,0fe4d3b5-ac94-4607-b0cd-2cd4962c764c,75cd6f49-7559-4c36-b6da-03bb3e1b4a73,29809d28-194e-46d3-b1b6-b9eff419561b,341dc6a1-48d8-429d-9dfc-5f749e0d9dd5,632c5fb5-6307-48a7-abf1-59867217209a,e3aae14f-7f00-49ce-b18d-9f767761f2cd,ec2b9341-e601-40b4-93a3-6c1921701929,b57f85d5-08cf-4125-afad-e8a7fd8b76dd,c762ce7e-fdff-49c6-aef2-4e8be4c42dd9,c5efa5a8-6982-4a16-a877-a9d67bbe0487 ,5d97209d-4735-415a-9631-25d7e6c92c9f,ce49faa8-7242-44f1-83e8-c5afff259485,38b3d80e-cf46-4d9c-80c6-401b0d292a07,2500d7a6-045e-4660-9743-802eed8fa59a,9430a456-272e-40e6-b0ab-33c77f293458, 079727ae-9c08-4442-8e44-93793f482f81,53fdda87-ac1a-4442-9f16-f8f285c74ca3,36a8afbf-cb65-4b62-bd84-bdcc3eeea63d,3dbf9c97-9c9a-45e0-b7cc-94af2aac0805,26b8144f-1f59-487b-9cf5-c91a43b9e079,d9746aba-7ede-4c0b-b5a7-ecb9952bc5a7,c1332619-0c4c-401e-8c16-94d97810bad0,72fe0050-d5de-4b2d-988e-890e439bceb4,46a183fa-35f8-4ab1-ba18-2e0342f83061,96272e9f-13cd-45b9-9a0e-6d195ae762bf,a6e44ece-eaa5-4e09-b204-f3e3cbb7ff96,60953b99-9783-4726-8d75-35fea7c454da,3be68288-4783-455e-b8a5-555b8e36f730,02306913-ed16-4b09-84bf-bf484bd87869,4ae595e9-08bd-4fb0-94d0-42af72ba8a23,b2e57733-5c83-40d7-9b94-765f6f5831ad,d1f576ed-0fbb-4a10-bb08-1962d1a11dfd,b66c6854-62e1-4303-bef9-edae2a341695,26424d6f-dd62-46ff-a236-5ffca4d707b0,d72664fd-2418-484d-958e-fcd539ce0662,75a015f6-c032-436e-a439-0e44e8542175,bfd38446-c1ea-4617-8ecc-ac0cb8249012,9d07078c-324f-443b-a431-c5b45f81bdf8,f5714219-e8ec-429a-b3d5-d29df90afdea,5993c65c-c616-486f-8722-0e150500a127,15c38c8a-d043-416e-bc93-2db6429b7357,c7432414-a2fa-4faf-8577-5bb286693318,0bedd5ca-0ca6-4232-8583-454636b3f83d,09e15d15-715e-4661-abf5-7a3d181c8c8e,9f321cc7-fae4-4956-8c6a-df6fe1049664,a0306e22-fa91-4b90-9a0a-3ee7d75349c5,4326ac27-a8fb-4371-ae60-95bb334b33a5,1823338f-9d48-4819-aaf4-5ae039656599,7236d08e-c77e-4515-88d9-5b5642ef5bef,7b99de22-b761-4c9a-a731-5c52c1ccf681,5b3b0e9a-0af5-482f-9928-ed2b40fb3846,4da33c25-306e-42d6-b492-893a9fa418f0,ae35d256-4f3f-4949-8ea3-4c2f32e167bc,8a444326-bbd3-4990-94c2-9e98ac23b131,ffeed8b0-0dd6-4a5a-81c7-3a543d4135ac,9e1441cd-bd72-4311-bc7a-c7864d95411d,b723590c-67e3-42f3-a22f-b8907670556d,6de788e4-fa70-45ee-9101-7f7c48084d4c","Kenny Rogers (Epicurean Partners Exchange, Inc.)",,,,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",primary,,,,"DELIVERY-3PL, PICK-UP, DELIVERY-INHOUSE",,,,
-62f0f17f-4039-4993-8e64-84b03910c005,Auntie Anne's,Pretiolas Philippines Inc.,"8d2abacb-6d8a-4d21-8f56-a94e371e308c,f96405a3-7bd3-4c0f-9b9e-ed9ebbb2b532,ae640c9f-18f7-4f6c-ad10-90bc3ff4400c,2f57acc7-c392-4951-82a9-14e06e405559,c40e8c52-94f2-44e4-b690-36b407e686a0,e12f9684-0684-44f2-b1c2-f57e65ecd9e6,21a980cc-aefd-4438-92fc-72acf7b7c8f2,b4861ad3-cf22-4627-9ba1-6c8672674256,4407ddd7-2e08-48a7-84f0-45af333a8740,b9e37f48-a44d-4de1-9216-c998e1d6df5b,5220cc8e-26bf-43ad-84a9-bc26e74515a7,bab68770-2272-41db-a3d2-1975da3ca0b6,a6223093-e1c0-4b03-b7d4-4986e65d3edf,62d2d5e6-4e2d-41a7-a83e-ef95aed110e2,3a321219-2cfe-463b-85b5-e219cc2dc424,74e1a5cf-76ff-463c-95f2-ce2c832e49b1,59708ab5-ef72-444c-9e4a-a0a67eba649e,14c0564c-ded9-4de4-b87b-d7f7a56fa877,0759ee61-a383-4e31-8fdc-00c49d333f11,f7603eb4-2ef4-4d15-9430-e7dfe06a92c9,5a6c65b8-5956-4b87-a082-6ed8cf26e9e7,3f306830-d5d5-4889-9866-2361e686b994,ee9ff63a-ca7e-4204-8666-6bf54a7d82b7,c835dc51-5c73-4498-bb4e-5b9642a5aab1,0727af1e-913a-4988-922e-1e4f633e6956,0fd7abb7-f0e0-416a-9e0c-f717401d42a6,08917aca-6e00-475b-99da-3af8ef6303b3,043ce240-2b17-4770-a9c0-5aa4c3cda635,311ac227-e5a0-4069-b22b-d4515fc2c4b4,54f3c144-b7eb-4a18-a890-50c0e8494e18,e37304f9-c2ec-4735-bf87-51022ef90103,37e1cc80-586a-4f74-a659-7d702fc3874e,aa003e7b-8ed8-45b9-87b5-1ee2851fe4c9,60f0eb23-ea11-40bd-9ab7-c6fd36327e74,69379ec7-356f-448e-8145-50667367d306,f4c94dad-4c86-4908-9c4b-97bd6dfd3672,5ce09b25-7926-4bb6-a89f-d04d11402b8a,857bdc89-bd2a-4411-88a2-13e823d61ad7,b25f546a-254a-490d-8da6-5a8daff0bef5,df441354-524b-4803-8707-276ac4dd7292,9cb22457-23ba-4410-a5c5-c9829ab697e9,643dab5c-5b80-4dea-9d3b-36011315b85f,a8d4b353-f8d3-42a1-94a6-6534360f26fc,a2d2e1d4-8ff8-47ce-b716-eaa0e7d514f6,fbbdf683-b7ad-4991-96f3-4e5c3b987b0e,20989cf0-58ce-40ea-876a-ad4174d08fd4,a77b3088-bc7c-471a-9ba9-d1466de07696,8efaceea-9549-4d89-bde1-e35977fb1841,42463b94-07de-495d-aeb4-9b5e6858cfe5,8bcde404-3100-419b-9f6e-7d8739b48e8f,2b50c30c-0495-4d9e-b468-3d461cce62d4,8bbbd8a8-5129-4e40-a6b8-dcdc4fc2c1b1,6741636f-dccd-4222-827f-4ff2dc26f46a,468db828-2492-4b8d-80c0-19c2083ceabd,20445177-40d0-46ab-9a3a-a40e143ea09d,d9aa1779-0cc0-4a2b-9579-6b73f9b4fa77,110f3d1b-2878-4b29-ab2d-0cf86001f215,eb21b6b5-fafc-461b-8944-8590330d5c58,1de00e1c-a750-46bf-af2e-e88dad435256,3f1d585a-4859-47a0-90e5-8908d820d284,e25282c4-7c4f-4e58-a2eb-32c0af0c1aa7,c4f62e3d-3769-44f2-9494-7b84d7ea8c95,e2804677-b9a8-44bd-b581-fe4ce185f4d7,809f44eb-be96-4242-989f-39ad2d441115,104b0e94-9ff4-44a6-8c79-c90fa0aee55f,45183dc5-71b9-42c4-bf4c-839d1565c1a9,9e9b302e-c138-4169-85ef-193b8fd0bef4,fb6e7945-67cb-46f3-994f-eddceb152c1f,033cc82b-ba9d-438f-9830-3746b92815a2,66e2deea-17b3-47a2-91ea-b0c37f3256ff,95bb4fc0-1e32-4e6b-936e-0d334b85853c,9e855a8b-395f-4f55-824c-ef3c4c4a46d3,51528db7-51d4-4e15-b16c-dde4f681e779,3247d01b-f306-4b70-af0e-8dcf9aab3fd4,ab6fb13d-2fb9-4e7b-aba6-8f101a63026b,c0c5af27-c9d8-463e-9dbc-13ade1da1711",Auntie Anne's,CreamCheese,CreamCheese,Free Cream Cheese Stix for a min. spend Php250 (claim 1x a month per customer; save P120),120,5%,VAT Inc.,Coupled,secondary,04/12/2023,,,"Delivery-3PL, Pick-up, MAPS, LEAD GEN",,,,
-a78385e1-82bc-44af-93da-7b2a8617ae49,Classic Savory - Tony Ting Food Concepts Incorporated,Tony Ting Food Concepts Incorporated,"638080f5-702a-4b88-8ac1-2e6ce4e8a59d,f5237f97-17ee-4f6d-9369-ca47d5d1d8bc,c9550b82-587b-40eb-bb6b-a7a7a46a4ebf , 4478e604-f902-4917-b821-9055599c5e0a , fda08442-0ab1-4bf8-9887-7fb6c57006bc , 6c3fa8ec-5952-416a-bce2-530b8b345429,b15266f7-9b38-43e5-a589-ce039dd17e1c,afd16d86-ee74-455a-a3a6-69a33596b8d0,ac7925ba-58d5-4579-9e52-eb9420f91753,85d6998f-69ba-4392-a0a6-3c33233a742e,e2f3a85d-f55a-4337-bd4e-0d31d9a376e4,df8f716a-0c4d-42fc-97af-3d1c551ab450,f6c696ad-c6eb-44e9-8869-c394f1ed3e13,c68388f9-e001-450e-9be7-4ab4057bb3dc,52302d47-9a17-4709-a7bd-76813919d729,73a71a27-1b87-482f-bf86-4aa32e25f455,6614f842-7f63-4224-b563-90f638083043,d3eef60a-dd8a-480c-973a-bb700f76cb9a,f0f60aba-2911-4814-b48c-3c566915c30e,608e9fb1-becc-4b50-b6b2-24a38ee6ada5,ae9b5715-f8a0-411e-a886-b28d7497dfb1,7e2bebc0-a386-43e6-b114-0ce25f6e9484",Classic Savory - Tony Ting Food Concepts Incorporated,,,,,,,"Delivery-3PL, Pick-up, Delivery-InHouse",primary,,,,"Delivery-3PL, Pick-up, Delivery-InHouse",,,,
-a78385e1-82bc-44af-93da-7b2a8617ae49,Classic Savory - Savory Fastfood Incorporated,SAVORY FASTFOOD INCORPORATED,"5ba82248-37fa-49d8-865a-62131c4a066b,f97174e9-c792-472e-87bd-846d4b57699a,023aa069-adce-48d2-997f-21c4fbb27dd9,3c635ad1-4588-4bef-ac21-280c2e315e4d,4c948ba2-9db3-4101-8121-334135b72d08,4d7c1936-84bb-4d88-8b6b-853e36b9cf58,d67008a0-703f-4aee-ab74-834c06064196,fa4b0024-e848-4c55-8455-e5ce5f9e28d6,1df2818c-e4b2-419a-994f-d2828859badf,d7e20202-7245-4d15-a368-cc1a6a16e69c,3d5b8af8-09db-47ab-933d-e92a7ffa4a16,22dfa9c6-30bb-4155-b61d-5a4f78ef5518,c7344a3e-4546-46f6-bb40-6d03dd05c13d,2127dce9-0ce2-4e9a-a9ec-e725dea3cd8e,89275d1f-ba8d-4a5c-bdea-1b359b901928,023aa069-adce-48d2-997f-21c4fbb27dd9,c7344a3e-4546-46f6-bb40-6d03dd05c13d,63bcf1c8-252d-4e13-b17b-e11d8e27375a, a6077930-dee7-45cb-80e2-320902185085, b827b271-d062-40dc-a22d-539c98ed4c41 , 5097b05e-e2e8-4b3e-82b5-2dff42493888 , dd21d318-2837-4552-a74a-9235e589e2fa , cad61986-8edc-46e7-86a2-9f8794d69dfb, e64bc42a-8723-4ca2-8d0c-9210d54611b3, b591d21e-beb3-4948-a310-e385d49fa549 , 5e38e39b-8065-4f81-9118-955e23b360cb , d4c72d22-c485-47d5-a80a-9f40e01a7bbf , 5a6754e8-94bd-42ad-907c-e0de930c8c1b , 9a7d05bc-ec72-4c4e-b70d-11be067775c0 , a1b5af94-3247-43b6-aec5-e1f18120c6d0 , 	1ef7a7f1-0684-494a-a672-94719866f1e4 , 	a62a9e74-4474-4d24-81ca-3960998a9a70 , 33ee145a-9bb8-4822-9d01-069f60fb2231,8bcf77c5-d43b-4fcc-9524-086b1b64d093,b3962522-2e69-47d4-8b59-6324ad1a7fbe,c8dad20f-6d76-4b40-8644-c1c432a9b558,5149e546-3bdb-4398-92b4-653335d0ac7a,49e0a1d3-7328-42f4-bc2e-6c0155073de8,f1db0629-3f3b-42a2-a42d-0eb082f399e6,779a82dc-e0f6-4382-a6aa-4acae50a46e7,ad67368e-05de-4c13-a420-a5cf80e66e6b,e2d80db0-f99f-4782-915f-153fe5d8ddb4,bd2e2047-41fd-47f7-818f-f9bdceabf0f5,b9bbd0be-652e-42ea-88a8-1d8705e26d53,c1e465b1-a567-4299-b085-720c38639d48,94d1e13f-ed8c-4df5-8117-8bc4c9974725,9a327b9a-6b62-4d2d-ae9c-788e0e3ab8a2,8f006966-4fb8-40e0-af72-f62b16856f63,0e127aae-48d6-4dfe-be12-cfab87b84c65,cd1c60ee-9d78-4f25-bac2-d3f37d358a09,11b06934-aa85-4e9e-9cfd-6c0d3df5104a,ecc9a513-1b80-4002-acde-eedd1b6a3c44,2d96e546-2db7-43c5-8e68-73869977e535,1830161b-2506-46bb-96f4-e0975f06d350,a4422637-8944-4f48-871c-656a85438a18,17b9c6f6-7555-4e49-86ba-5aced0d69a1f,edf41084-24df-401f-8b2e-21ff51583027,c84d80a0-d068-4c00-b8e3-161376742b8f,76967e68-4be2-4cb9-a4a4-2a9acef27d73,46f0ecb3-4173-425b-a610-4cc915febf7e,1cfc02f4-00dd-42c3-b9eb-606d63f4d457,10a84566-6a91-4121-b566-3e91e8138227,3d93cbe5-dc53-4d2c-a1f2-9a07cd3043b7,c530bc4f-6ef4-43f4-8ac8-52a3c6c56c9a,a2c596a3-ef09-4a33-bcf2-8a41de0dfd14,19217d20-4d11-411b-ac73-8ce98c97edfc,f50cf659-039f-4af0-8639-5ee30eefa807,e271eecb-f35c-4236-91fc-1dc27ba7d275,2124330c-f970-4548-afdf-a14670eda6ae",Classic Savory - Savory Fastfood Incorporated,,,,,,,"Delivery-3PL, Pick-up, Delivery-InHouse",primary,,,,"Delivery-3PL, Pick-up, Delivery-InHouse",,,,

@@ -218,7 +218,7 @@ function displayStore($merchant_id)
                                     <ul class="dropdown-menu" aria-labelledby="storeDropdown">
                                         <li><a class="dropdown-item"
                                                 href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers" style="color:#4BB0B8;">Stores</a>
+                                                data-breadcrumb="Offers" style="color:#4BB0B8;"> Stores</a>
                                         </li>
                                         <li><a class="dropdown-item"
                                                 href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
@@ -278,6 +278,7 @@ function displayStore($merchant_id)
                             value="<?php echo htmlspecialchars($merchant_id); ?>">
                         <input type="hidden" id="merchantName" name="merchantName"
                             value="<?php echo htmlspecialchars($merchant_name); ?>">
+                        <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
                         <div class="mb-3">
                             <label for="storeName" class="form-label">Store Name</label>
                             <input type="text" class="form-control" id="storeName" name="storeName">

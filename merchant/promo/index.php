@@ -289,10 +289,9 @@ function displayOffers($merchant_id, $merchant_name)
                 <div class="modal-body">
                     <form id="editPromoForm" action="edit.php" method="POST">
                         <input type="hidden" id="promoId" name="promoId">
-                        <input type="hidden" id="merchantId" name="merchantId"
-                            value="<?php echo htmlspecialchars($merchant_id); ?>">
-                        <input type="hidden" id="merchantName" name="merchantName"
-                            value="<?php echo htmlspecialchars($merchant_name); ?>">
+                        <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
+                        <input type="hidden" id="merchantName" name="merchantName"value="<?php echo htmlspecialchars($merchant_name); ?>">
+                        <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="promoCode" class="form-label">Promo Code</label>
