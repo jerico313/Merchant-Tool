@@ -90,38 +90,16 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
     END AS `Total Billing`,
     CONCAT(pg_fee_cte.pg_fee_rate, '%') AS `PG Fee Rate`,
     ROUND(`t`.`amount_discounted` * (pg_fee_cte.pg_fee_rate / 100), 2) AS `PG Fee Amount`,
-    CASE 
-        WHEN ROUND(
-            `t`.`amount_discounted` 
-            - CASE
-                WHEN pg_fee_cte.commission_type = 'Vat Exc' 
-                    THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100) * 1.12, 2)
-                WHEN pg_fee_cte.commission_type = 'Vat Inc' 
-                    THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2)
-            END 
-            - ROUND(`t`.`amount_discounted` * (pg_fee_cte.pg_fee_rate / 100), 2)
-            , 2) < 0
-        THEN CONCAT ('(', SUBSTR(ROUND(
-            `t`.`amount_discounted` 
-            - CASE
-                WHEN pg_fee_cte.commission_type = 'Vat Exc' 
-                    THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100) * 1.12, 2)
-                WHEN pg_fee_cte.commission_type = 'Vat Inc' 
-                    THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2)
-            END 
-            - ROUND(`t`.`amount_discounted` * (pg_fee_cte.pg_fee_rate / 100), 2)
-            , 2), 2), ')')
-        ELSE ROUND(
-            `t`.`amount_discounted` 
-            - CASE
-                WHEN pg_fee_cte.commission_type = 'Vat Exc' 
-                    THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100) * 1.12, 2)
-                WHEN pg_fee_cte.commission_type = 'Vat Inc' 
-                    THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2)
-            END 
-            - ROUND(`t`.`amount_discounted` * (pg_fee_cte.pg_fee_rate / 100), 2)
-            , 2)
-        END
+    ROUND(
+        `t`.`amount_discounted` 
+        - CASE
+            WHEN pg_fee_cte.commission_type = 'Vat Exc' 
+                THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100) * 1.12, 2)
+            WHEN pg_fee_cte.commission_type = 'Vat Inc' 
+                THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2)
+        END 
+        - ROUND(`t`.`amount_discounted` * (pg_fee_cte.pg_fee_rate / 100), 2)
+    , 2)
     AS `Amount to be Disbursed`
 FROM `leadgen_db`.`transaction` `t`
     JOIN `leadgen_db`.`store` `s` ON (`t`.`store_id` = `s`.`store_id`)
