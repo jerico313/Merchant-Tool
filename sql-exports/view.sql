@@ -1,6 +1,6 @@
-DROP VIEW IF EXISTS new_vies;
+DROP VIEW IF EXISTS transaction_summary_view;
 
-CREATE VIEW new_vies AS
+CREATE VIEW transaction_summary_view AS
 WITH pg_fee_cte AS (
     SELECT t.transaction_id,
         CASE
