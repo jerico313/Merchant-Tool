@@ -16,12 +16,10 @@ function displayDecoupled($merchant_id, $merchant_name)
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
-            $date = new DateTime($row['created_at']);
-            $formattedDate = $date->format('F d, Y g:i:s A');
             echo "<tr class='clickable-row' data-href='decoupled_settlement_report.php?decoupled_report_id=" . $row['decoupled_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "'>";
             echo "<td style='text-align:center;'>" . $row['settlement_number'] . "</td>";
-            echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['merchant_business_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
-            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
+            echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['merchant_business_name'] . " - " . $row['settlement_period']. " - (" . $row['settlement_number'] . ").pdf</td>";
+            echo "<td style='text-align:center;'>" . $row['created_at'] . "</td>";
             echo "</tr>";
         }
     }
@@ -222,9 +220,14 @@ function displayDecoupled($merchant_id, $merchant_name)
     <script>
         $(document).ready(function () {
             $('#example').DataTable({
-                scrollX: true,
-                order: [[2, 'desc']] // Default sort by the 'Created At' column in descending order
-            });
+        scrollX: true,
+        order: [[2, 'desc']], // Default sort by the 'Created At' column in descending order
+        createdRow: function (row, data, dataIndex) {
+            var date = new Date(data[2]); // Assuming 'Created At' column is the third column (index 2)
+            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            $('td:eq(2)', row).html(formattedDate); // Update the cell with the formatted date
+        }
+    });
 
             // Bind click event to all rows
             $('#example tbody').on('click', 'tr', function () {

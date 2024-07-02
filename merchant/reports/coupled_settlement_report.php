@@ -286,7 +286,7 @@ $totalAmountPaidOut = number_format($data['total_amount_paid_out'], 2);
       const opt = {
         margin: [-1.5, -0.2, 0, 0], // Top, left, bottom, right margins
         filename: filename,
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'jpeg', quality: 1.0 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
       };

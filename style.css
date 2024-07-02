@@ -336,7 +336,7 @@ li.paginate_button.page-item{
   color: #E96529 !important;
 } 
 
-.okay{
+.okay, .okay-failed{
   display: inline-block;
   background-color: #4caf50;
   color:#fff;
@@ -347,11 +347,12 @@ li.paginate_button.page-item{
   margin-top:30px;
 }
 
-.okay:hover{
+.okay:hover, .okay-failed:hover{
   background-color: transparent;
   color: #4caf50;
   border:solid #4caf50 2px;
 }
+
 
 /* Adjust the width or thickness of the horizontal scrollbar */
 .dataTables_scrollBody::-webkit-scrollbar {

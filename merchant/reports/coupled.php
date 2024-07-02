@@ -7,7 +7,7 @@ function displayCoupled($merchant_id, $merchant_name)
 {
     include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM report_history_coupled WHERE merchant_id = ? ORDER BY created_at DESC";
+    $sql = "SELECT * FROM report_history_coupled WHERE merchant_id = ? ORDER BY created_at DESC"; // Changed to DESC for latest to newest
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -17,12 +17,10 @@ function displayCoupled($merchant_id, $merchant_name)
         while ($row = $result->fetch_assoc()) {
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             $shortCoupledId = substr($row['coupled_report_id'], 0, 8);
-            $date = new DateTime($row['created_at']);
-            $formattedDate = $date->format('F d, Y g:i:s A');
             echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "'>";
             echo "<td style='text-align:center;'>" . $shortCoupledId . "</td>";
-            echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['merchant_business_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
-            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
+            echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['merchant_business_name'] . " - " . $row['settlement_period']. " - (" . $row['settlement_number'] . ").pdf</td>";
+            echo "<td style='text-align:center;'>" . $row['created_at'] . "</td>"; 
             echo "</tr>";
         }
     }
@@ -224,20 +222,25 @@ function displayCoupled($merchant_id, $merchant_name)
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                scrollX: true,
-                order: [[2, 'desc']] // Default sort by the 'Created At' column in descending order
-            });
+       $(document).ready(function () {
+    $('#example').DataTable({
+        scrollX: true,
+        order: [[2, 'desc']], // Default sort by the 'Created At' column in descending order
+        createdRow: function (row, data, dataIndex) {
+            var date = new Date(data[2]); // Assuming 'Created At' column is the third column (index 2)
+            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            $('td:eq(2)', row).html(formattedDate); // Update the cell with the formatted date
+        }
+    });
 
-            // Bind click event to all rows
-            $('#example tbody').on('click', 'tr', function () {
-                var href = $(this).attr('data-href');
-                if (href) {
-                    window.location = href;
-                }
-            });
-        });
+    // Bind click event to all rows
+    $('#example tbody').on('click', 'tr', function () {
+        var href = $(this).attr('data-href');
+        if (href) {
+            window.location = href;
+        }
+    });
+});
     </script>
 </body>
 

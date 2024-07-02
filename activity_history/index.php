@@ -18,14 +18,12 @@ function displayPGFeeRate() {
             $shortActivityId = substr($row['activity_id'], 0, 8);
             $userName = $row['user_name']; // Fetch the user's name directly
             $shortTableId = substr($row['table_id'], 0, 8);
-            $date = new DateTime($row['created_at']);
-            $formattedDate = $date->format('F d, Y g:i:s A'); 
             echo "<tr data-id='" . $row['activity_id'] . "' class='message-row'>";
             echo "<td class='message-cell' style='text-align:center;'>" . $shortActivityId . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $userName . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $shortTableId . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_type'] . "</td>";
-            echo "<td class='message-cell' style='text-align:center;'>" . $formattedDate . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $row['created_at'] . "</td>";
             echo "</tr>";
             $count++;
         }
@@ -226,16 +224,15 @@ function displayPGFeeRate() {
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script src="./js/script.js"></script>
 <script>
-  $(document).ready(function() {
-    if ($.fn.DataTable.isDataTable('#example')) {
-        $('#example').DataTable().destroy();
-    }
-    
-    $('#example').DataTable({
+ $('#example').DataTable({
         scrollX: true,
-        order: [[4, 'desc']] 
+        order: [[4, 'desc']], // Default sort by the 'Created At' column in descending order
+        createdRow: function (row, data, dataIndex) {
+            var date = new Date(data[4]); // Assuming 'Created At' column is the third column (index 2)
+            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            $('td:eq(4)', row).html(formattedDate); // Update the cell with the formatted date
+        }
     });
-});
 
 </script>
 <script>
