@@ -235,8 +235,8 @@ function displayMerchant()
           <div class="modal-body">
             <form id="reportForm">
               <input type="hidden" id="reportMerchantId" name="merchantId">
-              <input type="hidden" id="reportMerchantId" name="merchantId">
               <input type="hidden" id="reportMerchantName" name="merchantName">
+              <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
               <div class="mb-3">
                 <label for="reportType" class="form-label">Report Type</label>
                 <select class="form-select" id="reportType" required>
@@ -263,7 +263,34 @@ function displayMerchant()
       </div>
     </div>
     <div id="alertContainer"></div>
+    <script>
+  function checkReport(merchantId, merchantName) {
+    // Set the merchantId and merchantName in the report modal
+    document.getElementById('reportMerchantId').value = merchantId;
+    document.getElementById('reportMerchantName').value = merchantName;
 
+    // Show the report modal
+    $('#reportModal').modal('show');
+  }
+
+  document.getElementById('submitReport').addEventListener('click', function() {
+    var form = document.getElementById('reportForm');
+    var reportType = document.getElementById('reportType').value;
+
+    if (reportType === 'Coupled') {
+      form.action = 'coupled_generate_report.php';
+    } else if (reportType === 'Decoupled') {
+      form.action = 'decoupled_generate_report.php';
+    } else if (reportType === 'GCash') {
+      form.action = 'gcash_generate_report.php';
+    }
+
+    // Set the method to POST
+    form.method = 'POST';
+
+    form.submit();
+  });
+</script>
 
     <script>
       $(document).ready(function () {
@@ -272,59 +299,7 @@ function displayMerchant()
         });
       });
 
-      function checkReport(uuid, merchantName) {
-        $('#reportMerchantId').val(uuid);
-        $('#reportMerchantName').val(merchantName);
-        $('#reportModal').modal('show');
-      }
-
-      $('#submitReport').on('click', function () {
-        var merchantId = $('#reportMerchantId').val();
-        var reportType = $('#reportType').val();
-        var startDate = $('#startDate').val();
-        var endDate = $('#endDate').val();
-        var url;
-
-        if (reportType === 'Coupled') {
-          url = 'coupled_generate_report.php';
-        } else if (reportType === 'Decoupled') {
-          url = 'decoupled_generate_report.php';
-        } else if (reportType === 'GCash') {
-          url = 'gcash_generate_report.php';
-        }
-
-        $.ajax({
-          url: url,
-          type: 'POST',
-          data: { merchant_id: merchantId, start_date: startDate, end_date: endDate },
-          success: function (response) {
-            console.log(response);
-
-            // Hide the modal first
-            $('#reportModal').modal('hide');
-
-            // Create custom alert
-            var customAlert = $('<div class="alert-custom alert alert-success" role="alert" style="height:250px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top:30px;">' +
-              '<span><i class="fa-solid fa-circle-check fa-xl" style="font-size:80px;"></i></span>' +
-              '<span><p style="padding-top:50px; font-size:15px;">Report generated successfully!</p></span>' +
-              '</div>');
-
-            // Append the custom alert to a specific location, e.g., at the top of the page or a specific container
-            $('#alertContainer').append(customAlert);
-
-            var merchantName = $('#dynamicTableBody').find('tr[data-uuid="' + merchantId + '"]').find('td:nth-child(2)').text();
-            // Redirect after a short delay
-            setTimeout(function () {
-              window.location.href = 'settlement_reports.php?merchant_id=' + merchantId + '&merchant_name=' + encodeURIComponent(merchantName);
-            }, 3000); // Delay of 3 seconds before redirection
-          },
-          error: function (xhr, status, error) {
-            console.error('Error:', error);
-            $('#reportModal').modal('hide');
-          }
-        });
-      });
-    </script>
+      </script>
     <script>
       function editMerchant(merchantUuid) {
         // Fetch the current data of the selected merchant

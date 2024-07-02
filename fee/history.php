@@ -18,14 +18,12 @@ function displayFeeHistory($fee_id) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $shortFeeId = substr($row['fee_history_id'], 0, 8);
-            $date = new DateTime($row['changed_at']);
-            $formattedDate = $date->format('F d, Y');
             echo "<tr>";
             echo "<td style='text-align:center;'>" . $shortFeeId . "</td>";
             echo "<td style='text-align:center;'>" . $row['column_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['old_value'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['new_value'] . "</td>";
-            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
+            echo "<td style='text-align:center;'>" . $row['changed_at'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['changed_by_name'] . "</td>"; // Display user name instead of user ID
             echo "</tr>";
         }
@@ -172,13 +170,14 @@ function displayFeeHistory($fee_id) {
 <script src="./js/script.js"></script>
 <script>
 $(document).ready(function() {
-    if ($.fn.DataTable.isDataTable('#example')) {
-        $('#example').DataTable().destroy();
-    }
-    
     $('#example').DataTable({
         scrollX: true,
-        order: [[4, 'desc']] // Default sort by the 'Created At' column in descending order
+        order: [[4, 'desc']], // Default sort by the 'Created At' column in descending order
+        createdRow: function (row, data, dataIndex) {
+            var date = new Date(data[4]); // Assuming 'Created At' column is the third column (index 2)
+            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            $('td:eq(4)', row).html(formattedDate); // Update the cell with the formatted date
+        }
     });
 });
 </script>

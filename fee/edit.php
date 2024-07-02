@@ -16,17 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssssss", $paymayaCreditCard, $gcash, $gcashMiniapp, $paymaya,  $paymayaCreditCard,  $paymayaCreditCard, $leadgenCommission, $commissionType, $feeId);
 
     if ($stmt->execute()) {
-        // Find the latest inserted record in activity_history
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
         $stmt->execute();
         $stmt->bind_result($latestActivityId);
-        $stmt->fetch();
-        $stmt->close();
-
-        // Find the latest inserted record in fee_history
-        $stmt = $conn->prepare("SELECT fee_history_id FROM fee_history ORDER BY changed_at DESC LIMIT 1");
-        $stmt->execute();
-        $stmt->bind_result($latestFeeHistoryId);
         $stmt->fetch();
         $stmt->close();
 
@@ -37,8 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
             $stmt->close();
         }
-
-        // Update the user_id column in the latest fee_history record
+        
+        $stmt = $conn->prepare("SELECT fee_history_id FROM fee_history ORDER BY changed_at DESC LIMIT 1");
+        $stmt->execute();
+        $stmt->bind_result($latestFeeHistoryId);
+        $stmt->fetch();
+        $stmt->close();
+        
         if ($latestFeeHistoryId) {
             $stmt = $conn->prepare("UPDATE fee_history SET changed_by=? WHERE fee_history_id=?");
             $stmt->bind_param("ss", $userId, $latestFeeHistoryId);
