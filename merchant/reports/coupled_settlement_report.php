@@ -72,7 +72,7 @@ $totalAmountPaidOut = number_format($data['total_amount_paid_out'], 2);
       margin-bottom:50px;
     }
 
-    #downloadBtn {
+    #downloadBtn, #downloadBtnExcel {
       padding: 8px 20px;
       background-color: #4BB0B8;
       color: #fff;
@@ -113,7 +113,9 @@ $totalAmountPaidOut = number_format($data['total_amount_paid_out'], 2);
       <ul class="navbar-nav">
         <!-- Add your navigation items here if needed -->
       </ul>
-      <a class="btn btn-primary" id="downloadBtn"  href="#"><i class="fa-solid fa-download"></i> Download</a>
+      <a class="btn btn-primary" style="background-color:#0E864A;" id="downloadBtnExcel"   href="#"><i class="fa-solid fa-download"></i> Download Excel</a>
+      &nbsp;&nbsp;
+      <a class="btn btn-primary" id="downloadBtn"  href="#"> <i class="fa-solid fa-download"></i> Download PDF</a>
     </div>
   </div>
 </nav>

@@ -1,49 +1,58 @@
 <?php
-include("../../inc/config.php");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    include("../../inc/config.php");
+    $storeId = $_POST['storeId'];
+    $merchantName = $_POST['storeName'];
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    $userId = $_POST['userId'];
 
-// Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Retrieve POST data
-    $store_id = isset($_POST['store_id']) ? $_POST['store_id'] : '';
-    $start_date = isset($_POST['start_date']) ? $_POST['start_date'] : '';
-    $end_date = isset($_POST['end_date']) ? $_POST['end_date'] : '';
-
-    // Prepare SQL statement for calling stored procedure
     $sql = "CALL generate_store_coupled_report(?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $store_id, $start_date, $end_date);
 
-    // Execute the statement
-    $stmt->execute();
-    
-    // Get result set from stored procedure
-    $result = $stmt->get_result();
+    // Bind parameters to the prepared statement
+    $stmt->bind_param("sss", $storeId, $startDate, $endDate);
 
-    // Check if there are rows returned
-    if ($result->num_rows > 0) {
-        // Initialize an array to store fetched data
-        $data = [];
+    if ($stmt->execute()) {
+        $stmt->close(); // Close the first statement
+        
+        // Get the latest activity_id from activity_history
+        $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
+        $stmt->execute();
+        $stmt->bind_result($latestActivityId);
+        $stmt->fetch(); // Fetch the result
+        $stmt->close(); // Close the statement
 
-        // Fetch rows and add to $data array
-        while ($row = $result->fetch_assoc()) {
-            $data[] = $row;
+        // Get the max coupled_report_id from report_history_coupled
+        $stmt = $conn->prepare("SELECT coupled_report_id FROM report_history_coupled ORDER BY created_at DESC LIMIT 1");
+        $stmt->execute();
+        $stmt->bind_result($maxCoupledReportId);
+        $stmt->fetch(); // Fetch the result
+        $stmt->close(); // Close the statement
+
+        if ($latestActivityId) {
+            // Update activity_history with user_id
+            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
+            $stmt->bind_param("ss", $userId, $latestActivityId);
+            $stmt->execute();
+            $stmt->close(); // Close the statement
         }
 
-        // Close statement and database connection
-        $stmt->close();
-        $conn->close();
-
-        // Redirect to settlement_report.php if successful
-        header("Location: settlement_reports.php");
-        exit;
+        if ($maxCoupledReportId) {
+            // Redirect to the report page with parameters
+            $store_id = htmlspecialchars($storeId);
+            $store_name = htmlspecialchars($storeName);
+            $url = "reports/coupled_settlement_report.php?store_id=$store_id&store_name=$store_name&coupled_report_id=$maxCoupledReportId";
+            
+            header("Location: $url");
+            exit;
+        } else {
+            echo json_encode(['error' => 'No data found in report_history_coupled']);
+        }
     } else {
-        // If no rows were returned, handle accordingly (optional)
-        $stmt->close();
-        $conn->close();
-        echo json_encode(['error' => 'No data found']);
+        echo "Error executing stored procedure: " . $stmt->error;
     }
-} else {
-    // If request method is not POST, handle accordingly (optional)
-    echo json_encode(['error' => 'Invalid request method']);
+
+    $conn->close(); // Close the database connection
 }
 ?>

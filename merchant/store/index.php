@@ -300,43 +300,43 @@ function displayStore($merchant_id)
         </div>
     </div>
     <!-- Modal for Checking Report -->
-    <div class="modal fade" id="checkReportModal" data-bs-backdrop="static" tabindex="-1"
-        aria-labelledby="checkReportModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius:20px;">
-                <div class="modal-header border-0">
-                    <p class="modal-title" id="checkReportModalLabel">Check Report</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="checkReportForm">
-                        <input type="hidden" id="reportStoreId">
-                        <input type="hidden" id="reportStoreId" name="storetId">
-                        <input type="hidden" id="reportStoreName" name="storeName">
-                        <div class="mb-3">
-                            <label for="reportType" class="form-label">Report Type</label>
-                            <select class="form-select" id="reportType" required>
-                                <option value="" selected disabled>-- Select Report Type --</option>
-                                <option value="Coupled">Coupled</option>
-                                <option value="Decoupled">Decoupled</option>
-                                <option value="GCash">GCash</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="startDate" class="form-label">Start Date</label>
-                            <input type="date" class="form-control" id="startDate" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="endDate" class="form-label">End Date</label>
-                            <input type="date" class="form-control" id="endDate" required>
-                        </div>
-                        <button type="button" class="btn btn-primary"
-                            style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;"
-                            id="submitReport">Generate Report</button>
-                    </form>
-                </div>
-            </div>
+    <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:20px;">
+          <div class="modal-header border-0">
+            <p class="modal-title" id="reportModalLabel">Choose Report Type</p>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="reportForm">
+            <input type="hidden" id="reportStoreId" name="storeId">
+            <input type="hidden" id="reportStoreName" name="storeName">
+            <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+              <div class="mb-3">
+                <label for="reportType" class="form-label">Report Type</label>
+                <select class="form-select" id="reportType" required>
+                  <option selected disabled>-- Select Report Type --</option>
+                  <option value="Coupled">Coupled</option>
+                  <option value="Decoupled">Decoupled</option>
+                  <option value="GCash">GCash</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="startDate" name="startDate" required>
+              </div>
+              <div class="mb-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="endDate" name="endDate" required>
+              </div>
+              <button type="button" class="btn btn-primary"
+                style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;"
+                id="submitReport">Generate Report</button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
     <div id="alertContainer"></div>
     <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
@@ -383,64 +383,37 @@ function displayStore($merchant_id)
         }
 
         function viewReport(storeId, merchantName, storeName) {
-            window.location.href = 'settlement_reports.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
+            window.location.href = 'reports/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
         }
     </script>
     <script>
-        function checkReport(storeId, storeName, storeName, legalEntityName, storeAddress) {
-            $('#reportStoreId').val(storeId);
-            $('#reportStoreName').val(storeName);
-            // Show the correct modal (checkReportModal)
-            $('#checkReportModal').modal('show');
-        }
+  function checkReport(storeId, storetName) {
+    // Set the merchantId and merchantName in the report modal
+    document.getElementById('reportStoreId').value = storeId;
+    document.getElementById('reportStoreName').value = storeName;
 
-        $('#submitReport').on('click', function () {
-            var storeId = $('#reportStoreId').val();
-            var reportType = $('#reportType').val();
-            var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
-            var url;
+    // Show the report modal
+    $('#reportModal').modal('show');
+  }
 
-            if (reportType === 'Coupled') {
-                url = 'coupled_generate_report.php';
-            } else if (reportType === 'Decoupled') {
-                url = 'decoupled_generate_report.php';
-            } else if (reportType === 'GCash') {
-                url = 'gcash_generate_report.php';
-            }
+  document.getElementById('submitReport').addEventListener('click', function() {
+    var form = document.getElementById('reportForm');
+    var reportType = document.getElementById('reportType').value;
 
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: { store_id: storeId, start_date: startDate, end_date: endDate },
-                success: function (response) {
-                    console.log(response);
+    if (reportType === 'Coupled') {
+      form.action = 'coupled_generate_report.php';
+    } else if (reportType === 'Decoupled') {
+      form.action = 'decoupled_generate_report.php';
+    } else if (reportType === 'GCash') {
+      form.action = 'gcash_generate_report.php';
+    }
 
-                    // Hide the modal first
-                    $('#checkReportModal').modal('hide'); // Correct modal ID
+    // Set the method to POST
+    form.method = 'POST';
 
-                    var customAlert = $('<div class="alert-custom alert alert-success" role="alert" style="height:250px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top:30px;">' +
-                        '<span><i class="fa-solid fa-circle-check fa-xl" style="font-size:80px;"></i></span>' +
-                        '<span><p style="padding-top:50px; font-size:15px;">Report generated successfully!</p></span>' +
-                        '</div>');
-
-                    // Append the custom alert to a specific location, e.g., at the top of the page or a specific container
-                    $('#alertContainer').append(customAlert);
-
-                    var storeName = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]').find('td:nth-child(2)').text();
-
-                    // Redirect after a short delay
-                    setTimeout(function () {
-                        window.location.href = 'settlement_reports.php?store_id=' + storeId + '&store_name=' + encodeURIComponent(storeName);
-                    }, 3000); // Delay of 3 seconds before redirection
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', error);
-                    $('#checkReportModal').modal('hide'); // Correct modal ID
-                }
-            });
-        });
-    </script>
+    form.submit();
+  });
+</script>
 </body>
 
 </html>

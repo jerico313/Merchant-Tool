@@ -145,7 +145,7 @@ function displayCoupled($store_id, $store_name) {
                 <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                             <li class="breadcrumb-item"><a href="../../store/index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
-                            <li class="breadcrumb-item"><a href="../settlement_reports.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>" style="color:#E96529; font-size:14px;">Settlement Report</a></li>    
+                            <li class="breadcrumb-item"><a href="index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>" style="color:#E96529; font-size:14px;">Settlement Report</a></li>    
                             <li class="breadcrumb-item"><a href="#" style="color:#E96529; font-size:14px;">Coupled</a></li>                            
                         </ol>
                     </nav> 
