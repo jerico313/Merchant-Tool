@@ -47,7 +47,13 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             $CommissionAmount = number_format($row['Commission Amount'], 2);
             $TotalBilling = number_format($row['Total Billing'], 2);
             $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
-            $AmounttobeDisbursed = number_format($row['Amount to be Disbursed'], 2);
+            
+            $AmounttobeDisbursed = $row['Amount to be Disbursed'];
+            if ($AmounttobeDisbursed < 0) {
+                $AmounttobeDisbursed = '(' . number_format(-$AmounttobeDisbursed, 2) . ')';
+            } else {
+                $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
+            }
 
             $date = new DateTime($row['Transaction Date']);
             $formattedDate = $date->format('F d, Y g:i A');

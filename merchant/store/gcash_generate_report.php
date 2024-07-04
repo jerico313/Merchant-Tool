@@ -1,50 +1,55 @@
 <?php
-include("../../inc/config.php");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    include("../../inc/config.php");
 
-// Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Retrieve POST data
-    $store_id = isset($_POST['store_id']) ? $_POST['store_id'] : '';
-    $start_date = isset($_POST['start_date']) ? $_POST['start_date'] : '';
-    $end_date = isset($_POST['end_date']) ? $_POST['end_date'] : '';
+    $storeId = $_POST['storeId'];
+    $storeName = $_POST['storeName'];
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    $userId = $_POST['userId'];
 
-    // Prepare SQL statement for calling stored procedure
-    $sql = "CALL generate_store_gcash_report(?, ?, ?)";
+    $sql = "CALL generate_gcash_gcash_report(?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $store_id, $start_date, $end_date);
+    $stmt->bind_param("sss", $storeId, $startDate, $endDate);
 
-    // Execute the statement
-    $stmt->execute();
-    
-    // Get result set from stored procedure
-    $result = $stmt->get_result();
+    if ($stmt->execute()) {
+        $stmt->close();
 
-    // Check if there are rows returned
-    if ($result->num_rows > 0) {
-        // Initialize an array to store fetched data
-        $data = [];
+        $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
+        $stmt->execute();
+        $stmt->bind_result($latestActivityId);
+        $stmt->fetch();
+        $stmt->close();
 
-        // Fetch rows and add to $data array
-        while ($row = $result->fetch_assoc()) {
-            $data[] = $row;
+        if ($latestActivityId) {
+            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
+            $stmt->bind_param("ss", $userId, $latestActivityId);
+            $stmt->execute();
+            $stmt->close();
         }
 
-        // Close statement and database connection
+        $stmt = $conn->prepare("SELECT gcash_report_id FROM report_history_gcash_head ORDER BY created_at DESC LIMIT 1");
+        $stmt->execute();
+        $stmt->bind_result($maxGCashReportId);
+        $stmt->fetch();
         $stmt->close();
-        $conn->close();
 
-        // Redirect to settlement_report.html with JSON-encoded data
-        $data_json = json_encode($data);
-        header("Location: decoupled_settlement_report.php");
-        exit;
+        if ($maxGCashReportId) {
+
+            $store_id = htmlspecialchars($storeId);
+            $store_name = htmlspecialchars($storeName);
+            $url = "reports/gcash_settlement_report.php?store_id=$store_id&store_name=$store_name&gcash_report_id=$maxGCashReportId";
+            
+            header("Location: $url");
+            exit;
+        } else {
+            header("Location: failed.php");
+            exit;
+        }
     } else {
-        // If no rows were returned, handle accordingly (optional)
-        $stmt->close();
-        $conn->close();
-        echo json_encode(['error' => 'No data found']);
+        echo "Error executing stored procedure: " . $stmt->error;
     }
-} else {
-    // If request method is not POST, handle accordingly (optional)
-    echo json_encode(['error' => 'Invalid request method']);
+
+    $conn->close();
 }
 ?>
