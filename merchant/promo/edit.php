@@ -24,12 +24,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         // Find the latest inserted activity in activity_history
+        
+        
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
         $stmt->execute();
         $stmt->bind_result($latestActivityId);
         $stmt->fetch();
         $stmt->close();
 
+        $stmt = $conn->prepare("SELECT promo_history_id FROM promo_history ORDER BY changed_at DESC LIMIT 1");
+        $stmt->execute();
+        $stmt->bind_result($latestPromoHistoryId);
+        $stmt->fetch();
+        $stmt->close();
         // Update the user_id column in the latest activity_history record
         if ($latestActivityId) {
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
@@ -37,8 +44,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
             $stmt->close();
         }
+        
+        if ($latestPromoHistoryId) {
+            $stmt = $conn->prepare("UPDATE promo_history SET changed_by=? WHERE promo_history_id=?");
+            $stmt->bind_param("ss", $userId, $latestPromoHistoryId);
+            $stmt->execute();
+            $stmt->close();
+        }
 
-        // Redirect to the same page after successful update
+
         header("Location: index.php?merchant_id=" . htmlspecialchars($merchantId) . "&merchant_name=" . htmlspecialchars($merchantName));
         exit();
     } else {
