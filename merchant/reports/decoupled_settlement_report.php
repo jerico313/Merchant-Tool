@@ -240,11 +240,7 @@ function displayOffers($merchant_id, $start_date, $end_date)
         <div class="container-fluid">
             <a class="navbar-brand" href="javascript:history.back()">
                 <i class="fa-solid fa-arrow-left fa-lg"></i>
-                <span
-                    style="margin-left:10px;font-size:8px;background-color:#EA4335;padding:3px;border-radius:5px;font-family:helvetica;font-weight:bold;">PDF</span>
-                <?php echo htmlspecialchars($data['merchant_business_name']); ?> -
-                <?php echo htmlspecialchars($data['settlement_period']); ?> -
-                (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf
+                <span style="margin-left:10px;font-size:8px;background-color:#EA4335;padding:3px;border-radius:5px;font-family:helvetica;font-weight:bold;">PDF</span> <?php echo htmlspecialchars($data['merchant_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -301,16 +297,13 @@ function displayOffers($merchant_id, $start_date, $end_date)
         </p>
         <table style="width:100% !important;">
             <tr>
-                <td>Business Name: <span
-                        style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span>
+                <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span>
                 </td>
-                <td style="width:40%;">Settlement Date: <span
-                        style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span>
+                <td style="width:40%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span>
                 </td>
             </tr>
             <tr>
-                <td>Brand Name: <span
-                        style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span>
+                <td>Brand Name: <span style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span>
                 </td>
                 <td>Settlement Number: <span
                         style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span>

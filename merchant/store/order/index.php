@@ -5,7 +5,7 @@ $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 
-function displayOffers($store_id, $startDate = null, $endDate = null, $voucherType = null)
+function displayOffers($store_id, $startDate = null, $endDate = null, $voucherType = null, $promoGroup = null)
 {
     include ("../../../inc/config.php");
 
@@ -14,20 +14,20 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
     // Append date range condition if start date and end date are provided
     if ($startDate && $endDate) {
-        // Convert start and end dates to timestamps
-        $startTimestamp = strtotime($startDate);
-        $endTimestamp = strtotime($endDate);
-
-        // Adjust SQL query to compare timestamps
-        $sql .= " AND UNIX_TIMESTAMP(`Transaction Date`) BETWEEN ? AND ?";
-        $params[] = $startTimestamp;
-        $params[] = $endTimestamp;
+        $sql .= " AND `Transaction Date` BETWEEN ? AND ?";
+        $params[] = $startDate . ' 00:00:00';
+        $params[] = $endDate . ' 23:59:59';
     }
 
     // Append voucher type filter if specified
     if ($voucherType) {
         $sql .= " AND `Voucher Type` = ?";
         $params[] = $voucherType;
+    }
+
+    if ($promoGroup) {
+        $sql .= " AND `Promo Group` = ?";
+        $params[] = $promoGroup;
     }
 
     // Order by Transaction Date in descending order (latest to oldest)
@@ -55,11 +55,9 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
             }
 
-            $date = new DateTime($row['Transaction Date']);
-            $formattedDate = $date->format('F d, Y g:i A');
             echo "<tr style='padding:10px;'>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $formattedDate . "</td>";
+            echo "<td style='text-align:center;width:7%;'>" . $row['Transaction Date'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
             echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
             echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
@@ -86,6 +84,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     $conn->close();
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -387,76 +386,66 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
         }
     </script>
 
-    <script>
-        $(document).ready(function () {
-            var table = $('#example').DataTable({
-                scrollX: true,
-                language: {
-                    emptyTable: "No data available in table"
-                },
-                columnDefs: [
-                    { orderable: false, targets: [0, 1, 2, 5, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20] }, // Disable sorting for columns 2, 3, and 4/ Disable search/filter for columns 0, 1, 5, 6
-                ],
-                order: [] // Disable default sorting
-            });
+<script>
+$(document).ready(function () {
+    var table = $('#example').DataTable({
+        scrollX: true,
+        language: {
+            emptyTable: "No data available in table"
+        },
+        columnDefs: [
+            { orderable: false, targets: [0, 1, 2, 5, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20] },
+        ],
+        order: []
+    });
 
-            // Datepicker initialization
-            $("#startDate").datepicker({
-                dateFormat: "yy-mm-dd"
-            });
-            $("#endDate").datepicker({
-                dateFormat: "yy-mm-dd"
-            });
+    // Datepicker initialization
+    $("#startDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+    $("#endDate").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
 
-            // Date range search button click event
-            $('#search').on('click', function () {
-                var startDate = $('#startDate').val();
-                var endDate = $('#endDate').val();
+    // Date range search button click event
+    $('#search').on('click', function () {
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
 
-                var startTimestamp = new Date(startDate).getTime() / 1000; // Convert to seconds
-                var endTimestamp = new Date(endDate).getTime() / 1000; // Convert to seconds
+        // Send the dates to the server directly
+        window.location.href = window.location.pathname + "?store_id=<?php echo $store_id; ?>&startDate=" + startDate + "&endDate=" + endDate;
+    });
 
-                table.search('').columns().search('').draw();
-                table.columns(1).search(startTimestamp + ' to ' + endTimestamp, true, false).draw();
-            });
+    // Function to clear date range filter
+    $('#clearDates').on('click', function () {
+        $('#startDate, #endDate').val('');
+        table.search('').columns().search('').draw();
+    });
 
-            // Function to clear date range filter
-            $('#clearDates').on('click', function () {
-                $('#startDate, #endDate').val('');
-                table.search('').columns().search('').draw();
-            });
+    // Voucher Type filter buttons click events
+    $('#btnCoupled').on('click', function () {
+        table.search('').columns().search('').draw();
+        table.column(5).search('^Coupled$', true, false).draw();
+    });
 
-            // Voucher Type filter buttons click events
-            $('#btnCoupled').on('click', function () {
-                table.search('').columns().search('').draw(); // Clear existing search
+    $('#btnDecoupled').on('click', function () {
+        table.search('').columns().search('').draw();
+        table.column(5).search('^Decoupled$', true, false).draw();
+    });
 
-                // Apply exact search for 'Coupled' voucher type
-                table.column(5).search('^Coupled$', true, false).draw();
-            });
+    $('#btnGCash').on('click', function () {
+        table.search('').columns().search('').draw();
+        table.column(7).search('^Gcash$', true, false).draw();
+    });
 
-            $('#btnDecoupled').on('click', function () {
-                table.search('').columns().search('').draw(); // Clear existing search
+    // Show All button click event
+    $('#btnShowAll').on('click', function () {
+        $('#startDate, #endDate').val('');
+        table.search('').columns().search('').draw();
+    });
+});
+</script>
 
-                // Apply exact search for 'Decoupled' voucher type
-                table.column(5).search('^Decoupled$', true, false).draw();
-            });
-
-            $('#btnGCash').on('click', function () {
-                table.search('').columns().search('').draw(); // Clear existing search
-
-                // Apply exact search for 'GCash' voucher type
-                table.column(7).search('^Gcash$', true, false).draw();
-            });
-
-            // Show All button click event
-            $('#btnShowAll').on('click', function () {
-                $('#startDate, #endDate').val('');
-                table.search('').columns().search('').draw();
-            });
-        });
-
-
-    </script>
 </body>
 
 </html>
