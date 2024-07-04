@@ -1,0 +1,87 @@
+DROP VIEW IF EXISTS activity_history_view;
+
+CREATE VIEW activity_history_view AS
+SELECT
+    SUBSTR(`a`.`activity_id`, 1, 8) AS `activity_history_id`,
+    SUBSTR(COALESCE(`a`.`user_id`, 'xxxxxxxx'), 1, 8) AS `user_id`,
+    COALESCE(`u`.`name`, 'Unknown user') AS `user_name`,
+    `a`.`table_name` AS `table_name`,
+    SUBSTR(
+        COALESCE(
+            CASE
+                WHEN `a`.`table_name` = 'merchant' THEN `m`.`merchant_id`
+                WHEN `a`.`table_name` = 'store' THEN `s`.`store_id`
+                WHEN `a`.`table_name` = 'promo' THEN `p`.`promo_id`
+                WHEN `a`.`table_name` = 'promo_history' THEN `ph`.`promo_history_id`
+                WHEN `a`.`table_name` = 'fee' THEN `f`.`fee_id`
+                WHEN `a`.`table_name` = 'fee_history' THEN `fh`.`fee_history_id`
+                WHEN `a`.`table_name` = 'transaction' THEN `t`.`transaction_id`
+                WHEN `a`.`table_name` = 'user' THEN `u2`.`user_id`
+                WHEN `a`.`table_name` = 'report_history_coupled' THEN `rhc`.`coupled_report_id`
+                WHEN `a`.`table_name` = 'report_history_decoupled' THEN `rhd`.`decoupled_report_id`
+                WHEN `a`.`table_name` = 'report_history_gcash_head' THEN `rhgh`.`gcash_report_id`
+                WHEN `a`.`table_name` = 'report_history_gcash_body' THEN `rhgb`.`gcash_report_body_id`
+                ELSE NULL
+            END,
+            'xxxxxxxx'
+        ),
+        1,
+        8
+    ) AS `table_id`,
+    COALESCE(
+        CASE
+            WHEN `a`.`table_name` = 'merchant' THEN `m`.`merchant_name`
+            WHEN `a`.`table_name` = 'store' THEN `s`.`store_name`
+            WHEN `a`.`table_name` = 'promo' THEN `p`.`promo_code`
+            WHEN `a`.`table_name` = 'promo_history' THEN `ph`.`promo_code`
+            WHEN `a`.`table_name` = 'fee' THEN `fm`.`merchant_name`
+            WHEN `a`.`table_name` = 'fee_history' THEN `fhm`.`merchant_name`
+            WHEN `a`.`table_name` = 'transaction' THEN `t`.`customer_id`
+            WHEN `a`.`table_name` = 'user' THEN `u2`.`name`
+            WHEN `a`.`table_name` = 'report_history_coupled' THEN `rhc`.`settlement_number`
+            WHEN `a`.`table_name` = 'report_history_decoupled' THEN `rhd`.`settlement_number`
+            WHEN `a`.`table_name` = 'report_history_gcash_head' THEN `rhgh`.`settlement_number`
+            WHEN `a`.`table_name` = 'report_history_gcash_body' THEN `rhgh`.`settlement_number`
+            ELSE 'Deleted'
+        END,
+        'xxxxxxxx'
+    ) AS `column_name`,
+    `a`.`activity_type` AS `activity_type`,
+    `a`.`description` AS `description`,
+    `a`.`created_at` AS `created_at`,
+    `a`.`updated_at` AS `updated_at`
+FROM
+    `leadgen_db`.`activity_history` `a`
+    LEFT JOIN `leadgen_db`.`user` `u` ON `u`.`user_id` = `a`.`user_id`
+    LEFT JOIN `leadgen_db`.`merchant` `m` ON `a`.`table_id` = `m`.`merchant_id`
+    LEFT JOIN `leadgen_db`.`store` `s` ON `a`.`table_id` = `s`.`store_id`
+    LEFT JOIN `leadgen_db`.`promo` `p` ON `a`.`table_id` = `p`.`promo_id`
+    LEFT JOIN `leadgen_db`.`promo_history` `ph` ON `a`.`table_id` = `ph`.`promo_history_id`
+    LEFT JOIN `leadgen_db`.`fee` `f` ON `a`.`table_id` = `f`.`fee_id`
+    LEFT JOIN `leadgen_db`.`merchant` `fm` ON `f`.`merchant_id` = `fm`.`merchant_id`
+    LEFT JOIN `leadgen_db`.`fee_history` `fh` ON `a`.`table_id` = `fh`.`fee_history_id`
+    LEFT JOIN `leadgen_db`.`fee` `ffh` ON `fh`.`fee_id` = `ffh`.`fee_id`
+    LEFT JOIN `leadgen_db`.`merchant` `fhm` ON `ffh`.`merchant_id` = `fhm`.`merchant_id`
+    LEFT JOIN `leadgen_db`.`transaction` `t` ON `a`.`table_id` = `t`.`transaction_id`
+    LEFT JOIN `leadgen_db`.`user` `u2` ON `a`.`table_id` = `u2`.`user_id`
+    LEFT JOIN `leadgen_db`.`report_history_coupled` `rhc` ON `a`.`table_id` = `rhc`.`coupled_report_id`
+    LEFT JOIN `leadgen_db`.`report_history_decoupled` `rhd` ON `a`.`table_id` = `rhd`.`decoupled_report_id`
+    LEFT JOIN `leadgen_db`.`report_history_gcash_head` `rhgh` ON `a`.`table_id` = `rhgh`.`gcash_report_id`
+    LEFT JOIN `leadgen_db`.`report_history_gcash_body` `rhgb` ON `a`.`table_id` = `rhgb`.`gcash_report_body_id`
+    LEFT JOIN `leadgen_db`.`report_history_gcash_body` `rhgb2` ON `rhgb2`.`gcash_report_id` = `rhgh`.`gcash_report_id`
+WHERE
+    `a`.`table_name` IN(
+        'merchant',
+        'store',
+        'promo',
+        'promo_history',
+        'fee',
+        'fee_history',
+        'transaction',
+        'user',
+        'report_history_coupled',
+        'report_history_decoupled',
+        'report_history_gcash_head',
+        'report_history_gcash_body'
+    )
+ORDER BY `a`.`created_at` DESC
