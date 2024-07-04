@@ -38,7 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $merchant_id = htmlspecialchars($merchantId);
             $merchant_name = htmlspecialchars($merchantName);
-            $url = "reports/gcash_settlement_report.php?merchant_id=$merchant_id&merchant_name=$merchant_name&gcash_report_id=$maxGCashReportId";
+            $settlement_period_start = htmlspecialchars($startDate);
+            $settlement_period_end = htmlspecialchars($endDate);
+            $url = "reports/gcash_settlement_report.php?merchant_id=$merchant_id&merchant_name=$merchant_name&settlement_period_start=$settlement_period_start&settlement_period_end=$settlement_period_end&gcash_report_id=$maxGCashReportId";
             
             header("Location: $url");
             exit;

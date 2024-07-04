@@ -41,7 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Redirect to decoupled_settlement_report.php
             $store_id = htmlspecialchars($storeId);
             $store_name = htmlspecialchars($storeName);
-            $url = "reports/decoupled_settlement_report.php?store_id=$store_id&_name=$store_name&decoupled_report_id=$maxDecoupledReportId";
+            $settlement_period_start = htmlspecialchars($startDate);
+            $settlement_period_end = htmlspecialchars($endDate);
+            $url = "reports/decoupled_settlement_report.php?store_id=$store_id&_name=$store_name&decoupled_report_id=$maxDecoupledReportId&settlement_period_start=$settlement_period_start&settlement_period_end=$settlement_period_end";
             
             header("Location: $url");
             exit;

@@ -43,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Redirect to the report page with parameters
             $merchant_id = htmlspecialchars($merchantId);
             $merchant_name = htmlspecialchars($merchantName);
-            $start_date = htmlspecialchars($startDate);
-            $end_date = htmlspecialchars($endDate);
-            $url = "reports/coupled_settlement_report.php?merchant_id=$merchant_id&merchant_name=$merchant_name&start_date=$start_date&end_date=$end_date&coupled_report_id=$maxCoupledReportId";
+            $settlement_period_start = htmlspecialchars($startDate);
+            $settlement_period_end = htmlspecialchars($endDate);
+            $url = "reports/coupled_settlement_report.php?merchant_id=$merchant_id&merchant_name=$merchant_name&settlement_period_start=$settlement_period_start&settlement_period_end=$settlement_period_end&coupled_report_id=$maxCoupledReportId";
             
             header("Location: $url");
             exit;
