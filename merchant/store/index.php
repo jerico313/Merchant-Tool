@@ -312,6 +312,10 @@ function displayStore($merchant_id)
             <form id="reportForm">
             <input type="hidden" id="reportStoreId" name="storeId">
             <input type="hidden" id="reportStoreName" name="storeName">
+            <input type="hidden" id="merchantId" name="merchantId"
+                            value="<?php echo htmlspecialchars($merchant_id); ?>">
+            <input type="hidden" id="merchantName" name="merchantName"
+                            value="<?php echo htmlspecialchars($merchant_name); ?>">
             <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
               <div class="mb-3">
                 <label for="reportType" class="form-label">Report Type</label>

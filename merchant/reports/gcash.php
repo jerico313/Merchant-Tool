@@ -222,21 +222,27 @@ function displayGcash($merchant_id, $merchant_name)
     </div>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+    
     <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                scrollX: true,
-                order: [[2, 'desc']] // Default sort by the 'Created At' column in descending order
-            });
+       $(document).ready(function () {
+    $('#example').DataTable({
+        scrollX: true,
+        order: [[2, 'desc']], // Default sort by the 'Created At' column in descending order
+        createdRow: function (row, data, dataIndex) {
+            var date = new Date(data[2]); // Assuming 'Created At' column is the third column (index 2)
+            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            $('td:eq(2)', row).html(formattedDate); // Update the cell with the formatted date
+        }
+    });
 
-            // Bind click event to all rows
-            $('#example tbody').on('click', 'tr', function () {
-                var href = $(this).attr('data-href');
-                if (href) {
-                    window.location = href;
-                }
-            });
-        });
+    // Bind click event to all rows
+    $('#example tbody').on('click', 'tr', function () {
+        var href = $(this).attr('data-href');
+        if (href) {
+            window.location = href;
+        }
+    });
+});
     </script>
 </body>
 

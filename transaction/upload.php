@@ -137,7 +137,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
         return; // Prevent form submission
     }
 
-    if (fileName !== 'Transactio Listing.csv') {
+    if (fileName !== 'Transaction Listing.csv') {
         document.querySelector('.alert-custom-filename').style.display = 'block'; // Show filename alert
         setTimeout(function() {
             document.querySelector('.alert-custom-filename').style.display = 'none'; // Hide after 3 seconds

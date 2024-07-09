@@ -2,53 +2,72 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("../../inc/config.php");
 
-    $storeId = $_POST['storeId'];
-    $storeName = $_POST['storeName'];
-    $startDate = $_POST['startDate'];
-    $endDate = $_POST['endDate'];
-    $userId = $_POST['userId'];
+    $storeId = $_POST['storeId'] ?? '';
+    $storeName = $_POST['storeName'] ?? '';
+    $merchantId = $_POST['merchantId'] ?? '';
+    $merchantName = $_POST['merchantName'] ?? '';
+    $startDate = $_POST['startDate'] ?? '';
+    $endDate = $_POST['endDate'] ?? '';
+    $userId = $_POST['userId'] ?? '';
 
     $sql = "CALL generate_store_decoupled_report(?, ?, ?)";
     $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        die("Error preparing statement: " . $conn->error);
+    }
+
+    // Bind parameters to the prepared statement
     $stmt->bind_param("sss", $storeId, $startDate, $endDate);
 
     if ($stmt->execute()) {
-        $stmt->close();
+        $result = $stmt->get_result();
+        if ($result->num_rows === 0) {
+            // No rows returned, redirect to failed.php
+            header("Location: failed.php?merchant_id=$merchantId&merchant_name=$merchantName");
+            exit;
+        }
+        $stmt->close(); // Close the first statement
 
-        // Retrieve latest activity_id
+        // Get the latest activity_id from activity_history
+        $latestActivityId = null;
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
-        $stmt->execute();
-        $stmt->bind_result($latestActivityId);
-        $stmt->fetch();
-        $stmt->close();
+        if ($stmt) {
+            $stmt->execute();
+            $stmt->bind_result($latestActivityId);
+            $stmt->fetch(); // Fetch the result
+            $stmt->close(); // Close the statement
+        }
 
-        // Retrieve max decoupled_report_id
+        // Get the max coupled_report_id from report_history_coupled
+        $maxDecoupledReportId = null;
         $stmt = $conn->prepare("SELECT decoupled_report_id FROM report_history_decoupled ORDER BY created_at DESC LIMIT 1");
-        $stmt->execute();
-        $stmt->bind_result($maxDecoupledReportId);
-        $stmt->fetch();
-        $stmt->close();
+        if ($stmt) {
+            $stmt->execute();
+            $stmt->bind_result($maxDecoupledReportId);
+            $stmt->fetch(); // Fetch the result
+            $stmt->close(); // Close the statement
+        }
 
-        if ($maxDecoupledReportId) {
+        if ($latestActivityId !== null && $maxDecoupledReportId !== null) {
             // Update activity_history with user_id
-            if ($latestActivityId) {
-                $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
+            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
+            if ($stmt) {
                 $stmt->bind_param("ss", $userId, $latestActivityId);
                 $stmt->execute();
-                $stmt->close();
+                $stmt->close(); // Close the statement
             }
 
-            // Redirect to decoupled_settlement_report.php
+            // Redirect to the report page with parameters
             $store_id = htmlspecialchars($storeId);
             $store_name = htmlspecialchars($storeName);
             $settlement_period_start = htmlspecialchars($startDate);
             $settlement_period_end = htmlspecialchars($endDate);
-            $url = "reports/decoupled_settlement_report.php?store_id=$store_id&_name=$store_name&decoupled_report_id=$maxDecoupledReportId&settlement_period_start=$settlement_period_start&settlement_period_end=$settlement_period_end";
+            $url = "reports/decoupled_settlement_report.php?store_id=$store_id&decoupled_report_id=$maxDecoupledReportId&store_name=$store_name&settlement_period_start=$settlement_period_start&settlement_period_end=$settlement_period_end";
             
             header("Location: $url");
             exit;
         } else {
-            // Redirect to failed.php if no report found
             header("Location: failed.php");
             exit;
         }
@@ -56,6 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error executing stored procedure: " . $stmt->error;
     }
 
-    $conn->close();
+    $conn->close(); // Close the database connection
 }
 ?>

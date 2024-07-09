@@ -170,6 +170,7 @@ function displayOffers($merchant_id, $start_date, $end_date)
         }
 
         nav {
+            opacity:0.8;
             box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.25);
             -webkit-box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.25);
             -moz-box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.25);

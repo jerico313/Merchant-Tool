@@ -29,7 +29,7 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     while (($data = fgetcsv($handle)) !== FALSE) {
         // Bind parameters and execute for first table
         $fee_id = Uuid::uuid4()->toString();
-        $stmt1->bind_param("ssssssssss", $fee_id, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9]);
+        $stmt1->bind_param("ssssssssss", $fee_id, $data[1], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
         $stmt1->execute();
     }
 

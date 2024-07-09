@@ -94,7 +94,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                         <p class="title">Upload Promos</p>
                         <button type="button" class="btn btn-warning check-report" id="addMerchantBtn"><i
                                 class="fa-solid fa-plus"></i> Add New Promos </button>
-                        <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
+                        <form id="uploadForm" action="upload_process.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" method="post" enctype="multipart/form-data">
                     </div>
 
                     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -458,7 +458,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
         });
 
     </script>
-    <script src="../js/file_upload.js"></script>
+    <script src="../../js/file_upload.js"></script>
 </body>
 
 </html>

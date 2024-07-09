@@ -1,53 +1,75 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("../../inc/config.php");
-    $storeId = $_POST['storeId'];
-    $merchantName = $_POST['storeName'];
-    $startDate = $_POST['startDate'];
-    $endDate = $_POST['endDate'];
-    $userId = $_POST['userId'];
+
+    $storeId = $_POST['storeId'] ?? '';
+    $storeId = $_POST['storeId'] ?? '';
+    $merchantId = $_POST['merchantId'] ?? '';
+    $merchantName = $_POST['merchantName'] ?? '';
+    $startDate = $_POST['startDate'] ?? '';
+    $endDate = $_POST['endDate'] ?? '';
+    $userId = $_POST['userId'] ?? '';
 
     $sql = "CALL generate_store_coupled_report(?, ?, ?)";
     $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        die("Error preparing statement: " . $conn->error);
+    }
 
     // Bind parameters to the prepared statement
     $stmt->bind_param("sss", $storeId, $startDate, $endDate);
 
     if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        if ($result->num_rows === 0) {
+            // No rows returned, redirect to failed.php
+            header("Location: failed.php?merchant_id=$merchantId&merchant_name=$merchantName");
+            exit;
+        }
         $stmt->close(); // Close the first statement
-        
+
         // Get the latest activity_id from activity_history
+        $latestActivityId = null;
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
-        $stmt->execute();
-        $stmt->bind_result($latestActivityId);
-        $stmt->fetch(); // Fetch the result
-        $stmt->close(); // Close the statement
-
-        // Get the max coupled_report_id from report_history_coupled
-        $stmt = $conn->prepare("SELECT coupled_report_id FROM report_history_coupled ORDER BY created_at DESC LIMIT 1");
-        $stmt->execute();
-        $stmt->bind_result($maxCoupledReportId);
-        $stmt->fetch(); // Fetch the result
-        $stmt->close(); // Close the statement
-
-        if ($latestActivityId) {
-            // Update activity_history with user_id
-            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
-            $stmt->bind_param("ss", $userId, $latestActivityId);
+        if ($stmt) {
             $stmt->execute();
+            $stmt->bind_result($latestActivityId);
+            $stmt->fetch(); // Fetch the result
             $stmt->close(); // Close the statement
         }
 
-        if ($maxCoupledReportId) {
+        // Get the max coupled_report_id from report_history_coupled
+        $maxCoupledReportId = null;
+        $stmt = $conn->prepare("SELECT coupled_report_id FROM report_history_coupled ORDER BY created_at DESC LIMIT 1");
+        if ($stmt) {
+            $stmt->execute();
+            $stmt->bind_result($maxCoupledReportId);
+            $stmt->fetch(); // Fetch the result
+            $stmt->close(); // Close the statement
+        }
+
+        if ($latestActivityId !== null && $maxCoupledReportId !== null) {
+            // Update activity_history with user_id
+            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
+            if ($stmt) {
+                $stmt->bind_param("ss", $userId, $latestActivityId);
+                $stmt->execute();
+                $stmt->close(); // Close the statement
+            }
+
             // Redirect to the report page with parameters
             $store_id = htmlspecialchars($storeId);
-            $store_name = htmlspecialchars($storeName);
-            $url = "reports/coupled_settlement_report.php?store_id=$store_id&store_name=$store_name&coupled_report_id=$maxCoupledReportId";
+            $store_name = htmlspecialchars($storeId);
+            $settlement_period_start = htmlspecialchars($startDate);
+            $settlement_period_end = htmlspecialchars($endDate);
+            $url = "reports/coupled_settlement_report.php?store_id=$store_id&coupled_report_id=$maxCoupledReportId&store_name=$store_name&settlement_period_start=$settlement_period_start&settlement_period_end=$settlement_period_end";
             
             header("Location: $url");
             exit;
         } else {
-            echo json_encode(['error' => 'No data found in report_history_coupled']);
+            header("Location: ../failed.php");
+            exit;
         }
     } else {
         echo "Error executing stored procedure: " . $stmt->error;

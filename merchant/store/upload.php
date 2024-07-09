@@ -94,7 +94,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                         <p class="title">Upload Stores</p>
                         <button type="button" class="btn btn-warning check-report" id="addMerchantBtn"><i
                                 class="fa-solid fa-plus"></i> Add New Stores </button>
-                        <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
+                        <form id="uploadForm" action="upload_process.php??merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" method="post" enctype="multipart/form-data">
                     </div>
 
                     <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -207,7 +207,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
     <div class="alert-custom-filetype alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
         <i class="fa-solid fa-circle-exclamation"></i> Please upload a file with .csv extension only!
     </div>
-
+    <script src="../../js/file_upload.js"></script>
     <script>
         document.getElementById('addMerchantBtn').addEventListener('click', function () {
             document.querySelector('.form').style.display = 'block';
@@ -319,7 +319,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 
 
     </script>
-    <script src="../js/file_upload.js"></script>
+   
 </body>
 
 </html>

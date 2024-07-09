@@ -21,7 +21,7 @@ function displayMerchant()
       echo "<td style='text-align:center;width:13%;'>";
 
       $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-
+      
       if ($type !== 'User') {
         echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
         echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\")'>Edit</button> ";
@@ -39,6 +39,7 @@ function displayMerchant()
   $conn->close();
 }
 ?>
+
 
 
 
@@ -72,7 +73,13 @@ function displayMerchant()
       background-size: cover;
       background-attachment: fixed;
     }
+    .dropdown-menu {
+    z-index: 1050; /* Ensure dropdown appears on top */
+  }
 
+  .dropdown-toggle {
+    white-space: nowrap; /* Prevent button text wrapping */
+  }
     .title {
       font-size: 30px;
       font-weight: bold;
@@ -169,7 +176,7 @@ function displayMerchant()
                 <th>Legal Entity Name</th>
                 <th>Business Address</th>
                 <th>Email Address</th>
-                <th style="width:160px;">Action</th>
+                <th style="width:50px !important;">Action</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
