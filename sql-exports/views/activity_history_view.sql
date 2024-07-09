@@ -48,6 +48,17 @@ SELECT
     ) AS `column_name`,
     `a`.`activity_type` AS `activity_type`,
     `a`.`description` AS `description`,
+    CASE
+        WHEN TIMESTAMPDIFF(SECOND, `a`.`created_at`, NOW()) < 60 THEN
+            CONCAT(TIMESTAMPDIFF(SECOND, `a`.`created_at`, NOW()), ' second', IF(TIMESTAMPDIFF(SECOND, `a`.`created_at`, NOW()) = 1, '', 's'), ' ago')
+        WHEN TIMESTAMPDIFF(MINUTE, `a`.`created_at`, NOW()) < 60 THEN
+            CONCAT(TIMESTAMPDIFF(MINUTE, `a`.`created_at`, NOW()), ' minute', IF(TIMESTAMPDIFF(MINUTE, `a`.`created_at`, NOW()) = 1, '', 's'), ' ago')
+        WHEN TIMESTAMPDIFF(HOUR, `a`.`created_at`, NOW()) < 24 THEN
+            CONCAT(TIMESTAMPDIFF(HOUR, `a`.`created_at`, NOW()), ' hour', IF(TIMESTAMPDIFF(HOUR, `a`.`created_at`, NOW()) = 1, '', 's'), ' ago')
+        WHEN TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()) < 7 THEN
+            CONCAT(TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()), ' day', IF(TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()) = 1, '', 's'), ' ago')
+        ELSE DATE_FORMAT(`a`.`created_at`, '%M %d at %l:%i %p')
+    END AS `time_ago`,
     `a`.`created_at` AS `created_at`,
     `a`.`updated_at` AS `updated_at`
 FROM
