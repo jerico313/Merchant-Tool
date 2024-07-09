@@ -244,12 +244,12 @@
     });
 
     document.addEventListener('click', function(e) {
-        if (e.target && e.target.classList.contains('remove-field')) {
-            e.target.closest('.form-group').remove();
-        }
-    });
+    if (e.target && e.target.classList.contains('remove-field')) {
+        e.target.closest('.form-group').remove();
+    }
+});
 
-    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
 
     // Check if file name is 'Merchant Listing.csv'
@@ -286,14 +286,11 @@
 
     // Update the submit button text with file size and show loading spinner
     var submitButton = document.getElementById('submitButton');
-    var fileSizeKB = (fileSize / 1024).toFixed(2); // Convert bytes to KB
+    var fileSizeKB = (fileSize / 1024).toFixed(2); 
     submitButton.innerHTML = `<div class="spinner-border spinner-border-sm" role="status"></div><span> Uploading (${fileSizeKB} KB)...</span>`;
 
-    // If valid, simulate loading time based on file size and submit the form
-    var loadingTime = fileSize / 1024; // Simulate loading time in seconds based on file size
-    setTimeout(function() {
-        document.getElementById('uploadForm').submit();
-    }, loadingTime * 1000);
+    // Directly submit the form after updating the submit button
+    document.getElementById('uploadForm').submit();
 });
 
 
