@@ -31,7 +31,7 @@ WITH pg_fee_cte AS (
                         WHEN 'maya' THEN `f`.`maya`
                     END
                 ))
-                WHEN `t`.`payment` IS NULL THEN 0
+                WHEN `t`.`payment` IS NULL OR `t`.`payment` = '' THEN 0
         END AS pg_fee_rate,
         COALESCE(
         (
@@ -61,7 +61,7 @@ WITH pg_fee_cte AS (
         JOIN `leadgen_db`.`fee` `f` ON (`f`.`merchant_id` = `m`.`merchant_id`)
 )
 SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
-    `t`.`transaction_date` AS `Transaction Date`,
+    DATE_FORMAT(`t`.`transaction_date`, "%M %d, %Y %h:%i%p") AS `Transaction Date`,
     `m`.`merchant_id` AS `Merchant ID`,
     `m`.`merchant_name` AS `Merchant Name`,
     `s`.`store_id` AS `Store ID`,
@@ -76,7 +76,18 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
     `t`.`gross_amount` AS `Gross Amount`,
     `t`.`discount` AS `Discount`,
     `t`.`amount_discounted` AS `Cart Amount`,
-    `t`.`payment` AS `Payment`,
+    CASE
+        WHEN `t`.`payment` IN (
+                'paymaya_credit_card',
+                'maya',
+                'maya_checkout',
+                'paymaya',
+                'gcash',
+                'gcash_miniapp'
+            )
+            THEN `t`.`payment`
+        ELSE "-" 
+    END AS `Mode of Payment`,
     `t`.`bill_status` AS `Bill Status`,
     `t`.`comm_rate_base` AS `Comm Rate Base`,
     pg_fee_cte.commission_type AS `Commission Type`,
