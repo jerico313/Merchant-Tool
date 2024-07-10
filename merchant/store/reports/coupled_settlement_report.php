@@ -114,7 +114,7 @@ function displayOffers($store_id, $start_date, $end_date)
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Merchant Settlement Tool</title>
+  <title><?php echo htmlspecialchars($data['store_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
   <link rel="icon" href="/Merchant-Tool/images/booky1.png" type="image/x-icon" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>

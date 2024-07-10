@@ -25,7 +25,7 @@ function displayStore($merchant_id)
             echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['store_address'] . "</td>";
-            echo "<td style='text-align:center;'>";
+            echo "<td style='text-align:center;' class='actions-cell'>";
 
             // Initialize variables for HTML output
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
@@ -33,16 +33,24 @@ function displayStore($merchant_id)
             $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
             $escapedStoreAddress = htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
 
-            // Display buttons based on user type
+            echo "<button class='btn' style='border:none;background-color:transparent;border-radius:10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:20px;color:#4BB0B8;padding-top:3px;'></i></button>";
+
+            echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
+            echo "<ul class='list-group'>";
+
             if ($type !== 'User') {
-                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;padding:4px;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")'>View</button> ";
-                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;padding:4px;' onclick='editStore(\"" . $row['store_id'] . "\")'>Edit</button> ";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;pointer'>View</a></li>";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='editStore(\"" . $row['store_id'] . "\")' style='color:#E96529;'>Edit</button></li>";
             } else {
-                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;padding:4px;' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")'>View</button> ";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
             }
 
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")'>Check Report</button> ";
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#E31C21;color:#fff;padding:4px;' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")'>View Report</button> ";
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.3s;'><a href='#' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")' style='color:#E96529;'>Check Report</a></li>";
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.4s;'><a href='#' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")' style='color:#E96529;'>View Report</a></li>";
+
+            echo "</ul>"; 
+            echo "</div>"; 
+
             echo "</td>";
             echo "</tr>";
         }
@@ -51,6 +59,7 @@ function displayStore($merchant_id)
     $stmt->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,6 +91,21 @@ function displayStore($merchant_id)
             padding-left: 5vh;
             color: #4BB0B8;
         }
+
+        @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.action-item {
+  animation: fadeIn 0.3s ease forwards;
+}
 
         .voucher-type {
             padding-bottom: 0px;
@@ -251,7 +275,7 @@ function displayStore($merchant_id)
                                 <th>Store Name</th>
                                 <th>Legal Entity Name</th>
                                 <th>Store Address</th>
-                                <th style='width:350px;'>Action</th>
+                                <th style='width:120px;'>Action</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -417,6 +441,19 @@ function displayStore($merchant_id)
 
     form.submit();
   });
+</script>
+<script>
+    function toggleActions(button) {
+        // Find the actions-list div relative to the button
+        var actionsList = button.nextElementSibling;
+
+        // Toggle the display style of the actions-list div
+        if (actionsList.style.display === 'none') {
+            actionsList.style.display = 'block';
+        } else {
+            actionsList.style.display = 'none';
+        }
+    }
 </script>
 </body>
 

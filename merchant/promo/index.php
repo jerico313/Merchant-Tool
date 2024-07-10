@@ -1,10 +1,8 @@
 <?php
-include_once ("../../header.php");
+include_once("../../header.php");
 
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
-$store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
-
 
 function displayOffers($merchant_id, $merchant_name)
 {
@@ -36,22 +34,33 @@ function displayOffers($merchant_id, $merchant_name)
             echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
             echo "<td style='text-align:center;'>" . $start_date . "</td>";
             echo "<td style='text-align:center;'>" . $end_date . "</td>";
-            echo "<td style='text-align:center;'>";
+            echo "<td style='text-align:center;' class='actions-cell'>";
 
-            // Check if user type is 'user' to hide edit button
+            echo "<button class='btn' style='border:none;background-color:transparent;border-radius:10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:20px;color:#4BB0B8;padding-top:3px;'></i></button>";
+
+            echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
+            echo "<ul class='list-group'>";
+
+            // Dropdown menu items
             if ($type !== 'User') {
-                echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#95DD59;color:black;' onclick='editPromo(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")'>Edit</button> ";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='editPromo(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;pointer'>Edit</a></li>";
             }
 
-            echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:80px;background-color:#E8C0AE;color:black;' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")'>View History</button> ";
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;pointer'>View History</a></li>";
+
+            echo "</ul>"; // Close dropdown-menu
+            echo "</div>"; // Close dropdown
+
             echo "</td>";
             echo "</tr>";
         }
     }
 
+    $stmt->close();
     $conn->close();
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -84,6 +93,21 @@ function displayOffers($merchant_id, $merchant_name)
             padding-left: 5vh;
             color: #4BB0B8;
         }
+
+        @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.action-item {
+  animation: fadeIn 0.3s ease forwards;
+}
 
         .voucher-type {
             padding-bottom: 0px;
@@ -429,6 +453,19 @@ function displayOffers($merchant_id, $merchant_name)
         }
 
     </script>
+     <script>
+    function toggleActions(button) {
+        // Find the actions-list div relative to the button
+        var actionsList = button.nextElementSibling;
+
+        // Toggle the display style of the actions-list div
+        if (actionsList.style.display === 'none') {
+            actionsList.style.display = 'block';
+        } else {
+            actionsList.style.display = 'none';
+        }
+    }
+</script>
 </body>
 
 </html>

@@ -77,13 +77,19 @@ if (isset($_SESSION['user_id'])) {
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a id="orders-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/merchant/" style="padding-right:10px;padding-left:10px;">Merchants</a>
+                    <a id="merchant-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/merchant/" style="padding-right:10px;padding-left:10px;">Merchants</a>
                 </li>
                 <li class="nav-item">
-                    <a id="merchants-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/transaction/" style="padding-right:10px;padding-left:10px;">Transactions</a>
+                    <a id="store-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/store/" style="padding-right:10px;padding-left:10px;">Stores</a>
+                </li>
+                <li class="nav-item">
+                    <a id="promo-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/promo/" style="padding-right:10px;padding-left:10px;">Promos</a>
                 </li>
                 <li class="nav-item">
                     <a id="pg-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/fee/" style="padding-right:10px;padding-left:10px;">Fees</a>
+                </li>
+                <li class="nav-item">
+                    <a id="transaction-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/transaction/" style="padding-right:10px;padding-left:10px;">Transactions</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
@@ -111,17 +117,24 @@ if (isset($_SESSION['user_id'])) {
         var currentPage = window.location.href;
 
         // Get the navbar links
-        var ordersLink = document.getElementById('orders-link');
-        var merchantsLink = document.getElementById('merchants-link');
+        var merchantLink = document.getElementById('merchant-link');
+        var transactionLink = document.getElementById('transaction-link');
         var pgLink = document.getElementById('pg-link');
+        var storeLink = document.getElementById('store-link');
+        var promoLink = document.getElementById('promo-link');
+
 
         // Set the active class based on the current page
         if (currentPage.includes('merchant/') || currentPage.includes('merchant/index.php') || currentPage.includes('store/index.php') || currentPage.includes('merchant/upload.php') || currentPage.includes('merchant/upload_process.php') || currentPage.includes('order/index.php') || currentPage.includes('promo/index.php') || currentPage.includes('category.php') || currentPage.includes('order/index.php')) {
-            ordersLink.classList.add('active_nav');
+            merchantLink.classList.add('active_nav');
         } else if (currentPage.includes('transaction/') || currentPage.includes('transaction/upload_transaction.php') || currentPage.includes('upload_transaction_process.php')) {
-            merchantsLink.classList.add('active_nav');
+            transactionLink.classList.add('active_nav');
         } else if (currentPage.includes('fee/')) {
             pgLink.classList.add('active_nav');
+        } else if (currentPage.includes('store/')) {
+            storeLink.classList.add('active_nav');
+        } else if (currentPage.includes('promo/')) {
+            promoLink.classList.add('active_nav');
         }
 
         // Prevent default behavior of anchor tags

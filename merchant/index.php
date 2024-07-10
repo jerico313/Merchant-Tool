@@ -1,46 +1,58 @@
 <?php
-include_once ("../header.php");
+include_once("../header.php");
 
 function displayMerchant()
 {
-  global $conn, $type;
-  $sql = "SELECT * FROM merchant";
-  $result = $conn->query($sql);
+    global $conn, $type;
+    $sql = "SELECT * FROM merchant_view";
+    $result = $conn->query($sql);
 
-  if ($result->num_rows > 0) {
-    $count = 1;
-    while ($row = $result->fetch_assoc()) {
-      $shortMerchantId = substr($row['merchant_id'], 0, 8);
-      echo "<tr data-uuid='" . htmlspecialchars($row['merchant_id']) . "' data-partnership-type='" . strtolower($row['merchant_partnership_type']) . "'>";
-      echo "<td style='text-align:center;width:6%;'>" . $shortMerchantId . "</td>";
-      echo "<td style='text-align:center;width:13%;'>" . htmlspecialchars($row['merchant_name']) . "</td>";
-      echo "<td style='text-align:center;width:8%;' class='partnership-type'>" . htmlspecialchars($row['merchant_partnership_type']) . "</td>";
-      echo "<td style='text-align:center;width:13%;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
-      echo "<td style='text-align:center;width:15%;'>" . htmlspecialchars($row['business_address']) . "</td>";
-      echo "<td style='text-align:center;width:30%;'>" . htmlspecialchars($row['email_address']) . "</td>";
-      echo "<td style='text-align:center;width:13%;'>";
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $shortMerchantId = substr($row['merchant_id'], 0, 8);
+            $shortSalesId = substr($row['sales_id'], 0, 8);
+            $shortAccountManagerId = substr($row['account_manager_id'], 0, 8);
 
-      $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-      
-      if ($type !== 'User') {
-        echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
-        echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#95DD59;color:black;' onclick='editMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\")'>Edit</button> ";
-      } else {
-        echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:60px;background-color:#E8C0AE;color:black;' onclick='viewMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\", \"" . $escapedMerchantName . "\")'>View</button> ";
-      }
+            echo "<tr data-uuid='" . $row['merchant_id'] . "'>";
+            echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
+            echo "<td style='text-align:center;'>" . htmlspecialchars($row['merchant_name']) . "</td>";
+            echo "<td style='text-align:center;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
+            echo "<td style='text-align:center;'>" . htmlspecialchars($row['business_address']) . "</td>";
+            echo "<td style='text-align:center;'>" . htmlspecialchars($row['email_address']) . "</td>";
+            echo "<td style='text-align:center;'>" . $shortSalesId . "</td>";
+            echo "<td style='text-align:center;'>" . htmlspecialchars($row['sales']) . "</td>";
+            echo "<td style='text-align:center;'>" . $shortAccountManagerId . "</td>";
+            echo "<td style='text-align:center;'>" . htmlspecialchars($row['account_manager']) . "</td>";
+            echo "<td style='text-align:center;' class='actions-cell'>"; 
+            echo "<button class='btn' style='border:none;background-color:transparent;border-radius:10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:20px;color:#4BB0B8;padding-top:3px;'></i></button>";
 
-      echo "<button class='btn btn-success btn-sm' style='border:none; border-radius:20px;width:100px;background-color:#4BB0B8;color:#fff;padding:4px;' onclick='checkReport(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\", \"" . $escapedMerchantName . "\"  )'>Check Report</button> ";
-      echo "</td>";
-      echo "</tr>";
-      $count++;
+            // Action list (initially hidden)
+            echo "<div class='mt-2 actions-list' style='display:none;'>"; // Hidden initially
+            echo "<ul class='list-group'>";
+            
+            $escapedMerchantId = htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8');
+            $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
+            
+            if ($type !== 'User') {
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewMerchant(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View</a></li>";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='editMerchant(\"" . $escapedMerchantId . "\")' style='color:#E96529;'>Edit</a></li>";
+            } else {
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewMerchant(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View</a></li>";
+            }
+            
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.3s;'><a href='#' onclick='checkReport(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>Check Report</a></li>";
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.4s;'><a href='#'  onclick='viewReport(\"" . $escapedMerchantId  . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View Report</a></li> ";
+            echo "</ul>";
+            echo "</div>"; 
+            
+            echo "</td>";
+            echo "</tr>";
+        }
     }
-  }
 
-  $conn->close();
+    $conn->close();
 }
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -73,13 +85,21 @@ function displayMerchant()
       background-size: cover;
       background-attachment: fixed;
     }
-    .dropdown-menu {
-    z-index: 1050; /* Ensure dropdown appears on top */
+    @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  .dropdown-toggle {
-    white-space: nowrap; /* Prevent button text wrapping */
-  }
+.action-item {
+  animation: fadeIn 0.3s ease forwards;
+}
+
     .title {
       font-size: 30px;
       font-weight: bold;
@@ -116,6 +136,7 @@ function displayMerchant()
       font-size: 13px;
     }
 
+
     table.dataTable tbody th:last-child,
     table.dataTable tbody td:last-child {
       position: sticky;
@@ -134,7 +155,6 @@ function displayMerchant()
       box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
       -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
       -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-
     }
 
     select {
@@ -167,15 +187,18 @@ function displayMerchant()
         </div>
 
         <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-          <table id="example" class="table bord" style="width:150%;height:auto;">
+          <table id="example" class="table bord" style="width:200%;height:auto;">
             <thead>
               <tr>
                 <th>Merchant ID</th>
-                <th>Merchant Name</th>
-                <th>Partnership Type</th>
-                <th>Legal Entity Name</th>
-                <th>Business Address</th>
-                <th>Email Address</th>
+                <th style="width:150px !important;">Merchant Name</th>
+                <th style="width:150px !important;">Legal Entity Name</th>
+                <th style="width:250px !important;">Business Address</th>
+                <th style="width:150px !important;">Email Address</th>
+                <th>Sales ID</th>
+                <th style="width:150px !important;">Sales</th>
+                <th style="width:80px !important;">Account Manager ID</th>
+                <th style="width:150px !important;">Account Manager</th>
                 <th style="width:50px !important;">Action</th>
               </tr>
             </thead>
@@ -335,9 +358,23 @@ function displayMerchant()
       }
 
       function viewReport(merchantId, merchantName) {
-        window.location.href = 'settlement_reports.php?merchant_id=' + encodeURIComponent(merchantId) + '&merchant_name=' + encodeURIComponent(merchantName);
+        window.location.href = 'reports/index.php?merchant_id=' + encodeURIComponent(merchantId) + '&merchant_name=' + encodeURIComponent(merchantName);
       }
     </script>
+    <script>
+    function toggleActions(button) {
+        // Find the actions-list div relative to the button
+        var actionsList = button.nextElementSibling;
+
+        // Toggle the display style of the actions-list div
+        if (actionsList.style.display === 'none') {
+            actionsList.style.display = 'block';
+        } else {
+            actionsList.style.display = 'none';
+        }
+    }
+</script>
+
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
 </body>
