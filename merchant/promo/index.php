@@ -18,25 +18,26 @@ function displayOffers($merchant_id, $merchant_name)
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             $shortPromoId = substr($row['promo_id'], 0, 8);
             $promo_amount = number_format($row['promo_amount'], 2);
-            $start_date = ($row['start_date'] === '0000-00-00') ? 'No Start Date' : $row['start_date'];
-            $end_date = ($row['end_date'] === '0000-00-00') ? 'No End Date' : $row['end_date'];
+            $start_date = empty($row['start_date']) ? 'No Start Date' : $row['start_date'];
+            $end_date = empty($row['end_date']) ? 'No End Date' : $row['end_date'];
 
-            echo "<tr data-id='" . $row['promo_id'] . "'>";
-            echo "<td style='text-align:center;'>" . $shortPromoId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
-            echo "<td style='text-align:center;'>" . $promo_amount . "</td>";
-            echo "<td style='text-align:center;'>" . $row['voucher_type'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_category'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_group'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_type'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_details'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['remarks'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
-            echo "<td style='text-align:center;'>" . $start_date . "</td>";
-            echo "<td style='text-align:center;'>" . $end_date . "</td>";
-            echo "<td style='text-align:center;' class='actions-cell'>";
+            echo "<tr style='padding:15px 0;' data-id='" . $row['promo_id'] . "'>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $shortPromoId . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_code'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $promo_amount . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['voucher_type'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_category'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_group'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_type'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_details'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['remarks'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['bill_status'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $start_date . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $end_date . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['remarks2'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
 
-            echo "<button class='btn' style='border:none;background-color:transparent;border-radius:10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:20px;color:#4BB0B8;padding-top:3px;'></i></button>";
+            echo "<button class='btn' style='border:none;background-color:#4BB0B8;border-radius:20px;padding:0 10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#fff;'></i></button>";
 
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
             echo "<ul class='list-group'>";
@@ -48,8 +49,8 @@ function displayOffers($merchant_id, $merchant_name)
 
             echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;pointer'>View History</a></li>";
 
-            echo "</ul>"; // Close dropdown-menu
-            echo "</div>"; // Close dropdown
+            echo "</ul>"; 
+            echo "</div>";
 
             echo "</td>";
             echo "</tr>";
@@ -289,6 +290,7 @@ function displayOffers($merchant_id, $merchant_name)
                                 <th>Bill Status</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
+                                <th>Remarks 2</th>
                                 <th style='width:50px;'>Action</th>
                             </tr>
                         </thead>

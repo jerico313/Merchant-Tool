@@ -10,8 +10,7 @@ function displayMerchant()
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $shortMerchantId = substr($row['merchant_id'], 0, 8);
-
-            echo "<tr data-uuid='" . $row['merchant_id'] . "'>";
+            echo "<tr style='padding:15px 0;' data-uuid='" . $row['merchant_id'] . "'>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $shortMerchantId . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['merchant_name']) . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
@@ -33,7 +32,7 @@ function displayMerchant()
             
             if ($type !== 'User') {
                 echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewMerchant(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View</a></li>";
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='editMerchant(\"" . $escapedMerchantId . "\")' style='color:#E96529;'>Edit</a></li>";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='editMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\")' style='color:#E96529;'>Edit</a></li>";
             } else {
                 echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewMerchant(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View</a></li>";
             }
@@ -313,6 +312,8 @@ function fetchEmployeeNames() {
       </div>
     </div>
     <div id="alertContainer"></div>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
   function checkReport(merchantId, merchantName) {
     // Set the merchantId and merchantName in the report modal
@@ -352,28 +353,28 @@ function fetchEmployeeNames() {
       </script>
     <script>
       function editMerchant(merchantUuid) {
-        // Fetch the current data of the selected merchant
-        var merchantRow = $('#dynamicTableBody').find('tr[data-uuid="' + merchantUuid + '"]');
-        var merchantName = merchantRow.find('td:nth-child(2)').text();
-        var legalEntityName = merchantRow.find('td:nth-child(3)').text();
-        var businessAddress = merchantRow.find('td:nth-child(4)').text();
-        var emailAddress = merchantRow.find('td:nth-child(5)').text();
-        var sales = merchantRow.find('td:nth-child(9)').text();
-        var accountManager = merchantRow.find('td:nth-child(8)').text();
+    // Fetch the current data of the selected merchant
+    var merchantRow = $('#dynamicTableBody').find('tr[data-uuid="' + merchantUuid + '"]');
+    var merchantName = merchantRow.find('td:nth-child(2)').text();
+    var legalEntityName = merchantRow.find('td:nth-child(3)').text();
+    var businessAddress = merchantRow.find('td:nth-child(4)').text();
+    var emailAddress = merchantRow.find('td:nth-child(5)').text();
+    var salesId = merchantRow.find('td:nth-child(9)').text();  // Corrected index for salesId
+    var accountManagerId = merchantRow.find('td:nth-child(8)').text();  // Corrected index for accountManagerId
 
-        // Set values in the edit modal
-        $('#merchantId').val(merchantUuid);
-        $('#merchantName').val(merchantName);
-        $('#merchantPartnershipType').val(merchantPartnershipType);
-        $('#legalEntityName').val(legalEntityName);
-        $('#businessAddress').val(businessAddress);
-        $('#emailAddress').val(emailAddress);
-        $('#sales').val(sales);
-        $('#accountManager').val(accountManager);
+    // Set values in the edit modal
+    $('#merchantId').val(merchantUuid);
+    $('#merchantName').val(merchantName);
+    $('#legalEntityName').val(legalEntityName);
+    $('#businessAddress').val(businessAddress);
+    $('#emailAddress').val(emailAddress);
+    $('#sales').val(salesId);  // Update to salesId
+    $('#accountManager').val(accountManagerId);  // Update to accountManagerId
 
-        // Open the edit modal
-        $('#editMerchantModal').modal('show');
-      }
+    // Open the edit modal
+    $('#editMerchantModal').modal('show');
+}
+
     </script>
     <script>
       function viewMerchant(merchantId, merchantName) {
@@ -397,9 +398,6 @@ function fetchEmployeeNames() {
         }
     }
 </script>
-
-    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
 </body>
 
 </html>

@@ -11,21 +11,21 @@ function displayPGFeeRate()
         while ($row = $result->fetch_assoc()) {
             $shortFeeId = substr($row['fee_id'], 0, 8);
             echo "<tr data-id='" . $row['fee_id'] . "'>";
-            echo "<td style='text-align:center;'>" . $shortFeeId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['paymaya_credit_card'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['gcash'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['gcash_miniapp'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['paymaya'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['maya_checkout'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['maya'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['lead_gen_commission'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['commission_type'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $shortFeeId . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['paymaya_credit_card'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['gcash'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['gcash_miniapp'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['paymaya'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['maya_checkout'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['maya'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['lead_gen_commission'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['commission_type'] . "</td>";
             echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-            echo "<td style='text-align:center;' class='actions-cell'>";
+            echo "<td style='text-align:center;;vertical-align: middle;' class='actions-cell'>";
 
-            echo "<button class='btn' style='border:none;background-color:transparent;border-radius:10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:20px;color:#4BB0B8;padding-top:3px;'></i></button>";
+            echo "<button class='btn' style='border:none;background-color:#4BB0B8;border-radius:20px;padding:0 10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#fff;'></i></button>";
 
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
             echo "<ul class='list-group'>";
@@ -317,7 +317,7 @@ function displayPGFeeRate()
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [2, 3, 4, 5, 6, 7, 8, 9, 10] }    // Disable sorting for the specified columns
+            { orderable: false, targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }    // Disable sorting for the specified columns
           ],
           order: []  // Ensure no initial ordering
         });

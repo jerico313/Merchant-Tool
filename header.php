@@ -125,9 +125,9 @@ if (isset($_SESSION['user_id'])) {
 
 
         // Set the active class based on the current page
-        if (currentPage.includes('merchant/') || currentPage.includes('merchant/index.php') || currentPage.includes('store/index.php') || currentPage.includes('merchant/upload.php') || currentPage.includes('merchant/upload_process.php') || currentPage.includes('order/index.php') || currentPage.includes('promo/index.php') || currentPage.includes('category.php') || currentPage.includes('order/index.php')) {
+        if (currentPage.includes('merchant/'))  {
             merchantLink.classList.add('active_nav');
-        } else if (currentPage.includes('transaction/') || currentPage.includes('transaction/upload_transaction.php') || currentPage.includes('upload_transaction_process.php')) {
+        } else if (currentPage.includes('transaction/')) {
             transactionLink.classList.add('active_nav');
         } else if (currentPage.includes('fee/')) {
             pgLink.classList.add('active_nav');

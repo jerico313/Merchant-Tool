@@ -20,12 +20,12 @@ function displayStore($merchant_id)
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $shortStoreId = substr($row['store_id'], 0, 8);
-            echo "<tr data-uuid='" . $row['store_id'] . "'>";
-            echo "<td style='text-align:center;'>" . $shortStoreId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['legal_entity_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['store_address'] . "</td>";
-            echo "<td style='text-align:center;' class='actions-cell'>";
+            echo "<tr style='padding:15px 0;' data-uuid='" . $row['store_id'] . "'>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $shortStoreId . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_name'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['legal_entity_name'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_address'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
 
             // Initialize variables for HTML output
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
@@ -33,7 +33,7 @@ function displayStore($merchant_id)
             $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
             $escapedStoreAddress = htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
 
-            echo "<button class='btn' style='border:none;background-color:transparent;border-radius:10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:20px;color:#4BB0B8;padding-top:3px;'></i></button>";
+            echo "<button class='btn' style='border:none;background-color:#4BB0B8;border-radius:20px;padding:0 10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#fff;'></i></button>";
 
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
             echo "<ul class='list-group'>";

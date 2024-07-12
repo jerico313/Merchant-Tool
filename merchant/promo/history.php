@@ -10,7 +10,9 @@ function displayOfferHistory($promo_code, $merchant_name)
 {
     include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM promo_history WHERE promo_code = ?";
+    $sql = "SELECT ph.*, u.name FROM promo_history ph
+            LEFT JOIN user u ON ph.changed_by = u.user_id
+            WHERE ph.promo_code = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $promo_code); // Corrected variable name
     $stmt->execute();
@@ -24,7 +26,7 @@ function displayOfferHistory($promo_code, $merchant_name)
             echo "<td style='text-align:center;'>" . $row['old_bill_status'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['new_bill_status'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['changed_at'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['changed_by'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['name'] . "</td>"; // Display username
             echo "</tr>";
         }
     }

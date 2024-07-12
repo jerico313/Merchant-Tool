@@ -1,43 +1,43 @@
 <?php
 include_once("../header.php");
 
-function displayPGFeeRate()
+function displayStore()
 {
     global $conn, $type;
-    $sql = "SELECT fee.*, merchant.merchant_name FROM fee INNER JOIN merchant ON fee.merchant_id = merchant.merchant_id";
+    // Updated SQL query to join with the merchant table
+    $sql = "SELECT store.*, merchant.merchant_name 
+            FROM store 
+            JOIN merchant ON store.merchant_id = merchant.merchant_id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $shortFeeId = substr($row['fee_id'], 0, 8);
-            echo "<tr data-id='" . $row['fee_id'] . "'>";
-            echo "<td style='text-align:center;'>" . $shortFeeId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['paymaya_credit_card'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['gcash'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['gcash_miniapp'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['paymaya'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['maya_checkout'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['maya'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['lead_gen_commission'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['commission_type'] . "</td>";
+            $shortStoreId = substr($row['store_id'], 0, 8);
+            echo "<tr style='padding:15px 0;' data-uuid='" . $row['store_id'] . "'>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $shortStoreId . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_name'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['legal_entity_name'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_address'] . "</td>";
             echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
-            $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-            echo "<td style='text-align:center;' class='actions-cell'>";
+            echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
+            $escapedStoreName = htmlspecialchars($row['store_name'], ENT_QUOTES, 'UTF-8');
+            $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
+            $escapedStoreAddress = htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
 
-            echo "<button class='btn' style='border:none;background-color:transparent;border-radius:10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:20px;color:#4BB0B8;padding-top:3px;'></i></button>";
+            echo "<button class='btn' style='border:none;background-color:#4BB0B8;border-radius:20px;padding:0 10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#fff;'></i></button>";
 
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
             echo "<ul class='list-group'>";
 
-            // Dropdown menu items
             if ($type !== 'User') {
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='editFee(\"" . $row['fee_id'] . "\")' style='color:#E96529;pointer'>Edit</a></li>";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='editStore(\"" . $row['store_id'] . "\")' style='color:#E96529;'>Edit</a></li>";
+            } else {
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
             }
 
-            echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='viewHistory(\"" . $row['fee_id'] . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;pointer'>View History</a></li>";
-
-            echo "</ul>";
+            echo "</ul>"; 
             echo "</div>"; 
 
             echo "</td>";
@@ -48,7 +48,6 @@ function displayPGFeeRate()
     $conn->close();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,20 +82,19 @@ function displayPGFeeRate()
     }
 
     @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-.action-item {
-  animation: fadeIn 0.3s ease forwards;
-}
-
+    .action-item {
+      animation: fadeIn 0.3s ease forwards;
+    }
 
     .add-btns {
       padding-bottom: 0px;
@@ -223,86 +221,65 @@ function displayPGFeeRate()
       <div class="sub" style="text-align:left;">
 
         <div class="add-btns">
-          <p class="title">Fees</p>
+          <p class="title">Store</p>
           <a href="upload.php"><button type="button" class="btn btn-danger add-merchant"><i
-                class="fa-solid fa-upload"></i> Upload Fees</button></a>
+                class="fa-solid fa-upload"></i> Upload Stores</button></a>
         </div>
 
         <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
           <table id="example" class="table bord" style="width:100%;">
             <thead>
               <tr>
-                <th>Fee ID</th>
-                <th>Merchant Name</th>
-                <th>Paymaya Credit Card</th>
-                <th>GCash</th>
-                <th>GCash Miniapp</th>
-                <th>Paymaya</th>
-                <th>Maya Checkout</th>
-                <th>Maya</th>
-                <th>Leadgen Commission</th>
-                <th>Commission Type</th>
+                <th style="width:80px;">Store ID</th>
+                <th style="width:140px;">Merchant Name</th>
                 <th style="display:none;"></th>
-                <th style="width:100px;">Action</th>
+                <th>Store Name</th>
+                <th>Legal Entity Name</th>
+                <th>Store Address</th>
+                <th style="width:100px;">Actions</th>
+          
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
-              <?php displayPGFeeRate(); ?>
+              <?php displayStore(); ?>
             </tbody>
           </table>
         </div>
       </div>
     </div>
     <!-- Edit Modal -->
-    <div class="modal fade" id="editFeeModal" data-bs-backdrop="static" tabindex="-1"
-      aria-labelledby="editMerchantModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius:20px;">
-          <div class="modal-header border-0">
-            <p class="modal-title" id="editMerchantModalLabel" style="font-size:15px;font-weight:bold;">Edit Fee Details
-            </p>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="editfeeForm" action="edit.php" method="POST">
-              <input type="hidden" id="feeId" name="feeId">
-              <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-              <input type="hidden" id="merchantId" name="merchantId">
-              <div class="mb-3">
-                <label for="paymayaCreditCard" class="form-label">Paymaya Credit Card, Maya Checkout, & Maya</label>
-                <input type="text" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard">
-              </div>
-              <div class="mb-3">
-                <label for="gcash" class="form-label">GCash</label>
-                <input type="text" class="form-control" id="gcash" name="gcash">
-              </div>
-              <div class="mb-3">
-                <label for="gcashMiniapp" class="form-label">GCash Miniapp</label>
-                <input type="text" class="form-control" id="gcashMiniapp" name="gcashMiniapp">
-              </div>
-              <div class="mb-3">
-                <label for="paymaya" class="form-label">Paymaya</label>
-                <input class="form-control" rows="3" id="paymaya" name="paymaya" style="padding:5px 5px;"
-                  required></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="leadgenCommission" class="form-label">Leadgen Commission</label>
-                <input class="form-control" rows="3" id="leadgenCommission" name="leadgenCommission"
-                  style="padding:5px 5px;" required>
-              </div>
-              <div class="mb-3">
-                <label for="commissionType" class="form-label">Commission Type</label>
-                <select class="form-select" id="commissionType" name="commissionType" required>
-                  <option value="VAT Inc">VAT Inc</option>
-                  <option value="VAT Exc">VAT Exc</option>
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary"
-                style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
-            </form>
-          </div>
+    <div class="modal fade" id="editStoreModal" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="editStoreModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius:20px;">
+                <div class="modal-header border-0">
+                    <p class="modal-title" id="editStoreModalLabel">Edit Store Details</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editStoreForm" action="edit.php" method="POST">
+                        <input type="hidden" id="storeId" name="storeId">
+                        <input type="hidden" id="merchantId" name="merchantId">
+                        <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+                        <div class="mb-3">
+                            <label for="storeName" class="form-label">Store Name</label>
+                            <input type="text" class="form-control" id="storeName" name="storeName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="legalEntityName" class="form-label">Legal Entity Name</label>
+                            <input type="text" class="form-control" id="legalEntityName" name="legalEntityName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="storeAddress" class="form-label">Store Address</label>
+                            <input type="text" class="form-control" id="storeAddress" name="storeAddress">
+                        </div>
+                        <button type="submit" class="btn btn-primary"
+                            style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save
+                            changes</button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
     <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
@@ -317,63 +294,35 @@ function displayPGFeeRate()
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [2, 3, 4, 5, 6, 7, 8, 9, 10] }    // Disable sorting for the specified columns
+            { orderable: false, targets: [0, 4, 5] }    // Disable sorting for the specified columns
           ],
           order: []  // Ensure no initial ordering
         });
       });
-
-      function viewHistory(fee_id, merchant_name) {
-        window.location.href = 'history.php?fee_id=' + encodeURIComponent(fee_id) + '&merchant_name=' + encodeURIComponent(merchant_name);
-      }
-
     </script>
     <script>
-      function editFee(feeUuid) {
-        // Fetch the current data of the selected merchant
-        var feeRow = $('#dynamicTableBody').find('tr[data-id="' + feeUuid + '"]');
-        var paymayaCreditCard = feeRow.find('td:nth-child(3)').text();
-        var gcash = feeRow.find('td:nth-child(4)').text();
-        var gcashMiniapp = feeRow.find('td:nth-child(5)').text();
-        var paymaya = feeRow.find('td:nth-child(6)').text();
-        var mayaCheckout = feeRow.find('td:nth-child(7)').text();
-        var maya = feeRow.find('td:nth-child(8)').text();
-        var leadgenCommission = feeRow.find('td:nth-child(9)').text();
-        var commissionType = feeRow.find('td:nth-child(10)').text();
-        var merchantId = feeRow.find('td:nth-child(11)').text();
+      function editStore(storeId) {
+            var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
+            var storeName = storeRow.find('td:nth-child(3)').text();
+            var legalEntityName = storeRow.find('td:nth-child(4)').text();
+            var storeAddress = storeRow.find('td:nth-child(5)').text();
+            var merchantId = storeRow.find('td:nth-child(6)').text();
 
-        // Set values in the edit modal
-        $('#feeId').val(feeUuid);
-        $('#paymayaCreditCard').val(paymayaCreditCard);
-        $('#gcash').val(gcash);
-        $('#gcashMiniapp').val(gcashMiniapp);
-        $('#paymaya').val(paymaya);
-        $('#mayaCheckout').val(mayaCheckout);
-        $('#maya').val(maya);
-        $('#leadgenCommission').val(leadgenCommission);
-        $('#commissionType').val(commissionType);
-        $('#merchantId').val(merchantId);
 
-        // Open the edit modal
-        $('#editFeeModal').modal('show');
-      }
-    </script>
-    <script>
-      // Get all inputs that need conversion
-      const inputs = document.querySelectorAll('#paymayaCreditCard, #gcash, #gcashMiniapp, #paymaya, #leadgenCommission');
+            // Set values in the edit modal
+            $('#storeId').val(storeId);
+            $('#storeName').val(storeName);
+            $('#storeAddress').val(storeAddress);
+            $('#legalEntityName').val(legalEntityName);
+            $('#merchantId').val(merchantId);
 
-      // Add event listeners to each input
-      inputs.forEach(input => {
-        input.addEventListener('blur', function () {
-          let value = this.value;
+            // Open the edit modal
+            $('#editStoreModal').modal('show');
+        }
 
-          // Check if the value is a number and if it's a whole number
-          if (!isNaN(value) && Number.isInteger(parseFloat(value))) {
-            // Convert the whole number to a decimal
-            this.value = parseFloat(value).toFixed(2);
-          }
-        });
-      });
+        function viewOrder(storeId, storeName) {
+            window.location.href = 'order/index.php?store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
+        }
     </script>
     <script>
     function toggleActions(button) {
@@ -381,7 +330,7 @@ function displayPGFeeRate()
         var actionsList = button.nextElementSibling;
 
         // Toggle the display style of the actions-list div
-        if (actionsList.style.display === 'none') {
+        if (actionsList.style.display === 'none' || actionsList.style.display === '') {
             actionsList.style.display = 'block';
         } else {
             actionsList.style.display = 'none';

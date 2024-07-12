@@ -12,12 +12,13 @@ function displayUser() {
           $shortUserId = substr($row['user_id'], 0, 8);
           $checked = $row['status'] == 'Active' ? 'checked' : '';
           echo "<tr data-id='" . $row['user_id'] . "'>";
-          echo "<td style='text-align:center;'>" . $shortUserId . "</td>";
-          echo "<td style='text-align:center;'>" . $row['name'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['email_address'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['type'] . "</td>";
-          echo "<td style='text-align:center;'>" . ucfirst($row['status']) . "</td>";
-          echo "<td style='text-align:center;'>";
+          echo "<td style='text-align:center;vertical-align: middle;'>" . $shortUserId . "</td>";
+          echo "<td style='text-align:center;vertical-align: middle;'>" . $row['name'] . "</td>";
+          echo "<td style='text-align:center;vertical-align: middle;'>" . $row['email_address'] . "</td>";
+          echo "<td style='text-align:center;vertical-align: middle;'>" . $row['type'] . "</td>";
+          echo "<td style='text-align:center;vertical-align: middle;'>" . $row['department'] . "</td>";
+          echo "<td style='text-align:center;vertical-align: middle;'>" . $row['status'] . "</td>";
+          echo "<td style='text-align:center;vertical-align: middle;'>";
           echo "<div class='form-check form-switch form-switch-lg' style='display: flex; justify-content: center; accent-color: red;'>";
           echo "<input class='form-check-input' type='checkbox' role='switch' id='flexSwitchCheckChecked' $checked>";
           echo "</div>";
@@ -98,6 +99,7 @@ function displayUser() {
                   <th>Name</th>
                   <th>Email Address</th>
                   <th>Type</th>
+                  <th>Department</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -178,7 +180,7 @@ function displayUser() {
           data: { userId: userId, status: status },
           success: function(response) {
             $('#confirmButton').data('confirmed', true);
-            $(`tr[data-id='${userId}'] td:nth-child(5)`).text(status.charAt(0).toUpperCase() + status.slice(1));
+            $(`tr[data-id='${userId}'] td:nth-child(6)`).text(status.charAt(0).toUpperCase() + status.slice(1));
           },
           error: function(xhr, status, error) {
             console.error('Error updating status: ' + error);

@@ -87,10 +87,10 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
         <div class="custom-box pt-4">
             <span><a href="javascript:history.back()"><span class="back"><i
                             class="fa-regular fa-circle-left fa-lg"></i><span
-                            style="font-size:17px;color:grey;cursor:pointer;"> Back to Fees</span></span></a>
+                            style="font-size:17px;color:grey;cursor:pointer;"> Back to Promos</span></span></a>
                 <div class="upload pt-3" style="text-align:left;">
                     <div class="add-btns">
-                        <p class="title">Upload Fees</p>
+                        <p class="title">Upload Promos</p>
                         <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
                     </div>
 
@@ -123,7 +123,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
                 <div class="alert-custom-filename alert alert-danger" role="alert"
                     style="border-left:solid 3px #f01e2c;">
-                    <i class="fa-solid fa-circle-exclamation"></i> Please upload the correct file named "Fee
+                    <i class="fa-solid fa-circle-exclamation"></i> Please upload the correct file named "Promo
                     Listing.csv" !
                 </div>
 
@@ -136,7 +136,6 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                     document.getElementById('uploadForm').addEventListener('submit', function (event) {
                         event.preventDefault(); // Prevent default form submission
 
-                        // Check if file name is 'Merchant Listing.csv'
                         var fileInput = document.getElementById('fileToUpload');
                         var fileName = fileInput.value.split('\\').pop(); // Get the file name without path
 
@@ -148,7 +147,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                             return; // Prevent form submission
                         }
 
-                        if (fileName !== 'Fee Listing.csv') {
+                        if (fileName !== 'Promo Listing.csv') {
                             document.querySelector('.alert-custom-filename').style.display = 'block'; // Show filename alert
                             setTimeout(function () {
                                 document.querySelector('.alert-custom-filename').style.display = 'none'; // Hide after 3 seconds

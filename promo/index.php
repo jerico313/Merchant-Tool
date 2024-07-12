@@ -1,44 +1,52 @@
 <?php
 include_once("../header.php");
 
-function displayPGFeeRate()
+function displayStore()
 {
     global $conn, $type;
-    $sql = "SELECT fee.*, merchant.merchant_name FROM fee INNER JOIN merchant ON fee.merchant_id = merchant.merchant_id";
+
+    $sql = "SELECT promo.*, merchant.merchant_name 
+            FROM promo 
+            JOIN merchant ON promo.merchant_id = merchant.merchant_id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $shortFeeId = substr($row['fee_id'], 0, 8);
-            echo "<tr data-id='" . $row['fee_id'] . "'>";
-            echo "<td style='text-align:center;'>" . $shortFeeId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['merchant_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['paymaya_credit_card'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['gcash'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['gcash_miniapp'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['paymaya'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['maya_checkout'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['maya'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['lead_gen_commission'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['commission_type'] . "</td>";
-            echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
-            $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-            echo "<td style='text-align:center;' class='actions-cell'>";
+            $shortPromoId = substr($row['promo_id'], 0, 8);
+            $promo_amount = number_format($row['promo_amount'], 2);
+            $start_date = empty($row['start_date']) ? 'No Start Date' : $row['start_date'];
+            $end_date = empty($row['end_date']) ? 'No End Date' : $row['end_date'];
+            echo "<tr style='padding:15px 0;' data-uuid='" . $row['promo_id'] . "'>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $shortPromoId . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_code'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $promo_amount . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['voucher_type'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_category'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_group'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_type'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_details'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['remarks'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['bill_status'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $start_date . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $end_date . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['remarks2'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
 
-            echo "<button class='btn' style='border:none;background-color:transparent;border-radius:10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:20px;color:#4BB0B8;padding-top:3px;'></i></button>";
+            echo "<button class='btn' style='border:none;background-color:#4BB0B8;border-radius:20px;padding:0 10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#fff;'></i></button>";
 
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
             echo "<ul class='list-group'>";
 
             // Dropdown menu items
             if ($type !== 'User') {
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='editFee(\"" . $row['fee_id'] . "\")' style='color:#E96529;pointer'>Edit</a></li>";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='editPromo(\"" . $row['promo_id'] . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;pointer'>Edit</a></li>";
             }
 
-            echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='viewHistory(\"" . $row['fee_id'] . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;pointer'>View History</a></li>";
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;pointer'>View History</a></li>";
 
-            echo "</ul>";
-            echo "</div>"; 
+            echo "</ul>"; 
+            echo "</div>";
 
             echo "</td>";
             echo "</tr>";
@@ -83,20 +91,19 @@ function displayPGFeeRate()
     }
 
     @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-.action-item {
-  animation: fadeIn 0.3s ease forwards;
-}
-
+    .action-item {
+      animation: fadeIn 0.3s ease forwards;
+    }
 
     .add-btns {
       padding-bottom: 0px;
@@ -113,6 +120,26 @@ function displayPGFeeRate()
     .form-label {
       font-weight: bold;
     }
+
+    table.dataTable tbody th:last-child,
+        table.dataTable tbody td:last-child {
+            position: sticky;
+            right: 0;
+            z-index: 2;
+            background-color: #F1F1F1 !important;
+            box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+            -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+            -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+        }
+
+        table thead th:last-child {
+            position: sticky !important;
+            right: 0;
+            z-index: 2;
+            box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+            -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+            -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+        }
 
     @media only screen and (max-width: 767px) {
 
@@ -223,157 +250,190 @@ function displayPGFeeRate()
       <div class="sub" style="text-align:left;">
 
         <div class="add-btns">
-          <p class="title">Fees</p>
+          <p class="title">Promo</p>
           <a href="upload.php"><button type="button" class="btn btn-danger add-merchant"><i
-                class="fa-solid fa-upload"></i> Upload Fees</button></a>
+                class="fa-solid fa-upload"></i> Upload Promo</button></a>
         </div>
 
         <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-          <table id="example" class="table bord" style="width:100%;">
+          <table id="example" class="table bord" style="width:200%;">
             <thead>
-              <tr>
-                <th>Fee ID</th>
-                <th>Merchant Name</th>
-                <th>Paymaya Credit Card</th>
-                <th>GCash</th>
-                <th>GCash Miniapp</th>
-                <th>Paymaya</th>
-                <th>Maya Checkout</th>
-                <th>Maya</th>
-                <th>Leadgen Commission</th>
-                <th>Commission Type</th>
-                <th style="display:none;"></th>
-                <th style="width:100px;">Action</th>
+            <tr>
+                  <th>Promo ID</th>
+                  <th>Promo Code</th>
+                  <th>Merchant Name</th>
+                  <th>Promo Amount</th>
+                  <th>Voucher Type</th>
+                  <th>Promo Category</th>
+                  <th>Promo Group</th>
+                  <th>Promo Type</th>
+                  <th>Promo Details</th>
+                  <th>Remarks</th>
+                  <th>Bill Status</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Remarks 2</th>
+                  <th style='width:50px;'>Action</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
-              <?php displayPGFeeRate(); ?>
+              <?php displayStore(); ?>
             </tbody>
           </table>
         </div>
       </div>
     </div>
     <!-- Edit Modal -->
-    <div class="modal fade" id="editFeeModal" data-bs-backdrop="static" tabindex="-1"
-      aria-labelledby="editMerchantModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius:20px;">
-          <div class="modal-header border-0">
-            <p class="modal-title" id="editMerchantModalLabel" style="font-size:15px;font-weight:bold;">Edit Fee Details
-            </p>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="editfeeForm" action="edit.php" method="POST">
-              <input type="hidden" id="feeId" name="feeId">
-              <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-              <input type="hidden" id="merchantId" name="merchantId">
-              <div class="mb-3">
-                <label for="paymayaCreditCard" class="form-label">Paymaya Credit Card, Maya Checkout, & Maya</label>
-                <input type="text" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard">
-              </div>
-              <div class="mb-3">
-                <label for="gcash" class="form-label">GCash</label>
-                <input type="text" class="form-control" id="gcash" name="gcash">
-              </div>
-              <div class="mb-3">
-                <label for="gcashMiniapp" class="form-label">GCash Miniapp</label>
-                <input type="text" class="form-control" id="gcashMiniapp" name="gcashMiniapp">
-              </div>
-              <div class="mb-3">
-                <label for="paymaya" class="form-label">Paymaya</label>
-                <input class="form-control" rows="3" id="paymaya" name="paymaya" style="padding:5px 5px;"
-                  required></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="leadgenCommission" class="form-label">Leadgen Commission</label>
-                <input class="form-control" rows="3" id="leadgenCommission" name="leadgenCommission"
-                  style="padding:5px 5px;" required>
-              </div>
-              <div class="mb-3">
-                <label for="commissionType" class="form-label">Commission Type</label>
-                <select class="form-select" id="commissionType" name="commissionType" required>
-                  <option value="VAT Inc">VAT Inc</option>
-                  <option value="VAT Exc">VAT Exc</option>
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary"
-                style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
-            </form>
-          </div>
+    <div class="modal fade" id="editStoreModal" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="editStoreModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="border-radius:20px;">
+                <div class="modal-header border-0">
+                    <p class="modal-title" id="editPromoModalLabel" style="font-size:15px;font-weight:bold;">Edit Promo
+                        Details</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPromoForm" action="edit.php" method="POST">
+                        <input type="hidden" id="promoId" name="promoId">
+                        <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="promoCode" class="form-label">Promo Code</label>
+                                <input type="text" class="form-control" id="promoCode" name="promoCode">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="promoDetails" class="form-label">Promo Details</label>
+                                <textarea class="form-control" rows="2" id="promoDetails" name="promoDetails"
+                                    style="padding:5px 5px;" required></textarea>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="promoAmount" class="form-label">Promo Amount</label>
+                                <input type="text" class="form-control" id="promoAmount" name="promoAmount">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="remarks" class="form-label">Remarks</label>
+                                <input type="text" class="form-control" id="remarks" name="remarks">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="voucherType" class="form-label">Voucher Type</label>
+                                <select class="form-select" id="voucherType"  name="voucherType" required>
+                                    <option value="Coupled">Coupled</option>
+                                    <option value="Decoupled">Decoupled</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="billStatus" class="form-label">Bill Status</label>
+                                <select class="form-select" id="billStatus" name="billStatus" required>
+                                    <option value="PRE-TRIAL">PRE-TRIAL</option>
+                                    <option value="BILLABLE">BILLABLE</option>
+                                    <option value="NOT BILLABLE">NOT BILLABLE</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="promoCategory" class="form-label">Promo Category</label>
+                                <select class="form-select" id="promoCategory" name="promoCategory" required>
+                                    <option value="Grab & Go">Grab & Go</option>
+                                    <option value="Casual Dining">Casual Dining</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="promoGroup" class="form-label">Promo Group</label>
+                                <select class="form-select" id="promoGroup" name="promoGroup" required>
+                                    <option value="Booky">Booky</option>
+                                    <option value="Gcash">Gcash</option>
+                                    <option value="Unionbank">Unionbank</option>
+                                    <option value="Gcash/Booky">Gcash/Booky</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="promoType" class="form-label">Promo Type</label>
+                                <select class="form-select" id="promoType" name="promoType" required>
+                                    <option value="BOGO">BOGO</option>
+                                    <option value="Bundle">Bundle</option>
+                                    <option value="Fixed discount">Fixed discount</option>
+                                    <option value="Free item">Free item</option>
+                                    <option value="Fixed discount, Free item">Fixed discount, Free item</option>
+                                    <option value="Percent discount">Percent discount</option>
+                                    <option value="X for Y">X for Y</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="mb-3">
+                                    <label for="startDate" class="form-label">Start Date</label>
+                                    <input type="date" class="form-control" id="startDate" name="startDate" required>
+                                </div>
+                                <div class="">
+                                    <label for="endDate" class="form-label">End Date</label>
+                                    <input type="date" class="form-control" id="endDate" name="endDate" required>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"
+                            style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save
+                            changes</button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
     <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
     <script src="./js/script.js"></script>
     <script>
-      $(document).ready(function () {
-        if ($.fn.DataTable.isDataTable('#example')) {
-          $('#example').DataTable().destroy();
+        $(document).ready(function () {
+            if ($.fn.DataTable.isDataTable('#example')) {
+                $('#example').DataTable().destroy();
+            }
+
+            $('#example').DataTable({
+                scrollX: true
+            });
+        });
+        
+        function viewHistory(storeId, promoId, promoCode) {
+            window.location.href = 'history.php?store_id=' + encodeURIComponent(storeId) + '&promo_id=' + encodeURIComponent(promoId) + '&promo_code=' + encodeURIComponent(promoCode);
         }
-
-        $('#example').DataTable({
-          scrollX: true,
-          columnDefs: [
-            { orderable: false, targets: [2, 3, 4, 5, 6, 7, 8, 9, 10] }    // Disable sorting for the specified columns
-          ],
-          order: []  // Ensure no initial ordering
-        });
-      });
-
-      function viewHistory(fee_id, merchant_name) {
-        window.location.href = 'history.php?fee_id=' + encodeURIComponent(fee_id) + '&merchant_name=' + encodeURIComponent(merchant_name);
-      }
-
     </script>
     <script>
-      function editFee(feeUuid) {
-        // Fetch the current data of the selected merchant
-        var feeRow = $('#dynamicTableBody').find('tr[data-id="' + feeUuid + '"]');
-        var paymayaCreditCard = feeRow.find('td:nth-child(3)').text();
-        var gcash = feeRow.find('td:nth-child(4)').text();
-        var gcashMiniapp = feeRow.find('td:nth-child(5)').text();
-        var paymaya = feeRow.find('td:nth-child(6)').text();
-        var mayaCheckout = feeRow.find('td:nth-child(7)').text();
-        var maya = feeRow.find('td:nth-child(8)').text();
-        var leadgenCommission = feeRow.find('td:nth-child(9)').text();
-        var commissionType = feeRow.find('td:nth-child(10)').text();
-        var merchantId = feeRow.find('td:nth-child(11)').text();
+        function editPromo(promoId) {
+            // Fetch the current data of the selected promo
+            var promoRow = $('#dynamicTableBody').find('tr[data-uuid="' + promoId + '"]');
+            var promoCode = promoRow.find('td:nth-child(2)').text();
+            var merchantName = promoRow.find('td:nth-child(3)').text();
+            var promoAmount = promoRow.find('td:nth-child(4)').text();
+            var voucherType = promoRow.find('td:nth-child(5)').text();
+            var promoCategory = promoRow.find('td:nth-child(6)').text();
+            var promoGroup = promoRow.find('td:nth-child(7)').text();
+            var promoType = promoRow.find('td:nth-child(8)').text();
+            var promoDetails = promoRow.find('td:nth-child(9)').text();
+            var remarks = promoRow.find('td:nth-child(10)').text();
+            var billStatus = promoRow.find('td:nth-child(11)').text();
+            var startDate = promoRow.find('td:nth-child(12)').text();
+            var endDate = promoRow.find('td:nth-child(13)').text();
+            var remarks2 = promoRow.find('td:nth-child(14)').text();
 
-        // Set values in the edit modal
-        $('#feeId').val(feeUuid);
-        $('#paymayaCreditCard').val(paymayaCreditCard);
-        $('#gcash').val(gcash);
-        $('#gcashMiniapp').val(gcashMiniapp);
-        $('#paymaya').val(paymaya);
-        $('#mayaCheckout').val(mayaCheckout);
-        $('#maya').val(maya);
-        $('#leadgenCommission').val(leadgenCommission);
-        $('#commissionType').val(commissionType);
-        $('#merchantId').val(merchantId);
+            // Set the modal input fields with the current data
+            $('#promoId').val(promoId);
+            $('#editPromoForm #promoCode').val(promoCode);
+            $('#editPromoForm #merchantName').val(merchantName);
+            $('#editPromoForm #promoAmount').val(promoAmount);
+            $('#editPromoForm #voucherType').val(voucherType);
+            $('#editPromoForm #promoCategory').val(promoCategory);
+            $('#editPromoForm #promoGroup').val(promoGroup);
+            $('#editPromoForm #promoType').val(promoType);
+            $('#editPromoForm #promoDetails').val(promoDetails);
+            $('#editPromoForm #remarks').val(remarks);
+            $('#editPromoForm #billStatus').val(billStatus);
+            $('#editPromoForm #startDate').val(startDate);
+            $('#editPromoForm #endDate').val(endDate);
+            $('#editPromoForm #remarks2').val(remarks2);
 
-        // Open the edit modal
-        $('#editFeeModal').modal('show');
-      }
-    </script>
-    <script>
-      // Get all inputs that need conversion
-      const inputs = document.querySelectorAll('#paymayaCreditCard, #gcash, #gcashMiniapp, #paymaya, #leadgenCommission');
-
-      // Add event listeners to each input
-      inputs.forEach(input => {
-        input.addEventListener('blur', function () {
-          let value = this.value;
-
-          // Check if the value is a number and if it's a whole number
-          if (!isNaN(value) && Number.isInteger(parseFloat(value))) {
-            // Convert the whole number to a decimal
-            this.value = parseFloat(value).toFixed(2);
-          }
-        });
-      });
+            // Show the modal
+            $('#editStoreModal').modal('show');
+        }
     </script>
     <script>
     function toggleActions(button) {
@@ -381,7 +441,7 @@ function displayPGFeeRate()
         var actionsList = button.nextElementSibling;
 
         // Toggle the display style of the actions-list div
-        if (actionsList.style.display === 'none') {
+        if (actionsList.style.display === 'none' || actionsList.style.display === '') {
             actionsList.style.display = 'block';
         } else {
             actionsList.style.display = 'none';

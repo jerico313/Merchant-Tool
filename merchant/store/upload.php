@@ -91,40 +91,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                             style="font-size:17px;color:grey;cursor:pointer;"> Back to Stores</span></span></a>
                 <div class="upload pt-4" style="text-align:left;">
                     <div class="add-btns">
-                        <p class="title">Upload Stores</p>
-                        <button type="button" class="btn btn-warning check-report" id="addMerchantBtn"><i
-                                class="fa-solid fa-plus"></i> Add New Stores </button>
-                        <form id="uploadForm" action="upload_process.php??merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" method="post" enctype="multipart/form-data">
-                    </div>
-
-                    <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                        <div class="file" style="padding:10px 10px 10px 0;font-size:15px;">
-                            <p style="font-weight:bold;">Selected File: <span class="filename"
-                                    style="color:#E96529"></span></p>
-                        </div>
-                        <label for="fileToUpload" style="background-color:#fff;font-size:20px;" class="upload-btn"
-                            id="uploadBtn"><i class="fa-solid fa-cloud-arrow-up fa-2xl"
-                                style="font-size:40px;padding-bottom:30px;"></i><br>Choose a File</label>
-                        <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
-                        <div class="uploadfile" style="text-align:right;">
-                            <button type="button" class="btn btn-danger clear" id="clearButton">Clear</button>
-                            <button type="submit" class="btn btn-secondary upload_file"
-                                id="submitButton"><span>Submit</span></button>
-                        </div>
-                        <div class="file-preview" style="margin-top:20px;">
-                            <div class="table-container">
-                                <!-- Table will be appended here -->
-                            </div>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="form pt-4" style="text-align:left;display:none;">
-                    <div class="add-btns">
                         <p class="title">Store Details</p>
-                        <button type="button" class="btn btn-warning check-report" id="uploadMerchantBtn"><i
-                                class="fa-solid fa-upload"></i> Upload Stores </button>
                         <button type="button" class="btn btn-success" id="add-field"><i class="fa-solid fa-plus"></i>
                             Add More </button>
                     </div>
@@ -209,20 +176,6 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
     </div>
     <script src="../../js/file_upload.js"></script>
     <script>
-        document.getElementById('addMerchantBtn').addEventListener('click', function () {
-            document.querySelector('.form').style.display = 'block';
-            document.querySelector('.upload').style.display = 'none';
-        });
-
-        document.getElementById('uploadMerchantBtn').addEventListener('click', function () {
-            document.querySelector('.form').style.display = 'none';
-            document.querySelector('.upload').style.display = 'block';
-        });
-
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById('MerchantNum').dispatchEvent(new Event('input'));
-        });
-
         document.getElementById('add-field').addEventListener('click', function () {
             var formFields = document.getElementById('form-fields');
             var newField = document.createElement('div');

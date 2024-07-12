@@ -16,21 +16,21 @@ function displayOrder() {
   if ($result->num_rows > 0) {
       $count = 1;
       while ($row = $result->fetch_assoc()) {
-        $shortTransactiontId = substr($row['transaction_id'], 0, 8);
-        $gross_amount = number_format($row['gross_amount'], 2);
-            $amount_discounted = number_format($row['amount_discounted'], 2);
-            $discount = number_format($row['discount'], 2);
-          echo "<tr data-id='" . $row['transaction_id'] . "'>";
+          $shortTransactiontId = substr($row['transaction_id'], 0, 8);
+          $gross_amount = number_format($row['gross_amount'], 2);
+          $amount_discounted = number_format($row['amount_discounted'], 2);
+          $discount = number_format($row['discount'], 2);
+          echo "<tr style='padding:20px 0;' data-id='" . $row['transaction_id'] . "'>";
           echo "<td style='text-align:center;'>" . $shortTransactiontId . "</td>";
           echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>"; // Display store name
           echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $gross_amount . "</td>";
-            echo "<td style='text-align:center;'>" . $discount . "</td>";
-            echo "<td style='text-align:center;'>" . $discount . "</td>";
-            echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
+          echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
+          echo "<td style='text-align:center;'>" . $gross_amount . "</td>";
+          echo "<td style='text-align:center;'>" . $discount . "</td>";
+          echo "<td style='text-align:center;'>" . $discount . "</td>";
+          echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
           echo "</tr>";
           $count++;
       }
