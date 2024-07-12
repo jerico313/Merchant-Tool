@@ -10,21 +10,19 @@ function displayMerchant()
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $shortMerchantId = substr($row['merchant_id'], 0, 8);
-            $shortSalesId = substr($row['sales_id'], 0, 8);
-            $shortAccountManagerId = substr($row['account_manager_id'], 0, 8);
 
             echo "<tr data-uuid='" . $row['merchant_id'] . "'>";
-            echo "<td style='text-align:center;'>" . $shortMerchantId . "</td>";
-            echo "<td style='text-align:center;'>" . htmlspecialchars($row['merchant_name']) . "</td>";
-            echo "<td style='text-align:center;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
-            echo "<td style='text-align:center;'>" . htmlspecialchars($row['business_address']) . "</td>";
-            echo "<td style='text-align:center;'>" . htmlspecialchars($row['email_address']) . "</td>";
-            echo "<td style='text-align:center;'>" . $shortSalesId . "</td>";
-            echo "<td style='text-align:center;'>" . htmlspecialchars($row['sales']) . "</td>";
-            echo "<td style='text-align:center;'>" . $shortAccountManagerId . "</td>";
-            echo "<td style='text-align:center;'>" . htmlspecialchars($row['account_manager']) . "</td>";
-            echo "<td style='text-align:center;' class='actions-cell'>"; 
-            echo "<button class='btn' style='border:none;background-color:transparent;border-radius:10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:20px;color:#4BB0B8;padding-top:3px;'></i></button>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $shortMerchantId . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['merchant_name']) . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['business_address']) . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['email_address']) . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['sales']) . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['account_manager']) . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;display:none;'>" . htmlspecialchars($row['account_manager_id']) . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;display:none;'>" . htmlspecialchars($row['sales_id']) . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>"; 
+            echo "<button class='btn' style='border:none;background-color:#4BB0B8;border-radius:20px;padding:0 10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#fff;'></i></button>";
 
             // Action list (initially hidden)
             echo "<div class='mt-2 actions-list' style='display:none;'>"; // Hidden initially
@@ -52,8 +50,23 @@ function displayMerchant()
 
     $conn->close();
 }
-?>
 
+function fetchEmployeeNames() {
+  include("../inc/config.php");
+
+  $employeeSql = "SELECT user_id, name FROM user";
+  $employeeResult = $conn->query($employeeSql);
+
+  if ($employeeResult->num_rows > 0) {
+      while ($employeeRow = $employeeResult->fetch_assoc()) {
+          echo "<option value='" . htmlspecialchars($employeeRow['user_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($employeeRow['name'], ENT_QUOTES, 'UTF-8') . "</option>";
+      }
+  } else {
+      echo "<option value=''>No User found</option>";
+  }
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -195,10 +208,10 @@ function displayMerchant()
                 <th style="width:150px !important;">Legal Entity Name</th>
                 <th style="width:250px !important;">Business Address</th>
                 <th style="width:150px !important;">Email Address</th>
-                <th>Sales ID</th>
                 <th style="width:150px !important;">Sales</th>
-                <th style="width:80px !important;">Account Manager ID</th>
                 <th style="width:150px !important;">Account Manager</th>
+                <th style="display:none;"></th>
+                <th style="display:none;"></th>
                 <th style="width:50px !important;">Action</th>
               </tr>
             </thead>
@@ -227,13 +240,6 @@ function displayMerchant()
                 <input type="text" class="form-control" id="merchantName" name="merchantName">
               </div>
               <div class="mb-3">
-                <label for="merchantPartnershipType" class="form-label">Partnership Type</label>
-                <select class="form-select" id="merchantPartnershipType" name="merchantPartnershipType">
-                  <option value="Primary">Primary</option>
-                  <option value="Secondary">Secondary</option>
-                </select>
-              </div>
-              <div class="mb-3">
                 <label for="legalEntityName" class="form-label">Legal Entity Name</label>
                 <input type="text" class="form-control" id="legalEntityName" name="legalEntityName">
               </div>
@@ -245,6 +251,20 @@ function displayMerchant()
                 <label for="emailAddress" class="form-label">Email Address</label>
                 <textarea class="form-control" rows="3" id="emailAddress" name="emailAddress" style="padding:5px 5px;"
                   required></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="sales" class="form-label">Sales</label>
+                <select class="form-select" id="sales" name="sales" required>
+                  <option selected disabled>-- Select Sales --</option>
+                  <?php fetchEmployeeNames(); ?>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="accountManager" class="form-label">Account Manager</label>
+                <select class="form-select" id="accountManager" name="accountManager" required>
+                  <option selected disabled>-- Select Account Manager --</option>
+                  <?php fetchEmployeeNames(); ?>
+                </select>
               </div>
               <button type="submit" class="btn btn-primary"
                 style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
@@ -335,10 +355,11 @@ function displayMerchant()
         // Fetch the current data of the selected merchant
         var merchantRow = $('#dynamicTableBody').find('tr[data-uuid="' + merchantUuid + '"]');
         var merchantName = merchantRow.find('td:nth-child(2)').text();
-        var merchantPartnershipType = merchantRow.find('td:nth-child(3)').text();
-        var legalEntityName = merchantRow.find('td:nth-child(4)').text();
-        var businessAddress = merchantRow.find('td:nth-child(5)').text();
-        var emailAddress = merchantRow.find('td:nth-child(6)').text();
+        var legalEntityName = merchantRow.find('td:nth-child(3)').text();
+        var businessAddress = merchantRow.find('td:nth-child(4)').text();
+        var emailAddress = merchantRow.find('td:nth-child(5)').text();
+        var sales = merchantRow.find('td:nth-child(9)').text();
+        var accountManager = merchantRow.find('td:nth-child(8)').text();
 
         // Set values in the edit modal
         $('#merchantId').val(merchantUuid);
@@ -347,6 +368,8 @@ function displayMerchant()
         $('#legalEntityName').val(legalEntityName);
         $('#businessAddress').val(businessAddress);
         $('#emailAddress').val(emailAddress);
+        $('#sales').val(sales);
+        $('#accountManager').val(accountManager);
 
         // Open the edit modal
         $('#editMerchantModal').modal('show');

@@ -55,7 +55,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
             }
 
-            echo "<tr style='padding:10px;'>";
+            echo "<tr style='padding:15px 0;'>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
             echo "<td style='text-align:center;width:7%;'>" . $row['Transaction Date'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
