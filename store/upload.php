@@ -7,7 +7,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>Upload Stores</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
@@ -133,54 +133,49 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                 </div>
 
                 <script>
-                    document.getElementById('uploadForm').addEventListener('submit', function (event) {
-                        event.preventDefault(); // Prevent default form submission
+                    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-                        // Check if file name is 'Merchant Listing.csv'
-                        var fileInput = document.getElementById('fileToUpload');
-                        var fileName = fileInput.value.split('\\').pop(); // Get the file name without path
+    // Check if file name is 'Merchant Listing.csv'
+    var fileInput = document.getElementById('fileToUpload');
+    var fileName = fileInput.value.split('\\').pop(); // Get the file name without path
 
-                        if (fileName === '') {
-                            document.querySelector('.alert-custom').style.display = 'block'; // Show empty file alert
-                            setTimeout(function () {
-                                document.querySelector('.alert-custom').style.display = 'none'; // Hide after 3 seconds
-                            }, 3000);
-                            return; // Prevent form submission
-                        }
+    if (fileName === '') {
+        document.querySelector('.alert-custom').style.display = 'block'; // Show empty file alert
+        setTimeout(function() {
+            document.querySelector('.alert-custom').style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
+        return; // Prevent form submission
+    }
 
-                        if (fileName !== 'Store Listing.csv') {
-                            document.querySelector('.alert-custom-filename').style.display = 'block'; // Show filename alert
-                            setTimeout(function () {
-                                document.querySelector('.alert-custom-filename').style.display = 'none'; // Hide after 3 seconds
-                            }, 3000);
-                            return; // Prevent form submission
-                        }
+    if (fileName !== 'Store Listing.csv') {
+        document.querySelector('.alert-custom-filename').style.display = 'block'; // Show filename alert
+        setTimeout(function() {
+            document.querySelector('.alert-custom-filename').style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
+        return; // Prevent form submission
+    }
 
-                        // Check file type
-                        if (!fileName.endsWith('.csv')) {
-                            document.querySelector('.alert-custom-filetype').style.display = 'block'; // Show file type alert
-                            setTimeout(function () {
-                                document.querySelector('.alert-custom-filetype').style.display = 'none'; // Hide after 3 seconds
-                            }, 3000);
-                            return; // Prevent form submission
-                        }
+    // Check file type
+    if (!fileName.endsWith('.csv')) {
+        document.querySelector('.alert-custom-filetype').style.display = 'block'; // Show file type alert
+        setTimeout(function() {
+            document.querySelector('.alert-custom-filetype').style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
+        return; // Prevent form submission
+    }
 
-                        // Get the file size in bytes
-                        var fileSize = fileInput.files[0].size;
+    // Get the file size in bytes
+    var fileSize = fileInput.files[0].size; 
 
-                        // Update the submit button text with file size and show loading spinner
-                        var submitButton = document.getElementById('submitButton');
-                        var fileSizeKB = (fileSize / 1024).toFixed(2); // Convert bytes to KB
-                        submitButton.innerHTML = `<div class="spinner-border spinner-border-sm" role="status"></div><span> Uploading (${fileSizeKB} KB)...</span>`;
+    // Update the submit button text with file size and show loading spinner
+    var submitButton = document.getElementById('submitButton');
+    var fileSizeKB = (fileSize / 1024).toFixed(2); 
+    submitButton.innerHTML = `<div class="spinner-border spinner-border-sm" role="status"></div><span> Uploading (${fileSizeKB} KB)...</span>`;
 
-                        // If valid, simulate loading time based on file size and submit the form
-                        var loadingTime = fileSize / 1024; // Simulate loading time in seconds based on file size
-                        setTimeout(function () {
-                            document.getElementById('uploadForm').submit();
-                        }, loadingTime * 1000);
-                    });
-
-
+    // Directly submit the form after updating the submit button
+    document.getElementById('uploadForm').submit();
+});
                 </script>
                 <script src="../js/file_upload.js"></script>
 </body>
