@@ -36,7 +36,7 @@ function displayMerchant()
             }
             
             echo "<li class='list-group-item action-item' style='animation-delay: 0.3s;'><a href='#' onclick='checkReport(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>Check Report</a></li>";
-            echo "<li class='list-group-item action-item' style='animation-delay: 0.4s;'><a href='#'  onclick='viewReport(\"" . $escapedMerchantId  . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View Report</a></li> ";
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.4s;'><a href='#'  onclick='viewReport(\"" . $escapedMerchantId  . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View Reports</a></li> ";
             echo "</ul>";
             echo "</div>"; 
             
