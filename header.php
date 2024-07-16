@@ -56,9 +56,9 @@ if (isset($_SESSION['user_id'])) {
         border:solid #4BB0B8 2px !important ;
         border-radius: 30px !important;
         background-color: #4BB0B8 !important;
-        box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27) !important;
--webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27) !important;
--moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27) !important;
+        box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;
+        -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;
+        -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;
       } 
     </style>
 </head>
