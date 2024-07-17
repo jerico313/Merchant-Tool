@@ -23,7 +23,7 @@ SELECT
                 WHEN `a`.`table_name` = 'report_history_gcash_body' THEN `rhgb`.`gcash_report_body_id`
                 ELSE NULL
             END,
-            'xxxxxxxx'
+            'Deleted'
         ),
         1,
         8
@@ -42,9 +42,9 @@ SELECT
             WHEN `a`.`table_name` = 'report_history_decoupled' THEN `rhd`.`settlement_number`
             WHEN `a`.`table_name` = 'report_history_gcash_head' THEN `rhgh`.`settlement_number`
             WHEN `a`.`table_name` = 'report_history_gcash_body' THEN `rhgh`.`settlement_number`
-            ELSE 'Deleted'
+            ELSE NULL
         END,
-        'xxxxxxxx'
+        'Deleted'
     ) AS `column_name`,
     `a`.`activity_type` AS `activity_type`,
     `a`.`description` AS `description`,
