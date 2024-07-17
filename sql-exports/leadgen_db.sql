@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2024 at 01:35 PM
+-- Generation Time: Jul 17, 2024 at 04:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -51,7 +51,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_all` (IN `merchant
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -155,7 +155,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_all` (IN `merchant
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -273,7 +273,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_billable` (IN `mer
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -377,7 +377,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_billable` (IN `mer
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -495,7 +495,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_pretrial` (IN `mer
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -599,7 +599,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_pretrial` (IN `mer
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -718,7 +718,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_all` (IN `store_id` V
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -822,7 +822,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_all` (IN `store_id` V
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -941,7 +941,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_billable` (IN `store_
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1045,7 +1045,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_billable` (IN `store_
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1164,7 +1164,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_pretrial` (IN `store_
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1268,7 +1268,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_pretrial` (IN `store_
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1383,7 +1383,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_merchant_all` (IN `mercha
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1444,7 +1444,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_merchant_all` (IN `mercha
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1516,7 +1516,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_merchant_billable` (IN `m
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1577,7 +1577,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_merchant_billable` (IN `m
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1649,7 +1649,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_merchant_pretrial` (IN `m
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1710,7 +1710,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_merchant_pretrial` (IN `m
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1783,7 +1783,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_store_all` (IN `store_id`
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1844,7 +1844,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_store_all` (IN `store_id`
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1917,7 +1917,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_store_billable` (IN `stor
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -1978,7 +1978,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_store_billable` (IN `stor
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -2051,7 +2051,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_store_pretrial` (IN `stor
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -2112,7 +2112,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `decoupled_store_pretrial` (IN `stor
 	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	        CASE
                 WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M, %Y''))
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
                 WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
                 ELSE 
@@ -2419,6 +2419,264 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `gcash_store` (IN `store_id` VARCHAR
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_merchant_gcash_report` (IN `merchant_id` VARCHAR(36), IN `start_date` DATE, IN `end_date` DATE)   BEGIN
+    
+    DECLARE v_uuid VARCHAR(36);
+    SET v_uuid = UUID();
+    
+    SET @sql_insert = CONCAT('INSERT INTO report_history_gcash_head
+        (gcash_report_id, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, total_amount, commission_rate,commission_amount, vat_amount, total_commission_fees)
+        SELECT 
+            "', v_uuid, '" AS gcash_report_id,
+            `Merchant ID` AS merchant_id,
+            merchant.legal_entity_name AS merchant_business_name,
+	    `Merchant Name` AS merchant_brand_name,
+            merchant.business_address AS business_address,
+            "', start_date, '" AS settlement_period_start,
+            "', end_date, '" AS settlement_period_end,
+            DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
+	    CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
+	    CASE
+            WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
+            WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+            ELSE 
+                 CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+        END AS settlement_period,
+
+	    SUM(`Cart Amount`) AS total_amount,
+	    `Commission Rate` AS commission_rate,
+	    SUM(`Commission Amount`) AS commission_amount,
+	    SUM(`Commission Amount`) * 0.12 AS vat_amount,
+	    SUM(`Total Billing`) AS total_commission_fees
+        FROM 
+            `transaction_summary_view`
+        JOIN
+            `merchant` ON `Merchant ID` = merchant.`merchant_id`
+        WHERE 
+            `Merchant ID` = "', merchant_id, '"
+            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+            AND `Payment` = ''gcash''
+        GROUP BY 
+            `Merchant ID`');
+
+    PREPARE stmt_insert FROM @sql_insert;
+    EXECUTE stmt_insert;
+    DEALLOCATE PREPARE stmt_insert;
+
+    SET @sql_select = CONCAT('SELECT
+	    "', v_uuid, '" AS gcash_report_id, 
+            `Merchant ID` AS merchant_id,
+            merchant.legal_entity_name AS merchant_business_name,
+	    `Merchant Name` AS merchant_brand_name,
+            merchant.business_address AS business_address,
+            "', start_date, '" AS settlement_period_start,
+            "', end_date, '" AS settlement_period_end,
+	    DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
+	    CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
+	    CASE
+            WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
+            WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+            ELSE 
+                 CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+        END AS settlement_period,
+
+	    SUM(`Cart Amount`) AS total_amount,
+	    `Commission Rate` AS commission_rate,
+	    SUM(`Commission Amount`) AS commission_amount,
+	    SUM(`Commission Amount`) * 0.12 AS vat_amount,
+	    SUM(`Total Billing`) AS total_commission_fees
+        FROM 
+            `transaction_summary_view`
+        JOIN
+            `merchant` ON `Merchant ID` = merchant.`merchant_id`
+        WHERE 
+            `Merchant ID` = "', merchant_id, '"
+            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+            AND `Payment` = ''gcash''
+        GROUP BY 
+            `Merchant ID`');
+
+    PREPARE stmt_select FROM @sql_select;
+    EXECUTE stmt_select;
+    DEALLOCATE PREPARE stmt_select;
+
+    SET @sql_insert1 = CONCAT('INSERT INTO report_history_gcash_body
+        (gcash_report_id, item, quantity_redeemed, net_amount)
+        SELECT 
+            "', v_uuid, '"  AS gcash_report_id,
+            p.promo_code as item,
+            COUNT(`Transaction ID`) AS quantity_redeemed,
+	    SUM(`Cart Amount`) AS net_amount
+        FROM 
+            `transaction_summary_view`
+        JOIN
+            `promo` p ON `Promo Code` = p.promo_code
+        WHERE 
+            `Merchant ID` = "', merchant_id, '"
+            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+            AND `Payment` = ''gcash''
+        GROUP BY 
+            `Promo Code`');
+
+    PREPARE stmt_insert1 FROM @sql_insert1;
+    EXECUTE stmt_insert1;
+    DEALLOCATE PREPARE stmt_insert1;
+
+    SET @sql_select1 = CONCAT('SELECT 
+            "', v_uuid, '"  AS gcash_report_id,
+            p.promo_code as item,
+            COUNT(`Transaction ID`) AS quantity_redeemed,
+	    SUM(`Cart Amount`) AS net_amount
+        FROM 
+            `transaction_summary_view`
+        JOIN
+            `promo` p ON `Promo Code` = p.promo_code
+        WHERE 
+            `Merchant ID` = "', merchant_id, '"
+            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+            AND `Payment` = ''gcash''
+        GROUP BY 
+            `Promo Code`');
+
+    PREPARE stmt_select1 FROM @sql_select1;
+    EXECUTE stmt_select1;
+    DEALLOCATE PREPARE stmt_select1;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_store_gcash_report` (IN `store_id` VARCHAR(36), IN `start_date` DATE, IN `end_date` DATE)   BEGIN
+    
+    DECLARE v_uuid VARCHAR(36);
+    SET v_uuid = UUID();
+    
+    SET @sql_insert = CONCAT('INSERT INTO report_history_gcash_head
+        (gcash_report_id, store_id, store_business_name, store_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, total_amount, commission_rate,commission_amount, vat_amount, total_commission_fees)
+        SELECT 
+            "', v_uuid, '" AS gcash_report_id,
+            `Store ID` AS store_id,
+            store.legal_entity_name AS store_business_name,
+	    `Store Name` AS store_brand_name,
+            store.store_address AS business_address,
+            "', start_date, '" AS settlement_period_start,
+            "', end_date, '" AS settlement_period_end,
+            DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
+	    CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
+	    CASE
+            WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
+            WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+            ELSE 
+                 CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+        END AS settlement_period,
+
+	    SUM(`Cart Amount`) AS total_amount,
+	    `Commission Rate` AS commission_rate,
+	    SUM(`Commission Amount`) AS commission_amount,
+	    SUM(`Commission Amount`) * 0.12 AS vat_amount,
+	    SUM(`Total Billing`) AS total_commission_fees
+        FROM 
+            `transaction_summary_view`
+        JOIN
+            `store` ON `Store ID` = store.`store_id`
+        WHERE 
+            `Store ID` = "', store_id, '"
+            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+            AND `Payment` = ''gcash''
+        GROUP BY 
+            `Store ID`');
+
+    PREPARE stmt_insert FROM @sql_insert;
+    EXECUTE stmt_insert;
+    DEALLOCATE PREPARE stmt_insert;
+
+    SET @sql_select = CONCAT('SELECT
+	    "', v_uuid, '" AS gcash_report_id, 
+            `Store ID` AS store_id,
+            store.legal_entity_name AS store_business_name,
+	    `Store Name` AS store_brand_name,
+            store.store_address AS business_address,
+            "', start_date, '" AS settlement_period_start,
+            "', end_date, '" AS settlement_period_end,
+            DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
+	    CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
+	    CASE
+            WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
+            WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+            ELSE 
+                 CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+        END AS settlement_period,
+
+	    SUM(`Cart Amount`) AS total_amount,
+	    `Commission Rate` AS commission_rate,
+	    SUM(`Commission Amount`) AS commission_amount,
+	    SUM(`Commission Amount`) * 0.12 AS vat_amount,
+	    SUM(`Total Billing`) AS total_commission_fees
+        FROM 
+            `transaction_summary_view`
+        JOIN
+            `store` ON `Store ID` = store.`store_id`
+        WHERE 
+            `Store ID` = "', store_id, '"
+            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+            AND `Payment` = ''gcash''
+        GROUP BY 
+            `Store ID`');
+
+    PREPARE stmt_select FROM @sql_select;
+    EXECUTE stmt_select;
+    DEALLOCATE PREPARE stmt_select;
+
+    SET @sql_insert1 = CONCAT('INSERT INTO report_history_gcash_body
+        (gcash_report_id, item, quantity_redeemed, net_amount)
+        SELECT 
+            "', v_uuid, '"  AS gcash_report_id,
+            p.promo_code as item,
+            COUNT(`Transaction ID`) AS quantity_redeemed,
+	    SUM(`Cart Amount`) AS net_amount
+        FROM 
+            `transaction_summary_view`
+        JOIN
+            `promo` p ON `Promo Code` = p.promo_code
+        WHERE 
+            `Store ID` = "', store_id, '"
+            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+            AND `Payment` = ''gcash''
+        GROUP BY 
+            `Promo Code`');
+
+    PREPARE stmt_insert1 FROM @sql_insert1;
+    EXECUTE stmt_insert1;
+    DEALLOCATE PREPARE stmt_insert1;
+
+    SET @sql_select1 = CONCAT('SELECT 
+            "', v_uuid, '"  AS gcash_report_id,
+            p.promo_code as item,
+            COUNT(`Transaction ID`) AS quantity_redeemed,
+	    SUM(`Cart Amount`) AS net_amount
+        FROM 
+            `transaction_summary_view`
+        JOIN
+            `promo` p ON `Promo Code` = p.promo_code
+        WHERE 
+            `Store ID` = "', store_id, '"
+            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+            AND `Payment` = ''gcash''
+        GROUP BY 
+            `Promo Code`');
+
+    PREPARE stmt_select1 FROM @sql_select1;
+    EXECUTE stmt_select1;
+    DEALLOCATE PREPARE stmt_select1;
+
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -2443,7 +2701,6 @@ CREATE TABLE `activity_history` (
 --
 
 INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_id`, `activity_type`, `description`, `created_at`, `updated_at`) VALUES
-('01b2b4c8-440a-11ef-951c-48e7dad87c24', NULL, 'report_history_coupled', '01b22524-440a-11ef-951c-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nmerchant_business_name: Taipefoods Inc.\nmerchant_brand_name: Shi Lin\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City\nsettlement_period_start: 2024-07-01\nsettlement_period_end: 2024-07-31\nsettlement_number: SR#LG2024-07-17-01b22524\ntotal_successful_orders: 1\ntotal_gross_sales: 4702.00\ntotal_discount: 500.00\ntotal_outstanding_amount_1: 4202.00\nleadgen_commission_rate_base_pretrial: 4202.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 420.20\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees_1: 0.00\ncard_payment_pg_fee: 92.44\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 0.00\ntotal_payment_gateway_fees_1: 92.44\ntotal_outstanding_amount_2: 4202.00\ntotal_commission_fees_2: 0.00\ntotal_payment_gateway_fees_2: 92.44\nbank_fees: 10.00\nwtax_from_gross_sales: 20.55\ncwt_from_transaction_fees: 0.00\ncwt_from_pg_fees: 0.00\ntotal_amount_paid_out: 4079.01', '2024-07-17 06:58:44', '2024-07-17 06:58:44'),
 ('01d65bdb-4412-11ef-951c-48e7dad87c24', NULL, 'merchant', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Update', 'Merchant record updated\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda', '2024-07-17 07:56:00', '2024-07-17 07:56:00'),
 ('031c1b47-3826-11ef-9d23-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'user', '031c090d-3826-11ef-9d23-0a002700000d', 'Add', 'User record added\nemail_address: rominna@booky.ph\npassword: $2y$10$Q49RiBWN5YY4ifaslsE8he7XHED6Jr0vyQ7s5Izij4bg57oneXY9W\nname: Rominna Angeline R. Raymundo\ntype: User\nstatus: Inactive', '2024-07-02 03:48:58', '2024-07-02 04:03:11'),
 ('03cbdfcc-4430-11ef-951c-48e7dad87c24', NULL, 'transaction', 'dd50d96b', 'Update', 'Transaction record updated\nstore_id: a9610fdb-a96e-4415-919f-8e71e1b7659e -> 6cb2f0fe-253d-49c9-b52b-db44354138c8', '2024-07-17 11:30:48', '2024-07-17 11:30:48'),
@@ -2454,8 +2711,6 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('09d8e1a3-342e-11ef-b7ae-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'user', '09d8d971-342e-11ef-b7ae-0a002700000d', 'Add', 'User record added\nemail_address: cookie@booky.ph\npassword: $2y$10$QPrvim.Z8xAZjI2TOLASWeXwuaxjn4dzob7tLlB90Vp9PUpa8XyE2\nname: Cookie\ntype: User\nstatus: Inactive', '2024-06-27 02:36:21', '2024-07-02 04:03:42'),
 ('0d693fae-31f4-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'promo', '8504f541-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Promo record updated\nvoucher_type: Coupled -> Decoupled', '2024-06-24 06:36:13', '2024-07-02 04:03:42'),
 ('0ff4bf89-3826-11ef-9d23-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'user', '031c090d-3826-11ef-9d23-0a002700000d', 'Update', 'User record updated\nuser_id: 031c090d-3826-11ef-9d23-0a002700000d\nstatus: Inactive -> Active', '2024-07-02 03:49:19', '2024-07-02 04:03:42'),
-('10a141b4-4412-11ef-951c-48e7dad87c24', NULL, 'report_history_coupled', '10a0acad-4412-11ef-951c-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL and BILLABLE\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nmerchant_business_name: Taipefoods Inc.\nmerchant_brand_name: Shi Lin\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City\nsettlement_period_start: 2024-07-01\nsettlement_period_end: 2024-07-31\nsettlement_number: SR#LG2024-07-17-10a0acad\ntotal_successful_orders: 2\ntotal_gross_sales: 4702.00\ntotal_discount: 500.00\ntotal_outstanding_amount_1: 4202.00\nleadgen_commission_rate_base_pretrial: 4202.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 420.20\nleadgen_commission_rate_base_billable: 2000.00\ncommission_rate_billable: 10.00%\ntotal_billable: 200.00\ntotal_commission_fees_1: 200.00\ncard_payment_pg_fee: 92.44\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 0.00\ntotal_payment_gateway_fees_1: 92.44\ntotal_outstanding_amount_2: 4202.00\ntotal_commission_fees_2: 200.00\ntotal_payment_gateway_fees_2: 92.44\nbank_fees: 10.00\nwtax_from_gross_sales: 20.55\ncwt_from_transaction_fees: 0.00\ncwt_from_pg_fees: 0.00\ntotal_amount_paid_out: 3879.01', '2024-07-17 07:56:25', '2024-07-17 07:56:25'),
-('1232df7e-36fa-11ef-8f86-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_head', '1232217b-36fa-11ef-8f86-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: July 1, 2024\nsettlement_number: SR#LG2024-07-01-1232217b\nsettlement_period: May 1-Jun 30, 2024\ntotal_amount: 28916.00\ncommission_rate: 10.00%\nvat_amount: 272.26\ntotal_commission_fees: 2466.32', '2024-06-30 16:01:54', '2024-07-02 04:03:42'),
 ('1298e7ee-4407-11ef-951c-48e7dad87c24', NULL, 'report_history_coupled', '12983c64-4407-11ef-951c-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL and BILLABLE\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nmerchant_business_name: Taipefoods Inc.\nmerchant_brand_name: Shi Lin\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City\nsettlement_period_start: 2024-07-01\nsettlement_period_end: 2024-07-31\nsettlement_number: SR#LG2024-07-17-12983c64\ntotal_successful_orders: 2\ntotal_gross_sales: 4702.00\ntotal_discount: 500.00\ntotal_outstanding_amount_1: 4202.00\nleadgen_commission_rate_base_pretrial: 0.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 0.00\nleadgen_commission_rate_base_billable: 6202.00\ncommission_rate_billable: 10.00%\ntotal_billable: 620.20\ntotal_commission_fees_1: 620.20\ncard_payment_pg_fee: 92.44\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 0.00\ntotal_payment_gateway_fees_1: 92.44\ntotal_outstanding_amount_2: 4202.00\ntotal_commission_fees_2: 620.20\ntotal_payment_gateway_fees_2: 92.44\nbank_fees: 10.00\nwtax_from_gross_sales: 20.55\ncwt_from_transaction_fees: 0.00\ncwt_from_pg_fees: 0.00\ntotal_amount_paid_out: 3458.81', '2024-07-17 06:37:43', '2024-07-17 06:37:43'),
 ('1299fbd4-342e-11ef-b7ae-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'user', '09d8d971-342e-11ef-b7ae-0a002700000d', 'Update', 'User record updated\ntype: User -> Admin', '2024-06-27 02:36:35', '2024-07-02 04:03:42'),
 ('12b91ac6-4430-11ef-951c-48e7dad87c24', NULL, 'transaction', '6ea596b0', 'Update', 'Transaction record updated\nstore_id: a9610fdb-a96e-4415-919f-8e71e1b7659e -> b2ce0524-02b0-4bfc-b05d-8b637ff52ff5', '2024-07-17 11:31:13', '2024-07-17 11:31:13'),
@@ -2467,12 +2722,12 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('1a9d5902-4412-11ef-951c-48e7dad87c24', NULL, 'merchant', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Update', 'Merchant record updated\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda', '2024-07-17 07:56:41', '2024-07-17 07:56:41'),
 ('1c32e936-37c4-11ef-bccf-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\npromo_type:  -> Bundle', '2024-07-01 16:08:09', '2024-07-02 04:03:42'),
 ('1c3ad6cf-31f2-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '1c3abfde-31f2-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-1c39d6\ntotal_successful_orders: 4\ntotal_gross_sales: 39614.00\ntotal_discount: 9098.00\ntotal_outstanding_amount_1: 30516.00\nleadgen_commission_rate_base: 30516.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2645.52\ncard_payment_pg_fee: 1121.04\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 1189.52\ntotal_outstanding_amount_2: 30516.00\ntotal_commission_fees_2: 2645.52\ntotal_payment_gateway_fees_2: 1189.52\nbank_fees: 10.00\ncwt_from_gross_sales: 192.12\ncwt_from_transaction_fees: 47.24\ncwt_from_pg_fees: 21.24\ntotal_amount_paid_out: 26548.66', '2024-06-24 06:22:19', '2024-07-02 04:03:42'),
+('1c4bf5c0-4440-11ef-951c-48e7dad87c24', NULL, 'merchant', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Update', 'Merchant record updated\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nemail_address: shilin@booky.ph -> cookie@booky.ph', '2024-07-17 13:26:00', '2024-07-17 13:26:00'),
 ('1c9a876c-4430-11ef-951c-48e7dad87c24', NULL, 'transaction', 'eb9964e2', 'Update', 'Transaction record updated\nstore_id: a9610fdb-a96e-4415-919f-8e71e1b7659e -> b745e964-eba8-4372-a940-167be6c2c227', '2024-07-17 11:31:30', '2024-07-17 11:31:30'),
 ('1ca269d0-32be-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '1ca1a39f-32be-11ef-b166-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_date: June 25, 2024\nsettlement_number: SR#LG2024-06-25-1ca1\nsettlement_period: May 1-31, 2024\ntotal_successful_orders: 1\ntotal_gross_sales: 1800.00\ntotal_discount: 200.00\ntotal_net_sales: 1600.00\nleadgen_commission_rate_base_pretrial: 1600.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 99.68\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees: 0.00', '2024-06-25 06:42:37', '2024-07-02 04:03:42'),
 ('1e5309ed-4412-11ef-951c-48e7dad87c24', NULL, 'merchant', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Update', 'Merchant record updated\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d', '2024-07-17 07:56:48', '2024-07-17 07:56:48'),
 ('209a3b1c-32ba-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '20994229-32ba-11ef-b166-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: SR#LG-20240625-20994\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 28916.00\nleadgen_commission_rate_base: 28916.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2466.32\ncard_payment_pg_fee: 342.54\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 452.66\ntotal_payment_gateway_fees_1: 795.20\ntotal_outstanding_amount_2: 28916.00\ntotal_commission_fees_2: 2466.32\ntotal_payment_gateway_fees_2: 795.20\nbank_fees: 10.00\ncwt_from_gross_sales: 185.09\ncwt_from_transaction_fees: 45.38\ncwt_from_pg_fees: 14.20\ntotal_amount_paid_out: 25517.63', '2024-06-25 06:14:06', '2024-07-02 04:03:42'),
 ('23ebaeda-4406-11ef-951c-48e7dad87c24', NULL, 'promo', 'dee3716e-37c3-11ef-bccf-0a002700000d', 'Update', 'Promo record updated\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nvoucher_type: Decoupled -> Coupled', '2024-07-17 06:31:03', '2024-07-17 06:31:03'),
-('2446383e-4412-11ef-951c-48e7dad87c24', NULL, 'report_history_coupled', '2445ab71-4412-11ef-951c-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL and BILLABLE\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nmerchant_business_name: Taipefoods Inc.\nmerchant_brand_name: Shi Lin\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: \nsettlement_period_start: 2024-07-01\nsettlement_period_end: 2024-07-31\nsettlement_number: SR#LG2024-07-17-2445ab71\ntotal_successful_orders: 2\ntotal_gross_sales: 4702.00\ntotal_discount: 500.00\ntotal_outstanding_amount_1: 4202.00\nleadgen_commission_rate_base_pretrial: 4202.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 420.20\nleadgen_commission_rate_base_billable: 2000.00\ncommission_rate_billable: 10.00%\ntotal_billable: 200.00\ntotal_commission_fees_1: 200.00\ncard_payment_pg_fee: 92.44\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 0.00\ntotal_payment_gateway_fees_1: 92.44\ntotal_outstanding_amount_2: 4202.00\ntotal_commission_fees_2: 200.00\ntotal_payment_gateway_fees_2: 92.44\nbank_fees: 10.00\nwtax_from_gross_sales: 20.55\ncwt_from_transaction_fees: 0.00\ncwt_from_pg_fees: 0.00\ntotal_amount_paid_out: 3879.01', '2024-07-17 07:56:58', '2024-07-17 07:56:58'),
 ('26b16070-4430-11ef-951c-48e7dad87c24', NULL, 'transaction', 'eb9964e2', 'Update', 'Transaction record updated\nstore_id: b745e964-eba8-4372-a940-167be6c2c227 -> 67789d26-7c0f-4147-9f40-149aca3c0f9a', '2024-07-17 11:31:47', '2024-07-17 11:31:47'),
 ('2715561d-31f4-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '27153ce8-31f4-11ef-a30f-0a002700000d', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-2713761c\ntotal_successful_orders: 1\ntotal_gross_sales: 1800.00\ntotal_discount: 200.00\ntotal_net_sales: 1600.00\nleadgen_commission_rate_base_pretrial: 1600.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 179.20\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees: 0.00', '2024-06-24 06:36:56', '2024-07-02 04:03:42'),
 ('28e05e02-3826-11ef-9d23-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'merchant', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Update', 'Merchant record updated\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24', '2024-07-02 03:50:01', '2024-07-02 04:03:42'),
@@ -2480,7 +2735,6 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('2bb7b24b-31fb-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_body', '2bb4d85b-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 2bb4d85b-31fb-11ef-a30f-0a002700000d\nitem: B00KYDEMO\nquantity_redeemed: 2\nnet_amount: 16460.00', '2024-06-24 07:27:11', '2024-07-02 04:03:42'),
 ('2bb80317-31fb-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_body', '2bb4d85b-31fb-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 2bb4d85b-31fb-11ef-a30f-0a002700000d\nitem: GCA5H\nquantity_redeemed: 1\nnet_amount: 1600.00', '2024-06-24 07:27:11', '2024-07-02 04:03:42'),
 ('2c57bc60-3826-11ef-9d23-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'merchant', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Update', 'Merchant record updated\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d', '2024-07-02 03:50:07', '2024-07-02 04:03:42'),
-('2db8bbcd-4416-11ef-951c-48e7dad87c24', NULL, 'report_history_decoupled', '2db852ee-4416-11ef-951c-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL and BILLABLE\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\nmerchant_business_name: Figaro Coffee Systems, Inc.\nmerchant_brand_name: Angel\'s Pizza\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 33 Mayon St. Brgy. Malamig, Mandaluyong City\nsettlement_period_start: 2024-04-01\nsettlement_period_end: 2024-04-30\nsettlement_number: SR#LG2024-07-17-2db852ee\ntotal_successful_orders: 9\ntotal_gross_sales: 0.00\ntotal_discount: 0.00\ntotal_outstanding_amount: 0.00\nleadgen_commission_rate_base_pretrial: 0.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 0.00\nleadgen_commission_rate_base_billable: 9000.00\ncommission_rate_billable: 10.00%\ntotal_billable: 1008.00\ntotal_commission_fees: 1008.00', '2024-07-17 08:25:51', '2024-07-17 08:25:51'),
 ('2ec2656b-31f3-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '2ec24d91-31f3-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-2ec0997c\ntotal_successful_orders: 4\ntotal_gross_sales: 39614.00\ntotal_discount: 9098.00\ntotal_outstanding_amount_1: 30516.00\nleadgen_commission_rate_base: 30516.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2645.52\ncard_payment_pg_fee: 1121.04\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 1189.52\ntotal_outstanding_amount_2: 30516.00\ntotal_commission_fees_2: 2645.52\ntotal_payment_gateway_fees_2: 1189.52\nbank_fees: 10.00\ncwt_from_gross_sales: 192.12\ncwt_from_transaction_fees: 48.58\ncwt_from_pg_fees: 21.24\ntotal_amount_paid_out: 26547.32', '2024-06-24 06:30:00', '2024-07-02 04:03:42'),
 ('30668ad9-388e-11ef-b4b1-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'user', '031c090d-3826-11ef-9d23-0a002700000d', 'Update', 'User record updated\nuser_id: 031c090d-3826-11ef-9d23-0a002700000d', '2024-07-04 01:17:51', '2024-07-04 02:30:15'),
 ('350d7051-32be-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '350cbf0b-32be-11ef-b166-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_date: June 25, 2024\nsettlement_number: SR#LG2024-06-25-350c\nsettlement_period: May 1-31, 2024\ntotal_successful_orders: 1\ntotal_gross_sales: 1800.00\ntotal_discount: 200.00\ntotal_net_sales: 1600.00\nleadgen_commission_rate_base_pretrial: 1600.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 99.68\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees: 0.00', '2024-06-25 06:43:18', '2024-07-02 04:03:42'),
@@ -2492,7 +2746,6 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('3c942c76-31f3-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '3c941093-31f3-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-3c92ce35\ntotal_successful_orders: 4\ntotal_gross_sales: 39614.00\ntotal_discount: 9098.00\ntotal_outstanding_amount_1: 30516.00\nleadgen_commission_rate_base: 30516.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2645.52\ncard_payment_pg_fee: 1121.04\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 1189.52\ntotal_outstanding_amount_2: 30516.00\ntotal_commission_fees_2: 2645.52\ntotal_payment_gateway_fees_2: 1189.52\nbank_fees: 10.00\ncwt_from_gross_sales: 192.12\ncwt_from_transaction_fees: 47.24\ncwt_from_pg_fees: 21.24\ntotal_amount_paid_out: 26548.66', '2024-06-24 06:30:23', '2024-07-02 04:03:42'),
 ('3caf218d-1f21-11ef-a08a-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'user', '3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'Add', 'User record added\nemail_address: admin@bookymail.ph\npassword: admin123\nname: Admin\ntype: Admin\nstatus: Active', '2024-05-31 07:41:48', '2024-07-02 04:03:42'),
 ('3f405210-4430-11ef-951c-48e7dad87c24', NULL, 'transaction', 'd67668ed', 'Update', 'Transaction record updated\nstore_id: a9610fdb-a96e-4415-919f-8e71e1b7659e -> d61b2260-42e0-4281-be7a-bc3fb3244bd1', '2024-07-17 11:32:28', '2024-07-17 11:32:28'),
-('3f50f477-4412-11ef-951c-48e7dad87c24', NULL, 'report_history_coupled', '2445ab71-4412-11ef-951c-48e7dad87c24', 'Update', 'Coupled report history record updated', '2024-07-17 07:57:43', '2024-07-17 07:57:43'),
 ('41a37f61-2d28-11ef-a7c7-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_fulfillment_type: Coupled -> Decoupled', '2024-06-18 04:07:19', '2024-07-02 04:03:42'),
 ('421419bb-31f7-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_head', '4212c6cf-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_date: \nsettlement_number: 202405-4212c6\nsettlement_period: \ntotal_amount: N/A\ncommission_rate: N/A\nvat_amount: N/A\ntotal_commission_fees: N/A', '2024-06-24 06:59:10', '2024-07-02 04:03:42'),
 ('446c137a-1f21-11ef-a08a-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'user', '3ca941c5-1f21-11ef-a08a-48e7dad87c24', 'Update', 'User record updated\npassword: admin123 -> admin123booky', '2024-05-31 07:42:01', '2024-07-02 04:03:42'),
@@ -2533,7 +2786,6 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('61af7a9b-31ef-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '61af61a6-31ef-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-61ae33\ntotal_successful_orders: 3\ntotal_gross_sales: 24044.00\ntotal_discount: 5984.00\ntotal_outstanding_amount_1: 18060.00\nleadgen_commission_rate_base: 18060.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2022.72\ncard_payment_pg_fee: 778.50\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 846.98\ntotal_outstanding_amount_2: 18060.00\ntotal_commission_fees_2: 2022.72\ntotal_payment_gateway_fees_2: 846.98\nbank_fees: 10.00\ncwt_from_gross_sales: 115.99\ncwt_from_transaction_fees: 36.12\ncwt_from_pg_fees: 15.12\ntotal_amount_paid_out: 15115.55', '2024-06-24 06:02:47', '2024-07-02 04:03:42'),
 ('63f30570-31f7-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_head', '63f1b962-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_date: Jun 24, 2024\nsettlement_number: 202405-63f1b962\nsettlement_period: May 1 - May 31, 2024\ntotal_amount: 1600.00\ncommission_rate: 10.00%\nvat_amount: 1.20\ntotal_commission_fees: 11.20', '2024-06-24 07:00:07', '2024-07-02 04:03:42'),
 ('63f531cb-31f7-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_body', '63f1b962-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history body record added\ngcash_report_id: 63f1b962-31f7-11ef-a30f-0a002700000d\nitem: GCA5H\nquantity_redeemed: 1\nnet_amount: 1600.00\namount: 1600.00', '2024-06-24 07:00:07', '2024-07-02 04:03:42'),
-('65defe37-4416-11ef-951c-48e7dad87c24', NULL, 'report_history_decoupled', '65de76f5-4416-11ef-951c-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL and BILLABLE\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\nmerchant_business_name: Figaro Coffee Systems, Inc.\nmerchant_brand_name: Angel\'s Pizza\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 33 Mayon St. Brgy. Malamig, Mandaluyong City\nsettlement_period_start: 2024-04-01\nsettlement_period_end: 2024-04-30\nsettlement_number: SR#LG2024-07-17-65de76f5\ntotal_successful_orders: 9\ntotal_gross_sales: 0.00\ntotal_discount: 0.00\ntotal_outstanding_amount: 0.00\nleadgen_commission_rate_base_pretrial: 9000.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 1008.00\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees: 0.00', '2024-07-17 08:27:26', '2024-07-17 08:27:26'),
 ('6850aa26-37c5-11ef-bccf-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'fee', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Fee record updated\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\npaymaya_credit_card: 1.75 -> 1.80\nmaya_checkout: 1.75 -> 1.80\nmaya: 1.75 -> 1.80', '2024-07-01 16:17:26', '2024-07-02 04:03:42'),
 ('6990aac1-31ee-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '69909518-31ee-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-698f4d\ntotal_successful_orders: 1\ntotal_gross_sales: 1800.00\ntotal_discount: 200.00\ntotal_outstanding_amount_1: 1600.00\nleadgen_commission_rate_base: 1600.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 179.20\ncard_payment_pg_fee: 0.00\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 44.00\ntotal_outstanding_amount_2: 1600.00\ntotal_commission_fees_2: 179.20\ntotal_payment_gateway_fees_2: 44.00\nbank_fees: 10.00\ncwt_from_gross_sales: 8.78\ncwt_from_transaction_fees: 3.20\ncwt_from_pg_fees: 0.79\ntotal_amount_paid_out: 1362.01', '2024-06-24 05:55:51', '2024-07-02 04:03:42'),
 ('6a368a72-4400-11ef-951c-48e7dad87c24', NULL, 'store', 'b8af69b1-37c3-11ef-bccf-0a002700000d', 'Update', 'Store record updated\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nlegal_entity_name: Taipefoods Inc. -> Taipeifoods Inc.', '2024-07-17 05:50:04', '2024-07-17 05:50:04'),
@@ -2543,8 +2795,7 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('6d8cb4f9-4400-11ef-951c-48e7dad87c24', NULL, 'store', 'b8af69b1-37c3-11ef-bccf-0a002700000d', 'Update', 'Store record updated\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nlegal_entity_name: Taipeifoods Inc. -> Taipefoods Inc.', '2024-07-17 05:50:10', '2024-07-17 05:50:10'),
 ('6e0aca8a-2d3e-11ef-a4d2-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nfixed_discount: 0 -> 1\nfree_item: 0 -> 1', '2024-06-18 06:46:02', '2024-07-02 04:03:42'),
 ('733485b4-32c4-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_head', '7332e83f-32c4-11ef-b166-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: June 25, 2024\nsettlement_number: SR#LG2024-06-25-7332\nsettlement_period: May 1-Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 216.72\ntotal_commission_fees: 2022.72', '2024-06-25 07:27:59', '2024-07-02 04:03:42'),
-('73365dea-32c4-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_body', '7332e83f-32c4-11ef-b166-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: 7332e83f-32c4-11ef-b166-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 2\nnet_amount: 16460.00', '2024-06-25 07:27:59', '2024-07-02 04:03:42');
-INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_id`, `activity_type`, `description`, `created_at`, `updated_at`) VALUES
+('73365dea-32c4-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_body', '7332e83f-32c4-11ef-b166-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: 7332e83f-32c4-11ef-b166-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 2\nnet_amount: 16460.00', '2024-06-25 07:27:59', '2024-07-02 04:03:42'),
 ('733663ef-32c4-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_body', '7332e83f-32c4-11ef-b166-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: 7332e83f-32c4-11ef-b166-48e7dad87c24\nitem: GCA5H\nquantity_redeemed: 1\nnet_amount: 1600.00', '2024-06-25 07:27:59', '2024-07-02 04:03:42'),
 ('74b3c994-2d22-11ef-a7c7-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_fulfillment_type: Decoupled -> Coupled', '2024-06-18 03:25:48', '2024-07-02 04:03:42'),
 ('770a5f73-2d22-11ef-a7c7-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'settlement_report_history_coupled', '770a0718-2d22-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-7708ad\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 2466.32\nleadgen_commission_rate_base: 2466.32\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2268.80\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 1121.04\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 1145.52\ntotal_outstanding_amount_2: 2466.32\ntotal_commission_fees_2: 2268.80\ntotal_payment_gateway_fees_2: 1145.52\nbank_fees: 10.00\ncwt_from_gross_sales: 12.33\ncwt_from_transaction_fees: 4.31\ncwt_from_pg_fees: 20.46\ntotal_amount_paid_out: -945.56', '2024-06-18 03:25:52', '2024-07-02 04:03:42'),
@@ -2553,7 +2804,8 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('7d40dedf-4406-11ef-951c-48e7dad87c24', NULL, 'fee', '596e3a87-37c5-11ef-bccf-0a002700000d', 'Update', 'Fee record updated\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nis_cwt_rate_computed: 1 -> 0', '2024-07-17 06:33:33', '2024-07-17 06:33:33'),
 ('7d413c84-4406-11ef-951c-48e7dad87c24', NULL, 'fee_history', '7d41172a-4406-11ef-951c-48e7dad87c24', 'Add', 'Fee history record added\nfee_id: 596e3a87-37c5-11ef-bccf-0a002700000d\ncolumn_name: is_cwt_rate_computed\nold_value: 1\nnew_value: 0\nchanged_at: 2024-07-17 14:33:33\nchanged_by: N/A', '2024-07-17 06:33:33', '2024-07-17 06:33:33'),
 ('7d48141a-2d22-11ef-a7c7-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'settlement_report_history_coupled', '7d47f605-2d22-11ef-a7c7-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-7d46e9\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 28916.00\nleadgen_commission_rate_base: 28916.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2541.06\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 1121.04\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 24.48\ntotal_payment_gateway_fees_1: 1145.52\ntotal_outstanding_amount_2: 28916.00\ntotal_commission_fees_2: 2541.06\ntotal_payment_gateway_fees_2: 1145.52\nbank_fees: 10.00\ncwt_from_gross_sales: 183.34\ncwt_from_transaction_fees: 45.38\ncwt_from_pg_fees: 20.46\ntotal_amount_paid_out: 25101.92', '2024-06-18 03:26:02', '2024-07-02 04:03:42'),
-('7f9a3266-32b8-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '7f97eba5-32b8-11ef-b166-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-7f97eba5\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 28916.00\nleadgen_commission_rate_base: 28916.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2466.32\ncard_payment_pg_fee: 342.54\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 452.66\ntotal_payment_gateway_fees_1: 795.20\ntotal_outstanding_amount_2: 28916.00\ntotal_commission_fees_2: 2466.32\ntotal_payment_gateway_fees_2: 795.20\nbank_fees: 10.00\ncwt_from_gross_sales: 185.09\ncwt_from_transaction_fees: 45.38\ncwt_from_pg_fees: 14.20\ntotal_amount_paid_out: 25517.63', '2024-06-25 06:02:26', '2024-07-02 04:03:42'),
+('7f9a3266-32b8-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '7f97eba5-32b8-11ef-b166-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-7f97eba5\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 28916.00\nleadgen_commission_rate_base: 28916.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2466.32\ncard_payment_pg_fee: 342.54\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 452.66\ntotal_payment_gateway_fees_1: 795.20\ntotal_outstanding_amount_2: 28916.00\ntotal_commission_fees_2: 2466.32\ntotal_payment_gateway_fees_2: 795.20\nbank_fees: 10.00\ncwt_from_gross_sales: 185.09\ncwt_from_transaction_fees: 45.38\ncwt_from_pg_fees: 14.20\ntotal_amount_paid_out: 25517.63', '2024-06-25 06:02:26', '2024-07-02 04:03:42');
+INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_id`, `activity_type`, `description`, `created_at`, `updated_at`) VALUES
 ('81d181ba-31f2-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', '81d155ed-31f2-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-81d08642\ntotal_successful_orders: 4\ntotal_gross_sales: 39614.00\ntotal_discount: 9098.00\ntotal_outstanding_amount_1: 30516.00\nleadgen_commission_rate_base: 30516.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2645.52\ncard_payment_pg_fee: 1121.04\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 1189.52\ntotal_outstanding_amount_2: 30516.00\ntotal_commission_fees_2: 2645.52\ntotal_payment_gateway_fees_2: 1189.52\nbank_fees: 10.00\ncwt_from_gross_sales: 192.12\ncwt_from_transaction_fees: 47.24\ncwt_from_pg_fees: 21.24\ntotal_amount_paid_out: 26548.66', '2024-06-24 06:25:10', '2024-07-02 04:03:42'),
 ('828b4bc6-2eb6-11ef-abc9-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\npromo_amount: 100.00 -> 120.00', '2024-06-20 03:38:08', '2024-07-02 04:03:42'),
 ('83cdf8af-344f-11ef-b7ae-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_head', '83cbfc16-344f-11ef-b7ae-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store Edited\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: June 27, 2024\nsettlement_number: SR#LG2024-06-27-83cb\nsettlement_period: May 1-Jun 30, 2024\ntotal_amount: 17170.00\ncommission_rate: 10.00%\nvat_amount: 206.04\ntotal_commission_fees: 1923.04', '2024-06-27 06:35:58', '2024-07-02 04:03:42'),
@@ -2584,7 +2836,6 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('a667cc4e-2d50-11ef-a4d2-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'transaction', 'a6673ec0-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Transaction record added\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\npromo_id: 8504f541-2d50-11ef-a4d2-48e7dad87c24\ncustomer_id: \"638572947601\"\ntransaction_date: 2024-06-18 10:55:41\ngross_amount: 1800.00\ndiscount: 200.00\namount_discounted: 1600.00\npayment: gcash\nbill_status: PRE-TRIAL', '2024-06-18 08:56:28', '2024-07-02 04:03:42'),
 ('a89441e6-37c3-11ef-bccf-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'merchant', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Add', 'Merchant record added\nmerchant_name: Shi Lin\nmerchant_partnership_type: Primary\nlegal_entity_name: Taipefoods Inc.\nbusiness_address: 2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City\nemail_address: shilin@booky.ph', '2024-07-01 16:04:55', '2024-07-02 04:03:42'),
 ('a8e5cb96-3427-11ef-b7ae-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'fee', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Fee record updated\npaymaya_credit_card: 2.75 -> 1.50\nmaya_checkout: 2.75 -> 1.50\nmaya: 2.50 -> 1.50', '2024-06-27 01:50:41', '2024-07-02 04:03:42'),
-('a9d306b7-440a-11ef-951c-48e7dad87c24', NULL, 'report_history_coupled', 'a9d28d3a-440a-11ef-951c-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nbill_status: BILLABLE\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nmerchant_business_name: Taipefoods Inc.\nmerchant_brand_name: Shi Lin\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City\nsettlement_period_start: 2024-07-01\nsettlement_period_end: 2024-07-31\nsettlement_number: SR#LG2024-07-17-a9d28d3a\ntotal_successful_orders: 1\ntotal_gross_sales: 0.00\ntotal_discount: 0.00\ntotal_outstanding_amount_1: 0.00\nleadgen_commission_rate_base_pretrial: 0.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 0.00\nleadgen_commission_rate_base_billable: 2000.00\ncommission_rate_billable: 10.00%\ntotal_billable: 200.00\ntotal_commission_fees_1: 200.00\ncard_payment_pg_fee: 0.00\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 0.00\ntotal_payment_gateway_fees_1: 0.00\ntotal_outstanding_amount_2: 0.00\ntotal_commission_fees_2: 200.00\ntotal_payment_gateway_fees_2: 0.00\nbank_fees: 10.00\nwtax_from_gross_sales: 0.00\ncwt_from_transaction_fees: 0.00\ncwt_from_pg_fees: 0.00\ntotal_amount_paid_out: -210.00', '2024-07-17 07:03:26', '2024-07-17 07:03:26'),
 ('abc213d1-31f7-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_head', 'abc1668b-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: Jun 24, 2024\nsettlement_number: 202406-abc1668b\nsettlement_period: May 1 - Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 1.20\ntotal_commission_fees: 11.20', '2024-06-24 07:02:08', '2024-07-02 04:03:42'),
 ('acea9513-388e-11ef-b4b1-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'user', 'acea8342-388e-11ef-b4b1-0a002700000d', 'Add', 'User record added\nemail_address: cookie@booky.ph\npassword: $2y$10$dRffZ66tPS8hHDmkIWssSOOlk21L1/H3g1lOz6J8uxldv.BM.5rci\nname: Cookie\ntype: User\nstatus: Inactive', '2024-07-04 01:21:20', '2024-07-04 02:30:15'),
 ('af210407-2ebe-11ef-abc9-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nremarks:  -> not billable \"forever\"', '2024-06-20 04:36:38', '2024-07-02 04:03:42'),
@@ -2613,10 +2864,8 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('bf5284d1-344e-11ef-b7ae-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'promo', '8504f541-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Promo record updated\npromo_group: Gcash/Booky -> Unionbank', '2024-06-27 06:30:29', '2024-07-02 04:03:42'),
 ('c063b1d4-32b9-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', 'c0625900-32b9-11ef-b166-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: SR#LG-20240625-c0625\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 28916.00\nleadgen_commission_rate_base: 28916.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2466.32\ncard_payment_pg_fee: 342.54\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 452.66\ntotal_payment_gateway_fees_1: 795.20\ntotal_outstanding_amount_2: 28916.00\ntotal_commission_fees_2: 2466.32\ntotal_payment_gateway_fees_2: 795.20\nbank_fees: 10.00\ncwt_from_gross_sales: 185.09\ncwt_from_transaction_fees: 45.38\ncwt_from_pg_fees: 14.20\ntotal_amount_paid_out: 25517.63', '2024-06-25 06:11:24', '2024-07-02 04:03:42'),
 ('c22e7044-37bf-11ef-bccf-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'transaction', 'a6673ec0-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Transaction record updated\ntransaction_date: 2024-09-18 10:55:41 -> 2024-06-13 10:55:41', '2024-07-01 15:37:00', '2024-07-02 04:03:42'),
-('c3e29e7e-442f-11ef-951c-48e7dad87c24', NULL, 'report_history_decoupled', 'c3e23cd2-442f-11ef-951c-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: a9610fdb-a96e-4415-919f-8e71e1b7659e\nstore_business_name: Figaro Coffee Systems, Inc.\nstore_brand_name: Angel\'s Pizza Avida Davao\nbusiness_address: Avida Davao Towers, C. M. Recto St., Brgy. 34, Davao City\nsettlement_period_start: 2024-04-01\nsettlement_period_end: 2024-04-30\nsettlement_number: SR#LG2024-07-17-c3e23cd2\ntotal_successful_orders: 9\ntotal_gross_sales: 0.00\ntotal_discount: 0.00\ntotal_outstanding_amount: 0.00\nleadgen_commission_rate_base_pretrial: 9000.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 1008.00\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees: 0.00', '2024-07-17 11:29:01', '2024-07-17 11:29:01'),
 ('c65a58c8-3825-11ef-9d23-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'merchant', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Update', 'Merchant record updated\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24', '2024-07-02 03:47:16', '2024-07-02 04:03:42'),
 ('ca53c232-3825-11ef-9d23-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'merchant', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Update', 'Merchant record updated\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d', '2024-07-02 03:47:23', '2024-07-02 04:03:42'),
-('caacc640-4409-11ef-951c-48e7dad87c24', NULL, 'report_history_coupled', 'caac3a12-4409-11ef-951c-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL and BILLABLE\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nmerchant_business_name: Taipefoods Inc.\nmerchant_brand_name: Shi Lin\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City\nsettlement_period_start: 2024-07-01\nsettlement_period_end: 2024-07-31\nsettlement_number: SR#LG2024-07-17-caac3a12\ntotal_successful_orders: 2\ntotal_gross_sales: 4702.00\ntotal_discount: 500.00\ntotal_outstanding_amount_1: 4202.00\nleadgen_commission_rate_base_pretrial: 4202.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 420.20\nleadgen_commission_rate_base_billable: 2000.00\ncommission_rate_billable: 10.00%\ntotal_billable: 200.00\ntotal_commission_fees_1: 200.00\ncard_payment_pg_fee: 92.44\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 0.00\ntotal_payment_gateway_fees_1: 92.44\ntotal_outstanding_amount_2: 4202.00\ntotal_commission_fees_2: 200.00\ntotal_payment_gateway_fees_2: 92.44\nbank_fees: 10.00\nwtax_from_gross_sales: 20.55\ncwt_from_transaction_fees: 0.00\ncwt_from_pg_fees: 0.00\ntotal_amount_paid_out: 3879.01', '2024-07-17 06:57:11', '2024-07-17 06:57:11'),
 ('cf1512db-2d50-11ef-a4d2-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_head', 'cf141684-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-cf1416', '2024-06-18 08:57:36', '2024-07-02 04:03:42'),
 ('cf17118f-2d50-11ef-a4d2-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_body', 'cf141684-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: cf141684-2d50-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 4\nvoucher_value: 100.00\namount: 400.00', '2024-06-18 08:57:36', '2024-07-02 04:03:42'),
 ('cfe2b7ef-37c5-11ef-bccf-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'fee', '596e3a87-37c5-11ef-bccf-0a002700000d', 'Update', 'Fee record updated\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\npaymaya_credit_card: 2.50 -> 2.20\nmaya_checkout: 2.50 -> 2.20\nmaya: 2.50 -> 2.20', '2024-07-01 16:20:20', '2024-07-02 04:03:42'),
@@ -2631,9 +2880,7 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('db4177e5-4410-11ef-951c-48e7dad87c24', NULL, 'store', '67789d26-7c0f-4147-9f40-149aca3c0f9a', 'Add', 'Store record added\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\nstore_name: Angel\'s Pizza Marikina\nlegal_entity_name: Figaro Coffee Systems, Inc.\nstore_address: Unit 6 Thaddeus Arcade, Gil Fernando Ave., Brgy. San Roque, Marikina City', '2024-07-17 07:47:46', '2024-07-17 07:47:46'),
 ('db417cf9-4410-11ef-951c-48e7dad87c24', NULL, 'store', 'd61b2260-42e0-4281-be7a-bc3fb3244bd1', 'Add', 'Store record added\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\nstore_name: Angel\'s Pizza Ortigas\nlegal_entity_name: Figaro Coffee Systems, Inc.\nstore_address: 102-B Hanston Bldg Emerald Ave., Ortigas Center, Brgy. San Antonio, Pasig City', '2024-07-17 07:47:46', '2024-07-17 07:47:46'),
 ('db41800a-4410-11ef-951c-48e7dad87c24', NULL, 'store', '6cb2f0fe-253d-49c9-b52b-db44354138c8', 'Add', 'Store record added\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\nstore_name: Angel\'s Pizza Sta. Maria\nlegal_entity_name: Figaro Coffee Systems, Inc.\nstore_address: N/A', '2024-07-17 07:47:46', '2024-07-17 07:47:46'),
-('db4182c7-4410-11ef-951c-48e7dad87c24', NULL, 'store', 'b2ce0524-02b0-4bfc-b05d-8b637ff52ff5', 'Add', 'Store record added\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\nstore_name: Angel\'s Pizza Sucat\nlegal_entity_name: Figaro Coffee Systems, Inc.\nstore_address: BLK.4 Lot 21 President\'s Ave. Teoville East Village Bf Homes', '2024-07-17 07:47:46', '2024-07-17 07:47:46');
-INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_id`, `activity_type`, `description`, `created_at`, `updated_at`) VALUES
-('dcdf2257-4411-11ef-951c-48e7dad87c24', NULL, 'report_history_coupled', 'dcddfa37-4411-11ef-951c-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL and BILLABLE\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\nmerchant_business_name: Taipefoods Inc.\nmerchant_brand_name: Shi Lin\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City\nsettlement_period_start: 2024-07-01\nsettlement_period_end: 2024-07-31\nsettlement_number: SR#LG2024-07-17-dcddfa37\ntotal_successful_orders: 2\ntotal_gross_sales: 4702.00\ntotal_discount: 500.00\ntotal_outstanding_amount_1: 4202.00\nleadgen_commission_rate_base_pretrial: 4202.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 420.20\nleadgen_commission_rate_base_billable: 2000.00\ncommission_rate_billable: 10.00%\ntotal_billable: 200.00\ntotal_commission_fees_1: 200.00\ncard_payment_pg_fee: 92.44\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 0.00\ntotal_payment_gateway_fees_1: 92.44\ntotal_outstanding_amount_2: 4202.00\ntotal_commission_fees_2: 200.00\ntotal_payment_gateway_fees_2: 92.44\nbank_fees: 10.00\nwtax_from_gross_sales: 20.55\ncwt_from_transaction_fees: 0.00\ncwt_from_pg_fees: 0.00\ntotal_amount_paid_out: 3879.01', '2024-07-17 07:54:58', '2024-07-17 07:54:58'),
+('db4182c7-4410-11ef-951c-48e7dad87c24', NULL, 'store', 'b2ce0524-02b0-4bfc-b05d-8b637ff52ff5', 'Add', 'Store record added\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\nstore_name: Angel\'s Pizza Sucat\nlegal_entity_name: Figaro Coffee Systems, Inc.\nstore_address: BLK.4 Lot 21 President\'s Ave. Teoville East Village Bf Homes', '2024-07-17 07:47:46', '2024-07-17 07:47:46'),
 ('de9166b2-37bf-11ef-bccf-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'transaction', 'a6673ec0-2d50-11ef-a4d2-48e7dad87c24', 'Update', 'Transaction record updated\ntransaction_date: 2024-06-13 10:55:41 -> 2024-06-14 10:55:41', '2024-07-01 15:37:48', '2024-07-02 04:03:42'),
 ('dee39949-37c3-11ef-bccf-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'promo', 'dee3716e-37c3-11ef-bccf-0a002700000d', 'Add', 'Promo record added\n\npromo_code: SHILIN500\nmerchant_id: a893e292-37c3-11ef-bccf-0a002700000d\npromo_amount: 500\nvoucher_type: Decoupled\npromo_category: Casual Dining\npromo_group: Booky\npromo_type: Fixed discount\npromo_details: Shi Lin sample promo\nremarks: N/A\nbill_status: BILLABLE\nstart_date: 2024-04-01\nend_date: 2024-07-31', '2024-07-01 16:06:26', '2024-07-02 04:03:42'),
 ('dfc4a3ab-4407-11ef-951c-48e7dad87c24', NULL, 'transaction', '6c851d41-37c4-11ef-bccf-0a002700000d', 'Update', 'Transaction record updated\npromo_code: SHILIN500 -> PRESHILIN', '2024-07-17 06:43:28', '2024-07-17 06:43:28'),
@@ -2650,10 +2897,10 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('eb6e79d2-2d4e-11ef-a4d2-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_body', 'eb6c4798-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: eb6c4798-2d4e-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 1\nvoucher_value: 100.00\namount: 100.00', '2024-06-18 08:44:05', '2024-07-02 04:03:42'),
 ('ee8520d1-36f9-11ef-8f86-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', 'ee8374cc-36f9-11ef-8f86-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: SR#LG2024-07-01-ee8374cc\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 28916.00\nleadgen_commission_rate_base: 28916.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2466.32\ncard_payment_pg_fee: 186.84\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 428.18\ntotal_payment_gateway_fees_1: 615.02\ntotal_outstanding_amount_2: 28916.00\ntotal_commission_fees_2: 2466.32\ntotal_payment_gateway_fees_2: 615.02\nbank_fees: 10.00\ncwt_from_gross_sales: 185.99\ncwt_from_transaction_fees: 45.38\ncwt_from_pg_fees: 10.98\ntotal_amount_paid_out: 25693.69', '2024-06-30 16:00:54', '2024-07-02 04:03:42'),
 ('f15b0edb-2d50-11ef-a4d2-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_head', 'f15a327b-2d50-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-f15a32', '2024-06-18 08:58:34', '2024-07-02 04:03:42'),
+('f539307d-443e-11ef-951c-48e7dad87c24', NULL, 'report_history_decoupled', 'f5381776-443e-11ef-951c-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL and BILLABLE\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\nmerchant_business_name: Figaro Coffee Systems, Inc.\nmerchant_brand_name: Angel\'s Pizza\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 33 Mayon St. Brgy. Malamig, Mandaluyong City\nsettlement_period_start: 2024-04-01\nsettlement_period_end: 2024-04-30\nsettlement_number: SR#LG2024-07-17-f5381776\ntotal_successful_orders: 9\ntotal_gross_sales: 0.00\ntotal_discount: 0.00\ntotal_outstanding_amount: 0.00\nleadgen_commission_rate_base_pretrial: 9000.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 1008.00\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees: 0.00', '2024-07-17 13:17:45', '2024-07-17 13:17:45'),
 ('f5809aca-32be-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', 'f57fe3e7-32be-11ef-b166-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: June 25, 2024\nsettlement_number: SR#LG2024-06-25-f57f\nsettlement_period: May 1-Jun 30, 2024\ntotal_successful_orders: 1\ntotal_gross_sales: 1800.00\ntotal_discount: 200.00\ntotal_net_sales: 1600.00\nleadgen_commission_rate_base_pretrial: 1600.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 179.20\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees: 0.00', '2024-06-25 06:48:41', '2024-07-02 04:03:42'),
 ('f97b2689-4407-11ef-951c-48e7dad87c24', NULL, 'transaction', '6c851d41-37c4-11ef-bccf-0a002700000d', 'Update', 'Transaction record updated\nbill_status: BILLABLE -> PRE-TRIAL', '2024-07-17 06:44:11', '2024-07-17 06:44:11'),
 ('fb5ecc56-4412-11ef-951c-48e7dad87c24', NULL, 'fee', 'fb5e990a-4412-11ef-951c-48e7dad87c24', 'Add', 'Fee record added\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\npaymaya_credit_card: 2.50\npaymaya: 2.00\ngcash: 2.00\ngcash_miniapp: 2.00\nmaya_checkout: 2.50\nmaya: 2.50\nlead_gen_commission: 10.00\ncommission_type: VAT Exc\nis_cwt_rate_computed: 0', '2024-07-17 08:02:58', '2024-07-17 08:02:58'),
-('fbf6eb44-4415-11ef-951c-48e7dad87c24', NULL, 'report_history_decoupled', 'fbf5edca-4415-11ef-951c-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL and BILLABLE\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\nmerchant_business_name: Figaro Coffee Systems, Inc.\nmerchant_brand_name: Angel\'s Pizza\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 33 Mayon St. Brgy. Malamig, Mandaluyong City\nsettlement_period_start: 2024-04-01\nsettlement_period_end: 2024-04-30\nsettlement_number: SR#LG2024-07-17-fbf5edca\ntotal_successful_orders: 9\ntotal_gross_sales: 0.00\ntotal_discount: 0.00\ntotal_outstanding_amount: 0.00\nleadgen_commission_rate_base_pretrial: 0.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 0.00\nleadgen_commission_rate_base_billable: 9000.00\ncommission_rate_billable: 10.00%\ntotal_billable: 1008.00\ntotal_commission_fees: 1008.00', '2024-07-17 08:24:28', '2024-07-17 08:24:28'),
 ('fd549053-4407-11ef-951c-48e7dad87c24', NULL, 'transaction', '6c851d41-37c4-11ef-bccf-0a002700000d', 'Update', 'Transaction record updated\npromo_code: PRESHILIN -> SHILIN500', '2024-07-17 06:44:17', '2024-07-17 06:44:17');
 
 --
@@ -2719,7 +2966,6 @@ CREATE TABLE `fee` (
 --
 
 INSERT INTO `fee` (`fee_id`, `merchant_id`, `paymaya_credit_card`, `gcash`, `gcash_miniapp`, `paymaya`, `maya_checkout`, `maya`, `lead_gen_commission`, `commission_type`, `is_cwt_rate_computed`, `created_at`, `updated_at`) VALUES
-('02f361d3-1cc3-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 2.00, 3.00, 2.75, 2.50, 2.00, 2.00, 5.00, 'VAT Inc', 1, '2024-05-28 07:22:16', '2024-07-04 02:24:42'),
 ('596e3a87-37c5-11ef-bccf-0a002700000d', 'a893e292-37c3-11ef-bccf-0a002700000d', 2.20, 2.00, 2.00, 2.00, 2.20, 2.20, 10.00, 'VAT Inc', 0, '2024-07-01 16:17:02', '2024-07-17 06:33:33'),
 ('fb5e990a-4412-11ef-951c-48e7dad87c24', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 2.50, 2.00, 2.00, 2.00, 2.50, 2.50, 10.00, 'VAT Exc', 0, '2024-07-17 08:02:58', '2024-07-17 08:02:58');
 
@@ -2910,10 +3156,7 @@ CREATE TABLE `fee_history` (
 --
 
 INSERT INTO `fee_history` (`fee_history_id`, `fee_id`, `column_name`, `old_value`, `new_value`, `changed_at`, `changed_by`) VALUES
-('7d41172a-4406-11ef-951c-48e7dad87c24', '596e3a87-37c5-11ef-bccf-0a002700000d', 'is_cwt_rate_computed', '1', '0', '2024-07-17 06:33:33', NULL),
-('8753d0e1-3897-11ef-b4b1-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'paymaya_credit_card', '1.80', '2.00', '2024-07-04 02:24:42', NULL),
-('8754011f-3897-11ef-b4b1-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'maya_checkout', '1.80', '2.00', '2024-07-04 02:24:42', NULL),
-('87540b77-3897-11ef-b4b1-0a002700000d', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'maya', '1.80', '2.00', '2024-07-04 02:24:42', NULL);
+('7d41172a-4406-11ef-951c-48e7dad87c24', '596e3a87-37c5-11ef-bccf-0a002700000d', 'is_cwt_rate_computed', '1', '0', '2024-07-17 06:33:33', NULL);
 
 --
 -- Triggers `fee_history`
@@ -3002,8 +3245,7 @@ CREATE TABLE `merchant` (
 --
 
 INSERT INTO `merchant` (`merchant_id`, `merchant_name`, `merchant_partnership_type`, `legal_entity_name`, `business_address`, `email_address`, `sales`, `account_manager`, `created_at`, `updated_at`) VALUES
-('3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Merchant', 'Primary', 'Merchant Legal Name', 'Somewhere St.', 'merchantdemo1@booky.ph,merchantdemo2@booky.ph,merchantdemo3@booky.ph,merchantdemo4@booky.ph', 'b1a44bae-3825-11ef-9d23-0a002700000d', '031c090d-3826-11ef-9d23-0a002700000d', '2024-05-28 07:16:32', '2024-07-02 03:50:01'),
-('a893e292-37c3-11ef-bccf-0a002700000d', 'Shi Lin', 'Primary', 'Taipeifoods Inc.', NULL, 'shilin@booky.ph', NULL, '031c090d-3826-11ef-9d23-0a002700000d', '2024-07-01 16:04:55', '2024-07-17 11:04:04'),
+('a893e292-37c3-11ef-bccf-0a002700000d', 'Shi Lin', 'Primary', 'Taipeifoods Inc.', NULL, 'cookie@booky.ph', NULL, '031c090d-3826-11ef-9d23-0a002700000d', '2024-07-01 16:04:55', '2024-07-17 13:26:00'),
 ('f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Angel\'s Pizza', 'Primary', 'Figaro Coffee Systems, Inc.', '33 Mayon St. Brgy. Malamig, Mandaluyong City', 'cookie@booky.ph', NULL, NULL, '2024-07-17 07:38:33', '2024-07-17 07:56:41');
 
 --
@@ -3124,9 +3366,6 @@ CREATE TABLE `promo` (
 --
 
 INSERT INTO `promo` (`promo_id`, `promo_code`, `merchant_id`, `promo_amount`, `voucher_type`, `promo_category`, `promo_group`, `promo_type`, `promo_details`, `remarks`, `bill_status`, `start_date`, `end_date`, `remarks2`, `created_at`, `updated_at`) VALUES
-('4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 120, 'Coupled', 'Grab & Go', 'Gcash', 'Bundle', 'Booky sample promo', 'not billable \"forever\"', 'PRE-TRIAL', '2024-04-01', '2024-07-31', NULL, '2024-06-04 02:34:19', '2024-07-01 16:08:09'),
-('8504f541-2d50-11ef-a4d2-48e7dad87c24', 'GCA5H', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 200, 'Decoupled', 'Casual Dining', 'Unionbank', 'BOGO', 'gcash promo details', NULL, 'PRE-TRIAL', '2024-03-01', '2024-07-31', NULL, '2024-06-18 08:55:32', '2024-06-27 06:30:29'),
-('d1b7698b-4407-11ef-951c-48e7dad87c24', 'PRESHILIN', 'a893e292-37c3-11ef-bccf-0a002700000d', 200, 'Coupled', 'Casual Dining', 'Unionbank', 'Free item', 'Pre-trial shi lin promo', NULL, 'PRE-TRIAL', '2024-04-01', '2024-09-30', NULL, '2024-07-17 06:43:04', '2024-07-17 06:43:04'),
 ('dee3716e-37c3-11ef-bccf-0a002700000d', 'SHILIN500', 'a893e292-37c3-11ef-bccf-0a002700000d', 500, 'Coupled', 'Casual Dining', 'Booky', 'Fixed discount', 'Shi Lin sample promo', NULL, 'BILLABLE', '2024-04-01', '2024-07-31', NULL, '2024-07-01 16:06:26', '2024-07-17 06:31:03'),
 ('5146a532-4413-11ef-951c-48e7dad87c24', 'UBANGELS10', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 1000, 'Decoupled', 'Casual Dining', 'Unionbank', 'Percent discount', 'Get 10% off with a minimum spend of ₱1,000', 'free, min spend 1000', 'PRE-TRIAL', '2024-04-19', '2024-07-19', NULL, '2024-07-17 08:05:23', '2024-07-17 08:05:23');
 
@@ -3252,13 +3491,6 @@ CREATE TABLE `promo_history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `promo_history`
---
-
-INSERT INTO `promo_history` (`promo_history_id`, `promo_code`, `old_bill_status`, `new_bill_status`, `changed_at`, `changed_by`) VALUES
-('bc03116e-2eb6-11ef-abc9-48e7dad87c24', 'B00KYDEMO', 'BILLABLE', 'PRE-TRIAL', '2024-06-19 16:00:00', NULL);
-
---
 -- Triggers `promo_history`
 --
 DELIMITER $$
@@ -3365,19 +3597,6 @@ CREATE TABLE `report_history_coupled` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `report_history_coupled`
---
-
-INSERT INTO `report_history_coupled` (`coupled_report_id`, `generated_by`, `bill_status`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_date`, `settlement_number`, `settlement_period`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_outstanding_amount_1`, `leadgen_commission_rate_base_pretrial`, `commission_rate_pretrial`, `total_pretrial`, `leadgen_commission_rate_base_billable`, `commission_rate_billable`, `total_billable`, `total_commission_fees_1`, `card_payment_pg_fee`, `paymaya_pg_fee`, `gcash_miniapp_pg_fee`, `gcash_pg_fee`, `total_payment_gateway_fees_1`, `total_outstanding_amount_2`, `total_commission_fees_2`, `total_payment_gateway_fees_2`, `bank_fees`, `wtax_from_gross_sales`, `cwt_from_transaction_fees`, `cwt_from_pg_fees`, `total_amount_paid_out`, `created_at`, `updated_at`) VALUES
-('01682fee-4408-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL and BILLABLE', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Taipefoods Inc.', 'Shi Lin', NULL, NULL, NULL, '2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City', '2024-07-01', '2024-07-31', 'July 17, 2024', 'SR#LG2024-07-17-01682fee', 'July 1-July, 2024', 2, 4702.00, 500.00, 4202.00, 4202.00, '10.00%', 420.20, 2000.00, '10.00%', 200.00, 620.20, 92.44, 0.00, 0.00, 0.00, 92.44, 4202.00, 620.20, 92.44, 10.00, 20.55, 0.00, 0.00, 3458.81, '2024-07-17 06:44:24', '2024-07-17 06:44:24'),
-('01b22524-440a-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Taipefoods Inc.', 'Shi Lin', NULL, NULL, NULL, '2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City', '2024-07-01', '2024-07-31', 'July 17, 2024', 'SR#LG2024-07-17-01b22524', 'July 1-July, 2024', 1, 4702.00, 500.00, 4202.00, 4202.00, '10.00%', 420.20, 0.00, '10.00%', 0.00, 0.00, 92.44, 0.00, 0.00, 0.00, 92.44, 4202.00, 0.00, 92.44, 10.00, 20.55, 0.00, 0.00, 4079.01, '2024-07-17 06:58:44', '2024-07-17 06:58:44'),
-('10a0acad-4412-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL and BILLABLE', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Taipefoods Inc.', 'Shi Lin', NULL, NULL, NULL, '2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City', '2024-07-01', '2024-07-31', 'July 17, 2024', 'SR#LG2024-07-17-10a0acad', 'July 1-July, 2024', 2, 4702.00, 500.00, 4202.00, 4202.00, '10.00%', 420.20, 2000.00, '10.00%', 200.00, 200.00, 92.44, 0.00, 0.00, 0.00, 92.44, 4202.00, 200.00, 92.44, 10.00, 20.55, 0.00, 0.00, 3879.01, '2024-07-17 07:56:25', '2024-07-17 07:56:25'),
-('2445ab71-4412-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL and BILLABLE', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Taipefoods Inc.', 'Shi Lin', NULL, NULL, NULL, NULL, '2024-07-01', '2024-07-31', 'July 17, 2024', 'SR#LG2024-07-17-2445ab71', 'July 1-July, 2024', 2, 4702.00, 500.00, 4202.00, 4202.00, '10.00%', 420.20, 2000.00, '10.00%', 200.00, 200.00, 92.44, 0.00, 0.00, 0.00, 92.44, 4202.00, 200.00, 92.44, 10.00, 20.55, 0.00, 0.00, 3879.01, '2024-07-17 07:56:58', '2024-07-17 07:57:43'),
-('a9d28d3a-440a-11ef-951c-48e7dad87c24', NULL, 'BILLABLE', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Taipefoods Inc.', 'Shi Lin', NULL, NULL, NULL, '2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City', '2024-07-01', '2024-07-31', 'July 17, 2024', 'SR#LG2024-07-17-a9d28d3a', 'July 1-July, 2024', 1, 0.00, 0.00, 0.00, 0.00, '10.00%', 0.00, 2000.00, '10.00%', 200.00, 200.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 200.00, 0.00, 10.00, 0.00, 0.00, 0.00, -210.00, '2024-07-17 07:03:26', '2024-07-17 07:03:26'),
-('caac3a12-4409-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL and BILLABLE', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Taipefoods Inc.', 'Shi Lin', NULL, NULL, NULL, '2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City', '2024-07-01', '2024-07-31', 'July 17, 2024', 'SR#LG2024-07-17-caac3a12', 'July 1-July, 2024', 2, 4702.00, 500.00, 4202.00, 4202.00, '10.00%', 420.20, 2000.00, '10.00%', 200.00, 200.00, 92.44, 0.00, 0.00, 0.00, 92.44, 4202.00, 200.00, 92.44, 10.00, 20.55, 0.00, 0.00, 3879.01, '2024-07-17 06:57:11', '2024-07-17 06:57:11'),
-('dcddfa37-4411-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL and BILLABLE', 'a893e292-37c3-11ef-bccf-0a002700000d', 'Taipefoods Inc.', 'Shi Lin', NULL, NULL, NULL, '2100 ID Building, Don Chino Roces extension, Brgy. Magallanes, Makati City', '2024-07-01', '2024-07-31', 'July 17, 2024', 'SR#LG2024-07-17-dcddfa37', 'July 1-July, 2024', 2, 4702.00, 500.00, 4202.00, 4202.00, '10.00%', 420.20, 2000.00, '10.00%', 200.00, 200.00, 92.44, 0.00, 0.00, 0.00, 92.44, 4202.00, 200.00, 92.44, 10.00, 20.55, 0.00, 0.00, 3879.01, '2024-07-17 07:54:58', '2024-07-17 07:54:58');
 
 --
 -- Triggers `report_history_coupled`
@@ -3640,10 +3859,7 @@ CREATE TABLE `report_history_decoupled` (
 --
 
 INSERT INTO `report_history_decoupled` (`decoupled_report_id`, `generated_by`, `bill_status`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_date`, `settlement_number`, `settlement_period`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_outstanding_amount`, `leadgen_commission_rate_base_pretrial`, `commission_rate_pretrial`, `total_pretrial`, `leadgen_commission_rate_base_billable`, `commission_rate_billable`, `total_billable`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
-('2db852ee-4416-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL and BILLABLE', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Figaro Coffee Systems, Inc.', 'Angel\'s Pizza', NULL, NULL, NULL, '33 Mayon St. Brgy. Malamig, Mandaluyong City', '2024-04-01', '2024-04-30', 'July 17, 2024', 'SR#LG2024-07-17-2db852ee', 'April 1-April, 2024', 9, 0.00, 0.00, 0.00, 0.00, '10.00%', 0.00, 9000.00, '10.00%', 1008.00, 1008.00, '2024-07-17 08:25:51', '2024-07-17 08:25:51'),
-('65de76f5-4416-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL and BILLABLE', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Figaro Coffee Systems, Inc.', 'Angel\'s Pizza', NULL, NULL, NULL, '33 Mayon St. Brgy. Malamig, Mandaluyong City', '2024-04-01', '2024-04-30', 'July 17, 2024', 'SR#LG2024-07-17-65de76f5', 'April 1-April, 2024', 9, 0.00, 0.00, 0.00, 9000.00, '10.00%', 1008.00, 0.00, '10.00%', 0.00, 0.00, '2024-07-17 08:27:26', '2024-07-17 08:27:26'),
-('c3e23cd2-442f-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL', NULL, NULL, NULL, 'a9610fdb-a96e-4415-919f-8e71e1b7659e', 'Figaro Coffee Systems, Inc.', 'Angel\'s Pizza Avida Davao', 'Avida Davao Towers, C. M. Recto St., Brgy. 34, Davao City', '2024-04-01', '2024-04-30', 'July 17, 2024', 'SR#LG2024-07-17-c3e23cd2', 'April 1-April, 2024', 9, 0.00, 0.00, 0.00, 9000.00, '10.00%', 1008.00, 0.00, '10.00%', 0.00, 0.00, '2024-07-17 11:29:01', '2024-07-17 11:29:01'),
-('fbf5edca-4415-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL and BILLABLE', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Figaro Coffee Systems, Inc.', 'Angel\'s Pizza', NULL, NULL, NULL, '33 Mayon St. Brgy. Malamig, Mandaluyong City', '2024-04-01', '2024-04-30', 'July 17, 2024', 'SR#LG2024-07-17-fbf5edca', 'April 1-April, 2024', 9, 0.00, 0.00, 0.00, 0.00, '10.00%', 0.00, 9000.00, '10.00%', 1008.00, 1008.00, '2024-07-17 08:24:28', '2024-07-17 08:24:28');
+('f5381776-443e-11ef-951c-48e7dad87c24', NULL, 'PRE-TRIAL and BILLABLE', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Figaro Coffee Systems, Inc.', 'Angel\'s Pizza', NULL, NULL, NULL, '33 Mayon St. Brgy. Malamig, Mandaluyong City', '2024-04-01', '2024-04-30', 'July 17, 2024', 'SR#LG2024-07-17-f5381776', 'April 1-30, 2024', 9, 0.00, 0.00, 0.00, 9000.00, '10.00%', 1008.00, 0.00, '10.00%', 0.00, 0.00, '2024-07-17 13:17:45', '2024-07-17 13:17:45');
 
 --
 -- Triggers `report_history_decoupled`
@@ -3814,13 +4030,6 @@ CREATE TABLE `report_history_gcash_body` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `report_history_gcash_body`
---
-
-INSERT INTO `report_history_gcash_body` (`gcash_report_body_id`, `gcash_report_id`, `item`, `quantity_redeemed`, `net_amount`, `created_at`, `updated_at`) VALUES
-('123439e2-36fa-11ef-8f86-0a002700000d', '1232217b-36fa-11ef-8f86-0a002700000d', 'B00KYDEMO', 3, 28916.00, '2024-06-30 16:01:54', '2024-06-30 16:01:54');
-
---
 -- Triggers `report_history_gcash_body`
 --
 DELIMITER $$
@@ -3908,13 +4117,6 @@ CREATE TABLE `report_history_gcash_head` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `report_history_gcash_head`
---
-
-INSERT INTO `report_history_gcash_head` (`gcash_report_id`, `generated_by`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_date`, `settlement_number`, `settlement_period`, `total_amount`, `commission_rate`, `commission_amount`, `vat_amount`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
-('1232217b-36fa-11ef-8f86-0a002700000d', NULL, '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'Merchant Legal Name', 'B00KY Demo Merchant', NULL, NULL, NULL, 'Somewhere St.', '2024-05-01', '2024-06-30', 'July 1, 2024', 'SR#LG2024-07-01-1232217b', 'May 1-Jun 30, 2024', 28916.00, '10.00%', 2268.80, 272.26, 2466.32, '2024-06-30 16:01:54', '2024-06-30 16:01:54');
 
 --
 -- Triggers `report_history_gcash_head`
@@ -4057,7 +4259,6 @@ CREATE TABLE `store` (
 INSERT INTO `store` (`store_id`, `merchant_id`, `store_name`, `legal_entity_name`, `store_address`, `created_at`, `updated_at`) VALUES
 ('67789d26-7c0f-4147-9f40-149aca3c0f9a', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Angel\'s Pizza Marikina', 'Figaro Coffee Systems, Inc.', 'Unit 6 Thaddeus Arcade, Gil Fernando Ave., Brgy. San Roque, Marikina City', '2024-07-17 07:47:46', '2024-07-17 07:47:46'),
 ('6cb2f0fe-253d-49c9-b52b-db44354138c8', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Angel\'s Pizza Sta. Maria', 'Figaro Coffee Systems, Inc.', NULL, '2024-07-17 07:47:46', '2024-07-17 07:47:46'),
-('8946759b-1cc2-11ef-8abb-48e7dad87c24', '3606c45c-1cc2-11ef-8abb-48e7dad87c24', 'B00KY Demo Store Edited', 'Demo Legal Name', 'Anywhere St.', '2024-05-28 07:18:52', '2024-06-27 02:15:14'),
 ('a9610fdb-a96e-4415-919f-8e71e1b7659e', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Angel\'s Pizza Avida Davao', 'Figaro Coffee Systems, Inc.', 'Avida Davao Towers, C. M. Recto St., Brgy. 34, Davao City', '2024-07-17 07:47:46', '2024-07-17 07:47:46'),
 ('b2ce0524-02b0-4bfc-b05d-8b637ff52ff5', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Angel\'s Pizza Sucat', 'Figaro Coffee Systems, Inc.', 'BLK.4 Lot 21 President\'s Ave. Teoville East Village Bf Homes', '2024-07-17 07:47:46', '2024-07-17 07:47:46'),
 ('b745e964-eba8-4372-a940-167be6c2c227', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Angel\'s Pizza BGC', 'Figaro Coffee Systems, Inc.', NULL, '2024-07-17 07:47:46', '2024-07-17 07:47:46'),
@@ -4152,19 +4353,15 @@ CREATE TABLE `transaction` (
 
 INSERT INTO `transaction` (`transaction_id`, `store_id`, `promo_code`, `customer_id`, `customer_name`, `transaction_date`, `gross_amount`, `discount`, `amount_discounted`, `payment`, `comm_rate_base`, `bill_status`, `created_at`, `updated_at`) VALUES
 ('0f1b2d4d', '6cb2f0fe-253d-49c9-b52b-db44354138c8', 'UBANGELS10', '\"639225334747\"', NULL, '2024-04-26 19:10:00', 0.00, 0.00, 0.00, NULL, 1000.00, 'PRE-TRIAL', '2024-07-17 08:19:27', '2024-07-17 11:32:43'),
-('1bc0f5fe-224b-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '\"639121234345\"', 'Maria Demo', '2024-05-15 16:17:58', 20760.00, 5190.00, 15570.00, 'gcash', 15570.00, 'BILLABLE', '2024-06-01 08:17:58', '2024-06-05 03:42:49'),
 ('4a1ea5f4-37c4-11ef-bccf-0a002700000d', 'b8af69b1-37c3-11ef-bccf-0a002700000d', 'SHILIN500', '\"639987654321\"', 'El Sa', '2024-07-01 00:08:18', 0.00, 0.00, 0.00, NULL, 2000.00, 'BILLABLE', '2024-07-01 16:09:26', '2024-07-01 16:18:26'),
 ('6c851d41-37c4-11ef-bccf-0a002700000d', 'b8af69b1-37c3-11ef-bccf-0a002700000d', 'SHILIN500', '\"639574848321\"', 'Ay Mee', '2024-07-30 18:09:29', 4702.00, 500.00, 4202.00, 'maya_checkout', 4202.00, 'PRE-TRIAL', '2024-07-01 16:10:24', '2024-07-17 06:44:17'),
 ('6ea596b0', 'b2ce0524-02b0-4bfc-b05d-8b637ff52ff5', 'UBANGELS10', '\"639052772221\"', NULL, '2024-04-23 17:20:00', 0.00, 0.00, 0.00, NULL, 1000.00, 'PRE-TRIAL', '2024-07-17 08:16:40', '2024-07-17 11:31:13'),
 ('8461f2b3', 'a9610fdb-a96e-4415-919f-8e71e1b7659e', 'UBANGELS10', '\"639761268466\"', 'MONIQUE DIMPLE ZENG', '2024-04-20 11:26:00', 0.00, 0.00, 0.00, NULL, 1000.00, 'PRE-TRIAL', '2024-07-17 08:16:40', '2024-07-17 08:27:16'),
-('8d1552bf-1cc3-11ef-8abb-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '\"639123456789\"', 'Juan Person', '2024-05-28 09:25:43', 1484.00, 594.00, 890.00, NULL, 890.00, 'PRE-TRIAL', '2024-05-28 07:26:08', '2024-05-28 07:26:08'),
 ('902dc726', 'a9610fdb-a96e-4415-919f-8e71e1b7659e', 'UBANGELS10', '\"639053774507\"', NULL, '2024-04-20 17:53:00', 0.00, 0.00, 0.00, NULL, 1000.00, 'PRE-TRIAL', '2024-07-17 08:16:40', '2024-07-17 08:27:16'),
-('a6673ec0-2d50-11ef-a4d2-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'GCA5H', '\"638572947601\"', 'Custom Er', '2024-06-14 10:55:41', 1800.00, 200.00, 1600.00, 'gcash', 1600.00, 'PRE-TRIAL', '2024-06-18 08:56:28', '2024-07-01 15:37:48'),
 ('abf475bf', 'b745e964-eba8-4372-a940-167be6c2c227', 'UBANGELS10', '\"639776077101\"', 'YU MA', '2024-04-27 20:33:00', 0.00, 0.00, 0.00, NULL, 1000.00, 'PRE-TRIAL', '2024-07-17 08:19:27', '2024-07-17 11:33:00'),
 ('d0a90e98', 'b745e964-eba8-4372-a940-167be6c2c227', 'UBANGELS10', '\"639776077101\"', 'YU MA', '2024-04-28 13:34:00', 0.00, 0.00, 0.00, NULL, 1000.00, 'PRE-TRIAL', '2024-07-17 08:19:27', '2024-07-17 11:33:06'),
 ('d67668ed', 'd61b2260-42e0-4281-be7a-bc3fb3244bd1', 'UBANGELS10', '\"639064050757\"', NULL, '2024-04-26 15:38:00', 0.00, 0.00, 0.00, NULL, 1000.00, 'PRE-TRIAL', '2024-07-17 08:19:27', '2024-07-17 11:32:28'),
 ('dd50d96b', '6cb2f0fe-253d-49c9-b52b-db44354138c8', 'UBANGELS10', '\"639171186490\"', NULL, '2024-04-22 19:08:00', 0.00, 0.00, 0.00, NULL, 1000.00, 'PRE-TRIAL', '2024-07-17 08:16:40', '2024-07-17 11:30:48'),
-('e881c2e7-224a-11ef-b01f-48e7dad87c24', '8946759b-1cc2-11ef-8abb-48e7dad87c24', 'B00KYDEMO', '\"639987654321\"', 'Anya Human', '2024-06-06 10:16:20', 15570.00, 3114.00, 12456.00, 'paymaya_credit_card', 12456.00, 'PRE-TRIAL', '2024-06-04 08:17:39', '2024-06-04 08:17:39'),
 ('eb9964e2', '67789d26-7c0f-4147-9f40-149aca3c0f9a', 'UBANGELS10', '\"639083241312\"', NULL, '2024-04-25 19:06:00', 0.00, 0.00, 0.00, NULL, 1000.00, 'PRE-TRIAL', '2024-07-17 08:16:40', '2024-07-17 11:31:47');
 
 --
@@ -4391,7 +4588,7 @@ DELIMITER ;
 --
 DROP TABLE IF EXISTS `activity_history_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `activity_history_view`  AS SELECT substr(`a`.`activity_id`,1,8) AS `activity_history_id`, substr(coalesce(`a`.`user_id`,'xxxxxxxx'),1,8) AS `user_id`, coalesce(`u`.`name`,'Unknown user') AS `user_name`, `a`.`table_name` AS `table_name`, substr(coalesce(case when `a`.`table_name` = 'merchant' then `m`.`merchant_id` when `a`.`table_name` = 'store' then `s`.`store_id` when `a`.`table_name` = 'promo' then `p`.`promo_id` when `a`.`table_name` = 'promo_history' then `ph`.`promo_history_id` when `a`.`table_name` = 'fee' then `f`.`fee_id` when `a`.`table_name` = 'fee_history' then `fh`.`fee_history_id` when `a`.`table_name` = 'transaction' then `t`.`transaction_id` when `a`.`table_name` = 'user' then `u2`.`user_id` when `a`.`table_name` = 'report_history_coupled' then `rhc`.`coupled_report_id` when `a`.`table_name` = 'report_history_decoupled' then `rhd`.`decoupled_report_id` when `a`.`table_name` = 'report_history_gcash_head' then `rhgh`.`gcash_report_id` when `a`.`table_name` = 'report_history_gcash_body' then `rhgb`.`gcash_report_body_id` else NULL end,'xxxxxxxx'),1,8) AS `table_id`, coalesce(case when `a`.`table_name` = 'merchant' then `m`.`merchant_name` when `a`.`table_name` = 'store' then `s`.`store_name` when `a`.`table_name` = 'promo' then `p`.`promo_code` when `a`.`table_name` = 'promo_history' then `ph`.`promo_code` when `a`.`table_name` = 'fee' then `fm`.`merchant_name` when `a`.`table_name` = 'fee_history' then `fhm`.`merchant_name` when `a`.`table_name` = 'transaction' then `t`.`customer_id` when `a`.`table_name` = 'user' then `u2`.`name` when `a`.`table_name` = 'report_history_coupled' then `rhc`.`settlement_number` when `a`.`table_name` = 'report_history_decoupled' then `rhd`.`settlement_number` when `a`.`table_name` = 'report_history_gcash_head' then `rhgh`.`settlement_number` when `a`.`table_name` = 'report_history_gcash_body' then `rhgh`.`settlement_number` else 'Deleted' end,'xxxxxxxx') AS `column_name`, `a`.`activity_type` AS `activity_type`, `a`.`description` AS `description`, CASE WHEN timestampdiff(SECOND,`a`.`created_at`,current_timestamp()) < 60 THEN concat(timestampdiff(SECOND,`a`.`created_at`,current_timestamp()),' second',if(timestampdiff(SECOND,`a`.`created_at`,current_timestamp()) = 1,'','s'),' ago') WHEN timestampdiff(MINUTE,`a`.`created_at`,current_timestamp()) < 60 THEN concat(timestampdiff(MINUTE,`a`.`created_at`,current_timestamp()),' minute',if(timestampdiff(MINUTE,`a`.`created_at`,current_timestamp()) = 1,'','s'),' ago') WHEN timestampdiff(HOUR,`a`.`created_at`,current_timestamp()) < 24 THEN concat(timestampdiff(HOUR,`a`.`created_at`,current_timestamp()),' hour',if(timestampdiff(HOUR,`a`.`created_at`,current_timestamp()) = 1,'','s'),' ago') WHEN timestampdiff(DAY,`a`.`created_at`,current_timestamp()) < 7 THEN concat(timestampdiff(DAY,`a`.`created_at`,current_timestamp()),' day',if(timestampdiff(DAY,`a`.`created_at`,current_timestamp()) = 1,'','s'),' ago') ELSE date_format(`a`.`created_at`,'%M %d at %l:%i %p') END AS `time_ago`, `a`.`created_at` AS `created_at`, `a`.`updated_at` AS `updated_at` FROM (((((((((((((((((`activity_history` `a` left join `user` `u` on(`u`.`user_id` = `a`.`user_id`)) left join `merchant` `m` on(`a`.`table_id` = `m`.`merchant_id`)) left join `store` `s` on(`a`.`table_id` = `s`.`store_id`)) left join `promo` `p` on(`a`.`table_id` = `p`.`promo_id`)) left join `promo_history` `ph` on(`a`.`table_id` = `ph`.`promo_history_id`)) left join `fee` `f` on(`a`.`table_id` = `f`.`fee_id`)) left join `merchant` `fm` on(`f`.`merchant_id` = `fm`.`merchant_id`)) left join `fee_history` `fh` on(`a`.`table_id` = `fh`.`fee_history_id`)) left join `fee` `ffh` on(`fh`.`fee_id` = `ffh`.`fee_id`)) left join `merchant` `fhm` on(`ffh`.`merchant_id` = `fhm`.`merchant_id`)) left join `transaction` `t` on(`a`.`table_id` = `t`.`transaction_id`)) left join `user` `u2` on(`a`.`table_id` = `u2`.`user_id`)) left join `report_history_coupled` `rhc` on(`a`.`table_id` = `rhc`.`coupled_report_id`)) left join `report_history_decoupled` `rhd` on(`a`.`table_id` = `rhd`.`decoupled_report_id`)) left join `report_history_gcash_head` `rhgh` on(`a`.`table_id` = `rhgh`.`gcash_report_id`)) left join `report_history_gcash_body` `rhgb` on(`a`.`table_id` = `rhgb`.`gcash_report_body_id`)) left join `report_history_gcash_body` `rhgb2` on(`rhgb2`.`gcash_report_id` = `rhgh`.`gcash_report_id`)) WHERE `a`.`table_name` in ('merchant','store','promo','promo_history','fee','fee_history','transaction','user','report_history_coupled','report_history_decoupled','report_history_gcash_head','report_history_gcash_body') ORDER BY `a`.`created_at` DESC ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `activity_history_view`  AS SELECT substr(`a`.`activity_id`,1,8) AS `activity_history_id`, substr(coalesce(`a`.`user_id`,'xxxxxxxx'),1,8) AS `user_id`, coalesce(`u`.`name`,'Unknown user') AS `user_name`, `a`.`table_name` AS `table_name`, substr(coalesce(case when `a`.`table_name` = 'merchant' then `m`.`merchant_id` when `a`.`table_name` = 'store' then `s`.`store_id` when `a`.`table_name` = 'promo' then `p`.`promo_id` when `a`.`table_name` = 'promo_history' then `ph`.`promo_history_id` when `a`.`table_name` = 'fee' then `f`.`fee_id` when `a`.`table_name` = 'fee_history' then `fh`.`fee_history_id` when `a`.`table_name` = 'transaction' then `t`.`transaction_id` when `a`.`table_name` = 'user' then `u2`.`user_id` when `a`.`table_name` = 'report_history_coupled' then `rhc`.`coupled_report_id` when `a`.`table_name` = 'report_history_decoupled' then `rhd`.`decoupled_report_id` when `a`.`table_name` = 'report_history_gcash_head' then `rhgh`.`gcash_report_id` when `a`.`table_name` = 'report_history_gcash_body' then `rhgb`.`gcash_report_body_id` else NULL end,'Deleted'),1,8) AS `table_id`, coalesce(case when `a`.`table_name` = 'merchant' then `m`.`merchant_name` when `a`.`table_name` = 'store' then `s`.`store_name` when `a`.`table_name` = 'promo' then `p`.`promo_code` when `a`.`table_name` = 'promo_history' then `ph`.`promo_code` when `a`.`table_name` = 'fee' then `fm`.`merchant_name` when `a`.`table_name` = 'fee_history' then `fhm`.`merchant_name` when `a`.`table_name` = 'transaction' then `t`.`customer_id` when `a`.`table_name` = 'user' then `u2`.`name` when `a`.`table_name` = 'report_history_coupled' then `rhc`.`settlement_number` when `a`.`table_name` = 'report_history_decoupled' then `rhd`.`settlement_number` when `a`.`table_name` = 'report_history_gcash_head' then `rhgh`.`settlement_number` when `a`.`table_name` = 'report_history_gcash_body' then `rhgh`.`settlement_number` else NULL end,'Deleted') AS `column_name`, `a`.`activity_type` AS `activity_type`, `a`.`description` AS `description`, CASE WHEN timestampdiff(SECOND,`a`.`created_at`,current_timestamp()) < 60 THEN concat(timestampdiff(SECOND,`a`.`created_at`,current_timestamp()),' second',if(timestampdiff(SECOND,`a`.`created_at`,current_timestamp()) = 1,'','s'),' ago') WHEN timestampdiff(MINUTE,`a`.`created_at`,current_timestamp()) < 60 THEN concat(timestampdiff(MINUTE,`a`.`created_at`,current_timestamp()),' minute',if(timestampdiff(MINUTE,`a`.`created_at`,current_timestamp()) = 1,'','s'),' ago') WHEN timestampdiff(HOUR,`a`.`created_at`,current_timestamp()) < 24 THEN concat(timestampdiff(HOUR,`a`.`created_at`,current_timestamp()),' hour',if(timestampdiff(HOUR,`a`.`created_at`,current_timestamp()) = 1,'','s'),' ago') WHEN timestampdiff(DAY,`a`.`created_at`,current_timestamp()) < 7 THEN concat(timestampdiff(DAY,`a`.`created_at`,current_timestamp()),' day',if(timestampdiff(DAY,`a`.`created_at`,current_timestamp()) = 1,'','s'),' ago') ELSE date_format(`a`.`created_at`,'%M %d at %l:%i %p') END AS `time_ago`, `a`.`created_at` AS `created_at`, `a`.`updated_at` AS `updated_at` FROM (((((((((((((((((`activity_history` `a` left join `user` `u` on(`u`.`user_id` = `a`.`user_id`)) left join `merchant` `m` on(`a`.`table_id` = `m`.`merchant_id`)) left join `store` `s` on(`a`.`table_id` = `s`.`store_id`)) left join `promo` `p` on(`a`.`table_id` = `p`.`promo_id`)) left join `promo_history` `ph` on(`a`.`table_id` = `ph`.`promo_history_id`)) left join `fee` `f` on(`a`.`table_id` = `f`.`fee_id`)) left join `merchant` `fm` on(`f`.`merchant_id` = `fm`.`merchant_id`)) left join `fee_history` `fh` on(`a`.`table_id` = `fh`.`fee_history_id`)) left join `fee` `ffh` on(`fh`.`fee_id` = `ffh`.`fee_id`)) left join `merchant` `fhm` on(`ffh`.`merchant_id` = `fhm`.`merchant_id`)) left join `transaction` `t` on(`a`.`table_id` = `t`.`transaction_id`)) left join `user` `u2` on(`a`.`table_id` = `u2`.`user_id`)) left join `report_history_coupled` `rhc` on(`a`.`table_id` = `rhc`.`coupled_report_id`)) left join `report_history_decoupled` `rhd` on(`a`.`table_id` = `rhd`.`decoupled_report_id`)) left join `report_history_gcash_head` `rhgh` on(`a`.`table_id` = `rhgh`.`gcash_report_id`)) left join `report_history_gcash_body` `rhgb` on(`a`.`table_id` = `rhgb`.`gcash_report_body_id`)) left join `report_history_gcash_body` `rhgb2` on(`rhgb2`.`gcash_report_id` = `rhgh`.`gcash_report_id`)) WHERE `a`.`table_name` in ('merchant','store','promo','promo_history','fee','fee_history','transaction','user','report_history_coupled','report_history_decoupled','report_history_gcash_head','report_history_gcash_body') ORDER BY `a`.`created_at` DESC ;
 
 -- --------------------------------------------------------
 
