@@ -25,13 +25,13 @@ BEGIN
             DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
 	    CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	    CASE
-                WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
-                WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), ''-'', DATE_FORMAT("', end_date, '", ''%b %e, %Y''))
-                ELSE 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%b %e, %Y''))
-            END AS settlement_period,
+            WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
+            WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+            ELSE 
+                 CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+        END AS settlement_period,
 
 	    SUM(`Cart Amount`) AS total_amount,
 	    `Commission Rate` AS commission_rate,
@@ -64,13 +64,13 @@ BEGIN
 	    DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
 	    CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
 	    CASE
-                WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
-                WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e''), ''-'', DATE_FORMAT("', end_date, '", ''%b %e, %Y''))
-                ELSE 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%b %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%b %e, %Y''))
-            END AS settlement_period,
+            WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
+            WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+            ELSE 
+                 CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+        END AS settlement_period,
 
 	    SUM(`Cart Amount`) AS total_amount,
 	    `Commission Rate` AS commission_rate,
