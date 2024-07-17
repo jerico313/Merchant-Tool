@@ -58,7 +58,7 @@ function displayUser() {
 
     .title{
       font-size: 30px; 
-      font-weight: 1000; 
+      font-weight: 900; 
       margin-right: auto; 
       padding-left: 5vh;
       color: #E96529;
