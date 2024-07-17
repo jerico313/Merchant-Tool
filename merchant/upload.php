@@ -1,4 +1,38 @@
 <?php include ("../header.php") ?>
+<?php
+function fetchSales() {
+    include("../inc/config.php");
+
+    // Updated SQL query to filter by department
+    $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Operations'";
+    $employeeResult = $conn->query($employeeSql);
+
+    if ($employeeResult->num_rows > 0) {
+        while ($employeeRow = $employeeResult->fetch_assoc()) {
+            echo "<option value='" . htmlspecialchars($employeeRow['user_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($employeeRow['name'], ENT_QUOTES, 'UTF-8') . "</option>";
+        }
+    } else {
+        echo "<option value=''>No User found</option>";
+    }
+}
+
+function fetchAccountManager() {
+    include("../inc/config.php");
+
+    // Updated SQL query to filter by department
+    $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Finance'";
+    $employeeResult = $conn->query($employeeSql);
+
+    if ($employeeResult->num_rows > 0) {
+        while ($employeeRow = $employeeResult->fetch_assoc()) {
+            echo "<option value='" . htmlspecialchars($employeeRow['user_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($employeeRow['name'], ENT_QUOTES, 'UTF-8') . "</option>";
+        }
+    } else {
+        echo "<option value=''>No User found</option>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +58,7 @@
 
         .title {
             font-size: 30px;
-            font-weight: bold;
+            font-weight: 900;
             margin-right: auto;
             padding-left: 5vh;
             color: #E96529;
@@ -130,29 +164,33 @@
                                     <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="merchant_partnership_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Partnership Type</label>
-                                    <select class="form-select" id="merchant_partnership_type" name="merchant_partnership_type[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
-                                        <option value="">-- Select Merchant Partnership Type --</option>
-                                        <option value="Primary">Primary</option>
-                                        <option value="Secondary">Secondary</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
                                     <label for="legal_entity_name" class="form-label" style="font-size:15px;font-weight:bold;">Legal Entity Name</label>
                                     <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                            
                                 <div class="mb-3">
                                     <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
                                     <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
-                                    <textarea class="form-control" rows="9" name="email_address[]" style="border-radius:20px;padding:15px 15px;border: 2px dashed #928a89;" required></textarea>
+                                    <textarea class="form-control" rows="5" name="email_address[]" style="border-radius:20px;padding:15px 15px;border: 2px dashed #928a89;" required></textarea>
                                 </div>
-                                
+                                <div class="mb-3">
+                                <label for="sales" class="form-label" style="font-size:15px;font-weight:bold;">Sales</label>
+                                    <select class="form-select" id="sales" name="sales[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
+                                    <option selected disabled>-- Select Sales --</option>
+                                    <?php fetchSales(); ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                <label for="account_manager" class="form-label" style="font-size:15px;font-weight:bold;">Account Manager</label>
+                                    <select class="form-select" id="account_manager" name="account_manager[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
+                                    <option selected disabled>-- Select Account Manager --</option>
+                                    <?php fetchAccountManager(); ?>
+                                    </select>
+                                </div>
                             </div>
                             <div class="mb-3 mt-3" style="text-align:right;">
                                 

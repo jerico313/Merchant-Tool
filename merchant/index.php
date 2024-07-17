@@ -48,10 +48,27 @@ function displayMerchant()
     $conn->close();
 }
 
-function fetchEmployeeNames() {
+function fetchSales() {
   include("../inc/config.php");
 
-  $employeeSql = "SELECT user_id, name FROM user";
+  // Updated SQL query to filter by department
+  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Operations'";
+  $employeeResult = $conn->query($employeeSql);
+
+  if ($employeeResult->num_rows > 0) {
+      while ($employeeRow = $employeeResult->fetch_assoc()) {
+          echo "<option value='" . htmlspecialchars($employeeRow['user_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($employeeRow['name'], ENT_QUOTES, 'UTF-8') . "</option>";
+      }
+  } else {
+      echo "<option value=''>No User found</option>";
+  }
+}
+
+function fetchAccountManager() {
+  include("../inc/config.php");
+
+  // Updated SQL query to filter by department
+  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Finance'";
   $employeeResult = $conn->query($employeeSql);
 
   if ($employeeResult->num_rows > 0) {
@@ -112,7 +129,7 @@ function fetchEmployeeNames() {
 
     .title {
       font-size: 30px;
-      font-weight: 1000;
+      font-weight: 900;
       margin-right: auto;
       padding-left: 5vh;
       color: #E96529;
@@ -254,14 +271,14 @@ function fetchEmployeeNames() {
                 <label for="sales" class="form-label">Sales</label>
                 <select class="form-select" id="sales" name="sales" required>
                   <option selected disabled>-- Select Sales --</option>
-                  <?php fetchEmployeeNames(); ?>
+                  <?php fetchSales(); ?>
                 </select>
               </div>
               <div class="mb-3">
                 <label for="accountManager" class="form-label">Account Manager</label>
                 <select class="form-select" id="accountManager" name="accountManager" required>
                   <option selected disabled>-- Select Account Manager --</option>
-                  <?php fetchEmployeeNames(); ?>
+                  <?php fetchAccountManager(); ?>
                 </select>
               </div>
               <button type="submit" class="btn btn-primary"

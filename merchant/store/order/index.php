@@ -115,7 +115,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
         .title {
             font-size: 30px;
-            font-weight: 1000;
+            font-weight: 900;
             margin-right: auto;
             padding-left: 5vh;
             color: #4BB0B8;
