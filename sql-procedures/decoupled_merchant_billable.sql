@@ -1,8 +1,8 @@
-DROP PROCEDURE IF EXISTS decoupled_merchant_all;
+DROP PROCEDURE IF EXISTS decoupled_merchant_billabe;
 
 DELIMITER //
 
-CREATE PROCEDURE decoupled_merchant_all(
+CREATE PROCEDURE decoupled_merchant_billable(
     IN merchant_id VARCHAR(36),
     IN start_date DATE,
     IN end_date DATE
@@ -19,7 +19,7 @@ BEGIN
          leadgen_commission_rate_base_billable, commission_rate_billable, total_billable, total_commission_fees)
         SELECT 
             "', v_uuid, '" AS decoupled_report_id, 
-            ''PRE-TRIAL and BILLABLE'' AS bill_status, 
+            ''BILLABLE'' AS bill_status, 
 	        `Merchant ID` AS merchant_id, 
             merchant.legal_entity_name AS merchant_business_name, 
             `Merchant Name` AS merchant_brand_name,
@@ -70,7 +70,7 @@ BEGIN
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
 	        AND `Voucher Type` = ''Decoupled''
-	        AND `Bill Status` != ''NOT BILLABLE''
+	        AND `Bill Status` = ''BILLABLE''
         GROUP BY 
             `Merchant ID`');
 
@@ -80,7 +80,7 @@ BEGIN
 
     SET @sql_select = CONCAT('SELECT 
             "', v_uuid, '" AS decoupled_report_id, 
-            ''PRE-TRIAL and BILLABLE'' AS bill_status, 
+            ''BILLABLE'' AS bill_status, 
 	        `Merchant ID` AS merchant_id, 
             merchant.legal_entity_name AS merchant_business_name, 
             `Merchant Name` AS merchant_brand_name,
@@ -131,7 +131,7 @@ BEGIN
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
 	        AND `Voucher Type` = ''Decoupled''
-	        AND `Bill Status` != ''NOT BILLABLE''
+	        AND `Bill Status` = ''BILLABLE''
         GROUP BY 
             `Merchant ID`');
 
