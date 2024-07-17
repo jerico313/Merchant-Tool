@@ -24,6 +24,7 @@ a.dropdown-item:hover{
 .dropdown-menu{
   width: 170px !important;
   border-radius: 10px;
+  font-weight: 900;
 }
 
 .login-container {
@@ -42,6 +43,7 @@ a.dropdown-item:hover{
   font-size: 13px;
   padding: 8px 16px;
   text-decoration: none;
+  font-weight: bold;
   /* text-transform: capitalize; */
   transition: padding-left 0.2s ease-in-out;
   -moz-transition: padding-left 0.2s ease-in-out;
@@ -439,6 +441,10 @@ li.paginate_button.page-item{
 td{
   background-color:transparent !important;
   border-bottom: 1px solid #808080 !important;
+}
+
+th{
+  font-weight: 900;
 }
 
 th.month{

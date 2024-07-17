@@ -74,7 +74,7 @@ function displayStore()
 
     .title {
       font-size: 30px;
-      font-weight: bold;
+      font-weight: 1000;
       margin-right: auto;
       padding-left: 5vh;
       color: #E96529;
@@ -220,7 +220,7 @@ function displayStore()
       <div class="sub" style="text-align:left;">
 
         <div class="add-btns">
-          <p class="title">Store</p>
+          <p class="title">Stores</p>
           <a href="upload.php"><button type="button" class="btn btn-danger add-merchant"><i
                 class="fa-solid fa-upload"></i> Upload Stores</button></a>
         </div>
@@ -229,14 +229,13 @@ function displayStore()
           <table id="example" class="table bord" style="width:100%;">
             <thead>
               <tr>
-                <th style="width:80px;">Store ID</th>
-                <th style="width:140px;">Merchant Name</th>
+                <th style="width:80px;padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Store ID</th>
+                <th style="width:140px;padding:10px;">Merchant Name</th>
                 <th style="display:none;"></th>
-                <th>Store Name</th>
-                <th>Legal Entity Name</th>
-                <th>Store Address</th>
-                <th style="width:100px;">Actions</th>
-          
+                <th style="padding:10px;">Store Name</th>
+                <th style="padding:10px;">Legal Entity Name</th>
+                <th style="padding:10px;">Store Address</th>
+                <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Actions</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -293,7 +292,7 @@ function displayStore()
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 4, 5] }    // Disable sorting for the specified columns
+            { orderable: false, targets: [0, 4, 5, 6] }    // Disable sorting for the specified columns
           ],
           order: []  // Ensure no initial ordering
         });

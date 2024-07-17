@@ -86,7 +86,7 @@ function displayStore($merchant_id)
 
         .title {
             font-size: 30px;
-            font-weight: bold;
+            font-weight: 1000;
             margin-right: auto;
             padding-left: 5vh;
             color: #4BB0B8;
@@ -267,12 +267,12 @@ function displayStore($merchant_id)
                     <table id="example" class="table bord" style="width:100%;">
                         <thead>
                             <tr>
-                                <th style="width:50px;">Store ID</th>
-                                <th>Store Name</th>
-                                <th>Legal Entity Name</th>
-                                <th>Store Address</th>
-                                <th style='width:120px;'>Action</th>
-                            </tr>
+                            <th style="width:80px;padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Store ID</th>
+                            <th style="padding:10px;">Store Name</th>
+                            <th style="padding:10px;">Legal Entity Name</th>
+                            <th style="padding:10px;">Store Address</th>
+                            <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Actions</th>
+                        </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
                             <?php displayStore($merchant_id); ?>

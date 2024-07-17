@@ -58,7 +58,7 @@ function displayPGFeeRate() {
 
     .title{
       font-size: 30px; 
-      font-weight: bold; 
+      font-weight: 1000; 
       margin-right: auto; 
       padding-left: 5vh;
       color: #E96529;"

@@ -68,7 +68,7 @@ function displayOrder() {
 
     .title{
       font-size: 30px; 
-      font-weight: bold; 
+      font-weight: 1000; 
       margin-right: auto; 
       padding-left: 5vh;
       color: #E96529;
@@ -200,16 +200,16 @@ function displayOrder() {
           <table id="example" class="table bord" style="width:180%;">
             <thead>
               <tr>
-              <th>Transaction ID</th>
-              <th>Store Name</th>
-              <th>Promo Code</th>
-              <th>Customer ID</th>
-              <th>Customer Name</th>
-              <th>Transaction Date</th>
-              <th>Gross Amount</th>
-              <th>Discount</th>
-              <th>Amount Discounted</th>
-              <th>Payment</th>
+              <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Transaction ID</th>
+              <th style="padding:10px;">Store Name</th>
+              <th style="padding:10px;">Promo Code</th>
+              <th style="padding:10px;">Customer ID</th>
+              <th style="padding:10px;">Customer Name</th>
+              <th style="padding:10px;">Transaction Date</th>
+              <th style="padding:10px;">Gross Amount</th>
+              <th style="padding:10px;">Discount</th>
+              <th style="padding:10px;">Amount Discounted</th>
+              <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Payment</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">

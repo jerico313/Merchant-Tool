@@ -115,7 +115,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
         .title {
             font-size: 30px;
-            font-weight: bold;
+            font-weight: 1000;
             margin-right: auto;
             padding-left: 5vh;
             color: #4BB0B8;
@@ -304,27 +304,27 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                     <table id="example" class="table bord" style="width:250%;">
                         <thead>
                             <tr>
-                                <th>Transaction ID</th>
-                                <th>Transaction Date</th>
-                                <th>Customer ID</th>
-                                <th>Customer Name</th>
-                                <th>Promo Code</th>
-                                <th>Voucher Type</th>
-                                <th>Promo Category</th>
-                                <th>Promo Group</th>
-                                <th>Promo Type</th>
-                                <th>Gross Amount</th>
-                                <th>Discount</th>
-                                <th>Cart Amount</th>
-                                <th>Payment</th>
-                                <th>Bill Status</th>
-                                <th>Commission Type</th>
-                                <th>Commission Rate</th>
-                                <th>Commission Amount</th>
-                                <th>Total Billing</th>
-                                <th>PG Fee Rate</th>
-                                <th>PG Fee Amount</th>
-                                <th>Amount to be Disbursed</th>
+                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Transaction ID</th>
+                                <th style="padding:10px;">Transaction Date</th>
+                                <th style="padding:10px;">Customer ID</th>
+                                <th style="padding:10px;">Customer Name</th>
+                                <th style="padding:10px;">Promo Code</th>
+                                <th style="padding:10px;">Voucher Type</th>
+                                <th style="padding:10px;">Promo Category</th>
+                                <th style="padding:10px;">Promo Group</th>
+                                <th style="padding:10px;">Promo Type</th>
+                                <th style="padding:10px;">Gross Amount</th>
+                                <th style="padding:10px;">Discount</th>
+                                <th style="padding:10px;">Cart Amount</th>
+                                <th style="padding:10px;">Payment</th>
+                                <th style="padding:10px;">Bill Status</th>
+                                <th style="padding:10px;">Commission Type</th>
+                                <th style="padding:10px;">Commission Rate</th>
+                                <th style="padding:10px;">Commission Amount</th>
+                                <th style="padding:10px;">Total Billing</th>
+                                <th style="padding:10px;">PG Fee Rate</th>
+                                <th style="padding:10px;">PG Fee Amount</th>
+                                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Amount to be Disbursed</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">

@@ -83,7 +83,7 @@ function displayStore()
 
     .title {
       font-size: 30px;
-      font-weight: bold;
+      font-weight: 1000;
       margin-right: auto;
       padding-left: 5vh;
       color: #E96529;
@@ -249,30 +249,30 @@ function displayStore()
       <div class="sub" style="text-align:left;">
 
         <div class="add-btns">
-          <p class="title">Promo</p>
+          <p class="title">Promos</p>
           <a href="upload.php"><button type="button" class="btn btn-danger add-merchant"><i
-                class="fa-solid fa-upload"></i> Upload Promo</button></a>
+                class="fa-solid fa-upload"></i> Upload Promos</button></a>
         </div>
 
         <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
           <table id="example" class="table bord" style="width:200%;">
             <thead>
             <tr>
-                  <th>Promo ID</th>
-                  <th>Promo Code</th>
-                  <th>Merchant Name</th>
-                  <th>Promo Amount</th>
-                  <th>Voucher Type</th>
-                  <th>Promo Category</th>
-                  <th>Promo Group</th>
-                  <th>Promo Type</th>
-                  <th>Promo Details</th>
-                  <th>Remarks</th>
-                  <th>Bill Status</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Remarks 2</th>
-                  <th style='width:50px;'>Action</th>
+                  <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Promo ID</th>
+                  <th style="padding:10px;">Promo Code</th>
+                  <th style="padding:10px;">Merchant Name</th>
+                  <th style="padding:10px;">Promo Amount</th>
+                  <th style="padding:10px;">Voucher Type</th>
+                  <th style="padding:10px;">Promo Category</th>
+                  <th style="padding:10px;">Promo Group</th>
+                  <th style="padding:10px;">Promo Type</th>
+                  <th style="padding:10px;">Promo Details</th>
+                  <th style="padding:10px;">Remarks</th>
+                  <th style="padding:10px;">Bill Status</th>
+                  <th style="padding:10px;">Start Date</th>
+                  <th style="padding:10px;">End Date</th>
+                  <th style="padding:10px;">Remarks 2</th>
+                  <th style='width:50px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;'>Action</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -383,14 +383,19 @@ function displayStore()
     <script src="./js/script.js"></script>
     <script>
         $(document).ready(function () {
-            if ($.fn.DataTable.isDataTable('#example')) {
-                $('#example').DataTable().destroy();
-            }
+        if ($.fn.DataTable.isDataTable('#example')) {
+          $('#example').DataTable().destroy();
+        }
 
-            $('#example').DataTable({
-                scrollX: true
-            });
+        $('#example').DataTable({
+          scrollX: true,
+          columnDefs: [
+            { orderable: false, targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }    // Disable sorting for the specified columns
+          ],
+          order: []  // Ensure no initial ordering
         });
+      });
+
         
         function viewHistory(storeId, promoId, promoCode) {
             window.location.href = 'history.php?store_id=' + encodeURIComponent(storeId) + '&promo_id=' + encodeURIComponent(promoId) + '&promo_code=' + encodeURIComponent(promoCode);

@@ -26,7 +26,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 
     .title{
       font-size: 30px; 
-      font-weight: bold; 
+      font-weight: 1000; 
       margin-right: auto; 
       padding-left: 5vh;
       color: #E96529;
@@ -83,7 +83,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
             </div>
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
-      <p class="title" style="color:;font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?> </p>
+      <p class="title" style="color:#4BB0B8;font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?> </p>
       </div>
       <div class="content" style="margin:25px;">
       <div class="text-center" style="text-align:center;" style="width:100%;">

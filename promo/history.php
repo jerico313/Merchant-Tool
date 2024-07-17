@@ -59,7 +59,7 @@ function displayOfferHistory($promo_code)
 
         .title {
             font-size: 30px;
-            font-weight: bold;
+            font-weight: 1000;
             margin-right: auto;
             padding-left: 5vh;
             color: #4BB0B8;
@@ -173,11 +173,11 @@ function displayOfferHistory($promo_code)
                     <table id="example" class="table bord" style="width:100%;">
                         <thead>
                             <tr>
-                                <th>Promo History ID</th>
-                                <th>Old Bill Status</th>
-                                <th>New Bill Status</th>
-                                <th>Changed At</th>
-                                <th>Changed By</th>
+                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Promo History ID</th>
+                                <th style="padding:10px;">Old Bill Status</th>
+                                <th style="padding:10px;">New Bill Status</th>
+                                <th style="padding:10px;">Changed At</th>
+                                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Changed By</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">

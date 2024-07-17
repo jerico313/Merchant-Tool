@@ -113,7 +113,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
         .title {
             font-size: 30px;
-            font-weight: bold;
+            font-weight: 1000;
             margin-right: auto;
             padding-left: 5vh;
             color: #4BB0B8;
@@ -281,27 +281,27 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                     <table id="example" class="table bord" style="width:250%;">
                         <thead>
                             <tr>
-                                <th>Transaction ID</th>
-                                <th>Transaction Date</th>
-                                <th>Customer ID</th>
-                                <th>Customer Name</th>
-                                <th>Promo Code</th>
-                                <th>Voucher Type</th>
-                                <th>Promo Category</th>
-                                <th>Promo Group</th>
-                                <th>Promo Type</th>
-                                <th>Gross Amount</th>
-                                <th>Discount</th>
-                                <th>Cart Amount</th>
-                                <th>Payment</th>
-                                <th>Bill Status</th>
-                                <th>Commission Type</th>
-                                <th>Commission Rate</th>
-                                <th>Commission Amount</th>
-                                <th>Total Billing</th>
-                                <th>PG Fee Rate</th>
-                                <th>PG Fee Amount</th>
-                                <th>Amount to be Disbursed</th>
+                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Transaction ID</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Transaction Date</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Customer ID</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Customer Name</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Promo Code</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Voucher Type</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Promo Category</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Promo Group</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Promo Type</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Gross Amount</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Discount</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Cart Amount</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Payment</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Bill Status</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Commission Type</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Commission Rate</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Commission Amount</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Total Billing</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">PG Fee Rate</th>
+                                <th style="padding:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">PG Fee Amount</th>
+                                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.10)inset;">Amount to be Disbursed</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">

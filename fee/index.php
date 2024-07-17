@@ -76,7 +76,7 @@ function displayPGFeeRate()
 
     .title {
       font-size: 30px;
-      font-weight: bold;
+      font-weight: 1000;
       margin-right: auto;
       padding-left: 5vh;
       color: #E96529;
@@ -232,18 +232,18 @@ function displayPGFeeRate()
           <table id="example" class="table bord" style="width:100%;">
             <thead>
               <tr>
-                <th>Fee ID</th>
-                <th>Merchant Name</th>
-                <th>Paymaya Credit Card</th>
-                <th>GCash</th>
-                <th>GCash Miniapp</th>
-                <th>Paymaya</th>
-                <th>Maya Checkout</th>
-                <th>Maya</th>
-                <th>Leadgen Commission</th>
-                <th>Commission Type</th>
+                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Fee ID</th>
+                <th style="padding:10px;">Merchant Name</th>
+                <th style="padding:10px;">Paymaya Credit Card</th>
+                <th style="padding:10px;">GCash</th>
+                <th style="padding:10px;">GCash Miniapp</th>
+                <th style="padding:10px;">Paymaya</th>
+                <th style="padding:10px;">Maya Checkout</th>
+                <th style="padding:10px;">Maya</th>
+                <th style="padding:10px;">Leadgen Commission</th>
+                <th style="padding:10px;">Commission Type</th>
                 <th style="display:none;"></th>
-                <th style="width:100px;">Action</th>
+                <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Action</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
