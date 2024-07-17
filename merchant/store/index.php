@@ -347,6 +347,15 @@ function displayStore($merchant_id)
                 </select>
               </div>
               <div class="mb-3">
+                  <label for="billStatus" class="form-label">Bill Status</label>
+                  <select class="form-select" id="billStatus" required>
+                  <option selected disabled>-- Select Bill Status --</option>
+                  <option value="All">PRE-TRIAL and BILLABLE</option>
+                  <option value="Pre-Trial">PRE-TRIAL</option>
+                  <option value="Billable">BILLABLE</option>
+                  </select>
+              </div>
+              <div class="mb-3">
                 <label for="startDate" class="form-label">Start Date</label>
                 <input type="date" class="form-control" id="startDate" name="startDate" required>
               </div>
@@ -423,11 +432,24 @@ function displayStore($merchant_id)
   document.getElementById('submitReport').addEventListener('click', function() {
     var form = document.getElementById('reportForm');
     var reportType = document.getElementById('reportType').value;
+    var billStatus = document.getElementById('billStatus').value;
 
     if (reportType === 'Coupled') {
-      form.action = 'coupled_generate_report.php';
+      if (billStatus === 'Pre-Trial') {
+        form.action = 'coupled_generate_report_pre-trial.php';
+      } else if (billStatus === 'Billable') {
+        form.action = 'coupled_generate_report_billable.php';
+      } else if (billStatus === 'All') {
+        form.action = 'coupled_generate_report.php';
+      }
     } else if (reportType === 'Decoupled') {
-      form.action = 'decoupled_generate_report.php';
+      if (billStatus === 'Pre-Trial') {
+        form.action = 'decoupled_generate_report_pre-trial.php';
+      } else if (billStatus === 'Billable') {
+        form.action = 'decoupled_generate_report_billable.php';
+      } else if (billStatus === 'All') {
+        form.action = 'decoupled_generate_report.php';
+      }
     } else if (reportType === 'GCash') {
       form.action = 'gcash_generate_report.php';
     }

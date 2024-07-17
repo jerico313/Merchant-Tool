@@ -1,14 +1,16 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include("../inc/config.php");
+    include("../../inc/config.php");
 
+    $storeId = $_POST['storeId'] ?? '';
+    $storeName = $_POST['storeName'] ?? '';
     $merchantId = $_POST['merchantId'] ?? '';
     $merchantName = $_POST['merchantName'] ?? '';
     $startDate = $_POST['startDate'] ?? '';
     $endDate = $_POST['endDate'] ?? '';
     $userId = $_POST['userId'] ?? '';
 
-    $sql = "CALL decoupled_merchant_all(?, ?, ?)";
+    $sql = "CALL decoupled_store_pretrial(?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
@@ -16,13 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Bind parameters to the prepared statement
-    $stmt->bind_param("sss", $merchantId, $startDate, $endDate);
+    $stmt->bind_param("sss", $storeId, $startDate, $endDate);
 
     if ($stmt->execute()) {
         $result = $stmt->get_result();
         if ($result->num_rows === 0) {
             // No rows returned, redirect to failed.php
-            header("Location: failed.php");
+            header("Location: failed.php?merchant_id=$merchantId&merchant_name=$merchantName");
             exit;
         }
         $stmt->close(); // Close the first statement
@@ -57,11 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // Redirect to the report page with parameters
-            $merchant_id = htmlspecialchars($merchantId);
-            $merchant_name = htmlspecialchars($merchantName);
+            $store_id = htmlspecialchars($storeId);
+            $store_name = htmlspecialchars($storeName);
             $settlement_period_start = htmlspecialchars($startDate);
             $settlement_period_end = htmlspecialchars($endDate);
-            $url = 'reports/decoupled_settlement_report.php?merchant_id=' . urlencode($merchant_id) . '&decoupled_report_id=' . urlencode($maxDecoupledReportId) . '&merchant_name=' . urlencode($merchant_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end);
+            $url = 'reports/decoupled_settlement_report.php?store_id=' . urlencode($store_id) . '&decoupled_report_id=' . urlencode($maxDecoupledReportId) . '&store_name=' . urlencode($store_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end);
+            
             header("Location: $url");
             exit;
         } else {
