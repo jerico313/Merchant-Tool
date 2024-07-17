@@ -6,6 +6,7 @@ function displayMessage($type, $message) {
     $color = $type === 'error' ? '#f44336' : '#4caf50';
     $icon = $type === 'error' ? 'error-icon' : 'checkmark';
     $path = $type === 'error' ? '<line x1="16" y1="16" x2="36" y2="36"/><line x1="36" y1="16" x2="16" y2="36"/>' : '<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>';
+    $containerWidth = $type === 'success' ? '300px' : 'auto';
     echo <<<HTML
 <!DOCTYPE html>
 <html>
@@ -26,7 +27,7 @@ function displayMessage($type, $message) {
             margin-bottom:30px;
             border: solid #fff 2px; 
             border-radius: 10px; 
-            width: auto;
+            width: $containerWidth;
             height: auto; 
             padding: 20px; /* Increased padding */
             backdrop-filter: blur(16px) saturate(180%); 
@@ -72,6 +73,16 @@ function displayMessage($type, $message) {
         .error-list li {
             margin-bottom: 5px; /* Adjust spacing between list items */
         }
+        #okay{
+        display: inline-block;
+        background-color: $color;
+        color:#fff;
+        border:solid $color 2px;
+        width:150px;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-top:30px;
+        }
     </style>
 </head>
 <body>
@@ -98,7 +109,7 @@ HTML;
     }
 
     echo <<<HTML
-        <a href="index.php"><button type="button" class="btn btn-secondary okay">Okay</button></a>
+        <a href="index.php"><button type="button" class="btn btn-secondary okay" id="okay">Okay</button></a>
     </div>
 </body>
 </html>
@@ -154,8 +165,8 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $invalidMerchantIds = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $merchantId = $data[1]; // Assuming data[3] is merchant_id
-        $storeId = $data[3]; // Assuming data[3] is merchant_id
+        $merchantId = $data[1]; // Assuming data[1] is merchant_id
+        $storeId = $data[3]; // Assuming data[3] is store_id
         $storeName = $data[2]; // Assuming data[2] is store_name
 
         $duplicates = checkForDuplicates($conn, $storeId, $storeName);
