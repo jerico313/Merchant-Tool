@@ -26,7 +26,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 
     .title{
       font-size: 30px; 
-      font-weight: bold; 
+      font-weight: 1000; 
       margin-right: auto; 
       padding-left: 5vh;
       color: #E96529;
@@ -51,20 +51,39 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 </head>
 <body>
 <div class="cont-box">
-  <div class="custom-box pt-5">
+  <div class="custom-box pt-4">
   <div class="voucher-type">
                 <div class="row pb-2 title" aria-label="breadcrumb">
                 <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                             <li class="breadcrumb-item"><a href="../index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
-                            <li class="breadcrumb-item"><a href="#" style="color:#E96529; font-size:14px;"><?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?>  </a></li>                               
+                            <li class="breadcrumb-item dropdown">
+                <a href="#" class="dropdown-toggle" role="button" id="storeDropdown" data-bs-toggle="dropdown"
+                  aria-expanded="false" style="color:#E96529;font-size:14px;">
+                  Settlement Reports
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="storeDropdown">
+                  <li><a class="dropdown-item"
+                      href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                      data-breadcrumb="Offers">Stores</a>
+                  </li>
+                  <li><a class="dropdown-item"
+                      href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                      data-breadcrumb="Offers">Promos</a>
+                  </li>
+                  <li><a class="dropdown-item"
+                      href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                      data-breadcrumb="Offers" style="color:#4BB0B8;">Settlement Reports</a>
+                  </li>
+                </ul>
+              </li>                               
                         </ol>
                     </nav> 
                 </div>
             </div>
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
-        <p class="title">Settlement Reports</p>
+      <p class="title" style="color:#4BB0B8;font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?> </p>
       </div>
       <div class="content" style="margin:25px;">
       <div class="text-center" style="text-align:center;" style="width:100%;">

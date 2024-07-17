@@ -24,9 +24,7 @@ function displayStore()
             $escapedStoreName = htmlspecialchars($row['store_name'], ENT_QUOTES, 'UTF-8');
             $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
             $escapedStoreAddress = htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
-
-            echo "<button class='btn' style='border:none;background-color:#4BB0B8;border-radius:20px;padding:0 10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#fff;'></i></button>";
-
+            echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
             echo "<ul class='list-group'>";
 
@@ -76,7 +74,7 @@ function displayStore()
 
     .title {
       font-size: 30px;
-      font-weight: bold;
+      font-weight: 1000;
       margin-right: auto;
       padding-left: 5vh;
       color: #E96529;
@@ -158,7 +156,7 @@ function displayStore()
         font-weight: bold;
         color: #fff;
       }
-
+      
       td:nth-of-type(1):before {
         content: "Merchant ID";
       }
@@ -222,7 +220,7 @@ function displayStore()
       <div class="sub" style="text-align:left;">
 
         <div class="add-btns">
-          <p class="title">Store</p>
+          <p class="title">Stores</p>
           <a href="upload.php"><button type="button" class="btn btn-danger add-merchant"><i
                 class="fa-solid fa-upload"></i> Upload Stores</button></a>
         </div>
@@ -231,14 +229,13 @@ function displayStore()
           <table id="example" class="table bord" style="width:100%;">
             <thead>
               <tr>
-                <th style="width:80px;">Store ID</th>
-                <th style="width:140px;">Merchant Name</th>
+                <th style="width:80px;padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Store ID</th>
+                <th style="width:140px;padding:10px;">Merchant Name</th>
                 <th style="display:none;"></th>
-                <th>Store Name</th>
-                <th>Legal Entity Name</th>
-                <th>Store Address</th>
-                <th style="width:100px;">Actions</th>
-          
+                <th style="padding:10px;">Store Name</th>
+                <th style="padding:10px;">Legal Entity Name</th>
+                <th style="padding:10px;">Store Address</th>
+                <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Actions</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -295,7 +292,7 @@ function displayStore()
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 4, 5] }    // Disable sorting for the specified columns
+            { orderable: false, targets: [0, 4, 5, 6] }    // Disable sorting for the specified columns
           ],
           order: []  // Ensure no initial ordering
         });

@@ -56,8 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $merchant_name = htmlspecialchars($merchantName);
             $settlement_period_start = htmlspecialchars($startDate);
             $settlement_period_end = htmlspecialchars($endDate);
-            $url = "reports/gcash_settlement_report.php?merchant_id=$merchant_id&gcash_report_id=$maxGcashReportId&merchant_name=$merchant_name&settlement_period_start=$settlement_period_start&settlement_period_end=$settlement_period_end";
-            
+            $url = 'reports/gcash_settlement_report.php?merchant_id=' . urlencode($merchant_id) . '&gcash_report_id=' . urlencode($maxGcashReportId) . '&merchant_name=' . urlencode($merchant_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end);            
             header("Location: $url");
             exit;
         } else {

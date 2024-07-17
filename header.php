@@ -45,6 +45,9 @@ if (isset($_SESSION['user_id'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>      
       .navbar a {
@@ -56,10 +59,18 @@ if (isset($_SESSION['user_id'])) {
         border:solid #4BB0B8 2px !important ;
         border-radius: 30px !important;
         background-color: #4BB0B8 !important;
-        box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27) !important;
--webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27) !important;
--moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27) !important;
+        box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;
+        -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;
+        -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;
       } 
+
+      .dropdown-toggle::after {
+        display: none;
+      }
+
+      a#navbarDropdownMenuLink.nav-link.mx-2.dropdown-toggle::after{
+        display: none;
+      }
     </style>
 </head>
 <body>
@@ -68,7 +79,7 @@ if (isset($_SESSION['user_id'])) {
         <a class="navbar-brand" href="/Merchant-tool/merchant/">
             <table style="border:10px;">
                 <tr>
-                    <th style="font-weight:900 !important;color:#fff;font-size:23px !important;padding-top:1px;">booky <span style="font-size:25px;font-weight:normal;">|</span></th>
+                    <th style="font-weight:1000 !important;color:#fff;font-size:23px !important;padding-top:1px;">booky <span style="font-size:25px;font-weight:normal;">|</span></th>
                     <th style="font-size:13px;padding-top:4px;font-family: Nanum Gothic">&nbsp; LEADGEN</th>
                 </tr>
             </table>
@@ -98,7 +109,7 @@ if (isset($_SESSION['user_id'])) {
             <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
                 <li class="nav-item dropdown">
                     <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-egg" style="color:#fff;"></i><span style="font-size:13px;color:#fff;padding-left:5px;"><?php echo '  ' . htmlspecialchars($name); ?></span>
+                        <i class="fa-solid fa-egg" style="color:#fff;"></i><span style="font-size:13px;color:#fff;padding-left:5px;font-weight:700;"><?php echo '  ' . htmlspecialchars($name); ?></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                         <?php if ($type !== 'User') : ?>

@@ -21,9 +21,7 @@ function displayMerchant()
             echo "<td style='text-align:center;vertical-align: middle;display:none;'>" . htmlspecialchars($row['account_manager_id']) . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;display:none;'>" . htmlspecialchars($row['sales_id']) . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>"; 
-            echo "<button class='btn' style='border:none;background-color:#4BB0B8;border-radius:20px;padding:0 10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#fff;'></i></button>";
-
-            // Action list (initially hidden)
+            echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
             echo "<div class='mt-2 actions-list' style='display:none;'>"; // Hidden initially
             echo "<ul class='list-group'>";
             
@@ -38,7 +36,7 @@ function displayMerchant()
             }
             
             echo "<li class='list-group-item action-item' style='animation-delay: 0.3s;'><a href='#' onclick='checkReport(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>Check Report</a></li>";
-            echo "<li class='list-group-item action-item' style='animation-delay: 0.4s;'><a href='#'  onclick='viewReport(\"" . $escapedMerchantId  . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View Report</a></li> ";
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.4s;'><a href='#'  onclick='viewReport(\"" . $escapedMerchantId  . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View Reports</a></li> ";
             echo "</ul>";
             echo "</div>"; 
             
@@ -114,7 +112,7 @@ function fetchEmployeeNames() {
 
     .title {
       font-size: 30px;
-      font-weight: bold;
+      font-weight: 1000;
       margin-right: auto;
       padding-left: 5vh;
       color: #E96529;
@@ -160,13 +158,14 @@ function fetchEmployeeNames() {
       -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
     }
 
+
     table thead th:last-child {
       position: sticky !important;
       right: 0;
       z-index: 2;
-      box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-      -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-      -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+      box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+      -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+      -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
     }
 
     select {
@@ -202,16 +201,16 @@ function fetchEmployeeNames() {
           <table id="example" class="table bord" style="width:200%;height:auto;">
             <thead>
               <tr>
-                <th>Merchant ID</th>
-                <th style="width:150px !important;">Merchant Name</th>
-                <th style="width:150px !important;">Legal Entity Name</th>
-                <th style="width:250px !important;">Business Address</th>
-                <th style="width:150px !important;">Email Address</th>
-                <th style="width:150px !important;">Sales</th>
-                <th style="width:150px !important;">Account Manager</th>
+                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Merchant ID</th>
+                <th style="width:150px !important;padding:10px;">Merchant Name</th>
+                <th style="width:150px !important;padding:10px;">Legal Entity Name</th>
+                <th style="width:250px !important;padding:10px;">Business Address</th>
+                <th style="width:150px !important;padding:10px;">Email Address</th>
+                <th style="width:150px !important;padding:10px;">Sales</th>
+                <th style="width:150px !important;padding:10px;">Account Manager</th>
                 <th style="display:none;"></th>
                 <th style="display:none;"></th>
-                <th style="width:50px !important;">Action</th>
+                <th style="width:80px !important;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Action</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -345,8 +344,16 @@ function fetchEmployeeNames() {
 
     <script>
       $(document).ready(function () {
+        if ($.fn.DataTable.isDataTable('#example')) {
+          $('#example').DataTable().destroy();
+        }
+
         $('#example').DataTable({
-          scrollX: true
+          scrollX: true,
+          columnDefs: [
+            { orderable: false, targets: [0, 2, 3, 4, 5, 6, 9] }   
+          ],
+          order: []  // Ensure no initial ordering
         });
       });
 

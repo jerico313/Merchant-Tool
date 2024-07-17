@@ -24,6 +24,7 @@ a.dropdown-item:hover{
 .dropdown-menu{
   width: 170px !important;
   border-radius: 10px;
+  font-weight: 900;
 }
 
 .login-container {
@@ -42,6 +43,7 @@ a.dropdown-item:hover{
   font-size: 13px;
   padding: 8px 16px;
   text-decoration: none;
+  font-weight: bold;
   /* text-transform: capitalize; */
   transition: padding-left 0.2s ease-in-out;
   -moz-transition: padding-left 0.2s ease-in-out;
@@ -95,39 +97,78 @@ th{
   margin-left:10px;
 }
 
-.add-merchant, .check-report{
+.add-merchant, .check-report, #submitButton{
   display: inline-block;
   background-color: #4BB0B8;
-  color:#fff;
+  color: #fff;
   border:solid  #4BB0B8 2px;
   padding:5px;
   width:150px;
   border-radius: 20px;
   cursor: pointer;
   text-align: center;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.20);
+-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.20);
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.20);
 }
 
 #add-field{
   margin-left:10px;
-  background-color:#95DD59;
+  background-color:#72bf6a;
   border-radius:20px;
   width:150px;
   cursor:pointer;
-  color:black;
-  border:solid #95DD59 2px;
+  border:solid #72bf6a 2px;
   padding:5px;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27) !important;
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27) !important;
+  -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27) !important;
 }
 
-.remove-field{
-  background-color:#E8C0AE;
+#add-field:hover {
+  border:solid  #72bf6a 2px !important;
+  background-color: #72bf6a !important;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+}
+
+#add-field:active {
+  border:solid  #72bf6a 2px !important;
+  background-color: #72bf6a !important;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+}
+
+#remove-field, #clearButton{
+  background-color:#cc001b;
   border-radius:20px;
   width:150px;
   cursor:pointer;
-  color:black;
-  border:solid #E8C0AE 2px;
+  color:#fff;
+  border:solid #cc001b 2px;
   padding:5px;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27) !important;
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27) !important;
+  -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27) !important;
 }
 
+#remove-field:hover, #clearButton:hover {
+  border:solid #cc001b 2px !important;
+  background-color: #cc001b !important;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+}
+
+#remove-field:active, #clearButton:active {
+  border:solid #cc001b 2px !important;
+  background-color: #cc001b !important;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+}
 .upload_file{
   display: inline-block;
   background-color: #4BB0B8;
@@ -189,13 +230,17 @@ th{
   color: grey;
   text-align: center;
   border-spacing: 10px; /* Adjust the spacing here */
+
 }
 
 
-.add-merchant:hover {
-  background-color: transparent;
-  color: #4BB0B8;
+.add-merchant:hover, .check-report:hover, #submitButton:hover {
+  color: #fff;
   border:solid  #4BB0B8 2px;
+  background-color: #4BB0B8;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset;
+-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset;
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset;
 }
 
 .upload_file:hover {
@@ -210,10 +255,14 @@ th{
   border: solid #fff 2px;
 }
 
+
 .btn:active {
-  background-color: transparent !important;
-  color: #4BB0B8 !important;
-  border:solid  #4BB0B8 2px !important ;
+  color: #fff !important;
+  border:solid  #4BB0B8 2px !important;
+  background-color: #4BB0B8 !important;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.27)inset !important;
 }
 
 input[type="file"] {
@@ -239,7 +288,7 @@ button#dropdownMenuButton.btn.btn-primary.dropdown-toggle.mt-4::after{
 }
 
 
-.coupled:hover, .decoupled:hover, .all:hover,  .gcash:hover, .check-report:hover{
+.coupled:hover, .decoupled:hover, .all:hover,  .gcash:hover{
   background-color: transparent;
   color: #4BB0B8;
   border:solid  #4BB0B8 2px;
@@ -364,22 +413,20 @@ li.paginate_button.page-item{
   border:solid #4caf50 2px;
 }
 
-
-/* Adjust the width or thickness of the horizontal scrollbar */
 .dataTables_scrollBody::-webkit-scrollbar {
-  height: 7px; /* Set the height of the scrollbar */
+  height: 7px; 
   margin: 10px;
   padding: 4px !important; 
 }
 
 .dataTables_scrollBody::-webkit-scrollbar-track {
-  background: transparent; /* Set the background color of the scrollbar track */
+  background: transparent;
   padding: 4px !important; 
 }
 
 .dataTables_scrollBody::-webkit-scrollbar-thumb {
-  background: #E96529; /* Set the color of the scrollbar thumb */
-  border-radius: 6px; /* Round the corners of the scrollbar thumb */
+  background: #E96529; 
+  border-radius: 6px;
   padding: 4px !important; 
 }
 
@@ -394,6 +441,10 @@ li.paginate_button.page-item{
 td{
   background-color:transparent !important;
   border-bottom: 1px solid #808080 !important;
+}
+
+th{
+  font-weight: 900;
 }
 
 th.month{

@@ -56,7 +56,7 @@ function displayFeeHistory($fee_id) {
         }
         .title {
             font-size: 30px; 
-            font-weight: bold; 
+            font-weight: 1000; 
             margin-right: auto; 
             padding-left: 5vh;
             color: #4BB0B8;
@@ -149,12 +149,12 @@ function displayFeeHistory($fee_id) {
                 <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>Fee History ID</th>
-                            <th>Column Name</th>
-                            <th>Old Value</th>
-                            <th>New Value</th>
-                            <th>Change At</th>
-                            <th>Change By</th>
+                            <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Fee History ID</th>
+                            <th style="padding:10px;">Column Name</th>
+                            <th style="padding:10px;">Old Value</th>
+                            <th style="padding:10px;">New Value</th>
+                            <th style="padding:10px;">Change At</th>
+                            <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Change By</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">

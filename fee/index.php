@@ -25,8 +25,7 @@ function displayPGFeeRate()
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
             echo "<td style='text-align:center;;vertical-align: middle;' class='actions-cell'>";
 
-            echo "<button class='btn' style='border:none;background-color:#4BB0B8;border-radius:20px;padding:0 10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#fff;'></i></button>";
-
+            echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
             echo "<ul class='list-group'>";
 
@@ -77,7 +76,7 @@ function displayPGFeeRate()
 
     .title {
       font-size: 30px;
-      font-weight: bold;
+      font-weight: 1000;
       margin-right: auto;
       padding-left: 5vh;
       color: #E96529;
@@ -233,18 +232,18 @@ function displayPGFeeRate()
           <table id="example" class="table bord" style="width:100%;">
             <thead>
               <tr>
-                <th>Fee ID</th>
-                <th>Merchant Name</th>
-                <th>Paymaya Credit Card</th>
-                <th>GCash</th>
-                <th>GCash Miniapp</th>
-                <th>Paymaya</th>
-                <th>Maya Checkout</th>
-                <th>Maya</th>
-                <th>Leadgen Commission</th>
-                <th>Commission Type</th>
+                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Fee ID</th>
+                <th style="padding:10px;">Merchant Name</th>
+                <th style="padding:10px;">Paymaya Credit Card</th>
+                <th style="padding:10px;">GCash</th>
+                <th style="padding:10px;">GCash Miniapp</th>
+                <th style="padding:10px;">Paymaya</th>
+                <th style="padding:10px;">Maya Checkout</th>
+                <th style="padding:10px;">Maya</th>
+                <th style="padding:10px;">Leadgen Commission</th>
+                <th style="padding:10px;">Commission Type</th>
                 <th style="display:none;"></th>
-                <th style="width:100px;">Action</th>
+                <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Action</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">

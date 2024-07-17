@@ -53,7 +53,7 @@ function displayDecoupled($merchant_id, $merchant_name)
 
         .title {
             font-size: 30px;
-            font-weight: bold;
+            font-weight: 1000;
             margin-right: auto;
             padding-left: 5vh;
             color: #4BB0B8;
@@ -203,9 +203,9 @@ function displayDecoupled($merchant_id, $merchant_name)
                     <table id="example" class="table bord" style="width:100%;">
                         <thead>
                             <tr>
-                                <th>Settlement Number</th>
-                                <th>Filename</th>
-                                <th>Created At</th>
+                            <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Settlement Number</th>
+                                <th style="padding:10px;">Filename</th>
+                                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Created At</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">

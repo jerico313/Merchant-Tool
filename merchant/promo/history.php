@@ -60,7 +60,7 @@ function displayOfferHistory($promo_code, $merchant_name)
 
         .title {
             font-size: 30px;
-            font-weight: bold;
+            font-weight: 1000;
             margin-right: auto;
             padding-left: 5vh;
             color: #4BB0B8;
@@ -176,10 +176,6 @@ function displayOfferHistory($promo_code, $merchant_name)
                                         <li><a class="dropdown-item"
                                                 href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers" style="color:#4BB0B8;">Promos</a>
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="../reports/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Settlement Reports</a>
                                         </li>
                                     </ul>
                                 </li>

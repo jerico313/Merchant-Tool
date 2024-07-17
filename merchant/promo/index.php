@@ -37,7 +37,7 @@ function displayOffers($merchant_id, $merchant_name)
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['remarks2'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
 
-            echo "<button class='btn' style='border:none;background-color:#4BB0B8;border-radius:20px;padding:0 10px;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#fff;'></i></button>";
+            echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
 
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
             echo "<ul class='list-group'>";
@@ -90,7 +90,7 @@ function displayOffers($merchant_id, $merchant_name)
 
         .title {
             font-size: 30px;
-            font-weight: bold;
+            font-weight: 1000;
             margin-right: auto;
             padding-left: 5vh;
             color: #4BB0B8;
@@ -259,10 +259,6 @@ function displayOffers($merchant_id, $merchant_name)
                                                 href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers" style="color:#4BB0B8;">Promos</a>
                                         </li>
-                                        <li><a class="dropdown-item"
-                                                href="../reports/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Settlement Reports</a>
-                                        </li>
                                     </ul>
                                 </li>
                             </ol>
@@ -279,20 +275,20 @@ function displayOffers($merchant_id, $merchant_name)
                     <table id="example" class="table bord" style="width:200%;">
                         <thead>
                             <tr>
-                                <th>Promo ID</th>
-                                <th>Promo Code</th>
-                                <th>Promo Amount</th>
-                                <th>Voucher Type</th>
-                                <th>Promo Category</th>
-                                <th>Promo Group</th>
-                                <th>Promo Type</th>
-                                <th>Promo Details</th>
-                                <th>Remarks</th>
-                                <th>Bill Status</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Remarks 2</th>
-                                <th style='width:50px;'>Action</th>
+                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Promo ID</th>
+                                <th style="padding:10px;">Promo Code</th>
+                                <th style="padding:10px;">Promo Amount</th>
+                                <th style="padding:10px;">Voucher Type</th>
+                                <th style="padding:10px;">Promo Category</th>
+                                <th style="padding:10px;">Promo Group</th>
+                                <th style="padding:10px;">Promo Type</th>
+                                <th style="padding:10px;">Promo Details</th>
+                                <th style="padding:10px;">Remarks</th>
+                                <th style="padding:10px;">Bill Status</th>
+                                <th style="padding:10px;">Start Date</th>
+                                <th style="padding:10px;">End Date</th>
+                                <th style="padding:10px;">Remarks 2</th>
+                                <th style='width:50px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;'>Action</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">

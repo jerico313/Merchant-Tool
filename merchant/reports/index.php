@@ -26,7 +26,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
     .title {
       font-size: 30px;
-      font-weight: bold;
+      font-weight: 1000;
       margin-right: auto;
       padding-left: 5vh;
       color: #4BB0B8;
@@ -83,12 +83,12 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
               </li>
             </ol>
           </nav>
-          <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
-            <?php echo htmlspecialchars($merchant_name); ?>
-          </p>
         </div>
       </div>
       <div class="sub" style="text-align:left;">
+      <div class="add-btns">
+      <p class="title" style="color:;font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8'); ?> </p>
+      </div>
         <div class="content" style="margin:25px;">
           <div class="text-center" style="text-align:center;" style="width:100%;">
             <div class="row">

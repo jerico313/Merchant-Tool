@@ -53,16 +53,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt) {
                 $stmt->bind_param("ss", $userId, $latestActivityId);
                 $stmt->execute();
-                $stmt->close(); // Close the statement
+                $stmt->close();
             }
 
-            // Redirect to the report page with parameters
             $merchant_id = htmlspecialchars($merchantId);
             $merchant_name = htmlspecialchars($merchantName);
             $settlement_period_start = htmlspecialchars($startDate);
             $settlement_period_end = htmlspecialchars($endDate);
-            $url = "reports/coupled_settlement_report.php?merchant_id=$merchant_id&coupled_report_id=$maxCoupledReportId&merchant_name=$merchant_name&settlement_period_start=$settlement_period_start&settlement_period_end=$settlement_period_end";
-            
+            $url = 'reports/coupled_settlement_report.php?merchant_id=' . urlencode($merchant_id) . '&coupled_report_id=' . urlencode($maxCoupledReportId) . '&merchant_name=' . urlencode($merchant_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end);            
             header("Location: $url");
             exit;
         } else {

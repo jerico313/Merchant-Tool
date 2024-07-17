@@ -236,7 +236,7 @@
                     </div>
                 </div>
                 <div class="mb-3 mt-3" style="text-align:right;">
-                    <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
+                    <button type="button" class="btn btn-danger remove-field" id="remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
                 </div>
             </div>
         `;
