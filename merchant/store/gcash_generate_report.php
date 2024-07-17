@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $endDate = $_POST['endDate'] ?? '';
     $userId = $_POST['userId'] ?? '';
 
-    $sql = "CALL generate_store_gcash_report(?, ?, ?)";
+    $sql = "CALL gcash_store(?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {

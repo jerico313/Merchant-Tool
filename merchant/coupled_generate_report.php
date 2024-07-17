@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $endDate = $_POST['endDate'] ?? '';
     $userId = $_POST['userId'] ?? '';
 
-    $sql = "CALL generate_merchant_coupled_report(?, ?, ?)";
+    $sql = "CALL coupled_merchant_all(?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {

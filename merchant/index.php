@@ -289,48 +289,54 @@ function fetchAccountManager() {
       </div>
     </div>
     <!-- Report Modal -->
-    <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius:20px;">
-          <div class="modal-header border-0">
-            <p class="modal-title" id="reportModalLabel">Choose Report Type</p>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:20px;">
+      <div class="modal-header border-0">
+        <p class="modal-title" id="reportModalLabel">Choose Report Type</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="reportForm">
+          <input type="hidden" id="reportMerchantId" name="merchantId">
+          <input type="hidden" id="reportMerchantName" name="merchantName">
+          <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+          <div class="mb-3">
+            <label for="reportType" class="form-label">Report Type</label>
+            <select class="form-select" id="reportType" required>
+              <option selected disabled>-- Select Report Type --</option>
+              <option value="Coupled">Coupled</option>
+              <option value="Decoupled">Decoupled</option>
+              <option value="GCash">GCash</option>
+            </select>
           </div>
-          <div class="modal-body">
-            <form id="reportForm">
-              <input type="hidden" id="reportMerchantId" name="merchantId">
-              <input type="hidden" id="reportMerchantName" name="merchantName">
-              <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-              <div class="mb-3">
-                <label for="reportType" class="form-label">Report Type</label>
-                <select class="form-select" id="reportType" required>
-                  <option selected disabled>-- Select Report Type --</option>
-                  <option value="Coupled">Coupled</option>
-                  <option value="Decoupled">Decoupled</option>
-                  <option value="GCash">GCash</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="startDate" class="form-label">Start Date</label>
-                <input type="date" class="form-control" id="startDate" name="startDate" required>
-              </div>
-              <div class="mb-3">
-                <label for="endDate" class="form-label">End Date</label>
-                <input type="date" class="form-control" id="endDate" name="endDate" required>
-              </div>
-              <button type="button" class="btn btn-primary"
-                style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;"
-                id="submitReport">Generate Report</button>
-            </form>
+          <div class="mb-3">
+            <label for="billStatus" class="form-label">Bill Status</label>
+            <select class="form-select" id="billStatus" required>
+              <option selected disabled>-- Select Bill Status --</option>
+              <option value="All">PRE-TRIAL and BILLABLE</option>
+              <option value="Pre-Trial">PRE-TRIAL</option>
+              <option value="Billable">BILLABLE</option>
+            </select>
           </div>
-        </div>
+          <div class="mb-3">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" required>
+          </div>
+          <div class="mb-3">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" required>
+          </div>
+          <button type="button" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;" id="submitReport">Generate Report</button>
+        </form>
       </div>
     </div>
-    <div id="alertContainer"></div>
-    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-    <script>
+  </div>
+</div>
+<div id="alertContainer"></div>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+<script>
   function checkReport(merchantId, merchantName) {
     // Set the merchantId and merchantName in the report modal
     document.getElementById('reportMerchantId').value = merchantId;
@@ -343,11 +349,24 @@ function fetchAccountManager() {
   document.getElementById('submitReport').addEventListener('click', function() {
     var form = document.getElementById('reportForm');
     var reportType = document.getElementById('reportType').value;
+    var billStatus = document.getElementById('billStatus').value;
 
     if (reportType === 'Coupled') {
-      form.action = 'coupled_generate_report.php';
+      if (billStatus === 'Pre-Trial') {
+        form.action = 'coupled_generate_report_pre-trial.php';
+      } else if (billStatus === 'Billable') {
+        form.action = 'coupled_generate_report_billable.php';
+      } else if (billStatus === 'All') {
+        form.action = 'coupled_generate_report.php';
+      }
     } else if (reportType === 'Decoupled') {
-      form.action = 'decoupled_generate_report.php';
+      if (billStatus === 'Pre-Trial') {
+        form.action = 'decoupled_generate_report_pre-trial.php';
+      } else if (billStatus === 'Billable') {
+        form.action = 'decoupled_generate_report_billable.php';
+      } else if (billStatus === 'All') {
+        form.action = 'decoupled_generate_report.php';
+      }
     } else if (reportType === 'GCash') {
       form.action = 'gcash_generate_report.php';
     }
@@ -358,6 +377,7 @@ function fetchAccountManager() {
     form.submit();
   });
 </script>
+
 
     <script>
       $(document).ready(function () {

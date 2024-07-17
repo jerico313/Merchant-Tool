@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $endDate = $_POST['endDate'] ?? '';
     $userId = $_POST['userId'] ?? '';
 
-    $sql = "CALL decoupled_merchant_all(?, ?, ?)";
+    $sql = "CALL decoupled_merchant_pretrial(?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {

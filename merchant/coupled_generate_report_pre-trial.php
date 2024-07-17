@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $endDate = $_POST['endDate'] ?? '';
     $userId = $_POST['userId'] ?? '';
 
-    $sql = "CALL decoupled_merchant_all(?, ?, ?)";
+    $sql = "CALL coupled_merchant_pretrial(?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
@@ -38,30 +38,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Get the max coupled_report_id from report_history_coupled
-        $maxDecoupledReportId = null;
-        $stmt = $conn->prepare("SELECT decoupled_report_id FROM report_history_decoupled ORDER BY created_at DESC LIMIT 1");
+        $maxCoupledReportId = null;
+        $stmt = $conn->prepare("SELECT coupled_report_id FROM report_history_coupled ORDER BY created_at DESC LIMIT 1");
         if ($stmt) {
             $stmt->execute();
-            $stmt->bind_result($maxDecoupledReportId);
+            $stmt->bind_result($maxCoupledReportId);
             $stmt->fetch(); // Fetch the result
             $stmt->close(); // Close the statement
         }
 
-        if ($latestActivityId !== null && $maxDecoupledReportId !== null) {
+        if ($latestActivityId !== null && $maxCoupledReportId !== null) {
             // Update activity_history with user_id
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
             if ($stmt) {
                 $stmt->bind_param("ss", $userId, $latestActivityId);
                 $stmt->execute();
-                $stmt->close(); // Close the statement
+                $stmt->close();
             }
 
-            // Redirect to the report page with parameters
             $merchant_id = htmlspecialchars($merchantId);
             $merchant_name = htmlspecialchars($merchantName);
             $settlement_period_start = htmlspecialchars($startDate);
             $settlement_period_end = htmlspecialchars($endDate);
-            $url = 'reports/decoupled_settlement_report.php?merchant_id=' . urlencode($merchant_id) . '&decoupled_report_id=' . urlencode($maxDecoupledReportId) . '&merchant_name=' . urlencode($merchant_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end);
+            $url = 'reports/coupled_settlement_report.php?merchant_id=' . urlencode($merchant_id) . '&coupled_report_id=' . urlencode($maxCoupledReportId) . '&merchant_name=' . urlencode($merchant_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end);            
             header("Location: $url");
             exit;
         } else {

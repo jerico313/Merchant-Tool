@@ -76,7 +76,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                       data-breadcrumb="Offers">Promos</a>
                   </li>
                   <li><a class="dropdown-item"
-                      href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                      href="../reports/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                       data-breadcrumb="Offers" style="color:#4BB0B8;">Settlement Reports</a>
                   </li>
                 </ul>
