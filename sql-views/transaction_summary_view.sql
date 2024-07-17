@@ -61,7 +61,8 @@ WITH pg_fee_cte AS (
         JOIN `leadgen_db`.`fee` `f` ON (`f`.`merchant_id` = `m`.`merchant_id`)
 )
 SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
-    DATE_FORMAT(`t`.`transaction_date`, "%M %d, %Y %h:%i%p") AS `Transaction Date`,
+    DATE_FORMAT(`t`.`transaction_date`, "%M %d, %Y %h:%i%p") AS `Formatted Transaction Date`,
+    `t`.`transaction_date` AS `Transaction Date`,
     `m`.`merchant_id` AS `Merchant ID`,
     `m`.`merchant_name` AS `Merchant Name`,
     `s`.`store_id` AS `Store ID`,
@@ -101,6 +102,10 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
     END AS `Total Billing`,
     CONCAT(pg_fee_cte.pg_fee_rate, '%') AS `PG Fee Rate`,
     ROUND(`t`.`amount_discounted` * (pg_fee_cte.pg_fee_rate / 100), 2) AS `PG Fee Amount`,
+    CASE
+        WHEN `f`.`is_cwt_rate_computed` = 1 THEN 'Yes'
+        ELSE 'No'
+    END AS `Is CWT Rate Computed`,
     ROUND(
         `t`.`amount_discounted` 
         - CASE
@@ -117,5 +122,5 @@ FROM `leadgen_db`.`transaction` `t`
     JOIN `leadgen_db`.`merchant` `m` ON `m`.`merchant_id` = `s`.`merchant_id`
     JOIN `leadgen_db`.`promo` `p` ON `p`.`promo_code` = `t`.`promo_code`
     JOIN `leadgen_db`.`fee` `f` ON `f`.`merchant_id` = `m`.`merchant_id`
-    JOIN pg_fee_cte ON `t`.`transaction_id` = `pg_fee_cte`.`transaction_id`
-ORDER BY `t`.`transaction_date` ASC;
+    JOIN `pg_fee_cte` ON `t`.`transaction_id` = `pg_fee_cte`.`transaction_id`
+ORDER BY `t`.`transaction_date`;
