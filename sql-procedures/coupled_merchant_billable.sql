@@ -1,8 +1,8 @@
-DROP PROCEDURE IF EXISTS coupled_billable_merchant;
+DROP PROCEDURE IF EXISTS coupled_merchant_billable;
 
 DELIMITER //
 
-CREATE PROCEDURE coupled_billable_merchant(
+CREATE PROCEDURE coupled_merchant_billable(
     IN merchant_id VARCHAR(36),
     IN start_date DATE,
     IN end_date DATE
