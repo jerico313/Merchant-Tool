@@ -16,23 +16,13 @@ $conn->close();
 
 $totalGrossSales = number_format($data['total_gross_sales'], 2);
 $totalDiscount = number_format($data['total_discount'], 2);
-$totalOutstandingAmount1 = number_format($data['total_outstanding_amount_1'], 2);
+$totalOutstandingAmount = number_format($data['total_outstanding_amount'], 2);
 $leadgenCommissionRateBasePretrial = number_format($data['leadgen_commission_rate_base_pretrial'], 2);
-$leadgenCommissionRateBaseBillable = number_format($data['leadgen_commission_rate_base_billable'], 2); 
 $totalPretrial = number_format($data['total_pretrial'], 2);
+$leadgenCommissionRateBaseBillable = number_format($data['leadgen_commission_rate_base_billable'], 2); 
 $totalBillable = number_format($data['total_billable'], 2);
-$totalCommissionFees1 = number_format($data['total_commission_fees_1'], 2); 
-$cardPaymentPGFee = number_format($data['card_payment_pg_fee'], 2); 
-$paymayaPgFee = number_format($data['paymaya_pg_fee'], 2);
-$gcashMiniappPGFee = number_format($data['gcash_miniapp_pg_fee'], 2);  
-$gcashPGFee = number_format($data['gcash_pg_fee'], 2); 
-$totalPaymentGatewayFees1 = number_format($data['total_payment_gateway_fees_1'], 2);
-$totalOutstandingAmount2 = number_format($data['total_outstanding_amount_2'], 2);
-$totalCommissionFees2 = number_format($data['total_commission_fees_2'], 2);
-$totalPaymentGatewayFees2 = number_format($data['total_payment_gateway_fees_2'], 2);
-$bankFees = number_format($data['bank_fees'], 2);
-$wtaxFromGrossSales = number_format($data['wtax_from_gross_sales'], 2);
-$totalAmountPaidOut = number_format($data['total_amount_paid_out'], 2);
+$totalCommissionFees = number_format($data['total_commission_fees'], 2); 
+
 
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $end_date = isset($_GET['settlement_period_end']) ? $_GET['settlement_period_end'] : '';
@@ -323,7 +313,7 @@ function displayOffers($store_id, $start_date, $end_date)
       </tr>
       <tr>
           <td style="font-weight:bold;">Total Outstanding Amount:</td>
-          <td id="total_net_sales" style="font-weight:bold;text-align:center;"><?php  echo $totalOutstandingAmount1; ?> PHP</td>
+          <td id="total_net_sales" style="font-weight:bold;text-align:center;"><?php  echo $totalOutstandingAmount; ?> PHP</td>
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
@@ -369,70 +359,10 @@ function displayOffers($store_id, $start_date, $end_date)
     <table style="width:100% !important;">
       <tr>
           <td style="font-weight:bold;">Total Commision Fees:</td>
-          <td id="total_commission_fees" style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo $totalCommissionFees1; ?> PHP</td>
+          <td id="total_commission_fees" style="font-weight:bold;text-align:right;padding-right:85px;"><?php echo $totalCommissionFees; ?> PHP</td>
       </tr>
 </table>  
-<br>
-<table style="width:100% !important;">
-      <tr>
-          <td style="padding-left:85px;">Payment Gateway Fees</td>
-          <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;"></td>
-      </tr>
-    </table>
-    <br>   
-<table style="width:100% !important;">
-      <tr>
-          <td style="padding-left:85px;">Card Payment</td>
-          <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;"><?php echo $cardPaymentPGFee; ?></td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Paymaya</td>
-          <td id="commission_rate_pretrial" style="text-align:right;padding-right:85px;"><?php echo $paymayaPgFee; ?></td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Gcash_miniapp</td>
-          <td id="total_pretrial" style="text-align:right;padding-right:85px;"><?php echo $gcashMiniappPGFee; ?></td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Gcash</td>
-          <td id="total_pretrial" style="text-align:right;padding-right:85px;"><?php echo $gcashPGFee; ?></td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;font-weight:bold;">Total Payment Gateway Fees</td>
-          <td id="total_pretrial" style="text-align:right;padding-right:85px;font-weight:bold;"><?php echo $totalPaymentGatewayFees1; ?></td>
-      </tr>
-    </table>
-    <hr style="border: 1px solid #3b3b3b;">
-    <table style="width:100% !important;">
-      <tr>
-          <td>Payment Outstanding Amount</td>
-          <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;"><?php  echo $totalOutstandingAmount2; ?> PHP</td>
-      </tr>
-    </table>
-    <table style="width:100% !important;">
-      <tr>
-          <td>Less:<span style="padding-left:60px;">Total Commission Fees</span></td>
-          <td style="text-align:right;padding-right:85px;"><?php  echo $totalCommissionFees2; ?> PHP</td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Total Payment Gateway Fees</td>
-          <td style="text-align:right;padding-right:85px;"><?php  echo $totalPaymentGatewayFees2; ?> PHP</td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Bank Fees</td>
-          <td style="text-align:right;padding-right:85px;"><?php  echo $bankFees; ?> PHP</td>
-      </tr>
-      <tr>
-          <td style="padding-left:85px;">Wtax from Gross Sales (BIR-RMC-8-2024)</td>
-          <td style="text-align:right;padding-right:85px;"><?php  echo $wtaxFromGrossSales; ?> PHP</td>
-      </tr>
-    </table>
-    <table style="width:100% !important;">
-      <tr>
-          <td style="font-weight:bold;">Total Amount Paid Out</td>
-          <td id="leadgen_commission_rate_base_pretrial" style="font-weight:bold;width:30%;text-align:right;padding-right:85px;"><?php  echo $totalAmountPaidOut; ?> PHP</td>
-      </tr>
-    </table>
+
 
     <hr style="border: 1px solid #3b3b3b;">
     <p>This is a system generated report and doesn't require a signature. If you have questions feel free to contact us at 632-34917659 loc. 7663 or email us at accounting@phonebooky.com</p>

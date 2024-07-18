@@ -80,7 +80,6 @@ function displayMessage($type, $message) {
             <circle cx="26" cy="26" r="25"/>
             $path
         </svg>
-        <h2 style="padding-top:10px;color: $color;">Merchant/s Already Exist</h2>
 HTML;
 
     // If the message is an error and contains a list, format the list accordingly
