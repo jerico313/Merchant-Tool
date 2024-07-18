@@ -6,7 +6,8 @@ function displayMessage($type, $message) {
     $color = $type === 'error' ? '#f44336' : '#4caf50';
     $icon = $type === 'error' ? 'error-icon' : 'checkmark';
     $path = $type === 'error' ? '<line x1="16" y1="16" x2="36" y2="36"/><line x1="36" y1="16" x2="16" y2="36"/>' : '<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>';
-    $containerWidth = $type === 'success' ? '300px' : 'auto';
+    $containerWidth = $type === 'success' ? '250px' : '500px';
+    $containerHeight = $type === 'success' ? '300px' : 'auto';
     echo <<<HTML
 <!DOCTYPE html>
 <html>
@@ -28,7 +29,7 @@ function displayMessage($type, $message) {
             border: solid #fff 2px; 
             border-radius: 10px; 
             width: $containerWidth;
-            height: auto; 
+            height: $containerHeight; 
             padding: 20px; /* Increased padding */
             backdrop-filter: blur(16px) saturate(180%); 
             -webkit-backdrop-filter: blur(16px) saturate(180%); 
@@ -95,11 +96,12 @@ HTML;
 
     // Display success message
     if ($type === 'success') {
-        echo "<br><h2>Successfully Uploaded</h2>";
+        echo "<br><h2 style='color:#4caf50;'>Successfully Uploaded</h2>";
     }
 
     // If the message is an error and contains a list, format the list accordingly
     if ($type === 'error' && strpos($message, '<br>') !== false) {
+        echo "<br><h2 style='color:#f44336;'>Error</h2>";
         echo '<ul class="error-list">';
         $errors = explode('<br>', $message);
         foreach ($errors as $error) {
@@ -163,12 +165,25 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     $duplicateMessages = [];
     $invalidMerchantIds = [];
+    $storeIds = [];
+    $duplicateStoreIds = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $merchantId = $data[1]; // Assuming data[1] is merchant_id
         $storeId = $data[3]; // Assuming data[3] is store_id
         $storeName = $data[2]; // Assuming data[2] is store_name
 
+        // Check for duplicate store IDs in the CSV file itself
+        if (isset($storeIds[$storeId])) {
+            if (!isset($duplicateStoreIds[$storeId])) {
+                $duplicateStoreIds[$storeId] = [$storeName, $storeIds[$storeId]];
+            }
+            $duplicateStoreIds[$storeId][] = $storeName;
+        } else {
+            $storeIds[$storeId] = $storeName;
+        }
+
+        // Check for duplicates in the database
         $duplicates = checkForDuplicates($conn, $storeId, $storeName);
 
         if (!empty($duplicates)) {
@@ -182,6 +197,11 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     }
 
     fclose($handle);
+
+    // Add duplicate store IDs from the CSV file to the duplicate messages
+    foreach ($duplicateStoreIds as $storeId => $storeNames) {
+        $duplicateMessages[] = "Duplicate Store ID '{$storeId}' in CSV file: " . implode(", ", $storeNames);
+    }
 
     if (!empty($duplicateMessages) || !empty($invalidMerchantIds)) {
         $conn->close();
