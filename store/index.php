@@ -13,17 +13,21 @@ function displayStore()
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $shortStoreId = substr($row['store_id'], 0, 8);
+            $store_address = empty($row['store_address']) ? '-' : $row['store_address'];
+
             echo "<tr style='padding:15px 0;' data-uuid='" . $row['store_id'] . "'>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $shortStoreId . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_name'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['legal_entity_name'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_address'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $store_address . "</td>";
             echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
+            
             $escapedStoreName = htmlspecialchars($row['store_name'], ENT_QUOTES, 'UTF-8');
             $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
-            $escapedStoreAddress = htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
+            $escapedStoreAddress = empty($row['store_address']) ? '-' : htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
+            
             echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
             echo "<ul class='list-group'>";
@@ -34,6 +38,9 @@ function displayStore()
             } else {
                 echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
             }
+
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.3s;'><a href='#' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")' style='color:#E96529;'>Check Report</a></li>";
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.4s;'><a href='#' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")' style='color:#E96529;'>View Report</a></li>";
 
             echo "</ul>"; 
             echo "</div>"; 
@@ -158,7 +165,7 @@ function displayStore()
       }
       
       td:nth-of-type(1):before {
-        content: "Merchant ID";
+        content: "Store ID";
       }
 
       td:nth-of-type(2):before {
@@ -166,7 +173,7 @@ function displayStore()
       }
 
       td:nth-of-type(3):before {
-        content: "Merchant Type";
+        content: "Store Name";
       }
 
       td:nth-of-type(4):before {
@@ -174,27 +181,11 @@ function displayStore()
       }
 
       td:nth-of-type(5):before {
-        content: "Fullfillment Type";
-      }
-
-      td:nth-of-type(6):before {
-        content: "Business Address";
+        content: "Store Address";
       }
 
       td:nth-of-type(7):before {
-        content: "Email Address";
-      }
-
-      td:nth-of-type(8):before {
-        content: "VAT Type";
-      }
-
-      td:nth-of-type(9):before {
-        content: "Commission ID";
-      }
-
-      td:nth-of-type(10):before {
-        content: "Action";
+        content: "Actions";
       }
 
       .dataTables_length {
@@ -305,7 +296,6 @@ function displayStore()
             var legalEntityName = storeRow.find('td:nth-child(4)').text();
             var storeAddress = storeRow.find('td:nth-child(5)').text();
             var merchantId = storeRow.find('td:nth-child(6)').text();
-
 
             // Set values in the edit modal
             $('#storeId').val(storeId);

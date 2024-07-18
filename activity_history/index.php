@@ -1,12 +1,9 @@
 <?php require_once("../header.php")?>
 <?php
-function displayPGFeeRate() {
+function displayHistory() {
     global $conn, $type;
 
-    $sql = "SELECT ah.*, u.name AS user_name 
-            FROM activity_history AS ah 
-            LEFT JOIN user AS u ON ah.user_id = u.user_id 
-            ORDER BY ah.created_at DESC";
+    $sql = "SELECT * FROM activity_history_view";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -15,20 +12,19 @@ function displayPGFeeRate() {
             // Output for debugging
             echo "<!-- Debug: created_at=" . $row['created_at'] . " -->";
 
-            $shortActivityId = substr($row['activity_id'], 0, 8);
-            $userName = $row['user_name']; // Fetch the user's name directly
-            $shortTableId = substr($row['table_id'], 0, 8);
-            echo "<tr data-id='" . $row['activity_id'] . "' class='message-row'>";
-            echo "<td class='message-cell' style='text-align:center;'>" . $shortActivityId . "</td>";
-            echo "<td class='message-cell' style='text-align:center;'>" . $userName . "</td>";
-            echo "<td class='message-cell' style='text-align:center;'>" . $shortTableId . "</td>";
+            echo "<tr data-id='" . $row['activity_history_id'] . "' class='message-row'>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_history_id'] . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $row['table_id'] . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $row['table_name'] . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $row['column_name'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_type'] . "</td>";
-            echo "<td class='message-cell' style='text-align:center;'>" . $row['created_at'] . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $row['description'] . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $row['user_name'] . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $row['time_ago'] . "</td>";
             echo "</tr>";
             $count++;
         }
     }
-
     $conn->close();
 }
 ?>
@@ -39,6 +35,7 @@ function displayPGFeeRate() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity History</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
   <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
@@ -193,14 +190,17 @@ function displayPGFeeRate() {
         <thead>
             <tr>
                 <th>Activity ID</th>
-                <th>Name</th>
                 <th>Table ID</th>
+                <th>Table Name</th>
+                <th>Key Column</th>
                 <th>Activity Type</th>
-                <th>Created At</th>
+                <th>Description</th>
+                <th>Modified By</th>
+                <th>Updated At</th>
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
-        <?php displayPGFeeRate(); ?>
+        <?php displayHistory(); ?>
         </tbody>
     </table>
   </div>
@@ -226,12 +226,7 @@ function displayPGFeeRate() {
 <script>
  $('#example').DataTable({
         scrollX: true,
-        order: [[4, 'desc']], // Default sort by the 'Created At' column in descending order
-        createdRow: function (row, data, dataIndex) {
-            var date = new Date(data[4]); // Assuming 'Created At' column is the third column (index 2)
-            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            $('td:eq(4)', row).html(formattedDate); // Update the cell with the formatted date
-        }
+        order: [[7, 'asc']] // Default sort by the 'Created At' column in descending order
     });
 
 </script>

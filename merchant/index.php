@@ -10,11 +10,13 @@ function displayMerchant()
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $shortMerchantId = substr($row['merchant_id'], 0, 8);
+            $business_address = empty($row['business_address']) ? '-' : $row['business_address'];
+
             echo "<tr style='padding:15px 0;' data-uuid='" . $row['merchant_id'] . "'>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $shortMerchantId . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['merchant_name']) . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['business_address']) . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $business_address . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['email_address']) . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['sales']) . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['account_manager']) . "</td>";
@@ -269,14 +271,14 @@ function fetchAccountManager() {
               </div>
               <div class="mb-3">
                 <label for="sales" class="form-label">Sales</label>
-                <select class="form-select" id="sales" name="sales" required>
+                <select class="form-select" id="sales" name="sales">
                   <option selected disabled>-- Select Sales --</option>
                   <?php fetchSales(); ?>
                 </select>
               </div>
               <div class="mb-3">
                 <label for="accountManager" class="form-label">Account Manager</label>
-                <select class="form-select" id="accountManager" name="accountManager" required>
+                <select class="form-select" id="accountManager" name="accountManager">
                   <option selected disabled>-- Select Account Manager --</option>
                   <?php fetchAccountManager(); ?>
                 </select>

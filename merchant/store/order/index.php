@@ -40,13 +40,13 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-
             $GrossAmount = number_format($row['Gross Amount'], 2);
             $Discount = number_format($row['Discount'], 2);
             $CartAmount = number_format($row['Cart Amount'], 2);
             $CommissionAmount = number_format($row['Commission Amount'], 2);
             $TotalBilling = number_format($row['Total Billing'], 2);
             $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
+            $CustomerName = empty($row['Customer Name']) ? '-' : $row['Customer Name'];
             
             $AmounttobeDisbursed = $row['Amount to be Disbursed'];
             if ($AmounttobeDisbursed < 0) {
@@ -57,7 +57,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
             echo "<tr style='padding:15px 0;'>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $row['Transaction Date'] . "</td>";
+            echo "<td style='text-align:center;width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
             echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
             echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
@@ -68,7 +68,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             echo "<td style='text-align:center;width:4%;'>" . $GrossAmount . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $Discount . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $CartAmount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Payment'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
@@ -301,7 +301,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                         <i class="fa-solid fa-file-excel"></i> Download</button>
                 </div>
                 <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                    <table id="example" class="table bord" style="width:250%;">
+                    <table id="example" class="table bord" style="width:275%;">
                         <thead>
                             <tr>
                                 <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Transaction ID</th>
@@ -316,7 +316,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                 <th style="padding:10px;">Gross Amount</th>
                                 <th style="padding:10px;">Discount</th>
                                 <th style="padding:10px;">Cart Amount</th>
-                                <th style="padding:10px;">Payment</th>
+                                <th style="padding:10px;">Mode of Payment</th>
                                 <th style="padding:10px;">Bill Status</th>
                                 <th style="padding:10px;">Commission Type</th>
                                 <th style="padding:10px;">Commission Rate</th>
@@ -356,12 +356,12 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             // Function to format customer ID if needed
             function formatDataForExcel(row) {
                 // Replace any HTML entities with their respective characters
-                const promoCategory = row[6].replace(/&amp;/g, '&'); // Replace &amp; with &
+                const customerName = row[3].replace('-', '');
+                const modeOfPayment = row[12].replace('-', '');
 
                 return [
-                    row[0], `${row[2]}`, row[3], row[4], row[5], `${promoCategory}`,
-                    row[6], row[7], row[8], row[9], row[10],
-                    row[11], row[12], row[13], row[14], row[15],
+                    row[0],  row[1], row[2], `${customerName}`, row[4],
+                    row[9], row[10], row[11], `${modeOfPayment}`, row[15],
                     row[16], row[17], row[18], row[19], row[20]
                 ];
             }
@@ -371,9 +371,8 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
             // Add headers for Excel file
             filteredData.unshift([
-                'Transaction ID', 'Transaction Date',
-                'Customer ID', 'Customer Name', 'Promo Code', 'Voucher Type', 'Promo Category', 'Promo Group', 'Promo Type',
-                'Gross Amount', 'Discount', 'Cart Amount', 'Payment', 'Bill Status', 'Commission Type', 'Commission Rate',
+                'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code', 
+                'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Commission Rate',
                 'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
             ]);
 
@@ -382,8 +381,14 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             const ws = XLSX.utils.aoa_to_sheet(filteredData);
             XLSX.utils.book_append_sheet(wb, ws, "Transactions");
 
+            // Format the store name
+            const store_name = "<?php echo htmlspecialchars($store_name); ?>";
+            const formattedStoreName = store_name
+                .replace(/&#039;/g, '\'')
+                .replace(/Ã±/g, 'ñ');
+
             // Generate the Excel file and trigger the download
-            XLSX.writeFile(wb, `<?php echo htmlspecialchars($store_name); ?>_${formattedDate}.xlsx`);
+            XLSX.writeFile(wb, `${formattedStoreName} - Transactions - ${formattedDate}.xlsx`);
         }
     </script>
 

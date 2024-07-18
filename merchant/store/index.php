@@ -20,17 +20,19 @@ function displayStore($merchant_id)
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $shortStoreId = substr($row['store_id'], 0, 8);
+            $store_address = empty($row['store_address']) ? '-' : $row['store_address'];
+
             echo "<tr style='padding:15px 0;' data-uuid='" . $row['store_id'] . "'>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $shortStoreId . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_name'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['legal_entity_name'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_address'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $store_address . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
 
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
             $escapedStoreName = htmlspecialchars($row['store_name'], ENT_QUOTES, 'UTF-8');
             $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
-            $escapedStoreAddress = htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
+            $escapedStoreAddress = empty($row['store_address']) ? '-' : htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
 
             echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
 
@@ -191,11 +193,11 @@ function displayStore($merchant_id)
             }
 
             td:nth-of-type(2):before {
-                content: "Merchant ID";
+                content: "Store Name";
             }
 
             td:nth-of-type(3):before {
-                content: "Store Name";
+                content: "Legal Entity Name";
             }
 
             td:nth-of-type(4):before {
@@ -203,7 +205,7 @@ function displayStore($merchant_id)
             }
 
             td:nth-of-type(5):before {
-                content: "Action";
+                content: "Actions";
             }
 
             .dataTables_length {
