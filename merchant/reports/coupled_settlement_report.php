@@ -283,7 +283,7 @@ function displayOffers($merchant_id, $start_date, $end_date)
         </p>
         <table style="width:100% !important;">
             <tr>
-                <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span>
+                <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
                 </td>
                 <td style="width:40%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span>
                 </td>
