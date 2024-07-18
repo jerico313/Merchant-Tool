@@ -93,7 +93,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transactions</title>
+    <title><?php echo htmlspecialchars($store_name); ?> - Transactions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
@@ -239,10 +239,6 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                         <li><a class="dropdown-item"
                                                 href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="../../reports/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Settlement Reports</a>
                                         </li>
                                     </ul>
                                 </li>

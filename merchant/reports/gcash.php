@@ -36,7 +36,7 @@ function displayGcash($merchant_id, $merchant_name)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCash Settlement Reports</title>
+    <title><?php echo htmlspecialchars($merchant_name); ?> - Gcash Settlement Reports</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
@@ -170,32 +170,22 @@ function displayGcash($merchant_id, $merchant_name)
                     <div class="row pb-2 title" aria-label="breadcrumb">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                                <li class="breadcrumb-item"><a href="../../merchant/index.php"
-                                        style="color:#E96529; font-size:14px;">Merchants</a>
+                                <li class="breadcrumb-item">
+                                    <a href="../../merchant/index.php"
+                                        style="color:#E96529; font-size:14px;">
+                                        Merchants
+                                    </a>
                                 </li>
-                                <li class="breadcrumb-item dropdown">
-                                    <a href="#" class="dropdown-toggle" role="button" id="storeDropdown"
-                                        data-bs-toggle="dropdown" aria-expanded="false"
+                                <li class="breadcrumb-item">
+                                    <a href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                         style="color:#E96529;font-size:14px;">
                                         Settlement Reports
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                        <li><a class="dropdown-item"
-                                                href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Stores</a>
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Promos</a>
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers" style="color:#4BB0B8;">Settlement Reports</a>
-                                        </li>
-                                    </ul>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#"
-                                        style="color:#E96529; font-size:14px;">GCash</a>
+                                <li class="breadcrumb-item">
+                                    <a href="#" style="color:#E96529; font-size:14px;">
+                                        Gcash
+                                    </a>
                                 </li>
                             </ol>
                         </nav>
