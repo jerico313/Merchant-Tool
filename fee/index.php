@@ -10,6 +10,8 @@ function displayPGFeeRate()
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $shortFeeId = substr($row['fee_id'], 0, 8);
+            $isCwtRateComputed = $row['is_cwt_rate_computed'] == 1 ? 'Yes' : 'No';
+
             echo "<tr data-id='" . $row['fee_id'] . "'>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $shortFeeId . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
@@ -21,9 +23,10 @@ function displayPGFeeRate()
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['maya'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['lead_gen_commission'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['commission_type'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $isCwtRateComputed . "</td>";
             echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-            echo "<td style='text-align:center;;vertical-align: middle;' class='actions-cell'>";
+            echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell;'>";
 
             echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
@@ -161,7 +164,7 @@ function displayPGFeeRate()
       }
 
       td:nth-of-type(1):before {
-        content: "Merchant ID";
+        content: "Fee ID";
       }
 
       td:nth-of-type(2):before {
@@ -169,35 +172,43 @@ function displayPGFeeRate()
       }
 
       td:nth-of-type(3):before {
-        content: "Merchant Type";
+        content: "Paymaya Credit Card";
       }
 
       td:nth-of-type(4):before {
-        content: "Legal Entity Name";
+        content: "Gcash";
       }
 
       td:nth-of-type(5):before {
-        content: "Fullfillment Type";
+        content: "Gcash Miniapp";
       }
 
       td:nth-of-type(6):before {
-        content: "Business Address";
+        content: "Paymaya";
       }
 
       td:nth-of-type(7):before {
-        content: "Email Address";
+        content: "Maya Checkout";
       }
 
       td:nth-of-type(8):before {
-        content: "VAT Type";
+        content: "Maya";
       }
 
       td:nth-of-type(9):before {
-        content: "Commission ID";
+        content: "Leadgen Commission";
       }
 
       td:nth-of-type(10):before {
-        content: "Action";
+        content: "Commission Type";
+      }
+
+      td:nth-of-type(11):before {
+        content: "Is CWT Rate Computed?";
+      }
+
+      td:nth-of-type(12):before {
+        content: "Actions";
       }
 
       .dataTables_length {
@@ -235,13 +246,14 @@ function displayPGFeeRate()
                 <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Fee ID</th>
                 <th style="padding:10px;">Merchant Name</th>
                 <th style="padding:10px;">Paymaya Credit Card</th>
-                <th style="padding:10px;">GCash</th>
-                <th style="padding:10px;">GCash Miniapp</th>
+                <th style="padding:10px;">Gcash</th>
+                <th style="padding:10px;">Gcash Miniapp</th>
                 <th style="padding:10px;">Paymaya</th>
                 <th style="padding:10px;">Maya Checkout</th>
                 <th style="padding:10px;">Maya</th>
                 <th style="padding:10px;">Leadgen Commission</th>
                 <th style="padding:10px;">Commission Type</th>
+                <th style="padding:10px;">Is CWT Rate Computed?</th>
                 <th style="display:none;"></th>
                 <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Action</th>
               </tr>
@@ -297,6 +309,15 @@ function displayPGFeeRate()
                   <option value="VAT Exc">VAT Exc</option>
                 </select>
               </div>
+
+              <!--NOT WORKING PROPERLY-->
+              <div class="mb-3">
+                <label for="isCwtRateComputed" class="form-label">Is CWT Rate Computed?</label>
+                <select class="form-select" id="isCwtRateComputed" name="isCwtRateComputed" required>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
               <button type="submit" class="btn btn-primary"
                 style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
             </form>
@@ -319,7 +340,7 @@ function displayPGFeeRate()
           columnDefs: [
             { orderable: false, targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }    // Disable sorting for the specified columns
           ],
-          order: []  // Ensure no initial ordering
+          order: [[1, 'asc']]  // Ensure no initial ordering
         });
       });
 
@@ -340,7 +361,8 @@ function displayPGFeeRate()
         var maya = feeRow.find('td:nth-child(8)').text();
         var leadgenCommission = feeRow.find('td:nth-child(9)').text();
         var commissionType = feeRow.find('td:nth-child(10)').text();
-        var merchantId = feeRow.find('td:nth-child(11)').text();
+        var isCwtRateComputed = feeRow.find('td:nth-child(11)').text();
+        var merchantId = feeRow.find('td:nth-child(12)').text();
 
         // Set values in the edit modal
         $('#feeId').val(feeUuid);
@@ -352,6 +374,7 @@ function displayPGFeeRate()
         $('#maya').val(maya);
         $('#leadgenCommission').val(leadgenCommission);
         $('#commissionType').val(commissionType);
+        $('#isCwtRateComputed').val(isCwtRateComputed);
         $('#merchantId').val(merchantId);
 
         // Open the edit modal
