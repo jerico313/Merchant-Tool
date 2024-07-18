@@ -24,12 +24,12 @@ if(isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != 
     $header = fgetcsv($handle); // Skip header row
 
     // Prepare MySQL statement for first table
-    $stmt1 = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1 = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type, is_cwt_rate_computed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         // Bind parameters and execute for first table
         $fee_id = Uuid::uuid4()->toString();
-        $stmt1->bind_param("ssssssssss", $fee_id, $data[1], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
+        $stmt1->bind_param("sssssssssss", $fee_id, $data[1], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11], $data[12]);
         $stmt1->execute();
     }
 
