@@ -6,6 +6,9 @@ function displayMessage($type, $message) {
     $color = $type === 'error' ? '#f44336' : '#4caf50';
     $icon = $type === 'error' ? 'error-icon' : 'checkmark';
     $path = $type === 'error' ? '<line x1="16" y1="16" x2="36" y2="36"/><line x1="36" y1="16" x2="16" y2="36"/>' : '<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>';
+    $containerClass = $type === 'error' ? 'container' : 'container success-container';
+    $headerColor = $type === 'error' ? 'color: #f44336;' : 'color: #4caf50';
+    $header = $type === 'error' ? "<br><h2 style=\"$headerColor\">Error</h2>" : "<br><h2 style=\"$headerColor\">Successfully Uploaded</h2>";
     echo <<<HTML
 <!DOCTYPE html>
 <html>
@@ -21,9 +24,9 @@ function displayMessage($type, $message) {
             background-attachment: fixed; 
         }
         .container { 
-   
             text-align: center; 
-            margin-top:50px;
+            margin-top: 50px;
+            margin-bottom: 50px;
             border: solid #fff 2px; 
             border-radius: 10px; 
             width: 500px;
@@ -35,20 +38,47 @@ function displayMessage($type, $message) {
             border: 1px solid rgba(209, 213, 219, 0.3); 
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px; 
         }
-        .$icon { 
+        .success-container {
+            width: 250px; /* Set width to 200px for success container */
+            height: 300px;
+        }
+        .error-icon { 
             width: 80px; 
             height: 80px; 
             border-radius: 50%;
             display: block; 
             margin: 0 auto; 
         }
-        .$icon circle { 
+        .error-icon circle { 
             stroke-width: 4; 
             stroke-miterlimit: 10; 
             stroke: $color; 
             fill: none; 
         }
-        .$icon line, .$icon path { 
+        .error-icon line, .error-icon path { 
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-miterlimit: 10;
+            stroke: $color; 
+            fill: none; 
+            animation: draw 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; 
+        }
+        .checkmark { 
+            width: 80px; 
+            height: 80px; 
+            border-radius: 50%;
+            display: block; 
+            margin: 0 auto; 
+        }
+        .checkmark circle { 
+            stroke-width: 4; 
+            stroke-miterlimit: 10; 
+            stroke: $color; 
+            fill: none; 
+        }
+        .checkmark line, .checkmark path { 
             stroke-dasharray: 48;
             stroke-dashoffset: 48;
             stroke-width: 4;
@@ -75,11 +105,12 @@ function displayMessage($type, $message) {
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="$containerClass">
         <svg class="$icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
             <circle cx="26" cy="26" r="25"/>
             $path
         </svg>
+        $header
 HTML;
 
     // If the message is an error and contains a list, format the list accordingly
@@ -155,9 +186,11 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     // If no duplicates, proceed with inserting into database
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); // Skip header row again
-    $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, legal_entity_name, business_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, legal_entity_name, business_address, email_address, sales, account_manager) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $stmt->bind_param("ssssss", $data[1], $data[0], $data[2], $data[3], $data[4], $data[5]);
+        $data[6] = empty($data[6]) ? null : $data[6]; // Convert blank sales to null
+        $data[7] = empty($data[7]) ? null : $data[7]; // Convert blank account_manager to null
+        $stmt->bind_param("ssssssss", $data[1], $data[0], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7]);
         $stmt->execute();
     }
 
