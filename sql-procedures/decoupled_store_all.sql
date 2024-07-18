@@ -24,7 +24,10 @@ BEGIN
 	        `Store ID` AS store_id, 
             store.legal_entity_name AS store_business_name, 
             `Store Name` AS store_brand_name,
-            store.store_address AS business_address,
+            CASE
+                WHEN store.store_address IS NULL THEN ''
+                ELSE store.store_address
+            END AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
             DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
@@ -85,7 +88,10 @@ BEGIN
 	        `Store ID` AS store_id, 
             store.legal_entity_name AS store_business_name, 
             `Store Name` AS store_brand_name,
-            store.store_address AS business_address,
+            CASE
+                WHEN store.store_address IS NULL THEN ''
+                ELSE store.store_address
+            END AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
             DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,

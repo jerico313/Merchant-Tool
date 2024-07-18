@@ -18,8 +18,11 @@ BEGIN
             "', v_uuid, '" AS gcash_report_id,
             `Merchant ID` AS merchant_id,
             merchant.legal_entity_name AS merchant_business_name,
-	    `Merchant Name` AS merchant_brand_name,
-            merchant.business_address AS business_address,
+	        `Merchant Name` AS merchant_brand_name,
+            CASE
+                WHEN merchant.business_address IS NULL THEN ''
+                ELSE merchant.business_address 
+            END AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
             DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
@@ -57,8 +60,11 @@ BEGIN
 	    "', v_uuid, '" AS gcash_report_id, 
             `Merchant ID` AS merchant_id,
             merchant.legal_entity_name AS merchant_business_name,
-	    `Merchant Name` AS merchant_brand_name,
-            merchant.business_address AS business_address,
+	        `Merchant Name` AS merchant_brand_name,
+            CASE
+                WHEN merchant.business_address IS NULL THEN ''
+                ELSE merchant.business_address 
+            END AS business_address,
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
 	    DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
