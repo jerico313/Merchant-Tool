@@ -31,14 +31,14 @@ function displayMerchant()
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
             
             if ($type !== 'User') {
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewMerchant(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View</a></li>";
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='editMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\")' style='color:#E96529;'>Edit</a></li>";
+                echo "<li class='list-group-item action-item'><a href='#' onclick='viewMerchant(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View</a></li>";
+                echo "<li class='list-group-item action-item'><a href='#' onclick='editMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\")' style='color:#E96529;'>Edit</a></li>";
             } else {
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewMerchant(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View</a></li>";
+                echo "<li class='list-group-item action-item'><a href='#' onclick='viewMerchant(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View</a></li>";
             }
             
-            echo "<li class='list-group-item action-item' style='animation-delay: 0.3s;'><a href='#' onclick='checkReport(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>Check Report</a></li>";
-            echo "<li class='list-group-item action-item' style='animation-delay: 0.4s;'><a href='#'  onclick='viewReport(\"" . $escapedMerchantId  . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View Reports</a></li> ";
+            echo "<li class='list-group-item action-item'><a href='#' onclick='checkReport(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>Check Report</a></li>";
+            echo "<li class='list-group-item action-item'><a href='#'  onclick='viewReport(\"" . $escapedMerchantId  . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View Reports</a></li> ";
             echo "</ul>";
             echo "</div>"; 
             
@@ -207,7 +207,6 @@ function fetchAccountManager() {
   <div class="cont-box">
     <div class="custom-box pt-4">
       <div class="sub" style="text-align:left;">
-
         <div class="add-btns">
           <p class="title">Merchants</p>
           <a href="settlement_report.php"><button type="button" class="btn btn-warning check-report"

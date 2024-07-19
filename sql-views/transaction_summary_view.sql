@@ -102,10 +102,7 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
     END AS `Total Billing`,
     CONCAT(pg_fee_cte.pg_fee_rate, '%') AS `PG Fee Rate`,
     ROUND(`t`.`amount_discounted` * (pg_fee_cte.pg_fee_rate / 100), 2) AS `PG Fee Amount`,
-    CASE
-        WHEN `f`.`is_cwt_rate_computed` = 1 THEN 'Yes'
-        ELSE 'No'
-    END AS `Is CWT Rate Computed`,
+    `f`.`cwt_rate` `CWT Rate`,
     ROUND(
         `t`.`amount_discounted` 
         - CASE
