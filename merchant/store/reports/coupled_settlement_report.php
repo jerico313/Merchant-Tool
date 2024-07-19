@@ -182,7 +182,7 @@ p {
   } 
         @media print {
           @page {
-            size: auto; 
+            size: A4; 
             margin: 8mm; 
           }
           body {

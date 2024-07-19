@@ -147,7 +147,7 @@ function displayOffers($merchant_id, $start_date, $end_date)
       box-shadow: 1px 2px 6px 2px rgba(0,0,0,0.50);
       -webkit-box-shadow: 1px 2px 6px 2px rgba(0,0,0,0.50);
       -moz-box-shadow: 1px 2px 6px 2px rgba(0,0,0,0.50);
-      height:auto;
+      height:1110px;
       width:850px;
       margin-top:120px;
       margin-bottom:70px;
@@ -176,7 +176,7 @@ function displayOffers($merchant_id, $start_date, $end_date)
   } 
         @media print {
           @page {
-            size: auto; 
+            size: A4; 
             margin: 8mm; 
           }
           body {
