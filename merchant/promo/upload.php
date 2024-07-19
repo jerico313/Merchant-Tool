@@ -29,7 +29,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 
         .title {
             font-size: 30px;
-            font-weight: bold;
+            font-weight: 1000;
             margin-right: auto;
             padding-left: 5vh;
             color: #E96529;
@@ -352,7 +352,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                             </div>
                             </div>
                             <div class="mb-3 mt-3" style="text-align:right;">
-                                <button type="button" class="btn btn-danger remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
+                                <button type="button" class="btn btn-danger remove-field" id="remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
                             </div>
                         </div>
         `;
