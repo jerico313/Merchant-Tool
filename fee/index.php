@@ -10,7 +10,6 @@ function displayPGFeeRate()
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $shortFeeId = substr($row['fee_id'], 0, 8);
-            $isCwtRateComputed = $row['is_cwt_rate_computed'] == 1 ? 'Yes' : 'No';
 
             echo "<tr data-id='" . $row['fee_id'] . "'>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $shortFeeId . "</td>";
@@ -23,7 +22,7 @@ function displayPGFeeRate()
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['maya'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['lead_gen_commission'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['commission_type'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $isCwtRateComputed . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['cwt_rate'] . "</td>";
             echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
             echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell;'>";
@@ -310,14 +309,12 @@ function displayPGFeeRate()
                 </select>
               </div>
 
-              <!--NOT WORKING PROPERLY-->
               <div class="mb-3">
-                <label for="isCwtRateComputed" class="form-label">Is CWT Rate Computed?</label>
-                <select class="form-select" id="isCwtRateComputed" name="isCwtRateComputed" required>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
+                <label for="cwtRate" class="form-label">CWT Rate</label>
+                <input class="form-control" rows="3" id="cwtRate" name="cwtRate"
+                  style="padding:5px 5px;" required>
               </div>
+
               <button type="submit" class="btn btn-primary"
                 style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
             </form>
@@ -361,7 +358,7 @@ function displayPGFeeRate()
         var maya = feeRow.find('td:nth-child(8)').text();
         var leadgenCommission = feeRow.find('td:nth-child(9)').text();
         var commissionType = feeRow.find('td:nth-child(10)').text();
-        var isCwtRateComputed = feeRow.find('td:nth-child(11)').text();
+        var cwtRate = feeRow.find('td:nth-child(11)').text();
         var merchantId = feeRow.find('td:nth-child(12)').text();
 
         // Set values in the edit modal
@@ -374,7 +371,7 @@ function displayPGFeeRate()
         $('#maya').val(maya);
         $('#leadgenCommission').val(leadgenCommission);
         $('#commissionType').val(commissionType);
-        $('#isCwtRateComputed').val(isCwtRateComputed);
+        $('#cwtRate').val(cwtRate);
         $('#merchantId').val(merchantId);
 
         // Open the edit modal
