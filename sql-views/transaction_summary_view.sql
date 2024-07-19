@@ -61,8 +61,8 @@ WITH pg_fee_cte AS (
         JOIN `leadgen_db`.`fee` `f` ON (`f`.`merchant_id` = `m`.`merchant_id`)
 )
 SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
-    DATE_FORMAT(`t`.`transaction_date`, "%M %d, %Y %h:%i%p") AS `Formatted Transaction Date`,
-    `t`.`transaction_date` AS `Transaction Date`,
+    CONCAT('',DATE_FORMAT(`t`.`transaction_date`, '%M %d, %Y %h:%i%p'),'') AS `Formatted Transaction Date`,
+    DATE_FORMAT(`t`.`transaction_date`, "%Y-%m-%d") AS `Transaction Date`,
     `m`.`merchant_id` AS `Merchant ID`,
     `m`.`merchant_name` AS `Merchant Name`,
     `s`.`store_id` AS `Store ID`,
@@ -120,4 +120,4 @@ FROM `leadgen_db`.`transaction` `t`
     JOIN `leadgen_db`.`promo` `p` ON `p`.`promo_code` = `t`.`promo_code`
     JOIN `leadgen_db`.`fee` `f` ON `f`.`merchant_id` = `m`.`merchant_id`
     JOIN `pg_fee_cte` ON `t`.`transaction_id` = `pg_fee_cte`.`transaction_id`
-ORDER BY `t`.`transaction_date`;
+ORDER BY `t`.`transaction_date` DESC;
