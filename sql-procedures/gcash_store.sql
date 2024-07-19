@@ -45,7 +45,7 @@ BEGIN
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
+            AND `Promo Group` = ''Gcash''
         GROUP BY 
             `Store ID`');
 
@@ -84,7 +84,7 @@ BEGIN
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
+            AND `Promo Group` = ''Gcash''
         GROUP BY 
             `Store ID`');
 
@@ -106,7 +106,7 @@ BEGIN
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
+            AND `Promo Group` = ''Gcash''
         GROUP BY 
             `Promo Code`');
 
@@ -126,7 +126,7 @@ BEGIN
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
+            AND `Promo Group` = ''Gcash''
         GROUP BY 
             `Promo Code`');
 

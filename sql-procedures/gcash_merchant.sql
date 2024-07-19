@@ -23,21 +23,21 @@ BEGIN
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
             DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
-	    CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CASE
-            WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
-            WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
-                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
-            ELSE 
-                 CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
-        END AS settlement_period,
+            CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
+            CASE
+                WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
+                WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+                ELSE 
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+            END AS settlement_period,
 
-	    SUM(`Cart Amount`) AS total_amount,
-	    `Commission Rate` AS commission_rate,
-	    SUM(`Commission Amount`) AS commission_amount,
-	    SUM(`Commission Amount`) * 0.12 AS vat_amount,
-	    SUM(`Total Billing`) AS total_commission_fees
+            SUM(`Cart Amount`) AS total_amount,
+            `Commission Rate` AS commission_rate,
+            SUM(`Commission Amount`) AS commission_amount,
+            SUM(`Commission Amount`) * 0.12 AS vat_amount,
+            SUM(`Total Billing`) AS total_commission_fees
         FROM 
             `transaction_summary_view`
         JOIN
@@ -45,7 +45,7 @@ BEGIN
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
+            AND `Promo Group` = ''Gcash''
         GROUP BY 
             `Merchant ID`');
 
@@ -84,7 +84,7 @@ BEGIN
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
+            AND `Promo Group` = ''Gcash''
         GROUP BY 
             `Merchant ID`');
 
@@ -106,7 +106,7 @@ BEGIN
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
+            AND `Promo Group` = ''Gcash''
         GROUP BY 
             `Promo Code`');
 
@@ -126,7 +126,7 @@ BEGIN
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Payment` = ''gcash''
+            AND `Promo Group` = ''Gcash''
         GROUP BY 
             `Promo Code`');
 
