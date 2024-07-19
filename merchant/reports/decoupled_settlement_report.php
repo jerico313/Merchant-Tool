@@ -71,14 +71,10 @@ function displayOffers($merchant_id, $start_date, $end_date)
                 echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
                 echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
                 echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
-                echo "<td style='text-align:center;width:3%;'>" . $row['Voucher Type'] . "</td>";
-                echo "<td style='text-align:center;width:6%;'>" . $row['Promo Category'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Promo Group'] . "</td>";
-                echo "<td style='text-align:center;width:6%;'>" . $row['Promo Type'] . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $GrossAmount . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $Discount . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $CartAmount . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Payment'] . "</td>";
+                echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
@@ -256,14 +252,10 @@ function displayOffers($merchant_id, $start_date, $end_date)
                     <th>Customer ID</th>
                     <th>Customer Name</th>
                     <th>Promo Code</th>
-                    <th>Voucher Type</th>
-                    <th>Promo Category</th>
-                    <th>Promo Group</th>
-                    <th>Promo Type</th>
                     <th>Gross Amount</th>
                     <th>Discount</th>
                     <th>Cart Amount</th>
-                    <th>Payment</th>
+                    <th>Mode of Payment</th>
                     <th>Bill Status</th>
                     <th>Commission Type</th>
                     <th>Commission Rate</th>
@@ -287,7 +279,7 @@ function displayOffers($merchant_id, $start_date, $end_date)
         </p>
         <table style="width:100% !important;">
             <tr>
-                <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name']); ?></span>
+            <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_business_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
                 </td>
                 <td style="width:40%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span>
                 </td>
@@ -300,8 +292,8 @@ function displayOffers($merchant_id, $start_date, $end_date)
                 </td>
             </tr>
             <tr>
-                <td>Business Address: <span
-                        style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span>
+                <td>Business Address: 
+                    <span style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
                 </td>
                 <td>Settlement Period: <span
                         style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period']); ?></span>
