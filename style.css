@@ -68,12 +68,6 @@ select.form-select.form-select-sm{
   background-color: transparent;
 }
 
-th{
-  background-color:#E96529 !important;
-  text-align:center !important;
-  color:#fff !important;
-}
-
 .page-item.active .page-link {
   z-index: 3;
   color: #fff;
@@ -443,8 +437,21 @@ td{
   border-bottom: 1px solid #808080 !important;
 }
 
+
+
 th{
-  font-weight: 900;
+  background-color:#E96529 !important;
+  text-align:center !important;
+  color:#fff !important;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 13px;
+}
+
+tr {
+  font-weight: 600;
+  font-style: normal;
+  font-size: 13px;
 }
 
 th.month{
@@ -476,4 +483,16 @@ th.next.available{
   background-color: transparent;
   color: #0E864A ;
   border:solid  #0E864A  2px;
+}
+
+.list-group-item {
+  font-weight: 800;
+  font-style: normal;
+  font-size: 13px;
+}
+
+.nav-item {
+  font-weight: 700;
+  font-style: normal;
+  font-size: 13px;
 }
