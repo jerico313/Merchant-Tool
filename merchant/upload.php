@@ -242,37 +242,43 @@ function fetchAccountManager() {
             <div class="row">
             <hr style="border: 1px solid #3b3b3b;">
                 <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
-                        <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
-                        <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="merchant_partnership_type" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Type</label>
-                        <select class="form-select" id="merchant_partnership_type" name="merchant_partnership_type[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
-                            <option value="">-- Select Merchant Type --</option>
-                            <option value="Primary">Primary</option>
-                            <option value="Secondary">Secondary</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="legal_entity_name" class="form-label" style="font-size:15px;font-weight:bold;">Legal Entity Name</label>
-                        <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
-                        <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
-                        <textarea class="form-control" rows="9" name="email_address[]" style="border-radius:20px;padding:15px 15px;border: 2px dashed #928a89;" required></textarea>
-                    </div>
-                </div>
+                            <div class="mb-3">
+                                    <label for="merchant_id" class="form-label" style="font-size:15px;font-weight:bold;">Merchant ID</label>
+                                    <input type="text" class="form-control" name="merchant_id[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="merchant_name" class="form-label" style="font-size:15px;font-weight:bold;">Merchant Name</label>
+                                    <input type="text" class="form-control" name="merchant_name[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="legal_entity_name" class="form-label" style="font-size:15px;font-weight:bold;">Legal Entity Name</label>
+                                    <input type="text" class="form-control" name="legal_entity_name[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="business_address" class="form-label" style="font-size:15px;font-weight:bold;">Business Address</label>
+                                    <input type="text" class="form-control" name="business_address[]" style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="email_address" class="form-label" style="font-size:15px;font-weight:bold;">Email Address</label>
+                                    <textarea class="form-control" rows="5" name="email_address[]" style="border-radius:20px;padding:15px 15px;border: 2px dashed #928a89;" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                <label for="sales" class="form-label" style="font-size:15px;font-weight:bold;">Sales</label>
+                                    <select class="form-select" id="sales" name="sales[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
+                                    <option selected disabled>-- Select Sales --</option>
+                                    <?php fetchSales(); ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                <label for="account_manager" class="form-label" style="font-size:15px;font-weight:bold;">Account Manager</label>
+                                    <select class="form-select" id="account_manager" name="account_manager[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
+                                    <option selected disabled>-- Select Account Manager --</option>
+                                    <?php fetchAccountManager(); ?>
+                                    </select>
+                                </div>
+                            </div>
                 <div class="mb-3 mt-3" style="text-align:right;">
                     <button type="button" class="btn btn-danger remove-field" id="remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
                 </div>

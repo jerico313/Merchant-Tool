@@ -51,7 +51,7 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="style.css">
     <style>      
       .navbar a {
-        font-size: 13px !important;
+        font-size: 0.825vw !important;
       }
 
       .active_nav{
@@ -109,7 +109,7 @@ if (isset($_SESSION['user_id'])) {
             <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
                 <li class="nav-item dropdown">
                     <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-egg" style="color:#fff;"></i><span style="font-size:13px;color:#fff;padding-left:5px;font-weight:700;"><?php echo '  ' . htmlspecialchars($name); ?></span>
+                        <i class="fa-solid fa-egg" style="color:#fff;"></i><span style="font-size:0.825vw;color:#fff;padding-left:5px;font-weight:700;"><?php echo '  ' . htmlspecialchars($name); ?></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                         <?php if ($type !== 'User') : ?>

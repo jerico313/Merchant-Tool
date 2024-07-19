@@ -6,7 +6,7 @@ function displayOrder() {
   // Modified SQL query to join transaction and store tables
   $sql = "
     SELECT t.transaction_id, s.store_name, t.promo_code, t.customer_id, t.customer_name, 
-           t.transaction_date, t.gross_amount, t.discount, t.amount_discounted, t.payment
+           t.transaction_date, t.gross_amount, t.discount, t.amount_discounted, t.payment, t.comm_rate_base, t.bill_status
     FROM transaction t
     JOIN store s ON t.store_id = s.store_id
   ";
@@ -20,6 +20,7 @@ function displayOrder() {
           $gross_amount = number_format($row['gross_amount'], 2);
           $amount_discounted = number_format($row['amount_discounted'], 2);
           $discount = number_format($row['discount'], 2);
+          $comm_rate_base = number_format($row['comm_rate_base'], 2);
           echo "<tr style='padding:20px 0;' data-id='" . $row['transaction_id'] . "'>";
           echo "<td style='text-align:center;'>" . $shortTransactiontId . "</td>";
           echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>"; // Display store name
@@ -29,8 +30,10 @@ function displayOrder() {
           echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
           echo "<td style='text-align:center;'>" . $gross_amount . "</td>";
           echo "<td style='text-align:center;'>" . $discount . "</td>";
-          echo "<td style='text-align:center;'>" . $discount . "</td>";
+          echo "<td style='text-align:center;'>" . $amount_discounted . "</td>";
           echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
+          echo "<td style='text-align:center;'>" . $comm_rate_base . "</td>";
+          echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
           echo "</tr>";
           $count++;
       }
@@ -209,7 +212,9 @@ function displayOrder() {
               <th style="padding:10px;">Gross Amount</th>
               <th style="padding:10px;">Discount</th>
               <th style="padding:10px;">Amount Discounted</th>
-              <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Payment</th>
+              <th style="padding:10px;">Payment</th>
+              <th style="padding:10px;">Commission Rate Base</th>
+              <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Bill Status</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
