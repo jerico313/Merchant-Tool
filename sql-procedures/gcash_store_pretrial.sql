@@ -1,9 +1,9 @@
-DROP PROCEDURE IF EXISTS generate_merchant_gcash_report;
+DROP PROCEDURE IF EXISTS gcash_store_pretrial;
 
 DELIMITER //
 
-CREATE PROCEDURE generate_merchant_gcash_report(
-    IN merchant_id VARCHAR(36),
+CREATE PROCEDURE gcash_store_pretrial(
+    IN store_id VARCHAR(36),
     IN start_date DATE,
     IN end_date DATE
 )
@@ -13,13 +13,15 @@ BEGIN
     SET v_uuid = UUID();
     
     SET @sql_insert = CONCAT('INSERT INTO report_history_gcash_head
-        (gcash_report_id, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, total_amount, commission_rate,commission_amount, vat_amount, total_commission_fees)
+        (gcash_report_id, bill_status, store_id, store_business_name, store_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, total_amount, commission_rate,commission_amount, vat_amount, total_commission_fees)
         SELECT 
             "', v_uuid, '" AS gcash_report_id,
-            `Merchant ID` AS merchant_id,
-            merchant.legal_entity_name AS merchant_business_name,
-	        `Merchant Name` AS merchant_brand_name,
-            merchant.business_address AS business_address,
+            ''PRE-TRIAL'' AS bill_status, 
+            `Store ID` AS store_id,
+            store.legal_entity_name AS store_business_name,
+	        `Store Name` AS store_brand_name,
+            store.store_address AS business_address,
+
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
             DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
@@ -41,52 +43,56 @@ BEGIN
         FROM 
             `transaction_summary_view`
         JOIN
-            `merchant` ON `Merchant ID` = merchant.`merchant_id`
+            `store` ON `Store ID` = store.`store_id`
         WHERE 
-            `Merchant ID` = "', merchant_id, '"
+            `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
             AND `Promo Group` = ''Gcash''
+            AND `Bill Status` = ''PRE-TRIAL''
         GROUP BY 
-            `Merchant ID`');
+            `Store ID`');
 
     PREPARE stmt_insert FROM @sql_insert;
     EXECUTE stmt_insert;
     DEALLOCATE PREPARE stmt_insert;
 
     SET @sql_select = CONCAT('SELECT
-	    "', v_uuid, '" AS gcash_report_id, 
-            `Merchant ID` AS merchant_id,
-            merchant.legal_entity_name AS merchant_business_name,
-	        `Merchant Name` AS merchant_brand_name,
-            merchant.business_address AS business_address,
+	        "', v_uuid, '" AS gcash_report_id, 
+            ''PRE-TRIAL'' AS bill_status, 
+            `Store ID` AS store_id,
+            store.legal_entity_name AS store_business_name,
+	        `Store Name` AS store_brand_name,
+            store.store_address AS business_address,
+
             "', start_date, '" AS settlement_period_start,
             "', end_date, '" AS settlement_period_end,
-	    DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
-	    CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
-	    CASE
-            WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
-            WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
-                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
-            ELSE 
-                 CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
-        END AS settlement_period,
+            DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
+            CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
+            CASE
+                WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
+                WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+                ELSE 
+                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+            END AS settlement_period,
 
-	    SUM(`Cart Amount`) AS total_amount,
-	    `Commission Rate` AS commission_rate,
-	    SUM(`Commission Amount`) AS commission_amount,
-	    SUM(`Commission Amount`) * 0.12 AS vat_amount,
-	    SUM(`Total Billing`) AS total_commission_fees
+            SUM(`Cart Amount`) AS total_amount,
+            `Commission Rate` AS commission_rate,
+            SUM(`Commission Amount`) AS commission_amount,
+            SUM(`Commission Amount`) * 0.12 AS vat_amount,
+            SUM(`Total Billing`) AS total_commission_fees
         FROM 
             `transaction_summary_view`
         JOIN
-            `merchant` ON `Merchant ID` = merchant.`merchant_id`
+            `store` ON `Store ID` = store.`store_id`
         WHERE 
-            `Merchant ID` = "', merchant_id, '"
+            `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
             AND `Promo Group` = ''Gcash''
+            AND `Bill Status` = ''PRE-TRIAL''
         GROUP BY 
-            `Merchant ID`');
+            `Store ID`');
 
     PREPARE stmt_select FROM @sql_select;
     EXECUTE stmt_select;
@@ -98,15 +104,16 @@ BEGIN
             "', v_uuid, '"  AS gcash_report_id,
             p.promo_code as item,
             COUNT(`Transaction ID`) AS quantity_redeemed,
-	    SUM(`Cart Amount`) AS net_amount
+	        SUM(`Cart Amount`) AS net_amount
         FROM 
             `transaction_summary_view`
         JOIN
             `promo` p ON `Promo Code` = p.promo_code
         WHERE 
-            `Merchant ID` = "', merchant_id, '"
+            `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
             AND `Promo Group` = ''Gcash''
+            AND `Bill Status` = ''PRE-TRIAL''
         GROUP BY 
             `Promo Code`');
 
@@ -118,15 +125,16 @@ BEGIN
             "', v_uuid, '"  AS gcash_report_id,
             p.promo_code as item,
             COUNT(`Transaction ID`) AS quantity_redeemed,
-	    SUM(`Cart Amount`) AS net_amount
+	        SUM(`Cart Amount`) AS net_amount
         FROM 
             `transaction_summary_view`
         JOIN
             `promo` p ON `Promo Code` = p.promo_code
         WHERE 
-            `Merchant ID` = "', merchant_id, '"
+            `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
             AND `Promo Group` = ''Gcash''
+            AND `Bill Status` = ''PRE-TRIAL''
         GROUP BY 
             `Promo Code`');
 
