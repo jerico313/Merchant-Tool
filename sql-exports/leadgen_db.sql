@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2024 at 06:01 PM
+-- Generation Time: Jul 19, 2024 at 06:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -100,34 +100,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_all` (IN `merchant
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
         WHERE 
@@ -204,34 +186,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_all` (IN `merchant
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+            ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
         WHERE 
@@ -322,34 +286,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_billable` (IN `mer
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
         WHERE 
@@ -426,34 +372,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_billable` (IN `mer
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
         WHERE 
@@ -544,34 +472,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_pretrial` (IN `mer
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
         WHERE 
@@ -648,34 +558,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_pretrial` (IN `mer
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
         WHERE 
@@ -767,34 +659,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_all` (IN `store_id` V
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `store` ON `Store ID` = store.`store_id`
         WHERE 
@@ -871,34 +745,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_all` (IN `store_id` V
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `store` ON `Store ID` = store.`store_id`
         WHERE 
@@ -990,34 +846,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_billable` (IN `store_
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `store` ON `Store ID` = store.`store_id`
         WHERE 
@@ -1094,34 +932,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_billable` (IN `store_
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `store` ON `Store ID` = store.`store_id`
         WHERE 
@@ -1213,34 +1033,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_pretrial` (IN `store_
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `store` ON `Store ID` = store.`store_id`
         WHERE 
@@ -1317,34 +1119,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_store_pretrial` (IN `store_
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `store` ON `Store ID` = store.`store_id`
         WHERE 
@@ -3150,6 +2934,7 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('a8e5cb96-3427-11ef-b7ae-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'fee', '02f361d3-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Fee record updated\npaymaya_credit_card: 2.75 -> 1.50\nmaya_checkout: 2.75 -> 1.50\nmaya: 2.50 -> 1.50', '2024-06-27 01:50:41', '2024-07-02 04:03:42'),
 ('abc213d1-31f7-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_head', 'abc1668b-31f7-11ef-a30f-0a002700000d', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_date: Jun 24, 2024\nsettlement_number: 202406-abc1668b\nsettlement_period: May 1 - Jun 30, 2024\ntotal_amount: 18060.00\ncommission_rate: 10.00%\nvat_amount: 1.20\ntotal_commission_fees: 11.20', '2024-06-24 07:02:08', '2024-07-02 04:03:42'),
 ('acea9513-388e-11ef-b4b1-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'user', 'acea8342-388e-11ef-b4b1-0a002700000d', 'Add', 'User record added\nemail_address: cookie@booky.ph\npassword: $2y$10$dRffZ66tPS8hHDmkIWssSOOlk21L1/H3g1lOz6J8uxldv.BM.5rci\nname: Cookie\ntype: User\nstatus: Inactive', '2024-07-04 01:21:20', '2024-07-04 02:30:15'),
+('ad01a25b-45e8-11ef-9af2-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_decoupled', 'ad011b0d-45e8-11ef-9af2-48e7dad87c24', 'Add', 'Decoupled report history record added\ngenerated_by: N/A\nbill_status: PRE-TRIAL\nmerchant_id: f04538ac-2008-403b-b0f7-4f4d49a17fda\nmerchant_business_name: Figaro Coffee Systems, Inc.\nmerchant_brand_name: Angel\'s Pizza\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: 33 Mayon St. Brgy. Malamig, Mandaluyong City\nsettlement_period_start: 2024-04-01\nsettlement_period_end: 2024-04-30\nsettlement_number: SR#LG2024-07-20-ad011b0d\ntotal_successful_orders: 9\ntotal_gross_sales: 0.00\ntotal_discount: 0.00\ntotal_outstanding_amount: 0.00\nleadgen_commission_rate_base_pretrial: 9000.00\ncommission_rate_pretrial: 10.00%\ntotal_pretrial: 1008.00\nleadgen_commission_rate_base_billable: 0.00\ncommission_rate_billable: 10.00%\ntotal_billable: 0.00\ntotal_commission_fees: 0.00', '2024-07-19 16:05:11', '2024-07-19 16:05:11'),
 ('af210407-2ebe-11ef-abc9-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'promo', '4e3030a7-1cc3-11ef-8abb-48e7dad87c24', 'Update', 'Promo record updated\nremarks:  -> not billable \"forever\"', '2024-06-20 04:36:38', '2024-07-02 04:03:42'),
 ('b0ad6776-2eb8-11ef-abc9-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', 'b0acea51-2eb8-11ef-abc9-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-b0ab5e\ntotal_successful_orders: 3\ntotal_gross_sales: 24044.00\ntotal_discount: 5984.00\ntotal_outstanding_amount_1: 18060.00\nleadgen_commission_rate_base: 18060.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2022.72\npaymaya_pg_fee: 0.00\npaymaya_credit_card_pg_fee: 778.50\nmaya_pg_fee: 0.00\nmaya_checkout_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 68.48\ntotal_payment_gateway_fees_1: 846.98\ntotal_outstanding_amount_2: 18060.00\ntotal_commission_fees_2: 2022.72\ntotal_payment_gateway_fees_2: 846.98\nbank_fees: 10.00\ncwt_from_gross_sales: 115.99\ncwt_from_transaction_fees: 36.12\ncwt_from_pg_fees: 15.12\ntotal_amount_paid_out: 15115.55', '2024-06-20 03:53:44', '2024-07-02 04:03:42'),
 ('b115b12c-31f2-11ef-a30f-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', 'b1159c73-31f2-11ef-a30f-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: 202406-b11440c7\ntotal_successful_orders: 4\ntotal_gross_sales: 39614.00\ntotal_discount: 9098.00\ntotal_outstanding_amount_1: 30516.00\nleadgen_commission_rate_base: 30516.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2645.52\ncard_payment_pg_fee: 1121.04\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 24.48\ngcash_pg_fee: 44.00\ntotal_payment_gateway_fees_1: 1189.52\ntotal_outstanding_amount_2: 30516.00\ntotal_commission_fees_2: 2645.52\ntotal_payment_gateway_fees_2: 1189.52\nbank_fees: 10.00\ncwt_from_gross_sales: 192.12\ncwt_from_transaction_fees: 48.58\ncwt_from_pg_fees: 21.24\ntotal_amount_paid_out: 26547.32', '2024-06-24 06:26:29', '2024-07-02 04:03:42'),
@@ -3204,9 +2989,9 @@ INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_i
 ('e53057ae-4414-11ef-951c-48e7dad87c24', NULL, 'transaction', '8461f2b3', 'Add', 'Transaction record added\nstore_id: a9610fdb-a96e-4415-919f-8e71e1b7659e\npromo_code: UBANGELS10\ncustomer_id: \"639761268466\"\ntransaction_date: 2024-04-20 11:26:00\ngross_amount: 0.00\ndiscount: 0.00\namount_discounted: 0.00\npayment: N/A\nbill_status: BILLABLE', '2024-07-17 08:16:40', '2024-07-17 08:16:40'),
 ('e53063e1-4414-11ef-951c-48e7dad87c24', NULL, 'transaction', 'dd50d96b', 'Add', 'Transaction record added\nstore_id: a9610fdb-a96e-4415-919f-8e71e1b7659e\npromo_code: UBANGELS10\ncustomer_id: \"639171186490\"\ntransaction_date: 2024-04-22 19:08:00\ngross_amount: 0.00\ndiscount: 0.00\namount_discounted: 0.00\npayment: N/A\nbill_status: BILLABLE', '2024-07-17 08:16:40', '2024-07-17 08:16:40'),
 ('e5312f62-4414-11ef-951c-48e7dad87c24', NULL, 'transaction', '6ea596b0', 'Add', 'Transaction record added\nstore_id: a9610fdb-a96e-4415-919f-8e71e1b7659e\npromo_code: UBANGELS10\ncustomer_id: \"639052772221\"\ntransaction_date: 2024-04-23 17:20:00\ngross_amount: 0.00\ndiscount: 0.00\namount_discounted: 0.00\npayment: N/A\nbill_status: BILLABLE', '2024-07-17 08:16:40', '2024-07-17 08:16:40'),
-('e5313669-4414-11ef-951c-48e7dad87c24', NULL, 'transaction', 'eb9964e2', 'Add', 'Transaction record added\nstore_id: a9610fdb-a96e-4415-919f-8e71e1b7659e\npromo_code: UBANGELS10\ncustomer_id: \"639083241312\"\ntransaction_date: 2024-04-25 19:06:00\ngross_amount: 0.00\ndiscount: 0.00\namount_discounted: 0.00\npayment: N/A\nbill_status: BILLABLE', '2024-07-17 08:16:40', '2024-07-17 08:16:40'),
-('e74f38d0-32bc-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', 'e74e1262-32bc-11ef-b166-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: SR#LG2024-06-25-e74e\ntotal_successful_orders: 2\ntotal_gross_sales: 22244.00\ntotal_discount: 5784.00\ntotal_outstanding_amount_1: 16460.00\nleadgen_commission_rate_base: 16460.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 1843.52\ncard_payment_pg_fee: 0.00\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 452.66\ntotal_payment_gateway_fees_1: 452.66\ntotal_outstanding_amount_2: 16460.00\ntotal_commission_fees_2: 1843.52\ntotal_payment_gateway_fees_2: 452.66\nbank_fees: 10.00\ncwt_from_gross_sales: 108.96\ncwt_from_transaction_fees: 32.92\ncwt_from_pg_fees: 8.08\ntotal_amount_paid_out: 14085.86', '2024-06-25 06:33:58', '2024-07-02 04:03:42');
+('e5313669-4414-11ef-951c-48e7dad87c24', NULL, 'transaction', 'eb9964e2', 'Add', 'Transaction record added\nstore_id: a9610fdb-a96e-4415-919f-8e71e1b7659e\npromo_code: UBANGELS10\ncustomer_id: \"639083241312\"\ntransaction_date: 2024-04-25 19:06:00\ngross_amount: 0.00\ndiscount: 0.00\namount_discounted: 0.00\npayment: N/A\nbill_status: BILLABLE', '2024-07-17 08:16:40', '2024-07-17 08:16:40');
 INSERT INTO `activity_history` (`activity_id`, `user_id`, `table_name`, `table_id`, `activity_type`, `description`, `created_at`, `updated_at`) VALUES
+('e74f38d0-32bc-11ef-b166-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', 'e74e1262-32bc-11ef-b166-48e7dad87c24', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: N/A\nmerchant_business_name: N/A\nmerchant_brand_name: N/A\nstore_id: 8946759b-1cc2-11ef-8abb-48e7dad87c24\nstore_business_name: Demo Legal Name\nstore_brand_name: B00KY Demo Store\nbusiness_address: Anywhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: SR#LG2024-06-25-e74e\ntotal_successful_orders: 2\ntotal_gross_sales: 22244.00\ntotal_discount: 5784.00\ntotal_outstanding_amount_1: 16460.00\nleadgen_commission_rate_base: 16460.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 1843.52\ncard_payment_pg_fee: 0.00\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 452.66\ntotal_payment_gateway_fees_1: 452.66\ntotal_outstanding_amount_2: 16460.00\ntotal_commission_fees_2: 1843.52\ntotal_payment_gateway_fees_2: 452.66\nbank_fees: 10.00\ncwt_from_gross_sales: 108.96\ncwt_from_transaction_fees: 32.92\ncwt_from_pg_fees: 8.08\ntotal_amount_paid_out: 14085.86', '2024-06-25 06:33:58', '2024-07-02 04:03:42'),
 ('eb6d338b-2d4e-11ef-a4d2-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_head', 'eb6c4798-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history head record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-05-31\nsettlement_number: 202405-eb6c47', '2024-06-18 08:44:05', '2024-07-02 04:03:42'),
 ('eb6e79d2-2d4e-11ef-a4d2-48e7dad87c24', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_gcash_body', 'eb6c4798-2d4e-11ef-a4d2-48e7dad87c24', 'Add', 'Gcash report history body record added\ngcash_report_id: eb6c4798-2d4e-11ef-a4d2-48e7dad87c24\nitem: B00KYDEMO\nquantity_redeemed: 1\nvoucher_value: 100.00\namount: 100.00', '2024-06-18 08:44:05', '2024-07-02 04:03:42'),
 ('ee8520d1-36f9-11ef-8f86-0a002700000d', '09d8d971-342e-11ef-b7ae-0a002700000d', 'report_history_coupled', 'ee8374cc-36f9-11ef-8f86-0a002700000d', 'Add', 'Coupled report history record added\ngenerated_by: N/A\nmerchant_id: 3606c45c-1cc2-11ef-8abb-48e7dad87c24\nmerchant_business_name: Merchant Legal Name\nmerchant_brand_name: B00KY Demo Merchant\nstore_id: N/A\nstore_business_name: N/A\nstore_brand_name: N/A\nbusiness_address: Somewhere St.\nsettlement_period_start: 2024-05-01\nsettlement_period_end: 2024-06-30\nsettlement_number: SR#LG2024-07-01-ee8374cc\ntotal_successful_orders: 3\ntotal_gross_sales: 37814.00\ntotal_discount: 8898.00\ntotal_outstanding_amount_1: 28916.00\nleadgen_commission_rate_base: 28916.00\ncommission_rate: 10.00%\ntotal_commission_fees_1: 2466.32\ncard_payment_pg_fee: 186.84\npaymaya_pg_fee: 0.00\ngcash_miniapp_pg_fee: 0.00\ngcash_pg_fee: 428.18\ntotal_payment_gateway_fees_1: 615.02\ntotal_outstanding_amount_2: 28916.00\ntotal_commission_fees_2: 2466.32\ntotal_payment_gateway_fees_2: 615.02\nbank_fees: 10.00\ncwt_from_gross_sales: 185.99\ncwt_from_transaction_fees: 45.38\ncwt_from_pg_fees: 10.98\ntotal_amount_paid_out: 25693.69', '2024-06-30 16:00:54', '2024-07-02 04:03:42'),
@@ -4183,7 +3968,8 @@ CREATE TABLE `report_history_decoupled` (
 INSERT INTO `report_history_decoupled` (`decoupled_report_id`, `generated_by`, `bill_status`, `merchant_id`, `merchant_business_name`, `merchant_brand_name`, `store_id`, `store_business_name`, `store_brand_name`, `business_address`, `settlement_period_start`, `settlement_period_end`, `settlement_date`, `settlement_number`, `settlement_period`, `total_successful_orders`, `total_gross_sales`, `total_discount`, `total_outstanding_amount`, `leadgen_commission_rate_base_pretrial`, `commission_rate_pretrial`, `total_pretrial`, `leadgen_commission_rate_base_billable`, `commission_rate_billable`, `total_billable`, `total_commission_fees`, `created_at`, `updated_at`) VALUES
 ('1f00bc47-45dc-11ef-9af2-48e7dad87c24', NULL, 'PRE-TRIAL and BILLABLE', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Figaro Coffee Systems, Inc.', 'Angel\'s Pizza', NULL, NULL, NULL, '33 Mayon St. Brgy. Malamig, Mandaluyong City', '2024-04-01', '2024-04-30', 'July 19, 2024', 'SR#LG2024-07-19-1f00bc47', 'April 1-30, 2024', 8, 0.00, 0.00, 0.00, 8000.00, '10.00%', 896.00, 0.00, '10.00%', 0.00, 0.00, '2024-07-19 14:35:18', '2024-07-19 14:35:18'),
 ('5dade388-45e3-11ef-9af2-48e7dad87c24', NULL, 'PRE-TRIAL', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Figaro Coffee Systems, Inc.', 'Angel\'s Pizza', NULL, NULL, NULL, '33 Mayon St. Brgy. Malamig, Mandaluyong City', '2024-04-01', '2024-04-30', 'July 19, 2024', 'SR#LG2024-07-19-5dade388', 'April 1-30, 2024', 9, 0.00, 0.00, 0.00, 9000.00, '10.00%', 1008.00, 0.00, '10.00%', 0.00, 0.00, '2024-07-19 15:27:10', '2024-07-19 15:27:10'),
-('8ad37df2-45db-11ef-9af2-48e7dad87c24', NULL, 'PRE-TRIAL', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Figaro Coffee Systems, Inc.', 'Angel\'s Pizza', NULL, NULL, NULL, '33 Mayon St. Brgy. Malamig, Mandaluyong City', '2024-04-01', '2024-04-30', 'July 19, 2024', 'SR#LG2024-07-19-8ad37df2', 'April 1-30, 2024', 8, 0.00, 0.00, 0.00, 8000.00, '10.00%', 896.00, 0.00, '10.00%', 0.00, 0.00, '2024-07-19 14:31:10', '2024-07-19 14:31:10');
+('8ad37df2-45db-11ef-9af2-48e7dad87c24', NULL, 'PRE-TRIAL', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Figaro Coffee Systems, Inc.', 'Angel\'s Pizza', NULL, NULL, NULL, '33 Mayon St. Brgy. Malamig, Mandaluyong City', '2024-04-01', '2024-04-30', 'July 19, 2024', 'SR#LG2024-07-19-8ad37df2', 'April 1-30, 2024', 8, 0.00, 0.00, 0.00, 8000.00, '10.00%', 896.00, 0.00, '10.00%', 0.00, 0.00, '2024-07-19 14:31:10', '2024-07-19 14:31:10'),
+('ad011b0d-45e8-11ef-9af2-48e7dad87c24', NULL, 'PRE-TRIAL', 'f04538ac-2008-403b-b0f7-4f4d49a17fda', 'Figaro Coffee Systems, Inc.', 'Angel\'s Pizza', NULL, NULL, NULL, '33 Mayon St. Brgy. Malamig, Mandaluyong City', '2024-04-01', '2024-04-30', 'July 20, 2024', 'SR#LG2024-07-20-ad011b0d', 'April 1-30, 2024', 9, 0.00, 0.00, 0.00, 9000.00, '10.00%', 1008.00, 0.00, '10.00%', 0.00, 0.00, '2024-07-19 16:05:11', '2024-07-19 16:05:11');
 
 --
 -- Triggers `report_history_decoupled`
@@ -4936,7 +4722,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `transaction_summary_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transaction_summary_view`  AS WITH pg_fee_cte AS (SELECT `t`.`transaction_id` AS `transaction_id`, CASE WHEN `t`.`payment` in ('paymaya_credit_card','maya','maya_checkout','paymaya','gcash','gcash_miniapp') THEN (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = `t`.`payment` and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),case `t`.`payment` when 'paymaya_credit_card' then `f`.`paymaya_credit_card` when 'gcash' then `f`.`gcash` when 'gcash_miniapp' then `f`.`gcash_miniapp` when 'paymaya' then `f`.`paymaya` when 'maya_checkout' then `f`.`maya_checkout` when 'maya' then `f`.`maya` end)) WHEN `t`.`payment` is null OR `t`.`payment` = '' THEN 0 END AS `pg_fee_rate`, coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) AS `commission_type`, coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) AS `commission_rate` FROM (((`transaction` `t` join `store` `s` on(`t`.`store_id` = `s`.`store_id`)) join `merchant` `m` on(`m`.`merchant_id` = `s`.`merchant_id`)) join `fee` `f` on(`f`.`merchant_id` = `m`.`merchant_id`))) SELECT substr(`t`.`transaction_id`,1,8) AS `Transaction ID`, concat('',date_format(`t`.`transaction_date`,'%M %d, %Y %h:%i%p'),'') AS `Formatted Transaction Date`, date_format(`t`.`transaction_date`,'%Y-%m-%d') AS `Transaction Date`, `m`.`merchant_id` AS `Merchant ID`, `m`.`merchant_name` AS `Merchant Name`, `s`.`store_id` AS `Store ID`, `s`.`store_name` AS `Store Name`, `t`.`customer_id` AS `Customer ID`, ifnull('-',`t`.`customer_name`) AS `Customer Name`, `p`.`promo_code` AS `Promo Code`, `p`.`voucher_type` AS `Voucher Type`, `p`.`promo_category` AS `Promo Category`, `p`.`promo_group` AS `Promo Group`, `p`.`promo_type` AS `Promo Type`, `t`.`gross_amount` AS `Gross Amount`, `t`.`discount` AS `Discount`, `t`.`amount_discounted` AS `Cart Amount`, CASE WHEN `t`.`payment` in ('paymaya_credit_card','maya','maya_checkout','paymaya','gcash','gcash_miniapp') THEN `t`.`payment` ELSE '-' END AS `Mode of Payment`, `t`.`bill_status` AS `Bill Status`, `t`.`comm_rate_base` AS `Comm Rate Base`, `pg_fee_cte`.`commission_type` AS `Commission Type`, concat(`pg_fee_cte`.`commission_rate`,'%') AS `Commission Rate`, round(`t`.`comm_rate_base` * (`pg_fee_cte`.`commission_rate` / 100),2) AS `Commission Amount`, CASE WHEN `pg_fee_cte`.`commission_type` = 'Vat Exc' THEN round(`t`.`comm_rate_base` * (`pg_fee_cte`.`commission_rate` / 100) * 1.12,2) WHEN `pg_fee_cte`.`commission_type` = 'Vat Inc' THEN round(`t`.`comm_rate_base` * (`pg_fee_cte`.`commission_rate` / 100),2) END AS `Total Billing`, concat(`pg_fee_cte`.`pg_fee_rate`,'%') AS `PG Fee Rate`, round(`t`.`amount_discounted` * (`pg_fee_cte`.`pg_fee_rate` / 100),2) AS `PG Fee Amount`, `f`.`cwt_rate` AS `CWT Rate`, round(`t`.`amount_discounted` - case when `pg_fee_cte`.`commission_type` = 'Vat Exc' then round(`t`.`comm_rate_base` * (`pg_fee_cte`.`commission_rate` / 100) * 1.12,2) when `pg_fee_cte`.`commission_type` = 'Vat Inc' then round(`t`.`comm_rate_base` * (`pg_fee_cte`.`commission_rate` / 100),2) end - round(`t`.`amount_discounted` * (`pg_fee_cte`.`pg_fee_rate` / 100),2),2) AS `Amount to be Disbursed` FROM (((((`transaction` `t` join `store` `s` on(`t`.`store_id` = `s`.`store_id`)) join `merchant` `m` on(`m`.`merchant_id` = `s`.`merchant_id`)) join `promo` `p` on(`p`.`promo_code` = `t`.`promo_code`)) join `fee` `f` on(`f`.`merchant_id` = `m`.`merchant_id`)) join `pg_fee_cte` on(`t`.`transaction_id` = `pg_fee_cte`.`transaction_id`)) ORDER BY `t`.`transaction_date` DESC;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transaction_summary_view`  AS WITH pg_fee_cte AS (SELECT `t`.`transaction_id` AS `transaction_id`, CASE WHEN `t`.`payment` in ('paymaya_credit_card','maya','maya_checkout','paymaya','gcash','gcash_miniapp') THEN (select coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = `t`.`payment` and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),case `t`.`payment` when 'paymaya_credit_card' then `f`.`paymaya_credit_card` when 'gcash' then `f`.`gcash` when 'gcash_miniapp' then `f`.`gcash_miniapp` when 'paymaya' then `f`.`paymaya` when 'maya_checkout' then `f`.`maya_checkout` when 'maya' then `f`.`maya` end)) WHEN `t`.`payment` is null OR `t`.`payment` = '' THEN 0 END AS `pg_fee_rate`, coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'commission_type' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`commission_type`) AS `commission_type`, coalesce((select `fh`.`old_value` from `fee_history` `fh` where `fh`.`fee_id` = `f`.`fee_id` and `fh`.`column_name` = 'lead_gen_commission' and `fh`.`changed_at` >= `t`.`transaction_date` order by `fh`.`changed_at` desc limit 1),`f`.`lead_gen_commission`) AS `commission_rate` FROM (((`transaction` `t` join `store` `s` on(`t`.`store_id` = `s`.`store_id`)) join `merchant` `m` on(`m`.`merchant_id` = `s`.`merchant_id`)) join `fee` `f` on(`f`.`merchant_id` = `m`.`merchant_id`))) SELECT substr(`t`.`transaction_id`,1,8) AS `Transaction ID`, concat('',date_format(`t`.`transaction_date`,'%M %d, %Y %h:%i%p'),'') AS `Formatted Transaction Date`, date_format(`t`.`transaction_date`,'%Y-%m-%d') AS `Transaction Date`, `m`.`merchant_id` AS `Merchant ID`, `m`.`merchant_name` AS `Merchant Name`, `s`.`store_id` AS `Store ID`, `s`.`store_name` AS `Store Name`, `t`.`customer_id` AS `Customer ID`, ifnull('-',`t`.`customer_name`) AS `Customer Name`, `p`.`promo_code` AS `Promo Code`, `p`.`voucher_type` AS `Voucher Type`, `p`.`promo_category` AS `Promo Category`, `p`.`promo_group` AS `Promo Group`, `p`.`promo_type` AS `Promo Type`, `t`.`gross_amount` AS `Gross Amount`, `t`.`discount` AS `Discount`, `t`.`amount_discounted` AS `Cart Amount`, CASE WHEN `t`.`payment` in ('paymaya_credit_card','maya','maya_checkout','paymaya','gcash','gcash_miniapp') THEN `t`.`payment` ELSE '-' END AS `Mode of Payment`, `t`.`bill_status` AS `Bill Status`, `t`.`comm_rate_base` AS `Comm Rate Base`, `pg_fee_cte`.`commission_type` AS `Commission Type`, concat(`pg_fee_cte`.`commission_rate`,'%') AS `Commission Rate`, round(`t`.`comm_rate_base` * (`pg_fee_cte`.`commission_rate` / 100),2) AS `Commission Amount`, CASE WHEN `pg_fee_cte`.`commission_type` = 'Vat Exc' THEN round(`t`.`comm_rate_base` * (`pg_fee_cte`.`commission_rate` / 100) * 1.12,2) WHEN `pg_fee_cte`.`commission_type` = 'Vat Inc' THEN round(`t`.`comm_rate_base` * (`pg_fee_cte`.`commission_rate` / 100),2) END AS `Total Billing`, concat(`pg_fee_cte`.`pg_fee_rate`,'%') AS `PG Fee Rate`, round(`t`.`amount_discounted` * (`pg_fee_cte`.`pg_fee_rate` / 100),2) AS `PG Fee Amount`, `f`.`cwt_rate` AS `CWT Rate`, round(`t`.`amount_discounted` - case when `pg_fee_cte`.`commission_type` = 'Vat Exc' then round(`t`.`comm_rate_base` * (`pg_fee_cte`.`commission_rate` / 100) * 1.12,2) when `pg_fee_cte`.`commission_type` = 'Vat Inc' then round(`t`.`comm_rate_base` * (`pg_fee_cte`.`commission_rate` / 100),2) end - round(`t`.`amount_discounted` * (`pg_fee_cte`.`pg_fee_rate` / 100),2),2) AS `Amount to be Disbursed` FROM (((((`transaction` `t` join `store` `s` on(`t`.`store_id` = `s`.`store_id`)) join `merchant` `m` on(`m`.`merchant_id` = `s`.`merchant_id`)) join `promo` `p` on(`p`.`promo_code` = `t`.`promo_code`)) join `fee` `f` on(`f`.`merchant_id` = `m`.`merchant_id`)) join `pg_fee_cte` on(`t`.`transaction_id` = `pg_fee_cte`.`transaction_id`)) ORDER BY `t`.`transaction_date` AS `DESCdesc` ASC  ;
 
 --
 -- Indexes for dumped tables

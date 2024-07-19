@@ -82,34 +82,16 @@ BEGIN
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
         WHERE 
@@ -186,34 +168,16 @@ BEGIN
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
 	        10.00 AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_transaction_fees,
-            CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END AS cwt_from_pg_fees,
+	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
+            ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
             ROUND(SUM(`Cart Amount`)
-            - SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-              END)
+            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
             - SUM(`PG Fee Amount`)
             - 10.00
             - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' 
-                    THEN ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * 0.02, 2)
-                ELSE 0.00
-              END
-            + CASE
-                WHEN `IS CWT Rate Computed` = ''Yes'' THEN ROUND(SUM(`PG Fee Amount`) / 1.12 * 0.02, 2)
-                ELSE 0.00
-            END,2) AS total_amount_paid_out
+            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
+            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
         WHERE 
