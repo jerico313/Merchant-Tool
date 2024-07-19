@@ -3,8 +3,10 @@
 
 *{
   font-family: "Nunito", sans-serif;
-  font-size: 0.825vw;
   margin:0;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
 }
 
 .navbar{
@@ -449,12 +451,13 @@ li.paginate_button.page-item{
   margin-top: 10px;
 }
 
-td{
+td {
   background-color:transparent !important;
   border-bottom: 1px solid #808080 !important;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
 }
-
-
 
 th{
   background-color:#E96529 !important;
@@ -462,13 +465,7 @@ th{
   color:#fff !important;
   font-weight: 800;
   font-style: normal;
-  font-size: 13px;
-}
-
-tr {
-  font-weight: 600;
-  font-style: normal;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 th.month{
@@ -500,16 +497,4 @@ th.next.available{
   background-color: transparent;
   color: #0E864A ;
   border:solid  #0E864A  2px;
-}
-
-.list-group-item {
-  font-weight: 800;
-  font-style: normal;
-  font-size: 13px;
-}
-
-.nav-item {
-  font-weight: 700;
-  font-style: normal;
-  font-size: 13px;
 }

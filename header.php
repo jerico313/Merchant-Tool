@@ -50,8 +50,10 @@ if (isset($_SESSION['user_id'])) {
 <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>      
-      .navbar a {
-        font-size: 0.825vw !important;
+      .nav-link {
+        font-weight: 700;
+        font-style: normal;
+        font-size: 12px;
       }
 
       .active_nav{
