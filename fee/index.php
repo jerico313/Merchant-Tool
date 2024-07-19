@@ -1,52 +1,52 @@
 <?php
-include_once("../header.php");
+include_once ("../header.php");
 
 function displayPGFeeRate()
 {
-    global $conn, $type;
-    $sql = "SELECT fee.*, merchant.merchant_name FROM fee INNER JOIN merchant ON fee.merchant_id = merchant.merchant_id";
-    $result = $conn->query($sql);
+  global $conn, $type;
+  $sql = "SELECT fee.*, merchant.merchant_name FROM fee INNER JOIN merchant ON fee.merchant_id = merchant.merchant_id";
+  $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $shortFeeId = substr($row['fee_id'], 0, 8);
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $shortFeeId = substr($row['fee_id'], 0, 8);
 
-            echo "<tr data-id='" . $row['fee_id'] . "'>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $shortFeeId . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['paymaya_credit_card'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['gcash'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['gcash_miniapp'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['paymaya'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['maya_checkout'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['maya'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['lead_gen_commission'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['commission_type'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['cwt_rate'] . "</td>";
-            echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
-            $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-            echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell;'>";
+      echo "<tr data-id='" . $row['fee_id'] . "'>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $shortFeeId . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['paymaya_credit_card'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['gcash'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['gcash_miniapp'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['paymaya'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['maya_checkout'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['maya'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['lead_gen_commission'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['commission_type'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['cwt_rate'] . "</td>";
+      echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
+      $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
+      echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell;'>";
 
-            echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
-            echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
-            echo "<ul class='list-group'>";
+      echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
+      echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
+      echo "<ul class='list-group'>";
 
-            // Dropdown menu items
-            if ($type !== 'User') {
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='editFee(\"" . $row['fee_id'] . "\")' style='color:#E96529;pointer'>Edit</a></li>";
-            }
+      // Dropdown menu items
+      if ($type !== 'User') {
+        echo "<li class='list-group-item action-item'><a href='#' onclick='editFee(\"" . $row['fee_id'] . "\")' style='color:#E96529;pointer'>Edit</a></li>";
+      }
 
-            echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='viewHistory(\"" . $row['fee_id'] . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;pointer'>View History</a></li>";
+      echo "<li class='list-group-item action-item'><a href='#' onclick='viewHistory(\"" . $row['fee_id'] . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;pointer'>View History</a></li>";
 
-            echo "</ul>";
-            echo "</div>"; 
+      echo "</ul>";
+      echo "</div>";
 
-            echo "</td>";
-            echo "</tr>";
-        }
+      echo "</td>";
+      echo "</tr>";
     }
+  }
 
-    $conn->close();
+  $conn->close();
 }
 ?>
 
@@ -85,19 +85,20 @@ function displayPGFeeRate()
     }
 
     @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
 
-.action-item {
-  animation: fadeIn 0.3s ease forwards;
-}
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .action-item {
+      animation: fadeIn 0.3s ease forwards;
+    }
 
 
     .add-btns {
@@ -108,12 +109,21 @@ function displayPGFeeRate()
     }
 
     .modal-title {
+      font-weight: 900;
+      font-style: normal;
       font-size: 15px;
-      font-weight: bold;
     }
 
     .form-label {
-      font-weight: bold;
+      font-weight: 700;
+      font-style: normal;
+      font-size: 13px;
+    }
+
+    .form-control {
+      font-weight: 600;
+      font-style: normal;
+      font-size: 13px;
     }
 
     @media only screen and (max-width: 767px) {
@@ -203,7 +213,7 @@ function displayPGFeeRate()
       }
 
       td:nth-of-type(11):before {
-        content: "Is CWT Rate Computed?";
+        content: "CWT Rate";
       }
 
       td:nth-of-type(12):before {
@@ -252,9 +262,10 @@ function displayPGFeeRate()
                 <th style="padding:10px;">Maya</th>
                 <th style="padding:10px;">Leadgen Commission</th>
                 <th style="padding:10px;">Commission Type</th>
-                <th style="padding:10px;">Is CWT Rate Computed?</th>
+                <th style="padding:10px;">CWT Rate</th>
                 <th style="display:none;"></th>
-                <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Action</th>
+                <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">
+                  Action</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -311,8 +322,7 @@ function displayPGFeeRate()
 
               <div class="mb-3">
                 <label for="cwtRate" class="form-label">CWT Rate</label>
-                <input class="form-control" rows="3" id="cwtRate" name="cwtRate"
-                  style="padding:5px 5px;" required>
+                <input class="form-control" rows="3" id="cwtRate" name="cwtRate" style="padding:5px 5px;" required>
               </div>
 
               <button type="submit" class="btn btn-primary"
@@ -396,18 +406,18 @@ function displayPGFeeRate()
       });
     </script>
     <script>
-    function toggleActions(button) {
+      function toggleActions(button) {
         // Find the actions-list div relative to the button
         var actionsList = button.nextElementSibling;
 
         // Toggle the display style of the actions-list div
         if (actionsList.style.display === 'none') {
-            actionsList.style.display = 'block';
+          actionsList.style.display = 'block';
         } else {
-            actionsList.style.display = 'none';
+          actionsList.style.display = 'none';
         }
-    }
-</script>
+      }
+    </script>
 </body>
 
 </html>
