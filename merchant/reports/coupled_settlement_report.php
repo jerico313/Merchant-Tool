@@ -38,19 +38,20 @@ $totalAmountPaidOut = number_format($data['total_amount_paid_out'], 2);
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $end_date = isset($_GET['settlement_period_end']) ? $_GET['settlement_period_end'] : '';
 $start_date = isset($_GET['settlement_period_start']) ? $_GET['settlement_period_start'] : '';
+$bill_status = isset($_GET['bill_status']) ? $_GET['bill_status'] : '';
 
-function displayOffers($merchant_id, $start_date, $end_date)
+function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
 {
     include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM transaction_summary_view WHERE `Merchant ID` = ? AND `Transaction Date` BETWEEN ? AND ?";
+    $sql = "SELECT * FROM transaction_summary_view WHERE `Merchant ID` = ? AND `Transaction Date` BETWEEN ? AND ? AND `Bill Status` = ?";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
         die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
     }
 
-    $stmt->bind_param("sss", $merchant_id, $start_date, $end_date);
+    $stmt->bind_param("ssss", $merchant_id, $start_date, $end_date, $bill_status);
 
     if (!$stmt->execute()) {
         die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
@@ -271,7 +272,7 @@ function displayOffers($merchant_id, $start_date, $end_date)
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
-                            <?php displayOffers($merchant_id, $start_date, $end_date); ?>
+                            <?php displayOffers($merchant_id, $start_date, $end_date, $bill_status); ?>
                         </tbody>
                     </table>
 </div>
