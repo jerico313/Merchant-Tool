@@ -4,9 +4,19 @@ CREATE VIEW merchant_view AS
 SELECT
     `m`.`merchant_id` AS `merchant_id`,
     `m`.`merchant_name` AS `merchant_name`,
-    `m`.`legal_entity_name` AS `legal_entity_name`,
-    `m`.`business_address` AS `business_address`,
-    `m`.`email_address` AS `email_address`,
+    `m`.`merchant_partnership_type` AS `merchant_partnership_type`,
+    CASE
+        WHEN `m`.`legal_entity_name` IS NULL THEN "-"
+        ELSE `m`.`legal_entity_name`
+    END AS `legal_entity_name`,
+    CASE
+        WHEN `m`.`business_address` IS NULL THEN "-"
+        ELSE `m`.`business_address`
+    END AS `business_address`,
+    CASE
+        WHEN `m`.`email_address` IS NULL THEN "-"
+        ELSE `m`.`email_address`
+    END AS `email_address`,
     CASE
         WHEN `m`.`sales` IS NULL THEN "-"
         ELSE `m`.`sales`
