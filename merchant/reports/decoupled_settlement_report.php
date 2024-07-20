@@ -32,14 +32,28 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
 {
     include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM transaction_summary_view WHERE `Merchant ID` = ? AND `Transaction Date` BETWEEN ? AND ? AND `Bill Status` = ?";
+    // Base SQL query
+    $sql = "SELECT * FROM transaction_summary_view 
+            WHERE `Merchant ID` = ? 
+            AND `Transaction Date` BETWEEN ? AND ?";
+
+    // Adjust SQL query based on the bill_status parameter
+    if ($bill_status === 'BILLABLE') {
+        $sql .= " AND `Bill Status` = 'BILLABLE'";
+    } elseif ($bill_status === 'PRE-TRIAL') {
+        $sql .= " AND `Bill Status` = 'PRE-TRIAL'";
+    } elseif ($bill_status === 'All') {
+        $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL')";
+    }
+
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
         die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
     }
 
-    $stmt->bind_param("ssss", $merchant_id, $start_date, $end_date, $bill_status);
+    // Bind parameters without bill_status as it's already in the query
+    $stmt->bind_param("sss", $merchant_id, $start_date, $end_date);
 
     if (!$stmt->execute()) {
         die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);

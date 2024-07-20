@@ -353,11 +353,11 @@ function displayStore($merchant_id)
               </div>
               <div class="mb-3">
                   <label for="billStatus" class="form-label">Bill Status</label>
-                  <select class="form-select" id="billStatus" required>
+                  <select class="form-select" id="billStatus" name="billStatus"required>
                   <option selected disabled>-- Select Bill Status --</option>
                   <option value="All">PRE-TRIAL and BILLABLE</option>
-                  <option value="Pre-Trial">PRE-TRIAL</option>
-                  <option value="Billable">BILLABLE</option>
+                  <option value="PRE-TRIAL">PRE-TRIAL</option>
+                  <option value="BILLABLE">BILLABLE</option>
                   </select>
               </div>
               <div class="mb-3">
@@ -440,23 +440,29 @@ function displayStore($merchant_id)
     var billStatus = document.getElementById('billStatus').value;
 
     if (reportType === 'Coupled') {
-      if (billStatus === 'Pre-Trial') {
+      if (billStatus === 'PRE-TRIAL') {
         form.action = 'coupled_generate_report_pre-trial.php';
-      } else if (billStatus === 'Billable') {
+      } else if (billStatus === 'BILLABLE') {
         form.action = 'coupled_generate_report_billable.php';
       } else if (billStatus === 'All') {
         form.action = 'coupled_generate_report.php';
       }
     } else if (reportType === 'Decoupled') {
-      if (billStatus === 'Pre-Trial') {
+      if (billStatus === 'PRE-TRIAL') {
         form.action = 'decoupled_generate_report_pre-trial.php';
-      } else if (billStatus === 'Billable') {
+      } else if (billStatus === 'BILLABLE') {
         form.action = 'decoupled_generate_report_billable.php';
       } else if (billStatus === 'All') {
         form.action = 'decoupled_generate_report.php';
       }
     } else if (reportType === 'GCash') {
-      form.action = 'gcash_generate_report.php';
+        if (billStatus === 'PRE-TRIAL') {
+        form.action = 'gcash_generate_report_pre-trial.php';
+      } else if (billStatus === 'BILLABLE') {
+        form.action = 'gcash_generate_report_billable.php';
+      } else if (billStatus === 'All') {
+        form.action = 'gcash_generate_report.php';
+      }
     }
 
     // Set the method to POST

@@ -333,7 +333,7 @@ function fetchAccountManager()
           </div>
           <div class="mb-3">
             <label for="billStatus" class="form-label">Bill Status</label>
-            <select class="form-select" id="billStatus" required>
+            <select class="form-select" id="billStatus" name="billStatus" required>
               <option selected disabled>-- Select Bill Status --</option>
               <option value="All">PRE-TRIAL and BILLABLE</option>
               <option value="PRE-TRIAL">PRE-TRIAL</option>

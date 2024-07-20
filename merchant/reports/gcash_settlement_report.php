@@ -67,18 +67,33 @@ $totalCommissionFees = number_format($data['total_commission_fees'], 2);
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $end_date = isset($_GET['settlement_period_end']) ? $_GET['settlement_period_end'] : '';
 $start_date = isset($_GET['settlement_period_start']) ? $_GET['settlement_period_start'] : '';
+$bill_status = isset($_GET['bill_status']) ? $_GET['bill_status'] : '';
 
-function displayOffers($merchant_id, $start_date, $end_date)
+function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
 {
     include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM transaction_summary_view WHERE `Merchant ID` = ? AND `Transaction Date` BETWEEN ? AND ?";
+    // Base SQL query
+    $sql = "SELECT * FROM transaction_summary_view 
+            WHERE `Merchant ID` = ? 
+            AND `Transaction Date` BETWEEN ? AND ?";
+
+    // Adjust SQL query based on the bill_status parameter
+    if ($bill_status === 'BILLABLE') {
+        $sql .= " AND `Bill Status` = 'BILLABLE'";
+    } elseif ($bill_status === 'PRE-TRIAL') {
+        $sql .= " AND `Bill Status` = 'PRE-TRIAL'";
+    } elseif ($bill_status === 'All') {
+        $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL')";
+    }
+
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
         die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
     }
 
+    // Bind parameters without bill_status as it's already in the query
     $stmt->bind_param("sss", $merchant_id, $start_date, $end_date);
 
     if (!$stmt->execute()) {
@@ -96,7 +111,7 @@ function displayOffers($merchant_id, $start_date, $end_date)
                 $CommissionAmount = number_format($row['Commission Amount'], 2);
                 $TotalBilling = number_format($row['Total Billing'], 2);
                 $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
-                
+
                 $AmounttobeDisbursed = $row['Amount to be Disbursed'];
                 if ($AmounttobeDisbursed < 0) {
                     $AmounttobeDisbursed = '(' . number_format(-$AmounttobeDisbursed, 2) . ')';
@@ -296,7 +311,7 @@ function displayOffers($merchant_id, $start_date, $end_date)
                 </tr>
             </thead>
             <tbody id="dynamicTableBody">
-                <?php displayOffers($merchant_id, $start_date, $end_date); ?>
+                <?php displayOffers($merchant_id, $start_date, $end_date, $bill_status); ?>
             </tbody>
         </table>
     </div>

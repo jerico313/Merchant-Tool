@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $startDate = $_POST['startDate'] ?? '';
     $endDate = $_POST['endDate'] ?? '';
     $userId = $_POST['userId'] ?? '';
+    $billStatus = $_POST['billStatus'] ?? '';
 
     $sql = "CALL coupled_store_billable(?, ?, ?)";
     $stmt = $conn->prepare($sql);
@@ -63,7 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $store_name = htmlspecialchars($storeId);
             $settlement_period_start = htmlspecialchars($startDate);
             $settlement_period_end = htmlspecialchars($endDate);
-            $url = 'reports/coupled_settlement_report.php?store_id=' . urlencode($store_id) . '&coupled_report_id=' . urlencode($maxCoupledReportId) . '&store_name=' . urlencode($store_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end);
+            $bill_status = htmlspecialchars($billStatus);
+            $url = 'reports/coupled_settlement_report.php?store_id=' . urlencode($store_id) . '&coupled_report_id=' . urlencode($maxCoupledReportId) . '&store_name=' . urlencode($store_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end) . '&bill_status=' . urlencode($bill_status);
             header("Location: $url");
             exit;
         } else {
