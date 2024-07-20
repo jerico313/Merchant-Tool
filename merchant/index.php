@@ -18,10 +18,11 @@ function displayMerchant()
       echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
       echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['business_address']) . "</td>";
       echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['email_address']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['sales']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['account_manager']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;display:none;'>" . htmlspecialchars($row['account_manager_id']) . "</td>";
       echo "<td style='text-align:center;vertical-align: middle;display:none;'>" . htmlspecialchars($row['sales_id']) . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['sales']) . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;display:none;'>" . htmlspecialchars($row['account_manager_id']) . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['account_manager']) . "</td>";
+      
       echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
       echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
       echo "<div class='mt-2 actions-list' style='display:none;'>"; // Hidden initially
@@ -55,7 +56,7 @@ function fetchSales()
   include ("../inc/config.php");
 
   // Updated SQL query to filter by department
-  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Operations' ORDER BY name";
+  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Finance' ORDER BY name";
   $employeeResult = $conn->query($employeeSql);
 
   if ($employeeResult->num_rows > 0) {
@@ -431,28 +432,16 @@ function fetchAccountManager()
         var businessAddress = merchantRow.find('td:nth-child(5)').text();
         var emailAddress = merchantRow.find('td:nth-child(6)').text();
         var salesId = merchantRow.find('td:nth-child(7)').text();  // Corrected index for salesId
-        var accountManagerId = merchantRow.find('td:nth-child(9)').text();  // Corrected index for accountManagerId
+    var accountManagerId = merchantRow.find('td:nth-child(9)').text();  // Corrected index for accountManagerId
 
-        // Set values in the edit modal
-        $('#merchantId').val(merchantUuid);
-        $('#merchantName').val(merchantName);
-        $('#merchantParntershipType').val(merchantParntershipType);
-        if (legalEntityName === '-') {
-          $('#legalEntityName').val('');
-        } else {
-          $('#legalEntityName').val(legalEntityName);
-        }
-        if (businessAddress === '-') {
-          $('#businessAddress').val('');
-        } else {
-          $('#businessAddress').val(businessAddress);
-        }
-        if (emailAddress === '-') {
-          $('#emailAddress').val('');
-        } else {
-          $('#emailAddress').val(emailAddress);
-        }
-        if (salesId === '-') {
+    // Set values in the edit modal
+    $('#merchantId').val(merchantUuid);
+    $('#merchantName').val(merchantName);
+    $('#merchantParntershipType').val(merchantParntershipType);
+    $('#legalEntityName').val(legalEntityName);
+    $('#businessAddress').val(businessAddress);
+    $('#emailAddress').val(emailAddress);
+    if (salesId === '-') {
           $('#sales').val('No assigned person');
         } else {
           $('#sales').val(salesId);
@@ -463,6 +452,8 @@ function fetchAccountManager()
           $('#accountManager').val(accountManagerId);
         }
 
+        
+      
         // Open the edit modal
         $('#editMerchantModal').modal('show');
       }
