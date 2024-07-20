@@ -4,6 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $merchantId = $_POST['merchantId'];
     $merchantName = $_POST['merchantName'];
+    $merchantParntershipType = $_POST['merchantParntershipType'];
     $legalEntityName = $_POST['legalEntityName'];
     $businessAddress = $_POST['businessAddress'];
     $emailAddress = $_POST['emailAddress'];
@@ -11,9 +12,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $accountManager = $_POST['accountManager'];
     $userId = $_POST['userId'];
 
+    // Check if value is empty and set it to NULL
+    if (empty($legalEntityName)) {
+        $legalEntityName = NULL;
+    }
+
+    if (empty($businessAddress)) {
+        $businessAddress = NULL;
+    }
+
+    if (empty($emailAddress)) {
+        $emailAddress = NULL;
+    }
+
+    if ($accountManager == "No assigned person") {
+        $accountManager = NULL;
+    }
+
+    if ($sales == "No assigned person") {
+        $sales = NULL;
+    }
+
     // Update merchant details
-    $stmt = $conn->prepare("UPDATE merchant SET merchant_name=?, legal_entity_name=?, business_address=?, email_address=?, sales=?, account_manager=? WHERE merchant_id=?");
-    $stmt->bind_param("sssssss", $merchantName, $legalEntityName, $businessAddress, $emailAddress, $sales, $accountManager, $merchantId);
+    $stmt = $conn->prepare("UPDATE merchant SET merchant_name=?, merchant_parntership_type, legal_entity_name=?, business_address=?, email_address=?, sales=?, account_manager=? WHERE merchant_id=?");
+    $stmt->bind_param("sssssss", $merchantName, $merchantParntershipType, $legalEntityName, $businessAddress, $emailAddress, $sales, $accountManager, $merchantId);
 
     if ($stmt->execute()) {
         // Find the latest inserted activity in activity_history
