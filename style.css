@@ -3,8 +3,10 @@
 
 *{
   font-family: "Nunito", sans-serif;
-  font-size: 0.825vw;
   margin:0;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 12px;
 }
 
 .navbar{
@@ -66,12 +68,6 @@ input.form-control.form-control-sm{
 select.form-select.form-select-sm{
   border:solid 2px #E96529;
   background-color: transparent;
-}
-
-th{
-  background-color:#E96529 !important;
-  text-align:center !important;
-  color:#fff !important;
 }
 
 .page-item.active .page-link {
@@ -455,13 +451,21 @@ li.paginate_button.page-item{
   margin-top: 10px;
 }
 
-td{
+td {
   background-color:transparent !important;
   border-bottom: 1px solid #808080 !important;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
 }
 
 th{
-  font-weight: 900;
+  background-color:#E96529 !important;
+  text-align:center !important;
+  color:#fff !important;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 12px;
 }
 
 th.month{
