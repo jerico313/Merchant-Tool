@@ -86,13 +86,15 @@ BEGIN
 	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
             ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
-            ROUND(SUM(`Cart Amount`)
-            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
-            - SUM(`PG Fee Amount`)
-            - 10.00
-            - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
-            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
+            ROUND(
+                SUM(`Cart Amount`)
+                - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
+                - SUM(`PG Fee Amount`)
+                - 10.00
+                - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
+                + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * `CWT Rate`, 2)
+                + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2),
+            2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `store` ON `Store ID` = store.`store_id`
         WHERE 
@@ -172,13 +174,15 @@ BEGIN
 	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
             ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
-            ROUND(SUM(`Cart Amount`)
-            - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
-            - SUM(`PG Fee Amount`)
-            - 10.00
-            - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-            + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2)
-            + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS total_amount_paid_out
+            ROUND(
+                SUM(`Cart Amount`)
+                - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
+                - SUM(`PG Fee Amount`)
+                - 10.00
+                - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
+                + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * `CWT Rate`, 2)
+                + ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2),
+            2) AS total_amount_paid_out
         FROM `transaction_summary_view`
 	    JOIN `store` ON `Store ID` = store.`store_id`
         WHERE 
