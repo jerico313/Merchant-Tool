@@ -103,7 +103,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `coupled_merchant_all` (IN `merchant
 	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * `CWT Rate`, 2) AS cwt_from_transaction_fees,
             ROUND(SUM(`PG Fee Amount`) / 1.12 * `CWT Rate`, 2) AS cwt_from_pg_fees,
             
-            RROUND(
+            ROUND(
                 SUM(`Cart Amount`)
                 - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
                 - SUM(`PG Fee Amount`)
