@@ -54,7 +54,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
         $sql .= " AND `Bill Status` = 'BILLABLE'";
     } elseif ($bill_status === 'PRE-TRIAL') {
         $sql .= " AND `Bill Status` = 'PRE-TRIAL'";
-    } elseif ($bill_status === 'PRE-TRIAL and BILLABLE') {
+    } elseif ($bill_status === 'All') {
         $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL')";
     }
 
