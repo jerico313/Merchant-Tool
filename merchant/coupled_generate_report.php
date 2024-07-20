@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $startDate = $_POST['startDate'] ?? '';
     $endDate = $_POST['endDate'] ?? '';
     $userId = $_POST['userId'] ?? '';
+    $billStatus = $_POST['billStatus'] ?? '';
 
     $sql = "CALL coupled_merchant_all(?, ?, ?)";
     $stmt = $conn->prepare($sql);
@@ -60,7 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $merchant_name = htmlspecialchars($merchantName);
             $settlement_period_start = htmlspecialchars($startDate);
             $settlement_period_end = htmlspecialchars($endDate);
-            $url = 'reports/coupled_settlement_report.php?merchant_id=' . urlencode($merchant_id) . '&coupled_report_id=' . urlencode($maxCoupledReportId) . '&merchant_name=' . urlencode($merchant_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end);            
+            $bill_status = htmlspecialchars($billStatus);
+            $url = 'reports/coupled_settlement_report.php?merchant_id=' . urlencode($merchant_id) . '&coupled_report_id=' . urlencode($maxCoupledReportId) . '&merchant_name=' . urlencode($merchant_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end). '&merchant_name=' . urlencode($merchant_name) . '&bill_status=' . urlencode($bill_status);            
             header("Location: $url");
             exit;
         } else {

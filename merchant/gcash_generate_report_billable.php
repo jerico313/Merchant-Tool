@@ -9,52 +9,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_POST['userId'] ?? '';
     $billStatus = $_POST['billStatus'] ?? '';
 
-    $sql = "CALL coupled_merchant_billable(?, ?, ?)";
+    $sql = "CALL gcash_merchant_billable(?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
         die("Error preparing statement: " . $conn->error);
     }
 
-    // Bind parameters to the prepared statement
     $stmt->bind_param("sss", $merchantId, $startDate, $endDate);
 
     if ($stmt->execute()) {
         $result = $stmt->get_result();
         if ($result->num_rows === 0) {
-            // No rows returned, redirect to failed.php
             header("Location: failed.php");
             exit;
         }
         $stmt->close(); // Close the first statement
 
-        // Get the latest activity_id from activity_history
         $latestActivityId = null;
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
         if ($stmt) {
             $stmt->execute();
             $stmt->bind_result($latestActivityId);
-            $stmt->fetch(); // Fetch the result
-            $stmt->close(); // Close the statement
+            $stmt->fetch(); 
+            $stmt->close(); 
         }
 
-        // Get the max coupled_report_id from report_history_coupled
-        $maxCoupledReportId = null;
-        $stmt = $conn->prepare("SELECT coupled_report_id FROM report_history_coupled ORDER BY created_at DESC LIMIT 1");
+        $maxGcashReportId = null;
+        $stmt = $conn->prepare("SELECT gcash_report_id FROM report_history_gcash_head ORDER BY created_at DESC LIMIT 1");
         if ($stmt) {
             $stmt->execute();
-            $stmt->bind_result($maxCoupledReportId);
+            $stmt->bind_result($maxGcashReportId);
             $stmt->fetch(); // Fetch the result
             $stmt->close(); // Close the statement
         }
 
-        if ($latestActivityId !== null && $maxCoupledReportId !== null) {
+        if ($latestActivityId !== null && $maxGcashReportId !== null) {
             // Update activity_history with user_id
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
             if ($stmt) {
                 $stmt->bind_param("ss", $userId, $latestActivityId);
                 $stmt->execute();
-                $stmt->close();
+                $stmt->close(); // Close the statement
             }
 
             $merchant_id = htmlspecialchars($merchantId);
