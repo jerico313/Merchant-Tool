@@ -315,7 +315,7 @@ function fetchAccountManager() {
             <label for="billStatus" class="form-label">Bill Status</label>
             <select class="form-select" id="billStatus" required>
               <option selected disabled>-- Select Bill Status --</option>
-              <option value="All">PRE-TRIAL and BILLABLE</option>
+              <option value="PRE-TRIAL and BILLABLE">PRE-TRIAL and BILLABLE</option>
               <option value="PRE-TRIAL">PRE-TRIAL</option>
               <option value="BILLABLE">BILLABLE</option>
             </select>
@@ -357,7 +357,7 @@ function fetchAccountManager() {
         form.action = 'coupled_generate_report_pre-trial.php';
       } else if (billStatus === 'BILLABLE') {
         form.action = 'coupled_generate_report_billable.php';
-      } else if (billStatus === 'All') {
+      } else if (billStatus === 'PRE-TRIAL and BILLABLE') {
         form.action = 'coupled_generate_report.php';
       }
     } else if (reportType === 'Decoupled') {
@@ -365,7 +365,7 @@ function fetchAccountManager() {
         form.action = 'decoupled_generate_report_pre-trial.php';
       } else if (billStatus === 'BILLABLE') {
         form.action = 'decoupled_generate_report_billable.php';
-      } else if (billStatus === 'All') {
+      } else if (billStatus === 'PRE-TRIAL and BILLABLE') {
         form.action = 'decoupled_generate_report.php';
       }
     } else if (reportType === 'GCash') {
@@ -373,7 +373,7 @@ function fetchAccountManager() {
         form.action = 'gcash_generate_report_pre-trial.php';
       } else if (billStatus === 'BILLABLE') {
         form.action = 'gcash_generate_report_billable.php';
-      } else if (billStatus === 'All') {
+      } else if (billStatus === 'PRE-TRIAL and BILLABLE') {
         form.action = 'gcash_generate_report.php';
       }
     }
