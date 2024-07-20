@@ -59,11 +59,12 @@ function fetchSales()
   $employeeResult = $conn->query($employeeSql);
 
   if ($employeeResult->num_rows > 0) {
+    echo "<option value='No assigned person'>No assigned person</option>";
     while ($employeeRow = $employeeResult->fetch_assoc()) {
       echo "<option value='" . htmlspecialchars($employeeRow['user_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($employeeRow['name'], ENT_QUOTES, 'UTF-8') . "</option>";
     }
   } else {
-    echo "<option value=''>No User found</option>";
+    echo "<option value=''>No users found</option>";
   }
 }
 
@@ -76,11 +77,12 @@ function fetchAccountManager()
   $employeeResult = $conn->query($employeeSql);
 
   if ($employeeResult->num_rows > 0) {
+    echo "<option value='No assigned person'>No assigned person</option>";
     while ($employeeRow = $employeeResult->fetch_assoc()) {
       echo "<option value='" . htmlspecialchars($employeeRow['user_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($employeeRow['name'], ENT_QUOTES, 'UTF-8') . "</option>";
     }
   } else {
-    echo "<option value=''>No User found</option>";
+    echo "<option value=''>No users found</option>";
   }
 }
 
@@ -253,7 +255,6 @@ function fetchAccountManager()
           <div class="modal-header border-0">
             <p class="modal-title" id="editMerchantModalLabel">Edit Merchant Details</p>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <p><small class="text-danger" style="font-style:italic;">* Required fields</small></p>
           </div>
           <div class="modal-body">
             <form id="editMerchantForm" action="edit.php" method="POST">
@@ -266,7 +267,9 @@ function fetchAccountManager()
                 <input type="text" class="form-control" id="merchantName" name="merchantName" required maxlength="255">
               </div>
               <div class="mb-3">
-                <label for="merchantParntershipType" class="form-label">Partnership Type</label>
+                <label for="merchantParntershipType" class="form-label">
+                  Partnership Type<span class="text-danger" style="padding:2px">*</span>
+                </label>
                 <select class="form-select" id="merchantParntershipType" name="merchantParntershipType">
                   <option selected disabled>-- Select Partnership Type --</option>
                   <option selected value="Primary">Primary</option>
@@ -283,13 +286,12 @@ function fetchAccountManager()
               </div>
               <div class="mb-3">
                 <label for="emailAddress" class="form-label">Email Address</label>
-                <textarea class="form-control" rows="3" id="emailAddress" name="emailAddress" style="padding:5px 5px;"></textarea>
+                <textarea class="form-control" rows="3" id="emailAddress" name="emailAddress" style="padding:5px 5px;" placeholder="Enter email address"></textarea>
               </div>
               <div class="mb-3">
                 <label for="sales" class="form-label">Sales</label>
                 <select class="form-select" id="sales" name="sales">
                   <option selected disabled>-- Select Sales --</option>
-                  <option selected value="No assigned person">No assigned person</option>
                   <?php fetchSales(); ?>
                 </select>
               </div>
@@ -297,7 +299,6 @@ function fetchAccountManager()
                 <label for="accountManager" class="form-label">Account Manager</label>
                 <select class="form-select" id="accountManager" name="accountManager">
                   <option selected disabled>-- Select Account Manager --</option>
-                  <option selected value="No assigned person">No assigned person</option>
                   <?php fetchAccountManager(); ?>
                 </select>
               </div>

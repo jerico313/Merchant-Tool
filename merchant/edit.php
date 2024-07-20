@@ -34,8 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Update merchant details
-    $stmt = $conn->prepare("UPDATE merchant SET merchant_name=?, merchant_parntership_type, legal_entity_name=?, business_address=?, email_address=?, sales=?, account_manager=? WHERE merchant_id=?");
-    $stmt->bind_param("sssssss", $merchantName, $merchantParntershipType, $legalEntityName, $businessAddress, $emailAddress, $sales, $accountManager, $merchantId);
+    $stmt = $conn->prepare("UPDATE merchant SET merchant_name=?, merchant_partnership_type=?, legal_entity_name=?, business_address=?, email_address=?, sales=?, account_manager=? WHERE merchant_id=?");
+    $stmt->bind_param("ssssssss", $merchantName, $merchantParntershipType, $legalEntityName, $businessAddress, $emailAddress, $sales, $accountManager, $merchantId);
 
     if ($stmt->execute()) {
         // Find the latest inserted activity in activity_history
