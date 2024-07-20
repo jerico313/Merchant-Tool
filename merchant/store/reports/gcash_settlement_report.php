@@ -67,18 +67,33 @@ $totalCommissionFees = number_format($data['total_commission_fees'], 2);
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $end_date = isset($_GET['settlement_period_end']) ? $_GET['settlement_period_end'] : '';
 $start_date = isset($_GET['settlement_period_start']) ? $_GET['settlement_period_start'] : '';
+$bill_status = isset($_GET['bill_status']) ? $_GET['bill_status'] : '';
 
-function displayOffers($store_id, $start_date, $end_date)
+function displayOffers($store_id, $start_date, $end_date, $bill_status)
 {
-    include ("../../../inc/config.php");
+    include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM transaction_summary_view WHERE `Store ID` = ? AND `Transaction Date` BETWEEN ? AND ?";
+    // Base SQL query
+    $sql = "SELECT * FROM transaction_summary_view 
+            WHERE `Store ID` = ? 
+            AND `Transaction Date` BETWEEN ? AND ?";
+
+    // Adjust SQL query based on the bill_status parameter
+    if ($bill_status === 'BILLABLE') {
+        $sql .= " AND `Bill Status` = 'BILLABLE'";
+    } elseif ($bill_status === 'PRE-TRIAL') {
+        $sql .= " AND `Bill Status` = 'PRE-TRIAL'";
+    } elseif ($bill_status === 'All') {
+        $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL')";
+    }
+
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
         die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
     }
 
+    // Bind parameters without bill_status as it's already in the query
     $stmt->bind_param("sss", $store_id, $start_date, $end_date);
 
     if (!$stmt->execute()) {
@@ -96,7 +111,7 @@ function displayOffers($store_id, $start_date, $end_date)
                 $CommissionAmount = number_format($row['Commission Amount'], 2);
                 $TotalBilling = number_format($row['Total Billing'], 2);
                 $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
-                
+
                 $AmounttobeDisbursed = $row['Amount to be Disbursed'];
                 if ($AmounttobeDisbursed < 0) {
                     $AmounttobeDisbursed = '(' . number_format(-$AmounttobeDisbursed, 2) . ')';
@@ -112,14 +127,10 @@ function displayOffers($store_id, $start_date, $end_date)
                 echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
                 echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
                 echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
-                echo "<td style='text-align:center;width:3%;'>" . $row['Voucher Type'] . "</td>";
-                echo "<td style='text-align:center;width:6%;'>" . $row['Promo Category'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Promo Group'] . "</td>";
-                echo "<td style='text-align:center;width:6%;'>" . $row['Promo Type'] . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $GrossAmount . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $Discount . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $CartAmount . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Payment'] . "</td>";
+                echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
                 echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
@@ -302,7 +313,7 @@ function displayOffers($store_id, $start_date, $end_date)
                 </tr>
             </thead>
             <tbody id="dynamicTableBody">
-                <?php displayOffers($store_id, $start_date, $end_date); ?>
+                <?php displayOffers($store_id, $start_date, $end_date, $bill_status); ?>
             </tbody>
         </table>
     </div>
