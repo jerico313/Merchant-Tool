@@ -3115,7 +3115,7 @@ CREATE TRIGGER `fee_insert_log` AFTER INSERT ON `fee` FOR EACH ROW BEGIN
   '\n','maya: ', IFNULL(NEW.maya, 'N/A'),
   '\n','lead_gen_commission: ', IFNULL(NEW.lead_gen_commission, 'N/A'),
   '\n','commission_type: ', IFNULL(NEW.commission_type, 'N/A'),
-  '\n','is_cwt_rate_computed: ', IFNULL(NEW.is_cwt_rate_computed, 'N/A'));
+  '\n','cwt_rate: ', IFNULL(NEW.cwt_rate, 'N/A'));
   
   INSERT INTO activity_history (table_name, table_id, activity_type, description)
   VALUES ('fee', NEW.fee_id, 'Add', description);
@@ -3161,8 +3161,8 @@ CREATE TRIGGER `fee_update_log` AFTER UPDATE ON `fee` FOR EACH ROW BEGIN
     SET description = CONCAT(description, 'commission_type: ', OLD.commission_type, ' -> ', NEW.commission_type, '\n');
   END IF;
   
-  IF OLD.is_cwt_rate_computed != NEW.is_cwt_rate_computed THEN
-    SET description = CONCAT(description, 'is_cwt_rate_computed: ', OLD.is_cwt_rate_computed, ' -> ', NEW.is_cwt_rate_computed, '\n');
+  IF OLD.cwt_rate != NEW.cwt_rate THEN
+    SET description = CONCAT(description, 'cwt_rate: ', OLD.cwt_rate, ' -> ', NEW.cwt_rate, '\n');
   END IF;
 
   -- Remove the trailing '\n' from the description
