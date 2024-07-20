@@ -19,18 +19,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $checkStmt = $conn->prepare("SELECT COUNT(*) FROM merchant WHERE merchant_id = ? OR merchant_name = ?");
     
     // Prepare SQL statement for insertion
-    $insertStmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, legal_entity_name, business_address, email_address, sales, account_manager) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $insertStmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, legal_entity_name, business_address, email_address, sales, account_manager) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Bind parameters for insertion
-    $insertStmt->bind_param("sssssss", $merchant_id, $merchant_name, $legal_entity_name, $business_address, $email_address, $sales, $account_manager);
+    $insertStmt->bind_param("ssssssss", $merchant_id, $merchant_name, $merchant_partnership_type, $legal_entity_name, $business_address, $email_address, $sales, $account_manager);
 
     // Check if 'sales' or 'account_manager' are empty and set them to NULL
     foreach ($_POST['merchant_id'] as $key => $value) {
         $merchant_id = $_POST['merchant_id'][$key];
         $merchant_name = $_POST['merchant_name'][$key];
-        $legal_entity_name = $_POST['legal_entity_name'][$key];
-        $business_address = $_POST['business_address'][$key];
-        $email_address = $_POST['email_address'][$key];
+        $merchant_partnership_type = empty($_POST['merchant_partnership_type'][$key]) ? NULL : $_POST['merchant_partnership_type'][$key];
+        $legal_entity_name = empty($_POST['legal_entity_name'][$key]) ? NULL : $_POST['legal_entity_name'][$key];
+        $business_address = empty($_POST['business_address'][$key]) ? NULL : $_POST['business_address'][$key];
+        $email_address = empty($_POST['email_address'][$key]) ? NULL : $_POST['email_address'][$key];
         $sales = empty($_POST['sales'][$key]) ? NULL : $_POST['sales'][$key];
         $account_manager = empty($_POST['account_manager'][$key]) ? NULL : $_POST['account_manager'][$key];
         

@@ -55,7 +55,7 @@ function fetchSales()
   include ("../inc/config.php");
 
   // Updated SQL query to filter by department
-  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Operations'";
+  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Operations' ORDER BY name";
   $employeeResult = $conn->query($employeeSql);
 
   if ($employeeResult->num_rows > 0) {
@@ -73,7 +73,7 @@ function fetchAccountManager()
   include ("../inc/config.php");
 
   // Updated SQL query to filter by department
-  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Finance'";
+  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Operations' ORDER BY name";
   $employeeResult = $conn->query($employeeSql);
 
   if ($employeeResult->num_rows > 0) {
@@ -133,14 +133,6 @@ function fetchAccountManager()
 
     .action-item {
       animation: fadeIn 0.3s ease forwards;
-    }
-
-    .title {
-      font-size: 30px;
-      font-weight: 900;
-      margin-right: auto;
-      padding-left: 5vh;
-      color: #E96529;
     }
 
     .add-btns {
@@ -215,10 +207,11 @@ function fetchAccountManager()
       <div class="sub" style="text-align:left;">
         <div class="add-btns">
           <p class="title">Merchants</p>
-          <a href="settlement_report.php"><button type="button" class="btn btn-warning check-report"
-              style="display:none;"><i class="fa-solid fa-print"></i> Check Report</button></a>
-          <a href="upload.php"><button type="button" class="btn btn-warning add-merchant"><i
-                class="fa-solid fa-plus"></i> Add Merchant</button></a>
+          <a href="upload.php">
+            <button type="button" class="btn btn-warning add-merchant">
+              <i class="fa-solid fa-plus"></i> Add Merchant
+            </button>
+          </a>
         </div>
 
         <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -264,7 +257,7 @@ function fetchAccountManager()
                 <label for="merchantName" class="form-label">
                   Merchant Name<span class="text-danger" style="padding:2px">*</span>
                 </label>
-                <input type="text" class="form-control" id="merchantName" name="merchantName" required maxlength="255">
+                <input type="text" class="form-control" id="merchantName" name="merchantName" placeholder="Enter merchant name" required maxlength="255">
               </div>
               <div class="mb-3">
                 <label for="merchantParntershipType" class="form-label">
@@ -272,32 +265,37 @@ function fetchAccountManager()
                 </label>
                 <select class="form-select" id="merchantParntershipType" name="merchantParntershipType">
                   <option selected disabled>-- Select Partnership Type --</option>
-                  <option selected value="Primary">Primary</option>
-                  <option selected value="Secondary">Secondary</option>
+                  <option value="Primary">Primary</option>
+                  <option value="Secondary">Secondary</option>
+                  <option value="Unknown partnership type">Unknown partnership type</option>
                 </select>
               </div>
               <div class="mb-3">
                 <label for="legalEntityName" class="form-label">Legal Entity Name</label>
-                <input type="text" class="form-control" id="legalEntityName" name="legalEntityName" maxlength="255">
+                <input type="text" class="form-control" id="legalEntityName" name="legalEntityName" placeholder="Enter legal entity name" maxlength="255">
               </div>
               <div class="mb-3">
                 <label for="businessAddress" class="form-label">Business Address</label>
-                <input type="text" class="form-control" id="businessAddress" name="businessAddress">
+                <input type="text" class="form-control" id="businessAddress" name="businessAddress" placeholder="Enter business address">
               </div>
               <div class="mb-3">
                 <label for="emailAddress" class="form-label">Email Address</label>
                 <textarea class="form-control" rows="3" id="emailAddress" name="emailAddress" style="padding:5px 5px;" placeholder="Enter email address"></textarea>
               </div>
               <div class="mb-3">
-                <label for="sales" class="form-label">Sales</label>
-                <select class="form-select" id="sales" name="sales">
+                <label for="sales" class="form-label">
+                  Sales<span class="text-danger" style="padding:2px">*</span>
+                </label>
+                <select class="form-select" id="sales" name="sales" required>
                   <option selected disabled>-- Select Sales --</option>
                   <?php fetchSales(); ?>
                 </select>
               </div>
               <div class="mb-3">
-                <label for="accountManager" class="form-label">Account Manager</label>
-                <select class="form-select" id="accountManager" name="accountManager">
+                <label for="accountManager" class="form-label">
+                  Account Manager<span class="text-danger" style="padding:2px">*</span>
+                </label>
+                <select class="form-select" id="accountManager" name="accountManager" required>
                   <option selected disabled>-- Select Account Manager --</option>
                   <?php fetchAccountManager(); ?>
                 </select>

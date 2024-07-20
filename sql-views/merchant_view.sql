@@ -4,7 +4,10 @@ CREATE VIEW merchant_view AS
 SELECT
     `m`.`merchant_id` AS `merchant_id`,
     `m`.`merchant_name` AS `merchant_name`,
-    `m`.`merchant_partnership_type` AS `merchant_partnership_type`,
+    CASE
+        WHEN `m`.`merchant_partnership_type` IS NULL THEN "Unknown partnership type"
+        ELSE `m`.`merchant_partnership_type`
+    END AS `merchant_partnership_type`,
     CASE
         WHEN `m`.`legal_entity_name` IS NULL THEN "-"
         ELSE `m`.`legal_entity_name`

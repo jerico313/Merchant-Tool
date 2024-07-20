@@ -188,6 +188,10 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     fgetcsv($handle); // Skip header row again
     $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, legal_entity_name, business_address, email_address, sales, account_manager) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     while (($data = fgetcsv($handle)) !== FALSE) {
+        $data[2] = empty($data[2]) ? null : $data[2]; // Convert blank merchant_partnership_type to null
+        $data[3] = empty($data[3]) ? null : $data[3]; // Convert blank legal_entity_name to null
+        $data[4] = empty($data[4]) ? null : $data[4]; // Convert blank business_address to null
+        $data[5] = empty($data[5]) ? null : $data[5]; // Convert blank email_address to null
         $data[6] = empty($data[6]) ? null : $data[6]; // Convert blank sales to null
         $data[7] = empty($data[7]) ? null : $data[7]; // Convert blank account_manager to null
         $stmt->bind_param("ssssssss", $data[1], $data[0], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7]);

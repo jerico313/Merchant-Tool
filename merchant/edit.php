@@ -13,6 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_POST['userId'];
 
     // Check if value is empty and set it to NULL
+    if ($merchantParntershipType == "Unknown partnership type") {
+        $merchantParntershipType = NULL;
+    }
+
     if (empty($legalEntityName)) {
         $legalEntityName = NULL;
     }
