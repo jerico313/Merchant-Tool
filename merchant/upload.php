@@ -245,15 +245,16 @@ function fetchAccountManager() {
                                             <label for="legal_entity_name" class="form-label" id="input-label">Legal Entity Name</label>
                                             <input id="input-field" type="text" class="form-control" name="legal_entity_name[]" placeholder="Enter legal entity name" maxlength="255">
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="business_address" class="form-label" id="input-label">Business Address</label>
                                             <input id="input-field" type="text" class="form-control" name="business_address[]" placeholder="Enter business address">
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        
                                         <div class="mb-3">
                                             <label for="email_address" class="form-label" id="input-label">Email Address</label>
-                                            <textarea id="input-field" class="form-control" rows="2" name="email_address[]" placeholder="Enter email address"></textarea>
+                                            <textarea id="input-field" class="form-control pb-3 pt-3" rows="5" name="email_address[]" placeholder="Enter email address"></textarea>
                                         </div>
                                         <div class="mb-3">
                                         <label for="sales" class="form-label" id="input-label">

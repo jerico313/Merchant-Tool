@@ -1,49 +1,75 @@
-<?php require_once("../header.php")?>
+<?php require_once("../header.php"); ?>
+
 <?php
-function displayOrder() {
-  include("../inc/config.php");
+function displayOrder($store_id = null, $startDate = null, $endDate = null, $billStatus = null) {
+    include("../inc/config.php");
 
-  // Modified SQL query to join transaction and store tables
-  $sql = "
-    SELECT t.transaction_id, s.store_name, t.promo_code, t.customer_id, t.customer_name, 
-           t.transaction_date, t.gross_amount, t.discount, t.amount_discounted, t.payment, t.comm_rate_base, t.bill_status
-    FROM transaction t
-    JOIN store s ON t.store_id = s.store_id
-  ";
-  
-  $result = $conn->query($sql);
+    // Base SQL query
+    $sql = "
+        SELECT t.transaction_id, s.store_name, t.promo_code, t.customer_id, t.customer_name, 
+               t.transaction_date, t.gross_amount, t.discount, t.amount_discounted, t.payment, t.comm_rate_base, t.bill_status
+        FROM transaction t
+        JOIN store s ON t.store_id = s.store_id
+        WHERE 1=1
+    ";
+    $params = array();
 
-  if ($result->num_rows > 0) {
-      $count = 1;
-      while ($row = $result->fetch_assoc()) {
-          $shortTransactiontId = substr($row['transaction_id'], 0, 8);
-          $gross_amount = number_format($row['gross_amount'], 2);
-          $amount_discounted = number_format($row['amount_discounted'], 2);
-          $discount = number_format($row['discount'], 2);
-          $comm_rate_base = number_format($row['comm_rate_base'], 2);
-          echo "<tr style='padding:20px 0;' data-id='" . $row['transaction_id'] . "'>";
-          echo "<td style='text-align:center;'>" . $shortTransactiontId . "</td>";
-          echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>"; // Display store name
-          echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
-          echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
-          echo "<td style='text-align:center;'>" . $gross_amount . "</td>";
-          echo "<td style='text-align:center;'>" . $discount . "</td>";
-          echo "<td style='text-align:center;'>" . $amount_discounted . "</td>";
-          echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
-          echo "<td style='text-align:center;'>" . $comm_rate_base . "</td>";
-          echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
-          echo "</tr>";
-          $count++;
-      }
-  }
+    // Append date range filter if both startDate and endDate are provided
+    if ($startDate && $endDate) {
+        $sql .= " AND t.transaction_date BETWEEN ? AND ?";
+        $params[] = $startDate;
+        $params[] = $endDate;
+    }
 
-  $conn->close();
+    // Append bill status filter if specified
+    if ($billStatus) {
+        $sql .= " AND t.bill_status = ?";
+        $params[] = $billStatus;
+    }
+
+    // Order by transaction date in descending order
+    $sql .= " ORDER BY t.transaction_date DESC";
+
+    // Prepare and execute the SQL query
+    $stmt = $conn->prepare($sql);
+
+    // Check if there are parameters to bind
+    if (count($params) > 0) {
+        $types = str_repeat("s", count($params)); // Adjust types if needed
+        $stmt->bind_param($types, ...$params);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $shortTransactionId = substr($row['transaction_id'], 0, 8);
+            $gross_amount = number_format($row['gross_amount'], 2);
+            $amount_discounted = number_format($row['amount_discounted'], 2);
+            $discount = number_format($row['discount'], 2);
+            $comm_rate_base = number_format($row['comm_rate_base'], 2);
+
+            echo "<tr style='padding:20px 0;' data-id='" . $row['transaction_id'] . "'>";
+            echo "<td style='text-align:center;'>" . $shortTransactionId . "</td>";
+            echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
+            echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
+            echo "<td style='text-align:center;'>" . $gross_amount . "</td>";
+            echo "<td style='text-align:center;'>" . $discount . "</td>";
+            echo "<td style='text-align:center;'>" . $amount_discounted . "</td>";
+            echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
+            echo "<td style='text-align:center;'>" . $comm_rate_base . "</td>";
+            echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
+            echo "</tr>";
+        }
+    }
+
+    $conn->close();
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,7 +109,7 @@ function displayOrder() {
       display: flex; 
       align-items: center;
     }
-
+    
 
     @media only screen and (max-width: 767px) {
     table,
@@ -193,9 +219,42 @@ function displayOrder() {
     <div class="sub" style="text-align:left;">
       <div class="add-btns">
         <p class="title">Transactions</p>
-        <!-- Form to upload file -->
-        
-        <a href="upload.php"><button type="button" class="btn btn-secondary check-report" style="width:170px;"><i class="fa-solid fa-upload"></i> Upload Transactions</button></a>
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle check-report" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                style="width:150px;margin-left:10px;border-radius:20px;height:32px;background-color: #4BB0B8;border:solid #4BB0B8 2px;">
+                <i class="fa-solid fa-filter"></i> Filters
+            </button>
+            <div class="dropdown-menu dropdown-menu-center p-4" style="width:155px !important;" aria-labelledby="dropdownMenuButton">
+                <form>
+                    <button type="button" class="btn all mt-2" id="btnShowAll">All</button>
+                    <button type="button" class="btn coupled mt-2"
+                        id="btnPretrial">PRE-TRIAL</button>
+                    <button type="button" class="btn decoupled mt-2"
+                        id="btnBillable">BILLABLE</button>
+                </form>
+            </div>
+        </div>
+        <div class="dropdown">
+                <button class="dropdown-toggle dateRange" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-calendar"></i> Select Date Range</button>
+                    <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton">
+                <form id="dateFilterForm">
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" class="form-control" id="startDate" placeholder="Select start date" required>
+                    </div>
+                            
+                    <div class="form-group mt-3">
+                        <label for="endDate">End Date</label>
+                        <input type="date" class="form-control" id="endDate" placeholder="Select end date" required>
+                    </div>
+                    <button type="button" class="btn btn-warning mt-2" id="search"><i
+                            class="fa-solid fa-magnifying-glass"></i> Search</button>
+                </form>
+            </div>
+        </div>  
+        <a href="upload.php"><button type="button" class="btn btn-secondary check-report" style="margin-left:10px; width:170px;"><i class="fa-solid fa-upload"></i> Upload Transactions</button></a>
         
       </div>
       <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
@@ -233,59 +292,46 @@ function displayOrder() {
 <script src="./js/script.js"></script>
 
 <script>
-  // JavaScript to display filename and preview
-  document.getElementById('fileToUpload').addEventListener('change', function() {
-    const filenameElement = document.querySelector('.filename');
-    const filename = this.files[0].name;
-    filenameElement.textContent = `Selected file: ${filename}`;
-
-    // Preview the file content
-    const previewArea = document.querySelector('.file-preview');
-    previewArea.innerHTML = ''; // Clear previous preview
-    const file = this.files[0];
-    if (file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.name.endsWith('.csv')) {
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const contents = event.target.result;
-        const lines = contents.split('\n');
-        const table = document.createElement('table');
-        table.classList.add('table', 'table-bordered', 'mt-3');
-        const tbody = document.createElement('tbody');
-        for (let i = 0; i < Math.min(5, lines.length); i++) {
-          const cells = lines[i].split(',');
-          const row = document.createElement('tr');
-          for (let j = 0; j < cells.length; j++) {
-            const cell = document.createElement('td');
-            cell.textContent = cells[j];
-            row.appendChild(cell);
-          }
-          tbody.appendChild(row);
-        }
-        table.appendChild(tbody);
-        previewArea.appendChild(table);
-      }
-      reader.readAsText(file);
-    } else {
-      const pElement = document.createElement('p');
-      pElement.textContent = 'File preview not available';
-      previewArea.appendChild(pElement);
-    }
-  });
-
-  
-</script>
-<script>
 $(document).ready(function() {
-  if ( $.fn.DataTable.isDataTable('#example') ) {
-    $('#example').DataTable().destroy();
-  }
-  
-  $('#example').DataTable({
+  var table = $('#example').DataTable({
     scrollX: true
   });
+
+  $.fn.dataTable.ext.search.push(
+    function(settings, data, dataIndex) {
+      var startDate = $('#startDate').val();
+      var endDate = $('#endDate').val();
+      var date = data[5]; // Index for the transaction date column
+
+      if (startDate && endDate) {
+        return (date >= startDate && date <= endDate);
+      }
+      return true; // If no date range is selected, return all rows
+    }
+  );
+
+  // Search button click event
+  $('#search').on('click', function () {
+    table.draw();
+  });
+
+  // Voucher Type filter buttons click events
+  $('#btnPretrial').on('click', function () {
+    table.search('').columns().search('').draw();
+    table.column(11).search('PRE-TRIAL', true, false).draw();
+  });
+
+  $('#btnBillable').on('click', function () {
+    table.search('').columns().search('').draw();
+    table.column(11).search('BILLABLE', true, false).draw();
+  });
+
+  // Show All button click event
+  $('#btnShowAll').on('click', function () {
+    $('#startDate, #endDate').val('');
+    table.search('').columns().search('').draw();
+  });
 });
-</script>
-<script>
 </script>
 </body>
 </html>
