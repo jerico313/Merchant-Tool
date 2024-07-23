@@ -287,40 +287,41 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             <div class="sub" style="text-align:left;">
                 <div class="voucher-type">
                     <div class="row pb-2 title" aria-label="breadcrumb">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                                <li class="breadcrumb-item"><a href="../index.php"
-                                        style="color:#E96529; font-size:14px;">Stores</a></li>
-                                <li class="breadcrumb-item"><a href="#" onclick="location.reload();"
-                                        style="color:#E96529; font-size:14px;">Transactions</a></li>
-                            </ol>
-                        </nav>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
+                            <li class="breadcrumb-item"><a href="../../index.php" style="color:#E96529; font-size:14px;">Merchant</a></li>
+                            <li class="breadcrumb-item"><a href="../index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>" style="color:#E96529; font-size:14px;">Store</a></li>
+                            <li class="breadcrumb-item"><a href="#" onclick="location.reload();" style="color:#E96529; font-size:14px;">Transaction Details</a></li>
+                        </ol>
+                    </nav>
                         <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
                             <?php echo htmlspecialchars($store_name); ?>
                         </p>
                     </div>
-                    <div class="dropdown">
-                        <button class="check-report dropdown-toggle mt-4" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-filter"></i> Filters
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-center p-4" style="width:155px !important;" aria-labelledby="dropdownMenuButton">
-                            <form>
-                                <button type="button" class="btn all mt-2" id="btnShowAll">All</button>
-                                <button type="button" class="btn coupled mt-2"
-                                    id="btnCoupled">Coupled</button>
-                                <button type="button" class="btn decoupled mt-2"
-                                    id="btnDecoupled">Decoupled</button>
-                                <button type="button" class="btn gcash mt-2" id="btnGCash"><img
-                                        src="../../../images/gcash.png"
-                                        style="width:25px; height:20px; margin-right: 1.20vw;"
-                                        alt="gcash"><span>Gcash</span></button>
-                                        <hr style="border: 1px solid #3b3b3b;">
-                                        <button type="button" class="btn coupled mt-2"
-                        id="btnPretrial">PRE-TRIAL</button>
-                    <button type="button" class="btn decoupled mt-2"
-                        id="btnBillable">BILLABLE</button>
-                            </form>
-                        </div>
+                    <div class="dropdown-center">
+                    <button class="check-report dropdown-toggle mt-4" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-filter"></i> Filters
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-center p-4" style="width:300px !important;" aria-labelledby="dropdownMenuButton">
+                        <form>
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="button" class="btn all mt-2" id="btnShowAll">All</button>
+                                    <button type="button" class="btn coupled mt-2" id="btnCoupled">Coupled</button>
+                                    <button type="button" class="btn decoupled mt-2" id="btnDecoupled">Decoupled</button>
+                                    <button type="button" class="btn gcash mt-2" id="btnGCash">
+                                        <img src="../../../images/gcash.png" style="width:25px; height:20px; margin-right: 1.20vw;" alt="gcash">
+                                        <span>Gcash</span>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" class="btn coupled mt-2" id="btnPretrial">PRE-TRIAL</button>
+                                    <button type="button" class="btn decoupled mt-2" id="btnBillable">BILLABLE</button>
+                                    <button type="button" class="btn decoupled mt-2" id="btnNotBillable">NOT BILLABLE</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     </div>
                     <div class="dropdown">
                         <button class="dropdown-toggle mt-4 dateRange" type="button" id="dropdownMenuButton"
@@ -482,7 +483,12 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
   $('#btnBillable').on('click', function () {
     table.search('').columns().search('').draw();
-    table.column(13).search('BILLABLE', true, false).draw();
+    table.column(11).search('^BILLABLE$', true, false).draw();
+  });
+
+  $('#btnNotBillable').on('click', function () {
+    table.search('').columns().search('').draw();
+    table.column(11).search('^NOT BILLABLE$', true, false).draw();
   });
 
     // Show All button click event

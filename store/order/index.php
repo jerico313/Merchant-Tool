@@ -3,7 +3,7 @@
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 
-function displayOffers($store_id, $startDate = null, $endDate = null, $voucherType = null, $promoGroup = null)
+function displayOffers($store_id, $startDate = null, $endDate = null, $voucherType = null, $promoGroup = null, $billStatus = null)
 {
     include ("../../inc/config.php");
 
@@ -19,6 +19,11 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     if ($promoGroup) {
         $sql .= " AND `Promo Group` = ?";
         $params[] = $promoGroup;
+    }
+
+    if ($billStatus) {
+        $sql .= " AND `Bill Status` = ?";
+        $params[] = $billStatus;
     }
 
     // Append date range filter if both startDate and endDate are provided
@@ -293,24 +298,30 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                             <?php echo htmlspecialchars($store_name); ?>
                         </p>
                     </div>
-                    <div class="dropdown">
-                        <button class="dropdown-toggle check-report mt-4" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-filter"></i> Filters
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-center p-4" style="width:155px !important;" aria-labelledby="dropdownMenuButton">
-                            <form>
-                                <button type="button" class="btn all mt-2" id="btnShowAll">All</button>
-                                <button type="button" class="btn coupled mt-2"
-                                    id="btnCoupled">Coupled</button>
-                                <button type="button" class="btn decoupled mt-2"
-                                    id="btnDecoupled">Decoupled</button>
-                                <button type="button" class="btn gcash mt-2" id="btnGCash"><img
-                                        src="../../images/gcash.png"
-                                        style="width:25px; height:20px; margin-right: 1.20vw;"
-                                        alt="gcash"><span>Gcash</span></button>
-                            </form>
-                        </div>
+                    <div class="dropdown-center">
+                    <button class="check-report dropdown-toggle mt-4" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-filter"></i> Filters
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-center p-4" style="width:300px !important;" aria-labelledby="dropdownMenuButton">
+                        <form>
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="button" class="btn all mt-2" id="btnShowAll">All</button>
+                                    <button type="button" class="btn coupled mt-2" id="btnCoupled">Coupled</button>
+                                    <button type="button" class="btn decoupled mt-2" id="btnDecoupled">Decoupled</button>
+                                    <button type="button" class="btn gcash mt-2" id="btnGCash">
+                                        <img src="../../images/gcash.png" style="width:25px; height:20px; margin-right: 1.20vw;" alt="gcash">
+                                        <span>Gcash</span>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" class="btn coupled mt-2" id="btnPretrial">PRE-TRIAL</button>
+                                    <button type="button" class="btn decoupled mt-2" id="btnBillable">BILLABLE</button>
+                                    <button type="button" class="btn decoupled mt-2" id="btnNotBillable">NOT BILLABLE</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     </div>
                     <div class="dropdown">
                         <button class="dropdown-toggle dateRange mt-4" type="button" id="dropdownMenuButton"
@@ -466,6 +477,20 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
         table.column(7).search('^Gcash$', true, false).draw();
     });
 
+    $('#btnPretrial').on('click', function () {
+    table.search('').columns().search('').draw();
+    table.column(13).search('PRE-TRIAL', true, false).draw();
+  });
+
+  $('#btnBillable').on('click', function () {
+    table.search('').columns().search('').draw();
+    table.column(11).search('^BILLABLE$', true, false).draw();
+  });
+
+  $('#btnNotBillable').on('click', function () {
+    table.search('').columns().search('').draw();
+    table.column(11).search('^NOT BILLABLE$', true, false).draw();
+  });
     // Show All button click event
     $('#btnShowAll').on('click', function () {
         $('#startDate, #endDate').val('');

@@ -165,7 +165,6 @@ function fetchAccountManager()
     }
 
 
-    table.dataTable tbody th:last-child,
     table.dataTable tbody td:last-child {
       position: sticky;
       right: 0;
@@ -175,7 +174,6 @@ function fetchAccountManager()
       -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
       -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
     }
-
 
     table thead th:last-child {
       position: sticky !important;

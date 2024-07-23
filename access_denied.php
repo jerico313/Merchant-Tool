@@ -119,7 +119,7 @@ body {
 <body>
   <div class="wrapper">
     <form action="">
-    <h3 class="text-center mb-4"><img src="images/accessd.png" alt="booky" height="98" width="180"></h3>
+    <h3 class="text-center mb-4"><img src="images/accessed.png" alt="booky" height="98" width="180"></h3>
       <h1>Access Denied</h1>
       <h2>You do not have permission to access this page.</h2>
         <button type="submit" class="btn">Submit</button>

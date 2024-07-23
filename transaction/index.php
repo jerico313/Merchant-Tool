@@ -232,6 +232,8 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
                         id="btnPretrial">PRE-TRIAL</button>
                     <button type="button" class="btn decoupled mt-2"
                         id="btnBillable">BILLABLE</button>
+                        <button type="button" class="btn decoupled mt-2"
+                        id="btnNotBillable">NOT BILLABLE</button>
                 </form>
             </div>
         </div>
@@ -323,7 +325,12 @@ $(document).ready(function() {
 
   $('#btnBillable').on('click', function () {
     table.search('').columns().search('').draw();
-    table.column(11).search('BILLABLE', true, false).draw();
+    table.column(11).search('^BILLABLE$', true, false).draw();
+  });
+
+  $('#btnNotBillable').on('click', function () {
+    table.search('').columns().search('').draw();
+    table.column(11).search('^NOT BILLABLE$', true, false).draw();
   });
 
   // Show All button click event

@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: /Merchant-Tool/");
     exit();
@@ -7,31 +9,43 @@ if (!isset($_SESSION['user_id'])) {
 
 $name = $_SESSION['name'] ?? '';
 
+// Include database configuration
 include_once($_SERVER['DOCUMENT_ROOT'] . '/Merchant-Tool/inc/config.php');
 
+$user_id = $_SESSION['user_id'];
 
-if (isset($_SESSION['user_id'])) {
-  $user_id = $_SESSION['user_id'];
+// Escape the user ID to prevent SQL injection
+$escaped_user_id = mysqli_real_escape_string($conn, $user_id);
 
-  $escaped_user_id = mysqli_real_escape_string($conn, $user_id);
+// Query the database for user information
+$sql = "SELECT * FROM user WHERE user_id = '$escaped_user_id'";
+$result = mysqli_query($conn, $sql);
 
-  $sql = "SELECT * FROM user WHERE user_id = '$escaped_user_id'";
-  $result = mysqli_query($conn, $sql);
-
-  if ($result && mysqli_num_rows($result) > 0) {
-      $user_data = mysqli_fetch_assoc($result);
-      $type = $user_data['type'];
-      $name = $user_data['name'];
-      $user_id = $user_data['user_id'];
-  } else {
-      $type = 'type';
-  }
+// Check if the query was successful and if any rows were returned
+if ($result && mysqli_num_rows($result) > 0) {
+    $user_data = mysqli_fetch_assoc($result);
+    $type = $user_data['type'];
+    $name = $user_data['name'];
+    $user_id = $user_data['user_id'];
 } else {
-  $type = 'type';
+    // Handle case where no user data is found
+    $type = 'unknown';
 }
 
+// Check if the user type is 'User' and if the current page is 'users/index.php'
+if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/users') !== false) {
+    // Redirect to access denied page
+    header("Location: /Merchant-Tool/access_denied.php");
+    exit();
+}
 
+if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !== false) {
+    // Redirect to access denied page
+    header("Location: /Merchant-Tool/access_denied.php");
+    exit();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html>

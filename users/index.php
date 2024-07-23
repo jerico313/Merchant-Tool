@@ -1,53 +1,59 @@
-<?php require_once("../header.php")?>
 <?php
-function displayUser() {
-  include("../inc/config.php");
+include_once ("../header.php");
 
+function displayUser()
+{
+  global $conn, $type;
   $sql = "SELECT * FROM user";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
-      $count = 1;
-      while ($row = $result->fetch_assoc()) {
-          $shortUserId = substr($row['user_id'], 0, 8);
-          $checked = $row['status'] == 'Active' ? 'checked' : '';
-          echo "<tr data-id='" . $row['user_id'] . "'>";
-          echo "<td style='text-align:center;vertical-align: middle;'>" . $shortUserId . "</td>";
-          echo "<td style='text-align:center;vertical-align: middle;'>" . $row['name'] . "</td>";
-          echo "<td style='text-align:center;vertical-align: middle;'>" . $row['email_address'] . "</td>";
-          echo "<td style='text-align:center;vertical-align: middle;'>" . $row['type'] . "</td>";
-          echo "<td style='text-align:center;vertical-align: middle;'>" . $row['department'] . "</td>";
-          echo "<td style='text-align:center;vertical-align: middle;'>" . $row['status'] . "</td>";
-          echo "<td style='text-align:center;vertical-align: middle;'>";
-          echo "<div class='form-check form-switch form-switch-lg' style='display: flex; justify-content: center; accent-color: red;'>";
-          echo "<input class='form-check-input' type='checkbox' role='switch' id='flexSwitchCheckChecked' $checked>";
-          echo "</div>";
-          echo "</td>";
-          echo "</tr>";
-          $count++;
-      }
+    while ($row = $result->fetch_assoc()) {
+      $shortUsertId = substr($row['user_id'], 0, 8);
+
+      echo "<tr data-uuid='" . $row['user_id'] . "'>";
+      echo "<td style='text-align:center;vertical-align: middle;padding:13px 0;'>" . $shortUsertId . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['name'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['email_address'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['type'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['department'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['status'] . "</td>";
+      echo "<td style='display:none;'>" . $row['password'] . "</td>";
+      echo "<td style='text-align:center;vertical-align: middle;'>";
+      echo "<button class='btn check-report' style='border-radius:20px;width:60px;' onclick='editUser(\"" . $row['user_id'] . "\")'>Edit</button> ";
+      echo "</td>";
+      echo "</tr>";
+    }
   }
 
   $conn->close();
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Homepage</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
-<script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
-<link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
-<link rel='stylesheet' href='https://cdn.datatables.net/fixedcolumns/3.3.3/css/fixedColumns.bootstrap5.min.css'>
-<script src='https://cdn.datatables.net/fixedcolumns/3.3.3/js/dataTables.fixedColumns.min.js'></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
-<link rel="stylesheet" href="../style.css">
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merchants</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+  <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
+  <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz4fnFO9gybB08pRA9KFNJ6i7rtCIL9W8IKOmG4CJoFtI03eZI7Ph9jGxi"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-mQ93qBRaUHnTwhWm6A98qE6pK6DdEDQNl7h4WBC5h85ibG/NHOoxuHV9r+lpazjl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../style.css">
+
+  <style>
     body {
       background-image: url("../images/bg_booky.png");
       background-position: center;
@@ -56,32 +62,62 @@ function displayUser() {
       background-attachment: fixed;
     }
 
-    .title{
-      font-size: 30px; 
-      font-weight: 900; 
-      margin-right: auto; 
-      padding-left: 5vh;
-      color: #E96529;
-    }
-    
-    .form-switch.form-switch-lg .form-check-input {
-  height: 2rem;
-  width: calc(3rem + 0.75rem);
-  border-radius: 4rem;
-}
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
 
-.form-check-input:checked {
-    background-color: #28a745; /* Change this color to your desired checked color */
-    border-color: #28a745; /* Change this color to your desired checked color */
-  }
-    .add-btns{
-      padding-bottom: 0px; 
-      padding-right: 5vh; 
-      display: flex; 
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .action-item {
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .add-btns {
+      padding-bottom: 0px;
+      padding-right: 5vh;
+      display: flex;
       align-items: center;
     }
-</style>
+
+    .modal-title {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    #alertContainer {
+      width: 475px;
+      font-size: 10px;
+      background-color: #F8D7DA;
+      border-radius: 5px;
+      margin:5px 0;
+    }
+
+    select {
+      background: transparent;
+      border: 1px solid #ccc;
+      padding: 5px;
+      border-radius: 5px;
+      color: #333;
+      width: 80px;
+    }
+
+    select:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  </style>
 </head>
+
 <body>
   <div class="cont-box">
     <div class="custom-box pt-4">
@@ -90,110 +126,219 @@ function displayUser() {
           <p class="title"> <i class="fa-solid fa-user-gear fa-sm"></i> Manage Users</p>
           <a href="add_account.php"><button type="button" class="btn add-merchant"><i class="fa-solid fa-user-plus"></i> Create Account</button></a>
         </div>
+
         <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-          <div class="table-container">
-            <table id="example" class="table bord" style="width:100%;">
-              <thead>
-                <tr>
-                  <th>User ID</th>
-                  <th>Name</th>
-                  <th>Email Address</th>
-                  <th>Type</th>
-                  <th>Department</th>
-                  <th>Status</th>
-                  <th>Action</th>
+          <table id="example" class="table bord" style="width:100%;height:auto;">
+            <thead>
+            <tr>
+                  <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">User ID</th>
+                  <th style="padding:10px;">Name</th>
+                  <th style="padding:10px;">Email Address</th>
+                  <th style="padding:10px;">Type</th>
+                  <th style="padding:10px;">Department</th>
+                  <th style="padding:10px;">Status</th>
+                  <th style="display:none;"></th>
+                  <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Action</th>
                 </tr>
-              </thead>
-              <tbody id="dynamicTableBody">
-                <?php displayUser(); ?>
-              </tbody>
-            </table>
+            </thead>
+            <tbody id="dynamicTableBody">
+              <?php displayUser(); ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+<!-- Edit Modal -->
+<div class="modal fade" id="editUserModal" data-bs-backdrop="static" tabindex="-1"
+  aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:20px;">
+      <div class="modal-header border-0">
+        <p class="modal-title" id="editUserModalLabel" style="color:#E96529;font-weight:900;">
+          <i class="fa-solid fa-user-pen"></i> Edit User Details
+        </p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <form id="editUserForm" method="POST">
+          <input type="hidden" id="user_Id" name="user_Id">
+          <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+          <div class="mb-3">
+            <label for="name" class="form-label">
+              Name<span class="text-danger" style="padding:2px">*</span>
+            </label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter user name" required maxlength="255">
           </div>
-        </div>
+          <div class="mb-3">
+            <label for="emailAddress" class="form-label">
+              Email address<span class="text-danger" style="padding:2px">*</span>
+            </label>
+            <input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="Enter email address">
+          </div>
+          <div class="mb-3">
+            <label for="type" class="form-label">Type<span class="text-danger" style="padding:2px">*</span></label>
+            <select class="form-select" id="type" name="type">
+              <option value="Admin">Admin</option>
+              <option value="User">User</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="department" class="form-label">Department<span class="text-danger" style="padding:2px">*</span></label>
+            <select class="form-select" id="department" name="department">
+              <option value="Admin">Admin</option>
+              <option value="Finance">Finance</option>
+              <option value="Operations">Operations</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="status" class="form-label">Status<span class="text-danger" style="padding:2px">*</span></label>
+            <select class="form-select" id="status" name="status">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="editPassword" style="display:block;">
+              <input type="checkbox" id="editPassword" name="editPassword" style="accent-color:#E96529;vertical-align: middle; position: relative; bottom: 1px;" />
+             Edit Password
+            </label>
+            <div id="alertContainer" class="alert alert-danger d-none" role="alert"></div>
+          </div>
+          <div class="mb-3" id="passwordContainer">
+            <label for="password" class="form-label">
+              New Password<span class="text-danger" style="padding:2px">*</span>
+            </label>
+            <input type="text" class="form-control mb-3" id="newPassword" name="newPassword" placeholder="Enter New password" required>
+            <label for="password" class="form-label">
+              Confirm Password<span class="text-danger" style="padding:2px">*</span>
+            </label>
+            <input type="text" class="form-control" id="confirmPassword" placeholder="Confirm New password" required>
+          </div>
+          <button type="submit" id="saveChanges" class="btn btn-primary"
+            style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;font-weight:700;">Save Changes
+          </button>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="backdrop-filter: blur(16px) saturate(180%);-webkit-backdrop-filter: blur(16px) saturate(180%);background-color: rgba(255, 255, 255, 0.40);border-radius: 12px;border: 1px solid rgba(209, 213, 219, 0.3);">
-   
-        <div class="modal-body text-center pt-5 pb-5" id="modalBody">
-          <!-- Content will be inserted by JavaScript -->
-        </div>
-        <div class="modal-footer text-center">
-                <button type="button" class="btn" data-bs-dismiss="modal" style="background-color:transparent;margin: 0 auto;">Cancel</button>
-                <button type="button" class="btn" id="confirmButton" style="background-color:transparent;margin: 0 auto;color: red;">Yes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const editPasswordCheckbox = document.getElementById("editPassword");
+    const passwordContainer = document.getElementById("passwordContainer");
+    const newPasswordInput = document.getElementById("newPassword");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
 
-  <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
-  <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
-  <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
-  <script src="./js/script.js"></script>
-  <script>
-    $(document).ready(function() {
-      if ( $.fn.DataTable.isDataTable('#example') ) {
-        $('#example').DataTable().destroy();
+    function togglePasswordField() {
+      if (editPasswordCheckbox.checked) {
+        passwordContainer.style.display = "block";
+      } else {
+        passwordContainer.style.display = "none";
+        newPasswordInput.value = '';
+        confirmPasswordInput.value = '';
+      }
+    }
+
+    editPasswordCheckbox.addEventListener("change", togglePasswordField);
+
+    // Initial toggle based on the checkbox state
+    togglePasswordField();
+  });
+
+  function showAlert(message) {
+    const alertContainer = document.getElementById('alertContainer');
+    alertContainer.classList.remove('d-none');
+    alertContainer.innerHTML = message;
+
+    // Hide the alert after 2 seconds
+    setTimeout(() => {
+      alertContainer.classList.add('d-none');
+      alertContainer.innerHTML = '';
+    }, 2000);
+  }
+
+  document.getElementById('saveChanges').addEventListener('click', function(event) {
+    const form = document.getElementById('editUserForm');
+    const editPasswordCheckbox = document.getElementById('editPassword');
+    const newPassword = document.getElementById('newPassword').value.trim();
+    const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+    // Reset alert
+    const alertContainer = document.getElementById('alertContainer');
+    alertContainer.classList.add('d-none');
+    alertContainer.innerHTML = '';
+
+    if (editPasswordCheckbox.checked) {
+      // Check if password fields are empty
+      if (newPassword === '' || confirmPassword === '') {
+        showAlert('<i class="fa-solid fa-circle-exclamation"></i> Please enter both new password and confirm password.');
+        event.preventDefault();
+        return;
       }
 
-      $('#example').DataTable({
-        scrollX: true
-      });
+      // Check if passwords match
+      if (newPassword !== confirmPassword) {
+        showAlert('<i class="fa-solid fa-circle-exclamation"></i> Passwords do not match.');
+        event.preventDefault();
+        return;
+      }
 
-      let selectedUserId;
-      let newStatus;
-      let originalChecked;
+      form.action = 'edit_password.php';
+    } else {
+      form.action = 'edit.php';
+    }
 
-      $('.form-check-input').on('change', function() {
-        selectedUserId = $(this).closest('tr').data('id');
-        newStatus = this.checked ? 'active' : 'inactive';
-        originalChecked = this.checked;
-        $('#modalBody').text(`Are you sure you want to make this user ${newStatus}?`);
-        $('#statusModal').modal('show');
-      });
+    form.submit();
+  });
+</script>
 
-      $('#confirmButton').on('click', function() {
-        $('#statusModal').modal('hide');
-        changeStatus(selectedUserId, newStatus, originalChecked);
-      });
 
-      $('#statusModal').on('hidden.bs.modal', function () {
-        if ($('#confirmButton').data('confirmed') !== true) {
-          $('.form-check-input').each(function() {
-            if ($(this).closest('tr').data('id') === selectedUserId) {
-              $(this).prop('checked', !originalChecked);
-            }
-          });
+
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        if ($.fn.DataTable.isDataTable('#example')) {
+          $('#example').DataTable().destroy();
         }
-        $('#confirmButton').data('confirmed', false);
+
+        $('#example').DataTable({
+          scrollX: true,
+          columnDefs: [
+            { orderable: false, targets: [0] }
+          ],
+          order: []  // Ensure no initial ordering
+        });
       });
 
-      function changeStatus(userId, status, originalChecked) {
-        // Make an AJAX call to update the status in the database
-        $.ajax({
-          type: 'POST',
-          url: 'update_status.php', // Create a PHP file to handle the status update
-          data: { userId: userId, status: status },
-          success: function(response) {
-            $('#confirmButton').data('confirmed', true);
-            $(`tr[data-id='${userId}'] td:nth-child(6)`).text(status.charAt(0).toUpperCase() + status.slice(1));
-          },
-          error: function(xhr, status, error) {
-            console.error('Error updating status: ' + error);
-            $('.form-check-input').each(function() {
-              if ($(this).closest('tr').data('id') === userId) {
-                $(this).prop('checked', !originalChecked);
-              }
-            });
-          }
-        });
-      }
-    });
-  </script>
-</body>
-</html>
+    </script>
 
+    <!-- Edit Merchant Modal -->
+    <script>
+      function editUser(userUuid) {
+        // Fetch the current data of the selected merchant
+        var userRow = $('#dynamicTableBody').find('tr[data-uuid="' + userUuid + '"]');
+        var name = userRow.find('td:nth-child(2)').text();
+        var emailAddress = userRow.find('td:nth-child(3)').text();
+        var type = userRow.find('td:nth-child(4)').text();
+        var department = userRow.find('td:nth-child(5)').text();
+        var status = userRow.find('td:nth-child(6)').text();
+        var password = userRow.find('td:nth-child(7)').text();
+
+    // Set values in the edit modal
+        $('#user_Id').val(userUuid);
+        $('#name').val(name);
+        $('#emailAddress').val(emailAddress);
+        $('#type').val(type);
+        $('#department').val(department);
+        $('#status').val(status);
+        $('#password').val(password);
+
+        $('#editUserModal').modal('show');
+      }
+    </script>
+</body>
+
+</html>
