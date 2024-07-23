@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="icon" href="/Merchant-Tool/images/booky1.png" type="image/x-icon" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Form Merchant Tool</title>
+  <title>Login - Merchant Settlement Tool</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
