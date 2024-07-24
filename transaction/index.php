@@ -296,7 +296,8 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
 <script>
 $(document).ready(function() {
   var table = $('#example').DataTable({
-    scrollX: true
+    scrollX: true,
+    order: [[5, 'asc']]
   });
 
   $.fn.dataTable.ext.search.push(
