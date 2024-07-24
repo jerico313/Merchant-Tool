@@ -81,17 +81,7 @@ BEGIN
                 ELSE 0.00
             END) AS total_commission_fees_2,
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
-	        CASE 
-                WHEN ROUND(
-                    SUM(`Cart Amount`)
-                    - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
-                    - SUM(`PG Fee Amount`)
-                    - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-                    + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * (`CWT Rate` / 100), 2)
-                    + ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2), 2)
-                <= 0.00 THEN 0.00
-                ELSE 10.00 
-            END AS bank_fees,
+	        CASE WHEN SUM(`Amount to be Disbursed`) <= 0.00 THEN 0.00 ELSE 10.00 END AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
 	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * (`CWT Rate` / 100), 2) AS cwt_from_transaction_fees,
             ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2) AS cwt_from_pg_fees,
@@ -100,16 +90,7 @@ BEGIN
                 SUM(`Cart Amount`)
                 - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
                 - SUM(`PG Fee Amount`)
-                - CASE 
-                    WHEN ROUND(
-                        SUM(`Cart Amount`)
-                        - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
-                        - SUM(`PG Fee Amount`)
-                        - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-                        + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * (`CWT Rate` / 100), 2)
-                        + ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2), 2)
-                    <= 0.00 THEN 0.00
-                    ELSE 10.00 END
+                - CASE WHEN SUM(`Amount to be Disbursed`) <= 0.00 THEN 0.00 ELSE 10.00 END
                 - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
                 + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * (`CWT Rate` / 100), 2)
                 + ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2),
@@ -188,17 +169,7 @@ BEGIN
                 ELSE 0.00
             END) AS total_commission_fees_2,
             SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
-	        CASE 
-                WHEN ROUND(
-                    SUM(`Cart Amount`)
-                    - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
-                    - SUM(`PG Fee Amount`)
-                    - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-                    + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * (`CWT Rate` / 100), 2)
-                    + ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2), 2)
-                <= 0.00 THEN 0.00
-                ELSE 10.00 
-            END AS bank_fees,
+	        CASE WHEN SUM(`Amount to be Disbursed`) <= 0.00 THEN 0.00 ELSE 10.00 END AS bank_fees,
     	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
 	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * (`CWT Rate` / 100), 2) AS cwt_from_transaction_fees,
             ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2) AS cwt_from_pg_fees,
@@ -207,16 +178,7 @@ BEGIN
                 SUM(`Cart Amount`)
                 - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
                 - SUM(`PG Fee Amount`)
-                - CASE 
-                    WHEN ROUND(
-                        SUM(`Cart Amount`)
-                        - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
-                        - SUM(`PG Fee Amount`)
-                        - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-                        + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * (`CWT Rate` / 100), 2)
-                        + ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2), 2)
-                    <= 0.00 THEN 0.00
-                    ELSE 10.00 END
+                - CASE WHEN SUM(`Amount to be Disbursed`) <= 0.00 THEN 0.00 ELSE 10.00 END
                 - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
                 + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * (`CWT Rate` / 100), 2)
                 + ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2),
