@@ -17,8 +17,8 @@ function displayStore()
 
             echo "<tr style='padding:15px 0;' data-uuid='" . $row['store_id'] . "'>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $shortStoreId . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_name'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['legal_entity_name'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $store_address . "</td>";
             echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
@@ -166,11 +166,11 @@ function displayStore()
       }
 
       td:nth-of-type(2):before {
-        content: "Merchant Name";
+        content: "Store Name";
       }
 
       td:nth-of-type(3):before {
-        content: "Store Name";
+        content: "Merchant Name";
       }
 
       td:nth-of-type(4):before {
@@ -218,11 +218,11 @@ function displayStore()
             <thead>
               <tr>
                 <th style="width:80px;padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Store ID</th>
-                <th style="width:140px;padding:10px;">Merchant Name</th>
-                <th style="display:none;"></th>
                 <th style="padding:10px;">Store Name</th>
+                <th style="width:140px;padding:10px;">Merchant Name</th>
                 <th style="padding:10px;">Legal Entity Name</th>
                 <th style="padding:10px;">Store Address</th>
+                <th style="display:none;"></th>
                 <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Actions</th>
               </tr>
             </thead>
@@ -282,7 +282,7 @@ function displayStore()
           columnDefs: [
             { orderable: false, targets: [0, 4, 5, 6] }    // Disable sorting for the specified columns
           ],
-          order: []  // Ensure no initial ordering
+          order: [[1, 'asc']]  // Ensure no initial ordering
         });
       });
     </script>

@@ -217,7 +217,8 @@ function displayOfferHistory($promo_code, $merchant_name)
             }
 
             $('#example').DataTable({
-                scrollX: true
+                scrollX: true,
+                order: [[3, 'asc']]
             });
         });
     </script>

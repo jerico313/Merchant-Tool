@@ -227,17 +227,19 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); // Skip header row again
 
-    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        // Remove double quotes from column 23
-        $data[25] = str_replace('"', '', $data[25]);
-        $data[11] = str_replace(',', '', $data[11]);
-        $data[12] = str_replace(',', '', $data[12]);
-        $data[13] = str_replace(',', '', $data[13]);
+        
+        $data[13] = ($data[13] = str_replace('"', '', $data[13])) === '' ? null : $data[13];
+
+        $data[9] = str_replace(',', '', $data[9]); // gross_amount
+        $data[10] = str_replace(',', '', $data[10]); // discount
+        $data[11] = str_replace(',', '', $data[11]); // amount_discounted
+        $data[12] = str_replace(',', '', $data[12]); // amount_paid
         $transaction_date = convertDateFormat($data[8]);
         // Bind and execute for the transaction table
-        $stmt1->bind_param("ssssssssssss", $data[7], $data[3], $data[6], $data[5], $data[4], $transaction_date, $data[11], $data[12], $data[13], $data[25], $data[26], $data[27]);
+        $stmt1->bind_param("sssssssssssss", $data[7], $data[3], $data[6], $data[5], $data[4], $transaction_date, $data[9], $data[10], $data[11], $data[12], $data[13], $data[14], $data[15]);
         $stmt1->execute();
     }
 

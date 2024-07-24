@@ -1,5 +1,5 @@
 <?php
-include_once("../../header.php");
+include_once ("../../header.php");
 
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
@@ -49,7 +49,7 @@ function displayOffers($merchant_id, $merchant_name)
 
             echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;pointer'>View History</a></li>";
 
-            echo "</ul>"; 
+            echo "</ul>";
             echo "</div>";
 
             echo "</td>";
@@ -97,19 +97,20 @@ function displayOffers($merchant_id, $merchant_name)
         }
 
         @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
 
-.action-item {
-  animation: fadeIn 0.3s ease forwards;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .action-item {
+            animation: fadeIn 0.3s ease forwards;
+        }
 
         .voucher-type {
             padding-bottom: 0px;
@@ -198,33 +199,63 @@ function displayOffers($merchant_id, $merchant_name)
             }
 
             td:nth-of-type(1):before {
-                content: "Store ID";
+                content: "Promo ID";
             }
 
             td:nth-of-type(2):before {
-                content: "Merchant ID";
+                content: "Promo Code";
             }
 
             td:nth-of-type(3):before {
-                content: "Store Name";
+                content: "Promo Amount";
             }
 
             td:nth-of-type(4):before {
-                content: "Store Address";
+                content: "Voucher Type";
             }
 
             td:nth-of-type(5):before {
-                content: "Action";
+                content: "Promo Category";
+            }
+
+            td:nth-of-type(6):before {
+                content: "Promo Group";
+            }
+
+            td:nth-of-type(7):before {
+                content: "Promo Type";
+            }
+
+            td:nth-of-type(8):before {
+                content: "Promo Details";
+            }
+
+            td:nth-of-type(9):before {
+                content: "Remarks";
+            }
+
+            td:nth-of-type(10):before {
+                content: "Bill Status";
+            }
+
+            td:nth-of-type(11):before {
+                content: "Start Date";
+            }
+
+            td:nth-of-type(12):before {
+                content: "End Date";
+            }
+
+            td:nth-of-type(13):before {
+                content: "Remarks 2";
+            }
+
+            td:nth-of-type(14):before {
+                content: "Actions";
             }
 
             .dataTables_length {
                 display: none;
-            }
-
-            .title {
-                font-size: 25px;
-                padding-left: 2vh;
-                padding-top: 10px;
             }
 
             .voucher-type {
@@ -275,7 +306,8 @@ function displayOffers($merchant_id, $merchant_name)
                     <table id="example" class="table bord" style="width:200%;">
                         <thead>
                             <tr>
-                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Promo ID</th>
+                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">
+                                    Promo ID</th>
                                 <th style="padding:10px;">Promo Code</th>
                                 <th style="padding:10px;">Promo Amount</th>
                                 <th style="padding:10px;">Voucher Type</th>
@@ -288,7 +320,9 @@ function displayOffers($merchant_id, $merchant_name)
                                 <th style="padding:10px;">Start Date</th>
                                 <th style="padding:10px;">End Date</th>
                                 <th style="padding:10px;">Remarks 2</th>
-                                <th style='width:50px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;'>Action</th>
+                                <th
+                                    style='width:50px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;'>
+                                    Action</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -312,8 +346,10 @@ function displayOffers($merchant_id, $merchant_name)
                 <div class="modal-body">
                     <form id="editPromoForm" action="edit.php" method="POST">
                         <input type="hidden" id="promoId" name="promoId">
-                        <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
-                        <input type="hidden" id="merchantName" name="merchantName"value="<?php echo htmlspecialchars($merchant_name); ?>">
+                        <input type="hidden" id="merchantId" name="merchantId"
+                            value="<?php echo htmlspecialchars($merchant_id); ?>">
+                        <input type="hidden" id="merchantName" name="merchantName"
+                            value="<?php echo htmlspecialchars($merchant_name); ?>">
                         <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -336,7 +372,7 @@ function displayOffers($merchant_id, $merchant_name)
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="voucherType" class="form-label">Voucher Type</label>
-                                <select class="form-select" id="voucherType"  name="voucherType" required>
+                                <select class="form-select" id="voucherType" name="voucherType" required>
                                     <option value="Coupled">Coupled</option>
                                     <option value="Decoupled">Decoupled</option>
                                 </select>
@@ -408,7 +444,8 @@ function displayOffers($merchant_id, $merchant_name)
             }
 
             $('#example').DataTable({
-                scrollX: true
+                scrollX: true,
+                order: [[1, 'asc']]
             });
         });
 
@@ -452,19 +489,19 @@ function displayOffers($merchant_id, $merchant_name)
         }
 
     </script>
-     <script>
-    function toggleActions(button) {
-        // Find the actions-list div relative to the button
-        var actionsList = button.nextElementSibling;
+    <script>
+        function toggleActions(button) {
+            // Find the actions-list div relative to the button
+            var actionsList = button.nextElementSibling;
 
-        // Toggle the display style of the actions-list div
-        if (actionsList.style.display === 'none') {
-            actionsList.style.display = 'block';
-        } else {
-            actionsList.style.display = 'none';
+            // Toggle the display style of the actions-list div
+            if (actionsList.style.display === 'none') {
+                actionsList.style.display = 'block';
+            } else {
+                actionsList.style.display = 'none';
+            }
         }
-    }
-</script>
+    </script>
 </body>
 
 </html>

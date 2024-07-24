@@ -56,7 +56,7 @@ function fetchSales()
   include ("../inc/config.php");
 
   // Updated SQL query to filter by department
-  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Finance' ORDER BY name";
+  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Operations' ORDER BY name";
   $employeeResult = $conn->query($employeeSql);
 
   if ($employeeResult->num_rows > 0) {

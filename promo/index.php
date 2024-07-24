@@ -17,16 +17,20 @@ function displayStore()
             $start_date = empty($row['start_date']) ? 'No Start Date' : $row['start_date'];
             $end_date = empty($row['end_date']) ? 'No End Date' : $row['end_date'];
 
+<<<<<<< HEAD
             // Prepare truncated and full text for promo_details and remarks
             $promo_details_full = $row['promo_details'];
             $promo_details = strlen($row['promo_details']) > 50 ? substr($row['promo_details'], 0, 50) . '...' : $row['promo_details'];
             $remarks_full = $row['remarks'];
             $remarks = strlen($row['remarks']) > 50 ? substr($row['remarks'], 0, 50) . '...' : $row['remarks'];
 
+=======
+            
+>>>>>>> 97b6f72e61d1705521b9ee9079226b608ea3e490
             echo "<tr style='padding:15px 0;' data-uuid='" . $row['promo_id'] . "'>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $shortPromoId . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $promo_amount . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['voucher_type'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_category'] . "</td>";
@@ -266,8 +270,8 @@ function displayStore()
             <thead>
             <tr>
                   <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Promo ID</th>
-                  <th style="padding:10px;">Promo Code</th>
                   <th style="padding:10px;">Merchant Name</th>
+                  <th style="padding:10px;">Promo Code</th>
                   <th style="padding:10px;">Promo Amount</th>
                   <th style="padding:10px;">Voucher Type</th>
                   <th style="padding:10px;">Promo Category</th>
@@ -419,9 +423,9 @@ function displayStore()
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }    // Disable sorting for the specified columns
+            { orderable: false, targets: [3, 4, 5, 6, 7, 8, 9, 10, 11] }    // Disable sorting for the specified columns
           ],
-          order: []  // Ensure no initial ordering
+          order: [[1, 'asc'],[2, 'asc']]  // Ensure no initial ordering
         });
       });
 
@@ -430,6 +434,7 @@ function displayStore()
             window.location.href = 'history.php?store_id=' + encodeURIComponent(storeId) + '&promo_id=' + encodeURIComponent(promoId) + '&promo_code=' + encodeURIComponent(promoCode);
         }
     </script>
+<<<<<<< HEAD
    <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Ensure actions toggle function works with dynamic content
@@ -468,6 +473,25 @@ document.addEventListener('DOMContentLoaded', function() {
             var endDate = event.target.getAttribute('data-end-date');
             var remarks2 = event.target.getAttribute('data-remarks2');
             var noStartDateChecked = event.target.getAttribute('data-nostartdate');
+=======
+    <script>
+        function editPromo(promoId) {
+            // Fetch the current data of the selected promo
+            var promoRow = $('#dynamicTableBody').find('tr[data-uuid="' + promoId + '"]');
+            var merchantName = promoRow.find('td:nth-child(2)').text();
+            var promoCode = promoRow.find('td:nth-child(3)').text();
+            var promoAmount = promoRow.find('td:nth-child(4)').text();
+            var voucherType = promoRow.find('td:nth-child(5)').text();
+            var promoCategory = promoRow.find('td:nth-child(6)').text();
+            var promoGroup = promoRow.find('td:nth-child(7)').text();
+            var promoType = promoRow.find('td:nth-child(8)').text();
+            var promoDetails = promoRow.find('td:nth-child(9)').text();
+            var remarks = promoRow.find('td:nth-child(10)').text();
+            var billStatus = promoRow.find('td:nth-child(11)').text();
+            var startDate = promoRow.find('td:nth-child(12)').text();
+            var endDate = promoRow.find('td:nth-child(13)').text();
+            var remarks2 = promoRow.find('td:nth-child(14)').text();
+>>>>>>> 97b6f72e61d1705521b9ee9079226b608ea3e490
 
             // Set the modal input fields with the current data
             $('#promoId').val(promoId);

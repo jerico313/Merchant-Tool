@@ -392,7 +392,7 @@ function displayStore($merchant_id)
                 columnDefs: [
                     { orderable: false, targets: [2, 3, 4] }    // Disable sorting for the first column
                 ],
-                order: []  // Ensure no initial ordering
+                order: [[1, 'asc']]  // Ensure no initial ordering
             });
         });
 
