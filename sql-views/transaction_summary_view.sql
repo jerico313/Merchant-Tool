@@ -76,14 +76,17 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
     `p`.`promo_type` AS `Promo Type`,
     CASE
         WHEN `t`.`payment` IS NULL THEN 0.00
+        WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
         ELSE `t`.`gross_amount` 
     END AS `Gross Amount`,
     CASE
         WHEN `t`.`payment` IS NULL THEN 0.00
+        WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
         ELSE `t`.`discount` 
     END AS `Discount`,
     CASE
         WHEN `t`.`payment` IS NULL THEN 0.00
+        WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
         ELSE `t`.`amount_discounted` 
     END AS `Amount Discounted`,
     `t`.`amount_paid` AS `Cart Amount`,
