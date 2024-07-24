@@ -245,30 +245,29 @@ function fetchAccountManager() {
                                             <label for="legal_entity_name" class="form-label" id="input-label">Legal Entity Name</label>
                                             <input id="input-field" type="text" class="form-control" name="legal_entity_name[]" placeholder="Enter legal entity name" maxlength="255">
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="business_address" class="form-label" id="input-label">Business Address</label>
                                             <input id="input-field" type="text" class="form-control" name="business_address[]" placeholder="Enter business address">
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        
                                         <div class="mb-3">
                                             <label for="email_address" class="form-label" id="input-label">Email Address</label>
-                                            <textarea id="input-field" class="form-control pb-3 pt-3" rows="5" name="email_address[]" placeholder="Enter email address"></textarea>
+                                            <textarea id="input-field" class="form-control pb-3 pt-3" rows="2" name="email_address[]" placeholder="Enter email address"></textarea>
                                         </div>
                                         <div class="mb-3">
-                                        <label for="sales" class="form-label" id="input-label">
-                                            Sales<span class="text-danger" style="padding:2px">*</span>
-                                        </label>
+                                            <label for="sales" class="form-label" id="input-label">
+                                                Sales<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
                                             <select id="input-field" class="form-select" id="sales" name="sales[]" required>
                                                 <option selected disabled>-- Select Sales --</option>
                                                 <?php fetchSales(); ?>
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                        <label for="account_manager" class="form-label" id="input-label">
-                                            Account Manager<span class="text-danger" style="padding:2px">*</span>
-                                        </label>
+                                            <label for="account_manager" class="form-label" id="input-label">
+                                                Account Manager<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
                                             <select id="input-field" class="form-select" id="account_manager" name="account_manager[]" required>
                                                 <option selected disabled>-- Select Account Manager --</option>
                                                 <?php fetchAccountManager(); ?>
@@ -340,7 +339,7 @@ function fetchAccountManager() {
                             <label for="merchantParntershipType" class="form-label" id="input-label">
                                 Partnership Type<span class="text-danger" style="padding:2px">*</span>
                             </label>
-                                <select id="input-field"  class="form-select" id="merchantParntershipType" name="merchantParntershipType">
+                                <select id="input-field"  class="form-select" id="merchantParntershipType" name="merchantParntershipType" required>
                                 <option selected disabled>-- Select Partnership Type --</option>
                                 <option value="Primary">Primary</option>
                                 <option value="Secondary">Secondary</option>
@@ -361,15 +360,19 @@ function fetchAccountManager() {
                             <textarea id="input-field" class="form-control" rows="2" name="email_address[]" placeholder="Enter email address"></textarea>
                         </div>
                         <div class="mb-3">
-                        <label for="sales" class="form-label" id="input-label">Sales</label>
-                            <select id="input-field" class="form-select" id="sales" name="sales[]">
+                            <label for="sales" class="form-label" id="input-label">
+                                Sales<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <select id="input-field" class="form-select" id="sales" name="sales[]" required>
                                 <option selected disabled>-- Select Sales --</option>
                                 <?php fetchSales(); ?>
                             </select>
                         </div>
                         <div class="mb-3">
-                        <label for="account_manager" class="form-label" id="input-label">Account Manager</label>
-                            <select id="input-field" class="form-select" id="account_manager" name="account_manager[]">
+                            <label for="account_manager" class="form-label" id="input-label">
+                                Account Manager<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <select id="input-field" class="form-select" id="account_manager" name="account_manager[]" required>
                                 <option selected disabled>-- Select Account Manager --</option>
                                 <?php fetchAccountManager(); ?>
                             </select>

@@ -74,9 +74,19 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
     `p`.`promo_category` AS `Promo Category`,
     `p`.`promo_group` AS `Promo Group`,
     `p`.`promo_type` AS `Promo Type`,
-    `t`.`gross_amount` AS `Gross Amount`,
-    `t`.`discount` AS `Discount`,
-    `t`.`amount_discounted` AS `Cart Amount`,
+    CASE
+        WHEN `t`.`payment` IS NULL THEN 0.00
+        ELSE `t`.`gross_amount` 
+    END AS `Gross Amount`,
+    CASE
+        WHEN `t`.`payment` IS NULL THEN 0.00
+        ELSE `t`.`discount` 
+    END AS `Discount`,
+    CASE
+        WHEN `t`.`payment` IS NULL THEN 0.00
+        ELSE `t`.`amount_discounted` 
+    END AS `Amount Discounted`,
+    `t`.`amount_paid` AS `Cart Amount`,
     CASE
         WHEN `t`.`payment` IN (
                 'paymaya_credit_card',
@@ -101,17 +111,16 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
             THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2)
     END AS `Total Billing`,
     CONCAT(pg_fee_cte.pg_fee_rate, '%') AS `PG Fee Rate`,
-    ROUND(`t`.`amount_discounted` * (pg_fee_cte.pg_fee_rate / 100), 2) AS `PG Fee Amount`,
+    ROUND(`t`.`amount_paid` * (pg_fee_cte.pg_fee_rate / 100), 2) AS `PG Fee Amount`,
     `f`.`cwt_rate` `CWT Rate`,
-    ROUND(
-        `t`.`amount_discounted` 
+    ROUND(`t`.`amount_paid`
         - CASE
             WHEN pg_fee_cte.commission_type = 'Vat Exc' 
                 THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100) * 1.12, 2)
             WHEN pg_fee_cte.commission_type = 'Vat Inc' 
                 THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2)
         END 
-        - ROUND(`t`.`amount_discounted` * (pg_fee_cte.pg_fee_rate / 100), 2)
+        - ROUND(`t`.`amount_paid` * (pg_fee_cte.pg_fee_rate / 100), 2)
     , 2)
     AS `Amount to be Disbursed`
 FROM `leadgen_db`.`transaction` `t`
