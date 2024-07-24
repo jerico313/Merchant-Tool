@@ -16,10 +16,12 @@ function displayStore()
             $promo_amount = number_format($row['promo_amount'], 2);
             $start_date = empty($row['start_date']) ? 'No Start Date' : $row['start_date'];
             $end_date = empty($row['end_date']) ? 'No End Date' : $row['end_date'];
+
+            
             echo "<tr style='padding:15px 0;' data-uuid='" . $row['promo_id'] . "'>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $shortPromoId . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_code'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $promo_amount . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['voucher_type'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_category'] . "</td>";
@@ -259,8 +261,8 @@ function displayStore()
             <thead>
             <tr>
                   <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Promo ID</th>
-                  <th style="padding:10px;">Promo Code</th>
                   <th style="padding:10px;">Merchant Name</th>
+                  <th style="padding:10px;">Promo Code</th>
                   <th style="padding:10px;">Promo Amount</th>
                   <th style="padding:10px;">Voucher Type</th>
                   <th style="padding:10px;">Promo Category</th>
@@ -390,9 +392,9 @@ function displayStore()
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }    // Disable sorting for the specified columns
+            { orderable: false, targets: [3, 4, 5, 6, 7, 8, 9, 10, 11] }    // Disable sorting for the specified columns
           ],
-          order: []  // Ensure no initial ordering
+          order: [[1, 'asc'],[2, 'asc']]  // Ensure no initial ordering
         });
       });
 
@@ -405,8 +407,8 @@ function displayStore()
         function editPromo(promoId) {
             // Fetch the current data of the selected promo
             var promoRow = $('#dynamicTableBody').find('tr[data-uuid="' + promoId + '"]');
-            var promoCode = promoRow.find('td:nth-child(2)').text();
-            var merchantName = promoRow.find('td:nth-child(3)').text();
+            var merchantName = promoRow.find('td:nth-child(2)').text();
+            var promoCode = promoRow.find('td:nth-child(3)').text();
             var promoAmount = promoRow.find('td:nth-child(4)').text();
             var voucherType = promoRow.find('td:nth-child(5)').text();
             var promoCategory = promoRow.find('td:nth-child(6)').text();
