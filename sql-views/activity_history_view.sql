@@ -21,9 +21,9 @@ SELECT
                 WHEN `a`.`table_name` = 'report_history_decoupled' THEN `rhd`.`decoupled_report_id`
                 WHEN `a`.`table_name` = 'report_history_gcash_head' THEN `rhgh`.`gcash_report_id`
                 WHEN `a`.`table_name` = 'report_history_gcash_body' THEN `rhgb`.`gcash_report_body_id`
-                ELSE NULL
+                ELSE `a`.`table_id`
             END,
-            'Deleted'
+            `a`.`table_id`
         ),
         1,
         8
@@ -56,7 +56,7 @@ SELECT
         WHEN TIMESTAMPDIFF(HOUR, `a`.`created_at`, NOW()) < 24 THEN
             CONCAT(TIMESTAMPDIFF(HOUR, `a`.`created_at`, NOW()), ' hour', IF(TIMESTAMPDIFF(HOUR, `a`.`created_at`, NOW()) = 1, '', 's'), ' ago')
         WHEN TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()) < 7 THEN
-            CONCAT(TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()), ' day', IF(TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()) = 1, '', 's'), ' ago')
+            CONCAT(TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()), ' day', IF(TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()) = 1, '', 's'), ' ago at %l:%i %p')
         ELSE DATE_FORMAT(`a`.`created_at`, '%M %d at %l:%i %p')
     END AS `time_ago`,
     `a`.`created_at` AS `created_at`,
