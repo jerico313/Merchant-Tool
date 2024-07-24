@@ -154,7 +154,7 @@ function displayUser()
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="border-radius:20px;">
       <div class="modal-header border-0">
-        <p class="modal-title" id="editUserModalLabel" style="color:#E96529;font-weight:900;">
+        <p class="modal-title" id="editUserModalLabel" style="color:#E96529;font-weight:900;font-size:15px;">
           <i class="fa-solid fa-user-pen"></i> Edit User Details
         </p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

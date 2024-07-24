@@ -16,6 +16,13 @@ function displayStore()
             $promo_amount = number_format($row['promo_amount'], 2);
             $start_date = empty($row['start_date']) ? 'No Start Date' : $row['start_date'];
             $end_date = empty($row['end_date']) ? 'No End Date' : $row['end_date'];
+
+            // Prepare truncated and full text for promo_details and remarks
+            $promo_details_full = $row['promo_details'];
+            $promo_details = strlen($row['promo_details']) > 50 ? substr($row['promo_details'], 0, 50) . '...' : $row['promo_details'];
+            $remarks_full = $row['remarks'];
+            $remarks = strlen($row['remarks']) > 50 ? substr($row['remarks'], 0, 50) . '...' : $row['remarks'];
+
             echo "<tr style='padding:15px 0;' data-uuid='" . $row['promo_id'] . "'>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $shortPromoId . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_code'] . "</td>";
@@ -25,8 +32,8 @@ function displayStore()
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_category'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_group'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_type'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['promo_details'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['remarks'] . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;' class='text-cell' data-full='" . htmlentities($promo_details_full) . "' data-short='" . htmlentities($promo_details) . "'>" . $promo_details . "</td>";
+            echo "<td style='text-align:center;vertical-align: middle;' class='text-cell' data-full='" . htmlentities($remarks_full) . "' data-short='" . htmlentities($remarks) . "'>" . $remarks . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $row['bill_status'] . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $start_date . "</td>";
             echo "<td style='text-align:center;vertical-align: middle;'>" . $end_date . "</td>";
@@ -38,10 +45,10 @@ function displayStore()
 
             // Dropdown menu items
             if ($type !== 'User') {
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='editPromo(\"" . $row['promo_id'] . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;pointer'>Edit</a></li>";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' class='edit-link' data-promo-id='" . $row['promo_id'] . "' data-promo-code='" . $row['promo_code'] . "' data-merchant-name='" . $row['merchant_name'] . "' data-promo-amount='" . $promo_amount . "' data-voucher-type='" . $row['voucher_type'] . "' data-promo-category='" . $row['promo_category'] . "' data-promo-group='" . $row['promo_group'] . "' data-promo-type='" . $row['promo_type'] . "' data-promo-details='" . htmlentities($promo_details_full) . "' data-remarks='" . htmlentities($remarks_full) . "' data-bill-status='" . $row['bill_status'] . "' data-start-date='" . $start_date . "' data-end-date='" . $end_date . "' data-remarks2='" . $row['remarks2'] . "' style='color:#E96529;'>Edit</a></li>";
             }
 
-            echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;pointer'>View History</a></li>";
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;'>View History</a></li>";
 
             echo "</ul>"; 
             echo "</div>";
@@ -284,69 +291,45 @@ function displayStore()
     </div>
     <!-- Edit Modal -->
     <div class="modal fade" id="editStoreModal" data-bs-backdrop="static" tabindex="-1"
-        aria-labelledby="editStoreModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content" style="border-radius:20px;">
-                <div class="modal-header border-0">
-                    <p class="modal-title" id="editPromoModalLabel" style="font-size:15px;font-weight:bold;">Edit Promo
-                        Details</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editPromoForm" action="edit.php" method="POST">
-                        <input type="hidden" id="promoId" name="promoId">
-                        <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+     aria-labelledby="editStoreModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius:20px;">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="editStoreModalLabel" style="color:#E96529;font-weight:900;font-size:15px;">
+                <i class="fa-solid fa-pen-to-square"></i> Edit Promo Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editPromoForm" action="edit.php" method="POST">
+                    <input type="hidden" id="promoId" name="promoId">
+                    <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
                                 <label for="promoCode" class="form-label">Promo Code</label>
                                 <input type="text" class="form-control" id="promoCode" name="promoCode">
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="promoDetails" class="form-label">Promo Details</label>
-                                <textarea class="form-control" rows="2" id="promoDetails" name="promoDetails"
-                                    style="padding:5px 5px;" required></textarea>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
+                            <div class="mb-3">
                                 <label for="promoAmount" class="form-label">Promo Amount</label>
                                 <input type="text" class="form-control" id="promoAmount" name="promoAmount">
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="remarks" class="form-label">Remarks</label>
-                                <input type="text" class="form-control" id="remarks" name="remarks">
-                            </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="mb-3">
                                 <label for="voucherType" class="form-label">Voucher Type</label>
-                                <select class="form-select" id="voucherType"  name="voucherType" required>
+                                <select class="form-select" id="voucherType" name="voucherType" required>
                                     <option value="Coupled">Coupled</option>
                                     <option value="Decoupled">Decoupled</option>
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="billStatus" class="form-label">Bill Status</label>
-                                <select class="form-select" id="billStatus" name="billStatus" required>
-                                    <option value="PRE-TRIAL">PRE-TRIAL</option>
-                                    <option value="BILLABLE">BILLABLE</option>
-                                    <option value="NOT BILLABLE">NOT BILLABLE</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="mb-3">
                                 <label for="promoCategory" class="form-label">Promo Category</label>
                                 <select class="form-select" id="promoCategory" name="promoCategory" required>
                                     <option value="Grab & Go">Grab & Go</option>
                                     <option value="Casual Dining">Casual Dining</option>
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="promoGroup" class="form-label">Promo Group</label>
-                                <select class="form-select" id="promoGroup" name="promoGroup" required>
-                                    <option value="Booky">Booky</option>
-                                    <option value="Gcash">Gcash</option>
-                                    <option value="Unionbank">Unionbank</option>
-                                    <option value="Gcash/Booky">Gcash/Booky</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="mb-3">
                                 <label for="promoType" class="form-label">Promo Type</label>
                                 <select class="form-select" id="promoType" name="promoType" required>
                                     <option value="BOGO">BOGO</option>
@@ -358,25 +341,71 @@ function displayStore()
                                     <option value="X for Y">X for Y</option>
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="mb-3">
-                                    <label for="startDate" class="form-label">Start Date</label>
-                                    <input type="date" class="form-control" id="startDate" name="startDate" required>
-                                </div>
-                                <div class="">
-                                    <label for="endDate" class="form-label">End Date</label>
-                                    <input type="date" class="form-control" id="endDate" name="endDate" required>
-                                </div>
+                            <div class="mb-3">
+                                <label for="promoDetails" class="form-label">Promo Details</label>
+                                <textarea class="form-control" rows="2" id="promoDetails" name="promoDetails"
+                                          style="padding:5px;" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="remarks" class="form-label">Remarks</label>
+                                <textarea class="form-control" rows="2" id="remarks" name="remarks"
+                                          style="padding:5px;" required></textarea>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary"
-                            style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save
-                            changes</button>
-                    </form>
-                </div>
+
+                        <div class="col-md-6">
+                            
+                            <div class="mb-3">
+                                <label for="remarks2" class="form-label">Remarks2</label>
+                                <textarea class="form-control" rows="2" id="remarks2" name="remarks2"
+                                          style="padding:5px;"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="billStatus" class="form-label">Bill Status</label>
+                                <select class="form-select" id="billStatus" name="billStatus" required>
+                                    <option value="PRE-TRIAL">PRE-TRIAL</option>
+                                    <option value="BILLABLE">BILLABLE</option>
+                                    <option value="NOT BILLABLE">NOT BILLABLE</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="promoGroup" class="form-label">Promo Group</label>
+                                <select class="form-select" id="promoGroup" name="promoGroup" required>
+                                    <option value="Booky">Booky</option>
+                                    <option value="Gcash">Gcash</option>
+                                    <option value="Unionbank">Unionbank</option>
+                                    <option value="Gcash/Booky">Gcash/Booky</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="startDate" name="startDate">
+                            </div>
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="endDate" name="endDate">
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="NoStartDate" name="NoStartDate" style="accent-color:#E96529;">
+                                <label class="form-check-label" for="NoStartDate">No Start Date</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="NoEndDate" name="NoEndDate" style="accent-color:#E96529 !important;">
+                                <label class="form-check-label" for="NoEndDate">No End Date</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width:100%; background-color:#4BB0B8; border:#4BB0B8; border-radius: 20px;">
+                        Save changes
+                    </button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+
     <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
     <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
@@ -401,23 +430,44 @@ function displayStore()
             window.location.href = 'history.php?store_id=' + encodeURIComponent(storeId) + '&promo_id=' + encodeURIComponent(promoId) + '&promo_code=' + encodeURIComponent(promoCode);
         }
     </script>
-    <script>
-        function editPromo(promoId) {
-            // Fetch the current data of the selected promo
-            var promoRow = $('#dynamicTableBody').find('tr[data-uuid="' + promoId + '"]');
-            var promoCode = promoRow.find('td:nth-child(2)').text();
-            var merchantName = promoRow.find('td:nth-child(3)').text();
-            var promoAmount = promoRow.find('td:nth-child(4)').text();
-            var voucherType = promoRow.find('td:nth-child(5)').text();
-            var promoCategory = promoRow.find('td:nth-child(6)').text();
-            var promoGroup = promoRow.find('td:nth-child(7)').text();
-            var promoType = promoRow.find('td:nth-child(8)').text();
-            var promoDetails = promoRow.find('td:nth-child(9)').text();
-            var remarks = promoRow.find('td:nth-child(10)').text();
-            var billStatus = promoRow.find('td:nth-child(11)').text();
-            var startDate = promoRow.find('td:nth-child(12)').text();
-            var endDate = promoRow.find('td:nth-child(13)').text();
-            var remarks2 = promoRow.find('td:nth-child(14)').text();
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Ensure actions toggle function works with dynamic content
+    document.body.addEventListener('click', function(event) {
+        if (event.target.closest('.btn') && event.target.closest('.actions-cell')) {
+            var button = event.target.closest('.btn');
+            var actionsList = button.nextElementSibling;
+
+            if (actionsList.style.display === 'none' || actionsList.style.display === '') {
+                actionsList.style.display = 'block';
+            } else {
+                actionsList.style.display = 'none';
+            }
+        }
+    });
+});
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Event delegation for edit link
+    document.body.addEventListener('click', function(event) {
+        if (event.target.classList.contains('edit-link')) {
+            event.preventDefault();
+            var promoId = event.target.getAttribute('data-promo-id');
+            var promoCode = event.target.getAttribute('data-promo-code');
+            var merchantName = event.target.getAttribute('data-merchant-name');
+            var promoAmount = event.target.getAttribute('data-promo-amount');
+            var voucherType = event.target.getAttribute('data-voucher-type');
+            var promoCategory = event.target.getAttribute('data-promo-category');
+            var promoGroup = event.target.getAttribute('data-promo-group');
+            var promoType = event.target.getAttribute('data-promo-type');
+            var promoDetails = event.target.getAttribute('data-promo-details');
+            var remarks = event.target.getAttribute('data-remarks');
+            var billStatus = event.target.getAttribute('data-bill-status');
+            var startDate = event.target.getAttribute('data-start-date');
+            var endDate = event.target.getAttribute('data-end-date');
+            var remarks2 = event.target.getAttribute('data-remarks2');
+            var noStartDateChecked = event.target.getAttribute('data-nostartdate');
 
             // Set the modal input fields with the current data
             $('#promoId').val(promoId);
@@ -435,22 +485,64 @@ function displayStore()
             $('#editPromoForm #endDate').val(endDate);
             $('#editPromoForm #remarks2').val(remarks2);
 
+            // Set the NoStartDate checkbox
+            $('#editPromoForm #NoStartDate').prop('checked', noStartDateChecked === 'checked');
+
             // Show the modal
             $('#editStoreModal').modal('show');
         }
-    </script>
-    <script>
-    function toggleActions(button) {
-        // Find the actions-list div relative to the button
-        var actionsList = button.nextElementSibling;
+    });
 
-        // Toggle the display style of the actions-list div
-        if (actionsList.style.display === 'none' || actionsList.style.display === '') {
-            actionsList.style.display = 'block';
-        } else {
-            actionsList.style.display = 'none';
+    // Event delegation for text toggle
+    document.body.addEventListener('click', function(event) {
+        if (event.target.classList.contains('text-cell')) {
+            var fullText = event.target.getAttribute('data-full');
+            var shortText = event.target.getAttribute('data-short');
+            if (event.target.innerText === shortText) {
+                event.target.innerText = fullText;
+            } else {
+                event.target.innerText = shortText;
+            }
         }
+    });
+});
+
+  </script>
+<script>
+    function updateDateFields() {
+        // Get the values of the start and end date fields
+        var startDate = document.getElementById('startDate');
+        var endDate = document.getElementById('endDate');
+        
+        // Get the checkboxes
+        var noStartDateCheckbox = document.getElementById('NoStartDate');
+        var noEndDateCheckbox = document.getElementById('NoEndDate');
+
+        // Disable date fields based on checkboxes
+        startDate.disabled = noStartDateCheckbox.checked;
+        endDate.disabled = noEndDateCheckbox.checked;
     }
+
+    document.getElementById('editStoreModal').addEventListener('shown.bs.modal', function () {
+        // Get the values of the start and end date fields
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
+
+        // Get the checkboxes
+        var noStartDateCheckbox = document.getElementById('NoStartDate');
+        var noEndDateCheckbox = document.getElementById('NoEndDate');
+
+        // Check or uncheck the checkboxes based on the date fields
+        noStartDateCheckbox.checked = !startDate;
+        noEndDateCheckbox.checked = !endDate;
+
+        // Update the date fields based on the checkbox states
+        updateDateFields();
+    });
+
+    // Add event listeners to checkboxes to handle their state changes
+    document.getElementById('NoStartDate').addEventListener('change', updateDateFields);
+    document.getElementById('NoEndDate').addEventListener('change', updateDateFields);
 </script>
 </body>
 
