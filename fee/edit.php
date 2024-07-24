@@ -3,13 +3,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("../inc/config.php");
 
     $feeId = $_POST['feeId'];
-    $paymayaCreditCard = $_POST['paymayaCreditCard'];
-    $gcash = $_POST['gcash'];
-    $gcashMiniapp = $_POST['gcashMiniapp'];
-    $paymaya = $_POST['paymaya'];
-    $leadgenCommission = $_POST['leadgenCommission'];
+    
+    $paymayaCreditCard = substr($_POST['paymayaCreditCard'], 0, -1);
+    $gcash = substr($_POST['gcash'], 0, -1);
+    $gcashMiniapp = substr($_POST['gcashMiniapp'], 0, -1);
+    $paymaya = substr($_POST['paymaya'], 0, -1);
+    $gcash = substr($_POST['gcash'], 0, -1);
+    $gcashMiniapp = substr($_POST['gcashMiniapp'], 0, -1);
+    $paymaya = substr($_POST['paymaya'], 0, -1);
+    $leadgenCommission = substr($_POST['leadgenCommission'], 0, -1);
     $commissionType = $_POST['commissionType'];
-    $cwtRate = $_POST['cwtRate'];
+    $cwtRate = substr($_POST['cwtRate'], 0, -1);
     $userId = $_POST['userId'];
 
     // Update fee details
