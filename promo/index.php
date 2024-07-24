@@ -511,7 +511,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
 <script>
     function updateDateFields() {
-        // Get the values of the start and end date fields
+        // Get the date fields
         var startDate = document.getElementById('startDate');
         var endDate = document.getElementById('endDate');
         
@@ -519,31 +519,56 @@ document.addEventListener('DOMContentLoaded', function() {
         var noStartDateCheckbox = document.getElementById('NoStartDate');
         var noEndDateCheckbox = document.getElementById('NoEndDate');
 
-        // Disable date fields based on checkboxes
+        // Update the checkbox based on the date field values
+        noStartDateCheckbox.checked = !startDate.value;
+        noEndDateCheckbox.checked = !endDate.value;
+
+        // Disable or enable the date fields based on the checkbox states
         startDate.disabled = noStartDateCheckbox.checked;
         endDate.disabled = noEndDateCheckbox.checked;
     }
 
     document.getElementById('editStoreModal').addEventListener('shown.bs.modal', function () {
-        // Get the values of the start and end date fields
-        var startDate = document.getElementById('startDate').value;
-        var endDate = document.getElementById('endDate').value;
-
-        // Get the checkboxes
-        var noStartDateCheckbox = document.getElementById('NoStartDate');
-        var noEndDateCheckbox = document.getElementById('NoEndDate');
-
-        // Check or uncheck the checkboxes based on the date fields
-        noStartDateCheckbox.checked = !startDate;
-        noEndDateCheckbox.checked = !endDate;
-
-        // Update the date fields based on the checkbox states
         updateDateFields();
     });
 
     // Add event listeners to checkboxes to handle their state changes
-    document.getElementById('NoStartDate').addEventListener('change', updateDateFields);
-    document.getElementById('NoEndDate').addEventListener('change', updateDateFields);
+    document.getElementById('NoStartDate').addEventListener('change', function() {
+        var startDate = document.getElementById('startDate');
+        startDate.disabled = this.checked;
+        if (this.checked) {
+            startDate.value = '';
+        }
+    });
+
+    document.getElementById('NoEndDate').addEventListener('change', function() {
+        var endDate = document.getElementById('endDate');
+        endDate.disabled = this.checked;
+        if (this.checked) {
+            endDate.value = '';
+        }
+    });
+
+    // Add event listeners to date fields to automatically check the checkboxes if the date fields are cleared
+    document.getElementById('startDate').addEventListener('input', function () {
+        if (!this.value) {
+            document.getElementById('NoStartDate').checked = true;
+            this.disabled = true;
+        } else {
+            document.getElementById('NoStartDate').checked = false;
+            this.disabled = false;
+        }
+    });
+
+    document.getElementById('endDate').addEventListener('input', function () {
+        if (!this.value) {
+            document.getElementById('NoEndDate').checked = true;
+            this.disabled = true;
+        } else {
+            document.getElementById('NoEndDate').checked = false;
+            this.disabled = false;
+        }
+    });
 </script>
 </body>
 
