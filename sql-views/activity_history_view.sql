@@ -56,8 +56,8 @@ SELECT
         WHEN TIMESTAMPDIFF(HOUR, `a`.`created_at`, NOW()) < 24 THEN
             CONCAT(TIMESTAMPDIFF(HOUR, `a`.`created_at`, NOW()), ' hour', IF(TIMESTAMPDIFF(HOUR, `a`.`created_at`, NOW()) = 1, '', 's'), ' ago')
         WHEN TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()) < 7 THEN
-            CONCAT(TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()), ' day', IF(TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()) = 1, '', 's'), ' ago at %l:%i %p')
-        ELSE DATE_FORMAT(`a`.`created_at`, '%M %d at %l:%i %p')
+            CONCAT(TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()), ' day', IF(TIMESTAMPDIFF(DAY, `a`.`created_at`, NOW()) = 1, '', 's'), ' ago at ', DATE_FORMAT(`a`.`created_at`, '%l:%i%p'))
+        ELSE DATE_FORMAT(`a`.`created_at`, '%M %d at %l:%i%p')
     END AS `time_ago`,
     `a`.`created_at` AS `created_at`,
     `a`.`updated_at` AS `updated_at`
