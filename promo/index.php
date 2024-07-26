@@ -430,7 +430,6 @@ function displayStore()
             window.location.href = 'history.php?store_id=' + encodeURIComponent(storeId) + '&promo_id=' + encodeURIComponent(promoId) + '&promo_code=' + encodeURIComponent(promoCode);
         }
     </script>
-<<<<<<< HEAD
    <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Ensure actions toggle function works with dynamic content

@@ -13,6 +13,8 @@ $result = $stmt->get_result();
 $data = $result->fetch_assoc();
 $stmt->close();
 
+
+$merchant_brand_name = str_replace("'", "", $data['merchant_brand_name']);
 $totalGrossSales = number_format($data['total_gross_sales'], 2);
 $totalDiscount = number_format($data['total_discount'], 2);
 $totalOutstandingAmount1 = number_format($data['total_outstanding_amount_1'], 2);
@@ -234,7 +236,8 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-    XLSX.writeFile(wb, "<?php echo htmlspecialchars($data['merchant_brand_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).xlsx");
+    
+XLSX.writeFile(wb, "<?php echo htmlspecialchars($merchant_brand_name); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
 }
 </script>
 </head>

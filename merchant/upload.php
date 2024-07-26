@@ -169,8 +169,8 @@ function fetchAccountManager() {
         <div class="custom-box pt-4">
             <a href="javascript:history.back()">
                 <span class="back">
-                    <i class="fa-regular fa-circle-left fa-sm"></i>
-                    <span style="font-size:15px;color:grey;cursor:pointer;padding-left:3px"> Back to Merchants</span>
+                    <i class="fa-regular fa-circle-left" style="font-size:17px;"></i>
+                    <span style="font-size:17px;color:grey;cursor:pointer;padding-left:3px"> Back to Merchants</span>
                 </span>
             </a>
             <div class="upload pt-4" style="text-align:left;">

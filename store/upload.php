@@ -86,7 +86,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
     <div class="cont-box">
         <div class="custom-box pt-4">
             <span><a href="javascript:history.back()"><span class="back"><i
-                            class="fa-regular fa-circle-left fa-lg"></i><span
+                            class="fa-regular fa-circle-left" style="font-size:17px;"></i><span
                             style="font-size:17px;color:grey;cursor:pointer;"> Back to Stores</span></span></a>
                 <div class="upload pt-3" style="text-align:left;">
                     <div class="add-btns">
@@ -105,7 +105,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                         <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
                         <div class="uploadfile" style="text-align:right;">
                             <button type="button" class="btn btn-danger clear" id="clearButton">Clear</button>
-                            <button type="submit" class="btn btn-secondary upload_file"
+                            <button type="submit" style="width: 200px;" class="btn btn-secondary upload_file"
                                 id="submitButton"><span>Submit</span></button>
                         </div>
                         <div class="file-preview" style="margin-top:20px;">
