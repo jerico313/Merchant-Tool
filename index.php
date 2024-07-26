@@ -284,16 +284,25 @@ body {
   <input type="password" placeholder="Password" name="password" id="password" required>
 </div>
 
-      <div class="remember-forgot" style= "display:none">
-        <label><input type="checkbox"> Remember me</label>
-        <a href="#" style= "display:none">Forgot password? </a>
+      <div class="remember-forgot">
+      <label class="form-check-label" for="NoEndDate" style="display:block;margin-top:5x;">
+        <input type="checkbox" class="form-check-input" id="showPassword" name="showPassword" style="vertical-align: middle;position: relative; ">
+        Show Password</label>
+        <a href="forgot_password.php">Forgot password? </a>
       </div>
       <button type="submit" class="btn" name="login">Login</button>
-      <div class="register-link">
-        <p>Don't have an account?<a href="register.php"> Register</a></p>
-      </div>
+     
     </form>
   </div>
-
+  <script>
+  document.getElementById('showPassword').addEventListener('change', function() {
+    var passwordInput = document.getElementById('password');
+    if (this.checked) {
+      passwordInput.type = 'text';
+    } else {
+      passwordInput.type = 'password';
+    }
+  });
+</script>
 </body>
 </html>

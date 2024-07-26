@@ -233,7 +233,8 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
         // Bind parameters and execute for promo table
         $promo_id = Uuid::uuid4()->toString();
-        $stmt1->bind_param("ssssssssssssss", $promo_id, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $start_date, $end_date, $data[13]);
+        $promo_type = $data[7];
+        $stmt1->bind_param("ssssssssssssss", $promo_id, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $promo_type, $data[8], $data[9], $data[10], $start_date, $end_date, $data[13]);
         $stmt1->execute();
     }
 

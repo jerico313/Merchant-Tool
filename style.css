@@ -121,6 +121,23 @@ select.form-select.form-select-sm {
   -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.20);
 }
 
+.resend{
+  display: inline-block;
+  background-color: #fff;
+  color: #4BB0B8 ;
+  border: solid #4BB0B8 2px;
+  padding: 5px;
+  width: 150px;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.20);
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.20);
+  -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.20);
+}
+
+
+
 #add-field {
   margin-left: 10px;
   background-color: #72bf6a;
@@ -330,7 +347,7 @@ input[type="file"] {
   margin-left: 10px;
   border-radius: 20px;
   height: 32px;
-  background-color: #E96529;
+  background-color: #ef9267;
   border: solid #E96529 2px;
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;
   -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;

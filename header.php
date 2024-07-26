@@ -128,9 +128,11 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
                         <i class="fa-solid fa-egg" style="color:#fff;"></i><span style="font-size:0.825vw;color:#fff;padding-left:5px;font-weight:700;"><?php echo '  ' . htmlspecialchars($name); ?></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="/Merchant-Tool/profile"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a></li>
                         <?php if ($type !== 'User') : ?>
-                            <li><a class="dropdown-item" href="/Merchant-Tool/users/"><i class="fa-solid fa-users"></i> Manage Users</a></li>
-                            <li><a class="dropdown-item" href="/Merchant-Tool/activity_history/"><i class="fa-solid fa-user-clock"></i> Activity History</a></li>
+                            
+                            <li><a class="dropdown-item" href="/Merchant-Tool/users"><i class="fa-solid fa-users"></i> Manage Users</a></li>
+                            <li><a class="dropdown-item" href="/Merchant-Tool/activity_history"><i class="fa-solid fa-user-clock"></i> Activity History</a></li>
                         <?php endif; ?>
                         <li><a class="dropdown-item" href="/Merchant-Tool/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
                     </ul>
