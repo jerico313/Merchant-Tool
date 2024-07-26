@@ -192,7 +192,7 @@ function displayHistory() {
                 <th>Activity ID</th>
                 <th>Table ID</th>
                 <th>Table Name</th>
-                <th>Key Column</th>
+                <th>Key Identifier</th>
                 <th>Activity Type</th>
                 <th>Description</th>
                 <th>Modified By</th>
