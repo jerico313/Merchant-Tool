@@ -267,7 +267,7 @@ body {
   <div class="wrapper">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
       <h3 class="text-center mb-4"><img src="images/bookylog.png" alt="booky" height="98" width="180"></h3>
-      <h1>Merchant Settlement Tool</h1>
+      <p style="font-weight:900;text-align:center;font-size:15px;">Merchant Settlement Tool</p><br>
       <h2>Login</h2><br></br>
       <?php if (!empty($error)): ?>
         <div class="alert-custom alert alert-danger" role="alert">
@@ -284,8 +284,8 @@ body {
   <input type="password" placeholder="Password" name="password" id="password" required>
 </div>
 
-      <div class="remember-forgot">
-      <label class="form-check-label" for="NoEndDate" style="display:block;margin-top:5x;">
+      <div class="remember-forgot" style="padding:3px 15px;">
+      <label class="form-check-label" style="display:block;margin-top:5x;">
         <input type="checkbox" class="form-check-input" id="showPassword" name="showPassword" style="vertical-align: middle;position: relative; ">
         Show Password</label>
         <a href="forgot_password.php">Forgot password? </a>

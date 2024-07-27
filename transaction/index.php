@@ -296,6 +296,8 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script src="./js/script.js"></script>
 
+
+
 <script>
 $(document).ready(function() {
   var table = $('#example').DataTable({
@@ -324,17 +326,17 @@ $(document).ready(function() {
   // Voucher Type filter buttons click events
   $('#btnPretrial').on('click', function () {
     table.search('').columns().search('').draw();
-    table.column(11).search('PRE-TRIAL', true, false).draw();
+    table.column(12).search('PRE-TRIAL', true, false).draw();
   });
 
   $('#btnBillable').on('click', function () {
     table.search('').columns().search('').draw();
-    table.column(11).search('^BILLABLE$', true, false).draw();
+    table.column(12).search('^BILLABLE$', true, false).draw();
   });
 
   $('#btnNotBillable').on('click', function () {
     table.search('').columns().search('').draw();
-    table.column(11).search('^NOT BILLABLE$', true, false).draw();
+    table.column(12).search('^NOT BILLABLE$', true, false).draw();
   });
 
   // Show All button click event

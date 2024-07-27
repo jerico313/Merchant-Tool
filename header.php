@@ -1,6 +1,26 @@
 <?php
 session_start();
 
+// Define session timeout duration (e.g., 15 minutes)
+$timeout_duration = 900;
+
+// Check if the last activity timestamp is set
+if (isset($_SESSION['last_activity'])) {
+    // Calculate the session's lifetime
+    $elapsed_time = time() - $_SESSION['last_activity'];
+    // Check if the session has expired
+    if ($elapsed_time >= $timeout_duration) {
+        // Session expired, destroy the session and redirect to login page
+        session_unset();
+        session_destroy();
+        header("Location: /Merchant-Tool/");
+        exit();
+    }
+}
+
+// Update the last activity timestamp
+$_SESSION['last_activity'] = time();
+
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: /Merchant-Tool/");
@@ -32,6 +52,9 @@ if ($result && mysqli_num_rows($result) > 0) {
     $type = 'unknown';
 }
 
+// Get the first letter of the name and make it uppercase
+$initial = strtoupper($name[0]);
+
 // Check if the user type is 'User' and if the current page is 'users/index.php'
 if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/users') !== false) {
     // Redirect to access denied page
@@ -46,14 +69,13 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
 }
 ?>
 
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/Merchant-Tool/images/booky1.png" type="image/x-icon" />
-    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d36de8f7e2.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,30 +85,51 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>      
-      .nav-link {
-        font-weight: 700;
-        font-style: normal;
-        font-size: 12px;
-      }
+    <style>
+        .nav-link {
+            font-weight: 700;
+            font-style: normal;
+            font-size: 12px;
+        }
 
-      .active_nav{
-        color:#fff !important;
-        border:solid #4BB0B8 2px !important ;
-        border-radius: 30px !important;
-        background-color: #4BB0B8 !important;
-        box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;
-        -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;
-        -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;
-      } 
+        .active_nav {
+            color: #fff !important;
+            border: solid #4BB0B8 2px !important;
+            border-radius: 30px !important;
+            background-color: #4BB0B8 !important;
+            box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.27) inset !important;
+            -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.27) inset !important;
+            -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.27) inset !important;
+        }
 
-      .dropdown-toggle::after {
-        display: none;
-      }
+        .dropdown-toggle::after {
+            display: none;
+        }
 
-      a#navbarDropdownMenuLink.nav-link.mx-2.dropdown-toggle::after{
-        display: none;
-      }
+        a#navbarDropdownMenuLink.nav-link.mx-2.dropdown-toggle::after {
+            display: none;
+        }
+
+        .profile-initial{
+            background-color:#fff;
+            color:#4BB0B8;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:21px;
+            font-weight: 800;
+            border-radius:50%;
+            height:30px;
+            width:30px;
+            border: solid #fff 2px;
+            box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27)inset;
+            -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27)inset;
+            -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27)inset;
+            <?php if ($initial === 'D') echo 'padding-left:2px;padding-top:2px;'; ?>
+            <?php if ($initial === 'C' || $initial === 'G') echo 'padding-top:2px;padding-right:1px;'; ?>
+            <?php if ($initial === 'W' || $initial === 'Y' ) echo 'padding-top:3px;'; ?>
+            <?php if ($initial === 'H' ) echo 'padding-top:2px;'; ?>
+        }
     </style>
 </head>
 <body>
@@ -124,24 +167,29 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
             </ul>
             <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
                 <li class="nav-item dropdown">
-                    <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-egg" style="color:#fff;"></i><span style="font-size:0.825vw;color:#fff;padding-left:5px;font-weight:700;"><?php echo '  ' . htmlspecialchars($name); ?></span>
-                    </a>
+                <a class="nav-link mx-2 dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="d-flex align-items-center">
+        <div class="profile-initial" style="">
+            <?php echo $initial; ?>
+        </div>
+        <span style="color:#fff;padding-left:5px;font-weight:700;"><?php echo ' ' . htmlspecialchars($name); ?></span>
+    </div>
+</a>
+
+
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="/Merchant-Tool/profile"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a></li>
+                        <li><a class="dropdown-item" href="/Merchant-Tool/profile"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a></li>
                         <?php if ($type !== 'User') : ?>
-                            
-                            <li><a class="dropdown-item" href="/Merchant-Tool/users"><i class="fa-solid fa-users"></i> Manage Users</a></li>
-                            <li><a class="dropdown-item" href="/Merchant-Tool/activity_history"><i class="fa-solid fa-user-clock"></i> Activity History</a></li>
+                            <li><a class="dropdown-item" href="/Merchant-Tool/users/"><i class="fa-solid fa-users"></i> Manage Users</a></li>
+                            <li><a class="dropdown-item" href="/Merchant-Tool/activity_history/"><i class="fa-solid fa-user-clock"></i> Activity History</a></li>
                         <?php endif; ?>
                         <li><a class="dropdown-item" href="/Merchant-Tool/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>
-        </div>
+            </div>
     </div>
 </nav>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -154,7 +202,6 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
         var pgLink = document.getElementById('pg-link');
         var storeLink = document.getElementById('store-link');
         var promoLink = document.getElementById('promo-link');
-
 
         // Set the active class based on the current page
         if (currentPage.includes('merchant/'))  {
@@ -180,6 +227,28 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
                 }
             });
         });
+
+        // Session timeout logic
+        var timeout;
+        var timeoutDuration = 900000; // 15 minutes in milliseconds
+
+        function resetTimeout() {
+            clearTimeout(timeout);
+            timeout = setTimeout(logout, timeoutDuration);
+        }
+
+        function logout() {
+            window.location.href = '/Merchant-Tool/logout.php';
+        }
+
+        // Reset the timeout on any user activity
+        document.addEventListener('mousemove', resetTimeout);
+        document.addEventListener('keydown', resetTimeout);
+        document.addEventListener('scroll', resetTimeout);
+        document.addEventListener('click', resetTimeout);
+
+        // Initialize the timeout
+        resetTimeout();
     });
 </script>
 
