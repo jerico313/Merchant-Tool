@@ -216,7 +216,7 @@ function displayStore()
           <table id="example" class="table bord" style="width:200%;height:auto;">
             <thead>
               <tr>
-                <th sclass="first-col">Promo ID</th>
+                <th class="first-col">Promo ID</th>
                 <th>Merchant Name</th>
                 <th>Promo Code</th>
                 <th>Promo Amount</th>
