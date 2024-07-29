@@ -8,10 +8,7 @@ function displayStore($merchant_id)
 {
     global $conn, $type;
 
-    $sql = "SELECT store.*, merchant.merchant_name
-            FROM store
-            JOIN merchant ON store.merchant_id = merchant.merchant_id
-            WHERE store.merchant_id = ?";
+    $sql = "SELECT * FROM store_view WHERE merchant_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -22,35 +19,40 @@ function displayStore($merchant_id)
             $shortStoreId = substr($row['store_id'], 0, 8);
             $store_address = empty($row['store_address']) ? '-' : $row['store_address'];
 
+            // Prepare truncated and full text for email_address
+            $email_address_full = empty($row['email_address']) ? '-' : $row['email_address'];
+            $email_address = strlen($row['email_address']) > 30 ? substr($row['email_address'], 0, 30) . '...' : $row['email_address'];
+
             echo "<tr style='padding:15px 0;' data-uuid='" . $row['store_id'] . "'>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $shortStoreId . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_name'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['legal_entity_name'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $store_address . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
+            echo "<td>" . $shortStoreId . "</td>";
+            echo "<td>" . $row['store_name'] . "</td>";
+            echo "<td>" . $row['legal_entity_name'] . "</td>";
+            echo "<td>" . $store_address . "</td>";
+            echo "<td style='display:none;'>" . htmlspecialchars($email_address_full) . "</td>";
+            echo "<td class='text-cell' data-full='" . htmlentities($email_address_full) . "' data-short='" . htmlentities($email_address) . "'>" . $email_address . "</td>";
+            echo "<td class='actions-cell'>";
+            echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
+            echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
+            echo "<ul class='list-group'>";
 
             $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
             $escapedStoreName = htmlspecialchars($row['store_name'], ENT_QUOTES, 'UTF-8');
             $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
             $escapedStoreAddress = empty($row['store_address']) ? '-' : htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
 
-            echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
-
-            echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
-            echo "<ul class='list-group'>";
 
             if ($type !== 'User') {
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;pointer'>View</a></li>";
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='editStore(\"" . $row['store_id'] . "\")' style='color:#E96529;'>Edit</button></li>";
+                echo "<li class='list-group-item action-item'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;pointer'>View</a></li>";
+                echo "<li class='list-group-item action-item'><a href='#' onclick='editStore(\"" . $row['store_id'] . "\")' style='color:#E96529;'>Edit</button></li>";
             } else {
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
+                echo "<li class='list-group-item action-item'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
             }
 
-            echo "<li class='list-group-item action-item' style='animation-delay: 0.3s;'><a href='#' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")' style='color:#E96529;'>Check Report</a></li>";
-            echo "<li class='list-group-item action-item' style='animation-delay: 0.4s;'><a href='#' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")' style='color:#E96529;'>View Report</a></li>";
+            echo "<li class='list-group-item action-item'><a href='#' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")' style='color:#E96529;'>Check Report</a></li>";
+            echo "<li class='list-group-item action-item'><a href='#' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")' style='color:#E96529;'>View Report</a></li>";
 
-            echo "</ul>"; 
-            echo "</div>"; 
+            echo "</ul>";
+            echo "</div>";
 
             echo "</td>";
             echo "</tr>";
@@ -79,35 +81,20 @@ function displayStore($merchant_id)
     <link rel="stylesheet" href="../../style.css">
     <style>
         body {
-            background-image: url("../../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        .title {
-            font-size: 30px;
-            font-weight: 900;
-            margin-right: auto;
-            padding-left: 5vh;
-            color: #4BB0B8;
+            background-image: url("../../images/bg_booky.png"); 
         }
 
         @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
 
-.action-item {
-  animation: fadeIn 0.3s ease forwards;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         .voucher-type {
             padding-bottom: 0px;
@@ -126,19 +113,6 @@ function displayStore($merchant_id)
             width: 300px;
             padding: 15px;
             font-size: 13px;
-        }
-
-        .dropdown-item {
-            font-weight: bold;
-        }
-
-        .modal-title {
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .form-label {
-            font-weight: bold;
         }
 
         @media only screen and (max-width: 767px) {
@@ -172,20 +146,11 @@ function displayStore($merchant_id)
                 position: absolute;
                 top: 6px;
                 left: 6px;
-                width: 45%;
+                width: auto;
                 padding-right: 10px;
                 white-space: nowrap;
                 font-weight: bold;
                 text-align: left !important;
-            }
-
-            .table td:nth-child(1) {
-                background: #E96529;
-                height: 100%;
-                top: 0;
-                left: 0;
-                font-weight: bold;
-                color: #fff;
             }
 
             td:nth-of-type(1):before {
@@ -204,7 +169,11 @@ function displayStore($merchant_id)
                 content: "Store Address";
             }
 
-            td:nth-of-type(5):before {
+            td:nth-of-type(6):before {
+                content: "Email Address";
+            }
+
+            td:nth-of-type(7):before {
                 content: "Actions";
             }
 
@@ -257,27 +226,30 @@ function displayStore($merchant_id)
                                 </li>
                             </ol>
                         </nav>
-                        <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
-                            <?php echo htmlspecialchars($merchant_name); ?>
-                        </p>
                     </div>
-                    <button type="button" class="btn btn-warning check-report mt-4" style="display:none;"><i
-                            class="fa-solid fa-print"></i> Check Report</button>
-                    <a
-                        href="upload.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"><button
-                            type="button" class="btn btn-warning add-merchant mt-4"><i class="fa-solid fa-plus"></i> Add
-                            Store</button></a>
                 </div>
-                <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                    <table id="example" class="table bord" style="width:100%;">
+
+                <div class="add-btns">
+                    <p class="title2"><?php echo htmlspecialchars($merchant_name); ?></p>
+                    <a href="upload.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">
+                        <button type="button" class="btn btn-primary add-merchant">
+                            <i class="fa-solid fa-plus"></i> Add Store
+                        </button>
+                    </a>
+                </div>
+                
+                <div class="content">
+                    <table id="example" class="table bord" style="width:100%;height:auto;">
                         <thead>
                             <tr>
-                            <th style="width:80px;padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Store ID</th>
-                            <th style="padding:10px;">Store Name</th>
-                            <th style="padding:10px;">Legal Entity Name</th>
-                            <th style="padding:10px;">Store Address</th>
-                            <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Actions</th>
-                        </tr>
+                                <th class="first-col">Store ID</th>
+                                <th>Store Name</th>
+                                <th>Legal Entity Name</th>
+                                <th>Store Address</th>
+                                <th style="display:none;"></th>
+                                <th>Email Address</th>
+                                <th class="action-col" style="width:10%;">Actions</th>
+                            </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
                             <?php displayStore($merchant_id); ?>
@@ -287,7 +259,8 @@ function displayStore($merchant_id)
             </div>
         </div>
     </div>
-    <!-- Modal for Editing Store Details -->
+
+    <!-- Modal: Edit Store Details -->
     <div class="modal fade" id="editStoreModal" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="editStoreModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -304,83 +277,96 @@ function displayStore($merchant_id)
                         <input type="hidden" id="merchantName" name="merchantName"
                             value="<?php echo htmlspecialchars($merchant_name); ?>">
                         <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+
                         <div class="mb-3">
-                            <label for="storeName" class="form-label">Store Name</label>
-                            <input type="text" class="form-control" id="storeName" name="storeName">
+                            <label for="storeName" class="form-label">
+                                Store Name<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="storeName" name="storeName"
+                                placeholder="Enter store name" required maxlength="255">
                         </div>
                         <div class="mb-3">
                             <label for="legalEntityName" class="form-label">Legal Entity Name</label>
-                            <input type="text" class="form-control" id="legalEntityName" name="legalEntityName">
+                            <input type="text" class="form-control" id="legalEntityName" name="legalEntityName"
+                                placeholder="Enter legal entity name" maxlength="255">
                         </div>
                         <div class="mb-3">
                             <label for="storeAddress" class="form-label">Store Address</label>
-                            <input type="text" class="form-control" id="storeAddress" name="storeAddress">
+                            <textarea class="form-control" rows="2" id="storeAddress" name="storeAddress"
+                                placeholder="Enter store address"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary"
-                            style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save
-                            changes</button>
+                        <div class="mb-3">
+                            <label for="emailAddress" class="form-label">Email Address</label>
+                            <textarea class="form-control" rows="2" id="emailAddress" name="emailAddress"
+                                placeholder="Enter email address"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal for Checking Report -->
+
+    <!-- Modal: Check Report -->
     <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius:20px;">
-          <div class="modal-header border-0">
-            <p class="modal-title" id="reportModalLabel">Choose Report Type</p>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="reportForm">
-            <input type="hidden" id="reportStoreId" name="storeId">
-            <input type="hidden" id="reportStoreName" name="storeName">
-            <input type="hidden" id="merchantId" name="merchantId"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius:20px;">
+                <div class="modal-header border-0">
+                    <p class="modal-title" id="reportModalLabel">Choose Report Type</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reportForm">
+                        <input type="hidden" id="reportStoreId" name="storeId">
+                        <input type="hidden" id="reportStoreName" name="storeName">
+                        <input type="hidden" id="merchantId" name="merchantId"
                             value="<?php echo htmlspecialchars($merchant_id); ?>">
-            <input type="hidden" id="merchantName" name="merchantName"
+                        <input type="hidden" id="merchantName" name="merchantName"
                             value="<?php echo htmlspecialchars($merchant_name); ?>">
-            <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-              <div class="mb-3">
-                <label for="reportType" class="form-label">Report Type</label>
-                <select class="form-select" id="reportType" required>
-                  <option selected disabled>-- Select Report Type --</option>
-                  <option value="Coupled">Coupled</option>
-                  <option value="Decoupled">Decoupled</option>
-                  <option value="GCash">GCash</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                  <label for="billStatus" class="form-label">Bill Status</label>
-                  <select class="form-select" id="billStatus" name="billStatus"required>
-                  <option selected disabled>-- Select Bill Status --</option>
-                  <option value="All">PRE-TRIAL and BILLABLE</option>
-                  <option value="PRE-TRIAL">PRE-TRIAL</option>
-                  <option value="BILLABLE">BILLABLE</option>
-                  </select>
-              </div>
-              <div class="mb-3">
-                <label for="startDate" class="form-label">Start Date</label>
-                <input type="date" class="form-control" id="startDate" name="startDate" required>
-              </div>
-              <div class="mb-3">
-                <label for="endDate" class="form-label">End Date</label>
-                <input type="date" class="form-control" id="endDate" name="endDate" required>
-              </div>
-              <button type="button" class="btn btn-primary"
-                style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;"
-                id="submitReport">Generate Report</button>
-            </form>
-          </div>
+                        <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+                        <div class="mb-3">
+                            <label for="reportType" class="form-label">Report Type</label>
+                            <select class="form-select" id="reportType" required>
+                                <option selected disabled>-- Select Report Type --</option>
+                                <option value="Coupled">Coupled</option>
+                                <option value="Decoupled">Decoupled</option>
+                                <option value="GCash">GCash</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="billStatus" class="form-label">Bill Status</label>
+                            <select class="form-select" id="billStatus" name="billStatus" required>
+                                <option selected disabled>-- Select Bill Status --</option>
+                                <option value="All">PRE-TRIAL and BILLABLE</option>
+                                <option value="PRE-TRIAL">PRE-TRIAL</option>
+                                <option value="BILLABLE">BILLABLE</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="startDate" name="startDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="endDate" name="endDate" required>
+                        </div>
+                        <button type="button" class="btn btn-primary"
+                            style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;"
+                            id="submitReport">Generate Report</button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
+
     <div id="alertContainer"></div>
     <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
     <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
     <script src="./js/script.js"></script>
+    
+    <!-- Script: DataTable -->
     <script>
         $(document).ready(function () {
             if ($.fn.DataTable.isDataTable('#example')) {
@@ -390,25 +376,47 @@ function displayStore($merchant_id)
             $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [2, 3, 4] }    // Disable sorting for the first column
+                    { orderable: false, targets: [4, 5, 6] }    // Disable sorting for the first column
                 ],
                 order: [[1, 'asc']]  // Ensure no initial ordering
             });
         });
+    </script>        
 
+    <!-- Script: Edit Store Details -->
+    <script>    
         function editStore(storeId) {
             var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
             var storeName = storeRow.find('td:nth-child(2)').text();
             var legalEntityName = storeRow.find('td:nth-child(3)').text();
             var storeAddress = storeRow.find('td:nth-child(4)').text();
+            var emailAddress = storeRow.find('td:nth-child(5)').text();
             var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>";
             var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; // Set from PHP
 
             // Set values in the edit modal
             $('#storeId').val(storeId);
             $('#storeName').val(storeName);
-            $('#storeAddress').val(storeAddress);
-            $('#legalEntityName').val(legalEntityName);
+            
+            if (legalEntityName === '-') {
+                $('#legalEntityName').val(null);
+            } else {
+                $('#legalEntityName').val(legalEntityName);
+            }
+
+            if (condition) {
+                if (storeAddress === '-') {
+                    $('#storeAddress').val(null);
+                } else {
+                    $('#storeAddress').val(storeAddress);
+                }
+            }
+
+            if (emailAddress === '-') {
+                $('#emailAddress').val(null);
+            } else {
+                $('#emailAddress').val(emailAddress);
+            }
             $('#merchantId').val(merchantId);
             $('#merchantName').val(merchantName);
 
@@ -424,66 +432,84 @@ function displayStore($merchant_id)
             window.location.href = 'reports/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
         }
     </script>
+
+    <!-- Script: Check Report -->
     <script>
-  function checkReport(storeId, storetName) {
-    // Set the merchantId and merchantName in the report modal
-    document.getElementById('reportStoreId').value = storeId;
-    document.getElementById('reportStoreName').value = storeName;
+        function checkReport(storeId, storetName) {
+            // Set the merchantId and merchantName in the report modal
+            document.getElementById('reportStoreId').value = storeId;
+            document.getElementById('reportStoreName').value = storeName;
 
-    // Show the report modal
-    $('#reportModal').modal('show');
-  }
-
-  document.getElementById('submitReport').addEventListener('click', function() {
-    var form = document.getElementById('reportForm');
-    var reportType = document.getElementById('reportType').value;
-    var billStatus = document.getElementById('billStatus').value;
-
-    if (reportType === 'Coupled') {
-      if (billStatus === 'PRE-TRIAL') {
-        form.action = 'coupled_generate_report_pre-trial.php';
-      } else if (billStatus === 'BILLABLE') {
-        form.action = 'coupled_generate_report_billable.php';
-      } else if (billStatus === 'All') {
-        form.action = 'coupled_generate_report.php';
-      }
-    } else if (reportType === 'Decoupled') {
-      if (billStatus === 'PRE-TRIAL') {
-        form.action = 'decoupled_generate_report_pre-trial.php';
-      } else if (billStatus === 'BILLABLE') {
-        form.action = 'decoupled_generate_report_billable.php';
-      } else if (billStatus === 'All') {
-        form.action = 'decoupled_generate_report.php';
-      }
-    } else if (reportType === 'GCash') {
-        if (billStatus === 'PRE-TRIAL') {
-        form.action = 'gcash_generate_report_pre-trial.php';
-      } else if (billStatus === 'BILLABLE') {
-        form.action = 'gcash_generate_report_billable.php';
-      } else if (billStatus === 'All') {
-        form.action = 'gcash_generate_report.php';
-      }
-    }
-
-    // Set the method to POST
-    form.method = 'POST';
-
-    form.submit();
-  });
-</script>
-<script>
-    function toggleActions(button) {
-        // Find the actions-list div relative to the button
-        var actionsList = button.nextElementSibling;
-
-        // Toggle the display style of the actions-list div
-        if (actionsList.style.display === 'none') {
-            actionsList.style.display = 'block';
-        } else {
-            actionsList.style.display = 'none';
+            // Show the report modal
+            $('#reportModal').modal('show');
         }
-    }
-</script>
+
+        document.getElementById('submitReport').addEventListener('click', function () {
+            var form = document.getElementById('reportForm');
+            var reportType = document.getElementById('reportType').value;
+            var billStatus = document.getElementById('billStatus').value;
+
+            if (reportType === 'Coupled') {
+                if (billStatus === 'PRE-TRIAL') {
+                    form.action = 'coupled_generate_report_pre-trial.php';
+                } else if (billStatus === 'BILLABLE') {
+                    form.action = 'coupled_generate_report_billable.php';
+                } else if (billStatus === 'All') {
+                    form.action = 'coupled_generate_report.php';
+                }
+            } else if (reportType === 'Decoupled') {
+                if (billStatus === 'PRE-TRIAL') {
+                    form.action = 'decoupled_generate_report_pre-trial.php';
+                } else if (billStatus === 'BILLABLE') {
+                    form.action = 'decoupled_generate_report_billable.php';
+                } else if (billStatus === 'All') {
+                    form.action = 'decoupled_generate_report.php';
+                }
+            } else if (reportType === 'GCash') {
+                if (billStatus === 'PRE-TRIAL') {
+                    form.action = 'gcash_generate_report_pre-trial.php';
+                } else if (billStatus === 'BILLABLE') {
+                    form.action = 'gcash_generate_report_billable.php';
+                } else if (billStatus === 'All') {
+                    form.action = 'gcash_generate_report.php';
+                }
+            }
+
+            // Set the method to POST
+            form.method = 'POST';
+
+            form.submit();
+        });
+    </script>
+
+    <script>
+      // Event delegation for text toggle of email address
+      document.body.addEventListener('click', function (event) {
+          if (event.target.classList.contains('text-cell')) {
+            var fullText = event.target.getAttribute('data-full');
+            var shortText = event.target.getAttribute('data-short');
+            if (event.target.innerText === shortText) {
+              event.target.innerText = fullText;
+            } else {
+              event.target.innerText = shortText;
+            }
+          }
+        });
+    </script>
+
+    <script>
+        function toggleActions(button) {
+            // Find the actions-list div relative to the button
+            var actionsList = button.nextElementSibling;
+
+            // Toggle the display style of the actions-list div
+            if (actionsList.style.display === 'none') {
+                actionsList.style.display = 'block';
+            } else {
+                actionsList.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 
 </html>

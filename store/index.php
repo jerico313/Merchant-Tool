@@ -70,19 +70,8 @@ function displayStore()
   <style>
     body {
       background-image: url("../images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
     }
 
-    .title {
-      font-size: 30px;
-      font-weight: 900;
-      margin-right: auto;
-      padding-left: 5vh;
-      color: #E96529;
-    }
 
     @keyframes fadeIn {
       from {
@@ -93,26 +82,6 @@ function displayStore()
         opacity: 1;
         transform: translateY(0);
       }
-    }
-
-    .action-item {
-      animation: fadeIn 0.3s ease forwards;
-    }
-
-    .add-btns {
-      padding-bottom: 0px;
-      padding-right: 5vh;
-      display: flex;
-      align-items: center;
-    }
-
-    .modal-title {
-      font-size: 15px;
-      font-weight: bold;
-    }
-
-    .form-label {
-      font-weight: bold;
     }
 
     @media only screen and (max-width: 767px) {
@@ -151,15 +120,6 @@ function displayStore()
         text-align: left !important;
         font-weight: bold;
       }
-
-      .table td:nth-child(1) {
-        background: #E96529;
-        height: 100%;
-        top: 0;
-        left: 0;
-        font-weight: bold;
-        color: #fff;
-      }
       
       td:nth-of-type(1):before {
         content: "Store ID";
@@ -179,6 +139,10 @@ function displayStore()
 
       td:nth-of-type(5):before {
         content: "Store Address";
+      }
+
+      td:nth-of-type(6):before {
+        content: "Email Address";
       }
 
       td:nth-of-type(7):before {
@@ -206,11 +170,13 @@ function displayStore()
   <div class="cont-box">
     <div class="custom-box pt-4">
       <div class="sub" style="text-align:left;">
-
         <div class="add-btns">
           <p class="title">Stores</p>
-          <a href="upload.php"><button type="button" class="btn btn-danger add-merchant"><i
-                class="fa-solid fa-upload"></i> Upload Stores</button></a>
+          <a href="upload.php">
+            <button type="button" class="btn btn-primary add-merchant">
+              <i class="fa-solid fa-upload"></i> Upload Stores
+            </button>
+          </a>
         </div>
 
         <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">

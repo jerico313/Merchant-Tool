@@ -18,7 +18,6 @@ function displayHistory() {
             echo "<td class='message-cell' style='text-align:center;'>" . $row['table_name'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['column_name'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_type'] . "</td>";
-            echo "<td class='message-cell' style='text-align:center;'>" . $row['description'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['user_name'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['time_ago'] . "</td>";
             echo "</tr>";
@@ -47,25 +46,6 @@ function displayHistory() {
   <style>
     body {
       background-image: url("../images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-
-    .title{
-      font-size: 30px; 
-      font-weight: 900; 
-      margin-right: auto; 
-      padding-left: 5vh;
-      color: #E96529;"
-    }
-
-    .add-btns{
-      padding-bottom: 0px; 
-      padding-right: 5vh; 
-      display: flex; 
-      align-items: center;
     }
 
     tr:hover {
@@ -194,7 +174,6 @@ function displayHistory() {
                 <th>Table Name</th>
                 <th>Key Identifier</th>
                 <th>Activity Type</th>
-                <th>Description</th>
                 <th>Modified By</th>
                 <th>Updated At</th>
             </tr>
@@ -210,7 +189,7 @@ function displayHistory() {
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius:20px;">
             <div class="modal-header">
-                <p class="modal-title" id="messageModalLabel" style="font-size:15px;font-weight:bold;">Activity History Details</p>
+                <p class="modal-title" id="messageModalLabel">Activity History Details</p>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -226,7 +205,10 @@ function displayHistory() {
 <script>
  $('#example').DataTable({
         scrollX: true,
-        order: [[7, 'asc']] // Default sort by the 'Created At' column in descending order
+        columnDefs: [
+          { orderable: false, targets: [0, 1, 6] }    // Disable sorting for the first column
+        ],
+        order: []
     });
 
 </script>
@@ -235,7 +217,7 @@ $(document).ready(function() {
    // DataTable initialization code (already present in your code)
 
    // Add click event to specific columns (1, 2, 3, and 4)
-   $('#example tbody').on('click', 'td:nth-child(1), td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5)', function () {
+   $('#example tbody').on('click', 'td:nth-child(1), td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(7)', function () {
       // Access the row from the clicked cell
       var row = $(this).closest('tr');
       var activityId = row.data('id');

@@ -5,22 +5,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve the form data
     $promoId = $_POST['promoId'];
     $promoCode = $_POST['promoCode'];
-    $promoDetails = $_POST['promoDetails'];
     $promoAmount = $_POST['promoAmount'];
     $voucherType = $_POST['voucherType'];
-    $billStatus = $_POST['billStatus'];
     $promoCategory = $_POST['promoCategory'];
-    $promoGroup = $_POST['promoGroup'];
     $promoType = $_POST['promoType'];
+    $promoGroup = $_POST['promoGroup'];
+    $promoDetails = $_POST['promoDetails'];
+    $remarks = empty($_POST['remarks']) ? NULL : $_POST['remarks'];
+    $billStatus = $_POST['billStatus'];
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
+    $remarks2 = empty($_POST['remarks2']) ? NULL : $_POST['remarks2'];
     $merchantId = $_POST['merchantId'];
     $merchantName = $_POST['merchantName'];
     $userId = $_POST['userId'];
 
     // Update promo details
-    $stmt = $conn->prepare("UPDATE promo SET promo_code=?, promo_details=?, promo_amount=?, voucher_type=?, bill_status=?, promo_category=?, promo_group=?, promo_type=?, start_date=?, end_date=? WHERE promo_id=?");
-    $stmt->bind_param("sssssssssss", $promoCode, $promoDetails, $promoAmount, $voucherType, $billStatus, $promoCategory, $promoGroup, $promoType, $startDate, $endDate, $promoId);
+    $stmt = $conn->prepare("UPDATE promo SET promo_code=?, promo_amount=?, voucher_type=?, promo_category=?, promo_type=?, promo_group=?, promo_details=?, remarks=?, bill_status=?, start_date=?, end_date=?, remarks2=? WHERE promo_id=?");
+    $stmt->bind_param("sssssssssssss", $promoCode, $promoAmount, $voucherType, $promoCategory, $promoType, $promoGroup, $promoDetails, $remarks, $billStatus, $startDate, $endDate, $remarks2, $promoId);
 
     if ($stmt->execute()) {
         // Find the latest inserted activity in activity_history
