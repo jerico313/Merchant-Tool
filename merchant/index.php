@@ -275,7 +275,9 @@ function fetchAccountManager()
               <input type="hidden" id="reportMerchantName" name="merchantName">
               <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
               <div class="mb-3">
-                <label for="reportType" class="form-label">Report Type</label>
+                <label for="reportType" class="form-label">
+                  Report Type<span class="text-danger" style="padding:2px">*</span>
+                </label>
                 <select class="form-select" id="reportType" required>
                   <option selected disabled>-- Select Report Type --</option>
                   <option value="Coupled">Coupled</option>
@@ -284,7 +286,9 @@ function fetchAccountManager()
                 </select>
               </div>
               <div class="mb-3">
-                <label for="billStatus" class="form-label">Bill Status</label>
+                <label for="billStatus" class="form-label">
+                  Bill Status<span class="text-danger" style="padding:2px">*</span>                  
+                </label>
                 <select class="form-select" id="billStatus" name="billStatus" required>
                   <option selected disabled>-- Select Bill Status --</option>
                   <option value="All">PRE-TRIAL and BILLABLE</option>
@@ -293,14 +297,18 @@ function fetchAccountManager()
                 </select>
               </div>
               <div class="mb-3">
-                <label for="startDate" class="form-label">Start Date</label>
+                <label for="startDate" class="form-label">
+                  Start Date<span class="text-danger" style="padding:2px">*</span>
+                </label>
                 <input type="date" class="form-control" id="startDate" name="startDate" required>
               </div>
               <div class="mb-3">
-                <label for="endDate" class="form-label">End Date</label>
+                <label for="endDate" class="form-label">
+                  End Date<span class="text-danger" style="padding:2px">*</span>
+                </label>
                 <input type="date" class="form-control" id="endDate" name="endDate" required>
               </div>
-              <button type="button" class="btn btn-primary" id="submitReport">Generate Report</button>
+              <button type="button" class="btn btn-primary modal-save-btn" id="submitReport">Generate Report</button>
             </form>
           </div>
         </div>
@@ -371,7 +379,7 @@ function fetchAccountManager()
           columnDefs: [
             { orderable: false, targets: [2, 5, 6, 7, 8, 10, 11] }
           ],
-          order: [[1, 'asc']]  // Ensure no initial ordering
+          order: [[1, 'asc']]
         });
       });
 

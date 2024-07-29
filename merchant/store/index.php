@@ -43,7 +43,7 @@ function displayStore($merchant_id)
 
             if ($type !== 'User') {
                 echo "<li class='list-group-item action-item'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;pointer'>View</a></li>";
-                echo "<li class='list-group-item action-item'><a href='#' onclick='editStore(\"" . $row['store_id'] . "\")' style='color:#E96529;'>Edit</button></li>";
+                echo "<li class='list-group-item action-item'><a href='#' onclick='editStore(\"" . $row['store_id'] . "\")' style='color:#E96529;'>Edit</a></li>";
             } else {
                 echo "<li class='list-group-item action-item'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
             }
@@ -320,13 +320,14 @@ function displayStore($merchant_id)
                     <form id="reportForm">
                         <input type="hidden" id="reportStoreId" name="storeId">
                         <input type="hidden" id="reportStoreName" name="storeName">
-                        <input type="hidden" id="merchantId" name="merchantId"
-                            value="<?php echo htmlspecialchars($merchant_id); ?>">
-                        <input type="hidden" id="merchantName" name="merchantName"
-                            value="<?php echo htmlspecialchars($merchant_name); ?>">
+                        <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
+                        <input type="hidden" id="merchantName" name="merchantName" value="<?php echo htmlspecialchars($merchant_name); ?>">
                         <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+
                         <div class="mb-3">
-                            <label for="reportType" class="form-label">Report Type</label>
+                            <label for="reportType" class="form-label">
+                                Report Type<span class="text-danger" style="padding:2px">*</span>                                
+                            </label>
                             <select class="form-select" id="reportType" required>
                                 <option selected disabled>-- Select Report Type --</option>
                                 <option value="Coupled">Coupled</option>
@@ -335,7 +336,9 @@ function displayStore($merchant_id)
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="billStatus" class="form-label">Bill Status</label>
+                        <label for="billStatus" class="form-label">
+                            Bill Status<span class="text-danger" style="padding:2px">*</span>
+                        </label>
                             <select class="form-select" id="billStatus" name="billStatus" required>
                                 <option selected disabled>-- Select Bill Status --</option>
                                 <option value="All">PRE-TRIAL and BILLABLE</option>
@@ -344,16 +347,18 @@ function displayStore($merchant_id)
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="startDate" class="form-label">Start Date</label>
+                            <label for="startDate" class="form-label">
+                                Start Date<span class="text-danger" style="padding:2px">*</span>
+                            </label>
                             <input type="date" class="form-control" id="startDate" name="startDate" required>
                         </div>
                         <div class="mb-3">
-                            <label for="endDate" class="form-label">End Date</label>
+                            <label for="endDate" class="form-label">
+                                End Date<span class="text-danger" style="padding:2px">*</span>
+                            </label>
                             <input type="date" class="form-control" id="endDate" name="endDate" required>
                         </div>
-                        <button type="button" class="btn btn-primary"
-                            style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;"
-                            id="submitReport">Generate Report</button>
+                        <button type="button" class="btn btn-primary modal-save-btn" id="submitReport">Generate Report</button>
                     </form>
                 </div>
             </div>
