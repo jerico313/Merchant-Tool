@@ -25,9 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssssssssss", $promoCode, $promoAmount, $voucherType, $promoCategory, $promoType, $promoGroup, $promoDetails, $remarks, $billStatus, $startDate, $endDate, $remarks2, $promoId);
 
     if ($stmt->execute()) {
-        // Find the latest inserted activity in activity_history
-        
-        
+        // Find the latest inserted activity in activity_history  
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
         $stmt->execute();
         $stmt->bind_result($latestActivityId);

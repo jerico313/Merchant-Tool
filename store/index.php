@@ -1,53 +1,55 @@
 <?php
-include_once("../header.php");
+include_once ("../header.php");
 
 function displayStore()
 {
-    global $conn, $type;
-    // Updated SQL query to join with the merchant table
-    $sql = "SELECT store.*, merchant.merchant_name 
-            FROM store 
-            JOIN merchant ON store.merchant_id = merchant.merchant_id";
-    $result = $conn->query($sql);
+  global $conn, $type;
+  // Updated SQL query to join with the merchant table
+  $sql = "SELECT * FROM store_view";
+  $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $shortStoreId = substr($row['store_id'], 0, 8);
-            $store_address = empty($row['store_address']) ? '-' : $row['store_address'];
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $shortStoreId = substr($row['store_id'], 0, 8);
+      
+      // Prepare truncated and full text for email_address
+      $email_address_full = empty($row['email_address']) ? '-' : $row['email_address'];
+      $email_address = strlen($row['email_address']) > 30 ? substr($row['email_address'], 0, 30) . '...' : $row['email_address'];
 
-            echo "<tr style='padding:15px 0;' data-uuid='" . $row['store_id'] . "'>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $shortStoreId . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['store_name'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $row['legal_entity_name'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;'>" . $store_address . "</td>";
-            echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
-            echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
-            
-            $escapedStoreName = htmlspecialchars($row['store_name'], ENT_QUOTES, 'UTF-8');
-            $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
-            $escapedStoreAddress = empty($row['store_address']) ? '-' : htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
-            
-            echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
-            echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
-            echo "<ul class='list-group'>";
+      echo "<tr style='padding:15px 0;' data-uuid='" . $row['store_id'] . "'>";
+      echo "<td>" . $shortStoreId . "</td>";
+      echo "<td>" . $row['store_name'] . "</td>";
+      echo "<td style='display:none;'>" . $row['merchant_id'] . "</td>";
+      echo "<td>" . $row['merchant_name'] . "</td>";
+      echo "<td>" . $row['legal_entity_name'] . "</td>";
+      echo "<td>" . $row['store_address'] . "</td>";
+      echo "<td style='display:none;'>" . htmlspecialchars($email_address_full) . "</td>";
+      echo "<td class='text-cell' data-full='" . htmlentities($email_address_full) . "' data-short='" . htmlentities($email_address) . "'>" . $email_address . "</td>";      
+      echo "<td class='actions-cell'>";
+      echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
+      echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
+      echo "<ul class='list-group'>";
 
-            if ($type !== 'User') {
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='editStore(\"" . $row['store_id'] . "\")' style='color:#E96529;'>Edit</a></li>";
-            } else {
-                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
-            }
+      $escapedStoreName = htmlspecialchars($row['store_name'], ENT_QUOTES, 'UTF-8');
+      $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
+      $escapedStoreAddress = empty($row['store_address']) ? '-' : htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
 
-            echo "</ul>"; 
-            echo "</div>"; 
+      if ($type !== 'User') {
+        echo "<li class='list-group-item action-item'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
+        echo "<li class='list-group-item action-item'><a href='#' onclick='editStore(\"" . $row['store_id'] . "\")' style='color:#E96529;'>Edit</a></li>";
+      } else {
+        echo "<li class='list-group-item action-item'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
+      }
 
-            echo "</td>";
-            echo "</tr>";
-        }
+      echo "</ul>";
+      echo "</div>";
+
+      echo "</td>";
+      echo "</tr>";
     }
+  }
 
-    $conn->close();
+  $conn->close();
 }
 ?>
 
@@ -78,6 +80,7 @@ function displayStore()
         opacity: 0;
         transform: translateY(-10px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -120,7 +123,7 @@ function displayStore()
         text-align: left !important;
         font-weight: bold;
       }
-      
+
       td:nth-of-type(1):before {
         content: "Store ID";
       }
@@ -179,17 +182,19 @@ function displayStore()
           </a>
         </div>
 
-        <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+        <div class="content">
           <table id="example" class="table bord" style="width:100%;">
             <thead>
               <tr>
-                <th style="width:80px;padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Store ID</th>
-                <th style="padding:10px;">Store Name</th>
-                <th style="width:140px;padding:10px;">Merchant Name</th>
-                <th style="padding:10px;">Legal Entity Name</th>
-                <th style="padding:10px;">Store Address</th>
+                <th class="first-col" style="width:7%">Store ID</th>
+                <th style="width:20%">Store Name</th>
                 <th style="display:none;"></th>
-                <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Actions</th>
+                <th style="width:15%">Merchant Name</th>
+                <th>Legal Entity Name</th>
+                <th>Store Address</th>
+                <th style="display:none;"></th>
+                <th>Email Address</th>
+                <th class="action-col" style="width:8%">Actions</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -199,39 +204,57 @@ function displayStore()
         </div>
       </div>
     </div>
+
     <!-- Edit Modal -->
     <div class="modal fade" id="editStoreModal" data-bs-backdrop="static" tabindex="-1"
-        aria-labelledby="editStoreModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius:20px;">
-                <div class="modal-header border-0">
-                    <p class="modal-title" id="editStoreModalLabel">Edit Store Details</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editStoreForm" action="edit.php" method="POST">
-                        <input type="hidden" id="storeId" name="storeId">
-                        <input type="hidden" id="merchantId" name="merchantId">
-                        <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-                        <div class="mb-3">
-                            <label for="storeName" class="form-label">Store Name</label>
-                            <input type="text" class="form-control" id="storeName" name="storeName">
-                        </div>
-                        <div class="mb-3">
-                            <label for="legalEntityName" class="form-label">Legal Entity Name</label>
-                            <input type="text" class="form-control" id="legalEntityName" name="legalEntityName">
-                        </div>
-                        <div class="mb-3">
-                            <label for="storeAddress" class="form-label">Store Address</label>
-                            <input type="text" class="form-control" id="storeAddress" name="storeAddress">
-                        </div>
-                        <button type="submit" class="btn btn-primary"
-                            style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save
-                            changes</button>
-                    </form>
-                </div>
-            </div>
+      aria-labelledby="editStoreModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:20px;">
+          <div class="modal-header border-0">
+            <p class="modal-title" id="editStoreModalLabel">Edit Store Details</p>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="editStoreForm" action="edit.php" method="POST">
+              <input type="hidden" id="storeId" name="storeId">
+              <input type="hidden" id="merchantId" name="merchantId">
+              <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+              
+              <div class="mb-3">
+                <label for="storeName" class="form-label">
+                  Store Name<span class="text-danger" style="padding:2px">*</span>
+                </label>
+                <input type="text" class="form-control" id="storeName" name="storeName"
+                  placeholder="Enter store name" required maxlength="255">
+              </div>
+              <div class="mb-3">
+                <label for="merchantName" class="form-label">
+                  Merchant Name<span class="text-danger" style="padding:2px">*</span>
+                </label>
+                <input type="text" class="form-control" id="merchantName" name="merchantName"
+                  style="background-color: #d3d3d3; caret-color: transparent;"
+                  placeholder="Enter merchant name" required readonly>
+              </div>
+              <div class="mb-3">
+                <label for="legalEntityName" class="form-label">Legal Entity Name</label>
+                <input type="text" class="form-control" id="legalEntityName" name="legalEntityName"
+                  placeholder="Enter legal entity name" maxlength="255">
+              </div>
+              <div class="mb-3">
+                <label for="storeAddress" class="form-label">Store Address</label>
+                <textarea type="text" class="form-control" id="storeAddress" name="storeAddress"
+                  placeholder="Enter store address" rows="2"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="emailAddress" class="form-label">Email Address</label>
+                <textarea type="text" class="form-control" id="emailAddress" name="emailAddress"
+                  placeholder="Enter email address" rows="2"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
     <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
     <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
@@ -246,48 +269,83 @@ function displayStore()
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 4, 5, 6] }    // Disable sorting for the specified columns
+            { orderable: false, targets: [0, 5, 6, 7, 8] }    // Disable sorting for the specified columns
           ],
-          order: [[1, 'asc']]  // Ensure no initial ordering
+          order: [[1, 'asc']]
         });
       });
     </script>
     <script>
       function editStore(storeId) {
-            var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
-            var storeName = storeRow.find('td:nth-child(3)').text();
-            var legalEntityName = storeRow.find('td:nth-child(4)').text();
-            var storeAddress = storeRow.find('td:nth-child(5)').text();
-            var merchantId = storeRow.find('td:nth-child(6)').text();
+        var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
+        var storeName = storeRow.find('td:nth-child(2)').text();
+        var merchantId = storeRow.find('td:nth-child(3)').text();
+        var merchantName = storeRow.find('td:nth-child(4)').text();
+        var legalEntityName = storeRow.find('td:nth-child(5)').text();
+        var storeAddress = storeRow.find('td:nth-child(6)').text();
+        var emailAddress = storeRow.find('td:nth-child(7)').text();        
 
-            // Set values in the edit modal
-            $('#storeId').val(storeId);
-            $('#storeName').val(storeName);
-            $('#storeAddress').val(storeAddress);
+        // Set values in the edit modal
+        $('#storeId').val(storeId);
+        $('#storeName').val(storeName);
+        $('#merchantId').val(merchantId);
+        $('#merchantName').val(merchantName);
+        
+        if (legalEntityName === '-') {
+            $('#legalEntityName').val(null);
+        } else {
             $('#legalEntityName').val(legalEntityName);
-            $('#merchantId').val(merchantId);
-
-            // Open the edit modal
-            $('#editStoreModal').modal('show');
         }
 
-        function viewOrder(storeId, storeName) {
-            window.location.href = 'order/index.php?store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
+        if (storeAddress === '-') {
+            $('#storeAddress').val(null);
+        } else {
+            $('#storeAddress').val(storeAddress);
         }
+
+        if (emailAddress === '-') {
+            $('#emailAddress').val(null);
+        } else {
+            $('#emailAddress').val(emailAddress);
+        }
+
+        // Open the edit modal
+        $('#editStoreModal').modal('show');
+      }
+
+      function viewOrder(storeId, storeName) {
+        window.location.href = 'order/index.php?store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
+      }
     </script>
+
     <script>
-    function toggleActions(button) {
+      // Event delegation for text toggle of email address
+      document.body.addEventListener('click', function (event) {
+          if (event.target.classList.contains('text-cell')) {
+            var fullText = event.target.getAttribute('data-full');
+            var shortText = event.target.getAttribute('data-short');
+            if (event.target.innerText === shortText) {
+              event.target.innerText = fullText;
+            } else {
+              event.target.innerText = shortText;
+            }
+          }
+        });
+    </script>
+
+    <script>
+      function toggleActions(button) {
         // Find the actions-list div relative to the button
         var actionsList = button.nextElementSibling;
 
         // Toggle the display style of the actions-list div
         if (actionsList.style.display === 'none' || actionsList.style.display === '') {
-            actionsList.style.display = 'block';
+          actionsList.style.display = 'block';
         } else {
-            actionsList.style.display = 'none';
+          actionsList.style.display = 'none';
         }
-    }
-</script>
+      }
+    </script>
 </body>
 
 </html>

@@ -20,33 +20,6 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
   <style>
     body {
       background-image: url("../../../images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-
-    .title {
-      font-size: 30px;
-      font-weight: 900;
-      margin-right: auto;
-      padding-left: 5vh;
-      color: #E96529;
-    }
-
-    .add-btns {
-      padding-bottom: 0px;
-      padding-right: 5vh;
-      display: flex;
-      align-items: center;
-    }
-
-    .back {
-      font-size: 20px;
-      font-weight: bold;
-      margin-right: auto;
-      padding-left: 5vh;
-      color: #E96529;
     }
   </style>
 </head>
@@ -71,7 +44,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                 <ul class="dropdown-menu" aria-labelledby="storeDropdown">
                   <li><a class="dropdown-item"
                       href="../index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                      data-breadcrumb="Offers" style="color:#4BB0B8;"> Stores</a>
+                      data-breadcrumb="Offers" style="color:#4BB0B8;">Stores</a>
                   </li>
                   <li><a class="dropdown-item"
                       href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
@@ -137,8 +110,6 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
       </div>
     </div>
   </div>
-
-
 </body>
 
 </html>

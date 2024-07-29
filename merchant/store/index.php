@@ -239,7 +239,7 @@ function displayStore($merchant_id)
                 </div>
                 
                 <div class="content">
-                    <table id="example" class="table bord" style="width:100%;height:auto;">
+                    <table id="example" class="table bord" style="width:100%;">
                         <thead>
                             <tr>
                                 <th class="first-col">Store ID</th>
@@ -409,12 +409,10 @@ function displayStore($merchant_id)
                 $('#legalEntityName').val(legalEntityName);
             }
 
-            if (condition) {
-                if (storeAddress === '-') {
-                    $('#storeAddress').val(null);
-                } else {
-                    $('#storeAddress').val(storeAddress);
-                }
+            if (storeAddress === '-') {
+                $('#storeAddress').val(null);
+            } else {
+                $('#storeAddress').val(storeAddress);
             }
 
             if (emailAddress === '-') {
@@ -422,6 +420,7 @@ function displayStore($merchant_id)
             } else {
                 $('#emailAddress').val(emailAddress);
             }
+            
             $('#merchantId').val(merchantId);
             $('#merchantName').val(merchantName);
 

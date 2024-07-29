@@ -351,13 +351,12 @@ input[type="file"] {
   margin-left: 10px;
   border-radius: 20px;
   height: 32px;
-  background-color: #ef9267;
+  background-color: #E96529;
   border: solid #E96529 2px;
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;
   -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;
   -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;
 }
-
 
 button#dropdownMenuButton.btn.btn-primary.dropdown-toggle.mt-4::after {
   display: none !important;
@@ -885,4 +884,11 @@ td {
   border-radius: 5px;
   padding: 10px 20px;
   border: 1px dashed #928a89;
+}
+
+.voucher-type {
+  padding-bottom: 0px;
+  padding-right: 5vh;
+  display: flex;
+  align-items: center;
 }

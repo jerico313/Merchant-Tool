@@ -7,7 +7,7 @@ header('Content-Disposition: attachment;filename=transaction_view_history.csv');
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 
 $output = fopen('php://output', 'w');
-fputcsv($output, array('Transaction ID', 'Transaction Date', 'Merchant ID', 'Merchant Name', 'Store ID', 'Store Name', 'Customer ID', 'Customer Name', 'Promo ID', 'Promo Code', 'Promo Group', 'Promo Type', 'Status', 'Gross Amount', 'Discount', 'Amount Discounted', 'Payment', 'Commission Type', 'Commission Rate', 'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'));
+fputcsv($output, array('Transaction ID', 'Transaction Date', 'Merchant ID', 'Merchant Name', 'Store ID', 'Store Name', 'Customer ID', 'Customer Name', 'Promo Code', 'Promo Cateogry', 'Promo Group', 'Promo Type', 'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Type', 'Commission Rate', 'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'));
 
 $sql = "SELECT * FROM transaction_view_history WHERE `Store ID` = ?";
 $stmt = $conn->prepare($sql);
@@ -34,7 +34,7 @@ header('Content-Type: text/csv');
 header('Content-Disposition: attachment; filename="transaction_history.csv"');
 
 $output = fopen('php://output', 'w');
-fputcsv($output, array('Transaction ID', 'Transaction Date', 'Merchant ID', 'Merchant Name', 'Store ID', 'Store Name', 'Customer ID', 'Customer Name', 'Promo ID', 'Promo Code', 'Promo Group', 'Promo Type', 'Status', 'Gross Amount', 'Discount', 'Amount Discounted', 'Payment', 'Commission Type', 'Commission Rate', 'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'));
+fputcsv($output, array('Transaction ID', 'Transaction Date', 'Merchant ID', 'Merchant Name', 'Store ID', 'Store Name', 'Customer ID', 'Customer Name', 'Promo Code', 'Promo Cateogry', 'Promo Group', 'Promo Type', 'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Type', 'Commission Rate', 'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'));
 
 $sql = "SHOW TABLES LIKE 'transaction_view_history'";
 $result = $conn->query($sql);

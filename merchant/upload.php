@@ -57,8 +57,6 @@ function fetchAccountManager()
         body {
             background-image: url("../images/bg_booky.png");
         }
-
-        
     </style>
 </head>
 
@@ -80,7 +78,7 @@ function fetchAccountManager()
                         </button>
                     </div>
 
-                    <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+                    <div class="content">
                         <div class="file" style="padding:10px 10px 10px 0;font-size:15px;">
                             <p style="font-weight:bold;">Selected File: <span class="filename"
                                     style="color:#E96529"></span></p>
