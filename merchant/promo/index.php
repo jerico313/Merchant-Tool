@@ -1,12 +1,13 @@
 <?php
-include_once ("../../header.php");
+include_once("../../header.php");
 
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
-function displayOffers($merchant_id, $merchant_name)
+function displayStore($merchant_id, $merchant_name)
 {
     global $conn, $type;
+
     $sql = "SELECT * FROM promo WHERE merchant_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
@@ -15,7 +16,6 @@ function displayOffers($merchant_id, $merchant_name)
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             $shortPromoId = substr($row['promo_id'], 0, 8);
             $start_date = empty($row['start_date']) ? 'No Start Date' : $row['start_date'];
             $end_date = empty($row['end_date']) ? 'No End Date' : $row['end_date'];
@@ -49,12 +49,12 @@ function displayOffers($merchant_id, $merchant_name)
 
             // Dropdown menu items
             if ($type !== 'User') {
-                echo "<li class='list-group-item action-item'><a href='#' onclick='editPromo(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;pointer'>Edit</a></li>";
+                echo "<li class='list-group-item action-item' style='animation-delay: 0.1s;'><a href='#' class='edit-link' data-promo-id='" . htmlentities($row['promo_id']) . "' data-promo-code='" . htmlentities($row['promo_code']) . "' data-promo-amount='" . htmlentities($promo_amount) . "' data-voucher-type='" . htmlentities($row['voucher_type']) . "' data-promo-category='" . htmlentities($row['promo_category']) . "' data-promo-group='" . htmlentities($row['promo_group']) . "' data-promo-type='" . htmlentities($row['promo_type']) . "' data-promo-details='" . htmlentities($promo_details_full) . "' data-remarks='" . htmlentities($remarks_full) . "' data-bill-status='" . htmlentities($row['bill_status']) . "' data-start-date='" . htmlentities($start_date) . "' data-end-date='" . htmlentities($end_date) . "' data-remarks2='" . htmlentities($row['remarks2']) . "' style='color:#E96529;'>Edit</a></li>";
             }
 
-            echo "<li class='list-group-item action-item' ><a href='#' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;pointer'>View History</a></li>";
+            echo "<li class='list-group-item action-item' style='animation-delay: 0.2s;'><a href='#' onclick='viewHistory(\"" . htmlentities($merchant_id) . "\", \"" . htmlentities($merchant_name) . "\", \"" . htmlentities($row['promo_id']) . "\", \"" . htmlentities($row['promo_code']) . "\")' style='color:#E96529;'>View History</a></li>";
 
-            echo "</ul>";
+            echo "</ul>"; 
             echo "</div>";
 
             echo "</td>";
@@ -62,10 +62,10 @@ function displayOffers($merchant_id, $merchant_name)
         }
     }
 
-    $stmt->close();
     $conn->close();
 }
 ?>
+
 
 
 
@@ -101,7 +101,7 @@ function displayOffers($merchant_id, $merchant_name)
             }
         }
 
-        table.dataTable tbody th:last-child,
+    table.dataTable tbody th:last-child,
         table.dataTable tbody td:last-child {
             position: sticky;
             right: 0;
@@ -123,29 +123,29 @@ function displayOffers($merchant_id, $merchant_name)
 
         @media only screen and (max-width: 767px) {
 
-            table,
-            thead,
-            tbody,
-            th,
-            td,
-            tr {
-                display: block;
-                text-align: left !important;
-            }
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+        text-align: left !important;
+      }
 
-            thead tr,
-            tfoot tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
+      thead tr,
+      tfoot tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
 
-            td {
-                border: none;
-                border-bottom: 1px solid #eee;
-                position: relative;
-                padding-left: 50% !important;
-            }
+      td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50% !important;
+      }
 
             td:before {
                 position: absolute;
@@ -158,79 +158,70 @@ function displayOffers($merchant_id, $merchant_name)
                 text-align: left !important;
             }
 
-            td:nth-of-type(1):before {
-                content: "Promo ID";
-            }
+      td:nth-of-type(1):before {
+        content: "Merchant ID";
+      }
 
-            td:nth-of-type(2):before {
-                content: "Promo Code";
-            }
+      td:nth-of-type(2):before {
+        content: "Merchant Name";
+      }
 
-            td:nth-of-type(3):before {
-                content: "Promo Amount";
-            }
+      td:nth-of-type(3):before {
+        content: "Merchant Type";
+      }
 
-            td:nth-of-type(4):before {
-                content: "Voucher Type";
-            }
+      td:nth-of-type(4):before {
+        content: "Legal Entity Name";
+      }
 
-            td:nth-of-type(5):before {
-                content: "Promo Category";
-            }
+      td:nth-of-type(5):before {
+        content: "Fullfillment Type";
+      }
 
-            td:nth-of-type(6):before {
-                content: "Promo Group";
-            }
+      td:nth-of-type(6):before {
+        content: "Business Address";
+      }
 
-            td:nth-of-type(7):before {
-                content: "Promo Type";
-            }
+      td:nth-of-type(7):before {
+        content: "Email Address";
+      }
 
-            td:nth-of-type(8):before {
-                content: "Promo Details";
-            }
+      td:nth-of-type(8):before {
+        content: "VAT Type";
+      }
 
-            td:nth-of-type(9):before {
-                content: "Remarks";
-            }
+      td:nth-of-type(9):before {
+        content: "Commission ID";
+      }
 
-            td:nth-of-type(10):before {
-                content: "Bill Status";
-            }
+      td:nth-of-type(10):before {
+        content: "Action";
+      }
 
-            td:nth-of-type(11):before {
-                content: "Start Date";
-            }
+      .dataTables_length {
+        display: none;
+      }
 
-            td:nth-of-type(12):before {
-                content: "End Date";
-            }
+      .title {
+        font-size: 25px;
+        padding-left: 2vh;
+        padding-top: 10px;
+      }
 
-            td:nth-of-type(13):before {
-                content: "Remarks 2";
-            }
-
-            td:nth-of-type(14):before {
-                content: "Actions";
-            }
-
-            .dataTables_length {
-                display: none;
-            }
-
-            .voucher-type {
-                padding-right: 2vh;
-            }
-        }
-    </style>
+      .add-btns {
+        padding-right: 2vh;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="cont-box">
-        <div class="custom-box pt-4">
-            <div class="sub" style="text-align:left;">
-                <div class="voucher-type">
-                    <div class="row pb-2 title" aria-label="breadcrumb">
+  <div class="cont-box">
+    <div class="custom-box pt-4">
+      <div class="sub" style="text-align:left;">
+
+        <div class="add-btns">
+        <div class="row pb-2 title" aria-label="breadcrumb">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                                 <li class="breadcrumb-item"><a href="../index.php"
@@ -270,7 +261,7 @@ function displayOffers($merchant_id, $merchant_name)
                     <table id="example" class="table bord" style="width:200%;">
                         <thead>
                             <tr>
-                                <th sclass="first-col">Promo ID</th>
+                                <th class="first-col">Promo ID</th>
                                 <th>Promo Code</th>
                                 <th>Promo Amount</th>
                                 <th>Voucher Type</th>
@@ -433,6 +424,8 @@ function displayOffers($merchant_id, $merchant_name)
             </div>
         </div>
     </div>
+</div>
+
 
     <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
     <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
@@ -441,9 +434,9 @@ function displayOffers($merchant_id, $merchant_name)
 
     <script>
         $(document).ready(function () {
-            if ($.fn.DataTable.isDataTable('#example')) {
-                $('#example').DataTable().destroy();
-            }
+        if ($.fn.DataTable.isDataTable('#example')) {
+          $('#example').DataTable().destroy();
+        }
 
             $('#example').DataTable({
                 scrollX: true,
@@ -509,28 +502,90 @@ function displayOffers($merchant_id, $merchant_name)
         }
 
     </script>
-
-    <script>
-        function toggleActions(button) {
-            // Find the actions-list div relative to the button
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Ensure actions toggle function works with dynamic content
+    document.body.addEventListener('click', function(event) {
+        if (event.target.closest('.btn') && event.target.closest('.actions-cell')) {
+            var button = event.target.closest('.btn');
             var actionsList = button.nextElementSibling;
 
-            // Toggle the display style of the actions-list div
-            if (actionsList.style.display === 'none') {
+            if (actionsList.style.display === 'none' || actionsList.style.display === '') {
                 actionsList.style.display = 'block';
             } else {
                 actionsList.style.display = 'none';
             }
         }
-    </script>
+    });
+});
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Event delegation for edit link
+    document.body.addEventListener('click', function(event) {
+        if (event.target.classList.contains('edit-link')) {
+            event.preventDefault();
+            var promoId = event.target.getAttribute('data-promo-id');
+            var promoCode = event.target.getAttribute('data-promo-code');
+            var merchantName = event.target.getAttribute('data-merchant-name');
+            var promoAmount = event.target.getAttribute('data-promo-amount');
+            var voucherType = event.target.getAttribute('data-voucher-type');
+            var promoCategory = event.target.getAttribute('data-promo-category');
+            var promoGroup = event.target.getAttribute('data-promo-group');
+            var promoType = event.target.getAttribute('data-promo-type');
+            var promoDetails = event.target.getAttribute('data-promo-details');
+            var remarks = event.target.getAttribute('data-remarks');
+            var billStatus = event.target.getAttribute('data-bill-status');
+            var startDate = event.target.getAttribute('data-start-date');
+            var endDate = event.target.getAttribute('data-end-date');
+            var remarks2 = event.target.getAttribute('data-remarks2');
+            var noStartDateChecked = event.target.getAttribute('data-nostartdate');
 
-    <!-- Script: No Start Date and No End Date Checkbox  -->
-    <script>
-      function updateDateFields() {
+            // Set the modal input fields with the current data
+            $('#promoId').val(promoId);
+            $('#editPromoForm #promoCode').val(promoCode);
+            $('#editPromoForm #merchantName').val(merchantName);
+            $('#editPromoForm #promoAmount').val(promoAmount);
+            $('#editPromoForm #voucherType').val(voucherType);
+            $('#editPromoForm #promoCategory').val(promoCategory);
+            $('#editPromoForm #promoGroup').val(promoGroup);
+            $('#editPromoForm #promoType').val(promoType);
+            $('#editPromoForm #promoDetails').val(promoDetails);
+            $('#editPromoForm #remarks').val(remarks);
+            $('#editPromoForm #billStatus').val(billStatus);
+            $('#editPromoForm #startDate').val(startDate);
+            $('#editPromoForm #endDate').val(endDate);
+            $('#editPromoForm #remarks2').val(remarks2);
+
+            // Set the NoStartDate checkbox
+            $('#editPromoForm #NoStartDate').prop('checked', noStartDateChecked === 'checked');
+
+            // Show the modal
+            $('#editStoreModal').modal('show');
+        }
+    });
+
+    // Event delegation for text toggle
+    document.body.addEventListener('click', function(event) {
+        if (event.target.classList.contains('text-cell')) {
+            var fullText = event.target.getAttribute('data-full');
+            var shortText = event.target.getAttribute('data-short');
+            if (event.target.innerText === shortText) {
+                event.target.innerText = fullText;
+            } else {
+                event.target.innerText = shortText;
+            }
+        }
+    });
+});
+
+  </script>
+<script>
+    function updateDateFields() {
         // Get the date fields
         var startDate = document.getElementById('startDate');
         var endDate = document.getElementById('endDate');
-
+        
         // Get the checkboxes
         var noStartDateCheckbox = document.getElementById('NoStartDate');
         var noEndDateCheckbox = document.getElementById('NoEndDate');
@@ -542,50 +597,50 @@ function displayOffers($merchant_id, $merchant_name)
         // Disable or enable the date fields based on the checkbox states
         startDate.disabled = noStartDateCheckbox.checked;
         endDate.disabled = noEndDateCheckbox.checked;
-      }
+    }
 
-      document.getElementById('editStoreModal').addEventListener('shown.bs.modal', function () {
+    document.getElementById('editStoreModal').addEventListener('shown.bs.modal', function () {
         updateDateFields();
-      });
+    });
 
-      // Add event listeners to checkboxes to handle their state changes
-      document.getElementById('NoStartDate').addEventListener('change', function () {
+    // Add event listeners to checkboxes to handle their state changes
+    document.getElementById('NoStartDate').addEventListener('change', function() {
         var startDate = document.getElementById('startDate');
         startDate.disabled = this.checked;
         if (this.checked) {
-          startDate.value = '';
+            startDate.value = '';
         }
-      });
+    });
 
-      document.getElementById('NoEndDate').addEventListener('change', function () {
+    document.getElementById('NoEndDate').addEventListener('change', function() {
         var endDate = document.getElementById('endDate');
         endDate.disabled = this.checked;
         if (this.checked) {
-          endDate.value = '';
+            endDate.value = '';
         }
-      });
+    });
 
-      // Add event listeners to date fields to automatically check the checkboxes if the date fields are cleared
-      document.getElementById('startDate').addEventListener('input', function () {
+    // Add event listeners to date fields to automatically check the checkboxes if the date fields are cleared
+    document.getElementById('startDate').addEventListener('input', function () {
         if (!this.value) {
-          document.getElementById('NoStartDate').checked = true;
-          this.disabled = true;
+            document.getElementById('NoStartDate').checked = true;
+            this.disabled = true;
         } else {
-          document.getElementById('NoStartDate').checked = false;
-          this.disabled = false;
+            document.getElementById('NoStartDate').checked = false;
+            this.disabled = false;
         }
-      });
+    });
 
-      document.getElementById('endDate').addEventListener('input', function () {
+    document.getElementById('endDate').addEventListener('input', function () {
         if (!this.value) {
-          document.getElementById('NoEndDate').checked = true;
-          this.disabled = true;
+            document.getElementById('NoEndDate').checked = true;
+            this.disabled = true;
         } else {
-          document.getElementById('NoEndDate').checked = false;
-          this.disabled = false;
+            document.getElementById('NoEndDate').checked = false;
+            this.disabled = false;
         }
-      });
-    </script>
+    });
+</script>
 </body>
 
 </html>

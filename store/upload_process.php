@@ -96,7 +96,7 @@ HTML;
 
     // Display success message
     if ($type === 'success') {
-        echo "<br><h2 style='color:#4caf50;'>Successfully Uploaded</h2><br>";
+        echo "<br><br><h2 style='color:#4caf50;'>Successfully Uploaded</h2><br>";
     }
 
     // If the message is an error and contains a list, format the list accordingly

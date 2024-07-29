@@ -1,28 +1,4 @@
 <?php require_once("header.php")?>
-
-
-<?php
-require 'inc/config.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $conn->real_escape_string($_POST['username']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $password = password_hash($conn->real_escape_string($_POST['password']), PASSWORD_BCRYPT);
-
-    $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Registration successful";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    $conn->close();
-}
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,70 +22,19 @@ body {
   min-height: 100vh;
   background: url('images/bg_booky.png') no-repeat;
   background-size: cover;
-  background-position: center;
-    
-
+  background-position: center;   
 }
 .wrapper{
-  width: 50%;
-  background: rgba(75, 176, 184, 0.5);
-  border: 2px solid rgba(255, 255, 255, .2);
-  backdrop-filter: blur(50px);
-  margin-top:150px;
+  width: 40%;
+  margin-top:50px;
   margin-left:auto;
   margin-right:auto;
-  color: #fff;
-  border-radius: 10px;
-  padding: 50px 60px;
-
-  
-}
-
-.wrapper h1{
-  font-size:20px;
-  font-weight: bold;
-  text-align: center;
-  margin:0 0 12px;
-  
-}
-.wrapper h2{
-  font-size: 15px;
-  font-weight: medium;
-  text-align: center;
-
-}
-.wrapper i{
-  font-size: 80px;
-  margin:auto;
-  margin:text-center mb-4;
-}
-
-
-.wrapper .btn{
-  width: 100%;
-  height: 45px;
-  background: #E96529;
-  border: none;
-  outline: none;
-  border-radius: 40px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-  cursor: pointer;
-  font-size: 16px;
-  color: #fff;
-  font-weight: 600;
-  margin-top: 20px;
-}
-
-.wrapper .btn:hover{
-  background-color: #4BB0B8;
-  color:#fff;
-  border: 2px solid rgba(255, 255, 255, .2);
-}
-
-.wrapper .btn:active{
-  background: #fff;
-  color:#4BB0B8;
-  border:solid #fff 2px;
+  color: #E96529;
+  padding: 10px 10px 30px 10px;
+  border-radius: 30px;
+background: #f1f1f1;
+box-shadow:  5px 5px 10px #cdcdcd,
+             -5px -5px 10px #ffffff;
 }
 
 </style>
@@ -118,12 +43,9 @@ body {
 
 <body>
   <div class="wrapper">
-    <form action="">
-    <h3 class="text-center mb-4"><img src="images/accessed.png" alt="booky" height="98" width="180"></h3>
-      <h1>Access Denied</h1>
-      <h2>You do not have permission to access this page.</h2>
-        <button type="submit" class="btn">Submit</button>
-    </form>
+  <h3 class="text-center"><img src="images/barrier.png" height="210" width="400" style="padding:0px;filter: drop-shadow(5px 5px 5px #444444);"></h3>  
+      <p style="text-align:center;font-size:40px;font-weight:900;">Access Denied</p>
+      <p style="text-align:center;font-size:20px;font-weight:700;">You do not have permission to access this page.<br> You can go back to <a href="javascript:history.go(-1)" style="text-align:center;color:#4BB0B8;font-size:20px;font-weight:700;">previous page.</a></p>
 </div>
 </body>
 

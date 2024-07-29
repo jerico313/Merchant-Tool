@@ -7,7 +7,7 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
     // Base SQL query
     $sql = "
         SELECT t.transaction_id, s.store_name, t.promo_code, t.customer_id, t.customer_name, 
-               t.transaction_date, t.gross_amount, t.discount, t.amount_discounted, t.payment, t.comm_rate_base, t.bill_status
+               t.transaction_date, t.gross_amount, t.discount, t.amount_discounted, t.amount_paid, t.payment, t.comm_rate_base, t.bill_status
         FROM transaction t
         JOIN store s ON t.store_id = s.store_id
         WHERE 1=1
@@ -47,6 +47,7 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
             $shortTransactionId = substr($row['transaction_id'], 0, 8);
             $gross_amount = number_format($row['gross_amount'], 2);
             $amount_discounted = number_format($row['amount_discounted'], 2);
+            $amount_paid = number_format($row['amount_paid'], 2);
             $discount = number_format($row['discount'], 2);
             $comm_rate_base = number_format($row['comm_rate_base'], 2);
 
@@ -60,6 +61,7 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
             echo "<td style='text-align:center;'>" . $gross_amount . "</td>";
             echo "<td style='text-align:center;'>" . $discount . "</td>";
             echo "<td style='text-align:center;'>" . $amount_discounted . "</td>";
+            echo "<td style='text-align:center;'>" . $amount_paid . "</td>";
             echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
             echo "<td style='text-align:center;'>" . $comm_rate_base . "</td>";
             echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
@@ -273,6 +275,7 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
               <th style="padding:10px;">Gross Amount</th>
               <th style="padding:10px;">Discount</th>
               <th style="padding:10px;">Amount Discounted</th>
+              <th style="padding:10px;">Amount Paid</th>
               <th style="padding:10px;">Payment</th>
               <th style="padding:10px;">Commission Rate Base</th>
               <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Bill Status</th>
@@ -292,6 +295,8 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script src="./js/script.js"></script>
+
+
 
 <script>
 $(document).ready(function() {
@@ -321,17 +326,17 @@ $(document).ready(function() {
   // Voucher Type filter buttons click events
   $('#btnPretrial').on('click', function () {
     table.search('').columns().search('').draw();
-    table.column(11).search('PRE-TRIAL', true, false).draw();
+    table.column(12).search('PRE-TRIAL', true, false).draw();
   });
 
   $('#btnBillable').on('click', function () {
     table.search('').columns().search('').draw();
-    table.column(11).search('^BILLABLE$', true, false).draw();
+    table.column(12).search('^BILLABLE$', true, false).draw();
   });
 
   $('#btnNotBillable').on('click', function () {
     table.search('').columns().search('').draw();
-    table.column(11).search('^NOT BILLABLE$', true, false).draw();
+    table.column(12).search('^NOT BILLABLE$', true, false).draw();
   });
 
   // Show All button click event

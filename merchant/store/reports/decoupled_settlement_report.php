@@ -14,6 +14,7 @@ $data = $result->fetch_assoc();
 $stmt->close();
 $conn->close();
 
+$store_brand_name = str_replace("'", "", $data['store_brand_name']);
 $totalGrossSales = number_format($data['total_gross_sales'], 2);
 $totalDiscount = number_format($data['total_discount'], 2);
 $totalOutstandingAmount = number_format($data['total_outstanding_amount'], 2);
@@ -115,7 +116,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Merchant Settlement Tool</title>
+  <title><?php echo htmlspecialchars($data['store_brand_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.pdf</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
   <link rel="icon" href="/Merchant-Tool/images/booky1.png" type="image/x-icon" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
@@ -225,7 +226,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-            XLSX.writeFile(wb, "<?php echo htmlspecialchars($data['store_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).xlsx");
+            XLSX.writeFile(wb, "<?php echo htmlspecialchars($store_brand_name); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
         }
     </script>
 </head>
@@ -234,7 +235,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         <div class="container-fluid">
             <a class="navbar-brand" href="javascript:history.back()">
                 <i class="fa-solid fa-arrow-left fa-lg"></i>
-                <span style="margin-left:10px;font-size:8px;background-color:#EA4335;padding:3px;border-radius:5px;font-family:helvetica;font-weight:bold;">PDF</span> <?php echo htmlspecialchars($data['store_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf
+                <span style="margin-left:10px;font-size:8px;background-color:#EA4335;padding:3px;border-radius:5px;font-family:helvetica;font-weight:bold;">PDF</span> <?php echo htmlspecialchars($data['store_brand_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.pdf
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
