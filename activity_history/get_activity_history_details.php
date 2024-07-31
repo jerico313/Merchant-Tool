@@ -5,7 +5,7 @@ if (isset($_POST['activityId'])) {
     $activityId = $_POST['activityId'];
 
     // Prepare the SQL statement
-    $stmt = $conn->prepare("SELECT table_name, description FROM activity_history WHERE activity_id = ?");
+    $stmt = $conn->prepare("SELECT table_name, description FROM activity_history_view WHERE activity_history_id = ?");
     // Bind the activityId parameter to the prepared statement
     $stmt->bind_param("i", $activityId);
     // Execute the statement

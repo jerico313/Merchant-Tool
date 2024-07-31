@@ -230,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-3" style="text-align:right;margin-right:10px;">
+                                <div class="mt-4" style="text-align:right;margin-right:10px;">
                                     <button type="submit" name="change_password" class="btn btn-primary" style="background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
                                 </div>
                             </form>

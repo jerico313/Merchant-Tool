@@ -43,7 +43,7 @@ box-shadow:  5px 5px 10px #cdcdcd,
 
 <body>
   <div class="wrapper">
-  <h3 class="text-center"><img src="images/barrier.png" height="210" width="400" style="padding:0px;filter: drop-shadow(5px 5px 5px #444444);"></h3>  
+  <h3 class="text-center"><img src="images/barrier.png" height="210" width="400" style="padding:0px;filter: drop-shadow(5px 5px 5px #989898);"></h3>  
       <p style="text-align:center;font-size:40px;font-weight:900;">Access Denied</p>
       <p style="text-align:center;font-size:20px;font-weight:700;">You do not have permission to access this page.<br> You can go back to <a href="javascript:history.go(-1)" style="text-align:center;color:#4BB0B8;font-size:20px;font-weight:700;">previous page.</a></p>
 </div>
