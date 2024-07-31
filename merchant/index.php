@@ -11,20 +11,24 @@ function displayMerchant()
     while ($row = $result->fetch_assoc()) {
       $shortMerchantId = substr($row['merchant_id'], 0, 8);
 
+      // Prepare truncated and full text for email_address
+      $email_address_full = $row['email_address'];
+      $email_address = strlen($row['email_address']) > 30 ? substr($row['email_address'], 0, 30) . '...' : $row['email_address'];
+
       echo "<tr style='padding:15px 0;' data-uuid='" . $row['merchant_id'] . "'>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $shortMerchantId . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['merchant_name']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['merchant_partnership_type']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['business_address']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['email_address']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;display:none;'>" . htmlspecialchars($row['sales_id']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['sales']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;display:none;'>" . htmlspecialchars($row['account_manager_id']) . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . htmlspecialchars($row['account_manager']) . "</td>";
-      
-      echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell'>";
-      echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
+      echo "<td>" . $shortMerchantId . "</td>";
+      echo "<td>" . htmlspecialchars($row['merchant_name']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['merchant_partnership_type']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['business_address']) . "</td>";
+      echo "<td style='display:none;'>" . htmlspecialchars($email_address_full) . "</td>";
+      echo "<td class='text-cell' data-full='" . htmlentities($email_address_full) . "' data-short='" . htmlentities($email_address) . "'>" . $email_address . "</td>";
+      echo "<td style='display:none;'>" . htmlspecialchars($row['sales_id']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['sales']) . "</td>";
+      echo "<td style='display:none;'>" . htmlspecialchars($row['account_manager_id']) . "</td>";
+      echo "<td>" . htmlspecialchars($row['account_manager']) . "</td>";
+      echo "<td class='actions-cell'>";
+      echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
       echo "<div class='mt-2 actions-list' style='display:none;'>"; // Hidden initially
       echo "<ul class='list-group'>";
 
@@ -56,7 +60,7 @@ function fetchSales()
   include ("../inc/config.php");
 
   // Updated SQL query to filter by department
-  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Finance' ORDER BY name";
+  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Operations' ORDER BY name";
   $employeeResult = $conn->query($employeeSql);
 
   if ($employeeResult->num_rows > 0) {
@@ -114,42 +118,6 @@ function fetchAccountManager()
   <style>
     body {
       background-image: url("../images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .action-item {
-      animation: fadeIn 0.3s ease forwards;
-    }
-
-    .add-btns {
-      padding-bottom: 0px;
-      padding-right: 5vh;
-      display: flex;
-      align-items: center;
-    }
-
-    .modal-title {
-      font-size: 15px;
-      font-weight: bold;
-    }
-
-    .form-label {
-      font-weight: bold;
     }
 
     #alertContainer {
@@ -163,7 +131,6 @@ function fetchAccountManager()
       padding: 15px;
       font-size: 13px;
     }
-
 
     table.dataTable tbody td:last-child {
       position: sticky;
@@ -182,21 +149,7 @@ function fetchAccountManager()
       box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
       -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
       -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
-    }
-
-    select {
-      background: transparent;
-      border: 1px solid #ccc;
-      padding: 5px;
-      border-radius: 5px;
-      color: #333;
-      width: 80px;
-    }
-
-    select:focus {
-      outline: none;
-      box-shadow: none;
-    }
+    }    
   </style>
 </head>
 
@@ -207,29 +160,28 @@ function fetchAccountManager()
         <div class="add-btns">
           <p class="title">Merchants</p>
           <a href="upload.php">
-            <button type="button" class="btn btn-warning add-merchant">
+            <button type="button" class="btn btn-primary add-merchant">
               <i class="fa-solid fa-plus"></i> Add Merchant
             </button>
           </a>
         </div>
 
-        <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-          <table id="example" class="table bord" style="width:200%;height:auto;">
+        <div class="content">
+          <table id="example" class="table bord" style="width:150%;height:auto;">
             <thead>
               <tr>
-                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Merchant ID</th>
-                <th style="width:150px !important;padding:10px;">Merchant Name</th>
-                <th style="width:150px !important;padding:10px;">Partnership Type</th>
-                <th style="width:150px !important;padding:10px;">Legal Entity Name</th>
-                <th style="width:250px !important;padding:10px;">Business Address</th>
-                <th style="width:150px !important;padding:10px;">Email Address</th>
-                <th style="width:150px !important;padding:10px;">Sales</th>
-                <th style="width:150px !important;padding:10px;">Account Manager</th>
+                <th class="first-col">Merchant ID</th>
+                <th>Merchant Name</th>
+                <th>Partnership Type</th>
+                <th>Legal Entity Name</th>
+                <th>Business Address</th>
+                <th style="display:none;"></th>
+                <th>Email Address</th>
+                <th>Sales</th>
+                <th>Account Manager</th>
                 <th style="display:none;"></th>
                 <th style="display:none;"></th>
-                <th
-                  style="width:80px !important;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">
-                  Action</th>
+                <th class="action-col" style="width:6%;">Actions</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -239,7 +191,8 @@ function fetchAccountManager()
         </div>
       </div>
     </div>
-    <!-- Edit Modal -->
+
+    <!-- Modal: Edit Merchant Details -->
     <div class="modal fade" id="editMerchantModal" data-bs-backdrop="static" tabindex="-1"
       aria-labelledby="editMerchantModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -252,6 +205,7 @@ function fetchAccountManager()
             <form id="editMerchantForm" action="edit.php" method="POST">
               <input type="hidden" id="merchantId" name="merchantId">
               <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+              
               <div class="mb-3">
                 <label for="merchantName" class="form-label">
                   Merchant Name<span class="text-danger" style="padding:2px">*</span>
@@ -275,7 +229,7 @@ function fetchAccountManager()
               </div>
               <div class="mb-3">
                 <label for="businessAddress" class="form-label">Business Address</label>
-                <input type="text" class="form-control" id="businessAddress" name="businessAddress" placeholder="Enter business address">
+                <textarea  class="form-control" rows="2" id="businessAddress" name="businessAddress" placeholder="Enter business address"></textarea>
               </div>
               <div class="mb-3">
                 <label for="emailAddress" class="form-label">Email Address</label>
@@ -299,66 +253,77 @@ function fetchAccountManager()
                   <?php fetchAccountManager(); ?>
                 </select>
               </div>
-              <button type="submit" class="btn btn-primary"
-                style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
+              <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
             </form>
           </div>
         </div>
       </div>
     </div>
-    <!-- Report Modal -->
-    <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius:20px;">
-      <div class="modal-header border-0">
-        <p class="modal-title" id="reportModalLabel">Choose Report Type</p>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="reportForm">
-          <input type="hidden" id="reportMerchantId" name="merchantId">
-          <input type="hidden" id="reportMerchantName" name="merchantName">
-          <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-          <div class="mb-3">
-            <label for="reportType" class="form-label">Report Type</label>
-            <select class="form-select" id="reportType" required>
-              <option selected disabled>-- Select Report Type --</option>
-              <option value="Coupled">Coupled</option>
-              <option value="Decoupled">Decoupled</option>
-              <option value="GCash">GCash</option>
-            </select>
+
+    <!-- Modal: Check Report -->
+    <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:20px;">
+          <div class="modal-header border-0">
+            <p class="modal-title" id="reportModalLabel">Choose Report Type</p>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="mb-3">
-            <label for="billStatus" class="form-label">Bill Status</label>
-            <select class="form-select" id="billStatus" name="billStatus" required>
-              <option selected disabled>-- Select Bill Status --</option>
-              <option value="All">PRE-TRIAL and BILLABLE</option>
-              <option value="PRE-TRIAL">PRE-TRIAL</option>
-              <option value="BILLABLE">BILLABLE</option>
-            </select>
+          <div class="modal-body">
+            <form id="reportForm">
+              <input type="hidden" id="reportMerchantId" name="merchantId">
+              <input type="hidden" id="reportMerchantName" name="merchantName">
+              <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+              <div class="mb-3">
+                <label for="reportType" class="form-label">
+                  Report Type<span class="text-danger" style="padding:2px">*</span>
+                </label>
+                <select class="form-select" id="reportType" required>
+                  <option selected disabled>-- Select Report Type --</option>
+                  <option value="Coupled">Coupled</option>
+                  <option value="Decoupled">Decoupled</option>
+                  <option value="GCash">GCash</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="billStatus" class="form-label">
+                  Bill Status<span class="text-danger" style="padding:2px">*</span>                  
+                </label>
+                <select class="form-select" id="billStatus" name="billStatus" required>
+                  <option selected disabled>-- Select Bill Status --</option>
+                  <option value="All">PRE-TRIAL and BILLABLE</option>
+                  <option value="PRE-TRIAL">PRE-TRIAL</option>
+                  <option value="BILLABLE">BILLABLE</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="startDate" class="form-label">
+                  Start Date<span class="text-danger" style="padding:2px">*</span>
+                </label>
+                <input type="date" class="form-control" id="startDate" name="startDate" required>
+              </div>
+              <div class="mb-3">
+                <label for="endDate" class="form-label">
+                  End Date<span class="text-danger" style="padding:2px">*</span>
+                </label>
+                <input type="date" class="form-control" id="endDate" name="endDate" required>
+              </div>
+              <button type="button" class="btn btn-primary modal-save-btn" id="submitReport">Generate Report</button>
+            </form>
           </div>
-          <div class="mb-3">
-            <label for="startDate" class="form-label">Start Date</label>
-            <input type="date" class="form-control" id="startDate" name="startDate" required>
-          </div>
-          <div class="mb-3">
-            <label for="endDate" class="form-label">End Date</label>
-            <input type="date" class="form-control" id="endDate" name="endDate" required>
-          </div>
-          <button type="button" class="btn btn-primary" style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;" id="submitReport">Generate Report</button>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<div id="alertContainer"></div>
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-<script>
-  function checkReport(merchantId, merchantName) {
-    // Set the merchantId and merchantName in the report modal
-    document.getElementById('reportMerchantId').value = merchantId;
-    document.getElementById('reportMerchantName').value = merchantName;
+    <div id="alertContainer"></div>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+    
+    <!-- Script: Check Report -->
+    <script>
+      function checkReport(merchantId, merchantName) {
+        // Set the merchantId and merchantName in the report modal
+        document.getElementById('reportMerchantId').value = merchantId;
+        document.getElementById('reportMerchantName').value = merchantName;
 
         // Show the report modal
         $('#reportModal').modal('show');
@@ -369,31 +334,31 @@ function fetchAccountManager()
         var reportType = document.getElementById('reportType').value;
         var billStatus = document.getElementById('billStatus').value;
 
-    if (reportType === 'Coupled') {
-      if (billStatus === 'PRE-TRIAL') {
-        form.action = 'coupled_generate_report_pre-trial.php';
-      } else if (billStatus === 'BILLABLE') {
-        form.action = 'coupled_generate_report_billable.php';
-      } else if (billStatus === 'All') {
-        form.action = 'coupled_generate_report.php';
-      }
-    } else if (reportType === 'Decoupled') {
-      if (billStatus === 'PRE-TRIAL') {
-        form.action = 'decoupled_generate_report_pre-trial.php';
-      } else if (billStatus === 'BILLABLE') {
-        form.action = 'decoupled_generate_report_billable.php';
-      } else if (billStatus === 'All') {
-        form.action = 'decoupled_generate_report.php';
-      }
-    } else if (reportType === 'GCash') {
-      if (billStatus === 'PRE-TRIAL') {
-        form.action = 'gcash_generate_report_pre-trial.php';
-      } else if (billStatus === 'BILLABLE') {
-        form.action = 'gcash_generate_report_billable.php';
-      } else if (billStatus === 'All') {
-        form.action = 'gcash_generate_report.php';
-      }
-    }
+        if (reportType === 'Coupled') {
+          if (billStatus === 'PRE-TRIAL') {
+            form.action = 'coupled_generate_report_pre-trial.php';
+          } else if (billStatus === 'BILLABLE') {
+            form.action = 'coupled_generate_report_billable.php';
+          } else if (billStatus === 'All') {
+            form.action = 'coupled_generate_report.php';
+          }
+        } else if (reportType === 'Decoupled') {
+          if (billStatus === 'PRE-TRIAL') {
+            form.action = 'decoupled_generate_report_pre-trial.php';
+          } else if (billStatus === 'BILLABLE') {
+            form.action = 'decoupled_generate_report_billable.php';
+          } else if (billStatus === 'All') {
+            form.action = 'decoupled_generate_report.php';
+          }
+        } else if (reportType === 'GCash') {
+          if (billStatus === 'PRE-TRIAL') {
+            form.action = 'gcash_generate_report_pre-trial.php';
+          } else if (billStatus === 'BILLABLE') {
+            form.action = 'gcash_generate_report_billable.php';
+          } else if (billStatus === 'All') {
+            form.action = 'gcash_generate_report.php';
+          }
+        }
 
         // Set the method to POST
         form.method = 'POST';
@@ -402,6 +367,7 @@ function fetchAccountManager()
       });
     </script>
 
+    <!-- Script: DataTable -->
     <script>
       $(document).ready(function () {
         if ($.fn.DataTable.isDataTable('#example')) {
@@ -411,15 +377,15 @@ function fetchAccountManager()
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 2, 3, 4, 5, 6, 9] }
+            { orderable: false, targets: [2, 5, 6, 7, 8, 10, 11] }
           ],
-          order: []  // Ensure no initial ordering
+          order: [[1, 'asc']]
         });
       });
 
     </script>
 
-    <!-- Edit Merchant Modal -->
+    <!-- Script: Edit Merchant Details -->
     <script>
       function editMerchant(merchantUuid) {
         // Fetch the current data of the selected merchant
@@ -429,32 +395,62 @@ function fetchAccountManager()
         var legalEntityName = merchantRow.find('td:nth-child(4)').text();
         var businessAddress = merchantRow.find('td:nth-child(5)').text();
         var emailAddress = merchantRow.find('td:nth-child(6)').text();
-        var salesId = merchantRow.find('td:nth-child(7)').text();  // Corrected index for salesId
-    var accountManagerId = merchantRow.find('td:nth-child(9)').text();  // Corrected index for accountManagerId
+        var salesId = merchantRow.find('td:nth-child(8)').text();  // Corrected index for salesId
+        var accountManagerId = merchantRow.find('td:nth-child(10)').text();  // Corrected index for accountManagerId
 
-    // Set values in the edit modal
-    $('#merchantId').val(merchantUuid);
-    $('#merchantName').val(merchantName);
-    $('#merchantParntershipType').val(merchantParntershipType);
-    $('#legalEntityName').val(legalEntityName);
-    $('#businessAddress').val(businessAddress);
-    $('#emailAddress').val(emailAddress);
-    if (salesId === '-') {
+        // Set values in the edit modal
+        $('#merchantId').val(merchantUuid);
+        $('#merchantName').val(merchantName);
+        $('#merchantParntershipType').val(merchantParntershipType);
+        
+        if (legalEntityName === '-') {
+          $('#legalEntityName').val(null);
+        } else {
+          $('#legalEntityName').val(legalEntityName);
+        }
+        
+        if (businessAddress === '-') {
+          $('#businessAddress').val(null);
+        } else {
+          $('#businessAddress').val(businessAddress);
+        }
+        
+        if (emailAddress === '-') {
+          $('#emailAddress').val(null);
+        } else {
+          $('#emailAddress').val(emailAddress);
+        }
+        
+        if (salesId === '-') {
           $('#sales').val('No assigned person');
         } else {
           $('#sales').val(salesId);
         }
+
         if (accountManagerId === '-') {
           $('#accountManager').val('No assigned person');
         } else {
           $('#accountManager').val(accountManagerId);
         }
 
-        
-      
         // Open the edit modal
         $('#editMerchantModal').modal('show');
       }
+    </script>
+
+    <script>
+      // Event delegation for text toggle of email address
+      document.body.addEventListener('click', function (event) {
+          if (event.target.classList.contains('text-cell')) {
+            var fullText = event.target.getAttribute('data-full');
+            var shortText = event.target.getAttribute('data-short');
+            if (event.target.innerText === shortText) {
+              event.target.innerText = fullText;
+            } else {
+              event.target.innerText = shortText;
+            }
+          }
+        });
     </script>
 
     <script>

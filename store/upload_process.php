@@ -17,10 +17,6 @@ function displayMessage($type, $message) {
     <style>
         body { 
             background-image: url("../images/bg_booky.png"); 
-            background-position: center; 
-            background-repeat: no-repeat; 
-            background-size: cover; 
-            background-attachment: fixed; 
         }
         .container { 
             text-align: center; 
@@ -213,9 +209,12 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     // If no duplicates and all merchant IDs are valid, proceed with inserting into database
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); // Skip header row again
-    $stmt = $conn->prepare("INSERT INTO store (merchant_id, store_id, store_name, legal_entity_name, store_address) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO store (merchant_id, store_id, store_name, legal_entity_name, store_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $stmt->bind_param("sssss", $data[1], $data[3], $data[2], $data[4], $data[5]); // Adjust based on your CSV structure
+        $data[4] = empty($data[4]) ? null : $data[4]; // Convert blank legal_entity_name to null
+        $data[5] = empty($data[5]) ? null : $data[5]; // Convert blank store_address to null
+        $data[6] = empty($data[6]) ? null : $data[6]; // Convert blank email_address to null
+        $stmt->bind_param("ssssss", $data[1], $data[3], $data[2], $data[4], $data[5], $data[6]); // Adjust based on your CSV structure
         $stmt->execute();
     }
 
