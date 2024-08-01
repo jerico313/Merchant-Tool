@@ -276,7 +276,7 @@ body {
       <?php endif; ?>
       <div class="input-box">
   <i class="fa-solid fa-user input-icon" style="margin-left:10px;"></i>
-  <input type="text" style="padding-left: 50px !important;"placeholder="Enter your Email" name="email_address" required>
+  <input type="text" style="padding-left: 50px !important;"placeholder="Email address" name="email_address" required>
 </div>
 
 <div class="input-box">
@@ -287,8 +287,9 @@ body {
       <div class="remember-forgot" style="padding:3px 15px;">
       <label class="form-check-label" style="display:block;margin-top:5x;">
         <input type="checkbox" class="form-check-input" id="showPassword" name="showPassword" style="vertical-align: middle;position: relative; ">
-        Show Password</label>
-        <a href="forgot_password.php">Forgot password? </a>
+        Show password
+      </label>
+        <a href="forgot_password.php">Forgot password?</a>
       </div>
       <button type="submit" class="btn" name="login">Login</button>
      
