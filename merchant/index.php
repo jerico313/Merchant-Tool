@@ -525,9 +525,15 @@ function fetchAccountManager()
           columnDefs: [
             { orderable: false, targets: [0, 2, 5, 6, 7, 8, 10, 11] }
           ],
+<<<<<<< HEAD
+      order: [[5, 'asc']]
+   }); 
+  });
+=======
           order: [[1, 'asc']]
         });
       });
+>>>>>>> 1944734fd5d9e56d5ebdfa876a0052e460adc20d
     </script>
 
     <!-- Script: Edit Merchant Details -->
