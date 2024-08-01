@@ -315,7 +315,7 @@ function displayStore()
         <div class="add-btns">
           <p class="title">Promos</p>
           <a href="upload.php">
-            <button type="button" class="btn btn-danger add-merchant">
+            <button type="button" class="btn btn-primary add-merchant">
               <i class="fa-solid fa-upload"></i>
               Upload Promos
             </button>
