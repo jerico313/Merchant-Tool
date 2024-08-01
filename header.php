@@ -230,8 +230,8 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
 
         // Session timeout logic
         var timeout;
-        var timeoutDuration = 900000; // 15 minutes in milliseconds
-
+        var timeoutDuration = 3600000; // 15 minutes in milliseconds
+                              
         function resetTimeout() {
             clearTimeout(timeout);
             timeout = setTimeout(logout, timeoutDuration);

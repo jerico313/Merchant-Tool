@@ -1,6 +1,4 @@
-<?php include ("../header.php"); ?>
-
-
+<?php include("../header.php");?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,6 +93,7 @@
                         <div class="form-group mb-3">
                             <label for="name" style="font-weight:900;color:#6c6868;">Name<span class="text-danger" style="padding:2px">*</span></label>
                             <input type="text" class="form-control" id="name" name="name" style="font-weight:700;">
+                            <input type="hidden" value="<?php echo ($user_id); ?>" name="userId">
                         </div>
                         <div class="form-group mb-3">
                             <label for="email" style="font-weight:900;color:#6c6868;">Email<span class="text-danger" style="padding:2px">*</span></label>
@@ -107,7 +106,7 @@
                                 <option value="User">User</option>
                                 <option value="Admin">Admin</option>
                             </select>
-                            <input type="" value="<?php echo ($user_id); ?>" name="userId">
+                            
                         </div>
                     </div>
                     <div class="col-md-6">
