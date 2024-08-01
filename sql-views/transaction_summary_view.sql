@@ -74,25 +74,37 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
     `p`.`promo_category` AS `Promo Category`,
     `p`.`promo_group` AS `Promo Group`,
     `p`.`promo_type` AS `Promo Type`,
+    CASE
+        WHEN `t`.`payment` IS NULL THEN 0.00
+        WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
+        ELSE `t`.`gross_amount` 
+    END AS `Gross Amount`,
     FORMAT(
         CASE
             WHEN `t`.`payment` IS NULL THEN 0.00
             WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
             ELSE `t`.`gross_amount` 
-        END, 2) AS `Gross Amount`,
+        END, 2) AS `Formatted Gross Amount`,
+    
+        CASE
+            WHEN `t`.`payment` IS NULL THEN 0.00
+            WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
+            ELSE `t`.`discount` 
+        END AS `Discount`,
     FORMAT(
         CASE
             WHEN `t`.`payment` IS NULL THEN 0.00
             WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
             ELSE `t`.`discount` 
-        END, 2) AS `Discount`,
+        END, 2) AS `Formatted Discount`,
     FORMAT(
         CASE
             WHEN `t`.`payment` IS NULL THEN 0.00
             WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
             ELSE `t`.`amount_discounted` 
         END, 2) AS `Amount Discounted`,
-    FORMAT(`t`.`amount_paid`, 2) AS `Cart Amount`,
+    `t`.`amount_paid` AS `Cart Amount`,
+    FORMAT(`t`.`amount_paid`, 2) AS `Formatted Cart Amount`,
     CASE
         WHEN `t`.`payment` IN (
                 'paymaya_credit_card',
@@ -107,19 +119,37 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
     END AS `Mode of Payment`,
     `t`.`bill_status` AS `Bill Status`,
     FORMAT(`t`.`comm_rate_base`, 2) AS `Comm Rate Base`,
+    `t`.`comm_rate_base` AS `Formatted Comm Rate Base`,
     pg_fee_cte.commission_type AS `Commission Type`,
     CONCAT(pg_fee_cte.commission_rate, '%') AS `Commission Rate`,
-    FORMAT(ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2), 2) AS `Commission Amount`,
+    ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2) AS `Commission Amount`,
+    FORMAT(ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2), 2) AS `Formatted Commission Amount`,
+    CASE
+        WHEN pg_fee_cte.commission_type = 'Vat Exc' 
+            THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100) * 1.12, 2)
+        WHEN pg_fee_cte.commission_type = 'Vat Inc' 
+            THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2)
+    END AS `Total Billing`,
     FORMAT(
         CASE
             WHEN pg_fee_cte.commission_type = 'Vat Exc' 
                 THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100) * 1.12, 2)
             WHEN pg_fee_cte.commission_type = 'Vat Inc' 
                 THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2)
-        END, 2) AS `Total Billing`,
+        END, 2) AS `Formatted Total Billing`,
     CONCAT(pg_fee_cte.pg_fee_rate, '%') AS `PG Fee Rate`,
-    FORMAT(ROUND(`t`.`amount_paid` * (pg_fee_cte.pg_fee_rate / 100), 2), 2) AS `PG Fee Amount`,
+    ROUND(`t`.`amount_paid` * (pg_fee_cte.pg_fee_rate / 100), 2) AS `PG Fee Amount`,
+    FORMAT(ROUND(`t`.`amount_paid` * (pg_fee_cte.pg_fee_rate / 100), 2), 2) AS `Formatted PG Fee Amount`,
     `f`.`cwt_rate` `CWT Rate`,
+    ROUND(`t`.`amount_paid`
+        - CASE
+            WHEN pg_fee_cte.commission_type = 'Vat Exc' 
+                THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100) * 1.12, 2)
+            WHEN pg_fee_cte.commission_type = 'Vat Inc' 
+                THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2)
+        END 
+        - ROUND(`t`.`amount_paid` * (pg_fee_cte.pg_fee_rate / 100), 2)
+    , 2) AS `Amount to be Disbursed`
     FORMAT(
         ROUND(`t`.`amount_paid`
             - CASE
@@ -129,7 +159,7 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
                     THEN ROUND(`t`.`comm_rate_base` * (pg_fee_cte.commission_rate / 100), 2)
             END 
             - ROUND(`t`.`amount_paid` * (pg_fee_cte.pg_fee_rate / 100), 2)
-        , 2), 2) AS `Amount to be Disbursed`
+        , 2), 2) AS `Formatted Amount to be Disbursed`
 FROM `leadgen_db`.`transaction` `t`
     JOIN `leadgen_db`.`store` `s` ON `t`.`store_id` = `s`.`store_id`
     JOIN `leadgen_db`.`merchant` `m` ON `m`.`merchant_id` = `s`.`merchant_id`
