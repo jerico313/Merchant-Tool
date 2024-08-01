@@ -20,10 +20,6 @@ function displayMessage($type, $message) {
     <style>
         body { 
             background-image: url("../images/bg_booky.png"); 
-            background-position: center; 
-            background-repeat: no-repeat; 
-            background-size: cover; 
-            background-attachment: fixed; 
         }
         .container { 
             text-align: center; 

@@ -28,8 +28,12 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
     <div class="cont-box">
         <div class="custom-box pt-4">
-            <a href="javascript:history.back()"><span class="back"><i class="fa-regular fa-circle-left fa-lg"></i><span
-                        class="back-text"> Back to Stores</span></span></a>
+            <a href="javascript:history.back()">
+                <span class="back">
+                    <i class="fa-regular fa-circle-left fa-lg"></i>
+                    <span class="back-text"> Back to Stores</span>
+                </span>
+            </a>
             <div class="upload pt-4" style="text-align:left;">
                 <div class="add-btns">
                     <p class="title">Upload Stores</p>

@@ -230,7 +230,7 @@ function displayStore()
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Remarks 2</th>
-                <th class="action-col" style="width:30px;">Actions</th>
+                <th class="action-col" style="width:25px;">Actions</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
