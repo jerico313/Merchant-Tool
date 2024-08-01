@@ -21,20 +21,12 @@
             ELSE `m`.`email_address`
         END AS `email_address`,
         CASE
-            WHEN `m`.`sales` IS NULL THEN "-"
-            ELSE `m`.`sales`
-        END AS `sales_id`,
-        CASE
             WHEN `m`.`sales` IS NULL THEN "No assigned person"
-            ELSE `u1`.`name`
+            ELSE `m`.`sales`
         END AS `sales`,
         CASE
-            WHEN `m`.`account_manager` IS NULL THEN "-"
-            ELSE `m`.`account_manager`
-        END AS `account_manager_id`,
-        CASE
             WHEN `m`.`account_manager` IS NULL THEN "No assigned person"
-            ELSE `u2`.`name`
+            ELSE `m`.`account_manager`
         END AS `account_manager`,
         `m`.`created_at` AS `created_at`,
         `m`.`updated_at` AS `updated_at`

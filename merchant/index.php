@@ -23,9 +23,7 @@ function displayMerchant()
       echo "<td>" . htmlspecialchars($row['business_address']) . "</td>";
       echo "<td style='display:none;'>" . htmlspecialchars($email_address_full) . "</td>";
       echo "<td class='text-cell' data-full='" . htmlentities($email_address_full) . "' data-short='" . htmlentities($email_address) . "'>" . $email_address . "</td>";
-      echo "<td style='display:none;'>" . htmlspecialchars($row['sales_id']) . "</td>";
       echo "<td>" . htmlspecialchars($row['sales']) . "</td>";
-      echo "<td style='display:none;'>" . htmlspecialchars($row['account_manager_id']) . "</td>";
       echo "<td>" . htmlspecialchars($row['account_manager']) . "</td>";
       echo "<td class='actions-cell'>";
       echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
@@ -322,8 +320,6 @@ function fetchAccountManager()
                 <th>Email Address</th>
                 <th>Sales</th>
                 <th>Account Manager</th>
-                <th style="display:none;"></th>
-                <th style="display:none;"></th>
                 <th class="action-col" style="width:6%;">Actions</th>
               </tr>
             </thead>
@@ -386,19 +382,15 @@ function fetchAccountManager()
                 <label for="sales" class="form-label">
                   Sales<span class="text-danger" style="padding:2px">*</span>
                 </label>
-                <select class="form-select" id="sales" name="sales" required>
-                  <option selected disabled>-- Select Sales --</option>
-                  <?php fetchSales(); ?>
-                </select>
+                <input type="text" class="form-control" id="sales" name="sales"
+                  placeholder="Enter sales person" maxlength="255">
               </div>
               <div class="mb-3">
                 <label for="accountManager" class="form-label">
                   Account Manager<span class="text-danger" style="padding:2px">*</span>
                 </label>
-                <select class="form-select" id="accountManager" name="accountManager" required>
-                  <option selected disabled>-- Select Account Manager --</option>
-                  <?php fetchAccountManager(); ?>
-                </select>
+                <input type="text" class="form-control" id="accountManager" name="accountManager"
+                  placeholder="Enter account manager" maxlength="255">
               </div>
               <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
             </form>
@@ -523,7 +515,7 @@ function fetchAccountManager()
         var table = $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 2, 5, 6, 7, 8, 10, 11] }
+            { orderable: false, targets: [0, 2, 5, 6, 9] }
           ],
           order: [[1, 'asc']]
         });
@@ -541,8 +533,8 @@ function fetchAccountManager()
         var legalEntityName = merchantRow.find('td:nth-child(4)').text();
         var businessAddress = merchantRow.find('td:nth-child(5)').text();
         var emailAddress = merchantRow.find('td:nth-child(6)').text();
-        var salesId = merchantRow.find('td:nth-child(8)').text();  // Corrected index for salesId
-        var accountManagerId = merchantRow.find('td:nth-child(10)').text();  // Corrected index for accountManagerId
+        var sales = merchantRow.find('td:nth-child(8)').text();  // Corrected index for salesId
+        var accountManager = merchantRow.find('td:nth-child(9)').text();  // Corrected index for accountManagerId
 
         // Set values in the edit modal
         $('#merchantId').val(merchantUuid);
@@ -567,16 +559,16 @@ function fetchAccountManager()
           $('#emailAddress').val(emailAddress);
         }
 
-        if (salesId === '-') {
-          $('#sales').val('No assigned person');
+        if (sales === 'No assigned person') {
+          $('#sales').val(null);
         } else {
-          $('#sales').val(salesId);
+          $('#sales').val(sales);
         }
 
-        if (accountManagerId === '-') {
-          $('#accountManager').val('No assigned person');
+        if (accountManager === 'No assigned person') {
+          $('#accountManager').val(null);
         } else {
-          $('#accountManager').val(accountManagerId);
+          $('#accountManager').val(accountManager);
         }
 
         // Open the edit modal
