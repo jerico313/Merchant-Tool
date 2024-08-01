@@ -381,20 +381,18 @@ function displayStore()
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
     <script src="./js/script.js"></script>
     <script>
-      $(document).ready(function () {
-        if ($.fn.DataTable.isDataTable('#example')) {
-          $('#example').DataTable().destroy();
-        }
+      $(window).on('load', function() {
+   $('.loading').hide();
+   $('.cont-box').show();
 
-        $('#example').DataTable({
-          scrollX: true,
-          columnDefs: [
-            { orderable: false, targets: [3, 4, 5, 6, 7, 8, 9, 10, 11] }    // Disable sorting for the specified columns
+   var table = $('#example').DataTable({
+      scrollX: true,
+      columnDefs: [
+            { orderable: false, targets: [3, 4, 5, 6, 7, 8, 9, 10, 11] }
           ],
-          order: [[1, 'asc'], [2, 'asc']]  // Ensure no initial ordering
-        });
-      });
-
+          order: [[1, 'asc'], [2, 'asc']]
+   }); 
+  });
 
       function viewHistory(storeId, promoId, promoCode) {
         window.location.href = 'history.php?store_id=' + encodeURIComponent(storeId) + '&promo_id=' + encodeURIComponent(promoId) + '&promo_code=' + encodeURIComponent(promoCode);
