@@ -92,26 +92,24 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
                     $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
                 }
 
-                $date = new DateTime($row['Transaction Date']);
-                $formattedDate = $date->format('F d, Y g:i A');
                 echo "<tr style='padding:10px;color:#fff;'>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
-                echo "<td style='text-align:center;width:7%;'>" . $formattedDate . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
-                echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
-                echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $GrossAmount . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $Discount . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $CartAmount . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $CommissionAmount . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $TotalBilling . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $PGFeeAmount . "</td>";
-                echo "<td style='text-align:center;width:5%;'>" . $AmounttobeDisbursed . "</td>";
+                echo "<td>" . $row['Transaction ID'] . "</td>";
+                echo "<td>" . $row['Formatted Transaction Date'] . "</td>";
+                echo "<td>" . $row['Customer ID'] . "</td>";
+                echo "<td>" . $row['Customer Name'] . "</td>";
+                echo "<td>" . $row['Promo Code'] . "</td>";
+                echo "<td>" . $GrossAmount . "</td>";
+                echo "<td>" . $Discount . "</td>";
+                echo "<td>" . $CartAmount . "</td>";
+                echo "<td>" . $row['Mode of Payment'] . "</td>";
+                echo "<td>" . $row['Bill Status'] . "</td>";
+                echo "<td>" . $row['Commission Type'] . "</td>";
+                echo "<td>" . $row['Commission Rate'] . "</td>";
+                echo "<td>" . $CommissionAmount . "</td>";
+                echo "<td>" . $TotalBilling . "</td>";
+                echo "<td>" . $row['PG Fee Rate'] . "</td>";
+                echo "<td>" . $PGFeeAmount . "</td>";
+                echo "<td>" . $AmounttobeDisbursed . "</td>";
                 echo "</tr>";
             }
         }
@@ -234,7 +232,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
     }
 
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.utils.book_append_sheet(wb, ws, "Order Details");
 
     
 XLSX.writeFile(wb, "<?php echo htmlspecialchars($merchant_brand_name); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");

@@ -48,31 +48,6 @@ function displayCoupled($store_id, $store_name)
     <style>
         body {
             background-image: url("../../../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        .title {
-            font-size: 30px;
-            font-weight: 900;
-            margin-right: auto;
-            padding-left: 5vh;
-            color: #4BB0B8;
-        }
-
-        .voucher-type {
-            padding-bottom: 0px;
-            padding-right: 5vh;
-            display: flex;
-            align-items: center;
-        }
-
-        tr:hover {
-            background-color: #e0e0e0 !important;
-            color: white !important;
-            cursor: pointer;
         }
 
         @media only screen and (max-width: 767px) {
@@ -110,15 +85,6 @@ function displayCoupled($store_id, $store_name)
                 white-space: nowrap;
                 font-weight: bold;
                 text-align: left !important;
-            }
-
-            .table td:nth-child(1) {
-                background: #E96529;
-                height: 100%;
-                top: 0;
-                left: 0;
-                font-weight: bold;
-                color: #fff;
             }
 
             td:nth-of-type(1):before {
@@ -201,12 +167,12 @@ function displayCoupled($store_id, $store_name)
                                 </li>
                             </ol>
                         </nav>
-                        <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
+                        <p class="title">
                             <?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?>
                         </p>
                     </div>
                 </div>
-                <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+                <div class="content">
                     <table id="example" class="table bord" style="width:100%;">
                         <thead>
                             <tr>

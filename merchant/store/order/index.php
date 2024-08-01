@@ -44,43 +44,28 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $GrossAmount = number_format($row['Gross Amount'], 2);
-            $Discount = number_format($row['Discount'], 2);
-            $CartAmount = number_format($row['Cart Amount'], 2);
-            $CommissionAmount = number_format($row['Commission Amount'], 2);
-            $TotalBilling = number_format($row['Total Billing'], 2);
-            $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
-            $CustomerName = empty($row['Customer Name']) ? '-' : $row['Customer Name'];
-
-            $AmounttobeDisbursed = $row['Amount to be Disbursed'];
-            if ($AmounttobeDisbursed < 0) {
-                $AmounttobeDisbursed = '(' . number_format(-$AmounttobeDisbursed, 2) . ')';
-            } else {
-                $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
-            }
-
             echo "<tr style='padding:10px;'>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
             echo "<td style='text-align:center;width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $CustomerName . "</td>";
+            echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
             echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
             echo "<td style='text-align:center;width:3%;'>" . $row['Voucher Type'] . "</td>";
             echo "<td style='text-align:center;width:6%;'>" . $row['Promo Category'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Promo Group'] . "</td>";
             echo "<td style='text-align:center;width:6%;'>" . $row['Promo Type'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $GrossAmount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $Discount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $CartAmount . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Gross Amount'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Discount'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Cart Amount'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $CommissionAmount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $TotalBilling . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Amount'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Total Billing'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $PGFeeAmount . "</td>";
-            echo "<td style='text-align:center;width:5%;'>" . $AmounttobeDisbursed . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Amount'] . "</td>";
+            echo "<td style='text-align:center;width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
             echo "</tr>";
         }
@@ -404,13 +389,9 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
             // Function to format customer ID if needed
             function formatDataForExcel(row) {
-                // Replace any HTML entities with their respective characters
-                const customerName = row[3].replace('-', '');
-                const modeOfPayment = row[12].replace('-', '');
-
                 return [
-                    row[0], row[1], row[2], `${customerName}`, row[4],
-                    row[9], row[10], row[11], `${modeOfPayment}`, row[13],
+                    row[0], row[1], row[2], row[3], row[4],
+                    row[9], row[10], row[11], row[12], row[13],
                     row[15], row[16], row[17], row[18], row[19], row[20]
                 ];
             }
@@ -431,7 +412,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             XLSX.utils.book_append_sheet(wb, ws, "Transactions");
 
             // Generate the Excel file and trigger the download
-            XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate}.xlsx`);
+            XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
         }
 
         $(document).ready(function () {
