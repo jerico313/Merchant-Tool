@@ -434,7 +434,7 @@ function displayUser()
         var table = $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 2] }
+            { orderable: false, targets: [0, 2, 3, 4, 5] }
           ],
           order: [[1, 'asc']]
    }); 
