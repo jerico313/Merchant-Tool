@@ -1,4 +1,4 @@
-<?php 
+<?php
 include("../inc/config.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -25,15 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Prepare and execute the insert statement
         $stmt = $conn->prepare("INSERT INTO user (name, email_address, type, department) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $name, $emailAddress, $type, $department);
+        $stmt->execute();
+        $stmt->close();
 
+        $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
         if ($stmt->execute()) {
-            // Get the user_id of the newly inserted user
-            $newUserId = $stmt->insert_id;
-            $stmt->close();
-
-            // Find the latest inserted activity in activity_history
-            $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
-            $stmt->execute();
             $stmt->bind_result($latestActivityId);
             $stmt->fetch();
             $stmt->close();
@@ -41,20 +37,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Update the user_id column in the latest activity_history record
             if ($latestActivityId) {
                 $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
-                $stmt->bind_param("ii", $newUserId, $latestActivityId);
+                $stmt->bind_param("ss", $user_id, $latestActivityId);
                 $stmt->execute();
                 $stmt->close();
             }
-
-            // Redirect to the same page after a successful update
-            header("Location: index.php");
-            exit();
-        } else {
-            echo "Error inserting record: " . $stmt->error;
-            $stmt->close();
         }
-    }
 
-    $conn->close();
+        // Redirect to the same page after a successful update
+        header("Location: index.php");
+        exit();
+    }
 }
+
+$conn->close();
 ?>
