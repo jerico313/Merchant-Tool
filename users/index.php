@@ -16,7 +16,6 @@ function displayUser()
       echo "<td style='text-align:center;vertical-align: middle;'>" . $row['name'] . "</td>";
       echo "<td style='text-align:center;vertical-align: middle;'>" . $row['email_address'] . "</td>";
       echo "<td style='text-align:center;vertical-align: middle;'>" . $row['type'] . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['department'] . "</td>";
       echo "<td style='text-align:center;vertical-align: middle;'>" . $row['status'] . "</td>";
       echo "<td style='display:none;'>" . $row['password'] . "</td>";
       echo "<td style='text-align:center;vertical-align: middle;'>";
@@ -275,14 +274,13 @@ function displayUser()
           <table id="example" class="table bord" style="width:100%;height:auto;">
             <thead>
             <tr>
-                  <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">User ID</th>
+                  <th class="first-col">User ID</th>
                   <th style="padding:10px;">Name</th>
                   <th style="padding:10px;">Email Address</th>
                   <th style="padding:10px;">Type</th>
-                  <th style="padding:10px;">Department</th>
                   <th style="padding:10px;">Status</th>
                   <th style="display:none;"></th>
-                  <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Action</th>
+                  <th class="action-col">Action</th>
                 </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -325,14 +323,6 @@ function displayUser()
             <select class="form-select" id="type" name="type">
               <option value="Admin">Admin</option>
               <option value="User">User</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="department" class="form-label">Department<span class="text-danger" style="padding:2px">*</span></label>
-            <select class="form-select" id="department" name="department">
-              <option value="Admin">Admin</option>
-              <option value="Finance">Finance</option>
-              <option value="Operations">Operations</option>
             </select>
           </div>
           <div class="mb-3">
@@ -450,8 +440,9 @@ function displayUser()
         var table = $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0] }
+            { orderable: false, targets: [0, 2, 5, 6, 9] }
           ],
+          order: [[1, 'asc']]
       order: []
    }); 
   });
@@ -464,16 +455,14 @@ function displayUser()
         var name = userRow.find('td:nth-child(2)').text();
         var emailAddress = userRow.find('td:nth-child(3)').text();
         var type = userRow.find('td:nth-child(4)').text();
-        var department = userRow.find('td:nth-child(5)').text();
-        var status = userRow.find('td:nth-child(6)').text();
-        var password = userRow.find('td:nth-child(7)').text();
+        var status = userRow.find('td:nth-child(5)').text();
+        var password = userRow.find('td:nth-child(6)').text();
 
     // Set values in the edit modal
         $('#user_Id').val(userUuid);
         $('#name').val(name);
         $('#emailAddress').val(emailAddress);
         $('#type').val(type);
-        $('#department').val(department);
         $('#status').val(status);
         $('#password').val(password);
 

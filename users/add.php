@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $emailAddress = $_POST['emailAddress'];
     $type = $_POST['type'];
-    $department = $_POST['department'];
     $user_id = $_POST['userId'];
 
     // Check if the email already exists
@@ -23,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Error: The email address is already registered.";
     } else {
         // Prepare and execute the insert statement
-        $stmt = $conn->prepare("INSERT INTO user (name, email_address, type, department) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $name, $emailAddress, $type, $department);
+        $stmt = $conn->prepare("INSERT INTO user (name, email_address, type) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $name, $emailAddress, $type);
         $stmt->execute();
         $stmt->close();
 

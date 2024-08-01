@@ -53,42 +53,6 @@ function displayMerchant()
   $conn->close();
 }
 
-function fetchSales()
-{
-  include ("../inc/config.php");
-
-  // Updated SQL query to filter by department
-  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Operations' ORDER BY name";
-  $employeeResult = $conn->query($employeeSql);
-
-  if ($employeeResult->num_rows > 0) {
-    echo "<option value='No assigned person'>No assigned person</option>";
-    while ($employeeRow = $employeeResult->fetch_assoc()) {
-      echo "<option value='" . htmlspecialchars($employeeRow['user_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($employeeRow['name'], ENT_QUOTES, 'UTF-8') . "</option>";
-    }
-  } else {
-    echo "<option value=''>No users found</option>";
-  }
-}
-
-function fetchAccountManager()
-{
-  include ("../inc/config.php");
-
-  // Updated SQL query to filter by department
-  $employeeSql = "SELECT user_id, name FROM user WHERE department = 'Operations' ORDER BY name";
-  $employeeResult = $conn->query($employeeSql);
-
-  if ($employeeResult->num_rows > 0) {
-    echo "<option value='No assigned person'>No assigned person</option>";
-    while ($employeeRow = $employeeResult->fetch_assoc()) {
-      echo "<option value='" . htmlspecialchars($employeeRow['user_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($employeeRow['name'], ENT_QUOTES, 'UTF-8') . "</option>";
-    }
-  } else {
-    echo "<option value=''>No users found</option>";
-  }
-}
-
 ?>
 
 <!DOCTYPE html>
