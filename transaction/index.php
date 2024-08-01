@@ -51,19 +51,21 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
       $amount_paid = number_format($row['amount_paid'], 2);
       $discount = number_format($row['discount'], 2);
       $comm_rate_base = number_format($row['comm_rate_base'], 2);
+      $customer_name = empty($row['customer_name']) ? '-' : $row['customer_name'];
+      $payment = empty($row['payment']) ? '-' : $row['payment'];
 
       echo "<tr style='padding:20px 0;' data-id='" . $row['transaction_id'] . "'>";
       echo "<td style='text-align:center;'>" . $shortTransactionId . "</td>";
       echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
       echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
       echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
-      echo "<td style='text-align:center;'>" . $row['customer_name'] . "</td>";
+      echo "<td style='text-align:center;'>" . $customer_name . "</td>";
       echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
       echo "<td style='text-align:center;'>" . $gross_amount . "</td>";
       echo "<td style='text-align:center;'>" . $discount . "</td>";
       echo "<td style='text-align:center;'>" . $amount_discounted . "</td>";
       echo "<td style='text-align:center;'>" . $amount_paid . "</td>";
-      echo "<td style='text-align:center;'>" . $row['payment'] . "</td>";
+      echo "<td style='text-align:center;'>" . $payment . "</td>";
       echo "<td style='text-align:center;'>" . $comm_rate_base . "</td>";
       echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
       echo "</tr>";
@@ -186,19 +188,19 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
         display: none;
       }
 
-    .title{
-      font-size: 25px;
-      padding-left: 2vh;
-      padding-top:10px;
-    }
-  
-    .add-btns{
-      padding-right: 2vh;
-      padding-bottom: 10px;
-    }
-  }
+      .title {
+        font-size: 25px;
+        padding-left: 2vh;
+        padding-top: 10px;
+      }
 
-  .loading {
+      .add-btns {
+        padding-right: 2vh;
+        padding-bottom: 10px;
+      }
+    }
+
+    .loading {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -213,110 +215,143 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
       display: none;
     }
 
-    
-.lds-default,
-.lds-default div {
-  box-sizing: border-box;
-}
-.lds-default {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  color:#E96529;
-}
-.lds-default div {
-  position: absolute;
-  width: 6.4px;
-  height: 6.4px;
-  background: currentColor;
-  border-radius: 50%;
-  animation: lds-default 1.2s linear infinite;
-}
-.lds-default div:nth-child(1) {
-  animation-delay: 0s;
-  top: 36.8px;
-  left: 66.24px;
-}
-.lds-default div:nth-child(2) {
-  animation-delay: -0.1s;
-  top: 22.08px;
-  left: 62.29579px;
-}
-.lds-default div:nth-child(3) {
-  animation-delay: -0.2s;
-  top: 11.30421px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(4) {
-  animation-delay: -0.3s;
-  top: 7.36px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(5) {
-  animation-delay: -0.4s;
-  top: 11.30421px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(6) {
-  animation-delay: -0.5s;
-  top: 22.08px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(7) {
-  animation-delay: -0.6s;
-  top: 36.8px;
-  left: 7.36px;
-}
-.lds-default div:nth-child(8) {
-  animation-delay: -0.7s;
-  top: 51.52px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(9) {
-  animation-delay: -0.8s;
-  top: 62.29579px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(10) {
-  animation-delay: -0.9s;
-  top: 66.24px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(11) {
-  animation-delay: -1s;
-  top: 62.29579px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(12) {
-  animation-delay: -1.1s;
-  top: 51.52px;
-  left: 62.29579px;
-}
-@keyframes lds-default {
-  0%, 20%, 80%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-}
-</style>
+
+    .lds-default,
+    .lds-default div {
+      box-sizing: border-box;
+    }
+
+    .lds-default {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      color: #E96529;
+    }
+
+    .lds-default div {
+      position: absolute;
+      width: 6.4px;
+      height: 6.4px;
+      background: currentColor;
+      border-radius: 50%;
+      animation: lds-default 1.2s linear infinite;
+    }
+
+    .lds-default div:nth-child(1) {
+      animation-delay: 0s;
+      top: 36.8px;
+      left: 66.24px;
+    }
+
+    .lds-default div:nth-child(2) {
+      animation-delay: -0.1s;
+      top: 22.08px;
+      left: 62.29579px;
+    }
+
+    .lds-default div:nth-child(3) {
+      animation-delay: -0.2s;
+      top: 11.30421px;
+      left: 51.52px;
+    }
+
+    .lds-default div:nth-child(4) {
+      animation-delay: -0.3s;
+      top: 7.36px;
+      left: 36.8px;
+    }
+
+    .lds-default div:nth-child(5) {
+      animation-delay: -0.4s;
+      top: 11.30421px;
+      left: 22.08px;
+    }
+
+    .lds-default div:nth-child(6) {
+      animation-delay: -0.5s;
+      top: 22.08px;
+      left: 11.30421px;
+    }
+
+    .lds-default div:nth-child(7) {
+      animation-delay: -0.6s;
+      top: 36.8px;
+      left: 7.36px;
+    }
+
+    .lds-default div:nth-child(8) {
+      animation-delay: -0.7s;
+      top: 51.52px;
+      left: 11.30421px;
+    }
+
+    .lds-default div:nth-child(9) {
+      animation-delay: -0.8s;
+      top: 62.29579px;
+      left: 22.08px;
+    }
+
+    .lds-default div:nth-child(10) {
+      animation-delay: -0.9s;
+      top: 66.24px;
+      left: 36.8px;
+    }
+
+    .lds-default div:nth-child(11) {
+      animation-delay: -1s;
+      top: 62.29579px;
+      left: 51.52px;
+    }
+
+    .lds-default div:nth-child(12) {
+      animation-delay: -1.1s;
+      top: 51.52px;
+      left: 62.29579px;
+    }
+
+    @keyframes lds-default {
+
+      0%,
+      20%,
+      80%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.5);
+      }
+    }
+  </style>
 </head>
 
 <body>
-<div class="loading">
-  <div>
-   <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  <div class="loading">
+    <div>
+      <div class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    Loading, Please wait...
   </div>
-  Loading, Please wait...
-</div>
-<div class="cont-box">
-  <div class="custom-box pt-4">
-    <div class="sub" style="text-align:left;">
-      <div class="add-btns">
-        <p class="title">Transactions</p>
-        <div class="dropdown">
+  <div class="cont-box">
+    <div class="custom-box pt-4">
+      <div class="sub" style="text-align:left;">
+        <div class="add-btns">
+          <p class="title">Transactions</p>
+          <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle check-report" type="button" id="dropdownMenuButton"
               data-bs-toggle="dropdown" aria-expanded="false"
               style="width:150px;margin-left:10px;border-radius:20px;height:32px;background-color: #4BB0B8;border:solid #4BB0B8 2px;">
@@ -392,15 +427,15 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
 
 
 
-<script>
-$(window).on('load', function() {
-   $('.loading').hide();
-   $('.cont-box').show();
+  <script>
+    $(window).on('load', function () {
+      $('.loading').hide();
+      $('.cont-box').show();
 
-   var table = $('#example').DataTable({
-      scrollX: true,
-      order: [[5, 'asc']]
-   }); 
+      var table = $('#example').DataTable({
+        scrollX: true,
+        order: [[5, 'asc']]
+      });
 
       $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
