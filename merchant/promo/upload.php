@@ -43,7 +43,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                         Add More </button>
                 </div>
 
-                <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+                <div class="content">
                     <form id="dynamic-form"
                         action="add.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                         method="POST">
@@ -52,63 +52,59 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="promo_id" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Promo Code</label>
-                                            <input type="text" class="form-control" name="promo_code[]"
-                                                style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;"
-                                                required>
+                                            <label for="promo_id" class="form-label" id="form-input-label">
+                                                Promo Code<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <input id="form-input-field" type="text" class="form-control" 
+                                                name="promo_code[]" placeholder="Enter promo code" 
+                                                required maxlength="100">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="merchant_name" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Merchant Name</label>
-                                            <input type="text" class="form-control"
+                                            <label for="merchant_name" class="form-label" id="form-input-label">
+                                                Merchant Name<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <input id="form-input-field" type="text" class="form-control"
+                                                style="background-color: #d3d3d3; caret-color: transparent;"
                                                 value="<?php echo htmlspecialchars($merchant_name); ?>"
-                                                name="merchant_name[]"
-                                                style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;background-color:#d3d3d3;"
-                                                readonly required>
-                                            <input type="hidden" class="form-control"
+                                                name="merchant_name[]" readonly required>
+                                            <input id="form-input-field" type="hidden" class="form-control"
                                                 value="<?php echo htmlspecialchars($merchant_id); ?>"
-                                                name="merchant_id[]"
-                                                style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;background-color:#d3d3d3;"
-                                                readonly required>
-
+                                                name="merchant_id[]" readonly required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="promo_amount" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Promo Amount</label>
-                                            <input type="text" class="form-control" name="promo_amount[]"
-                                                style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;"
-                                                required>
+                                            <label for="promo_amount" class="form-label" id="form-input-label">
+                                                Promo Amount<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <input id="form-input-field" type="number" class="form-control" 
+                                                name="promo_amount[]" placeholder="0"                                                
+                                                min="0" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="voucher_type" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Voucher Type</label>
-                                            <select class="form-select" id="voucher_type" name="voucher_type[]"
-                                                style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;"
-                                                required>
-                                                <option value="">-- Select Voucher Type --</option>
+                                            <label for="voucher_type" class="form-label" id="form-input-label">
+                                                Voucher Type<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <select id="form-input-field" class="form-select" name="voucher_type[]" required>
+                                                <option disabled selected>-- Select Voucher Type --</option>
                                                 <option value="Coupled">Coupled</option>
                                                 <option value="Decoupled">Decoupled</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="promo_category" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Promo Category</label>
-                                            <select class="form-select" id="promo_category" name="promo_category[]"
-                                                style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;"
-                                                required>
-                                                <option value="">-- Select Promo Category --</option>
+                                            <label for="promo_category" class="form-label" id="form-input-label">
+                                                Promo Category<span class="text-danger" style="padding:2px">*</span>                                                
+                                            </label>
+                                            <select id="form-input-field" class="form-select" name="promo_category[]" required>
+                                                <option disabled selected>-- Select Promo Category --</option>
                                                 <option value="Grab & Go">Grab & Go</option>
                                                 <option value="Casual Dining">Casual Dining</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="promo_group" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Promo Group</label>
-                                            <select class="form-select" id="promo_group" name="promo_group[]"
-                                                style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;"
-                                                required>
-                                                <option value="">-- Select Promo Group --</option>
+                                            <label for="promo_group" class="form-label" id="form-input-label">
+                                                Promo Group<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <select id="form-input-field" class="form-select" name="promo_group[]" required>
+                                                <option disabled selected>-- Select Promo Group --</option>
                                                 <option value="Grab & Go">Booky</option>
                                                 <option value="Gcash">Gcash</option>
                                                 <option value="Unionbank">Unionbank</option>
@@ -116,18 +112,16 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="promo_type" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Promo Type</label>
-                                            <select class="form-select" id="promo_type" name="promo_type[]"
-                                                style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;"
-                                                required>
-                                                <option value="">-- Select Promo Group --</option>
+                                            <label for="promo_type" class="form-label" id="form-input-label">
+                                                Promo Type<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <select id="form-input-field" class="form-select" name="promo_type[]" required>
+                                                <option disabled selected>-- Select Promo Type --</option>
                                                 <option value="BOGO">BOGO</option>
                                                 <option value="Bundle">Bundle</option>
                                                 <option value="Fixed discount">Fixed discount</option>
                                                 <option value="Free item">Free item</option>
-                                                <option value="Free discount, Free item">Free discount, Free item
-                                                </option>
+                                                <option value="Fixed discount, Free item">Free discount, Free item</option>
                                                 <option value="Percent discount">Percent discount</option>
                                                 <option value="X for Y">X for Y</option>
                                             </select>
@@ -135,45 +129,45 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="promo_details" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Promo Details</label>
-                                            <textarea class="form-control" rows="5" name="promo_details[]"
-                                                style="border-radius:20px;padding:15px 15px;border: 2px dashed #928a89;"
-                                                required></textarea>
+                                            <label for="promo_details" class="form-label" id="form-input-label">
+                                                Promo Details<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <textarea id="form-input-field" class="form-control" rows="3"
+                                                name="promo_details[]" placeholder="Enter promo details" required></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="remarks" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Remarks</label>
-                                            <input type="text" class="form-control" name="remarks[]"
-                                                style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;">
+                                            <label for="remarks" class="form-label" id="form-input-label">Remarks</label>
+                                            <textarea id="form-input-field" class="form-control" rows="2"
+                                                name="remarks[]" placeholder="Enter remarks"></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="bill_status" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Bill Status</label>
-                                            <select class="form-select" id="bill_status" name="bill_status[]"
-                                                style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;"
-                                                required>
-                                                <option value="">-- Select Bill Status --</option>
+                                            <label for="bill_status" class="form-label" id="form-input-label">
+                                                Bill Status<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <select id="form-input-field" class="form-select" name="bill_status[]" required>
+                                                <option disabled selected>-- Select Bill Status --</option>
                                                 <option value="PRE-TRIAL">PRE-TRIAL</option>
                                                 <option value="BILLABLE">BILLABLE</option>
                                                 <option value="NOT BILLABLE">NOT BILLABLE</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="start_date" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">Start Date</label>
-                                            <input type="date" class="form-control" id="start_date" name="start_date[]"
-                                                style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;">
+                                            <label for="start_date" class="form-label" id="form-input-label">
+                                                Start Date<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <input id="form-input-field" type="date" class="form-control" name="start_date[]" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="end_date" class="form-label"
-                                                style="font-size:15px;font-weight:bold;">End Date</label>
-                                            <input type="date" class="form-control" id="end_date" name="end_date[]"
-                                                style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;">
+                                            <label for="end_date" class="form-label" id="form-input-label">
+                                                End Date<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <input id="form-input-field" type="date" class="form-control" name="end_date[]" required>
                                         </div>
-                                    </div>
-                                    <div class="mb-3 mt-3" style="text-align:right;">
-
+                                        <div class="mb-3">
+                                            <label for="remarks2" class="form-label" id="form-input-label">Remarks 2</label>
+                                            <textarea id="form-input-field" class="form-control" rows="2"
+                                                name="remarks2[]" placeholder="Enter additional remarks"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -205,108 +199,128 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
             var newField = document.createElement('div');
             newField.classList.add('form-group');
             newField.innerHTML = `
-            <div class="row">
-        <hr style="border: 1px solid #3b3b3b;">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="promo_id" class="form-label"
-                                        style="font-size:15px;font-weight:bold;">Promo Code</label>
-                                    <input type="text" class="form-control" name="promo_code[]"
-                                        style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="merchant_name" class="form-label"
-                                        style="font-size:15px;font-weight:bold;">Merchant Name</label>
-                                    <input type="text" class="form-control"
-                                        value="<?php echo htmlspecialchars($merchant_name); ?>" name="merchant_name[]"
-                                        style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;background-color:#d3d3d3;"
-                                        readonly required>
-                                    <input type="hidden" class="form-control"
-                                        value="<?php echo htmlspecialchars($merchant_id); ?>" name="merchant_id[]"
-                                        style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;background-color:#d3d3d3;"
-                                        readonly required>
-
-                                </div>
-                                <div class="mb-3">
-                                    <label for="promo_amount" class="form-label"
-                                        style="font-size:15px;font-weight:bold;">Promo Amount</label>
-                                    <input type="text" class="form-control" name="promo_amount[]"
-                                        style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="voucher_type" class="form-label" style="font-size:15px;font-weight:bold;">Voucher Type</label>
-                                    <select class="form-select" id="voucher_type" name="voucher_type[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
-                                        <option value="">-- Select Voucher Type --</option>
-                                        <option value="Coupled">Coupled</option>
-                                        <option value="Decoupled">Decoupled</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="promo_category" class="form-label" style="font-size:15px;font-weight:bold;">Promo Category</label>
-                                    <select class="form-select" id="promo_category" name="promo_category[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
-                                        <option value="">-- Select Promo Category --</option>
-                                        <option value="Grab & Go">Grab & Go</option>
-                                        <option value="Casual Dining">Casual Dining</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="promo_group" class="form-label" style="font-size:15px;font-weight:bold;">Promo Group</label>
-                                    <select class="form-select" id="promo_group" name="promo_group[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
-                                        <option value="">-- Select Promo Group --</option>
-                                        <option value="Grab & Go">Booky</option>
-                                        <option value="Gcash">Gcash</option>
-                                        <option value="Unionbank">Unionbank</option>
-                                        <option value="Gcash/Booky">Gcash/Booky</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="promo_type" class="form-label" style="font-size:15px;font-weight:bold;">Promo Type</label>
-                                    <select class="form-select" id="promo_type" name="promo_type[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
-                                        <option value="">-- Select Promo Group --</option>
-                                        <option value="BOGO">BOGO</option>
-                                        <option value="Bundle">Bundle</option>
-                                        <option value="Fixed discount">Fixed discount</option>
-                                        <option value="Free item">Free item</option>
-                                        <option value="Free discount, Free item">Free discount, Free item</option>
-                                        <option value="Percent discount">Percent discount</option>
-                                        <option value="X for Y">X for Y</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="promo_details" class="form-label"
-                                        style="font-size:15px;font-weight:bold;">Promo Details</label>
-                                        <textarea class="form-control" rows="5" name="promo_details[]" style="border-radius:20px;padding:15px 15px;border: 2px dashed #928a89;" required></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="remarks" class="form-label"
-                                        style="font-size:15px;font-weight:bold;">Remarks</label>
-                                    <input type="text" class="form-control" name="remarks[]"
-                                        style="border-radius:20px;padding:10px 20px;border: 2px dashed #928a89;">
-                                </div>
-                            <div class="mb-3">
-                                <label for="bill_status" class="form-label" style="font-size:15px;font-weight:bold;">Bill Status</label>
-                                <select class="form-select" id="bill_status" name="bill_status[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;" required>
-                                    <option value="">-- Select Bill Status --</option>
-                                    <option value="PRE-TRIAL">PRE-TRIAL</option>
-                                    <option value="BILLABLE">BILLABLE</option>
-                                    <option value="NOT BILLABLE">NOT BILLABLE</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="start_date" class="form-label" style="font-size:15px;font-weight:bold;">Start Date</label>
-                                <input type="date" class="form-control" id="start_date" name="start_date[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;">
-                            </div>
-                            <div class="mb-3">
-                                <label for="end_date" class="form-label" style="font-size:15px;font-weight:bold;">End Date</label>
-                                <input type="date" class="form-control" id="end_date" name="end_date[]" style="border-radius:20px;padding:11px 20px;border: 2px dashed #928a89;">
-                            </div>
-                            </div>
-                            <div class="mb-3 mt-3" style="text-align:right;">
-                                <button type="button" class="btn btn-danger remove-field" id="remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
-                            </div>
+                <hr style="border: 1px solid #3b3b3b;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="promo_id" class="form-label" id="form-input-label">
+                                Promo Code<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input id="form-input-field" type="text" class="form-control" 
+                                name="promo_code[]" placeholder="Enter promo code" 
+                                required maxlength="100">
                         </div>
+                        <div class="mb-3">
+                            <label for="merchant_name" class="form-label" id="form-input-label">
+                                Merchant Name<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input id="form-input-field" type="text" class="form-control"
+                                style="background-color: #d3d3d3; caret-color: transparent;"
+                                value="<?php echo htmlspecialchars($merchant_name); ?>"
+                                name="merchant_name[]" readonly required>
+                            <input id="form-input-field" type="hidden" class="form-control"
+                                value="<?php echo htmlspecialchars($merchant_id); ?>"
+                                name="merchant_id[]" readonly required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="promo_amount" class="form-label" id="form-input-label">
+                                Promo Amount<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input id="form-input-field" type="number" class="form-control" 
+                                name="promo_amount[]" placeholder="0"                                                
+                                min="0" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="voucher_type" class="form-label" id="form-input-label">
+                                Voucher Type<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <select id="form-input-field" class="form-select" name="voucher_type[]" required>
+                                <option disabled selected>-- Select Voucher Type --</option>
+                                <option value="Coupled">Coupled</option>
+                                <option value="Decoupled">Decoupled</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="promo_category" class="form-label" id="form-input-label">
+                                Promo Category<span class="text-danger" style="padding:2px">*</span>                                                
+                            </label>
+                            <select id="form-input-field" class="form-select" name="promo_category[]" required>
+                                <option disabled selected>-- Select Promo Category --</option>
+                                <option value="Grab & Go">Grab & Go</option>
+                                <option value="Casual Dining">Casual Dining</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="promo_group" class="form-label" id="form-input-label">
+                                Promo Group<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <select id="form-input-field" class="form-select" name="promo_group[]" required>
+                                <option disabled selected>-- Select Promo Group --</option>
+                                <option value="Grab & Go">Booky</option>
+                                <option value="Gcash">Gcash</option>
+                                <option value="Unionbank">Unionbank</option>
+                                <option value="Gcash/Booky">Gcash/Booky</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="promo_type" class="form-label" id="form-input-label">
+                                Promo Type<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <select id="form-input-field" class="form-select" name="promo_type[]" required>
+                                <option disabled selected>-- Select Promo Type --</option>
+                                <option value="BOGO">BOGO</option>
+                                <option value="Bundle">Bundle</option>
+                                <option value="Fixed discount">Fixed discount</option>
+                                <option value="Free item">Free item</option>
+                                <option value="Fixed discount, Free item">Free discount, Free item</option>
+                                <option value="Percent discount">Percent discount</option>
+                                <option value="X for Y">X for Y</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="promo_details" class="form-label" id="form-input-label">
+                                Promo Details<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <textarea id="form-input-field" class="form-control" rows="3"
+                                name="promo_details[]" placeholder="Enter promo details" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="remarks" class="form-label" id="form-input-label">Remarks</label>
+                            <textarea id="form-input-field" class="form-control" rows="2"
+                                name="remarks[]" placeholder="Enter remarks"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bill_status" class="form-label" id="form-input-label">
+                                Bill Status<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <select id="form-input-field" class="form-select" name="bill_status[]" required>
+                                <option disabled selected>-- Select Bill Status --</option>
+                                <option value="PRE-TRIAL">PRE-TRIAL</option>
+                                <option value="BILLABLE">BILLABLE</option>
+                                <option value="NOT BILLABLE">NOT BILLABLE</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="start_date" class="form-label" id="form-input-label">
+                                Start Date<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input id="form-input-field" type="date" class="form-control" name="start_date[]" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="end_date" class="form-label" id="form-input-label">
+                                End Date<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input id="form-input-field" type="date" class="form-control" name="end_date[]" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="remarks2" class="form-label" id="form-input-label">Remarks 2</label>
+                            <textarea id="form-input-field" class="form-control" rows="2"
+                                name="remarks2[]" placeholder="Enter additional remarks"></textarea>
+                        </div>
+                    </div>
+                </div>
         `;
             formFields.appendChild(newField);
         });

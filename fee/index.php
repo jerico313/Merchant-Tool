@@ -347,51 +347,52 @@ function displayPGFeeRate()
               <input type="hidden" id="merchantId" name="merchantId">
               
               <div class="mb-3">
-                <label for="paymayaCreditCard" class="form-label">Paymaya Credit Card, Maya Checkout, & Maya</label>
+                <label for="paymayaCreditCard" class="form-label">Paymaya Credit Card, Maya Checkout, & Maya<span class="text-danger" style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard" min="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard" min="0.00" placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="gcash" class="form-label">Gcash</label>
+                <label for="gcash" class="form-label">Gcash<span class="text-danger" style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="gcash" name="gcash" min="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="gcash" name="gcash" min="0.00" placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="gcashMiniapp" class="form-label">Gcash Miniapp</label>
+                <label for="gcashMiniapp" class="form-label">Gcash Miniapp<span class="text-danger" style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="gcashMiniapp" name="gcashMiniapp" min="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="gcashMiniapp" name="gcashMiniapp" min="0.00" placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="paymaya" class="form-label">Paymaya</label>
+                <label for="paymaya" class="form-label">Paymaya<span class="text-danger" style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="paymaya" name="paymaya" min="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="paymaya" name="paymaya" min="0.00" placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="leadgenCommission" class="form-label">Leadgen Commission</label>
+                <label for="leadgenCommission" class="form-label">Leadgen Commission<span class="text-danger" style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="leadgenCommission" name="leadgenCommission" min="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="leadgenCommission" name="leadgenCommission" min="0.00" placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="commissionType" class="form-label">Commission Type</label>
+                <label for="commissionType" class="form-label">Commission Type<span class="text-danger" style="padding:2px">*</span></label>
                 <select class="form-select" id="commissionType" name="commissionType" required>
+                  <option selected disabled>-- Select Commission Type --</option>
                   <option value="VAT Inc">VAT Inc</option>
                   <option value="VAT Exc">VAT Exc</option>
                 </select>
               </div>
               <div class="mb-3">
-                <label for="cwtRate" class="form-label">CWT Rate</label>
+                <label for="cwtRate" class="form-label">CWT Rate<span class="text-danger" style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate" min="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate" min="0.00" placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>

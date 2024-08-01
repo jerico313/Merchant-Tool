@@ -19,8 +19,8 @@ if ($conn->connect_error) {
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare and bind SQL statement
-    $stmt = $conn->prepare("INSERT INTO promo (promo_id, promo_code, merchant_id, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssssssss", $promo_id, $promo_code, $merchant_id, $promo_amount, $voucher_type, $promo_category, $promo_group, $promo_type, $promo_details, $remarks, $bill_status, $start_date, $end_date);
+    $stmt = $conn->prepare("INSERT INTO promo (promo_id, promo_code, merchant_id, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, remarks2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssssssss", $promo_id, $promo_code, $merchant_id, $promo_amount, $voucher_type, $promo_category, $promo_group, $promo_type, $promo_details, $remarks, $bill_status, $start_date, $end_date, $remarks2);
 
     // Set parameters and execute
     foreach ($_POST['promo_code'] as $key => $value) {
@@ -33,11 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $promo_group = $_POST['promo_group'][$key];
         $promo_type = $_POST['promo_type'][$key];
         $promo_details = $_POST['promo_details'][$key];
-        $remarks = $_POST['remarks'][$key];
+        $remarks = empty($_POST['remarks'][$key]) ? NULL : $_POST['remarks'][$key];
         $bill_status = $_POST['bill_status'][$key];
         $start_date = $_POST['start_date'][$key];
         $end_date = $_POST['end_date'][$key];
-        
+        $remarks2 = empty($_POST['remarks2'][$key]) ? NULL : $_POST['remarks2'][$key];
         $stmt->execute();
     }
 
@@ -57,10 +57,6 @@ $conn->close();
     <style>
         body {
             background-image: url("../../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
         }
 
         .container {

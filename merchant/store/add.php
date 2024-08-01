@@ -17,16 +17,17 @@ if ($conn->connect_error) {
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare and bind SQL statement
-    $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $store_id, $merchant_id, $store_name, $legal_entity_name, $store_address);
+    $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $store_id, $merchant_id, $store_name, $legal_entity_name, $store_address, $email_address);
 
     // Set parameters and execute
     foreach ($_POST['store_id'] as $key => $value) {
         $store_id = $_POST['store_id'][$key];
         $merchant_id = $_POST['merchant_id'][$key];
         $store_name = $_POST['store_name'][$key];
-        $legal_entity_name = $_POST['legal_entity_name'][$key];
-        $store_address = $_POST['store_address'][$key];
+        $legal_entity_name = empty($_POST['legal_entity_name'][$key]) ? NULL : $_POST['legal_entity_name'][$key];
+        $store_address = empty($_POST['store_address'][$key]) ? NULL : $_POST['store_address'][$key];
+        $email_address = empty($_POST['email_address'][$key]) ? NULL : $_POST['email_address'][$key];
         $stmt->execute();
     }
 
@@ -46,10 +47,6 @@ $conn->close();
     <style>
         body {
             background-image: url("../../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
         }
 
         .container {
