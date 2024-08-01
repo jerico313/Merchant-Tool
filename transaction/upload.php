@@ -18,77 +18,26 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
     <style>
         body {
             background-image: url("../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
         }
-
-        .title {
-            font-size: 30px;
-            font-weight: 1000;
-            margin-right: auto;
-            padding-left: 5vh;
-            color: #E96529;
-        }
-
-        .back {
-            font-size: 20px;
-            font-weight: bold;
-            margin-right: auto;
-            padding-left: 5vh;
-            color: #E96529;
-        }
-
-        .add-btns {
-            padding-bottom: 0px;
-            padding-right: 5vh;
-            display: flex;
-            align-items: center;
-        }
-
-        .table-transparent {
-            border: solid 1px lightgrey;
-            radius: 10px;
-        }
-
-        .loading {
-            display: none;
-        }
-
-        .alert-custom, .alert-custom-filename, .alert-custom-filetype {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            margin-top: 70px;
-            width: 99%;
-            padding: 15px;
-            font-size: 13px;
-        }
-
-        .file-preview {
-            overflow-x: auto;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
     </style>
 </head>
 <body>
 
 <div class="cont-box">
     <div class="custom-box pt-4">
-    <span><a href="javascript:history.back()"><span class="back"><i class="fa-regular fa-circle-left fa-lg"></i><span style="font-size:17px;color:grey;cursor:pointer;"> Back to Transactions</span></span></a>
-        <div class="upload pt-3" style="text-align:left;">
+        <a href="javascript:history.back()">
+                <span class="back">
+                    <i class="fa-regular fa-circle-left fa-lg"></i>
+                    <span class="back-text"> Back to Transactions</span>
+                </span>
+            </a>
+        <div class="upload pt-4" style="text-align:left;">
             <div class="add-btns">
                 <p class="title">Upload Transactions</p>
                 <form id="uploadForm" action="upload_process.php" method="post" enctype="multipart/form-data">
             </div>
 
-            <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+            <div class="content">
                 <div class="file" style="padding:10px 10px 10px 0;font-size:15px;">
                     <p style="font-weight:bold;">Selected File: <span class="filename" style="color:#E96529"></span></p>
                 </div>
@@ -98,7 +47,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                 <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
                 <div class="uploadfile" style="text-align:right;">
                     <button type="button" class="btn btn-danger clear" id="clearButton">Clear</button>
-                    <button type="submit" class="btn btn-secondary upload_file" id="submitButton"><span>Submit</span></button>
+                    <button type="submit" class="btn btn-primary upload_file" id="submitButton"><span>Submit</span></button>
                 </div>
                 <div class="file-preview" style="margin-top:20px;">
                     <div class="table-container">
