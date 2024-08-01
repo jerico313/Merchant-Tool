@@ -489,8 +489,8 @@ function fetchAccountManager()
             { orderable: false, targets: [2, 5, 6, 7, 8, 10, 11] }
           ],
       order: [[5, 'asc']]
-   }); });
-
+   }); 
+  });
     </script>
 
     <!-- Script: Edit Merchant Details -->
