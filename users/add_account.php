@@ -18,15 +18,16 @@
         }
 
         #content {
-            border-left: solid #E96529 8px;
+            border-left: solid #E96529 10px;
             box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.33);
-            width: 95%;
+            width: 60%;
+            margin-top:70px;
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 40px; 
             background-color: #fff;
             border-radius: 10px;
-            padding: 10px;
+            padding: 25px;
         }
 
         #First {
@@ -35,80 +36,38 @@
     </style>
 </head>
 <body>
-<div class="mt-4 mb-3">
-    <a href="javascript:history.back()">
-        <span class="back">
-            <i class="fa-regular fa-circle-left fa-lg"></i>
-            <span class="back-text"> Back to Manage Users</span>
-        </span>
-    </a>
-</div>
-<div class="cont-box">
+
+<div class="cont-box mt-5">
     <div id="content">
-        <div class="name" style="margin-left:10px;">
             <p style="font-weight:900;font-size:20px;color:#4BB0B8;">Create a New Account</p>
-        </div>
         <form action="add.php"  method="POST">
-            <div id="First" style="padding:20px !important;margin:10px;border-radius:8px;border-left:solid #E96529 8px;padding:5px;">
                 <div class="row">
-                    <div class="col-md-6 pb-3">
+                    <div class="col">
                         <div class="form-group mb-3">
                             <label for="name" style="font-weight:900;color:#6c6868;">Name<span class="text-danger" style="padding:2px">*</span></label>
-                            <input type="text" class="form-control" id="name" name="name" style="font-weight:700;">
+                            <input type="text" class="form-control" id="name" name="name" style="padding:10px;font-weight:700;">
                             <input type="hidden" value="<?php echo ($user_id); ?>" name="userId">
                         </div>
                         <div class="form-group mb-3">
                             <label for="email" style="font-weight:900;color:#6c6868;">Email<span class="text-danger" style="padding:2px">*</span></label>
-                            <input type="email" class="form-control" id="email" name="emailAddress" style="font-weight:700;">
+                            <input type="email" class="form-control" id="email" name="emailAddress" style="padding:10px;font-weight:700;">
                         </div>
                         <div class="form-group mb-3">
                             <label for="type" style="font-weight:900;color:#6c6868;">Type<span class="text-danger" style="padding:2px">*</span></label>
-                            <select class="form-select" id="type" name="type" required>
+                            <select class="form-select" id="type" name="type" required style="padding:10px;">
                                 <option selected disabled value="">-- Select User Type --</option>
                                 <option value="User">User</option>
                                 <option value="Admin">Admin</option>
                             </select>
                             
                         </div>
+                        <div class="mt-4 mb-2" style="text-align:right;">
+                        <a href="index.php"><button type="button" name="submit" class="btn btn-primary" style="width:120px;background-color:#cc001b ;border:#4BB0B8;border-radius: 20px;">Cancel</button></a>
+                        <button type="submit" name="submit" class="btn btn-primary" style="margin-left:10px;width:120px;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Submit</button>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label for="department" style="font-weight:900;color:#6c6868;">Department<span class="text-danger" style="padding:2px">*</span></label>
-                            <select class="form-select" id="department" name="department" required>
-                                <option selected disabled value="">-- Select Department --</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Operations">Operations</option>
-                                <option value="Finance">Finance</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="password" style="font-weight:900;color:#6c6868;">Password<span class="text-danger" style="padding:2px">*</span></label>
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="password" name="password" style="font-weight:700;">
-                                <span class="input-group-text">
-                                    <i class="fas fa-eye" id="togglePassword" style="cursor: pointer;"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="confirmPassword" style="font-weight:900;color:#6c6868;">Confirm Password<span class="text-danger" style="padding:2px">*</span></label>
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" style="font-weight:700;">
-                                <span class="input-group-text">
-                                    <i class="fas fa-eye" id="toggleConfirmPassword" style="cursor: pointer;"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-right" style="text-align:right;margin-right:10px;">
-                        <button type="button" id="generatePasswordButton" onclick="generatePassword()" class="btn btn-primary" style="background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px; display: none;">Generate Password</button>
                     </div>
                 </div>
-            </div>
-            <div class="mt-4 mb-2" style="text-align:right;margin-right:10px;">
-                <button type="submit" name="submit" class="btn btn-primary" style="background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Submit</button>
-            </div>
-        </f>
+        </form>
     </div>
 </div>
 
