@@ -4,16 +4,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $feeId = $_POST['feeId'];
     
-    $paymayaCreditCard = substr($_POST['paymayaCreditCard'], 0, -1);
-    $gcash = substr($_POST['gcash'], 0, -1);
-    $gcashMiniapp = substr($_POST['gcashMiniapp'], 0, -1);
-    $paymaya = substr($_POST['paymaya'], 0, -1);
-    $gcash = substr($_POST['gcash'], 0, -1);
-    $gcashMiniapp = substr($_POST['gcashMiniapp'], 0, -1);
-    $paymaya = substr($_POST['paymaya'], 0, -1);
-    $leadgenCommission = substr($_POST['leadgenCommission'], 0, -1);
+    $paymayaCreditCard = $_POST['paymayaCreditCard'];
+    $gcash = $_POST['gcash'];
+    $gcashMiniapp = $_POST['gcashMiniapp'];
+    $paymaya = $_POST['paymaya'];
+    $gcash = $_POST['gcash'];
+    $gcashMiniapp = $_POST['gcashMiniapp'];
+    $paymaya = $_POST['paymaya'];
+    $leadgenCommission = $_POST['leadgenCommission'];
     $commissionType = $_POST['commissionType'];
-    $cwtRate = substr($_POST['cwtRate'], 0, -1);
+    $cwtRate = $_POST['cwtRate'];
     $userId = $_POST['userId'];
 
     // Update fee details

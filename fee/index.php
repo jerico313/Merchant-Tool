@@ -12,22 +12,22 @@ function displayPGFeeRate()
       $shortFeeId = substr($row['fee_id'], 0, 8);
 
       echo "<tr data-id='" . $row['fee_id'] . "'>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $shortFeeId . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['merchant_name'] . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['paymaya_credit_card'] . "%" . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['gcash'] . "%" . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['gcash_miniapp'] . "%" . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['paymaya'] . "%" . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['maya_checkout'] . "%" . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['maya'] . "%" . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['lead_gen_commission'] . "%" . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['commission_type'] . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['cwt_rate'] . "%" . "</td>";
-      echo "<td style='text-align:center;display:none;'>" . $row['merchant_id'] . "</td>";
+      echo "<td>" . $shortFeeId . "</td>";
+      echo "<td>" . $row['merchant_name'] . "</td>";
+      echo "<td>" . $row['paymaya_credit_card']  . "%" . "</td>";
+      echo "<td>" . $row['gcash']  . "%" . "</td>";
+      echo "<td>" . $row['gcash_miniapp'] . "%" . "</td>";
+      echo "<td>" . $row['paymaya'] . "%" . "</td>";
+      echo "<td>" . $row['maya_checkout'] . "%" . "</td>";
+      echo "<td>" . $row['maya'] . "%" . "</td>";
+      echo "<td>" . $row['lead_gen_commission'] . "%" . "</td>";
+      echo "<td>" . $row['commission_type'] . "</td>";
+      echo "<td>" . $row['cwt_rate'] . "%" . "</td>";
+      echo "<td style='display:none;'>" . $row['merchant_id'] . "</td>";
       $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-      echo "<td style='text-align:center;vertical-align: middle;' class='actions-cell;'>";
+      echo "<td class='actions-cell;'>";
 
-      echo "<button class='btn' style='border:solid #4BB0B8 2px;background-color:#4BB0B8;border-radius:20px;padding:0 10px;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.27)inset !important;' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
+      echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
       echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
       echo "<ul class='list-group'>";
 
@@ -70,60 +70,6 @@ function displayPGFeeRate()
   <style>
     body {
       background-image: url("../images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-
-    .title {
-      font-size: 30px;
-      font-weight: 900;
-      margin-right: auto;
-      padding-left: 5vh;
-      color: #E96529;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .action-item {
-      animation: fadeIn 0.3s ease forwards;
-    }
-
-
-    .add-btns {
-      padding-bottom: 0px;
-      padding-right: 5vh;
-      display: flex;
-      align-items: center;
-    }
-
-    .modal-title {
-      font-weight: 900;
-      font-style: normal;
-      font-size: 15px;
-    }
-
-    .form-label {
-      font-weight: 700;
-      font-style: normal;
-      font-size: 13px;
-    }
-
-    .form-control {
-      font-weight: 600;
-      font-style: normal;
-      font-size: 13px;
     }
 
     @media only screen and (max-width: 767px) {
@@ -358,24 +304,23 @@ function displayPGFeeRate()
                 class="fa-solid fa-upload"></i> Upload Fees</button></a>
         </div>
 
-        <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+        <div class="content">
           <table id="example" class="table bord" style="width:100%;">
             <thead>
               <tr>
-                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Fee ID</th>
-                <th style="padding:10px;">Merchant Name</th>
-                <th style="padding:10px;">Paymaya Credit Card</th>
-                <th style="padding:10px;">Gcash</th>
-                <th style="padding:10px;">Gcash Miniapp</th>
-                <th style="padding:10px;">Paymaya</th>
-                <th style="padding:10px;">Maya Checkout</th>
-                <th style="padding:10px;">Maya</th>
-                <th style="padding:10px;">Leadgen Commission</th>
-                <th style="padding:10px;">Commission Type</th>
-                <th style="padding:10px;">CWT Rate</th>
+                <th class="first-col">Fee ID</th>
+                <th>Merchant Name</th>
+                <th>Paymaya Credit Card</th>
+                <th>Gcash</th>
+                <th>Gcash Miniapp</th>
+                <th>Paymaya</th>
+                <th>Maya Checkout</th>
+                <th>Maya</th>
+                <th>Leadgen Commission</th>
+                <th>Commission Type</th>
+                <th>CWT Rate</th>
                 <th style="display:none;"></th>
-                <th style="width:100px;padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">
-                  Action</th>
+                <th class="action-col">Action</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -385,14 +330,14 @@ function displayPGFeeRate()
         </div>
       </div>
     </div>
-    <!-- Edit Modal -->
+
+    <!-- Modal: Edit Merchant Details -->
     <div class="modal fade" id="editFeeModal" data-bs-backdrop="static" tabindex="-1"
       aria-labelledby="editMerchantModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius:20px;">
           <div class="modal-header border-0">
-            <p class="modal-title" id="editMerchantModalLabel" style="font-size:15px;font-weight:bold;">Edit Fee Details
-            </p>
+            <p class="modal-title" id="editMerchantModalLabel">Edit Fee Details</p>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -400,27 +345,41 @@ function displayPGFeeRate()
               <input type="hidden" id="feeId" name="feeId">
               <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
               <input type="hidden" id="merchantId" name="merchantId">
+              
               <div class="mb-3">
                 <label for="paymayaCreditCard" class="form-label">Paymaya Credit Card, Maya Checkout, & Maya</label>
-                <input type="text" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard">
+                <div class="input-group">
+                  <input type="number" step="0.01" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard" min="0.00" required>
+                  <span class="input-group-text">%</span>
+                </div>
               </div>
               <div class="mb-3">
-                <label for="gcash" class="form-label">GCash</label>
-                <input type="text" class="form-control" id="gcash" name="gcash">
+                <label for="gcash" class="form-label">Gcash</label>
+                <div class="input-group">
+                  <input type="number" step="0.01" class="form-control" id="gcash" name="gcash" min="0.00" required>
+                  <span class="input-group-text">%</span>
+                </div>
               </div>
               <div class="mb-3">
-                <label for="gcashMiniapp" class="form-label">GCash Miniapp</label>
-                <input type="text" class="form-control" id="gcashMiniapp" name="gcashMiniapp">
+                <label for="gcashMiniapp" class="form-label">Gcash Miniapp</label>
+                <div class="input-group">
+                  <input type="number" step="0.01" class="form-control" id="gcashMiniapp" name="gcashMiniapp" min="0.00" required>
+                  <span class="input-group-text">%</span>
+                </div>
               </div>
               <div class="mb-3">
                 <label for="paymaya" class="form-label">Paymaya</label>
-                <input class="form-control" rows="3" id="paymaya" name="paymaya" style="padding:5px 5px;"
-                  required></textarea>
+                <div class="input-group">
+                  <input type="number" step="0.01" class="form-control" id="paymaya" name="paymaya" min="0.00" required>
+                  <span class="input-group-text">%</span>
+                </div>
               </div>
               <div class="mb-3">
                 <label for="leadgenCommission" class="form-label">Leadgen Commission</label>
-                <input class="form-control" rows="3" id="leadgenCommission" name="leadgenCommission"
-                  style="padding:5px 5px;" required>
+                <div class="input-group">
+                  <input type="number" step="0.01" class="form-control" id="leadgenCommission" name="leadgenCommission" min="0.00" required>
+                  <span class="input-group-text">%</span>
+                </div>
               </div>
               <div class="mb-3">
                 <label for="commissionType" class="form-label">Commission Type</label>
@@ -429,14 +388,14 @@ function displayPGFeeRate()
                   <option value="VAT Exc">VAT Exc</option>
                 </select>
               </div>
-
               <div class="mb-3">
                 <label for="cwtRate" class="form-label">CWT Rate</label>
-                <input class="form-control" rows="3" id="cwtRate" name="cwtRate" style="padding:5px 5px;" required>
+                <div class="input-group">
+                  <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate" min="0.00" required>
+                  <span class="input-group-text">%</span>
+                </div>
               </div>
-
-              <button type="submit" class="btn btn-primary"
-                style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
+              <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>  
             </form>
           </div>
         </div>
@@ -451,10 +410,10 @@ function displayPGFeeRate()
    $('.loading').hide();
    $('.cont-box').show();
 
-   var table = $('#example').DataTable({
-      scrollX: true,
-      columnDefs: [
-            { orderable: false, targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }
+        $('#example').DataTable({
+          scrollX: true,
+          columnDefs: [
+            { orderable: false, targets: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }    // Disable sorting for the specified columns
           ],
       order: [[1, 'asc']]
    }); 
@@ -469,15 +428,15 @@ function displayPGFeeRate()
       function editFee(feeUuid) {
         // Fetch the current data of the selected merchant
         var feeRow = $('#dynamicTableBody').find('tr[data-id="' + feeUuid + '"]');
-        var paymayaCreditCard = feeRow.find('td:nth-child(3)').text();
-        var gcash = feeRow.find('td:nth-child(4)').text();
-        var gcashMiniapp = feeRow.find('td:nth-child(5)').text();
-        var paymaya = feeRow.find('td:nth-child(6)').text();
-        var mayaCheckout = feeRow.find('td:nth-child(7)').text();
-        var maya = feeRow.find('td:nth-child(8)').text();
-        var leadgenCommission = feeRow.find('td:nth-child(9)').text();
+        var paymayaCreditCard = feeRow.find('td:nth-child(3)').text().replace('%', '').trim();
+        var gcash = feeRow.find('td:nth-child(4)').text().replace('%', '').trim();
+        var gcashMiniapp = feeRow.find('td:nth-child(5)').text().replace('%', '').trim();
+        var paymaya = feeRow.find('td:nth-child(6)').text().replace('%', '').trim();
+        var mayaCheckout = feeRow.find('td:nth-child(7)').text().replace('%', '').trim();
+        var maya = feeRow.find('td:nth-child(8)').text().replace('%', '').trim();
+        var leadgenCommission = feeRow.find('td:nth-child(9)').text().replace('%', '').trim();
         var commissionType = feeRow.find('td:nth-child(10)').text();
-        var cwtRate = feeRow.find('td:nth-child(11)').text();
+        var cwtRate = feeRow.find('td:nth-child(11)').text().replace('%', '').trim();
         var merchantId = feeRow.find('td:nth-child(12)').text();
 
         // Set values in the edit modal
