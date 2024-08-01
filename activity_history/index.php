@@ -15,7 +15,6 @@ function displayHistory() {
             echo "<tr data-id='" . $row['activity_history_id'] . "' class='message-row'>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_history_id'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['table_id'] . "</td>";
-            echo "<td class='message-cell' style='text-align:center;'>" . $row['table_name'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['column_name'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_type'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['user_name'] . "</td>";
@@ -169,6 +168,14 @@ function displayHistory() {
         <table id="example" class="table bord" style="width:100%;">
         <thead>
             <tr>
+<<<<<<< HEAD
+                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Activity ID</th>
+                <th style="padding:10px;">Table ID</th>
+                <th style="padding:10px;">Key Identifier</th>
+                <th style="padding:10px;">Activity Type</th>
+                <th style="padding:10px;">Modified By</th>
+                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Updated At</th>
+=======
                 <th>Activity ID</th>
                 <th>Table ID</th>
                 <th>Table Name</th>
@@ -176,6 +183,7 @@ function displayHistory() {
                 <th>Activity Type</th>
                 <th>Modified By</th>
                 <th>Updated At</th>
+>>>>>>> ccd3ee5418cf5cf63217c3e561c9032d89f315e3
             </tr>
         </thead>
         <tbody id="dynamicTableBody">
@@ -205,10 +213,14 @@ function displayHistory() {
 <script>
  $('#example').DataTable({
         scrollX: true,
+<<<<<<< HEAD
+        order: [[5, 'asc']] // Default sort by the 'Created At' column in descending order
+=======
         columnDefs: [
           { orderable: false, targets: [0, 1, 6] }    // Disable sorting for the first column
         ],
         order: []
+>>>>>>> ccd3ee5418cf5cf63217c3e561c9032d89f315e3
     });
 
 </script>
