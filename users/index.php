@@ -437,7 +437,6 @@ function displayUser()
             { orderable: false, targets: [0, 2] }
           ],
           order: [[1, 'asc']]
-      order: []
    }); 
   });
     </script>

@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_POST['userId'];
 
     $stmt = $conn->prepare("UPDATE user SET name=?, email_address=?, type=?, status=? WHERE user_id=?");
-    $stmt->bind_param("ssssss", $name, $emailAddress, $type, $status, $user_Id);
+    $stmt->bind_param("sssss", $name, $emailAddress, $type, $status, $user_Id);
 
     if ($stmt->execute()) {
         // Find the latest inserted activity in activity_history
