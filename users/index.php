@@ -12,13 +12,12 @@ function displayUser()
       $shortUsertId = substr($row['user_id'], 0, 8);
 
       echo "<tr data-uuid='" . $row['user_id'] . "'>";
-      echo "<td style='text-align:center;vertical-align: middle;padding:13px 0;'>" . $shortUsertId . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['name'] . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['email_address'] . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['type'] . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>" . $row['status'] . "</td>";
-      echo "<td style='display:none;'>" . $row['password'] . "</td>";
-      echo "<td style='text-align:center;vertical-align: middle;'>";
+      echo "<td style='padding:13px 0;'>" . $shortUsertId . "</td>";
+      echo "<td>" . $row['name'] . "</td>";
+      echo "<td>" . $row['email_address'] . "</td>";
+      echo "<td>" . $row['type'] . "</td>";
+      echo "<td>" . $row['status'] . "</td>";
+      echo "<td>";
       echo "<button class='btn check-report' style='border-radius:20px;width:60px;' onclick='editUser(\"" . $row['user_id'] . "\")'>Edit</button> ";
       echo "</td>";
       echo "</tr>";
@@ -55,10 +54,6 @@ function displayUser()
   <style>
     body {
       background-image: url("../images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
     }
 
     @keyframes fadeIn {
@@ -270,7 +265,7 @@ function displayUser()
           <a href="add_account.php"><button type="button" class="btn add-merchant"><i class="fa-solid fa-user-plus"></i> Create Account</button></a>
         </div>
 
-        <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+        <div class="content">
           <table id="example" class="table bord" style="width:100%;height:auto;">
             <thead>
             <tr>
@@ -279,7 +274,6 @@ function displayUser()
                   <th style="padding:10px;">Email Address</th>
                   <th style="padding:10px;">Type</th>
                   <th style="padding:10px;">Status</th>
-                  <th style="display:none;"></th>
                   <th class="action-col">Action</th>
                 </tr>
             </thead>
@@ -440,7 +434,7 @@ function displayUser()
         var table = $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 2, 5, 6, 9] }
+            { orderable: false, targets: [0, 2] }
           ],
           order: [[1, 'asc']]
       order: []
@@ -456,7 +450,6 @@ function displayUser()
         var emailAddress = userRow.find('td:nth-child(3)').text();
         var type = userRow.find('td:nth-child(4)').text();
         var status = userRow.find('td:nth-child(5)').text();
-        var password = userRow.find('td:nth-child(6)').text();
 
     // Set values in the edit modal
         $('#user_Id').val(userUuid);
@@ -464,7 +457,6 @@ function displayUser()
         $('#emailAddress').val(emailAddress);
         $('#type').val(type);
         $('#status').val(status);
-        $('#password').val(password);
 
         $('#editUserModal').modal('show');
       }

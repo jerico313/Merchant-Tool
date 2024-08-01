@@ -6,12 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $emailAddress = $_POST['emailAddress'];
     $type = $_POST['type'];
-    $department = $_POST['department'];
     $status = $_POST['status'];
     $userId = $_POST['userId'];
 
-    $stmt = $conn->prepare("UPDATE user SET name=?, email_address=?, type=?, department=?, status=? WHERE user_id=?");
-    $stmt->bind_param("ssssss", $name, $emailAddress, $type, $department, $status, $user_Id);
+    $stmt = $conn->prepare("UPDATE user SET name=?, email_address=?, type=?, status=? WHERE user_id=?");
+    $stmt->bind_param("ssssss", $name, $emailAddress, $type, $status, $user_Id);
 
     if ($stmt->execute()) {
         // Find the latest inserted activity in activity_history
