@@ -1,8 +1,9 @@
 <?php
-require_once("../header.php");
-require_once("../inc/config.php");
+require_once ("../header.php");
+require_once ("../inc/config.php");
 
-function displayMessage($type, $message) {
+function displayMessage($type, $message)
+{
     $color = $type === 'error' ? '#f44336' : '#4caf50';
     $icon = $type === 'error' ? 'error-icon' : 'checkmark';
     $path = $type === 'error' ? '<line x1="16" y1="16" x2="36" y2="36"/><line x1="36" y1="16" x2="16" y2="36"/>' : '<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>';
@@ -17,10 +18,6 @@ function displayMessage($type, $message) {
     <style>
         body { 
             background-image: url("../images/bg_booky.png"); 
-            background-position: center; 
-            background-repeat: no-repeat; 
-            background-size: cover; 
-            background-attachment: fixed; 
         }
         .container { 
             text-align: center; 
@@ -118,7 +115,8 @@ HTML;
 HTML;
 }
 
-function checkForDuplicates($conn, $transactionId) {
+function checkForDuplicates($conn, $transactionId)
+{
     $stmt = $conn->prepare("SELECT transaction_id FROM transaction WHERE transaction_id = ?");
     $stmt->bind_param("s", $transactionId);
     $stmt->execute();
@@ -128,7 +126,8 @@ function checkForDuplicates($conn, $transactionId) {
     return $exists ? ["Transaction ID '{$transactionId}' already exists."] : [];
 }
 
-function checkStoreExistence($conn, $storeId) {
+function checkStoreExistence($conn, $storeId)
+{
     $stmt = $conn->prepare("SELECT * FROM store WHERE store_id = ?");
     $stmt->bind_param("s", $storeId);
     $stmt->execute();
@@ -138,7 +137,8 @@ function checkStoreExistence($conn, $storeId) {
     return $exists;
 }
 
-function checkPromoExistence($conn, $promoCode) {
+function checkPromoExistence($conn, $promoCode)
+{
     $stmt = $conn->prepare("SELECT * FROM promo WHERE promo_code = ?");
     $stmt->bind_param("s", $promoCode);
     $stmt->execute();
@@ -148,7 +148,8 @@ function checkPromoExistence($conn, $promoCode) {
     return $exists;
 }
 
-function convertDateFormat($dateString) {
+function convertDateFormat($dateString)
+{
     $date = DateTime::createFromFormat('F d, Y h:iA', $dateString);
     return $date->format('Y-m-d H:i:s');
 }
@@ -230,14 +231,14 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        
-        $data[13] = ($data[13] = str_replace('"', '', $data[13])) === '' ? null : $data[13];
-
+        $data[4] = empty($data[4]) ? null : $data[4]; // Convert blank customer_name to null
+        $transaction_date = convertDateFormat($data[8]);
         $data[9] = str_replace(',', '', $data[9]); // gross_amount
         $data[10] = str_replace(',', '', $data[10]); // discount
         $data[11] = str_replace(',', '', $data[11]); // amount_discounted
         $data[12] = str_replace(',', '', $data[12]); // amount_paid
-        $transaction_date = convertDateFormat($data[8]);
+        $data[13] = ($data[13] = str_replace('"', '', $data[13])) === '' ? null : $data[13]; //payment
+
         // Bind and execute for the transaction table
         $stmt1->bind_param("sssssssssssss", $data[7], $data[3], $data[6], $data[5], $data[4], $transaction_date, $data[9], $data[10], $data[11], $data[12], $data[13], $data[14], $data[15]);
         $stmt1->execute();
