@@ -14,39 +14,7 @@
     <link rel="stylesheet" href="../style.css">
     <style>
         body {
-            background-image: url("../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        .title {
-            font-size: 30px;
-            font-weight: 900;
-            margin-right: auto;
-            padding-left: 5vh;
-            color: #E96529;
-        }
-
-        .back {
-            font-size: 20px;
-            font-weight: bold;
-            margin-right: auto;
-            padding-left: 5vh;
-            color: #E96529;
-        }
-
-        .add-btns {
-            padding-bottom: 0px;
-            padding-right: 5vh;
-            display: flex;
-            align-items: center;
-        }
-
-        .table-transparent {
-            border: solid 1px lightgrey;
-            border-radius: 10px;
+            background-image: url("../images/bg_booky.png");    
         }
 
         #content {
@@ -64,20 +32,14 @@
         #First {
             box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.33);
         }
-
-        .file-preview {
-            overflow-x: auto;
-            margin-left: auto;
-            margin-right: auto;
-        }
     </style>
 </head>
 <body>
 <div class="mt-4 mb-3">
     <a href="javascript:history.back()">
         <span class="back">
-            <i class="fa-regular fa-circle-left" style="font-size:17px;"></i>
-            <span style="font-size:17px;color:grey;cursor:pointer;padding-left:3px"> Back to Manage Users</span>
+            <i class="fa-regular fa-circle-left fa-lg"></i>
+            <span class="back-text"> Back to Manage Users</span>
         </span>
     </a>
 </div>
