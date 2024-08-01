@@ -1,17 +1,14 @@
 <?php include ("../../header.php") ?>
 <?php
-$store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
-$store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
-$encoded_store_name = json_encode($store_name, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 
-function displayOffers($store_id, $startDate = null, $endDate = null, $voucherType = null, $promoGroup = null, $billStatus = null)
+function displayOffers($merchant_id, $startDate = null, $endDate = null, $voucherType = null, $promoGroup = null, $billStatus = null)
 {
     include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM transaction_summary_view WHERE `Store ID` = ?";
-    $params = array($store_id);
+    $sql = "SELECT * FROM transaction_summary_view WHERE `Merchant ID` = ?";
+    $params = array($merchant_id);
 
     // Append voucher type filter if specified
     if ($voucherType) {
@@ -81,7 +78,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($store_name); ?> - Store Transactions</title>
+    <title><?php echo htmlspecialchars($merchant_name); ?> - Merchant Transactions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
@@ -91,10 +88,10 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="../../../style.css">
+    <link rel="stylesheet" href="../../style.css">
     <style>
         body {
-            background-image: url("../../../images/bg_booky.png");
+            background-image: url("../../images/bg_booky.png");
         }
 
         @media only screen and (max-width: 767px) {
@@ -386,7 +383,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                                 <li class="breadcrumb-item">
-                                    <a href="../../../merchant/index.php" style="color:#E96529; font-size:14px;">
+                                    <a href="../../merchant/index.php" style="color:#E96529; font-size:14px;">
                                         Merchants
                                     </a>
                                 </li>
@@ -394,29 +391,34 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                     <a href="#" class="dropdown-toggle" role="button" id="storeDropdown"
                                         data-bs-toggle="dropdown" aria-expanded="false"
                                         style="color:#E96529;font-size:14px;">
-                                        Stores
+                                        Transactions
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="storeDropdown">
+                                        
                                         <li><a class="dropdown-item"
-                                                href="../index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers" style="color:#4BB0B8;">Stores</a>
+                                                href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers">Store</a>
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers" style="color:#4BB0B8;">Transactions</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a href="#" style="color:#E96529; font-size:14px;">
-                                        Store Transactions
+                                        Merchant Transactions
                                     </a>
                                 </li>
                             </ol>
                         </nav>
                         <div style="width:650px;">
                         <p class="title2" style="padding-left:6px">
-                            <?php echo htmlspecialchars($store_name); ?>
+                            <?php echo htmlspecialchars($merchant_name); ?>
                         </p>
                         </div>
                     </div>
@@ -435,7 +437,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                         <button type="button" class="btn decoupled mt-2"
                                             id="btnDecoupled">Decoupled</button>
                                         <button type="button" class="btn gcash mt-2" id="btnGCash">
-                                            <img src="../../../images/gcash.png"
+                                            <img src="../../images/gcash.png"
                                                 style="width:25px; height:20px; margin-right: 1.20vw;" alt="gcash">
                                             <span>Gcash</span>
                                         </button>
@@ -506,7 +508,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
-                            <?php displayOffers($store_id); ?>
+                            <?php displayOffers($merchant_id); ?>
                         </tbody>
                     </table>
                 </div>
@@ -555,7 +557,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             XLSX.utils.book_append_sheet(wb, ws, "Transactions");
 
             // Generate the Excel file and trigger the download
-            XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
+            XLSX.writeFile(wb, `<?php echo $merchant_name; ?> - ${formattedDate} - Transactions.xlsx`);
         }
 
         $(window).on('load', function () {

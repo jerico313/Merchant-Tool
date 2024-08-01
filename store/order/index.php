@@ -414,9 +414,11 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                         style="color:#E96529; font-size:14px;">Transactions</a></li>
                             </ol>
                         </nav>
+                        <div style="width:650px;">
                         <p class="title2" style="padding-left:6px">
                             <?php echo htmlspecialchars($store_name); ?>
                         </p>
+                        </div>
                     </div>
                     <div class="dropdown-center">
                         <button class="check-report dropdown-toggle mt-4" type="button" id="dropdownMenuButton"
@@ -615,12 +617,12 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
             $('#btnBillable').on('click', function () {
                 table.search('').columns().search('').draw();
-                table.column(11).search('^BILLABLE$', true, false).draw();
+                table.column(13).search('^BILLABLE$', true, false).draw();
             });
 
             $('#btnNotBillable').on('click', function () {
                 table.search('').columns().search('').draw();
-                table.column(11).search('^NOT BILLABLE$', true, false).draw();
+                table.column(13).search('^NOT BILLABLE$', true, false).draw();
             });
             // Show All button click event
             $('#btnShowAll').on('click', function () {

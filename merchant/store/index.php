@@ -309,7 +309,7 @@ function displayStore($merchant_id)
         <div class="custom-box pt-4">
             <div class="sub" style="text-align:left;">
                 <div class="voucher-type">
-                    <div class="row pb-2 title" aria-label="breadcrumb">
+                    <div class="row title" aria-label="breadcrumb">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                                 <li class="breadcrumb-item">
@@ -331,6 +331,10 @@ function displayStore($merchant_id)
                                         <li><a class="dropdown-item"
                                                 href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers">Transaction</a>
                                         </li>
                                     </ul>
                                 </li>
