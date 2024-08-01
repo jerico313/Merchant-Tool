@@ -177,20 +177,17 @@ function fetchAccountManager()
                                             <label for="sales" class="form-label" id="form-input-label">
                                                 Sales<span class="text-danger" style="padding:2px">*</span>
                                             </label>
-                                            <select id="form-input-field" class="form-select" name="sales[]" required>
-                                                <option value="" disabled selected>-- Select Sales --</option>
-                                                <?php fetchSales(); ?>
-                                            </select>
+                                            <input id="form-input-field" type="text" class="form-control"
+                                                name="sales[]" placeholder="Enter sales person"
+                                                maxlength="255">
                                         </div>
                                         <div class="mb-3">
                                             <label for="account_manager" class="form-label" id="form-input-label">
                                                 Account Manager<span class="text-danger" style="padding:2px">*</span>
                                             </label>
-                                            <select id="form-input-field" class="form-select" name="account_manager[]"
-                                                required>
-                                                <option value="" disabled selected>-- Select Account Manager --</option>
-                                                <?php fetchAccountManager(); ?>
-                                            </select>
+                                            <input id="form-input-field" type="text" class="form-control"
+                                                name="account_manager[]" placeholder="Enter account manager"
+                                                maxlength="255">
                                         </div>
                                     </div>
                                 </div>
@@ -283,19 +280,17 @@ function fetchAccountManager()
                             <label for="sales" class="form-label" id="form-input-label">
                                 Sales<span class="text-danger" style="padding:2px">*</span>
                             </label>
-                            <select id="form-input-field" class="form-select" name="sales[]" required>
-                                <option value="" disabled selected>-- Select Sales --</option>
-                                <?php fetchSales(); ?>
-                            </select>
+                            <input id="form-input-field" type="text" class="form-control"
+                                name="sales[]" placeholder="Enter sales person"
+                                maxlength="255">
                         </div>
                         <div class="mb-3">
                             <label for="account_manager" class="form-label" id="form-input-label">
                                 Account Manager<span class="text-danger" style="padding:2px">*</span>
                             </label>
-                            <select id="form-input-field" class="form-select" name="account_manager[]" required>
-                                <option value="" disabled selected>-- Select Account Manager --</option>
-                                <?php fetchAccountManager(); ?>
-                            </select>
+                            <input id="form-input-field" type="text" class="form-control"
+                                name="account_manager[]" placeholder="Enter account manager"
+                                maxlength="255">
                         </div>
                     </div>
                     <div class="mb-3 mt-3" style="text-align:right;">
