@@ -154,9 +154,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
                             aria-labelledby="exampleFirstTab">
                             <form method="POST" action="update.php">
                                 <div id="First" style="padding:20px !important;margin:10px;border-radius:8px;border-left:solid #E96529 8px;padding:5px;">
-                                    <div class="name">
+                                    
                                         <p style="font-weight:900;font-size:20px;color:#4BB0B8;"><?php echo strtoupper($data['name']); ?> (<?php echo htmlspecialchars($data['user_id']); ?>)</p>
-                                    </div>
+                                    
                                     <hr style="border: 1px solid #3b3b3b;">
                                     <div class="row">
                                         <div class="col-md-6 pb-3">
@@ -202,9 +202,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
                             aria-labelledby="exampleSecondTab">
                             <form method="POST">
                                 <div id="First" style="padding:20px !important;margin:10px;border-radius:8px;border-left:solid #E96529 8px;padding:5px;">
-                                    <div class="name">
                                         <p style="font-weight:900;font-size:20px;color:#4BB0B8;"><?php echo strtoupper($data['name']); ?> (<?php echo htmlspecialchars($data['user_id']); ?>)</p>
-                                    </div>
+
                                     <hr style="border: 1px solid #3b3b3b;">
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
