@@ -137,6 +137,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     *{
   font-family: "Nunito", sans-serif;
@@ -194,50 +195,6 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
           }
         } 
   </style>
-
-  <script>
-  function exportToExcel() {
-    const table = document.getElementById("myTable");
-    const ws = XLSX.utils.table_to_sheet(table);
-
-    // Format columns 9 and 10 to two decimal places with commas
-    ws['!cols'] = [{wch: 10}, {wch: 10}, {wch: 10}, {wch: 10}, {wch: 10}, {wch: 10}, {wch: 10}, {wch: 10}, {wch: 15}, {wch: 15}]; // Adjust column widths if needed
-
-    // Add number formatting to columns 9 and 10
-    for (let i = 1; i <= ws['!ref'].split(':')[1].replace(/\D/g,''); i++) {
-        if (ws[`J${i}`]) {
-            ws[`J${i}`].z = '#,##0.00'; 
-        }
-        if (ws[`K${i}`]) {
-            ws[`K${i}`].z = '#,##0.00'; 
-        }
-        if (ws[`L${i}`]) {
-            ws[`L${i}`].z = '#,##0.00'; 
-        }
-        if (ws[`Q${i}`]) {
-            ws[`Q${i}`].z = '#,##0.00';
-        }
-        if (ws[`R${i}`]) {
-            ws[`R${i}`].z = '#,##0.00';
-        }
-        if (ws[`T${i}`]) {
-            ws[`T${i}`].z = '#,##0.00'; 
-        }
-        if (ws[`J${i}`]) {
-            ws[`J${i}`].z = '#,##0.00'; 
-        }
-        if (ws[`U${i}`]) {
-            ws[`U${i}`].z = '#,##0.00';
-        }
-    }
-
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Order Details");
-
-    
-XLSX.writeFile(wb, "<?php echo htmlspecialchars($merchant_brand_name); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
-}
-</script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-3 pb-3 pl-3 pr-3 fixed-top">
@@ -255,14 +212,14 @@ XLSX.writeFile(wb, "<?php echo htmlspecialchars($merchant_brand_name); ?> - <?ph
         <!-- Add your navigation items here if needed -->
       </ul>
       <a class="print" id="print" href="#"><i class="fa-solid fa-print fa-lg"></i> Print</a>
-      <a class="downloadExcel" id="downloadBtnExcel" onclick="exportToExcel()" href="#"><i class="fa-solid fa-download fa-lg"></i> Excel</a>
+      <a class="downloadExcel" id="downloadBtnExcel" type="button" onclick="downloadTables()" href="#"><i class="fa-solid fa-download fa-lg"></i> Excel</a>
       <!--<a class="downloadBtn" id="downloadBtn"  href="#"> <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
     </div>
   </div>
 </nav>
 
 <div class="box" style="display:none" >
-<table id="myTable" class="table bord" style="width:250%;">
+<table id="example" class="table bord" style="width:250%;">
                         <thead>
                             <tr>
                                 <th>Transaction ID</th>
@@ -500,6 +457,16 @@ document.getElementById('print').addEventListener('click', function () {
 
     window.print();
 });
+</script>
+<script>
+  function downloadTables() {
+    // Get the table element
+    var table = document.getElementById("example");
+    // Convert the table to a worksheet
+    var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+    // Generate an Excel file and prompt download
+    XLSX.writeFile(wb, "<?php echo htmlspecialchars($data['merchant_brand_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+  }
 </script>
 </body>
 </html>

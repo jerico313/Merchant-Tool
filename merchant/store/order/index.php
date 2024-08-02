@@ -1,4 +1,4 @@
-<?php include ("../../header.php") ?>
+<?php include ("../../../header.php") ?>
 <?php
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
@@ -8,7 +8,7 @@ $encoded_store_name = json_encode($store_name, JSON_HEX_TAG | JSON_HEX_AMP | JSO
 
 function displayOffers($store_id, $startDate = null, $endDate = null, $voucherType = null, $promoGroup = null, $billStatus = null)
 {
-    include ("../../inc/config.php");
+    include ("../../../inc/config.php");
 
     $sql = "SELECT * FROM transaction_summary_view WHERE `Store ID` = ?";
     $params = array($store_id);
@@ -522,41 +522,46 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
-        function downloadTables() {
-            // Get current date and format it for the file name
-            const currentDate = new Date();
-            const formattedDate = currentDate.toISOString().split('T')[0]; // Format date for file name
+       
+       function downloadTables() {
+    // Get current date and format it for the file name
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0]; // Format date for file name
 
-            // Assuming you have initialized DataTable on #example
-            const tableData = $('#example').DataTable().rows().data().toArray();
+    // Assuming you have initialized DataTable on #example
+    const table = $('#example').DataTable();
 
-            // Function to format customer ID if needed
-            function formatDataForExcel(row) {
-                return [
-                    row[0], row[1], row[2], row[3], row[4],
-                    row[9], row[10], row[11], row[12], row[13],
-                    row[15], row[16], row[17], row[18], row[19], row[20]
-                ];
-            }
+    // Get filtered data from DataTable
+    const filteredData = table.rows({ search: 'applied' }).data().toArray();
 
-            // Extracting all columns data and formatting customer ID
-            const filteredData = tableData.map(row => formatDataForExcel(row));
+    // Function to format data for Excel export (customize as per your need)
+    function formatDataForExcel(row) {
+        return [
+            row[0], row[1], row[2], row[3], row[4],
+            row[9], row[10], row[11], row[12], row[13],
+            row[15], row[16], row[17], row[18], row[19], row[20]
+        ];
+    }
 
-            // Add headers for Excel file
-            filteredData.unshift([
-                'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
-                'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
-                'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
-            ]);
+    // Format each row for Excel
+    const formattedRows = filteredData.map(row => formatDataForExcel(row));
 
-            // Create a new workbook and add the data to the first sheet
-            const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.aoa_to_sheet(filteredData);
-            XLSX.utils.book_append_sheet(wb, ws, "Transactions");
+    // Add headers for Excel file
+    formattedRows.unshift([
+        'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
+        'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
+        'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
+    ]);
 
-            // Generate the Excel file and trigger the download
-            XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
-        }
+    // Create a new workbook and add the data to the first sheet
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(formattedRows);
+    XLSX.utils.book_append_sheet(wb, ws, "Transactions");
+
+    // Generate the Excel file and trigger the download
+    XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
+}
+
 
         $(window).on('load', function () {
             $('.loading').hide();
