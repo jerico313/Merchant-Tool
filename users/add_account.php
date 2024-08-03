@@ -49,7 +49,7 @@
                             <label for="name" style="font-weight:900;color:#6c6868;">
                                 Name<span class="text-danger" style="padding:2px">*</span>
                             </label>
-                            <input type="text" class="form-control" id="name" name="name"
+                            <input type="text" style="padding:10px" class="form-control" id="name" name="name"
                                 placeholder="Enter name" required maxlength="255">
                             <input type="hidden" value="<?php echo ($user_id); ?>" name="userId">
                         </div>
@@ -58,7 +58,7 @@
                                 Email Address<span class="text-danger" style="padding:2px">*</span>
                             </label>
                             <input type="email" class="form-control" id="email" name="emailAddress"
-                                placeholder="Enter email address" required maxlength="255">
+                                placeholder="Enter email address" style="padding:10px;" required maxlength="255">
                         </div>
                         <div class="form-group mb-3">
                             <label for="type" style="font-weight:900;color:#6c6868;">

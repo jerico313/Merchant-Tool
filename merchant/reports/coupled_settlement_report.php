@@ -212,7 +212,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
         <!-- Add your navigation items here if needed -->
       </ul>
       <a class="print" id="print" href="#"><i class="fa-solid fa-print fa-lg"></i> Print</a>
-      <a class="downloadExcel" id="downloadBtnExcel" type="button" onclick="downloadTables()" href="#"><i class="fa-solid fa-download fa-lg"></i> Excel</a>
+      <a class="downloadExcel" id="downloadBtnExcel" type="button" onclick="downloadTables()" href="#"><i class="fa-solid fa-download fa-lg"></i> CSV</a>
       <!--<a class="downloadBtn" id="downloadBtn"  href="#"> <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
     </div>
   </div>
@@ -465,8 +465,9 @@ document.getElementById('print').addEventListener('click', function () {
     // Convert the table to a worksheet
     var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
     // Generate an Excel file and prompt download
-    XLSX.writeFile(wb, "<?php echo htmlspecialchars($data['merchant_brand_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+    XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.csv");
   }
+  
 </script>
 </body>
 </html>

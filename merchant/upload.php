@@ -55,7 +55,7 @@
                         <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
                         <div class="uploadfile" style="text-align:right;">
                             <button type="button" class="btn btn-danger clear" id="clearButton">Clear</button>
-                            <button type="submit" class="btn btn-primary upload_file" id="submitButton">
+                            <button type="submit" style="width: 190px;" class="btn btn-primary upload_file" id="submitButton">
                                 <span>Submit</span>
                             </button>
                         </div>

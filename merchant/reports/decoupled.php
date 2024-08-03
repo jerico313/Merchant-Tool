@@ -167,7 +167,7 @@ function displayDecoupled($merchant_id, $merchant_name)
                     <div class="row pb-2 title" aria-label="breadcrumb">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                                <<li class="breadcrumb-item">
+                                <li class="breadcrumb-item">
                                     <a href="../../merchant/index.php"
                                         style="color:#E96529; font-size:14px;">
                                         Merchants

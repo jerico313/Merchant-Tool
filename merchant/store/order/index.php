@@ -522,7 +522,6 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
-       
        function downloadTables() {
     // Get current date and format it for the file name
     const currentDate = new Date();
@@ -561,7 +560,6 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     // Generate the Excel file and trigger the download
     XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
 }
-
 
         $(window).on('load', function () {
             $('.loading').hide();

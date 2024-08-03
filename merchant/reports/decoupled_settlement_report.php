@@ -212,13 +212,13 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
                 </ul>
                 <a class="btn" id="print"><i class="fa-solid fa-print fa-lg"></i> Print</a>
                 <a class="downloadBtnExcel" id="downloadBtnExcel" onclick="downloadTables()"><i
-                        class="fa-solid fa-download fa-lg"></i> Excel</a>
+                        class="fa-solid fa-download fa-lg"></i> CSV</a>
                 <!--<a class="downloadBtn" id="downloadBtn" > <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
             </div>
         </div>
     </nav>
     <div class="box" style="display:none;">
-        <table id="myTable" class="table bord" style="width:250%;">
+        <table id="example" class="table bord" style="width:250%;">
             <thead>
                 <tr>
                     <th>Transaction ID</th>
@@ -395,7 +395,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
     // Convert the table to a worksheet
     var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
     // Generate an Excel file and prompt download
-    XLSX.writeFile(wb, "<?php echo htmlspecialchars($data['merchant_brand_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+    XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.csv");
   }
 </script>
 </body>

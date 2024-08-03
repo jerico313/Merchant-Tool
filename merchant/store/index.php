@@ -96,6 +96,25 @@ function displayStore($merchant_id)
             }
         }
 
+        table.dataTable tbody td:last-child {
+      position: sticky;
+      right: 0;
+      z-index: 2;
+      background-color: #F1F1F1 !important;
+      box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+      -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+      -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    table thead th:last-child {
+      position: sticky !important;
+      right: 0;
+      z-index: 2;
+      box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+      -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+      -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+    }
+
         .voucher-type {
             padding-bottom: 0px;
             padding-right: 5vh;
@@ -353,7 +372,7 @@ function displayStore($merchant_id)
                 </div>
                 
                 <div class="content">
-                    <table id="example" class="table bord" style="width:100%;">
+                    <table id="example" class="table bord" style="width:150%;">
                         <thead>
                             <tr>
                                 <th class="first-col">Store ID</th>
@@ -362,7 +381,7 @@ function displayStore($merchant_id)
                                 <th>Store Address</th>
                                 <th style="display:none;"></th>
                                 <th>Email Address</th>
-                                <th class="action-col" style="width:10%;">Actions</th>
+                                <th class="action-col" style="width:7%;">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
