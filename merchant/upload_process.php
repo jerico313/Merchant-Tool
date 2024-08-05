@@ -145,6 +145,13 @@ function checkForDuplicates($conn, $merchantId, $merchantName) {
     return $duplicates;
 }
 
+function updateActivityHistory($conn, $merchantId, $userId) {
+    $stmt = $conn->prepare("UPDATE activity_history SET user_id = ? WHERE description LIKE CONCAT('%', ?, '%') AND user_id IS NULL ORDER BY created_at DESC LIMIT 1");
+    $stmt->bind_param("ss", $userId, $merchantId);
+    $stmt->execute();
+    $stmt->close();
+}
+
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
     $file_ext = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
@@ -183,6 +190,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); // Skip header row again
     $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, legal_entity_name, business_address, email_address, sales, account_manager) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $data[2] = empty($data[2]) ? null : $data[2]; // Convert blank merchant_partnership_type to null
         $data[3] = empty($data[3]) ? null : $data[3]; // Convert blank legal_entity_name to null
@@ -192,6 +200,9 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $data[7] = empty($data[7]) ? null : $data[7]; // Convert blank account_manager to null
         $stmt->bind_param("ssssssss", $data[1], $data[0], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7]);
         $stmt->execute();
+
+        // Update the user_id column in the latest activity_history record
+        updateActivityHistory($conn, $data[0], $userId);
     }
 
     fclose($handle);

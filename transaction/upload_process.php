@@ -148,6 +148,13 @@ function checkPromoExistence($conn, $promoCode)
     return $exists;
 }
 
+function updateActivityHistory($conn, $customerId, $userId) {
+    $stmt = $conn->prepare("UPDATE activity_history SET user_id = ? WHERE description LIKE CONCAT('%', ?, '%') AND user_id IS NULL ORDER BY created_at DESC LIMIT 1");
+    $stmt->bind_param("ss", $userId, $customerId);
+    $stmt->execute();
+    $stmt->close();
+}
+
 function convertDateFormat($dateString)
 {
     $date = DateTime::createFromFormat('F d, Y h:iA', $dateString);
@@ -229,7 +236,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     fgetcsv($handle); // Skip header row again
 
     $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+    $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $data[4] = empty($data[4]) ? null : $data[4]; // Convert blank customer_name to null
         $transaction_date = convertDateFormat($data[8]);
@@ -242,6 +249,8 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         // Bind and execute for the transaction table
         $stmt1->bind_param("sssssssssssss", $data[7], $data[3], $data[6], $data[5], $data[4], $transaction_date, $data[9], $data[10], $data[11], $data[12], $data[13], $data[14], $data[15]);
         $stmt1->execute();
+        
+        updateActivityHistory($conn, $data[5], $userId);
     }
 
     fclose($handle);
