@@ -125,22 +125,6 @@ select.form-select.form-select-sm {
   -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.20);
 }
 
-#cancelButton {
-  display: inline-block;
-  background-color: #cc001b;
-  color: #fff;
-  border: solid #cc001b 2px;
-  padding: 5px;
-  width: 150px;
-  border-radius: 20px;
-  cursor: pointer;
-  text-align: center;
-  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.20);
-  -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.20);
-  -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.20);
-  font-weight:700;
-}
-
 .resend{
   display: inline-block;
   background-color: #fff;
@@ -288,15 +272,6 @@ select.form-select.form-select-sm {
   color: #fff;
   border: solid #4BB0B8 2px;
   background-color: #4BB0B8;
-  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;
-  -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;
-  -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;
-}
-
-#cancelButton:hover {
-  color: #fff;
-  border: solid #cc001b 2px;
-  background-color: #cc001b;
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;
   -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;
   -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.27)inset;
@@ -883,6 +858,7 @@ td {
   padding: 10px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  width: auto;
 }
 
 .action-item {
