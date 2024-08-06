@@ -2,7 +2,7 @@
 // Include the configuration file
 require_once("../header.php");
 require_once '../inc/config.php';
-
+$userId = $_SESSION['user_id']; 
 // Create a database connection
 $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 

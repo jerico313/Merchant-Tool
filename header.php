@@ -2,7 +2,7 @@
 session_start();
 
 // Define session timeout duration (e.g., 15 minutes)
-$timeout_duration = 900;
+$timeout_duration = 3600;
 
 // Check if the last activity timestamp is set
 if (isset($_SESSION['last_activity'])) {
@@ -130,6 +130,8 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
             <?php if ($initial === 'W' || $initial === 'Y' ) echo 'padding-top:3px;'; ?>
             <?php if ($initial === 'H' ) echo 'padding-top:2px;'; ?>
         }
+
+        
     </style>
 </head>
 <body>
@@ -190,7 +192,6 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
             </div>
     </div>
 </nav>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Get the current page URL
@@ -230,7 +231,7 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
 
         // Session timeout logic
         var timeout;
-        var timeoutDuration = 3600000; // 15 minutes in milliseconds
+        var timeoutDuration = 10000000;
                               
         function resetTimeout() {
             clearTimeout(timeout);

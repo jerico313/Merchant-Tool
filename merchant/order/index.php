@@ -1,14 +1,14 @@
 <?php include ("../../header.php") ?>
 <?php
-$store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
-$store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
+$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
-function displayOffers($store_id, $startDate = null, $endDate = null, $voucherType = null, $promoGroup = null, $billStatus = null)
+function displayOffers($merchant_id, $startDate = null, $endDate = null, $voucherType = null, $promoGroup = null, $billStatus = null)
 {
     include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM transaction_summary_view WHERE `Store ID` = ?";
-    $params = array($store_id);
+    $sql = "SELECT * FROM transaction_summary_view WHERE `Merchant ID` = ?";
+    $params = array($merchant_id);
 
     // Append voucher type filter if specified
     if ($voucherType) {
@@ -25,7 +25,6 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
         $sql .= " AND `Bill Status` = ?";
         $params[] = $billStatus;
     }
-
     // Append date range filter if both startDate and endDate are provided
     if ($startDate && $endDate) {
         $sql .= " AND `Transaction Date` BETWEEN ? AND ?";
@@ -42,43 +41,28 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $GrossAmount = number_format($row['Gross Amount'], 2);
-            $Discount = number_format($row['Discount'], 2);
-            $CartAmount = number_format($row['Cart Amount'], 2);
-            $CommissionAmount = number_format($row['Commission Amount'], 2);
-            $TotalBilling = number_format($row['Total Billing'], 2);
-            $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
-            $CustomerName = empty($row['Customer Name']) ? '-' : $row['Customer Name'];
-
-            $AmounttobeDisbursed = $row['Amount to be Disbursed'];
-            if ($AmounttobeDisbursed < 0) {
-                $AmounttobeDisbursed = '(' . number_format(-$AmounttobeDisbursed, 2) . ')';
-            } else {
-                $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
-            }
-
             echo "<tr style='padding:10px;'>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
             echo "<td style='text-align:center;width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $CustomerName . "</td>";
+            echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
             echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
             echo "<td style='text-align:center;width:3%;'>" . $row['Voucher Type'] . "</td>";
             echo "<td style='text-align:center;width:6%;'>" . $row['Promo Category'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Promo Group'] . "</td>";
             echo "<td style='text-align:center;width:6%;'>" . $row['Promo Type'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $GrossAmount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $Discount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $CartAmount . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Gross Amount'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Discount'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Cart Amount'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $CommissionAmount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $TotalBilling . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Amount'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Total Billing'] . "</td>";
             echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $PGFeeAmount . "</td>";
-            echo "<td style='text-align:center;width:5%;'>" . $AmounttobeDisbursed . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Amount'] . "</td>";
+            echo "<td style='text-align:center;width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
             echo "</tr>";
         }
@@ -94,7 +78,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($store_name); ?> - Transactions</title>
+    <title><?php echo htmlspecialchars($merchant_name); ?> - Merchant Transactions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
@@ -145,15 +129,6 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 white-space: nowrap;
                 font-weight: bold;
                 text-align: left !important;
-            }
-
-            .table td:nth-child(1) {
-                background: #E96529;
-                height: 100%;
-                top: 0;
-                left: 0;
-                font-weight: bold;
-                color: #fff;
             }
 
             td:nth-of-type(1):before {
@@ -269,7 +244,6 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
         .cont-box {
             display: none;
         }
-
 
         .lds-default,
         .lds-default div {
@@ -408,18 +382,47 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                     <div class="row pb-2 title" aria-label="breadcrumb">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                                <li class="breadcrumb-item"><a href="../index.php"
-                                        style="color:#E96529; font-size:14px;">Stores</a></li>
-                                <li class="breadcrumb-item"><a href="#" onclick="location.reload();"
-                                        style="color:#E96529; font-size:14px;">Transactions</a></li>
+                                <li class="breadcrumb-item">
+                                    <a href="../../merchant/index.php" style="color:#E96529; font-size:14px;">
+                                        Merchants
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item dropdown">
+                                    <a href="#" class="dropdown-toggle" role="button" id="storeDropdown"
+                                        data-bs-toggle="dropdown" aria-expanded="false"
+                                        style="color:#E96529;font-size:14px;">
+                                        Transactions
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="storeDropdown">
+                                        
+                                        <li><a class="dropdown-item"
+                                                href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers">Store</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers">Promos</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers" style="color:#4BB0B8;">Transactions</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#" style="color:#E96529; font-size:14px;">
+                                        Merchant Transactions
+                                    </a>
+                                </li>
                             </ol>
                         </nav>
                         <div style="width:650px;">
                         <p class="title2" style="padding-left:6px">
-                            <?php echo htmlspecialchars($store_name); ?>
+                            <?php echo htmlspecialchars($merchant_name); ?>
                         </p>
                         </div>
                     </div>
+
                     <div class="dropdown-center">
                         <button class="check-report dropdown-toggle mt-4" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-filter"></i> Filters
@@ -452,7 +455,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                         </div>
                     </div>
                     <div class="dropdown">
-                        <button class="dropdown-toggle dateRange mt-4" type="button" id="dropdownMenuButton"
+                        <button class="dropdown-toggle mt-4 dateRange" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-calendar"></i> Select
                             Date Range</button>
                         <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton">
@@ -468,46 +471,44 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                     <input type="date" class="form-control" id="endDate" placeholder="Select end date"
                                         required>
                                 </div>
-                                <button type="button" class="btn btn-warning mt-2" id="search"><i
+                                <button type="button" class="btn btn-primary mt-2" id="search"><i
                                         class="fa-solid fa-magnifying-glass"></i> Search</button>
                             </form>
                         </div>
                     </div>
-                    <button type="button" onclick="downloadTables()" class="btn btn-warning download-csv mt-4">
+                    <button type="button" onclick="downloadTables()" class="btn btn-primary download-csv mt-4">
                         <i class="fa-solid fa-file-excel"></i> Download</button>
                 </div>
                 <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                     <table id="example" class="table bord" style="width:275%;">
                         <thead>
                             <tr>
-                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">
-                                    Transaction ID</th>
-                                <th style="padding:10px;">Transaction Date</th>
-                                <th style="padding:10px;">Customer ID</th>
-                                <th style="padding:10px;">Customer Name</th>
-                                <th style="padding:10px;">Promo Code</th>
-                                <th style="padding:10px;">Voucher Type</th>
-                                <th style="padding:10px;">Promo Category</th>
-                                <th style="padding:10px;">Promo Group</th>
-                                <th style="padding:10px;">Promo Type</th>
-                                <th style="padding:10px;">Gross Amount</th>
-                                <th style="padding:10px;">Discount</th>
-                                <th style="padding:10px;">Cart Amount</th>
-                                <th style="padding:10px;">Mode of Payment</th>
-                                <th style="padding:10px;">Bill Status</th>
-                                <th style="padding:10px;">Commission Type</th>
-                                <th style="padding:10px;">Commission Rate</th>
-                                <th style="padding:10px;">Commission Amount</th>
-                                <th style="padding:10px;">Total Billing</th>
-                                <th style="padding:10px;">PG Fee Rate</th>
-                                <th style="padding:10px;">PG Fee Amount</th>
+                                <th class="first-col">Transaction ID</th>
+                                <th>Transaction Date</th>
+                                <th>Customer ID</th>
+                                <th>Customer Name</th>
+                                <th>Promo Code</th>
+                                <th>Voucher Type</th>
+                                <th>Promo Category</th>
+                                <th>Promo Group</th>
+                                <th>Promo Type</th>
+                                <th>Gross Amount</th>
+                                <th>Discount</th>
+                                <th>Cart Amount</th>
+                                <th>Mode of Payment</th>
+                                <th>Bill Status</th>
+                                <th>Commission Type</th>
+                                <th>Commission Rate</th>
+                                <th>Commission Amount</th>
+                                <th>Total Billing</th>
+                                <th>PG Fee Rate</th>
+                                <th>PG Fee Amount</th>
+                                <th>Amount to be Disbursed</th>
                                 <th style="display:none;"></th>
-                                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">
-                                    Amount to be Disbursed</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
-                            <?php displayOffers($store_id); ?>
+                            <?php displayOffers($merchant_id); ?>
                         </tbody>
                     </table>
                 </div>
@@ -559,7 +560,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     XLSX.utils.book_append_sheet(wb, ws, "Transactions");
 
     // Generate the Excel file and trigger the download
-    XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
+    XLSX.writeFile(wb, `<?php echo $merchant_name; ?> - ${formattedDate} - Transactions.xlsx`);
 }
 
         $(window).on('load', function () {
@@ -573,18 +574,16 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 ],
                 order: [[21, 'asc']]
             });
-
-            // Function to apply date range filter
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     var startDate = $('#startDate').val();
                     var endDate = $('#endDate').val();
-                    var date = data[21]; // Assuming that the date is in the second column (index 1)
+                    var date = data[21];
 
                     if (startDate && endDate) {
                         return (date >= startDate && date <= endDate);
                     }
-                    return true; // If no date range is selected, return all rows
+                    return true;
                 }
             );
 
@@ -623,6 +622,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 table.search('').columns().search('').draw();
                 table.column(13).search('^NOT BILLABLE$', true, false).draw();
             });
+
             // Show All button click event
             $('#btnShowAll').on('click', function () {
                 $('#startDate, #endDate').val('');

@@ -140,6 +140,13 @@ function checkForDuplicates($conn, $merchantId) {
     return $duplicates;
 }
 
+function updateActivityHistory($conn, $merchantId, $userId) {
+    $stmt = $conn->prepare("UPDATE activity_history SET user_id = ? WHERE description LIKE CONCAT('%', ?, '%') AND user_id IS NULL ORDER BY created_at DESC LIMIT 1");
+    $stmt->bind_param("ss", $userId, $merchantId);
+    $stmt->execute();
+    $stmt->close();
+}
+
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
     $file_ext = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
@@ -203,10 +210,13 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     fgetcsv($handle); // Skip header row again
 
     $stmt1 = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type, cwt_rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $fee_id = Uuid::uuid4()->toString();
         $stmt1->bind_param("sssssssssss", $fee_id, $data[1], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11], $data[12]);
         $stmt1->execute();
+
+        updateActivityHistory($conn, $data[1], $userId);
     }
 
     fclose($handle);

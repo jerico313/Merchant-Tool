@@ -51,7 +51,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                     <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" style="display:none;">
                     <div class="uploadfile" style="text-align:right;">
                         <button type="button" class="btn btn-danger clear" id="clearButton">Clear</button>
-                        <button type="submit" class="btn btn-primary upload_file" id="submitButton">
+                        <button type="submit" style="width: 190px;" class="btn btn-primary upload_file" id="submitButton">
                             <span>Submit</span>
                         </button>
                     <div class="file-preview" style="margin-top:20px;">

@@ -414,10 +414,11 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                 </li>
                             </ol>
                         </nav>
-
+                        <div style="width:650px;">
                         <p class="title2" style="padding-left:6px">
                             <?php echo htmlspecialchars($store_name); ?>
                         </p>
+                        </div>
                     </div>
 
                     <div class="dropdown-center">
@@ -521,41 +522,44 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
-        function downloadTables() {
-            // Get current date and format it for the file name
-            const currentDate = new Date();
-            const formattedDate = currentDate.toISOString().split('T')[0]; // Format date for file name
+       function downloadTables() {
+    // Get current date and format it for the file name
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0]; // Format date for file name
 
-            // Assuming you have initialized DataTable on #example
-            const tableData = $('#example').DataTable().rows().data().toArray();
+    // Assuming you have initialized DataTable on #example
+    const table = $('#example').DataTable();
 
-            // Function to format customer ID if needed
-            function formatDataForExcel(row) {
-                return [
-                    row[0], row[1], row[2], row[3], row[4],
-                    row[9], row[10], row[11], row[12], row[13],
-                    row[15], row[16], row[17], row[18], row[19], row[20]
-                ];
-            }
+    // Get filtered data from DataTable
+    const filteredData = table.rows({ search: 'applied' }).data().toArray();
 
-            // Extracting all columns data and formatting customer ID
-            const filteredData = tableData.map(row => formatDataForExcel(row));
+    // Function to format data for Excel export (customize as per your need)
+    function formatDataForExcel(row) {
+        return [
+            row[0], row[1], row[2], row[3], row[4],
+            row[9], row[10], row[11], row[12], row[13],
+            row[15], row[16], row[17], row[18], row[19], row[20]
+        ];
+    }
 
-            // Add headers for Excel file
-            filteredData.unshift([
-                'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
-                'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
-                'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
-            ]);
+    // Format each row for Excel
+    const formattedRows = filteredData.map(row => formatDataForExcel(row));
 
-            // Create a new workbook and add the data to the first sheet
-            const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.aoa_to_sheet(filteredData);
-            XLSX.utils.book_append_sheet(wb, ws, "Transactions");
+    // Add headers for Excel file
+    formattedRows.unshift([
+        'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
+        'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
+        'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
+    ]);
 
-            // Generate the Excel file and trigger the download
-            XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
-        }
+    // Create a new workbook and add the data to the first sheet
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(formattedRows);
+    XLSX.utils.book_append_sheet(wb, ws, "Transactions");
+
+    // Generate the Excel file and trigger the download
+    XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
+}
 
         $(window).on('load', function () {
             $('.loading').hide();
@@ -609,12 +613,12 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
             $('#btnBillable').on('click', function () {
                 table.search('').columns().search('').draw();
-                table.column(11).search('^BILLABLE$', true, false).draw();
+                table.column(13).search('^BILLABLE$', true, false).draw();
             });
 
             $('#btnNotBillable').on('click', function () {
                 table.search('').columns().search('').draw();
-                table.column(11).search('^NOT BILLABLE$', true, false).draw();
+                table.column(13).search('^NOT BILLABLE$', true, false).draw();
             });
 
             // Show All button click event

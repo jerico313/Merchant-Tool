@@ -16,7 +16,9 @@ function displayHistory() {
             echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_history_id'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_type'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['user_name'] . "</td>";
+            echo "<td class='message-cell' style='text-align:center;'>" . $row['table_name'] . "</td>";
             echo "<td class='message-cell' style='text-align:center;'>" . $row['time_ago'] . "</td>";
+            echo "<td class='message-cell' style='display:none;'>" . $row['created_at'] . "</td>";
             echo "</tr>";
             $count++;
         }
@@ -279,7 +281,9 @@ function displayHistory() {
               <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Activity ID</th>
               <th style="padding:10px;">Activity Type</th>
               <th style="padding:10px;">Modified By</th>
+              <th style="padding:10px;">Table Name</th>
               <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Updated At</th>
+              <th style="display:none;"></th>
             </tr>
           </thead>
           <tbody id="dynamicTableBody">
@@ -316,7 +320,7 @@ $(window).on('load', function() {
 
    var table = $('#example').DataTable({
       scrollX: true,
-      order: [[3, 'asc']]
+      order: [[5, 'desc']]
    });
 
    // Add click event to specific columns (1, 2, 3, and 4)

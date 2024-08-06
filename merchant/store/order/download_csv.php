@@ -1,60 +1,57 @@
-<?php
-include("../../../inc/config.php");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Rolling Egg</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    margin: 0;
+    padding: 0;
+ 
+}
 
-header('Content-Type: text/csv');
-header('Content-Disposition: attachment;filename=transaction_view_history.csv');
+.egg-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
 
-$store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
+    align-items: flex-end;
+    overflow: hidden;
+}
 
-$output = fopen('php://output', 'w');
-fputcsv($output, array('Transaction ID', 'Transaction Date', 'Merchant ID', 'Merchant Name', 'Store ID', 'Store Name', 'Customer ID', 'Customer Name', 'Promo Code', 'Promo Cateogry', 'Promo Group', 'Promo Type', 'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Type', 'Commission Rate', 'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'));
+.egg {
+    position: relative;
+    width: 50px;
+    height: 70px;
+    background-color: #FFFACD; /* Light yellow */
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Egg shape */
+    animation: rollEgg 6s infinite ease-in-out;
+}
 
-$sql = "SELECT * FROM transaction_view_history WHERE `Store ID` = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $store_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        fputcsv($output, $row);
+@keyframes rollEgg {
+    0%, 100% {
+        transform: translateX(0) rotate(0deg);
+    }
+    25% {
+        transform: translateX(calc(100vw - 50px)) rotate(360deg);
+    }
+    50% {
+        transform: translateX(calc(100vw - 50px)) rotate(360deg);
+    }
+    75% {
+        transform: translateX(0) rotate(720deg);
     }
 }
 
-fclose($output);
-$conn->close();
-?>
-
-<?php
-include("../../../inc/config.php");
-
-$store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
-
-header('Content-Type: text/csv');
-header('Content-Disposition: attachment; filename="transaction_history.csv"');
-
-$output = fopen('php://output', 'w');
-fputcsv($output, array('Transaction ID', 'Transaction Date', 'Merchant ID', 'Merchant Name', 'Store ID', 'Store Name', 'Customer ID', 'Customer Name', 'Promo Code', 'Promo Cateogry', 'Promo Group', 'Promo Type', 'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Type', 'Commission Rate', 'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'));
-
-$sql = "SHOW TABLES LIKE 'transaction_view_history'";
-$result = $conn->query($sql);
-
-if($result->num_rows == 1) {
-    $sql = "SELECT * FROM transaction_view_history WHERE `Store ID` = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $store_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    while ($row = $result->fetch_assoc()) {
-        fputcsv($output, $row);
-    }
-
-    $stmt->close();
-} else {
-    echo "Error: Table 'transaction_view_history' doesn't exist.";
-}
-
-fclose($output);
-$conn->close();
-?>
+    </style>
+</head>
+<body>
+    <div class="egg-container">
+        <div class="egg"></div>
+    </div>
+</body>
+</html>

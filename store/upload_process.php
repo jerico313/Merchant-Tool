@@ -142,6 +142,14 @@ function checkMerchantExistence($conn, $merchantId) {
     return $exists;
 }
 
+function updateActivityHistory($conn, $storeId, $userId) {
+    $stmt = $conn->prepare("UPDATE activity_history SET user_id = ? WHERE description LIKE CONCAT('%', ?, '%') AND user_id IS NULL ORDER BY created_at DESC LIMIT 1");
+    $stmt->bind_param("ss", $userId, $storeId);
+    $stmt->execute();
+    $stmt->close();
+}
+
+
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
     $file_ext = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
@@ -210,12 +218,15 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); // Skip header row again
     $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
+    $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $data[4] = empty($data[4]) ? null : $data[4]; // Convert blank legal_entity_name to null
         $data[5] = empty($data[5]) ? null : $data[5]; // Convert blank store_address to null
         $data[6] = empty($data[6]) ? null : $data[6]; // Convert blank email_address to null
         $stmt->bind_param("ssssss", $data[3], $data[1], $data[2], $data[4], $data[5], $data[6]); // Adjust based on your CSV structure
         $stmt->execute();
+
+        updateActivityHistory($conn, $data[1], $userId);
     }
 
     fclose($handle);

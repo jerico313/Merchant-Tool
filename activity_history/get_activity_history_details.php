@@ -16,7 +16,7 @@ if (isset($_POST['activityId'])) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             echo "<p><strong>Table Name:</strong> " . htmlspecialchars($row['table_name']) . "</p>";
-            echo "<p><strong>Column Name:</strong> " . htmlspecialchars($row['column_name']) . "</p>";
+            echo "<p><strong>Key Identifier:</strong> " . htmlspecialchars($row['column_name']) . "</p>";
             echo "<p><strong>Description:<br></strong> " . nl2br(htmlspecialchars($row['description'])) . "</p>";
         } else {
             echo "No details found for Activity ID: " . htmlspecialchars($activityId);

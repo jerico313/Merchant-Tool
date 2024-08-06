@@ -142,6 +142,13 @@ function checkMerchantExistence($conn, $merchantId) {
     return $exists;
 }
 
+function updateActivityHistory($conn, $promoCode, $userId) {
+    $stmt = $conn->prepare("UPDATE activity_history SET user_id = ? WHERE description LIKE CONCAT('%', ?, '%') AND user_id IS NULL ORDER BY created_at DESC LIMIT 1");
+    $stmt->bind_param("ss", $userId, $promoCode);
+    $stmt->execute();
+    $stmt->close();
+}
+
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
     $file_ext = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
@@ -209,6 +216,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); // Skip header row again
     $stmt1 = $conn->prepare("INSERT INTO promo (promo_id, merchant_id, promo_code, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, remarks2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         // Handle date formatting
         $data[3] = str_replace(',', '', $data[3]);
@@ -232,6 +240,8 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $promo_type = $data[7];
         $stmt1->bind_param("ssssssssssssss", $promo_id, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $promo_type, $data[8], $data[9], $data[10], $start_date, $end_date, $data[13]);
         $stmt1->execute();
+
+        updateActivityHistory($conn, $data[2], $userId);
     }
 
     fclose($handle);
