@@ -75,7 +75,6 @@
                             <a href="index.php">
                                 <button type="button" class="btn btn-danger clear" id="clearButton">Cancel</button>
                             </a>
-                            
                             <button type="submit" name="submit" class="btn btn-primary upload_file" id="submitButton">
                                 <span>Submit</span>
                             </button>
