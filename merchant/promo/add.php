@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare and bind SQL statement
     $stmt = $conn->prepare("INSERT INTO promo (promo_id, promo_code, merchant_id, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, remarks2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssssssss", $promo_id, $promo_code, $merchant_id, $promo_amount, $voucher_type, $promo_category, $promo_group, $promo_type, $promo_details, $remarks, $bill_status, $start_date, $end_date, $remarks2);
+    $stmt->bind_param("ssssssssssssss", $promo_id, $promo_code, $merchant_id, $promo_amount, $voucher_type, $promo_category, $promo_group, $promo_type, $promo_details, $remarks, $bill_status, $start_date, $end_date, $remarks2);
 
     // Set parameters and execute
     foreach ($_POST['promo_code'] as $key => $value) {
@@ -39,6 +39,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $end_date = $_POST['end_date'][$key];
         $remarks2 = empty($_POST['remarks2'][$key]) ? NULL : $_POST['remarks2'][$key];
         $stmt->execute();
+
+        // Update the user_id in activity_history where it is blank or null and the description contains the promo_code
+        $update_stmt = $conn->prepare("
+            UPDATE activity_history
+            SET user_id = ?
+            WHERE (user_id IS NULL OR user_id = '')
+            AND description LIKE CONCAT('%promo_code: ', ?, '%')
+        ");
+
+        $user_id = $_SESSION['user_id']; // Assuming the user_id is stored in the session
+
+        $update_stmt->bind_param("ss", $user_id, $promo_code);
+        $update_stmt->execute();
+        $update_stmt->close();
     }
 
     // Close statement

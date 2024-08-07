@@ -1,9 +1,12 @@
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
-// Include the configuration file
-require_once("../../header.php");
-require_once '../../inc/config.php';
+
+require_once("../header.php");
+require_once '../inc/config.php';
+require_once '../vendor/autoload.php'; // Include the Composer autoload file
+
+use Ramsey\Uuid\Uuid;
 
 // Create a database connection
 $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
@@ -15,31 +18,34 @@ if ($conn->connect_error) {
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Prepare and bind SQL statement for inserting into the store table
-    $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $store_id, $merchant_id, $store_name, $legal_entity_name, $store_address, $email_address);
+    // Prepare and bind SQL statement
+    $stmt = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type, cwt_rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssssss", $fee_id, $merchant_id, $paymaya_creditcard, $gcash, $gcash_miniapp, $paymaya, $paymaya_creditcard, $paymaya_creditcard, $leadgen_commission, $commission_type, $cwt_rate);
 
     // Set parameters and execute
-    foreach ($_POST['store_id'] as $key => $value) {
-        $store_id = $_POST['store_id'][$key];
+    foreach ($_POST['merchant_id'] as $key => $value) {
+        $fee_id = Uuid::uuid4()->toString();
         $merchant_id = $_POST['merchant_id'][$key];
-        $store_name = $_POST['store_name'][$key];
-        $legal_entity_name = empty($_POST['legal_entity_name'][$key]) ? NULL : $_POST['legal_entity_name'][$key];
-        $store_address = empty($_POST['store_address'][$key]) ? NULL : $_POST['store_address'][$key];
-        $email_address = empty($_POST['email_address'][$key]) ? NULL : $_POST['email_address'][$key];
+        $paymaya_creditcard = $_POST['paymaya_creditcard'][$key];
+        $gcash = $_POST['gcash'][$key];
+        $gcash_miniapp = $_POST['gcash_miniapp'][$key];
+        $paymaya = $_POST['paymaya'][$key];
+        $leadgen_commission = $_POST['leadgen_commission'][$key];
+        $commission_type = $_POST['commission_type'][$key];
+        $cwt_rate = $_POST['cwt_rate'][$key];
         $stmt->execute();
 
-        // Update the user_id in activity_history where it is blank or null and the description contains the store_name
+        // Update the user_id in activity_history where it is blank or null and the description contains the promo_code
         $update_stmt = $conn->prepare("
             UPDATE activity_history
             SET user_id = ?
             WHERE (user_id IS NULL OR user_id = '')
-            AND description LIKE CONCAT('%store_name: ', ?, '%')
+            AND description LIKE CONCAT('%merchant_id: ', ?, '%')
         ");
 
         $user_id = $_SESSION['user_id']; // Assuming the user_id is stored in the session
 
-        $update_stmt->bind_param("ss", $user_id, $store_name);
+        $update_stmt->bind_param("ss", $user_id, $merchant_id);
         $update_stmt->execute();
         $update_stmt->close();
     }
@@ -55,11 +61,11 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Upload Success</title>
     <style>
         body {
-            background-image: url("../../images/bg_booky.png");
+            background-image: url("../images/bg_booky.png");
         }
 
         .container {
