@@ -284,7 +284,7 @@ function displayMerchant()
                 <th>Email Address</th>
                 <th>Sales</th>
                 <th>Account Manager</th>
-                <th class="action-col" style="width:7%;">Actions</th>
+                <th class="action-col">Actions</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">

@@ -73,11 +73,8 @@
                         </div>
                         <div class="mt-4 mb-2" style="text-align:right;">
                             <a href="index.php">
-                                <button type="button" name="submit" class="btn btn-primary upload_file" id="cancelButton">
-                                    Cancel
-                                </button>
+                                <button type="button" class="btn btn-danger clear" id="clearButton">Cancel</button>
                             </a>
-                            
                             <button type="submit" name="submit" class="btn btn-primary upload_file" id="submitButton">
                                 <span>Submit</span>
                             </button>

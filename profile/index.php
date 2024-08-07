@@ -68,27 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
     <link rel="stylesheet" href="../style.css">
     <style>
         body {
-            background-image: url("../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        .title {
-            font-size: 30px;
-            font-weight: 900;
-            margin-right: auto;
-            padding-left: 5vh;
-            color: #E96529;
-        }
-
-        .back {
-            font-size: 20px;
-            font-weight: bold;
-            margin-right: auto;
-            padding-left: 5vh;
-            color: #E96529;
+            background-image: url("../images/bg_booky.png");            
         }
 
         .content, #First {
@@ -153,25 +133,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
                         <div class="tab-pane fade show active" id="exampleFirst" role="tabpanel"
                             aria-labelledby="exampleFirstTab">
                             <form method="POST" action="update.php">
-                                <div id="First" style="padding:20px !important;margin:10px;border-radius:8px;border-left:solid #E96529 8px;padding:5px;">
-                                    
-                                        <p style="font-weight:900;font-size:20px;color:#4BB0B8;"><?php echo strtoupper($data['name']); ?> (<?php echo htmlspecialchars($data['user_id']); ?>)</p>
-                                    
+                                <div style="padding:10px !important;margin:10px;">
+                                    <p style="font-weight:900;font-size:20px;color:#4BB0B8;"><?php echo strtoupper($data['name']); ?> (<?php echo htmlspecialchars($data['user_id']); ?>)</p>
                                     <hr style="border: 1px solid #3b3b3b;">
                                     <div class="row">
-                                        <div class="col-md-6 pb-3">
-                                            <div class="form-group mb-3">
-                                                <label for="user_id" style="font-weight:900;color:#6c6868;">User ID</label>
-                                                <p style="border:none;padding:0px;font-weight:700;" class="form-control mt-2" id="user_id"><?php echo htmlspecialchars($data['user_id']); ?></p>
-                                                <input style="border:none;padding:0px;font-weight:700;" name="user_id" type="hidden"class="form-control mt-2" id="user_id" value="<?php echo htmlspecialchars($data['user_id']); ?>">
-                                            </div>
+                                        <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label for="name" style="font-weight:900;color:#6c6868;">Name</label>
-                                                <input type="text" class="form-control" id="name" style="font-weight:700;" name="name" value="<?php echo htmlspecialchars($data['name']); ?>">
+                                                <input type="text" class="form-control" id="name" style="font-weight:700;" name="name" placeholder="Enter name" value="<?php echo htmlspecialchars($data['name']); ?>" required maxlength="255">
                                             </div>
-                                            <div class="form-group">
-                                                <label for="email" style="font-weight:900;color:#6c6868;">Email</label>
-                                                <input type="email" class="form-control" id="email" style="font-weight:700;" name="email" value="<?php echo htmlspecialchars($data['email_address']); ?>">
+                                            <div class="form-group mb-3">
+                                                <label for="email" style="font-weight:900;color:#6c6868;">Email Address</label>
+                                                <input type="email" class="form-control" id="email" style="font-weight:700;" name="email" placeholder="Enter email address" value="<?php echo htmlspecialchars($data['email_address']); ?>" required maxlength="255">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -179,21 +152,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
                                                 <label for="type" style="font-weight:900;color:#6c6868;">Type</label>
                                                 <p style="border:none;padding:0px;font-weight:700;" class="form-control mt-2" id="type"><?php echo htmlspecialchars($data['type']); ?></p>
                                             </div>
-                                            <div class="form-group mb-3 mt-3">
-                                                <label for="department" style="font-weight:900;color:#6c6868;">Department</label>
-                                                <p style="border:none;padding:0px;font-weight:700;" class="form-control mt-2" id="department"><?php echo htmlspecialchars($data['department']); ?></p>
-                                            </div>
-                                            <div class="form-group mt-4">
-                                            <label for="status" style="font-weight:900;color:#6c6868;">Status</label>
-                                            <p style="border:none;padding:0px;font-weight:700; color: <?php echo ($data['status'] == 'Active') ? 'green' : 'red'; ?>" 
-                                                class="form-control mt-2" 
-                                                id="status"> <?php echo htmlspecialchars($data['status']); ?></p>
+                                            <div class="form-group mb-3">
+                                                <label for="status" style="font-weight:900;color:#6c6868;">Status</label>
+                                                <p style="border:none;padding:0px;font-weight:700; color: <?php echo ($data['status'] == 'Active') ? 'green' : 'red'; ?>" 
+                                                    class="form-control mt-2" 
+                                                    id="status"> <?php echo htmlspecialchars($data['status']); ?></p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-4" style="text-align:right;margin-right:10px;">
-                                    <button type="submit" name="update_profile" class="btn btn-primary" style="background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
+                                <div style="text-align:right;margin-right:10px;">
+                                    <button type="submit" name="update_profile" class="btn btn-primary upload_file" id="submitButton">
+                                        <span>Save changes</span>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -201,36 +172,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
                         <div class="tab-pane fade" id="exampleSecond" role="tabpanel"
                             aria-labelledby="exampleSecondTab">
                             <form method="POST">
-                                <div id="First" style="padding:20px !important;margin:10px;border-radius:8px;border-left:solid #E96529 8px;padding:5px;">
-                                        <p style="font-weight:900;font-size:20px;color:#4BB0B8;"><?php echo strtoupper($data['name']); ?> (<?php echo htmlspecialchars($data['user_id']); ?>)</p>
-
+                                <div style="padding:10px !important;margin:10px;">
+                                    <p style="font-weight:900;font-size:20px;color:#4BB0B8;"><?php echo strtoupper($data['name']); ?> (<?php echo htmlspecialchars($data['user_id']); ?>)</p>
                                     <hr style="border: 1px solid #3b3b3b;">
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label for="old_password" style="font-weight:900;color:#6c6868;">Old Password</label>
                                             <div class="input-group">
-                                                <input type="password" class="form-control" id="old_password" name="old_password" placeholder="Enter Old Password">
+                                                <input type="password" class="form-control" id="old_password" name="old_password" placeholder="Enter old password">
                                                 <span class="input-group-text"><i class="fa fa-key"></i></span>
                                             </div>
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="new_password" style="font-weight:900;color:#6c6868;">New Password</label>
                                             <div class="input-group">
-                                                <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Enter New Password">
+                                                <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Enter new password">
                                                 <span class="input-group-text"><i class="fa fa-key"></i></span>
                                             </div>
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="confirm_password" style="font-weight:900;color:#6c6868;">Confirm Password</label>
                                             <div class="input-group">
-                                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Enter Confirm Password">
+                                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm new password">
                                                 <span class="input-group-text"><i class="fa fa-key"></i></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-4" style="text-align:right;margin-right:10px;">
-                                    <button type="submit" name="change_password" class="btn btn-primary" style="background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;">Save changes</button>
+                                <div style="text-align:right;margin-right:10px;">
+                                    <button type="submit" name="change_password" class="btn btn-primary upload_file" id="submitButton">
+                                        <span>Save changes</span>
+                                    </button>
                                 </div>
                             </form>
                         </div>
