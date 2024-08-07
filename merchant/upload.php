@@ -317,25 +317,65 @@
 
     </script>
     <script>
-        document.getElementById('dynamic-form').addEventListener('submit', function (event) {
-            const form = event.target;
-            const requiredFields = form.querySelectorAll('[required]');
-            let isValid = true;
+        document.getElementById('dynamic-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    let merchantIds = document.querySelectorAll('input[name="merchant_id[]"]');
+    let ids = Array.from(merchantIds).map(input => input.value);
+    
+    let duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
+    if (duplicateIds.length > 0) {
+        showAlert('Duplicate Merchant ID found: ' + duplicateIds.join(', '), 'danger');
+        return false;
+    }
 
-            requiredFields.forEach(field => {
-                if (field.type === 'select-one' && !field.value) {
-                    isValid = false;
-                } else if (field.type !== 'select-one' && !field.value.trim()) {
-                    isValid = false;
-                }
-            });
+    checkMerchantIds(ids);
+});
 
-            if (!isValid) {
-                event.preventDefault();
-                alert('Please fill out all required fields.');
-            }
-        });
+function checkMerchantIds(ids) {
+    fetch('check_merchant.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ merchant_ids: ids })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.exists) {
+            showAlert('Merchant IDs already exist: ' + data.ids.join(', '), 'danger');
+        } else {
+            document.getElementById('dynamic-form').submit();
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function showAlert(message, type) {
+    let alertContainer = document.getElementById('alert-container');
+    if (!alertContainer) {
+        alertContainer = document.createElement('div');
+        alertContainer.id = 'alert-container';
+        document.body.insertBefore(alertContainer, document.body.firstChild);
+    }
+    
+    alertContainer.innerHTML = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert" style="position: fixed;top: 0;right: 20px;transform: translateY(-50%);z-index: 1000;margin-top: 105px;width: auto;max-width: 80%;padding: 15px;font-size: 14px;border-radius: 8px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);background-color: #f8d7da;border-color: #f5c6cb;color: #721c24;border: 1px solid #dae0e5;border-left: solid 3px #f01e2c;box-sizing: border-box;">
+            <i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i> ${message}
+        </div>
+    `;
+    
+    // Automatically remove alert after a few seconds
+    setTimeout(() => {
+        let alertElement = alertContainer.querySelector('.alert');
+        if (alertElement) {
+            alertElement.classList.remove('show');
+            alertElement.classList.add('fade');
+            setTimeout(() => alertContainer.innerHTML = '', 150);
+        }
+    }, 5000);
+}
     </script>
+    
     <script src="../js/file_upload.js"></script>
 </body>
 

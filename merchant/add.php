@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Prepare and bind SQL statement for inserting into the store table
+    // Prepare and bind SQL statement for inserting into the merchant table
     $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, legal_entity_name, business_address, email_address, sales, account_manager) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssssss", $merchant_id, $merchant_name, $merchant_partnership_type, $legal_entity_name, $business_address, $email_address, $sales, $account_manager);
 
@@ -28,28 +28,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sales = empty($_POST['sales'][$key]) ? NULL : $_POST['sales'][$key];
         $account_manager = empty($_POST['account_manager'][$key]) ? NULL : $_POST['account_manager'][$key];
         $stmt->execute();
+
+        // Update the user_id in activity_history where it is blank or null and the description contains the merchant_name
+        $update_stmt = $conn->prepare("
+            UPDATE activity_history
+            SET user_id = ?
+            WHERE (user_id IS NULL OR user_id = '')
+            AND description LIKE CONCAT('%merchant_name: ', ?, '%')
+        ");
+
+        $user_id = $_SESSION['user_id']; // Assuming the user_id is stored in the session
+
+        $update_stmt->bind_param("ss", $user_id, $merchant_name);
+        $update_stmt->execute();
+        $update_stmt->close();
     }
 
     // Close statement
     $stmt->close();
-    
-    // Update the user_id in activity_history where it is blank or null and the description contains the merchant_id
-    $update_stmt = $conn->prepare("
-        UPDATE activity_history
-        SET user_id = ?
-        WHERE (user_id IS NULL OR user_id = '')
-        AND description LIKE CONCAT('%merchant_name: ', ?, '%')
-    ");
-    
-    // Assuming you have the user_id to set
-    $user_id = $_SESSION['user_id']; 
-    
-    // Bind parameters and execute the update statement
-    $update_stmt->bind_param("ss", $user_id, $merchant_name);
-    $update_stmt->execute();
-    
-    // Close the update statement
-    $update_stmt->close();
 }
 
 // Close connection

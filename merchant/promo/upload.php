@@ -379,6 +379,69 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
         });
 
     </script>
+ <script>
+document.getElementById('dynamic-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    let promoCodes = document.querySelectorAll('input[name="promo_code[]"]');
+    let codes = Array.from(promoCodes).map(input => input.value.trim()); // Ensure no extra spaces
+
+    let duplicateCodes = codes.filter((code, index) => codes.indexOf(code) !== index);
+    if (duplicateCodes.length > 0) {
+        showAlert('Duplicate Promo Code found: ' + duplicateCodes.join(', '), 'danger');
+        return false;
+    }
+
+    checkPromoCodes(codes);
+});
+
+function checkPromoCodes(codes) {
+    fetch('check_promo.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ promo_code: codes })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.exists) {
+            showAlert('Promo Code(s) already exist: ' + data.ids.join(', '), 'danger');
+        } else {
+            document.getElementById('dynamic-form').submit();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('An error occurred while checking promo codes.', 'danger');
+    });
+}
+
+function showAlert(message, type) {
+    let alertContainer = document.getElementById('alert-container');
+    if (!alertContainer) {
+        alertContainer = document.createElement('div');
+        alertContainer.id = 'alert-container';
+        document.body.insertBefore(alertContainer, document.body.firstChild);
+    }
+    
+    alertContainer.innerHTML = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert" style="position: fixed;top: 0;right: 20px;transform: translateY(-50%);z-index: 1000;margin-top: 105px;width: auto;max-width: 80%;padding: 15px;font-size: 14px;border-radius: 8px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);background-color: #f8d7da;border-color: #f5c6cb;color: #721c24;border: 1px solid #dae0e5;border-left: solid 3px #f01e2c;box-sizing: border-box;">
+            <i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i> ${message}
+        </div>
+    `;
+    
+    // Automatically remove alert after a few seconds
+    setTimeout(() => {
+        let alertElement = alertContainer.querySelector('.alert');
+        if (alertElement) {
+            alertElement.classList.remove('show');
+            alertElement.classList.add('fade');
+            setTimeout(() => alertContainer.innerHTML = '', 150);
+        }
+    }, 5000);
+}
+</script>
+
     <script src="../../js/file_upload.js"></script>
 </body>
 
