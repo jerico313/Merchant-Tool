@@ -344,17 +344,17 @@ function displayMerchant()
               </div>
               <div class="mb-3">
                 <label for="sales" class="form-label">
-                  Sales<span class="text-danger" style="padding:2px">*</span>
+                  Sales
                 </label>
                 <input type="text" class="form-control" id="sales" name="sales"
-                  placeholder="Enter sales person" maxlength="255">
+                  placeholder="Enter sales person (leave blank if no assigned person)" maxlength="255">
               </div>
               <div class="mb-3">
                 <label for="accountManager" class="form-label">
-                  Account Manager<span class="text-danger" style="padding:2px">*</span>
+                  Account Manager
                 </label>
                 <input type="text" class="form-control" id="accountManager" name="accountManager"
-                  placeholder="Enter account manager" maxlength="255">
+                  placeholder="Enter account manager (leave blank if no assigned person)" maxlength="255">
               </div>
               <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
             </form>

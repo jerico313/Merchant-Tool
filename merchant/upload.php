@@ -137,17 +137,13 @@
                                                 name="email_address[]" placeholder="Enter email address"></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="sales" class="form-label" id="form-input-label">
-                                                Sales<span class="text-danger" style="padding:2px">*</span>
-                                            </label>
+                                            <label for="sales" class="form-label" id="form-input-label">Sales</label>
                                             <input id="form-input-field" type="text" class="form-control"
                                                 name="sales[]" placeholder="Enter sales person"
                                                 maxlength="255">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="account_manager" class="form-label" id="form-input-label">
-                                                Account Manager<span class="text-danger" style="padding:2px">*</span>
-                                            </label>
+                                            <label for="account_manager" class="form-label" id="form-input-label">Account Manager</label>
                                             <input id="form-input-field" type="text" class="form-control"
                                                 name="account_manager[]" placeholder="Enter account manager"
                                                 maxlength="255">
