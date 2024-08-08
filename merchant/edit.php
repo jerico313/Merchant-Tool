@@ -29,13 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $emailAddress = NULL;
     }
 
-    if ($accountManager == "No assigned person") {
-        $accountManager = NULL;
-    }
-
-    if ($sales == "No assigned person") {
+    if (empty($sales)) {
         $sales = NULL;
     }
+
+    if (empty($accountManager)) {
+        $accountManager = NULL;
+    }   
 
     // Update merchant details
     $stmt = $conn->prepare("UPDATE merchant SET merchant_name=?, merchant_partnership_type=?, legal_entity_name=?, business_address=?, email_address=?, sales=?, account_manager=? WHERE merchant_id=?");
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Update the user_id column in the latest activity_history record
             if ($latestActivityId) {
-                $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
+                $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=? AND activity_type = 'Update'");
                 $stmt->bind_param("ss", $userId, $latestActivityId);
                 $stmt->execute();
                 $stmt->close();

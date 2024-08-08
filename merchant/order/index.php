@@ -31,9 +31,7 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
         $params[] = $startDate;
         $params[] = $endDate;
     }
-    // Order by Transaction Date in descending order (latest to oldest)
-    $sql .= " ORDER BY `Transaction Date` DESC";
-
+    
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(str_repeat("s", count($params)), ...$params);
     $stmt->execute();
@@ -42,27 +40,27 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo "<tr style='padding:10px;'>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
-            echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
-            echo "<td style='text-align:center;width:3%;'>" . $row['Voucher Type'] . "</td>";
-            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Category'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Promo Group'] . "</td>";
-            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Type'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Gross Amount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Discount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Cart Amount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Amount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Total Billing'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Amount'] . "</td>";
-            echo "<td style='text-align:center;width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Transaction ID'] . "</td>";
+            echo "<td style='width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Customer ID'] . "</td>";
+            echo "<td style='width:7%;'>" . $row['Customer Name'] . "</td>";
+            echo "<td style='width:5%;'>" . $row['Promo Code'] . "</td>";
+            echo "<td style='width:3%;'>" . $row['Voucher Type'] . "</td>";
+            echo "<td style='width:6%;'>" . $row['Promo Category'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Promo Group'] . "</td>";
+            echo "<td style='width:6%;'>" . $row['Promo Type'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Gross Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Discount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Cart Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Mode of Payment'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Bill Status'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Type'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Rate'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Total Billing'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['PG Fee Amount'] . "</td>";
+            echo "<td style='width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
             echo "</tr>";
         }
@@ -78,7 +76,7 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($merchant_name); ?> - Merchant Transactions</title>
+    <title><?php echo htmlspecialchars($merchant_name); ?> - Transactions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
@@ -373,7 +371,7 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
                 <div></div>
             </div>
         </div>
-        Loading, Please wait...
+        Loading...
     </div>
     <div class="cont-box">
         <div class="custom-box pt-4">
@@ -394,10 +392,10 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
                                         Transactions
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                        
+
                                         <li><a class="dropdown-item"
                                                 href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Store</a>
+                                                data-breadcrumb="Offers">Stores</a>
                                         </li>
                                         <li><a class="dropdown-item"
                                                 href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
@@ -409,17 +407,12 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="breadcrumb-item">
-                                    <a href="#" style="color:#E96529; font-size:14px;">
-                                        Merchant Transactions
-                                    </a>
-                                </li>
                             </ol>
                         </nav>
                         <div style="width:650px;">
-                        <p class="title2" style="padding-left:6px">
-                            <?php echo htmlspecialchars($merchant_name); ?>
-                        </p>
+                            <p class="title2" style="padding-left:6px">
+                                <?php echo htmlspecialchars($merchant_name); ?>
+                            </p>
                         </div>
                     </div>
 
@@ -479,7 +472,7 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
                     <button type="button" onclick="downloadTables()" class="btn btn-primary download-csv mt-4">
                         <i class="fa-solid fa-file-excel"></i> Download</button>
                 </div>
-                <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+                <div class="content">
                     <table id="example" class="table bord" style="width:275%;">
                         <thead>
                             <tr>
@@ -524,44 +517,44 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
-       function downloadTables() {
-    // Get current date and format it for the file name
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString().split('T')[0]; // Format date for file name
+        function downloadTables() {
+            // Get current date and format it for the file name
+            const currentDate = new Date();
+            const formattedDate = currentDate.toISOString().split('T')[0]; // Format date for file name
 
-    // Assuming you have initialized DataTable on #example
-    const table = $('#example').DataTable();
+            // Assuming you have initialized DataTable on #example
+            const table = $('#example').DataTable();
 
-    // Get filtered data from DataTable
-    const filteredData = table.rows({ search: 'applied' }).data().toArray();
+            // Get filtered data from DataTable
+            const filteredData = table.rows({ search: 'applied' }).data().toArray();
 
-    // Function to format data for Excel export (customize as per your need)
-    function formatDataForExcel(row) {
-        return [
-            row[0], row[1], row[2], row[3], row[4],
-            row[9], row[10], row[11], row[12], row[13],
-            row[15], row[16], row[17], row[18], row[19], row[20]
-        ];
-    }
+            // Function to format data for Excel export (customize as per your need)
+            function formatDataForExcel(row) {
+                return [
+                    row[0], row[1], row[2], row[3], row[4],
+                    row[9], row[10], row[11], row[12], row[13],
+                    row[15], row[16], row[17], row[18], row[19], row[20]
+                ];
+            }
 
-    // Format each row for Excel
-    const formattedRows = filteredData.map(row => formatDataForExcel(row));
+            // Format each row for Excel
+            const formattedRows = filteredData.map(row => formatDataForExcel(row));
 
-    // Add headers for Excel file
-    formattedRows.unshift([
-        'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
-        'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
-        'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
-    ]);
+            // Add headers for Excel file
+            formattedRows.unshift([
+                'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
+                'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
+                'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
+            ]);
 
-    // Create a new workbook and add the data to the first sheet
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(formattedRows);
-    XLSX.utils.book_append_sheet(wb, ws, "Transactions");
+            // Create a new workbook and add the data to the first sheet
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(formattedRows);
+            XLSX.utils.book_append_sheet(wb, ws, "Transactions");
 
-    // Generate the Excel file and trigger the download
-    XLSX.writeFile(wb, `<?php echo $merchant_name; ?> - ${formattedDate} - Transactions.xlsx`);
-}
+            // Generate the Excel file and trigger the download
+            XLSX.writeFile(wb, `<?php echo $merchant_name; ?> - ${formattedDate} - Transactions.xlsx`);
+        }
 
         $(window).on('load', function () {
             $('.loading').hide();

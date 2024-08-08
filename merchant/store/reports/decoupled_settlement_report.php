@@ -66,40 +66,24 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             if ($row['Voucher Type'] == "Decoupled") {
-                $GrossAmount = number_format($row['Gross Amount'], 2);
-                $Discount = number_format($row['Discount'], 2);
-                $CartAmount = number_format($row['Cart Amount'], 2);
-                $CommissionAmount = number_format($row['Commission Amount'], 2);
-                $TotalBilling = number_format($row['Total Billing'], 2);
-                $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
-
-                $AmounttobeDisbursed = $row['Amount to be Disbursed'];
-                if ($AmounttobeDisbursed < 0) {
-                    $AmounttobeDisbursed = '(' . number_format(-$AmounttobeDisbursed, 2) . ')';
-                } else {
-                    $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
-                }
-
-                $date = new DateTime($row['Transaction Date']);
-                $formattedDate = $date->format('F d, Y g:i A');
-                echo "<tr style='padding:10px;color:#fff;'>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
-                echo "<td style='text-align:center;width:7%;'>" . $formattedDate . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
-                echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
-                echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $GrossAmount . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $Discount . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $CartAmount . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $CommissionAmount . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $TotalBilling . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
-                echo "<td style='text-align:center;width:4%;'>" . $PGFeeAmount . "</td>";
-                echo "<td style='text-align:center;width:5%;'>" . $AmounttobeDisbursed . "</td>";
+                echo "<tr>";
+                echo "<td>" . $row['Transaction ID'] . "</td>";
+                echo "<td>" . $row['Formatted Transaction Date'] . "</td>";
+                echo "<td>" . $row['Customer ID'] . "</td>";
+                echo "<td>" . $row['Customer Name'] . "</td>";
+                echo "<td>" . $row['Promo Code'] . "</td>";
+                echo "<td>" . $row['Gross Amount'] . "</td>";
+                echo "<td>" . $row['Discount'] . "</td>";
+                echo "<td>" . $row['Cart Amount'] . "</td>";
+                echo "<td>" . $row['Mode of Payment'] . "</td>";
+                echo "<td>" . $row['Bill Status'] . "</td>";
+                echo "<td>" . $row['Commission Type'] . "</td>";
+                echo "<td>" . $row['Commission Rate'] . "</td>";
+                echo "<td>" . $row['Commission Amount'] . "</td>";
+                echo "<td>" . $row['Total Billing'] . "</td>";
+                echo "<td>" . $row['PG Fee Rate'] . "</td>";
+                echo "<td>" . $row['PG Fee Amount'] . "</td>";
+                echo "<td>" . $row['Amount to be Disbursed'] . "</td>";
                 echo "</tr>";
             }
         }

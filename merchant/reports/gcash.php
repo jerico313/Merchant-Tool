@@ -48,25 +48,6 @@ function displayGcash($merchant_id, $merchant_name)
     <style>
         body {
             background-image: url("../../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        .title {
-            font-size: 30px;
-            font-weight: 900;
-            margin-right: auto;
-            padding-left: 5vh;
-            color: #4BB0B8;
-        }
-
-        .voucher-type {
-            padding-bottom: 0px;
-            padding-right: 5vh;
-            display: flex;
-            align-items: center;
         }
 
         tr:hover {
@@ -148,16 +129,6 @@ function displayGcash($merchant_id, $merchant_name)
             .dataTables_length {
                 display: none;
             }
-
-            .title {
-                font-size: 25px;
-                padding-left: 2vh;
-                padding-top: 10px;
-            }
-
-            .voucher-type {
-                padding-right: 2vh;
-            }
         }
     </style>
 </head>
@@ -189,12 +160,12 @@ function displayGcash($merchant_id, $merchant_name)
                                 </li>
                             </ol>
                         </nav>
-                        <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
+                        <p class="title2" style="padding-left:6px">
                             <?php echo htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8'); ?>
                         </p>
                     </div>
                 </div>
-                <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+                <div class="content">
                     <table id="example" class="table bord" style="width:100%;">
                         <thead>
                             <tr>

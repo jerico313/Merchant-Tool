@@ -5,7 +5,7 @@ if (isset($_POST['activityId'])) {
     $activityId = $_POST['activityId'];
 
     // Prepare the SQL statement
-    if ($stmt = $conn->prepare("SELECT table_name, column_name, description FROM activity_history_view WHERE activity_history_id = ?")) {
+    if ($stmt = $conn->prepare("SELECT table_id, table_name, column_name, description, created_at FROM activity_history_view WHERE activity_history_id = ?")) {
         // Bind the activityId parameter to the prepared statement
         $stmt->bind_param("s", $activityId);
         // Execute the statement
@@ -16,8 +16,10 @@ if (isset($_POST['activityId'])) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             echo "<p><strong>Table Name:</strong> " . htmlspecialchars($row['table_name']) . "</p>";
+            echo "<p><strong>Table ID:</strong> " . htmlspecialchars($row['table_id']) . "</p>";
             echo "<p><strong>Key Identifier:</strong> " . htmlspecialchars($row['column_name']) . "</p>";
             echo "<p><strong>Description:<br></strong> " . nl2br(htmlspecialchars($row['description'])) . "</p>";
+            echo "<p><strong>Updated At:</strong> " . htmlspecialchars($row['created_at']) . "</p>";
         } else {
             echo "No details found for Activity ID: " . htmlspecialchars($activityId);
         }

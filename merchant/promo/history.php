@@ -271,7 +271,7 @@ function displayOfferHistory($promo_code, $merchant_name)
         <div></div>
       </div>
     </div>
-    Loading, Please wait...
+    Loading...
   </div>
   <div class="cont-box">
     <div class="custom-box pt-4">
@@ -296,6 +296,10 @@ function displayOfferHistory($promo_code, $merchant_name)
                         href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                         data-breadcrumb="Offers" style="color:#4BB0B8;">Promos</a>
                     </li>
+                    <li><a class="dropdown-item"
+                        href="../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                        data-breadcrumb="Offers">Transactions</a>
+                    </li>
                   </ul>
                 </li>
                 <li class="breadcrumb-item"><a href="#" onclick="location.reload();"
@@ -312,7 +316,7 @@ function displayOfferHistory($promo_code, $merchant_name)
           <table id="example" class="table bord" style="width:100%;">
             <thead>
               <tr>
-                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Promo History ID
+                <th class="first-col">Promo History ID
                 </th>
                 <th style="padding:10px;">Old Bill Status</th>
                 <th style="padding:10px;">New Bill Status</th>

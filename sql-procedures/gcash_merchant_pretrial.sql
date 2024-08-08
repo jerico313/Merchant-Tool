@@ -38,12 +38,21 @@ BEGIN
             SUM(`Cart Amount`) AS total_amount,
             `Commission Rate` AS commission_rate,
             SUM(`Commission Amount`) AS commission_amount,
-            SUM(`Commission Amount`) * 0.12 AS vat_amount,
-            SUM(`Total Billing`) AS total_commission_fees
+            CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+                ELSE 0.00
+            END AS vat_amount,
+            SUM(`Commission Amount`)
+            + CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+                ELSE 0.00
+            END AS total_commission_fees
         FROM 
             `transaction_summary_view`
         JOIN
             `merchant` ON `Merchant ID` = merchant.`merchant_id`
+        JOIN
+            `fee` ON `Merchant ID` = fee.`merchant_id`
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
@@ -80,12 +89,21 @@ BEGIN
             SUM(`Cart Amount`) AS total_amount,
             `Commission Rate` AS commission_rate,
             SUM(`Commission Amount`) AS commission_amount,
-            SUM(`Commission Amount`) * 0.12 AS vat_amount,
-            SUM(`Total Billing`) AS total_commission_fees
+            CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+                ELSE 0.00
+            END AS vat_amount,
+            SUM(`Commission Amount`)
+            + CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+                ELSE 0.00
+            END AS total_commission_fees
         FROM 
             `transaction_summary_view`
         JOIN
             `merchant` ON `Merchant ID` = merchant.`merchant_id`
+        JOIN
+            `fee` ON `Merchant ID` = fee.`merchant_id`
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''

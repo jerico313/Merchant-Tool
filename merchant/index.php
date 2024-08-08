@@ -257,7 +257,7 @@ function displayMerchant()
         <div></div>
       </div>
     </div>
-    Loading, Please wait...
+    Loading...
   </div>
   <div class="cont-box">
     <div class="custom-box pt-4">
@@ -284,7 +284,7 @@ function displayMerchant()
                 <th>Email Address</th>
                 <th>Sales</th>
                 <th>Account Manager</th>
-                <th class="action-col">Actions</th>
+                <th class="action-col" style="width:7%;">Actions</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -344,17 +344,17 @@ function displayMerchant()
               </div>
               <div class="mb-3">
                 <label for="sales" class="form-label">
-                  Sales<span class="text-danger" style="padding:2px">*</span>
+                  Sales
                 </label>
                 <input type="text" class="form-control" id="sales" name="sales"
-                  placeholder="Enter sales person" maxlength="255">
+                  placeholder="Enter sales person (leave blank if no assigned person)" maxlength="255">
               </div>
               <div class="mb-3">
                 <label for="accountManager" class="form-label">
-                  Account Manager<span class="text-danger" style="padding:2px">*</span>
+                  Account Manager
                 </label>
                 <input type="text" class="form-control" id="accountManager" name="accountManager"
-                  placeholder="Enter account manager" maxlength="255">
+                  placeholder="Enter account manager (leave blank if no assigned person)" maxlength="255">
               </div>
               <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
             </form>
@@ -385,7 +385,7 @@ function displayMerchant()
                   <option selected disabled>-- Select Report Type --</option>
                   <option value="Coupled">Coupled</option>
                   <option value="Decoupled">Decoupled</option>
-                  <option value="GCash">GCash</option>
+                  <option value="Gcash">Gcash</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -453,7 +453,7 @@ function displayMerchant()
           } else if (billStatus === 'All') {
             form.action = 'decoupled_generate_report.php';
           }
-        } else if (reportType === 'GCash') {
+        } else if (reportType === 'Gcash') {
           if (billStatus === 'PRE-TRIAL') {
             form.action = 'gcash_generate_report_pre-trial.php';
           } else if (billStatus === 'BILLABLE') {

@@ -328,7 +328,7 @@ function displayOffers($merchant_id, $merchant_name)
   <div>
    <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
   </div>
-  Loading, Please wait...
+  Loading...
 </div>
     <div class="cont-box">
         <div class="custom-box pt-4">
@@ -357,7 +357,7 @@ function displayOffers($merchant_id, $merchant_name)
                                         </li>
                                         <li><a class="dropdown-item"
                                                 href="../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Transaction</a>
+                                                data-breadcrumb="Offers">Transactions</a>
                                         </li>
                                     </ul>
                                 </li>

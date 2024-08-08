@@ -45,28 +45,28 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo "<tr style='padding:10px;'>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
-            echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
-            echo "<td style='text-align:center;width:3%;'>" . $row['Voucher Type'] . "</td>";
-            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Category'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Promo Group'] . "</td>";
-            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Type'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Gross Amount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Discount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Cart Amount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Amount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Total Billing'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Amount'] . "</td>";
-            echo "<td style='text-align:center;width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Transaction ID'] . "</td>";
+            echo "<td style='width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Customer ID'] . "</td>";
+            echo "<td style='width:7%;'>" . $row['Customer Name'] . "</td>";
+            echo "<td style='width:5%;'>" . $row['Promo Code'] . "</td>";
+            echo "<td style='width:3%;'>" . $row['Voucher Type'] . "</td>";
+            echo "<td style='width:6%;'>" . $row['Promo Category'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Promo Group'] . "</td>";
+            echo "<td style='width:6%;'>" . $row['Promo Type'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Gross Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Discount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Cart Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Mode of Payment'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Bill Status'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Type'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Rate'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Total Billing'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['PG Fee Amount'] . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
+            echo "<td style='width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
             echo "</tr>";
         }
     }
@@ -376,7 +376,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 <div></div>
             </div>
         </div>
-        Loading, Please wait...
+        Loading...
     </div>
     <div class="cont-box">
         <div class="custom-box pt-4">
@@ -404,6 +404,10 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                         <li><a class="dropdown-item"
                                                 href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="../../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers">Transactions</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -453,9 +457,9 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                         </div>
                     </div>
                     <div class="dropdown">
-                        <button class="dropdown-toggle mt-4 dateRange" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-calendar"></i> Select
-                            Date Range</button>
+                        <button class="dropdown-toggle mt-4 dateRange" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-calendar"></i> Select Date Range
+                        </button>
                         <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton">
                             <form id="dateFilterForm">
                                 <div class="form-group">
@@ -477,7 +481,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                     <button type="button" onclick="downloadTables()" class="btn btn-primary download-csv mt-4">
                         <i class="fa-solid fa-file-excel"></i> Download</button>
                 </div>
-                <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+                <div class="content">
                     <table id="example" class="table bord" style="width:275%;">
                         <thead>
                             <tr>
@@ -501,8 +505,8 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                 <th>Total Billing</th>
                                 <th>PG Fee Rate</th>
                                 <th>PG Fee Amount</th>
-                                <th>Amount to be Disbursed</th>
                                 <th style="display:none;"></th>
+                                <th class="action-col">Amount to be Disbursed</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -568,15 +572,15 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 2, 5, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21] }
+                    { orderable: false, targets: [0, 2, 5, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21] }
                 ],
-                order: [[21, 'asc']]
+                order: [[20, 'asc']]
             });
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     var startDate = $('#startDate').val();
                     var endDate = $('#endDate').val();
-                    var date = data[21];
+                    var date = data[20];
 
                     if (startDate && endDate) {
                         return (date >= startDate && date <= endDate);

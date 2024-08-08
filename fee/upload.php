@@ -17,7 +17,7 @@ function fetchMerchants()
             echo "<option value='" . htmlspecialchars($merchantRow['merchant_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($merchantRow['merchant_name'], ENT_QUOTES, 'UTF-8') . "</option>";
         }
     } else {
-        echo "<option value=''>No Merchants found</option>";
+        echo "<option value=''>No merchants found</option>";
     }
 }
 

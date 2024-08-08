@@ -14,8 +14,8 @@ function displayPGFeeRate()
       echo "<tr data-id='" . $row['fee_id'] . "'>";
       echo "<td>" . $shortFeeId . "</td>";
       echo "<td>" . $row['merchant_name'] . "</td>";
-      echo "<td>" . $row['paymaya_credit_card']  . "%" . "</td>";
-      echo "<td>" . $row['gcash']  . "%" . "</td>";
+      echo "<td>" . $row['paymaya_credit_card'] . "%" . "</td>";
+      echo "<td>" . $row['gcash'] . "%" . "</td>";
       echo "<td>" . $row['gcash_miniapp'] . "%" . "</td>";
       echo "<td>" . $row['paymaya'] . "%" . "</td>";
       echo "<td>" . $row['maya_checkout'] . "%" . "</td>";
@@ -215,111 +215,145 @@ function displayPGFeeRate()
       display: none;
     }
 
-    
-.lds-default,
-.lds-default div {
-  box-sizing: border-box;
-}
-.lds-default {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  color:#E96529;
-}
-.lds-default div {
-  position: absolute;
-  width: 6.4px;
-  height: 6.4px;
-  background: currentColor;
-  border-radius: 50%;
-  animation: lds-default 1.2s linear infinite;
-}
-.lds-default div:nth-child(1) {
-  animation-delay: 0s;
-  top: 36.8px;
-  left: 66.24px;
-}
-.lds-default div:nth-child(2) {
-  animation-delay: -0.1s;
-  top: 22.08px;
-  left: 62.29579px;
-}
-.lds-default div:nth-child(3) {
-  animation-delay: -0.2s;
-  top: 11.30421px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(4) {
-  animation-delay: -0.3s;
-  top: 7.36px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(5) {
-  animation-delay: -0.4s;
-  top: 11.30421px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(6) {
-  animation-delay: -0.5s;
-  top: 22.08px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(7) {
-  animation-delay: -0.6s;
-  top: 36.8px;
-  left: 7.36px;
-}
-.lds-default div:nth-child(8) {
-  animation-delay: -0.7s;
-  top: 51.52px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(9) {
-  animation-delay: -0.8s;
-  top: 62.29579px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(10) {
-  animation-delay: -0.9s;
-  top: 66.24px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(11) {
-  animation-delay: -1s;
-  top: 62.29579px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(12) {
-  animation-delay: -1.1s;
-  top: 51.52px;
-  left: 62.29579px;
-}
-@keyframes lds-default {
-  0%, 20%, 80%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-}
+
+    .lds-default,
+    .lds-default div {
+      box-sizing: border-box;
+    }
+
+    .lds-default {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      color: #E96529;
+    }
+
+    .lds-default div {
+      position: absolute;
+      width: 6.4px;
+      height: 6.4px;
+      background: currentColor;
+      border-radius: 50%;
+      animation: lds-default 1.2s linear infinite;
+    }
+
+    .lds-default div:nth-child(1) {
+      animation-delay: 0s;
+      top: 36.8px;
+      left: 66.24px;
+    }
+
+    .lds-default div:nth-child(2) {
+      animation-delay: -0.1s;
+      top: 22.08px;
+      left: 62.29579px;
+    }
+
+    .lds-default div:nth-child(3) {
+      animation-delay: -0.2s;
+      top: 11.30421px;
+      left: 51.52px;
+    }
+
+    .lds-default div:nth-child(4) {
+      animation-delay: -0.3s;
+      top: 7.36px;
+      left: 36.8px;
+    }
+
+    .lds-default div:nth-child(5) {
+      animation-delay: -0.4s;
+      top: 11.30421px;
+      left: 22.08px;
+    }
+
+    .lds-default div:nth-child(6) {
+      animation-delay: -0.5s;
+      top: 22.08px;
+      left: 11.30421px;
+    }
+
+    .lds-default div:nth-child(7) {
+      animation-delay: -0.6s;
+      top: 36.8px;
+      left: 7.36px;
+    }
+
+    .lds-default div:nth-child(8) {
+      animation-delay: -0.7s;
+      top: 51.52px;
+      left: 11.30421px;
+    }
+
+    .lds-default div:nth-child(9) {
+      animation-delay: -0.8s;
+      top: 62.29579px;
+      left: 22.08px;
+    }
+
+    .lds-default div:nth-child(10) {
+      animation-delay: -0.9s;
+      top: 66.24px;
+      left: 36.8px;
+    }
+
+    .lds-default div:nth-child(11) {
+      animation-delay: -1s;
+      top: 62.29579px;
+      left: 51.52px;
+    }
+
+    .lds-default div:nth-child(12) {
+      animation-delay: -1.1s;
+      top: 51.52px;
+      left: 62.29579px;
+    }
+
+    @keyframes lds-default {
+
+      0%,
+      20%,
+      80%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.5);
+      }
+    }
   </style>
 </head>
 
 <body>
-<div class="loading">
-  <div>
-   <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  <div class="loading">
+    <div>
+      <div class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    Loading...
   </div>
-  Loading, Please wait...
-</div>
   <div class="cont-box">
     <div class="custom-box pt-4">
       <div class="sub" style="text-align:left;">
 
         <div class="add-btns">
           <p class="title">Fees</p>
-          <a href="upload.php"><button type="button" class="btn btn-danger add-merchant"><i class="fa-solid fa-plus"></i> Add New Fee</button></a>
+          <a href="upload.php"><button type="button" class="btn btn-danger add-merchant"><i
+                class="fa-solid fa-plus"></i> Add Fee</button></a>
         </div>
 
         <div class="content">
@@ -363,44 +397,55 @@ function displayPGFeeRate()
               <input type="hidden" id="feeId" name="feeId">
               <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
               <input type="hidden" id="merchantId" name="merchantId">
-              
+
               <div class="mb-3">
-                <label for="paymayaCreditCard" class="form-label">Paymaya Credit Card, Maya Checkout, & Maya<span class="text-danger" style="padding:2px">*</span></label>
+                <label for="paymayaCreditCard" class="form-label">Paymaya Credit Card, Maya Checkout, & Maya<span
+                    class="text-danger" style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard" min="0.00" placeholder="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard"
+                    min="0.00" placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="gcash" class="form-label">Gcash<span class="text-danger" style="padding:2px">*</span></label>
+                <label for="gcash" class="form-label">Gcash<span class="text-danger"
+                    style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="gcash" name="gcash" min="0.00" placeholder="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="gcash" name="gcash" min="0.00"
+                    placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="gcashMiniapp" class="form-label">Gcash Miniapp<span class="text-danger" style="padding:2px">*</span></label>
+                <label for="gcashMiniapp" class="form-label">Gcash Miniapp<span class="text-danger"
+                    style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="gcashMiniapp" name="gcashMiniapp" min="0.00" placeholder="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="gcashMiniapp" name="gcashMiniapp" min="0.00"
+                    placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="paymaya" class="form-label">Paymaya<span class="text-danger" style="padding:2px">*</span></label>
+                <label for="paymaya" class="form-label">Paymaya<span class="text-danger"
+                    style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="paymaya" name="paymaya" min="0.00" placeholder="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="paymaya" name="paymaya" min="0.00"
+                    placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="leadgenCommission" class="form-label">Leadgen Commission<span class="text-danger" style="padding:2px">*</span></label>
+                <label for="leadgenCommission" class="form-label">Leadgen Commission<span class="text-danger"
+                    style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="leadgenCommission" name="leadgenCommission" min="0.00" placeholder="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="leadgenCommission" name="leadgenCommission"
+                    min="0.00" placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="commissionType" class="form-label">Commission Type<span class="text-danger" style="padding:2px">*</span></label>
+                <label for="commissionType" class="form-label">Commission Type<span class="text-danger"
+                    style="padding:2px">*</span></label>
                 <select class="form-select" id="commissionType" name="commissionType" required>
                   <option selected disabled>-- Select Commission Type --</option>
                   <option value="VAT Inc">VAT Inc</option>
@@ -408,13 +453,15 @@ function displayPGFeeRate()
                 </select>
               </div>
               <div class="mb-3">
-                <label for="cwtRate" class="form-label">CWT Rate<span class="text-danger" style="padding:2px">*</span></label>
+                <label for="cwtRate" class="form-label">CWT Rate<span class="text-danger"
+                    style="padding:2px">*</span></label>
                 <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate" min="0.00" placeholder="0.00" required>
+                  <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate" min="0.00"
+                    placeholder="0.00" required>
                   <span class="input-group-text">%</span>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>  
+              <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
             </form>
           </div>
         </div>
@@ -425,18 +472,18 @@ function displayPGFeeRate()
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
     <script src="./js/script.js"></script>
     <script>
-      $(window).on('load', function() {
-   $('.loading').hide();
-   $('.cont-box').show();
+      $(window).on('load', function () {
+        $('.loading').hide();
+        $('.cont-box').show();
 
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
             { orderable: false, targets: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }    // Disable sorting for the specified columns
           ],
-      order: [[1, 'asc']]
-   }); 
-  });
+          order: [[1, 'asc']]
+        });
+      });
 
       function viewHistory(fee_id, merchant_name) {
         window.location.href = 'history.php?fee_id=' + encodeURIComponent(fee_id) + '&merchant_name=' + encodeURIComponent(merchant_name);

@@ -359,7 +359,7 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
         <div></div>
       </div>
     </div>
-    Loading, Please wait...
+    Loading...
   </div>
   <div class="cont-box">
     <div class="custom-box pt-4">
