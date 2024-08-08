@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             SET user_id = ?
             WHERE (user_id IS NULL OR user_id = '')
             AND description LIKE CONCAT('%merchant_name: ', ?, '%')
+            AND activity_type = 'Add'
         ");
 
         $user_id = $_SESSION['user_id']; // Assuming the user_id is stored in the session

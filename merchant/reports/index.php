@@ -18,37 +18,6 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
   <style>
     body {
       background-image: url("../../images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-
-    .title {
-      font-size: 30px;
-      font-weight: 900;
-      margin-right: auto;
-      padding-left: 5vh;
-      color: #4BB0B8;
-    }
-
-    .add-btns {
-      padding-bottom: 0px;
-      padding-right: 5vh;
-      display: flex;
-      align-items: center;
-    }
-
-    .back {
-      font-size: 20px;
-      font-weight: bold;
-      margin-right: auto;
-      padding-left: 5vh;
-      color: #E96529;
-    }
-
-    .dropdown-item {
-      font-weight: bold;
     }
   </style>
 </head>
@@ -68,7 +37,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
       </div>
       <div class="sub" style="text-align:left;">
       <div class="add-btns">
-      <p class="title" style="color:;font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8'); ?> </p>
+      <p class="title2"><?php echo htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8'); ?></p>
       </div>
         <div class="content" style="margin:25px;">
           <div class="text-center" style="text-align:center;" style="width:100%;">
@@ -102,7 +71,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                     style="background-color:#4BB0B8; height:100px; border-radius:20px; margin:5px; display: flex; justify-content: center; align-items: center;">
                     <span style="font-size:20px;color:#fff;padding-top:15px"><i
                         class="fa-solid fa-folder fa-2xl"></i><span>
-                        <p style="padding-top:5px;font-size:15px;">GCash</p>
+                        <p style="padding-top:5px;font-size:15px;">Gcash</p>
                   </div>
                 </a>
               </div>

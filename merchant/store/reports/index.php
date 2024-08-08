@@ -63,7 +63,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
       </div>
       <div class="sub" style="text-align:left;">
         <div class="add-btns">
-          <p class="title" style="color:#4BB0B8;font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
+          <p class="title2">
             <?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?>
           </p>
         </div>

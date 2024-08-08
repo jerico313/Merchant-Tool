@@ -49,7 +49,7 @@ function displayStore($merchant_id)
             }
 
             echo "<li class='list-group-item action-item'><a href='#' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")' style='color:#E96529;'>Check Report</a></li>";
-            echo "<li class='list-group-item action-item'><a href='#' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")' style='color:#E96529;'>View Report</a></li>";
+            echo "<li class='list-group-item action-item'><a href='#' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")' style='color:#E96529;'>View Reports</a></li>";
 
             echo "</ul>";
             echo "</div>";
@@ -81,7 +81,7 @@ function displayStore($merchant_id)
     <link rel="stylesheet" href="../../style.css">
     <style>
         body {
-            background-image: url("../../images/bg_booky.png"); 
+            background-image: url("../../images/bg_booky.png");
         }
 
         @keyframes fadeIn {
@@ -97,23 +97,23 @@ function displayStore($merchant_id)
         }
 
         table.dataTable tbody td:last-child {
-      position: sticky;
-      right: 0;
-      z-index: 2;
-      background-color: #F1F1F1 !important;
-      box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-      -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-      -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-    }
+            position: sticky;
+            right: 0;
+            z-index: 2;
+            background-color: #F1F1F1 !important;
+            box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+            -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+            -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+        }
 
-    table thead th:last-child {
-      position: sticky !important;
-      right: 0;
-      z-index: 2;
-      box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
-      -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
-      -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
-    }
+        table thead th:last-child {
+            position: sticky !important;
+            right: 0;
+            z-index: 2;
+            box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+            -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+            -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+        }
 
         .voucher-type {
             padding-bottom: 0px;
@@ -212,118 +212,151 @@ function displayStore($merchant_id)
         }
 
         .loading {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 80vh;
-      font-size: 18px;
-      color: #333;
-      font-weight: 800;
-    }
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            font-size: 18px;
+            color: #333;
+            font-weight: 800;
+        }
 
-    .cont-box {
-      display: none;
-    }
+        .cont-box {
+            display: none;
+        }
 
-    
-.lds-default,
-.lds-default div {
-  box-sizing: border-box;
-}
-.lds-default {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  color:#E96529;
-}
-.lds-default div {
-  position: absolute;
-  width: 6.4px;
-  height: 6.4px;
-  background: currentColor;
-  border-radius: 50%;
-  animation: lds-default 1.2s linear infinite;
-}
-.lds-default div:nth-child(1) {
-  animation-delay: 0s;
-  top: 36.8px;
-  left: 66.24px;
-}
-.lds-default div:nth-child(2) {
-  animation-delay: -0.1s;
-  top: 22.08px;
-  left: 62.29579px;
-}
-.lds-default div:nth-child(3) {
-  animation-delay: -0.2s;
-  top: 11.30421px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(4) {
-  animation-delay: -0.3s;
-  top: 7.36px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(5) {
-  animation-delay: -0.4s;
-  top: 11.30421px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(6) {
-  animation-delay: -0.5s;
-  top: 22.08px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(7) {
-  animation-delay: -0.6s;
-  top: 36.8px;
-  left: 7.36px;
-}
-.lds-default div:nth-child(8) {
-  animation-delay: -0.7s;
-  top: 51.52px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(9) {
-  animation-delay: -0.8s;
-  top: 62.29579px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(10) {
-  animation-delay: -0.9s;
-  top: 66.24px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(11) {
-  animation-delay: -1s;
-  top: 62.29579px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(12) {
-  animation-delay: -1.1s;
-  top: 51.52px;
-  left: 62.29579px;
-}
-@keyframes lds-default {
-  0%, 20%, 80%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-}
+
+        .lds-default,
+        .lds-default div {
+            box-sizing: border-box;
+        }
+
+        .lds-default {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+            color: #E96529;
+        }
+
+        .lds-default div {
+            position: absolute;
+            width: 6.4px;
+            height: 6.4px;
+            background: currentColor;
+            border-radius: 50%;
+            animation: lds-default 1.2s linear infinite;
+        }
+
+        .lds-default div:nth-child(1) {
+            animation-delay: 0s;
+            top: 36.8px;
+            left: 66.24px;
+        }
+
+        .lds-default div:nth-child(2) {
+            animation-delay: -0.1s;
+            top: 22.08px;
+            left: 62.29579px;
+        }
+
+        .lds-default div:nth-child(3) {
+            animation-delay: -0.2s;
+            top: 11.30421px;
+            left: 51.52px;
+        }
+
+        .lds-default div:nth-child(4) {
+            animation-delay: -0.3s;
+            top: 7.36px;
+            left: 36.8px;
+        }
+
+        .lds-default div:nth-child(5) {
+            animation-delay: -0.4s;
+            top: 11.30421px;
+            left: 22.08px;
+        }
+
+        .lds-default div:nth-child(6) {
+            animation-delay: -0.5s;
+            top: 22.08px;
+            left: 11.30421px;
+        }
+
+        .lds-default div:nth-child(7) {
+            animation-delay: -0.6s;
+            top: 36.8px;
+            left: 7.36px;
+        }
+
+        .lds-default div:nth-child(8) {
+            animation-delay: -0.7s;
+            top: 51.52px;
+            left: 11.30421px;
+        }
+
+        .lds-default div:nth-child(9) {
+            animation-delay: -0.8s;
+            top: 62.29579px;
+            left: 22.08px;
+        }
+
+        .lds-default div:nth-child(10) {
+            animation-delay: -0.9s;
+            top: 66.24px;
+            left: 36.8px;
+        }
+
+        .lds-default div:nth-child(11) {
+            animation-delay: -1s;
+            top: 62.29579px;
+            left: 51.52px;
+        }
+
+        .lds-default div:nth-child(12) {
+            animation-delay: -1.1s;
+            top: 51.52px;
+            left: 62.29579px;
+        }
+
+        @keyframes lds-default {
+
+            0%,
+            20%,
+            80%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+        }
     </style>
 </head>
 
 <body>
-<div class="loading">
-  <div>
-   <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-  </div>
-  Loading, Please wait...
-</div>
+    <div class="loading">
+        <div>
+            <div class="lds-default">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        Loading...
+    </div>
     <div class="cont-box">
         <div class="custom-box pt-4">
             <div class="sub" style="text-align:left;">
@@ -364,13 +397,14 @@ function displayStore($merchant_id)
 
                 <div class="add-btns">
                     <p class="title2"><?php echo htmlspecialchars($merchant_name); ?></p>
-                    <a href="upload.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">
+                    <a
+                        href="upload.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">
                         <button type="button" class="btn btn-primary add-merchant">
                             <i class="fa-solid fa-plus"></i> Add Store
                         </button>
                     </a>
                 </div>
-                
+
                 <div class="content">
                     <table id="example" class="table bord" style="width:150%;">
                         <thead>
@@ -453,13 +487,15 @@ function displayStore($merchant_id)
                     <form id="reportForm">
                         <input type="hidden" id="reportStoreId" name="storeId">
                         <input type="hidden" id="reportStoreName" name="storeName">
-                        <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
-                        <input type="hidden" id="merchantName" name="merchantName" value="<?php echo htmlspecialchars($merchant_name); ?>">
+                        <input type="hidden" id="merchantId" name="merchantId"
+                            value="<?php echo htmlspecialchars($merchant_id); ?>">
+                        <input type="hidden" id="merchantName" name="merchantName"
+                            value="<?php echo htmlspecialchars($merchant_name); ?>">
                         <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
 
                         <div class="mb-3">
                             <label for="reportType" class="form-label">
-                                Report Type<span class="text-danger" style="padding:2px">*</span>                                
+                                Report Type<span class="text-danger" style="padding:2px">*</span>
                             </label>
                             <select class="form-select" id="reportType" required>
                                 <option selected disabled>-- Select Report Type --</option>
@@ -469,9 +505,9 @@ function displayStore($merchant_id)
                             </select>
                         </div>
                         <div class="mb-3">
-                        <label for="billStatus" class="form-label">
-                            Bill Status<span class="text-danger" style="padding:2px">*</span>
-                        </label>
+                            <label for="billStatus" class="form-label">
+                                Bill Status<span class="text-danger" style="padding:2px">*</span>
+                            </label>
                             <select class="form-select" id="billStatus" name="billStatus" required>
                                 <option selected disabled>-- Select Bill Status --</option>
                                 <option value="All">PRE-TRIAL and BILLABLE</option>
@@ -491,7 +527,8 @@ function displayStore($merchant_id)
                             </label>
                             <input type="date" class="form-control" id="endDate" name="endDate" required>
                         </div>
-                        <button type="button" class="btn btn-primary modal-save-btn" id="submitReport">Generate Report</button>
+                        <button type="button" class="btn btn-primary modal-save-btn" id="submitReport">Generate
+                            Report</button>
                     </form>
                 </div>
             </div>
@@ -503,25 +540,25 @@ function displayStore($merchant_id)
     <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
     <script src="./js/script.js"></script>
-    
+
     <!-- Script: DataTable -->
     <script>
-        $(window).on('load', function() {
-   $('.loading').hide();
-   $('.cont-box').show();
+        $(window).on('load', function () {
+            $('.loading').hide();
+            $('.cont-box').show();
 
-   var table = $('#example').DataTable({
-      scrollX: true,
-      columnDefs: [
-            { orderable: false, targets: [4, 5, 6] }
-          ],
-      order: [[1, 'asc']]
-   }); 
-  });
-    </script>        
+            var table = $('#example').DataTable({
+                scrollX: true,
+                columnDefs: [
+                    { orderable: false, targets: [4, 5, 6] }
+                ],
+                order: [[1, 'asc']]
+            });
+        });
+    </script>
 
     <!-- Script: Edit Store Details -->
-    <script>    
+    <script>
         function editStore(storeId) {
             var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
             var storeName = storeRow.find('td:nth-child(2)').text();
@@ -534,7 +571,7 @@ function displayStore($merchant_id)
             // Set values in the edit modal
             $('#storeId').val(storeId);
             $('#storeName').val(storeName);
-            
+
             if (legalEntityName === '-') {
                 $('#legalEntityName').val(null);
             } else {
@@ -552,7 +589,7 @@ function displayStore($merchant_id)
             } else {
                 $('#emailAddress').val(emailAddress);
             }
-            
+
             $('#merchantId').val(merchantId);
             $('#merchantName').val(merchantName);
 
@@ -619,17 +656,17 @@ function displayStore($merchant_id)
     </script>
 
     <script>
-      // Event delegation for text toggle of email address
-      document.body.addEventListener('click', function (event) {
-          if (event.target.classList.contains('text-cell')) {
-            var fullText = event.target.getAttribute('data-full');
-            var shortText = event.target.getAttribute('data-short');
-            if (event.target.innerText === shortText) {
-              event.target.innerText = fullText;
-            } else {
-              event.target.innerText = shortText;
+        // Event delegation for text toggle of email address
+        document.body.addEventListener('click', function (event) {
+            if (event.target.classList.contains('text-cell')) {
+                var fullText = event.target.getAttribute('data-full');
+                var shortText = event.target.getAttribute('data-short');
+                if (event.target.innerText === shortText) {
+                    event.target.innerText = fullText;
+                } else {
+                    event.target.innerText = shortText;
+                }
             }
-          }
         });
     </script>
 

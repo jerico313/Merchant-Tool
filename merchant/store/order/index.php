@@ -376,7 +376,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 <div></div>
             </div>
         </div>
-        Loading, Please wait...
+        Loading...
     </div>
     <div class="cont-box">
         <div class="custom-box pt-4">
@@ -457,9 +457,9 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                         </div>
                     </div>
                     <div class="dropdown">
-                        <button class="dropdown-toggle mt-4 dateRange" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-calendar"></i> Select
-                            Date Range</button>
+                        <button class="dropdown-toggle mt-4 dateRange" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-calendar"></i> Select Date Range
+                        </button>
                         <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton">
                             <form id="dateFilterForm">
                                 <div class="form-group">
@@ -481,7 +481,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                     <button type="button" onclick="downloadTables()" class="btn btn-primary download-csv mt-4">
                         <i class="fa-solid fa-file-excel"></i> Download</button>
                 </div>
-                <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+                <div class="content">
                     <table id="example" class="table bord" style="width:275%;">
                         <thead>
                             <tr>

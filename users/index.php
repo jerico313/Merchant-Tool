@@ -260,7 +260,7 @@ function displayUser()
         <div></div>
       </div>
     </div>
-    Loading, Please wait...
+    Loading...
   </div>
   <div class="cont-box">
     <div class="custom-box pt-4">
@@ -270,15 +270,15 @@ function displayUser()
           <a href="add_account.php"><button type="button" class="btn add-merchant"><i class="fa-solid fa-user-plus"></i> Add User</button></a>
         </div>
 
-        <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+        <div class="content">
           <table id="example" class="table bord" style="width:100%;height:auto;">
             <thead>
             <tr>
                   <th class="first-col">User ID</th>
-                  <th style="padding:10px;">Name</th>
-                  <th style="padding:10px;">Email Address</th>
-                  <th style="padding:10px;">Type</th>
-                  <th style="padding:10px;">Status</th>
+                  <th>Name</th>
+                  <th>Email Address</th>
+                  <th>Type</th>
+                  <th>Status</th>
                   <th style="display:none;"></th>
                   <th class="action-col">Action</th>
                 </tr>

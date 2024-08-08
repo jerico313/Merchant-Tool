@@ -328,7 +328,7 @@ function displayOffers($merchant_id, $merchant_name)
   <div>
    <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
   </div>
-  Loading, Please wait...
+  Loading...
 </div>
     <div class="cont-box">
         <div class="custom-box pt-4">

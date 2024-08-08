@@ -271,7 +271,7 @@ function displayOfferHistory($promo_code, $merchant_name)
         <div></div>
       </div>
     </div>
-    Loading, Please wait...
+    Loading...
   </div>
   <div class="cont-box">
     <div class="custom-box pt-4">

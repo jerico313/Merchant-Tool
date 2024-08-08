@@ -265,7 +265,7 @@ function displayHistory() {
   <div>
    <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
   </div>
-  Loading, Please wait...
+  Loading...
 </div>
 
 <div class="cont-box">

@@ -257,7 +257,7 @@ function displayMerchant()
         <div></div>
       </div>
     </div>
-    Loading, Please wait...
+    Loading...
   </div>
   <div class="cont-box">
     <div class="custom-box pt-4">
@@ -284,7 +284,7 @@ function displayMerchant()
                 <th>Email Address</th>
                 <th>Sales</th>
                 <th>Account Manager</th>
-                <th class="action-col">Actions</th>
+                <th class="action-col" style="width:7%;">Actions</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
