@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_POST['userId'] ?? '';
     $billStatus = $_POST['billStatus'] ?? '';
 
-    $sql = "CALL gcash_merchant(?, ?, ?)";
+    $sql = "CALL gcash_merchant_all(?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {

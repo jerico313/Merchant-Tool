@@ -78,7 +78,7 @@ require_once("../header.php");
             <circle class="checkmark__circle" cx="26" cy="26" r="25"/>
             <path class="checkmark__check" fill="none" d="M16 16 36 36 M36 16 16 36"/>
         </svg>
-        <h2 style="padding-top:10px;color: #f44336;">Failed to Generate</h2>
+        <h2 style="padding-top:10px;color: #f44336;">Failed to generate</h2>
         <a href="index.php"><button type="button" class="btn btn-danger okay-failed">Okay</button></a>
     </div>
     <script>

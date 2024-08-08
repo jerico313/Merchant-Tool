@@ -77,7 +77,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             if ($row['Voucher Type'] == "Coupled") {
-                echo "<tr style='padding:10px;color:#fff;'>";
+                echo "<tr>";
                 echo "<td>" . $row['Transaction ID'] . "</td>";
                 echo "<td>" . $row['Formatted Transaction Date'] . "</td>";
                 echo "<td>" . $row['Customer ID'] . "</td>";

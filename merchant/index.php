@@ -385,7 +385,7 @@ function displayMerchant()
                   <option selected disabled>-- Select Report Type --</option>
                   <option value="Coupled">Coupled</option>
                   <option value="Decoupled">Decoupled</option>
-                  <option value="GCash">GCash</option>
+                  <option value="Gcash">Gcash</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -453,7 +453,7 @@ function displayMerchant()
           } else if (billStatus === 'All') {
             form.action = 'decoupled_generate_report.php';
           }
-        } else if (reportType === 'GCash') {
+        } else if (reportType === 'Gcash') {
           if (billStatus === 'PRE-TRIAL') {
             form.action = 'gcash_generate_report_pre-trial.php';
           } else if (billStatus === 'BILLABLE') {

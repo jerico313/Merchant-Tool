@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_POST['userId'] ?? '';
     $billStatus = $_POST['billStatus'] ?? '';
 
-    $sql = "CALL gcash_store(?, ?, ?)";
+    $sql = "CALL gcash_store_all(?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {

@@ -65,8 +65,8 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             echo "<td style='width:4%;'>" . $row['Total Billing'] . "</td>";
             echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
             echo "<td style='width:4%;'>" . $row['PG Fee Amount'] . "</td>";
-            echo "<td style='width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
+            echo "<td style='width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
             echo "</tr>";
         }
     }
@@ -505,8 +505,8 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                 <th>Total Billing</th>
                                 <th>PG Fee Rate</th>
                                 <th>PG Fee Amount</th>
-                                <th>Amount to be Disbursed</th>
                                 <th style="display:none;"></th>
+                                <th class="action-col">Amount to be Disbursed</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -572,15 +572,15 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 2, 5, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21] }
+                    { orderable: false, targets: [0, 2, 5, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21] }
                 ],
-                order: [[21, 'asc']]
+                order: [[20, 'asc']]
             });
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     var startDate = $('#startDate').val();
                     var endDate = $('#endDate').val();
-                    var date = data[21];
+                    var date = data[20];
 
                     if (startDate && endDate) {
                         return (date >= startDate && date <= endDate);
