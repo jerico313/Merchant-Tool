@@ -1,16 +1,11 @@
 <?php
 session_start();
 
-// Define session timeout duration (e.g., 15 minutes)
 $timeout_duration = 3600;
 
-// Check if the last activity timestamp is set
 if (isset($_SESSION['last_activity'])) {
-    // Calculate the session's lifetime
     $elapsed_time = time() - $_SESSION['last_activity'];
-    // Check if the session has expired
     if ($elapsed_time >= $timeout_duration) {
-        // Session expired, destroy the session and redirect to login page
         session_unset();
         session_destroy();
         header("Location: /Merchant-Tool/");
@@ -18,10 +13,9 @@ if (isset($_SESSION['last_activity'])) {
     }
 }
 
-// Update the last activity timestamp
 $_SESSION['last_activity'] = time();
 
-// Check if user is logged in
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: /Merchant-Tool/");
     exit();
@@ -29,12 +23,10 @@ if (!isset($_SESSION['user_id'])) {
 
 $name = $_SESSION['name'] ?? '';
 
-// Include database configuration
 include_once($_SERVER['DOCUMENT_ROOT'] . '/Merchant-Tool/inc/config.php');
 
 $user_id = $_SESSION['user_id'];
 
-// Escape the user ID to prevent SQL injection
 $escaped_user_id = mysqli_real_escape_string($conn, $user_id);
 
 // Query the database for user information
@@ -48,7 +40,6 @@ if ($result && mysqli_num_rows($result) > 0) {
     $name = $user_data['name'];
     $user_id = $user_data['user_id'];
 } else {
-    // Handle case where no user data is found
     $type = 'unknown';
 }
 

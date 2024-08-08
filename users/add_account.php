@@ -34,6 +34,39 @@
         #First {
             box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.33);
         }
+
+        .alert-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            width: auto;
+            max-width: 80%;
+            padding: 15px;
+            font-size: 14px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+            border: 1px solid #dae0e5;
+            border-left: solid 3px #f01e2c;
+            box-sizing: border-box;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+            /* Smooth transition for fade-out effect */
+        }
+
+        .alert-container.fade-out {
+            opacity: 0;
+        }
+
+        .spinner-border-sm {
+        width: 1rem;
+        height: 1rem;
+        border-width: 0.2em;
+    }
     </style>
 </head>
 
@@ -86,83 +119,72 @@
     </div>
 
     <script>
-        function generatePassword() {
-            var name = document.getElementById('name').value.trim();
-            var email = document.getElementById('email').value.trim();
-            var type = document.getElementById('type').value;
-            var department = document.getElementById('department').value;
+    document.getElementById('submitButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-            if (!name || !email || !type || !department) {
-                alert('Please fill in all fields before generating a password.');
-                return;
-            }
+        const email = document.getElementById('email').value;
+        const formData = new FormData(document.querySelector('form'));
 
-            var sanitizedName = name.replace(/\s+/g, '_');
-            var sanitizedDepartment;
+        const submitButton = document.getElementById('submitButton');
+        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'; // Add loading spinner
+        submitButton.disabled = true; // Disable the button to prevent multiple submissions
 
-            switch (department) {
-                case 'Operations':
-                    sanitizedDepartment = 'Ops';
-                    break;
-                case 'Finance':
-                    sanitizedDepartment = 'Fin';
-                    break;
-                case 'Admin':
-                    sanitizedDepartment = 'Adm';
-                    break;
-                default:
-                    sanitizedDepartment = department.replace(/\s+/g, '_');
-            }
+        // Make an AJAX request to check if the email exists
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'check_user.php', true); // Replace 'check_user.php' with your actual PHP file
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = xhr.responseText;
+                if (response === 'exists') {
+                    // Email exists, show the alert
+                    const alertContainer = document.createElement('div');
+                    alertContainer.classList.add('alert-container', 'alert', 'alert-danger', 'mt-3');
+                    alertContainer.setAttribute('role', 'alert');
+                    alertContainer.innerHTML = '<i class="fa-solid fa-circle-check" style="padding-right:3px"></i> The email address you entered already exists. Please use a different email address.';
+                    document.getElementById('content').appendChild(alertContainer);
 
-            var randomNumber = Math.floor(Math.random() * 1000);
-            var password = sanitizedName + '_' + sanitizedDepartment + randomNumber;
+                    // Remove the alert after 5 seconds
+                    setTimeout(function() {
+                        alertContainer.classList.add('fade-out');
+                        setTimeout(function() {
+                            alertContainer.remove();
+                        }, 1000); 
+                    }, 5000);
 
-            document.getElementById('password').value = password;
-            document.getElementById('confirmPassword').value = password;
-        }
-
-        function toggleGeneratePasswordButton() {
-            var name = document.getElementById('name').value.trim();
-            var email = document.getElementById('email').value.trim();
-            var type = document.getElementById('type').value;
-            var department = document.getElementById('department').value;
-
-            var generateButton = document.getElementById('generatePasswordButton');
-            if (name && email && type && department) {
-                generateButton.style.display = 'inline-block';
+                    // Re-enable the button and reset its text
+                    submitButton.innerHTML = 'Submit';
+                    submitButton.disabled = false;
+                } else {
+                    // Email doesn't exist, submit the form data to add.php
+                    const formSubmit = new XMLHttpRequest();
+                    formSubmit.open('POST', 'add.php', true);
+                    formSubmit.onload = function() {
+                        if (formSubmit.status === 200) {
+                            // Redirect or handle success
+                            window.location.href = 'index.php'; // Redirect to index.php after successful submission
+                        } else {
+                            console.error('Error submitting form:', formSubmit.status);
+                        }
+                        // Re-enable the button and reset its text
+                        submitButton.innerHTML = 'Submit';
+                        submitButton.disabled = false;
+                    };
+                    formSubmit.send(formData);
+                }
             } else {
-                generateButton.style.display = 'none';
+                // Handle errors
+                console.error('Error checking email:', xhr.status);
+                // Re-enable the button and reset its text
+                submitButton.innerHTML = 'Submit';
+                submitButton.disabled = false;
             }
-        }
+        };
+        xhr.send('email=' + encodeURIComponent(email));
+    });
+</script>
 
-        document.getElementById('name').addEventListener('input', toggleGeneratePasswordButton);
-        document.getElementById('email').addEventListener('input', toggleGeneratePasswordButton);
-        document.getElementById('type').addEventListener('change', toggleGeneratePasswordButton);
-        document.getElementById('department').addEventListener('change', toggleGeneratePasswordButton);
 
-        document.addEventListener('DOMContentLoaded', toggleGeneratePasswordButton);
-
-        function togglePasswordVisibility(inputId, iconId) {
-            const passwordField = document.getElementById(inputId);
-            const toggleIcon = document.getElementById(iconId);
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordField.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-        }
-
-        document.getElementById('togglePassword').addEventListener('click', function () {
-            togglePasswordVisibility('password', 'togglePassword');
-        });
-        document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
-            togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword');
-        });
-    </script>
 
 </body>
 

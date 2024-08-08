@@ -7,6 +7,8 @@ include "inc/config.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+$alertMessage = ''; // Variable to store alert message
+
 function sendEmail($to, $subject, $message) {
     // Create a new PHPMailer instance
     $mail = new PHPMailer();
@@ -36,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["resend_code"])) {
     $check_email_result = mysqli_query($conn, $check_email_sql);
 
     if (mysqli_num_rows($check_email_result) == 0) {
-        echo "<script>alert('Email not found. Please enter a valid email address.'); window.location = 'forgot_password.php';</script>";
+        $alertMessage = '<div class="alert-custom alert alert-danger" role="alert"><i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i>Email not found. Please enter a valid email address.</div>';
     } else {
         $update_query = "UPDATE user SET verification_code = '$verification_code' WHERE email_address = '$email'";
 
@@ -97,15 +99,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["resend_code"])) {
             $mail->addEmbeddedImage('images/booky2.png', 'booky_logo'); // Adjust path as needed
 
             if ($mail->send()) {
-                echo "Verification code sent to your email. Check your inbox.";
+                $alertMessage = '<div class="alert-custom alert alert-success" role="alert"><i class="fa-solid fa-circle-check" style="padding-right:3px"></i>Verification code sent to your email. Check your inbox.</div>';
                 $_SESSION['email'] = $email;
                 header("Location: verify_change_pass.php?email=$email");
                 exit();
             } else {
-                echo "Error sending verification code. Please try again later.";
+                $alertMessage = '<div class="alert-custom alert alert-danger" role="alert"><i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i>Error sending verification code. Please try again later.</div>';
             }
         } else {
-            echo "Error updating verification code. Please try again later.";
+            $alertMessage = '<div class="alert-custom alert alert-danger" role="alert"><i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i>Error updating verification code. Please try again later.</div>';
         }
     }
 }
@@ -127,10 +129,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify"])) {
             header("Location: password_sent_success.php");
             exit();
         } else {
-            echo "Error updating password. Please try again later.";
+            $alertMessage = '<div class="alert-container alert alert-danger" role="alert"><i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i>Error updating password. Please try again later.</div>';
         }
     } else {
-        echo "<script>alert('Invalid verification code. Please try again.'); history.go(-1);</script>";
+        $alertMessage = '<div class="alert-container alert alert-danger" role="alert"><i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i>Invalid verification code. Please try again.</div>';
     }
 }
 
@@ -197,9 +199,9 @@ function sendTemporaryPasswordEmail($to, $temporary_password) {
     $mail->addEmbeddedImage('images/booky2.png', 'booky_logo'); // Adjust path as needed
 
     if ($mail->send()) {
-        echo "Temporary password sent to your email. Check your inbox.";
+        $alertMessage = '<div class="alert-container alert alert-success" role="alert"><i class="fa-solid fa-circle-check" style="padding-right:3px"></i>Temporary password sent to your email. Check your inbox.</div>';
     } else {
-        echo "Error sending temporary password. Please try again later.";
+        $alertMessage = '<div class="alert-container alert alert-danger" role="alert"><i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i>Error sending temporary password. Please try again later.</div>';
     }
 }
 ?>
@@ -215,87 +217,113 @@ function sendTemporaryPasswordEmail($to, $temporary_password) {
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-            body {
-              background: url('images/registerbg.png') no-repeat;
-      background-color: #cccccc;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-      font-family: Manrope;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+        body {
+            background: url('images/registerbg.png') no-repeat;
+            background-color: #cccccc;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: Manrope;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: -1; /* Move the pseudo-element to the background */
+            left: 0;
+            width: 100%;
+            height: 100%;  
+            background: rgba(0, 0, 0, 0.3); /* Adjust alpha value for darkness */
+            background-attachment: fixed; /* Ensure the dark overlay doesn't move */
+        }
+        .verification-container {
+            max-width: 400px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width:350px;
+            box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.27);
+            -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.27);
+            -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.27);
+        }
 
-    body::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  z-index: -1; /* Move the pseudo-element to the background */
-  left: 0;
-  width: 100%;
-  height: 100%;  
-  background: rgba(0, 0, 0, 0.3); /* Adjust alpha value for darkness */
-  background-attachment: fixed; /* Ensure the dark overlay doesn't move */
-}
-.verification-container {
-    max-width: 400px;
-    margin: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        h3 {
+            color: #4BB0B8 ;
+            font-weight: 900;
+            text-align: center;
+        }
 
-    width:350px;
-    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.27);
-  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.27);
-  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.27);
-}
+        p {
+            color: #555;
+        }
 
-h3 {
-    color: #4BB0B8 ;
-    font-weight: 900;
-    text-align: center;
-}
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-p {
-    color: #555;
-}
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
 
-.form-group {
-    margin-bottom: 20px;
-}
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+        .btn-submit {
+            width: 100%;
+        }
 
-input {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+        .alert-container {
+            position: fixed;
+            top: 0;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            margin-top: 50px;
+            width: auto;
+            max-width: 80%;
+            padding: 15px;
+            font-size: 14px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+            border: 1px solid #dae0e5;
+            border-left: solid 3px #f01e2c;
+            box-sizing: border-box;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+            /* Smooth transition for fade-out effect */
+        }
 
-.btn-submit {
-    width: 100%;
-}
-
+        .alert-container.fade-out {
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
     <div class="verification-container">
         <h3>Forgot Password</h3>
         <p>Enter the verification code sent to your email address.</p>
-        <form action="change_pass.php" method="post">
+        <?php if (!empty($alertMessage)) echo $alertMessage; ?>
+        <form method="post">
             <div class="form-group">
                 <label for="verification_code">Verification Code:</label>
                 <input type="text" name="verification_code" required>
@@ -303,10 +331,19 @@ input {
             <button type="submit" name="verify" class="btn-submit check-report">Verify</button>
         </form>
         <form method="POST" class="mt-3">
-        <input type="hidden" name="email"
-        value="<?php echo htmlspecialchars($email); ?>">
+            <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
             <button type="submit" name="resend_code" class="btn-submit resend">Resend Code</button>
         </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var alerts = document.querySelectorAll('.alert-container');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    alert.style.opacity = '0';
+                }, 3000); // Adjust the delay time as needed
+            });
+        });
+    </script>
 </body>
 </html>

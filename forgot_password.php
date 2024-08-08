@@ -7,7 +7,8 @@ include "inc/config.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-function sendEmail($to, $subject, $message) {
+function sendEmail($to, $subject, $message)
+{
     // Create a new PHPMailer instance
     $mail = new PHPMailer();
     $mail->isSMTP();
@@ -28,6 +29,8 @@ function sendEmail($to, $subject, $message) {
     return $mail->send();
 }
 
+$alertMessage = ''; // Variable to store alert message
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
     $verification_code = mt_rand(100000, 999999);
     $email = $_POST["email"];
@@ -36,7 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
     $check_email_result = mysqli_query($conn, $check_email_sql);
 
     if (mysqli_num_rows($check_email_result) == 0) {
-        echo "<script>alert('Email not found. Please enter a valid email address.'); window.location = 'forgot_password.php';</script>";
+        $alertMessage = '<div class="alert-container alert alert-danger" role="alert">
+                            <i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i> Email not found. Please enter a valid email address.
+                        </div>';
     } else {
         $update_query = "UPDATE user SET verification_code = '$verification_code' WHERE email_address = '$email'";
 
@@ -95,15 +100,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
             $mail->addEmbeddedImage('images/booky2.png', 'booky_logo'); // Adjust path as needed
 
             if ($mail->send()) {
-                echo "Verification code sent to your email. Check your inbox.";
+                $alertMessage = '<div class="alert-container alert alert-success" role="alert">
+                                    <i class="fa-solid fa-circle-check" style="padding-right:3px"></i> Verification code sent to your email. Check your inbox.
+                                </div>';
                 $_SESSION['email'] = $email;
-                header("Location: verify_change_pass.php?email=$email");
+                header("Location: verify_change_password.php?email=$email");
                 exit();
             } else {
-                echo "Error sending verification code. Please try again later.";
+                $alertMessage = '<div class="alert-container alert alert-danger" role="alert">
+                                    <i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i> Error sending verification code. Please try again later.
+                                </div>';
             }
         } else {
-            echo "Error updating verification code. Please try again later.";
+            $alertMessage = '<div class="alert-container alert alert-danger" role="alert">
+                                <i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i> Error updating verification code. Please try again later.
+                            </div>';
         }
     }
 }
@@ -138,20 +149,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
             min-height: 100vh;
         }
 
-
         body::before {
             content: "";
             position: absolute;
             top: 0;
             z-index: -1;
-            /* Move the pseudo-element to the background */
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.3);
-            /* Adjust alpha value for darkness */
             background-attachment: fixed;
-            /* Ensure the dark overlay doesn't move */
         }
 
         .verification-container {
@@ -198,11 +205,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
         .btn-submit {
             width: 100%;
         }
+
+        .alert-container {
+            position: fixed;
+            top: 0;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            margin-top: 50px;
+            width: auto;
+            max-width: 80%;
+            padding: 15px;
+            font-size: 14px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+            border: 1px solid #dae0e5;
+            border-left: solid 3px #f01e2c;
+            box-sizing: border-box;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+            /* Smooth transition for fade-out effect */
+        }
+
+        .alert-container.fade-out {
+            opacity: 0;
+        }
     </style>
 </head>
 
 <body>
     <div class="verification-container">
+        <?php if ($alertMessage): ?>
+            <?php echo $alertMessage; ?>
+        <?php endif; ?>
         <h3>Forgot your password?</h3>
         <p>Enter the email address associated with your account to change your password.</p>
         <form method="POST">
@@ -216,5 +254,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
         </form>
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to add fade-out class to alert
+        function fadeOutAlert() {
+            const alert = document.querySelector('.alert-container');
+            if (alert) {
+                setTimeout(() => {
+                    alert.classList.add('fade-out');
+                }, 3000); // Time in milliseconds before the fade-out starts
+            }
+        }
+
+        fadeOutAlert();
+    });
+</script>
 
 </html>
