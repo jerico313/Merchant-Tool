@@ -16,7 +16,6 @@ SELECT
                 WHEN `a`.`table_name` = 'fee' THEN `f`.`fee_id`
                 WHEN `a`.`table_name` = 'fee_history' THEN `fh`.`fee_history_id`
                 WHEN `a`.`table_name` = 'transaction' THEN `t`.`transaction_id`
-                WHEN `a`.`table_name` = 'user' THEN `u2`.`user_id`
                 WHEN `a`.`table_name` = 'report_history_coupled' THEN `rhc`.`coupled_report_id`
                 WHEN `a`.`table_name` = 'report_history_decoupled' THEN `rhd`.`decoupled_report_id`
                 WHEN `a`.`table_name` = 'report_history_gcash_head' THEN `rhgh`.`gcash_report_id`
@@ -37,7 +36,6 @@ SELECT
             WHEN `a`.`table_name` = 'fee' THEN `fm`.`merchant_name`
             WHEN `a`.`table_name` = 'fee_history' THEN `fhm`.`merchant_name`
             WHEN `a`.`table_name` = 'transaction' THEN `t`.`customer_id`
-            WHEN `a`.`table_name` = 'user' THEN `u2`.`name`
             WHEN `a`.`table_name` = 'report_history_coupled' THEN `rhc`.`settlement_number`
             WHEN `a`.`table_name` = 'report_history_decoupled' THEN `rhd`.`settlement_number`
             WHEN `a`.`table_name` = 'report_history_gcash_head' THEN `rhgh`.`settlement_number`
@@ -74,7 +72,6 @@ FROM
     LEFT JOIN `leadgen_db`.`fee` `ffh` ON `fh`.`fee_id` = `ffh`.`fee_id`
     LEFT JOIN `leadgen_db`.`merchant` `fhm` ON `ffh`.`merchant_id` = `fhm`.`merchant_id`
     LEFT JOIN `leadgen_db`.`transaction` `t` ON `a`.`table_id` = `t`.`transaction_id`
-    LEFT JOIN `leadgen_db`.`user` `u2` ON `a`.`table_id` = `u2`.`user_id`
     LEFT JOIN `leadgen_db`.`report_history_coupled` `rhc` ON `a`.`table_id` = `rhc`.`coupled_report_id`
     LEFT JOIN `leadgen_db`.`report_history_decoupled` `rhd` ON `a`.`table_id` = `rhd`.`decoupled_report_id`
     LEFT JOIN `leadgen_db`.`report_history_gcash_head` `rhgh` ON `a`.`table_id` = `rhgh`.`gcash_report_id`
@@ -89,7 +86,6 @@ WHERE
         'fee',
         'fee_history',
         'transaction',
-        'user',
         'report_history_coupled',
         'report_history_decoupled',
         'report_history_gcash_head',
