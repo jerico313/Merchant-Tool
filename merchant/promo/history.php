@@ -316,7 +316,7 @@ function displayOfferHistory($promo_code, $merchant_name)
           <table id="example" class="table bord" style="width:100%;">
             <thead>
               <tr>
-                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Promo History ID
+                <th class="first-col">Promo History ID
                 </th>
                 <th style="padding:10px;">Old Bill Status</th>
                 <th style="padding:10px;">New Bill Status</th>

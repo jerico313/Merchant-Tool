@@ -266,7 +266,7 @@ function displayUser()
     <div class="custom-box pt-4">
       <div class="sub" style="text-align:left;">
         <div class="add-btns">
-          <p class="title"> <i class="fa-solid fa-user-gear fa-sm"></i> Manage Users</p>
+          <p class="title"><i class="fa-solid fa-user-gear fa-sm"></i> Manage Users</p>
           <a href="add_account.php"><button type="button" class="btn add-merchant"><i class="fa-solid fa-user-plus"></i> Add User</button></a>
         </div>
 

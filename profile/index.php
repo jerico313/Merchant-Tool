@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
         <div class="custom-box pt-2">
             <div class="upload pt-3" style="text-align:left;">
                 <div class="add-btns">
-                    <p class="title">Profile</p>
+                    <p class="title"><i class="fa-solid fa-user fa-sm"></i> Profile</p>
                 </div>
 
                 <div class="content"

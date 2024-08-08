@@ -14,13 +14,14 @@ function displayHistory()
       echo "<!-- Debug: created_at=" . $row['created_at'] . " -->";
 
       echo "<tr data-id='" . $row['activity_history_id'] . "' class='message-row'>";
-      echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_history_id'] . "</td>";
-      echo "<td class='message-cell' style='text-align:center;'>" . $row['activity_type'] . "</td>";
-      echo "<td class='message-cell' style='text-align:center;'>" . $row['user_name'] . "</td>";
-      echo "<td class='message-cell' style='text-align:center;'>" . $row['table_name'] . "</td>";
-      echo "<td class='message-cell' style='text-align:center;'>" . $row['column_name'] . "</td>";
-      echo "<td class='message-cell' style='text-align:center;'>" . $row['time_ago'] . "</td>";
-      echo "<td class='message-cell' style='display:none;'>" . $row['created_at'] . "</td>";
+      echo "<td>" . $row['activity_history_id'] . "</td>";
+      echo "<td>" . $row['table_name'] . "</td>";
+      echo "<td>" . $row['table_id'] . "</td>";
+      echo "<td style='width:20%;'>" . $row['column_name'] . "</td>";
+      echo "<td>" . $row['activity_type'] . "</td>";
+      echo "<td>" . $row['user_name'] . "</td>";
+      echo "<td style='display:none;'>" . $row['created_at'] . "</td>";
+      echo "<td>" . $row['time_ago'] . "</td>";
       echo "</tr>";
       $count++;
     }
@@ -315,13 +316,14 @@ function displayHistory()
           <table id="example" class="table bord" style="width:100%;">
             <thead>
               <tr>
-                <th>Activity ID</th>
+                <th class="first-col">Activity ID</th>
+                <th>Table Name</th>
+                <th>Table ID</th>
+                <th>Key Identifier</th>
                 <th>Activity Type</th>
                 <th>Modified By</th>
-                <th>Table Name</th>
-                <th>Key Identifier</th>
-                <th>Updated At</th>
                 <th style="display:none;"></th>
+                <th class="action-col">Updated At</th>
               </tr>
             </thead>
             <tbody id="dynamicTableBody">
@@ -358,11 +360,14 @@ function displayHistory()
 
       var table = $('#example').DataTable({
         scrollX: true,
+        columnDefs: [
+            { orderable: false, targets: [0, 1, 2, 3, 4, 5, 6, 7] }    // Disable sorting for the specified columns
+          ],
         order: [[6, 'desc']]
       });
 
       // Add click event to specific columns (1, 2, 3, and 4)
-      $('#example tbody').on('click', 'td:nth-child(1), td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(7)', function () {
+      $('#example tbody').on('click', 'td:nth-child(1), td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8)', function () {
         // Access the row from the clicked cell
         var row = $(this).closest('tr');
         var activityId = row.data('id');
