@@ -38,7 +38,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 
             <div class="upload pt-4" style="text-align:left;">
                 <div class="add-btns">
-                    <p class="title">Promo Details</p>
+                    <p class="title">Add New Promo</p>
                     <button type="button" class="btn btn-success" id="add-field"><i class="fa-solid fa-plus"></i>
                         Add More </button>
                 </div>
@@ -55,9 +55,9 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                             <label for="promo_id" class="form-label" id="form-input-label">
                                                 Promo Code<span class="text-danger" style="padding:2px">*</span>
                                             </label>
-                                            <input id="form-input-field" type="text" class="form-control" 
-                                                name="promo_code[]" placeholder="Enter promo code" 
-                                                required maxlength="100">
+                                            <input id="form-input-field" type="text" class="form-control"
+                                                name="promo_code[]" placeholder="Enter promo code" required
+                                                maxlength="100">
                                         </div>
                                         <div class="mb-3">
                                             <label for="merchant_name" class="form-label" id="form-input-label">
@@ -75,15 +75,15 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                             <label for="promo_amount" class="form-label" id="form-input-label">
                                                 Promo Amount<span class="text-danger" style="padding:2px">*</span>
                                             </label>
-                                            <input id="form-input-field" type="number" class="form-control" 
-                                                name="promo_amount[]" placeholder="0"                                                
-                                                min="0" required>
+                                            <input id="form-input-field" type="number" class="form-control"
+                                                name="promo_amount[]" placeholder="0" min="0" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="voucher_type" class="form-label" id="form-input-label">
                                                 Voucher Type<span class="text-danger" style="padding:2px">*</span>
                                             </label>
-                                            <select id="form-input-field" class="form-select" name="voucher_type[]" required>
+                                            <select id="form-input-field" class="form-select" name="voucher_type[]"
+                                                required>
                                                 <option disabled selected>-- Select Voucher Type --</option>
                                                 <option value="Coupled">Coupled</option>
                                                 <option value="Decoupled">Decoupled</option>
@@ -91,9 +91,10 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                         </div>
                                         <div class="mb-3">
                                             <label for="promo_category" class="form-label" id="form-input-label">
-                                                Promo Category<span class="text-danger" style="padding:2px">*</span>                                                
+                                                Promo Category<span class="text-danger" style="padding:2px">*</span>
                                             </label>
-                                            <select id="form-input-field" class="form-select" name="promo_category[]" required>
+                                            <select id="form-input-field" class="form-select" name="promo_category[]"
+                                                required>
                                                 <option disabled selected>-- Select Promo Category --</option>
                                                 <option value="Grab & Go">Grab & Go</option>
                                                 <option value="Casual Dining">Casual Dining</option>
@@ -103,7 +104,8 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                             <label for="promo_group" class="form-label" id="form-input-label">
                                                 Promo Group<span class="text-danger" style="padding:2px">*</span>
                                             </label>
-                                            <select id="form-input-field" class="form-select" name="promo_group[]" required>
+                                            <select id="form-input-field" class="form-select" name="promo_group[]"
+                                                required>
                                                 <option disabled selected>-- Select Promo Group --</option>
                                                 <option value="Grab & Go">Booky</option>
                                                 <option value="Gcash">Gcash</option>
@@ -115,13 +117,15 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                             <label for="promo_type" class="form-label" id="form-input-label">
                                                 Promo Type<span class="text-danger" style="padding:2px">*</span>
                                             </label>
-                                            <select id="form-input-field" class="form-select" name="promo_type[]" required>
+                                            <select id="form-input-field" class="form-select" name="promo_type[]"
+                                                required>
                                                 <option disabled selected>-- Select Promo Type --</option>
                                                 <option value="BOGO">BOGO</option>
                                                 <option value="Bundle">Bundle</option>
                                                 <option value="Fixed discount">Fixed discount</option>
                                                 <option value="Free item">Free item</option>
-                                                <option value="Fixed discount, Free item">Free discount, Free item</option>
+                                                <option value="Fixed discount, Free item">Free discount, Free item
+                                                </option>
                                                 <option value="Percent discount">Percent discount</option>
                                                 <option value="X for Y">X for Y</option>
                                             </select>
@@ -133,10 +137,12 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                                 Promo Details<span class="text-danger" style="padding:2px">*</span>
                                             </label>
                                             <textarea id="form-input-field" class="form-control" rows="3"
-                                                name="promo_details[]" placeholder="Enter promo details" required></textarea>
+                                                name="promo_details[]" placeholder="Enter promo details"
+                                                required></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="remarks" class="form-label" id="form-input-label">Remarks</label>
+                                            <label for="remarks" class="form-label"
+                                                id="form-input-label">Remarks</label>
                                             <textarea id="form-input-field" class="form-control" rows="2"
                                                 name="remarks[]" placeholder="Enter remarks"></textarea>
                                         </div>
@@ -144,7 +150,8 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                             <label for="bill_status" class="form-label" id="form-input-label">
                                                 Bill Status<span class="text-danger" style="padding:2px">*</span>
                                             </label>
-                                            <select id="form-input-field" class="form-select" name="bill_status[]" required>
+                                            <select id="form-input-field" class="form-select" name="bill_status[]"
+                                                required>
                                                 <option disabled selected>-- Select Bill Status --</option>
                                                 <option value="PRE-TRIAL">PRE-TRIAL</option>
                                                 <option value="BILLABLE">BILLABLE</option>
@@ -154,14 +161,22 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                         <div class="mb-3">
                                             <label for="start_date" class="form-label" id="form-input-label">
                                                 Start Date<span class="text-danger" style="padding:2px">*</span>
+                                                <input type="checkbox" class="form-check-input" id="NoStartDate"
+                                                    name="NoStartDate" style="accent-color:#E96529;">
+                                                <label class="form-check-label" for="NoStartDate">No Start Date</label>
                                             </label>
-                                            <input id="form-input-field" type="date" class="form-control" name="start_date[]" required>
+                                            <input id="form-input-field" type="date" class="form-control"
+                                                name="start_date[]" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="end_date" class="form-label" id="form-input-label">
                                                 End Date<span class="text-danger" style="padding:2px">*</span>
+                                                <input type="checkbox" class="form-check-input" id="NoEndDate"
+                                                    name="NoEndDate" style="accent-color:#E96529 !important;">
+                                                <label class="form-check-label" for="NoEndDate">No End Date</label>
                                             </label>
-                                            <input id="form-input-field" type="date" class="form-control" name="end_date[]" required>
+                                            <input id="form-input-field" type="date" class="form-control"
+                                                name="end_date[]" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="remarks2" class="form-label" id="form-input-label">Remarks 2</label>
@@ -305,12 +320,18 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                         <div class="mb-3">
                             <label for="start_date" class="form-label" id="form-input-label">
                                 Start Date<span class="text-danger" style="padding:2px">*</span>
+                                <input type="checkbox" class="form-check-input" id="NoStartDate"
+                                    name="NoStartDate" style="accent-color:#E96529;">
+                                <label class="form-check-label" for="NoStartDate">No Start Date</label>
                             </label>
                             <input id="form-input-field" type="date" class="form-control" name="start_date[]" required>
                         </div>
                         <div class="mb-3">
                             <label for="end_date" class="form-label" id="form-input-label">
                                 End Date<span class="text-danger" style="padding:2px">*</span>
+                                <input type="checkbox" class="form-check-input" id="NoEndDate"
+                                    name="NoEndDate" style="accent-color:#E96529 !important;">
+                                <label class="form-check-label" for="NoEndDate">No End Date</label>
                             </label>
                             <input id="form-input-field" type="date" class="form-control" name="end_date[]" required>
                         </div>
@@ -319,6 +340,11 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                             <textarea id="form-input-field" class="form-control" rows="2"
                                 name="remarks2[]" placeholder="Enter additional remarks"></textarea>
                         </div>
+                    </div>
+                    <div class="mb-3 mt-3" style="text-align:right;">
+                        <button type="button" class="btn btn-danger remove-field" id="remove-field">
+                            <i class="fa-solid fa-trash"></i> Remove
+                        </button>
                     </div>
                 </div>
         `;
@@ -379,68 +405,130 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
         });
 
     </script>
- <script>
-document.getElementById('dynamic-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    let promoCodes = document.querySelectorAll('input[name="promo_code[]"]');
-    let codes = Array.from(promoCodes).map(input => input.value.trim()); // Ensure no extra spaces
+    <script>
+        document.getElementById('dynamic-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            let promoCodes = document.querySelectorAll('input[name="promo_code[]"]');
+            let codes = Array.from(promoCodes).map(input => input.value.trim()); // Ensure no extra spaces
 
-    let duplicateCodes = codes.filter((code, index) => codes.indexOf(code) !== index);
-    if (duplicateCodes.length > 0) {
-        showAlert('Duplicate Promo Code found: ' + duplicateCodes.join(', '), 'danger');
-        return false;
-    }
+            let duplicateCodes = codes.filter((code, index) => codes.indexOf(code) !== index);
+            if (duplicateCodes.length > 0) {
+                showAlert('Duplicate Promo Code found: ' + duplicateCodes.join(', '), 'danger');
+                return false;
+            }
 
-    checkPromoCodes(codes);
-});
+            checkPromoCodes(codes);
+        });
 
-function checkPromoCodes(codes) {
-    fetch('check_promo.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ promo_code: codes })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.exists) {
-            showAlert('Promo Code(s) already exist: ' + data.ids.join(', '), 'danger');
-        } else {
-            document.getElementById('dynamic-form').submit();
+        function checkPromoCodes(codes) {
+            fetch('check_promo.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ promo_code: codes })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        showAlert('Promo Code(s) already exist: ' + data.ids.join(', '), 'danger');
+                    } else {
+                        document.getElementById('dynamic-form').submit();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showAlert('An error occurred while checking promo codes.', 'danger');
+                });
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showAlert('An error occurred while checking promo codes.', 'danger');
-    });
-}
 
-function showAlert(message, type) {
-    let alertContainer = document.getElementById('alert-container');
-    if (!alertContainer) {
-        alertContainer = document.createElement('div');
-        alertContainer.id = 'alert-container';
-        document.body.insertBefore(alertContainer, document.body.firstChild);
-    }
-    
-    alertContainer.innerHTML = `
+        function showAlert(message, type) {
+            let alertContainer = document.getElementById('alert-container');
+            if (!alertContainer) {
+                alertContainer = document.createElement('div');
+                alertContainer.id = 'alert-container';
+                document.body.insertBefore(alertContainer, document.body.firstChild);
+            }
+
+            alertContainer.innerHTML = `
         <div class="alert alert-${type} alert-dismissible fade show" role="alert" style="position: fixed;top: 0;right: 20px;transform: translateY(-50%);z-index: 1000;margin-top: 105px;width: auto;max-width: 80%;padding: 15px;font-size: 14px;border-radius: 8px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);background-color: #f8d7da;border-color: #f5c6cb;color: #721c24;border: 1px solid #dae0e5;border-left: solid 3px #f01e2c;box-sizing: border-box;">
             <i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i> ${message}
         </div>
     `;
-    
-    // Automatically remove alert after a few seconds
-    setTimeout(() => {
-        let alertElement = alertContainer.querySelector('.alert');
-        if (alertElement) {
-            alertElement.classList.remove('show');
-            alertElement.classList.add('fade');
-            setTimeout(() => alertContainer.innerHTML = '', 150);
+
+            // Automatically remove alert after a few seconds
+            setTimeout(() => {
+                let alertElement = alertContainer.querySelector('.alert');
+                if (alertElement) {
+                    alertElement.classList.remove('show');
+                    alertElement.classList.add('fade');
+                    setTimeout(() => alertContainer.innerHTML = '', 150);
+                }
+            }, 5000);
         }
-    }, 5000);
-}
-</script>
+    </script>
+
+    <script>
+        function updateDateFields() {
+            // Get the date fields
+            var startDate = document.getElementById('start_date');
+            var endDate = document.getElementById('end_date');
+
+            // Get the checkboxes
+            var noStartDateCheckbox = document.getElementById('NoStartDate');
+            var noEndDateCheckbox = document.getElementById('NoEndDate');
+
+            // Update the checkbox based on the date field values
+            noStartDateCheckbox.checked = !startDate.value;
+            noEndDateCheckbox.checked = !endDate.value;
+
+            // Disable or enable the date fields based on the checkbox states
+            startDate.disabled = noStartDateCheckbox.checked;
+            endDate.disabled = noEndDateCheckbox.checked;
+        }
+
+        document.getElementById('editStoreModal').addEventListener('shown.bs.modal', function () {
+            updateDateFields();
+        });
+
+        // Add event listeners to checkboxes to handle their state changes
+        document.getElementById('NoStartDate').addEventListener('change', function () {
+            var startDate = document.getElementById('start_date');
+            startDate.disabled = this.checked;
+            if (this.checked) {
+                startDate.value = '';
+            }
+        });
+
+        document.getElementById('NoEndDate').addEventListener('change', function () {
+            var endDate = document.getElementById('end_date');
+            endDate.disabled = this.checked;
+            if (this.checked) {
+                endDate.value = '';
+            }
+        });
+
+        // Add event listeners to date fields to automatically check the checkboxes if the date fields are cleared
+        document.getElementById('start_date').addEventListener('input', function () {
+            if (!this.value) {
+                document.getElementById('NoStartDate').checked = true;
+                this.disabled = true;
+            } else {
+                document.getElementById('NoStartDate').checked = false;
+                this.disabled = false;
+            }
+        });
+
+        document.getElementById('end_date').addEventListener('input', function () {
+            if (!this.value) {
+                document.getElementById('NoEndDate').checked = true;
+                this.disabled = true;
+            } else {
+                document.getElementById('NoEndDate').checked = false;
+                this.disabled = false;
+            }
+        });
+    </script>
 
     <script src="../../js/file_upload.js"></script>
 </body>
