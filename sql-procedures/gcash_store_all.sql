@@ -38,12 +38,23 @@ BEGIN
             SUM(`Cart Amount`) AS total_amount,
             `Commission Rate` AS commission_rate,
             SUM(`Commission Amount`) AS commission_amount,
-            SUM(`Commission Amount`) * 0.12 AS vat_amount,
-            SUM(`Total Billing`) AS total_commission_fees
+            CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+                ELSE 0.00
+            END AS vat_amount,
+            SUM(`Commission Amount`)
+            + CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+                ELSE 0.00
+            END AS total_commission_fees
         FROM 
             `transaction_summary_view`
         JOIN
             `store` ON `Store ID` = store.`store_id`
+        JOIN
+            `merchant` ON merchant.`merchant_id` = store.`merchant_id`
+        JOIN
+            `fee` ON fee.`merchant_id` = merchant.`merchant_id`
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
@@ -80,12 +91,23 @@ BEGIN
             SUM(`Cart Amount`) AS total_amount,
             `Commission Rate` AS commission_rate,
             SUM(`Commission Amount`) AS commission_amount,
-            SUM(`Commission Amount`) * 0.12 AS vat_amount,
-            SUM(`Total Billing`) AS total_commission_fees
+            CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+                ELSE 0.00
+            END AS vat_amount,
+            SUM(`Commission Amount`)
+            + CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+                ELSE 0.00
+            END AS total_commission_fees
         FROM 
             `transaction_summary_view`
         JOIN
             `store` ON `Store ID` = store.`store_id`
+        JOIN
+            `merchant` ON merchant.`merchant_id` = store.`merchant_id`
+        JOIN
+            `fee` ON fee.`merchant_id` = merchant.`merchant_id`
         WHERE 
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
