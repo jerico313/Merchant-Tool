@@ -296,6 +296,10 @@ function displayOfferHistory($promo_code, $merchant_name)
                         href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                         data-breadcrumb="Offers" style="color:#4BB0B8;">Promos</a>
                     </li>
+                    <li><a class="dropdown-item"
+                        href="../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                        data-breadcrumb="Offers">Transactions</a>
+                    </li>
                   </ul>
                 </li>
                 <li class="breadcrumb-item"><a href="#" onclick="location.reload();"

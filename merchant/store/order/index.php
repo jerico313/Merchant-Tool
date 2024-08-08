@@ -45,27 +45,27 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo "<tr style='padding:10px;'>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
-            echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
-            echo "<td style='text-align:center;width:3%;'>" . $row['Voucher Type'] . "</td>";
-            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Category'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Promo Group'] . "</td>";
-            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Type'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Gross Amount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Discount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Cart Amount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Amount'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Total Billing'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Amount'] . "</td>";
-            echo "<td style='text-align:center;width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Transaction ID'] . "</td>";
+            echo "<td style='width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Customer ID'] . "</td>";
+            echo "<td style='width:7%;'>" . $row['Customer Name'] . "</td>";
+            echo "<td style='width:5%;'>" . $row['Promo Code'] . "</td>";
+            echo "<td style='width:3%;'>" . $row['Voucher Type'] . "</td>";
+            echo "<td style='width:6%;'>" . $row['Promo Category'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Promo Group'] . "</td>";
+            echo "<td style='width:6%;'>" . $row['Promo Type'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Gross Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Discount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Cart Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Mode of Payment'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Bill Status'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Type'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Rate'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Total Billing'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['PG Fee Amount'] . "</td>";
+            echo "<td style='width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
             echo "</tr>";
         }
@@ -404,6 +404,10 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                         <li><a class="dropdown-item"
                                                 href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="../../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers">Transactions</a>
                                         </li>
                                     </ul>
                                 </li>

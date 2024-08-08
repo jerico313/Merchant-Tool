@@ -11,7 +11,7 @@ function displayStore()
   if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
       $shortStoreId = substr($row['store_id'], 0, 8);
-      
+
       // Prepare truncated and full text for email_address
       $email_address_full = empty($row['email_address']) ? '-' : $row['email_address'];
       $email_address = strlen($row['email_address']) > 30 ? substr($row['email_address'], 0, 30) . '...' : $row['email_address'];
@@ -24,7 +24,7 @@ function displayStore()
       echo "<td>" . $row['legal_entity_name'] . "</td>";
       echo "<td>" . $row['store_address'] . "</td>";
       echo "<td style='display:none;'>" . htmlspecialchars($email_address_full) . "</td>";
-      echo "<td class='text-cell' data-full='" . htmlentities($email_address_full) . "' data-short='" . htmlentities($email_address) . "'>" . $email_address . "</td>";      
+      echo "<td class='text-cell' data-full='" . htmlentities($email_address_full) . "' data-short='" . htmlentities($email_address) . "'>" . $email_address . "</td>";
       echo "<td class='actions-cell'>";
       echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
       echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
@@ -201,104 +201,137 @@ function displayStore()
       display: none;
     }
 
-    
-.lds-default,
-.lds-default div {
-  box-sizing: border-box;
-}
-.lds-default {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  color:#E96529;
-}
-.lds-default div {
-  position: absolute;
-  width: 6.4px;
-  height: 6.4px;
-  background: currentColor;
-  border-radius: 50%;
-  animation: lds-default 1.2s linear infinite;
-}
-.lds-default div:nth-child(1) {
-  animation-delay: 0s;
-  top: 36.8px;
-  left: 66.24px;
-}
-.lds-default div:nth-child(2) {
-  animation-delay: -0.1s;
-  top: 22.08px;
-  left: 62.29579px;
-}
-.lds-default div:nth-child(3) {
-  animation-delay: -0.2s;
-  top: 11.30421px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(4) {
-  animation-delay: -0.3s;
-  top: 7.36px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(5) {
-  animation-delay: -0.4s;
-  top: 11.30421px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(6) {
-  animation-delay: -0.5s;
-  top: 22.08px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(7) {
-  animation-delay: -0.6s;
-  top: 36.8px;
-  left: 7.36px;
-}
-.lds-default div:nth-child(8) {
-  animation-delay: -0.7s;
-  top: 51.52px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(9) {
-  animation-delay: -0.8s;
-  top: 62.29579px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(10) {
-  animation-delay: -0.9s;
-  top: 66.24px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(11) {
-  animation-delay: -1s;
-  top: 62.29579px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(12) {
-  animation-delay: -1.1s;
-  top: 51.52px;
-  left: 62.29579px;
-}
-@keyframes lds-default {
-  0%, 20%, 80%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-}
+
+    .lds-default,
+    .lds-default div {
+      box-sizing: border-box;
+    }
+
+    .lds-default {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      color: #E96529;
+    }
+
+    .lds-default div {
+      position: absolute;
+      width: 6.4px;
+      height: 6.4px;
+      background: currentColor;
+      border-radius: 50%;
+      animation: lds-default 1.2s linear infinite;
+    }
+
+    .lds-default div:nth-child(1) {
+      animation-delay: 0s;
+      top: 36.8px;
+      left: 66.24px;
+    }
+
+    .lds-default div:nth-child(2) {
+      animation-delay: -0.1s;
+      top: 22.08px;
+      left: 62.29579px;
+    }
+
+    .lds-default div:nth-child(3) {
+      animation-delay: -0.2s;
+      top: 11.30421px;
+      left: 51.52px;
+    }
+
+    .lds-default div:nth-child(4) {
+      animation-delay: -0.3s;
+      top: 7.36px;
+      left: 36.8px;
+    }
+
+    .lds-default div:nth-child(5) {
+      animation-delay: -0.4s;
+      top: 11.30421px;
+      left: 22.08px;
+    }
+
+    .lds-default div:nth-child(6) {
+      animation-delay: -0.5s;
+      top: 22.08px;
+      left: 11.30421px;
+    }
+
+    .lds-default div:nth-child(7) {
+      animation-delay: -0.6s;
+      top: 36.8px;
+      left: 7.36px;
+    }
+
+    .lds-default div:nth-child(8) {
+      animation-delay: -0.7s;
+      top: 51.52px;
+      left: 11.30421px;
+    }
+
+    .lds-default div:nth-child(9) {
+      animation-delay: -0.8s;
+      top: 62.29579px;
+      left: 22.08px;
+    }
+
+    .lds-default div:nth-child(10) {
+      animation-delay: -0.9s;
+      top: 66.24px;
+      left: 36.8px;
+    }
+
+    .lds-default div:nth-child(11) {
+      animation-delay: -1s;
+      top: 62.29579px;
+      left: 51.52px;
+    }
+
+    .lds-default div:nth-child(12) {
+      animation-delay: -1.1s;
+      top: 51.52px;
+      left: 62.29579px;
+    }
+
+    @keyframes lds-default {
+
+      0%,
+      20%,
+      80%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.5);
+      }
+    }
   </style>
 </head>
 
 <body>
-<div class="loading">
-  <div>
-   <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  <div class="loading">
+    <div>
+      <div class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    Loading, Please wait...
   </div>
-  Loading, Please wait...
-</div>
   <div class="cont-box">
     <div class="custom-box pt-4">
       <div class="sub" style="text-align:left;">
@@ -348,21 +381,21 @@ function displayStore()
               <input type="hidden" id="storeId" name="storeId">
               <input type="hidden" id="merchantId" name="merchantId">
               <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-              
+
               <div class="mb-3">
                 <label for="storeName" class="form-label">
                   Store Name<span class="text-danger" style="padding:2px">*</span>
                 </label>
-                <input type="text" class="form-control" id="storeName" name="storeName"
-                  placeholder="Enter store name" required maxlength="255">
+                <input type="text" class="form-control" id="storeName" name="storeName" placeholder="Enter store name"
+                  required maxlength="255">
               </div>
               <div class="mb-3">
                 <label for="merchantName" class="form-label">
                   Merchant Name<span class="text-danger" style="padding:2px">*</span>
                 </label>
                 <input type="text" class="form-control" id="merchantName" name="merchantName"
-                  style="background-color: #d3d3d3; caret-color: transparent;"
-                  placeholder="Enter merchant name" required readonly>
+                  style="background-color: #d3d3d3; caret-color: transparent;" placeholder="Enter merchant name"
+                  required readonly>
               </div>
               <div class="mb-3">
                 <label for="legalEntityName" class="form-label">Legal Entity Name</label>
@@ -390,17 +423,18 @@ function displayStore()
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
     <script src="./js/script.js"></script>
     <script>
-      $(window).on('load', function() {
-   $('.loading').hide();
-   $('.cont-box').show();
+      $(window).on('load', function () {
+        $('.loading').hide();
+        $('.cont-box').show();
 
-   var table = $('#example').DataTable({
-      scrollX: true,
-      columnDefs: [
+        var table = $('#example').DataTable({
+          scrollX: true,
+          columnDefs: [
             { orderable: false, targets: [0, 5, 6, 7, 8] }
           ],
-      order: [[1, 'asc']]
-   }); });
+          order: [[1, 'asc']]
+        });
+      });
     </script>
 
 
@@ -412,30 +446,30 @@ function displayStore()
         var merchantName = storeRow.find('td:nth-child(4)').text();
         var legalEntityName = storeRow.find('td:nth-child(5)').text();
         var storeAddress = storeRow.find('td:nth-child(6)').text();
-        var emailAddress = storeRow.find('td:nth-child(7)').text();        
+        var emailAddress = storeRow.find('td:nth-child(7)').text();
 
         // Set values in the edit modal
         $('#storeId').val(storeId);
         $('#storeName').val(storeName);
         $('#merchantId').val(merchantId);
         $('#merchantName').val(merchantName);
-        
+
         if (legalEntityName === '-') {
-            $('#legalEntityName').val(null);
+          $('#legalEntityName').val(null);
         } else {
-            $('#legalEntityName').val(legalEntityName);
+          $('#legalEntityName').val(legalEntityName);
         }
 
         if (storeAddress === '-') {
-            $('#storeAddress').val(null);
+          $('#storeAddress').val(null);
         } else {
-            $('#storeAddress').val(storeAddress);
+          $('#storeAddress').val(storeAddress);
         }
 
         if (emailAddress === '-') {
-            $('#emailAddress').val(null);
+          $('#emailAddress').val(null);
         } else {
-            $('#emailAddress').val(emailAddress);
+          $('#emailAddress').val(emailAddress);
         }
 
         // Open the edit modal
@@ -450,16 +484,16 @@ function displayStore()
     <script>
       // Event delegation for text toggle of email address
       document.body.addEventListener('click', function (event) {
-          if (event.target.classList.contains('text-cell')) {
-            var fullText = event.target.getAttribute('data-full');
-            var shortText = event.target.getAttribute('data-short');
-            if (event.target.innerText === shortText) {
-              event.target.innerText = fullText;
-            } else {
-              event.target.innerText = shortText;
-            }
+        if (event.target.classList.contains('text-cell')) {
+          var fullText = event.target.getAttribute('data-full');
+          var shortText = event.target.getAttribute('data-short');
+          if (event.target.innerText === shortText) {
+            event.target.innerText = fullText;
+          } else {
+            event.target.innerText = shortText;
           }
-        });
+        }
+      });
     </script>
 
     <script>

@@ -353,7 +353,7 @@ function displayStore($merchant_id)
                                         </li>
                                         <li><a class="dropdown-item"
                                                 href="../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Transaction</a>
+                                                data-breadcrumb="Offers">Transactions</a>
                                         </li>
                                     </ul>
                                 </li>

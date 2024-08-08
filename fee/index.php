@@ -319,7 +319,7 @@ function displayPGFeeRate()
 
         <div class="add-btns">
           <p class="title">Fees</p>
-          <a href="upload.php"><button type="button" class="btn btn-danger add-merchant"><i class="fa-solid fa-plus"></i> Add New Fee</button></a>
+          <a href="upload.php"><button type="button" class="btn btn-danger add-merchant"><i class="fa-solid fa-plus"></i> Add Fee</button></a>
         </div>
 
         <div class="content">
