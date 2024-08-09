@@ -32,8 +32,6 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
         $params[] = $startDate;
         $params[] = $endDate;
     }
-    // Order by Transaction Date in descending order (latest to oldest)
-    $sql .= " ORDER BY `Transaction Date` DESC";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(str_repeat("s", count($params)), ...$params);
@@ -58,27 +56,27 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             }
 
             echo "<tr style='padding:10px;'>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
-            echo "<td style='text-align:center;width:7%;'>" . $CustomerName . "</td>";
-            echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
-            echo "<td style='text-align:center;width:3%;'>" . $row['Voucher Type'] . "</td>";
-            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Category'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Promo Group'] . "</td>";
-            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Type'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $GrossAmount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $Discount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $CartAmount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $CommissionAmount . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $TotalBilling . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
-            echo "<td style='text-align:center;width:4%;'>" . $PGFeeAmount . "</td>";
-            echo "<td style='text-align:center;width:5%;'>" . $AmounttobeDisbursed . "</td>";
+            echo "<td style='width:4%;'>" . $row['Transaction ID'] . "</td>";
+            echo "<td style='width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Customer ID'] . "</td>";
+            echo "<td style='width:7%;'>" . $CustomerName . "</td>";
+            echo "<td style='width:5%;'>" . $row['Promo Code'] . "</td>";
+            echo "<td style='width:3%;'>" . $row['Voucher Type'] . "</td>";
+            echo "<td style='width:6%;'>" . $row['Promo Category'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Promo Group'] . "</td>";
+            echo "<td style='width:6%;'>" . $row['Promo Type'] . "</td>";
+            echo "<td style='width:4%;'>" . $GrossAmount . "</td>";
+            echo "<td style='width:4%;'>" . $Discount . "</td>";
+            echo "<td style='width:4%;'>" . $CartAmount . "</td>";
+            echo "<td style='width:4%;'>" . $row['Mode of Payment'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Bill Status'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Type'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Commission Rate'] . "</td>";
+            echo "<td style='width:4%;'>" . $CommissionAmount . "</td>";
+            echo "<td style='width:4%;'>" . $TotalBilling . "</td>";
+            echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
+            echo "<td style='width:4%;'>" . $PGFeeAmount . "</td>";
+            echo "<td style='width:5%;'>" . $AmounttobeDisbursed . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
             echo "</tr>";
         }
@@ -415,16 +413,16 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                             </ol>
                         </nav>
                         <div style="width:650px;">
-                        <p class="title2" style="padding-left:6px">
-                            <?php echo htmlspecialchars($store_name); ?>
-                        </p>
+                            <p class="title2" style="padding-left:6px">
+                                <?php echo htmlspecialchars($store_name); ?>
+                            </p>
                         </div>
                     </div>
                     <div class="dropdown-center">
                         <button class="check-report dropdown-toggle mt-4" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-filter"></i> Filters
                         </button>
-                        <div class="dropdown-menu dropdown-menu-center p-4" style="width:300px !important;"
+                        <div class="dropdown-menu dropdown-menu-center p-4" style="width:155px !important;"
                             aria-labelledby="dropdownMenuButton">
                             <form>
                                 <div class="row">
@@ -480,30 +478,28 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                     <table id="example" class="table bord" style="width:275%;">
                         <thead>
                             <tr>
-                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">
-                                    Transaction ID</th>
-                                <th style="padding:10px;">Transaction Date</th>
-                                <th style="padding:10px;">Customer ID</th>
-                                <th style="padding:10px;">Customer Name</th>
-                                <th style="padding:10px;">Promo Code</th>
-                                <th style="padding:10px;">Voucher Type</th>
-                                <th style="padding:10px;">Promo Category</th>
-                                <th style="padding:10px;">Promo Group</th>
-                                <th style="padding:10px;">Promo Type</th>
-                                <th style="padding:10px;">Gross Amount</th>
-                                <th style="padding:10px;">Discount</th>
-                                <th style="padding:10px;">Cart Amount</th>
-                                <th style="padding:10px;">Mode of Payment</th>
-                                <th style="padding:10px;">Bill Status</th>
-                                <th style="padding:10px;">Commission Type</th>
-                                <th style="padding:10px;">Commission Rate</th>
-                                <th style="padding:10px;">Commission Amount</th>
-                                <th style="padding:10px;">Total Billing</th>
-                                <th style="padding:10px;">PG Fee Rate</th>
-                                <th style="padding:10px;">PG Fee Amount</th>
+                                <th class="first-col">Transaction ID</th>
+                                <th>Transaction Date</th>
+                                <th>Customer ID</th>
+                                <th>Customer Name</th>
+                                <th>Promo Code</th>
+                                <th>Voucher Type</th>
+                                <th>Promo Category</th>
+                                <th>Promo Group</th>
+                                <th>Promo Type</th>
+                                <th>Gross Amount</th>
+                                <th>Discount</th>
+                                <th>Cart Amount</th>
+                                <th>Mode of Payment</th>
+                                <th>Bill Status</th>
+                                <th>Commission Type</th>
+                                <th>Commission Rate</th>
+                                <th>Commission Amount</th>
+                                <th>Total Billing</th>
+                                <th>PG Fee Rate</th>
+                                <th>PG Fee Amount</th>
                                 <th style="display:none;"></th>
-                                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">
-                                    Amount to be Disbursed</th>
+                                <th class="action-col">Amount to be Disbursed</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -523,44 +519,44 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
-       function downloadTables() {
-    // Get current date and format it for the file name
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString().split('T')[0]; // Format date for file name
+        function downloadTables() {
+            // Get current date and format it for the file name
+            const currentDate = new Date();
+            const formattedDate = currentDate.toISOString().split('T')[0]; // Format date for file name
 
-    // Assuming you have initialized DataTable on #example
-    const table = $('#example').DataTable();
+            // Assuming you have initialized DataTable on #example
+            const table = $('#example').DataTable();
 
-    // Get filtered data from DataTable
-    const filteredData = table.rows({ search: 'applied' }).data().toArray();
+            // Get filtered data from DataTable
+            const filteredData = table.rows({ search: 'applied' }).data().toArray();
 
-    // Function to format data for Excel export (customize as per your need)
-    function formatDataForExcel(row) {
-        return [
-            row[0], row[1], row[2], row[3], row[4],
-            row[9], row[10], row[11], row[12], row[13],
-            row[15], row[16], row[17], row[18], row[19], row[20]
-        ];
-    }
+            // Function to format data for Excel export (customize as per your need)
+            function formatDataForExcel(row) {
+                return [
+                    row[0], row[1], row[2], row[3], row[4],
+                    row[9], row[10], row[11], row[12], row[13],
+                    row[15], row[16], row[17], row[18], row[19], row[20]
+                ];
+            }
 
-    // Format each row for Excel
-    const formattedRows = filteredData.map(row => formatDataForExcel(row));
+            // Format each row for Excel
+            const formattedRows = filteredData.map(row => formatDataForExcel(row));
 
-    // Add headers for Excel file
-    formattedRows.unshift([
-        'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
-        'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
-        'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
-    ]);
+            // Add headers for Excel file
+            formattedRows.unshift([
+                'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
+                'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
+                'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
+            ]);
 
-    // Create a new workbook and add the data to the first sheet
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(formattedRows);
-    XLSX.utils.book_append_sheet(wb, ws, "Transactions");
+            // Create a new workbook and add the data to the first sheet
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(formattedRows);
+            XLSX.utils.book_append_sheet(wb, ws, "Transactions");
 
-    // Generate the Excel file and trigger the download
-    XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
-}
+            // Generate the Excel file and trigger the download
+            XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
+        }
 
         $(window).on('load', function () {
             $('.loading').hide();
