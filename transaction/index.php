@@ -1,4 +1,4 @@
-<?php
+<?php 
 include_once ("../header.php");
 
 function displayOrder($startDate = null, $endDate = null, $voucherType = null, $promoGroup = null, $billStatus = null)
@@ -47,8 +47,8 @@ function displayOrder($startDate = null, $endDate = null, $voucherType = null, $
         $stmt->bind_param($types, ...$params);
     }
 
-  $stmt->execute();
-  $result = $stmt->get_result();
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -113,9 +113,8 @@ function displayOrder($startDate = null, $endDate = null, $voucherType = null, $
       background-image: url("../images/bg_booky.png");
     }
 
-    .second-col {
-      <?php if ($type === 'User')
-        echo 'padding: 10px;border-top-left-radius: 10px;border-bottom-left-radius: 10px;'; ?>
+    .second-col{
+      <?php if ($type === 'User' ) echo 'padding: 10px;border-top-left-radius: 10px;border-bottom-left-radius: 10px;'; ?>
     }
 
     #select, #transaction{
@@ -432,8 +431,7 @@ function displayOrder($startDate = null, $endDate = null, $voucherType = null, $
           </div>
           <a href="upload.php"><button type="button" class="btn btn-primary check-report"
               style="margin-left:10px; width:170px;"><i class="fa-solid fa-upload"></i> Upload Transactions</button></a>
-          <button type="button" class="btn btn-danger delete" id="clearButton" style="margin-left:10px;"><i
-              class="fa-solid fa-trash"></i> Delete</button>
+          <button type="button" class="btn btn-danger delete" id="clearButton" style="margin-left:10px;"><i class="fa-solid fa-trash"></i> Delete</button>
         </div>
         <div class="content">
           <div class="table-container">
@@ -476,59 +474,44 @@ function displayOrder($startDate = null, $endDate = null, $voucherType = null, $
     </div>
   </div>
 
-  <!-- First Modal: Display selected transaction count -->
-  <div class="modal fade" id="deleteCountModal" tabindex="-1" aria-labelledby="deleteCountModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content" style="border-radius:20px;">
-        <div class="modal-header border-0 text-center p-0">
-
-        </div>
-        <div class="modal-body" style="text-align:center;">
-          <p class="modal-title" style="text-align:center;color:#cc001b;" id="deleteCountModalLabel">Delete Transaction
-          </p><br>
-          You have selected <span id="selectedCount"></span> transaction(s) for deletion. Are you sure you want to
-          continue?
-        </div>
-        <div class="modal-footer border-0">
-          <button type="button" class="btn btn-primary" id="proceedToDeleteButton"
-            style="background-color:#cc001b;border:solid #cc001b 2px;width:100%;border-radius:20px;font-weight:bold;">Proceed</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-            style="width:100%;border-radius:20px;background-color:#fff;color:#cc001b;border:solid #cc001b 2px;font-weight:bold;">Cancel</button>
-        </div>
+<!-- First Modal: Display selected transaction count -->
+<div class="modal fade" id="deleteCountModal" tabindex="-1" aria-labelledby="deleteCountModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm"  >
+    <div class="modal-content"  style="border-radius:20px;">
+      <div class="modal-header border-0 text-center p-0">     
+      
+      </div>
+      <div class="modal-body" style="text-align:center;">
+      <p class="modal-title" style="text-align:center;color:#cc001b;" id="deleteCountModalLabel">Delete Transaction</p><br>
+        You have selected <span id="selectedCount"></span> transaction(s) for deletion. Are you sure you want to continue?
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-primary" id="proceedToDeleteButton" style="background-color:#cc001b;border:solid #cc001b 2px;width:100%;border-radius:20px;font-weight:bold;">Proceed</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width:100%;border-radius:20px;background-color:#fff;color:#cc001b;border:solid #cc001b 2px;font-weight:bold;">Cancel</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Second Modal: Confirm deletion -->
-  <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-top modal-sm">
-      <div class="modal-content" style="border-radius:20px;">
-        <div class="modal-header border-0 text-center p-0">
-        </div>
+<!-- Second Modal: Confirm deletion -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content" style="border-radius:20px;">
+      <div class="modal-header border-0 text-center p-0">
+      </div>
+      
+      <div class="modal-body" style="text-align:center;">
+      <p class="modal-title" style="text-align:center;color:#cc001b;" id="deleteCountModalLabel">Delete Transaction</p><br>
+        Are you sure you want to delete the selected transaction(s)?
+      </div>
 
-        <div class="modal-body" style="text-align:center;">
-          <p class="modal-title" style="text-align:center;color:#cc001b;" id="deleteCountModalLabel">Delete Transaction</p>
-          <br>
-          <p>Are you sure you want to delete the selected transaction(s)?</p>
-        </div>
-
-        <div class="modal-footer border-0">
-          <div class="row w-100">
-            <div class="col-md-6 d-flex justify-content-start">
-              <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"
-                style="border-radius:20px;background-color:#fff;color:#cc001b;border:solid #cc001b 2px;font-weight:bold;">Cancel</button>
-            </div>
-            <div class="col-md-6 d-flex justify-content-end">
-              <button type="button" class="btn btn-danger w-100" id="confirmDeleteButton"
-                style="background-color:#cc001b;border:solid #cc001b 2px;border-radius:20px;font-weight:bold;">Delete</button>
-            </div>
-          </div>
-        </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-danger" id="confirmDeleteButton" style="background-color:#cc001b;border:solid #cc001b 2px;width:100%;border-radius:20px;font-weight:bold;">Delete</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width:100%;border-radius:20px;background-color:#fff;color:#cc001b;border:solid #cc001b 2px;font-weight:bold;">Cancel</button>
       </div>
     </div>
   </div>
+</div>
 
 
   <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
@@ -537,22 +520,20 @@ function displayOrder($startDate = null, $endDate = null, $voucherType = null, $
   <script src="./js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz4fnFO9gybBogGzOgPHoK1O5jHbGc7F8yy3U9gknFyy7+X2AiOk7PM53i" crossorigin="anonymous">
-    </script>
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
     integrity="sha384-oBqDVmMz4fnFO9gybBogGzOgPHoK1O5jHbGc7F8yy3U9gknFyy7+X2AiOk7PM53i" crossorigin="anonymous">
-    </script>
+  </script>
 
   <script>
     $(window).on('load', function () {
-      $('.loading').hide();
-      $('.cont-box').show();
+  $('.loading').hide();
+  $('.cont-box').show();
 
-      var table = $('#example').DataTable({
-        scrollX: true,
-        columnDefs: [
-          { orderable: false, targets: [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23] }
-        ]
-      });
+  var table = $('#example').DataTable({
+    scrollX: true,
+    order: [[6, 'asc']]
+  });
 
   
   // Update the checkbox change event listener
@@ -619,55 +600,58 @@ function displayOrder($startDate = null, $endDate = null, $voucherType = null, $
                 table.search('').columns().search('').draw();
             });
 
-      // Delete button click event
-      $('#clearButton').on('click', function () {
-        var selectedIds = [];
-        $('input[name="transaction_ids[]"]:checked').each(function () {
-          selectedIds.push($(this).val());
-        });
-
-        if (selectedIds.length > 0) {
-          $('#selectedCount').text(selectedIds.length);
-          $('#deleteCountModal').modal('show');
-        } else {
-          alert('No transactions selected for deletion.');
-        }
-      });
-
-      // Proceed to delete button click event
-      $('#proceedToDeleteButton').on('click', function () {
-        $('#deleteCountModal').modal('hide');
-        $('#deleteConfirmationModal').modal('show');
-      });
-
-      // Confirm delete button click event
-      $('#confirmDeleteButton').on('click', function () {
-        var selectedIds = [];
-        $('input[name="transaction_ids[]"]:checked').each(function () {
-          selectedIds.push($(this).val());
-        });
-
-        if (selectedIds.length > 0) {
-          $.ajax({
-            url: 'delete_transactions.php', // Replace with your server-side delete handler
-            type: 'POST',
-            data: { transaction_ids: selectedIds },
-            success: function (response) {
-              // Hide the modal and reload the page or table data to reflect the deletions
-              $('#deleteConfirmationModal').modal('hide');
-              location.reload();
-            },
-            error: function (xhr, status, error) {
-              console.error('Error deleting transactions:', error);
-            }
-          });
-        } else {
-          $('#deleteConfirmationModal').modal('hide');
-        }
-      });
+  // Delete button click event
+  $('#clearButton').on('click', function () {
+    var selectedIds = [];
+    $('input[name="transaction_ids[]"]:checked').each(function () {
+      selectedIds.push($(this).val());
     });
 
-  </script>
+    if (selectedIds.length > 0) {
+      $('#selectedCount').text(selectedIds.length);
+      $('#deleteCountModal').modal('show');
+    } else {
+      alert('No transactions selected for deletion.');
+    }
+  });
+
+  // Proceed to delete button click event
+  $('#proceedToDeleteButton').on('click', function () {
+    $('#deleteCountModal').modal('hide');
+    $('#deleteConfirmationModal').modal('show');
+  });
+
+  // Confirm delete button click event
+  $('#confirmDeleteButton').on('click', function () {
+    var selectedIds = [];
+    $('input[name="transaction_ids[]"]:checked').each(function () {
+      selectedIds.push($(this).val());
+    });
+
+    if (selectedIds.length > 0) {
+      $.ajax({
+        url: 'delete_transactions.php', // Replace with your server-side delete handler
+        type: 'POST',
+        data: { transaction_ids: selectedIds },
+        success: function (response) {
+          // Hide the modal and reload the page or table data to reflect the deletions
+          $('#deleteConfirmationModal').modal('hide');
+          location.reload();
+        },
+        error: function (xhr, status, error) {
+          console.error('Error deleting transactions:', error);
+        }
+      });
+    } else {
+      $('#deleteConfirmationModal').modal('hide');
+    }
+  });
+});
+
+</script>
 </body>
 
 </html>
+
+
+
