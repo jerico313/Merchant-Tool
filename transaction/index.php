@@ -1,42 +1,49 @@
 <?php 
 include_once ("../header.php");
 
-function displayOrder($store_id = null, $startDate = null, $endDate = null, $billStatus = null, $type = 'User')
+function displayOrder($startDate = null, $endDate = null, $voucherType = null, $promoGroup = null, $billStatus = null)
 {
-    include("../inc/config.php");
+    include ("../inc/config.php");
 
-    // Base SQL query
-    $sql = "
-        SELECT t.transaction_id, s.store_name, t.promo_code, t.customer_id, t.customer_name, 
-               t.transaction_date, t.gross_amount, t.discount, t.amount_discounted, t.amount_paid, t.payment, t.comm_rate_base, t.bill_status
-        FROM transaction t
-        JOIN store s ON t.store_id = s.store_id
-        WHERE 1=1
-    ";
+    $sql = "SELECT * FROM transaction_summary_view WHERE 1=1";
     $params = array();
 
-    // Append date range filter if both startDate and endDate are provided
-    if ($startDate && $endDate) {
-        $sql .= " AND t.transaction_date BETWEEN ? AND ?";
-        $params[] = $startDate;
-        $params[] = $endDate;
+    // Append voucher type filter if specified
+    if ($voucherType) {
+        $sql .= " AND `Voucher Type` = ?";
+        $params[] = $voucherType;
+    }
+
+    // Append promo group filter if specified
+    if ($promoGroup) {
+        $sql .= " AND `Promo Group` = ?";
+        $params[] = $promoGroup;
     }
 
     // Append bill status filter if specified
     if ($billStatus) {
-        $sql .= " AND t.bill_status = ?";
+        $sql .= " AND `Bill Status` = ?";
         $params[] = $billStatus;
     }
 
-    // Order by transaction date in descending order
-    $sql .= " ORDER BY t.transaction_date DESC";
+    // Append date range filter if both startDate and endDate are provided
+    if ($startDate && $endDate) {
+        $sql .= " AND `Transaction Date` BETWEEN ? AND ?";
+        $params[] = $startDate;
+        $params[] = $endDate;
+    }
+    
+    // Order by Transaction Date in descending order (latest to oldest)
+    $sql .= " ORDER BY `Transaction Date` DESC";
 
-    // Prepare and execute the SQL query
     $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        die('MySQL prepare error: ' . $conn->error);
+    }
 
-    // Check if there are parameters to bind
-    if (count($params) > 0) {
-        $types = str_repeat("s", count($params)); // Adjust types if needed
+    // Dynamically bind parameters based on their types
+    if (!empty($params)) {
+        $types = str_repeat("s", count($params));
         $stmt->bind_param($types, ...$params);
     }
 
@@ -45,37 +52,43 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $shortTransactionId = substr($row['transaction_id'], 0, 8);
-            $gross_amount = number_format($row['gross_amount'], 2);
-            $amount_discounted = number_format($row['amount_discounted'], 2);
-            $amount_paid = number_format($row['amount_paid'], 2);
-            $discount = number_format($row['discount'], 2);
-            $comm_rate_base = number_format($row['comm_rate_base'], 2);
-            $customer_name = empty($row['customer_name']) ? '-' : $row['customer_name'];
-            $payment = empty($row['payment']) ? '-' : $row['payment'];
+            $CustomerName = empty($row['Customer Name']) ? '-' : $row['Customer Name'];
 
-            echo "<tr style='padding:20px 0;' data-id='" . $row['transaction_id'] . "'>";
-            echo "<td style='text-align:center;'id='transaction'><input style='accent-color:#E96529;' class='transaction' type='checkbox' name='transaction_ids[]' value='" . $row['transaction_id'] . "'></td>";
-            echo "<td style='text-align:center;'>" . $shortTransactionId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['store_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['promo_code'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['customer_id'] . "</td>";
-            echo "<td style='text-align:center;'>" . $customer_name . "</td>";
-            echo "<td style='text-align:center;'>" . $row['transaction_date'] . "</td>";
-            echo "<td style='text-align:center;'>" . $gross_amount . "</td>";
-            echo "<td style='text-align:center;'>" . $discount . "</td>";
-            echo "<td style='text-align:center;'>" . $amount_discounted . "</td>";
-            echo "<td style='text-align:center;'>" . $amount_paid . "</td>";
-            echo "<td style='text-align:center;'>" . $payment . "</td>";
-            echo "<td style='text-align:center;'>" . $comm_rate_base . "</td>";
-            echo "<td style='text-align:center;'>" . $row['bill_status'] . "</td>";
+            echo "<tr style='padding:20px 0;' data-id='" . $row['Transaction ID'] . "'>";
+            echo "<td style='text-align:center;' id='transaction'><input style='accent-color:#E96529;' class='transaction' type='checkbox' name='transaction_ids[]' value='" . $row['Transaction ID'] . "'></td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
+            echo "<td style='text-align:center;width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
+            echo "<td style='text-align:center;width:7%;'>" . $CustomerName . "</td>";
+            echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
+            echo "<td style='text-align:center;width:3%;'>" . $row['Voucher Type'] . "</td>";
+            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Category'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Promo Group'] . "</td>";
+            echo "<td style='text-align:center;width:6%;'>" . $row['Promo Type'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Gross Amount']. "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Discount'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Cart Amount'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Commission Amount'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['Total Billing'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
+            echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Amount'] . "</td>";
+            echo "<td style='text-align:center;width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
+            echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
             echo "</tr>";
         }
+    } else {
+        echo "<tr><td colspan='22' style='text-align:center;'>No results found.</td></tr>";
     }
 
+    $stmt->close();
     $conn->close();
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -105,9 +118,12 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
     }
 
     #select, #transaction{
-      <?php if ($type === 'User' ) echo 'display:none;'; ?>
+      <?php if ($type === 'User' ) echo 'display:none;'; ?> 
     }
 
+    #clearButton{
+      display: none;
+    }
    
     @media only screen and (max-width: 767px) {
 
@@ -335,9 +351,6 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
       }
     }
 
-    .delete{
-      display:none;
-    }
   </style>
 </head>
 
@@ -366,22 +379,37 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
       <div class="sub" style="text-align:left;">
         <div class="add-btns">
           <p class="title">Transactions</p>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle check-report" type="button" id="dropdownMenuButton"
-              data-bs-toggle="dropdown" aria-expanded="false"
-              style="width:150px;margin-left:10px;border-radius:20px;height:32px;background-color: #4BB0B8;border:solid #4BB0B8 2px;">
-              <i class="fa-solid fa-filter"></i> Filters
-            </button>
-            <div class="dropdown-menu dropdown-menu-center p-4" style="width:155px !important;"
-              aria-labelledby="dropdownMenuButton">
-              <form>
-                <button type="button" class="btn all mt-2" id="btnShowAll">All</button>
-                <button type="button" class="btn coupled mt-2" id="btnPretrial">PRE-TRIAL</button>
-                <button type="button" class="btn decoupled mt-2" id="btnBillable">BILLABLE</button>
-                <button type="button" class="btn decoupled mt-2" id="btnNotBillable">NOT BILLABLE</button>
-              </form>
-            </div>
-          </div>
+          <div class="dropdown-center">
+                        <button class="check-report dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-filter"></i> Filters
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-center p-4" style="width:300px !important;"
+                            aria-labelledby="dropdownMenuButton">
+                            <form>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="button" class="btn all mt-2" id="btnShowAll">All</button>
+                                        <button type="button" class="btn coupled mt-2" id="btnCoupled">Coupled</button>
+                                        <button type="button" class="btn decoupled mt-2"
+                                            id="btnDecoupled">Decoupled</button>
+                                        <button type="button" class="btn gcash mt-2" id="btnGCash">
+                                            <img src="../../images/gcash.png"
+                                                style="width:25px; height:20px; margin-right: 1.20vw;" alt="gcash">
+                                            <span>Gcash</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn coupled mt-2"
+                                            id="btnPretrial">PRE-TRIAL</button>
+                                        <button type="button" class="btn decoupled mt-2"
+                                            id="btnBillable">BILLABLE</button>
+                                        <button type="button" class="btn decoupled mt-2" id="btnNotBillable">NOT
+                                            BILLABLE</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
           <div class="dropdown">
             <button class="dropdown-toggle dateRange" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
               aria-expanded="false"><i class="fa-solid fa-calendar"></i> Select Date Range</button>
@@ -407,23 +435,33 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
         </div>
         <div class="content">
           <div class="table-container">
-            <table id="example" class="table bord" style="width:180%;">
+            <table id="example" class="table bord" style="width:300%;">
               <thead>
               <tr>
-                <th class="first-col" id="select">Select</th>
+                <th class="first-col" style="width:10px;"id="select">Select</th>
                 <th class="second-col">Transaction ID</th>
-                <th>Store Name</th>
-                <th>Promo Code</th>
-                <th>Customer ID</th>
-                <th>Customer Name</th>
-                <th>Transaction Date</th>
-                <th>Gross Amount</th>
-                <th>Discount</th>
-                <th>Amount Discounted</th>
-                <th>Amount Paid</th>
-                <th>Payment</th>
-                <th>Commission Rate Base</th>
-                <th class="action-col">Bill Status</th>
+                <th style="padding:10px;">Transaction Date</th>
+                <th style="padding:10px;">Customer ID</th>
+                <th style="padding:10px;">Customer Name</th>
+                <th style="padding:10px;">Promo Code</th>
+                <th style="padding:10px;">Voucher Type</th>
+                <th style="padding:10px;">Promo Category</th>
+                <th style="padding:10px;">Promo Group</th>
+                <th style="padding:10px;">Promo Type</th>
+                <th style="padding:10px;">Gross Amount</th>
+                <th style="padding:10px;">Discount</th>
+                <th style="padding:10px;">Cart Amount</th>
+                <th style="padding:10px;">Mode of Payment</th>
+                <th style="padding:10px;">Bill Status</th>
+                <th style="padding:10px;">Commission Type</th>
+                <th style="padding:10px;">Commission Rate</th>
+                <th style="padding:10px;">Commission Amount</th>
+                <th style="padding:10px;">Total Billing</th>
+                <th style="padding:10px;">PG Fee Rate</th>
+                <th style="padding:10px;">PG Fee Amount</th>
+                <th style="display:none;"></th>
+                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">
+                    Amount to be Disbursed</th>
               </tr>
               </thead>
               <tbody id="dynamicTableBody">
@@ -498,57 +536,69 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $bil
   });
 
   
-$('input[type="checkbox"]').change(function () {
-        if ($('input[type="checkbox"]:checked').length > 0) {
-          $('.delete').show();
-        } else {
-          $('.delete').hide();
-        }
-      });
-
-  $.fn.dataTable.ext.search.push(
-    function (settings, data, dataIndex) {
-      var startDate = $('#startDate').val();
-      var endDate = $('#endDate').val();
-      var date = data[6].split(' ')[0]; // Only compare the date part
-
-      if (startDate && endDate) {
-        var endDatePlusOne = new Date(endDate);
-        endDatePlusOne.setDate(endDatePlusOne.getDate() + 1);
-        endDatePlusOne = endDatePlusOne.toISOString().split('T')[0]; // Convert back to string in YYYY-MM-DD format
-        
-        return (date >= startDate && date < endDatePlusOne);
-      }
-      return true; // If no date range is selected, return all rows
+  // Update the checkbox change event listener
+  $('body').on('change', 'input.transaction[type="checkbox"]', function () {
+    if ($('input.transaction[type="checkbox"]:checked').length > 0) {
+      $('.delete').show();
+    } else {
+      $('.delete').hide();
     }
-  );
-
-  // Search button click event
-  $('#search').on('click', function () {
-    table.draw();
   });
 
-  // Voucher Type filter buttons click events
-  $('#btnPretrial').on('click', function () {
-    table.search('').columns().search('').draw();
-    table.column(13).search('PRE-TRIAL', true, false).draw();
-  });
 
-  $('#btnBillable').on('click', function () {
-    table.search('').columns().search('').draw();
-    table.column(13).search('^BILLABLE$', true, false).draw();
-  });
+      $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var startDate = $('#startDate').val();
+                    var endDate = $('#endDate').val();
+                    var date = data[22]; // Assuming that the date is in the second column (index 1)
 
-  $('#btnNotBillable').on('click', function () {
-    table.search('').columns().search('').draw();
-    table.column(13).search('^NOT BILLABLE$', true, false).draw();
-  });
+                    if (startDate && endDate) {
+                        return (date >= startDate && date <= endDate);
+                    }
+                    return true; // If no date range is selected, return all rows
+                }
+            );
 
-  // Show All button click event
-  $('#btnShowAll').on('click', function () {
-    $('#startDate, #endDate').val('');
-    table.search('').columns().search('').draw();
-  });
+            // Search button click event
+            $('#search').on('click', function () {
+                table.draw();
+            });
+
+            // Voucher Type filter buttons click events
+            $('#btnCoupled').on('click', function () {
+                table.search('').columns().search('').draw();
+                table.column(6).search('^Coupled$', true, false).draw();
+            });
+
+            $('#btnDecoupled').on('click', function () {
+                table.search('').columns().search('').draw();
+                table.column(6).search('^Decoupled$', true, false).draw();
+            });
+
+            $('#btnGCash').on('click', function () {
+                table.search('').columns().search('').draw();
+                table.column(8).search('^Gcash$', true, false).draw();
+            });
+
+            $('#btnPretrial').on('click', function () {
+                table.search('').columns().search('').draw();
+                table.column(14).search('PRE-TRIAL', true, false).draw();
+            });
+
+            $('#btnBillable').on('click', function () {
+                table.search('').columns().search('').draw();
+                table.column(14).search('^BILLABLE$', true, false).draw();
+            });
+
+            $('#btnNotBillable').on('click', function () {
+                table.search('').columns().search('').draw();
+                table.column(14).search('^NOT BILLABLE$', true, false).draw();
+            });
+            // Show All button click event
+            $('#btnShowAll').on('click', function () {
+                $('#startDate, #endDate').val('');
+                table.search('').columns().search('').draw();
+            });
 
   // Delete button click event
   $('#clearButton').on('click', function () {
