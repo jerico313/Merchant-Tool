@@ -877,7 +877,7 @@ td {
   font-weight: 700;
 }
 
-#form-input-field {
+#form-input-field, #end_date, #start_date {
   font-size: 13px;
   font-weight: 600;
   border-radius: 5px;

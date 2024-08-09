@@ -165,8 +165,8 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                                     name="NoStartDate" style="accent-color:#E96529;">
                                                 <label class="form-check-label" for="NoStartDate">No Start Date</label>
                                             </label>
-                                            <input id="form-input-field" type="date" class="form-control"
-                                                name="start_date[]" required>
+                                            <input type="date" class="form-control"
+                                                name="start_date[]" id="start_date" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="end_date" class="form-label" id="form-input-label">
@@ -175,8 +175,8 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                                     name="NoEndDate" style="accent-color:#E96529 !important;">
                                                 <label class="form-check-label" for="NoEndDate">No End Date</label>
                                             </label>
-                                            <input id="form-input-field" type="date" class="form-control"
-                                                name="end_date[]" required>
+                                            <input type="date" class="form-control"
+                                                name="end_date[]" id="end_date" disrequired>
                                         </div>
                                         <div class="mb-3">
                                             <label for="remarks2" class="form-label" id="form-input-label">Remarks 2</label>
@@ -324,7 +324,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                     name="NoStartDate" style="accent-color:#E96529;">
                                 <label class="form-check-label" for="NoStartDate">No Start Date</label>
                             </label>
-                            <input id="form-input-field" type="date" class="form-control" name="start_date[]" required>
+                            <input id="start_date" type="date" class="form-control" name="start_date[]" required>
                         </div>
                         <div class="mb-3">
                             <label for="end_date" class="form-label" id="form-input-label">
@@ -333,7 +333,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                     name="NoEndDate" style="accent-color:#E96529 !important;">
                                 <label class="form-check-label" for="NoEndDate">No End Date</label>
                             </label>
-                            <input id="form-input-field" type="date" class="form-control" name="end_date[]" required>
+                            <input id="end_date" type="date" class="form-control" name="end_date[]" required>
                         </div>
                         <div class="mb-3">
                             <label for="remarks2" class="form-label" id="form-input-label">Remarks 2</label>
@@ -349,8 +349,30 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                 </div>
         `;
             formFields.appendChild(newField);
+            
         });
 
+        document.getElementById('form-fields').addEventListener('change', function (e) {
+        if (e.target && e.target.id === 'NoStartDate') {
+            var startDateInput = e.target.closest('.row').querySelector('#start_date');
+            if (e.target.checked) {
+                startDateInput.value = ''; // Clear the date
+                startDateInput.disabled = true; // Disable the input
+            } else {
+                startDateInput.disabled = false; // Enable the input
+            }
+        }
+
+        if (e.target && e.target.id === 'NoEndDate') {
+            var endDateInput = e.target.closest('.row').querySelector('#end_date');
+            if (e.target.checked) {
+                endDateInput.value = ''; // Clear the date
+                endDateInput.disabled = true; // Disable the input
+            } else {
+                endDateInput.disabled = false; // Enable the input
+            }
+        }
+    });
         document.addEventListener('click', function (e) {
             if (e.target && e.target.classList.contains('remove-field')) {
                 e.target.closest('.form-group').remove();
@@ -467,69 +489,6 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
             }, 5000);
         }
     </script>
-
-    <script>
-        function updateDateFields() {
-            // Get the date fields
-            var startDate = document.getElementById('start_date');
-            var endDate = document.getElementById('end_date');
-
-            // Get the checkboxes
-            var noStartDateCheckbox = document.getElementById('NoStartDate');
-            var noEndDateCheckbox = document.getElementById('NoEndDate');
-
-            // Update the checkbox based on the date field values
-            noStartDateCheckbox.checked = !startDate.value;
-            noEndDateCheckbox.checked = !endDate.value;
-
-            // Disable or enable the date fields based on the checkbox states
-            startDate.disabled = noStartDateCheckbox.checked;
-            endDate.disabled = noEndDateCheckbox.checked;
-        }
-
-        document.getElementById('editStoreModal').addEventListener('shown.bs.modal', function () {
-            updateDateFields();
-        });
-
-        // Add event listeners to checkboxes to handle their state changes
-        document.getElementById('NoStartDate').addEventListener('change', function () {
-            var startDate = document.getElementById('start_date');
-            startDate.disabled = this.checked;
-            if (this.checked) {
-                startDate.value = '';
-            }
-        });
-
-        document.getElementById('NoEndDate').addEventListener('change', function () {
-            var endDate = document.getElementById('end_date');
-            endDate.disabled = this.checked;
-            if (this.checked) {
-                endDate.value = '';
-            }
-        });
-
-        // Add event listeners to date fields to automatically check the checkboxes if the date fields are cleared
-        document.getElementById('start_date').addEventListener('input', function () {
-            if (!this.value) {
-                document.getElementById('NoStartDate').checked = true;
-                this.disabled = true;
-            } else {
-                document.getElementById('NoStartDate').checked = false;
-                this.disabled = false;
-            }
-        });
-
-        document.getElementById('end_date').addEventListener('input', function () {
-            if (!this.value) {
-                document.getElementById('NoEndDate').checked = true;
-                this.disabled = true;
-            } else {
-                document.getElementById('NoEndDate').checked = false;
-                this.disabled = false;
-            }
-        });
-    </script>
-
     <script src="../../js/file_upload.js"></script>
 </body>
 
