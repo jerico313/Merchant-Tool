@@ -1,5 +1,4 @@
 <?php
-// Include the configuration file
 include ('../../../inc/config.php');
 
 $gcash_report_id = isset($_GET['gcash_report_id']) ? $_GET['gcash_report_id'] : '';
@@ -74,7 +73,7 @@ $bill_status = isset($_GET['bill_status']) ? $_GET['bill_status'] : '';
 
 function displayOffers($store_id, $start_date, $end_date, $bill_status)
 {
-  include ("../../inc/config.php");
+  include ("../../../inc/config.php");
 
   // Base SQL query
   $sql = "SELECT * FROM transaction_summary_view 
@@ -108,24 +107,40 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
   if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
       if ($row['Promo Group'] == "Gcash") {
-        echo "<tr>";
-        echo "<td>" . $row['Transaction ID'] . "</td>";
-        echo "<td>" . $row['Formatted Transaction Date'] . "</td>";
-        echo "<td>" . $row['Customer ID'] . "</td>";
-        echo "<td>" . $row['Customer Name'] . "</td>";
-        echo "<td>" . $row['Promo Code'] . "</td>";
-        echo "<td>" . $row['Gross Amount'] . "</td>";
-        echo "<td>" . $row['Discount'] . "</td>";
-        echo "<td>" . $row['Cart Amount'] . "</td>";
-        echo "<td>" . $row['Mode of Payment'] . "</td>";
-        echo "<td>" . $row['Bill Status'] . "</td>";
-        echo "<td>" . $row['Commission Type'] . "</td>";
-        echo "<td>" . $row['Commission Rate'] . "</td>";
-        echo "<td>" . $row['Commission Amount'] . "</td>";
-        echo "<td>" . $row['Total Billing'] . "</td>";
-        echo "<td>" . $row['PG Fee Rate'] . "</td>";
-        echo "<td>" . $row['PG Fee Amount'] . "</td>";
-        echo "<td>" . $row['Amount to be Disbursed'] . "</td>";
+        $GrossAmount = number_format($row['Gross Amount'], 2);
+        $Discount = number_format($row['Discount'], 2);
+        $CartAmount = number_format($row['Cart Amount'], 2);
+        $CommissionAmount = number_format($row['Commission Amount'], 2);
+        $TotalBilling = number_format($row['Total Billing'], 2);
+        $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
+
+        $AmounttobeDisbursed = $row['Amount to be Disbursed'];
+        if ($AmounttobeDisbursed < 0) {
+          $AmounttobeDisbursed = '(' . number_format(-$AmounttobeDisbursed, 2) . ')';
+        } else {
+          $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
+        }
+
+        $date = new DateTime($row['Transaction Date']);
+        $formattedDate = $date->format('F d, Y g:i A');
+        echo "<tr style='padding:10px;color:#fff;'>";
+        echo "<td style='text-align:center;width:4%;'>" . $row['Transaction ID'] . "</td>";
+        echo "<td style='text-align:center;width:7%;'>" . $formattedDate . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $row['Customer ID'] . "</td>";
+        echo "<td style='text-align:center;width:7%;'>" . $row['Customer Name'] . "</td>";
+        echo "<td style='text-align:center;width:5%;'>" . $row['Promo Code'] . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $GrossAmount . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $Discount . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $CartAmount . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $row['Mode of Payment'] . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $row['Bill Status'] . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $row['Commission Type'] . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $row['Commission Rate'] . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $CommissionAmount . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $TotalBilling . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $row['PG Fee Rate'] . "</td>";
+        echo "<td style='text-align:center;width:4%;'>" . $PGFeeAmount . "</td>";
+        echo "<td style='text-align:center;width:5%;'>" . $AmounttobeDisbursed . "</td>";
         echo "</tr>";
       }
     }
@@ -198,7 +213,9 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       text-decoration: none;
     }
 
+
     nav {
+      opacity: 0.8;
       box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.25);
       -webkit-box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.25);
       -moz-box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.25);
@@ -220,48 +237,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       }
     }
   </style>
-  <script>
-    function exportToExcel() {
-      const table = document.getElementById("myTable");
-      const ws = XLSX.utils.table_to_sheet(table);
-
-      // Format columns 9 and 10 to two decimal places with commas
-      ws['!cols'] = [{ wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 15 }, { wch: 15 }]; // Adjust column widths if needed
-
-      // Add number formatting to columns 9 and 10
-      for (let i = 1; i <= ws['!ref'].split(':')[1].replace(/\D/g, ''); i++) {
-        if (ws[`J${i}`]) {
-          ws[`J${i}`].z = '#,##0.00';
-        }
-        if (ws[`K${i}`]) {
-          ws[`K${i}`].z = '#,##0.00';
-        }
-        if (ws[`L${i}`]) {
-          ws[`L${i}`].z = '#,##0.00';
-        }
-        if (ws[`Q${i}`]) {
-          ws[`Q${i}`].z = '#,##0.00';
-        }
-        if (ws[`R${i}`]) {
-          ws[`R${i}`].z = '#,##0.00';
-        }
-        if (ws[`T${i}`]) {
-          ws[`T${i}`].z = '#,##0.00';
-        }
-        if (ws[`J${i}`]) {
-          ws[`J${i}`].z = '#,##0.00';
-        }
-        if (ws[`U${i}`]) {
-          ws[`U${i}`].z = '#,##0.00';
-        }
-      }
-
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-      XLSX.writeFile(wb, "<?php echo htmlspecialchars($store_brand_name); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
-    }
-  </script>
 </head>
 
 <body>
@@ -285,14 +260,14 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
           <!-- Add your navigation items here if needed -->
         </ul>
         <a class="print" id="print" href="#"><i class="fa-solid fa-print fa-lg"></i> Print</a>
-        <a class="downloadBtnExcel" id="downloadBtnExcel" onclick="exportToExcel()" href="#"><i
-            class="fa-solid fa-download fa-lg"></i> Excel</a>
+        <a class="downloadBtnExcel" id="downloadBtnExcel" onclick="downloadTables()" href="#"><i
+            class="fa-solid fa-download fa-lg"></i> CSV</a>
         <!-- <a class="downloadBtn" id="downloadBtn"  href="#"> <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
       </div>
     </div>
   </nav>
   <div class="box" style="display:none;">
-    <table id="myTable" class="table bord" style="width:250%;">
+    <table id="transaction" class="table bord" style="width:250%;">
       <thead>
         <tr>
           <th>Transaction ID</th>
@@ -300,14 +275,10 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
           <th>Customer ID</th>
           <th>Customer Name</th>
           <th>Promo Code</th>
-          <th>Voucher Type</th>
-          <th>Promo Category</th>
-          <th>Promo Group</th>
-          <th>Promo Type</th>
           <th>Gross Amount</th>
           <th>Discount</th>
           <th>Cart Amount</th>
-          <th>Payment</th>
+          <th>Mode of Payment</th>
           <th>Bill Status</th>
           <th>Commission Type</th>
           <th>Commission Rate</th>
@@ -323,8 +294,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       </tbody>
     </table>
   </div>
-
-
   <div class="container" style="padding:70px;" id="content">
     <p style="text-align:center;font-size:20px;font-weight:900;">SETTLEMENT REPORT</p>
     <p class="text-right" style="font-weight:bold;font-size:40px;">
@@ -333,23 +302,22 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     <table style="width:100% !important;">
       <tr>
         <td>Business Name: <span
-            style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['store_business_name']); ?></span>
-        </td>
+            style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['store_business_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
         <td style="width:40%;">Settlement Date: <span
-            style="margin-left:25px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span>
+            style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span>
         </td>
       </tr>
       <tr>
         <td>Brand Name: <span
-            style="margin-left:20px;font-weight:bold;"><?php echo htmlspecialchars($data['store_brand_name']); ?></span>
+            style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['store_brand_name']); ?></span>
         </td>
         <td>Settlement Number: <span
             style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span>
         </td>
       </tr>
-      <tr>
-        <td>Address: <span
-            style="margin-left:40px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span>
+      <tr style="vertical-align: text-top;">
+        <td>Business Address: <span
+            style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
         </td>
         <td>Settlement Period: <span
             style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period']); ?></span>
@@ -357,7 +325,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
-    <p style="text-align:center;font-weight:bold;">GCash Lead Generation</p>
+    <p style="text-align:center;font-weight:bold;">Gcash Lead Generation</p>
     <hr style="border: 1px solid #3b3b3b;">
     <table id="example" style="width:100%;">
       <thead>
@@ -394,20 +362,18 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     </table>
     <table style="width:100% !important;">
       <tr>
-        <td style="width:31%;"></td>
-        <td style="text-align:right;width:28%;">Commission (<?php echo htmlspecialchars($data['commission_rate']); ?>)
+        <td style="text-align:right;width:80%;">Commission (<?php echo htmlspecialchars($data['commission_rate']); ?>)</td>
+        <td style="text-align:right;width:20%;padding-right:70px;"><?php echo $commissionAmount; ?></td>
+      </tr>
+      <tr>
+
+        <td style="text-align:right;width:80%;">VAT (12%)</td>
+        <td style="text-align:right;width:20%;padding-right:70px;"><?php echo $vatAmount; ?></td>
+      </tr>
+      <tr>
+        <td style="text-align:right;width:80%;"></td>
+        <td style="text-align:right;width:20%;font-weight:bold;padding-right:70px;"><?php echo $totalCommissionFees; ?>
         </td>
-        <td style="text-align:right;width:41%;padding-right:70px;"><?php echo $commissionAmount; ?></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td style="text-align:right;width:24%;">VAT (12.00%)</td>
-        <td style="text-align:right;padding-right:70px;"><?php echo $vatAmount; ?></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td style="text-align:right;width:24%;"></td>
-        <td style="text-align:right;font-weight:bold;padding-right:70px;"><?php echo $totalCommissionFees; ?></td>
       </tr>
     </table>
     <br>
@@ -436,7 +402,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         const invoice = document.getElementById("content");
         var opt = {
           margin: [-1.5, -0.5, -0.5, -0.5], // [top, right, bottom, left] in inches
-          filename: '<?php echo htmlspecialchars($data['merchant_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf',
+          filename: '<?php echo htmlspecialchars($data['store_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf',
           image: { type: 'jpeg', quality: 1.0 },
           html2canvas: { scale: 5 },
           jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' }
@@ -461,8 +427,13 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       window.print();
     });
   </script>
-
-
+  <script>
+    function downloadTables() {
+      var table = document.getElementById("transaction");
+      var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+      XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+    }
+  </script>
 
 </body>
 

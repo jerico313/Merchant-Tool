@@ -19,15 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sss", $merchantId, $startDate, $endDate);
 
     if ($stmt->execute()) {
-        $stmt->close(); // Close the first statement
+        $stmt->close(); 
 
         $maxGcashReportId = null;
         $stmt = $conn->prepare("SELECT gcash_report_id FROM report_history_gcash_head ORDER BY created_at DESC LIMIT 1");
         if ($stmt) {
             $stmt->execute();
             $stmt->bind_result($maxGcashReportId);
-            $stmt->fetch(); // Fetch the result
-            $stmt->close(); // Close the statement
+            $stmt->fetch();
+            $stmt->close();
         }
 
         $merchantIdHead = null;
@@ -39,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
         }
 
-        // Fetch all gcash_report_id's from report_history_gcash_body
         $gcashReportIdsBody = [];
         $stmt = $conn->prepare("SELECT DISTINCT gcash_report_id FROM report_history_gcash_body WHERE created_at >= (SELECT created_at FROM report_history_gcash_head ORDER BY created_at DESC LIMIT 1)");
         if ($stmt) {
@@ -51,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
         }
 
-        // Combine both merchant_id from head and gcash_report_id from body
         $merchantIds = [$merchantIdHead];
         $gcashReportIds = $gcashReportIdsBody;
 
@@ -85,7 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // Redirect to the first generated report URL (you can customize this as needed)
         $merchant_id = htmlspecialchars($merchantId);
         $merchant_name = htmlspecialchars($merchantName);
         $settlement_period_start = htmlspecialchars($startDate);
@@ -98,6 +95,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error executing stored procedure: " . $stmt->error;
     }
 
-    $conn->close(); // Close the database connection
+    $conn->close(); 
 }
 ?>

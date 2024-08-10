@@ -173,7 +173,7 @@ select.form-select.form-select-sm {
 #clearButton {
   background-color: #cc001b;
   border-radius: 20px;
-  width: 150px;
+  width: 150px !important;
   cursor: pointer;
   color: #fff;
   border: solid #cc001b 2px;
@@ -637,6 +637,15 @@ th.next.available {
   margin-right: auto;
   padding-left: 5vh;
   color: #4BB0B8;
+  text-shadow: 3px 3px 5px rgba(99, 99, 99, 0.35);
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 900;
+  margin-right: auto;
+  padding-left: 5vh;
+  color: #E96529;
   text-shadow: 3px 3px 5px rgba(99, 99, 99, 0.35);
 }
 

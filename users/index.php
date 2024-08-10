@@ -239,7 +239,6 @@ function displayUser()
       }
     }
   </style>
-  </style>
 </head>
 
 <body>

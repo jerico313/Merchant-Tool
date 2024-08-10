@@ -137,10 +137,152 @@ function displayDecoupled($merchant_id, $merchant_name)
                 padding-right: 2vh;
             }
         }
+        .loading {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+      font-size: 18px;
+      color: #333;
+      font-weight: 800;
+    }
+
+    .cont-box {
+      display: none;
+    }
+
+
+    .lds-default,
+    .lds-default div {
+      box-sizing: border-box;
+    }
+
+    .lds-default {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      color: #E96529;
+    }
+
+    .lds-default div {
+      position: absolute;
+      width: 6.4px;
+      height: 6.4px;
+      background: currentColor;
+      border-radius: 50%;
+      animation: lds-default 1.2s linear infinite;
+    }
+
+    .lds-default div:nth-child(1) {
+      animation-delay: 0s;
+      top: 36.8px;
+      left: 66.24px;
+    }
+
+    .lds-default div:nth-child(2) {
+      animation-delay: -0.1s;
+      top: 22.08px;
+      left: 62.29579px;
+    }
+
+    .lds-default div:nth-child(3) {
+      animation-delay: -0.2s;
+      top: 11.30421px;
+      left: 51.52px;
+    }
+
+    .lds-default div:nth-child(4) {
+      animation-delay: -0.3s;
+      top: 7.36px;
+      left: 36.8px;
+    }
+
+    .lds-default div:nth-child(5) {
+      animation-delay: -0.4s;
+      top: 11.30421px;
+      left: 22.08px;
+    }
+
+    .lds-default div:nth-child(6) {
+      animation-delay: -0.5s;
+      top: 22.08px;
+      left: 11.30421px;
+    }
+
+    .lds-default div:nth-child(7) {
+      animation-delay: -0.6s;
+      top: 36.8px;
+      left: 7.36px;
+    }
+
+    .lds-default div:nth-child(8) {
+      animation-delay: -0.7s;
+      top: 51.52px;
+      left: 11.30421px;
+    }
+
+    .lds-default div:nth-child(9) {
+      animation-delay: -0.8s;
+      top: 62.29579px;
+      left: 22.08px;
+    }
+
+    .lds-default div:nth-child(10) {
+      animation-delay: -0.9s;
+      top: 66.24px;
+      left: 36.8px;
+    }
+
+    .lds-default div:nth-child(11) {
+      animation-delay: -1s;
+      top: 62.29579px;
+      left: 51.52px;
+    }
+
+    .lds-default div:nth-child(12) {
+      animation-delay: -1.1s;
+      top: 51.52px;
+      left: 62.29579px;
+    }
+
+    @keyframes lds-default {
+
+      0%,
+      20%,
+      80%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.5);
+      }
+    }
     </style>
 </head>
 
 <body>
+<div class="loading">
+    <div>
+      <div class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    Loading...
+  </div>
     <div class="cont-box">
         <div class="custom-box pt-4">
             <div class="sub" style="text-align:left;">
@@ -175,10 +317,12 @@ function displayDecoupled($merchant_id, $merchant_name)
                 <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                     <table id="example" class="table bord" style="width:100%;">
                         <thead>
-                            <tr>
-                            <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Settlement Number</th>
-                                <th style="padding:10px;">Filename</th>
-                                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Created At</th>
+                        <tr>
+                                <th style="border-top-left-radius:10px;border-bottom-left-radius:10px;">
+                                    Settlement Number</th>
+                                <th>Filename</th>
+                                <th style="border-top-right-radius:10px;border-bottom-right-radius:10px;">
+                                    Created At</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -192,17 +336,22 @@ function displayDecoupled($merchant_id, $merchant_name)
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-        scrollX: true,
-        order: [[2, 'desc']], // Default sort by the 'Created At' column in descending order
+         $(window).on('load', function () {
+        $('.loading').hide();
+        $('.cont-box').show();
+
+        var table = $('#example').DataTable({
+          scrollX: true,
+          columnDefs: [
+            { orderable: false, targets: [0] }
+          ],
+          order: [[2, 'desc']], // Default sort by the 'Created At' column in descending order
         createdRow: function (row, data, dataIndex) {
             var date = new Date(data[2]); // Assuming 'Created At' column is the third column (index 2)
             var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
             $('td:eq(2)', row).html(formattedDate); // Update the cell with the formatted date
         }
-    });
-
+   }); 
             // Bind click event to all rows
             $('#example tbody').on('click', 'tr', function () {
                 var href = $(this).attr('data-href');
