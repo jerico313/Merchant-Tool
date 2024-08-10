@@ -19,6 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sss", $merchantId, $startDate, $endDate);
 
     if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        if ($result->num_rows === 0) {
+            header("Location: failed.php");
+            exit;
+        }
         $stmt->close(); 
 
         $maxGcashReportId = null;

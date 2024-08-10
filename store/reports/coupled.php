@@ -1,4 +1,4 @@
-<?php include ("../../../header.php") ?>
+<?php include ("../../header.php") ?>
 <?php
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
@@ -7,7 +7,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 
 function displayDecoupled($store_id, $store_name)
 {
-    include ("../../../inc/config.php");
+    include ("../../inc/config.php");
 
     $sql = "SELECT * FROM report_history_coupled WHERE store_id = ? ORDER BY created_at DESC";
     $stmt = $conn->prepare($sql);
@@ -44,10 +44,10 @@ function displayDecoupled($store_id, $store_name)
     <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="../../../style.css">
+    <link rel="stylesheet" href="../../style.css">
     <style>
         body {
-            background-image: url("../../../images/bg_booky.png");
+            background-image: url("../../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -310,29 +310,12 @@ function displayDecoupled($store_id, $store_name)
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                                 <li class="breadcrumb-item">
-                                    <a href="../../../merchant/index.php" style="color:#E96529; font-size:14px;">
-                                        Merchants
+                                    <a href="../index.php" style="color:#E96529; font-size:14px;">
+                                    Stores
                                     </a>
-                                </li>
-                                <li class="breadcrumb-item dropdown">
-                                    <a href="#" class="dropdown-toggle" role="button" id="storeDropdown"
-                                        data-bs-toggle="dropdown" aria-expanded="false"
-                                        style="color:#E96529;font-size:14px;">
-                                        Stores
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                        <li><a class="dropdown-item"
-                                                href="../../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers" style="color:#4BB0B8;"> Stores</a>
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Promos</a>
-                                        </li>
-                                    </ul>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>"
+                                    <a href="index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>"
                                         style="color:#E96529; font-size:14px;">
                                         Settlement Reports
                                     </a>

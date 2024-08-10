@@ -1,4 +1,4 @@
-<?php include ("../../../header.php") ?>
+<?php include ("../../header.php") ?>
 <?php
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
@@ -7,9 +7,9 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 
 function displayDecoupled($store_id, $store_name)
 {
-    include ("../../../inc/config.php");
+    include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM report_history_coupled WHERE store_id = ? ORDER BY created_at DESC";
+    $sql = "SELECT * FROM report_history_decoupled WHERE store_id = ? ORDER BY created_at DESC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $store_id);
     $stmt->execute();
@@ -19,7 +19,7 @@ function displayDecoupled($store_id, $store_name)
         while ($row = $result->fetch_assoc()) {
             $date = new DateTime($row['created_at']);
             $formattedDate = $date->format('F d, Y g:i:s A');
-            echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) .  "'>";
+            echo "<tr class='clickable-row' data-href='decoupled_settlement_report.php?decoupled_report_id=" . $row['decoupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) .  "'>";
             echo "<td style='text-align:center;'>" . $row['settlement_number'] . "</td>";
             echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['store_business_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
             echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
@@ -44,10 +44,10 @@ function displayDecoupled($store_id, $store_name)
     <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="../../../style.css">
+    <link rel="stylesheet" href="../../style.css">
     <style>
         body {
-            background-image: url("../../../images/bg_booky.png");
+            background-image: url("../../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -309,37 +309,20 @@ function displayDecoupled($store_id, $store_name)
                     <div class="row pb-2 title" aria-label="breadcrumb">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                                <li class="breadcrumb-item">
-                                    <a href="../../../merchant/index.php" style="color:#E96529; font-size:14px;">
-                                        Merchants
+                            <li class="breadcrumb-item">
+                                    <a href="../index.php" style="color:#E96529; font-size:14px;">
+                                    Stores
                                     </a>
                                 </li>
-                                <li class="breadcrumb-item dropdown">
-                                    <a href="#" class="dropdown-toggle" role="button" id="storeDropdown"
-                                        data-bs-toggle="dropdown" aria-expanded="false"
-                                        style="color:#E96529;font-size:14px;">
-                                        Stores
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="storeDropdown">
-                                        <li><a class="dropdown-item"
-                                                href="../../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers" style="color:#4BB0B8;"> Stores</a>
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                                data-breadcrumb="Offers">Promos</a>
-                                        </li>
-                                    </ul>
-                                </li>
                                 <li class="breadcrumb-item">
-                                    <a href="index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&merchant_id=<?php echo htmlspecialchars($merchant_id); ?>"
+                                    <a href="index.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>"
                                         style="color:#E96529; font-size:14px;">
                                         Settlement Reports
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a href="#" style="color:#E96529; font-size:14px;">
-                                        Coupled
+                                        Decoupled
                                     </a>
                                 </li>
                             </ol>
@@ -380,11 +363,11 @@ function displayDecoupled($store_id, $store_name)
           columnDefs: [
             { orderable: false, targets: [0] }
           ],
-          order: [[2, 'desc']],
+          order: [[2, 'desc']], 
         createdRow: function (row, data, dataIndex) {
             var date = new Date(data[2]); 
             var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            $('td:eq(2)', row).html(formattedDate);
+            $('td:eq(2)', row).html(formattedDate); // Update the cell with the formatted date
         }
    }); 
 
