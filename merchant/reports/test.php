@@ -2,27 +2,40 @@
 // Include the configuration file
 include ('../../inc/config.php');
 
-$decoupled_report_id = isset($_GET['decoupled_report_id']) ? $_GET['decoupled_report_id'] : '';
+$coupled_report_id = isset($_GET['coupled_report_id']) ? $_GET['coupled_report_id'] : '';
 
 // Fetch data from the database
-$sql = "SELECT * FROM report_history_decoupled WHERE decoupled_report_id = ?";
+$sql = "SELECT * FROM report_history_coupled WHERE coupled_report_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $decoupled_report_id);
+$stmt->bind_param("s", $coupled_report_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_assoc();
 $stmt->close();
-$conn->close();
+
 
 $merchant_brand_name = str_replace("'", "", $data['merchant_brand_name']);
 $totalGrossSales = number_format($data['total_gross_sales'], 2);
 $totalDiscount = number_format($data['total_discount'], 2);
-$totalOutstandingAmount = number_format($data['total_outstanding_amount'], 2);
+$totalOutstandingAmount1 = number_format($data['total_outstanding_amount_1'], 2);
 $leadgenCommissionRateBasePretrial = number_format($data['leadgen_commission_rate_base_pretrial'], 2);
-$totalPretrial = number_format($data['total_pretrial'], 2);
+$totalCommissionFees1 = number_format($data['total_commission_fees_1'], 2);
 $leadgenCommissionRateBaseBillable = number_format($data['leadgen_commission_rate_base_billable'], 2);
+$totalPretrial = number_format($data['total_pretrial'], 2);
 $totalBillable = number_format($data['total_billable'], 2);
-$totalCommissionFees = number_format($data['total_commission_fees'], 2);
+$cardPaymentPGFee = number_format($data['card_payment_pg_fee'], 2);
+$paymayaPgFee = number_format($data['paymaya_pg_fee'], 2);
+$gcashMiniappPGFee = number_format($data['gcash_miniapp_pg_fee'], 2);
+$gcashPGFee = number_format($data['gcash_pg_fee'], 2);
+$totalPaymentGatewayFees1 = number_format($data['total_payment_gateway_fees_1'], 2);
+$totalOutstandingAmount2 = number_format($data['total_outstanding_amount_2'], 2);
+$totalCommissionFees2 = number_format($data['total_commission_fees_2'], 2);
+$totalPaymentGatewayFees2 = number_format($data['total_payment_gateway_fees_2'], 2);
+$bankFees = number_format($data['bank_fees'], 2);
+$wtaxFromGrossSales = number_format($data['wtax_from_gross_sales'], 2);
+$cwtFromTransactionFees = number_format($data['cwt_from_transaction_fees'], 2);
+$cwtFromPgFees = number_format($data['cwt_from_pg_fees'], 2);
+$totalAmountPaidOut = number_format($data['total_amount_paid_out'], 2);
 
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $end_date = isset($_GET['settlement_period_end']) ? $_GET['settlement_period_end'] : '';
@@ -64,7 +77,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            if ($row['Voucher Type'] == "Decoupled") {
+            if ($row['Voucher Type'] == "Coupled") {
                 echo "<tr>";
                 echo "<td>" . $row['Transaction ID'] . "</td>";
                 echo "<td>" . $row['Formatted Transaction Date'] . "</td>";
@@ -117,6 +130,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * {
             font-family: "Nunito", sans-serif;
@@ -139,10 +153,10 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.50);
             -webkit-box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.50);
             -moz-box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.50);
-            height: 1100px;
+            height: 1110px;
             width: 850px;
             margin-top: 120px;
-            margin-bottom: 50px;
+            margin-bottom: 70px;
         }
 
         #downloadBtn,
@@ -171,7 +185,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
 
         @media print {
             @page {
-                size: auto;
+                size: A4;
                 margin: 8mm;
             }
 
@@ -188,7 +202,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             <a class="navbar-brand" href="javascript:history.back()">
                 <i class="fa-solid fa-arrow-left fa-lg"></i>
                 <span
-                    style="margin-left:10px;font-size:8px;background-color:#EA4335;padding:3px;border-radius:5px;font-family:helvetica;font-weight:bold;">PDF</span>
+                    style="margin-left:10px;font-size:8px;background-color:#EA4335;padding:4px;border-radius:5px;font-family:helvetica;font-weight:bold;">PDF</span>
                 <?php echo htmlspecialchars($data['merchant_brand_name']); ?> -
                 <?php echo htmlspecialchars($data['settlement_period']); ?> -
                 (<?php echo htmlspecialchars($data['settlement_number']); ?>)
@@ -202,14 +216,15 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
                 <ul class="navbar-nav">
                     <!-- Add your navigation items here if needed -->
                 </ul>
-                <a class="btn" id="print"><i class="fa-solid fa-print fa-lg"></i> Print</a>
-                <a class="downloadBtnExcel" id="downloadBtnExcel" onclick="downloadTables()"><i
+                <a class="print" id="print" href="#"><i class="fa-solid fa-print fa-lg"></i> Print</a>
+                <a class="downloadExcel" id="downloadBtnExcel" type="button" onclick="downloadTables()" href="#"><i
                         class="fa-solid fa-download fa-lg"></i> CSV</a>
-                <!--<a class="downloadBtn" id="downloadBtn" > <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
+                <!--<a class="downloadBtn" id="downloadBtn"  href="#"> <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
             </div>
         </div>
     </nav>
-    <div class="box" style="display:none;">
+
+    <div class="box" style="display:none">
         <table id="example" class="table bord" style="width:250%;">
             <thead>
                 <tr>
@@ -275,7 +290,8 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             <tr>
                 <td>Total Number of Successful Orders</td>
                 <td id="total_successful_orders" style="width:30%;text-align:center;">
-                    <?php echo htmlspecialchars($data['total_successful_orders']); ?> order/s</td>
+                    <?php echo htmlspecialchars($data['total_successful_orders']); ?> order/s
+                </td>
             </tr>
         </table>
         <br>
@@ -292,7 +308,8 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             <tr>
                 <td style="font-weight:bold;">Total Outstanding Amount:</td>
                 <td id="total_net_sales" style="font-weight:bold;text-align:center;">
-                    <?php echo $totalOutstandingAmount; ?> PHP</td>
+                    <?php echo $totalOutstandingAmount1; ?> PHP
+                </td>
             </tr>
         </table>
         <hr style="border: 1px solid #3b3b3b;">
@@ -308,17 +325,20 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             <tr>
                 <td style="padding-left:85px;">Leadgen Commission rate base(Pre-Trial)</td>
                 <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;">
-                    <?php echo $leadgenCommissionRateBasePretrial; ?></td>
+                    <?php echo $leadgenCommissionRateBasePretrial; ?>
+                </td>
             </tr>
             <tr>
                 <td style="padding-left:85px;">Commission fee rate</td>
                 <td id="commission_rate_pretrial" style="text-align:right;padding-right:85px;">
-                    <?php echo htmlspecialchars($data['commission_rate_pretrial']); ?></td>
+                    <?php echo htmlspecialchars($data['commission_rate_pretrial']); ?>
+                </td>
             </tr>
             <tr>
                 <td style="font-weight:bold;padding-left:85px;">Total</td>
                 <td id="total_pretrial" style="font-weight:bold;text-align:right;padding-right:85px;">
-                    <?php echo $totalPretrial; ?> PHP</td>
+                    <?php echo $totalPretrial; ?> PHP
+                </td>
             </tr>
         </table>
         <br>
@@ -327,17 +347,20 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             <tr>
                 <td style="padding-left:85px;">Leadgen Commission rate base(Billable)</td>
                 <td id="leadgen_commission_rate_base_billable" style="text-align:right;padding-right:85px;">
-                    <?php echo $leadgenCommissionRateBaseBillable; ?></td>
+                    <?php echo $leadgenCommissionRateBaseBillable; ?>
+                </td>
             </tr>
             <tr>
                 <td style="padding-left:85px;">Commission fee rate</td>
                 <td id="commission_rate_billable" style="text-align:right;padding-right:85px;">
-                    <?php echo htmlspecialchars($data['commission_rate_billable']); ?></td>
+                    <?php echo htmlspecialchars($data['commission_rate_billable']); ?>
+                </td>
             </tr>
             <tr>
                 <td style="font-weight:bold;padding-left:85px;">Total</td>
                 <td id="total_billable" style="text-align:right;padding-right:85px;font-weight:bold;">
-                    <?php echo $totalBillable; ?></td>
+                    <?php echo $totalBillable; ?>
+                </td>
             </tr>
         </table>
         <br>
@@ -345,10 +368,94 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             <tr>
                 <td style="font-weight:bold;">Total Commision Fees:</td>
                 <td id="total_commission_fees" style="font-weight:bold;text-align:right;padding-right:85px;">
-                    <?php echo $totalCommissionFees; ?> PHP</td>
+                    <?php echo $totalCommissionFees1; ?> PHP
+                </td>
             </tr>
         </table>
-
+        <br>
+        <table style="width:100% !important;">
+            <tr>
+                <td style="padding-left:85px;">Payment Gateway Fees</td>
+                <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;">
+                </td>
+            </tr>
+        </table>
+        <br>
+        <table style="width:100% !important;">
+            <tr>
+                <td style="padding-left:85px;">Card Payment</td>
+                <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;">
+                    <?php echo $cardPaymentPGFee; ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left:85px;">Paymaya</td>
+                <td id="commission_rate_pretrial" style="text-align:right;padding-right:85px;">
+                    <?php echo $paymayaPgFee; ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left:85px;">Gcash_miniapp</td>
+                <td id="total_pretrial" style="text-align:right;padding-right:85px;"><?php echo $gcashMiniappPGFee; ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left:85px;">Gcash</td>
+                <td id="total_pretrial" style="text-align:right;padding-right:85px;"><?php echo $gcashPGFee; ?></td>
+            </tr>
+            <tr>
+                <td style="padding-left:85px;font-weight:bold;">Total Payment Gateway Fees</td>
+                <td id="total_pretrial" style="text-align:right;padding-right:85px;font-weight:bold;">
+                    <?php echo $totalPaymentGatewayFees1; ?>
+                </td>
+            </tr>
+        </table>
+        <hr style="border: 1px solid #3b3b3b;">
+        <table style="width:100% !important;">
+            <tr>
+                <td>Payment Outstanding Amount</td>
+                <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;">
+                    <?php echo $totalOutstandingAmount2; ?> PHP
+                </td>
+            </tr>
+        </table>
+        <table style="width:100% !important;">
+            <tr>
+                <td>Less:<span style="padding-left:60px;">Total Commission Fees</span></td>
+                <td style="text-align:right;padding-right:85px;"><?php echo $totalCommissionFees2; ?> PHP</td>
+            </tr>
+            <tr>
+                <td style="padding-left:85px;">Total Payment Gateway Fees</td>
+                <td style="text-align:right;padding-right:85px;"><?php echo $totalPaymentGatewayFees2; ?> PHP</td>
+            </tr>
+            <tr>
+                <td style="padding-left:85px;">Bank Fees</td>
+                <td style="text-align:right;padding-right:85px;"><?php echo $bankFees; ?> PHP</td>
+            </tr>
+            <tr>
+                <td style="padding-left:85px;">Wtax from Gross Sales (BIR-RMC-8-2024)</td>
+                <td style="text-align:right;padding-right:85px;"><?php echo $wtaxFromGrossSales; ?> PHP</td>
+            </tr>
+        </table>
+        <table style="width:100% !important;">
+            <tr>
+                <td>Add:<span style="padding-left:61px;">CWT from Transaction Fees</span></td>
+                <td style="text-align:right;padding-right:85px;"><?php echo $cwtFromTransactionFees; ?> PHP</td>
+            </tr>
+            <tr>
+                <td style="padding-left:85px;">CWT from PG Fees</td>
+                <td style="text-align:right;padding-right:85px;"><?php echo $cwtFromPgFees; ?> PHP</td>
+            </tr>
+        </table>
+        <table style="width:100% !important;">
+            <tr>
+                <td style="font-weight:bold;">Total Amount Paid Out</td>
+                <td id="leadgen_commission_rate_base_pretrial"
+                    style="font-weight:bold;width:30%;text-align:right;padding-right:85px;">
+                    <?php echo $totalAmountPaidOut; ?> PHP
+                </td>
+            </tr>
+        </table>
 
         <hr style="border: 1px solid #3b3b3b;">
         <p>This is a system generated report and doesn't require a signature. If you have questions feel free to contact
@@ -359,25 +466,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
         <p>San Rafael St. cor. Boni Avenue Bgy. Plainview Mandaluyong City 1550 Philippines</p>
         <p style="margin-bottom:50px;">T: (632) 34917659 </p>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js">
-    </script>
-
-    <script>
-        window.onload = function () {
-            document.getElementById("downloadBtn").addEventListener("click", () => {
-                const invoice = document.getElementById("content");
-                var opt = {
-                    margin: [-1.5, -0.5, -0.5, -0.5], // [top, right, bottom, left] in inches
-                    filename: '<?php echo htmlspecialchars($data['merchant_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf',
-                    image: { type: 'jpeg', quality: 1.0 },
-                    html2canvas: { scale: 5 },
-                    jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' }
-                };
-                html2pdf().from(invoice).set(opt).save();
-            });
-        }
-
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script>
         document.getElementById('print').addEventListener('click', function () {
             const originalContent = document.body.innerHTML;
@@ -394,37 +483,17 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             window.print();
         });
     </script>
-   <script>
-    function downloadTables() {
-        // Get the table element
-        var table = document.getElementById("example");
-        var rows = table.querySelectorAll("tr");
-        var data = [];
+    <script>
+        function downloadTables() {
+            // Get the table element
+            var table = document.getElementById("example");
+            // Convert the table to a worksheet
+            var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+            // Generate an Excel file and prompt download
+            XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.csv");
+        }
 
-        // Loop through the rows and extract data
-        rows.forEach(function(row) {
-            var rowData = [];
-            var cells = row.querySelectorAll("th, td");
-            
-            cells.forEach(function(cell) {
-                var cellText = cell.innerText || cell.textContent;
-                // Push the exact cell text to rowData
-                rowData.push(cellText);
-            });
-
-            data.push(rowData);
-        });
-
-        // Create a new workbook and add the data to the sheet
-        var ws = XLSX.utils.aoa_to_sheet(data);
-        var wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-        // Generate an Excel file and prompt download
-        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
-    }
-</script>
-
+    </script>
 </body>
 
 </html>

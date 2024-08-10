@@ -429,11 +429,35 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
   </script>
   <script>
     function downloadTables() {
-      var table = document.getElementById("transaction");
-      var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
-      XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+        // Get the table element
+        var table = document.getElementById("example");
+        var rows = table.querySelectorAll("tr");
+        var data = [];
+
+        // Loop through the rows and extract data
+        rows.forEach(function(row) {
+            var rowData = [];
+            var cells = row.querySelectorAll("th, td");
+            
+            cells.forEach(function(cell) {
+                var cellText = cell.innerText || cell.textContent;
+                // Push the exact cell text to rowData
+                rowData.push(cellText);
+            });
+
+            data.push(rowData);
+        });
+
+        // Create a new workbook and add the data to the sheet
+        var ws = XLSX.utils.aoa_to_sheet(data);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+        // Generate an Excel file and prompt download
+        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
-  </script>
+</script>
+
 
 </body>
 

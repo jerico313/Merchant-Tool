@@ -127,7 +127,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <style>
         * {
             font-family: "Nunito", sans-serif;
@@ -192,17 +192,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             }
         }
     </style>
-    <script>
-        function exportToExcel() {
-            const table = document.getElementById("myTable");
-            const ws = XLSX.utils.table_to_sheet(table);
-
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Transactions");
-
-            XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
-        }
-    </script>
 </head>
 
 <body>
@@ -226,7 +215,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                     <!-- Add your navigation items here if needed -->
                 </ul>
                 <a class="print" id="print" href="#"><i class="fa-solid fa-print fa-lg"></i> Print</a>
-                <a class="downloadExcel" id="downloadBtnExcel" onclick="exportToExcel()" href="#"><i
+                <a class="downloadExcel" id="downloadBtnExcel" onclick="downloadTables()"><i
                         class="fa-solid fa-download fa-lg"></i> Excel</a>
                 <!--<a class="downloadBtn" id="downloadBtn"  href="#"> <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
             </div>
@@ -234,7 +223,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     </nav>
 
     <div class="box">
-        <table id="myTable" class="table bord" style="width:250%;display:none;">
+        <table id="example" class="table bord" style="width:250%;display:none;">
             <thead>
                 <tr>
                     <th>Transaction ID</th>
@@ -491,6 +480,36 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             window.print();
         });
     </script>
+    <script>
+    function downloadTables() {
+        // Get the table element
+        var table = document.getElementById("example");
+        var rows = table.querySelectorAll("tr");
+        var data = [];
+
+        // Loop through the rows and extract data
+        rows.forEach(function(row) {
+            var rowData = [];
+            var cells = row.querySelectorAll("th, td");
+            
+            cells.forEach(function(cell) {
+                var cellText = cell.innerText || cell.textContent;
+                // Push the exact cell text to rowData
+                rowData.push(cellText);
+            });
+
+            data.push(rowData);
+        });
+
+        // Create a new workbook and add the data to the sheet
+        var ws = XLSX.utils.aoa_to_sheet(data);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+        // Generate an Excel file and prompt download
+        XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+    }
+</script>
 
 </body>
 

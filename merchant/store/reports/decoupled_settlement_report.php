@@ -171,48 +171,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             }
         }
   </style>
-  <script>
-        function exportToExcel() {
-            const table = document.getElementById("myTable");
-            const ws = XLSX.utils.table_to_sheet(table);
-
-            // Format columns 9 and 10 to two decimal places with commas
-            ws['!cols'] = [{ wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 15 }, { wch: 15 }]; // Adjust column widths if needed
-
-            // Add number formatting to columns 9 and 10
-            for (let i = 1; i <= ws['!ref'].split(':')[1].replace(/\D/g, ''); i++) {
-                if (ws[`J${i}`]) {
-                    ws[`J${i}`].z = '#,##0.00';
-                }
-                if (ws[`K${i}`]) {
-                    ws[`K${i}`].z = '#,##0.00';
-                }
-                if (ws[`L${i}`]) {
-                    ws[`L${i}`].z = '#,##0.00';
-                }
-                if (ws[`Q${i}`]) {
-                    ws[`Q${i}`].z = '#,##0.00';
-                }
-                if (ws[`R${i}`]) {
-                    ws[`R${i}`].z = '#,##0.00';
-                }
-                if (ws[`T${i}`]) {
-                    ws[`T${i}`].z = '#,##0.00';
-                }
-                if (ws[`J${i}`]) {
-                    ws[`J${i}`].z = '#,##0.00';
-                }
-                if (ws[`U${i}`]) {
-                    ws[`U${i}`].z = '#,##0.00';
-                }
-            }
-
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-            XLSX.writeFile(wb, "<?php echo htmlspecialchars($store_brand_name); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
-        }
-    </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-3 pb-3 pl-3 pr-3 fixed-top">
@@ -230,14 +188,14 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                     <!-- Add your navigation items here if needed -->
                 </ul>
                 <a class="btn" id="print"><i class="fa-solid fa-print fa-lg"></i> Print</a>
-                <a class="downloadBtnExcel" id="downloadBtnExcel" onclick="exportToExcel()"><i
+                <a class="downloadBtnExcel" id="downloadBtnExcel" onclick="downloadTables()"><i
                         class="fa-solid fa-download fa-lg"></i> Excel</a>
                 <!--<a class="downloadBtn" id="downloadBtn" > <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
             </div>
         </div>
     </nav>
     <div class="box" style="display:none;">
-        <table id="myTable" class="table bord" style="width:250%;">
+        <table id="example" class="table bord" style="width:250%;">
             <thead>
                 <tr>
                     <th>Transaction ID</th>
@@ -388,6 +346,36 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             window.print();
         });
     </script>
+<script>
+    function downloadTables() {
+        // Get the table element
+        var table = document.getElementById("example");
+        var rows = table.querySelectorAll("tr");
+        var data = [];
+
+        // Loop through the rows and extract data
+        rows.forEach(function(row) {
+            var rowData = [];
+            var cells = row.querySelectorAll("th, td");
+            
+            cells.forEach(function(cell) {
+                var cellText = cell.innerText || cell.textContent;
+                // Push the exact cell text to rowData
+                rowData.push(cellText);
+            });
+
+            data.push(rowData);
+        });
+
+        // Create a new workbook and add the data to the sheet
+        var ws = XLSX.utils.aoa_to_sheet(data);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+        // Generate an Excel file and prompt download
+        XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+    }
+</script>
 
 </body>
 </html>
