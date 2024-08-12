@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         $result = $stmt->get_result();
         if ($result->num_rows === 0) {
-            // No rows returned, redirect to failed.php
             header("Location: failed.php?merchant_id=$merchantId&merchant_name=$merchantName");
             exit;
         }
@@ -61,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $storeIds = [$storeIdHead];
         $gcashReportIds = $gcashReportIdsBody;
 
-        // Update user_id in activity_history based on store_id
         if ($storeIdHead) {
             $pattern = '%store_id: ' . $storeIdHead . '%';
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE description LIKE ? AND user_id IS NULL");

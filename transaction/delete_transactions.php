@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql = "DELETE FROM transaction WHERE transaction_id IN ($placeholders)";
     $stmt = $conn->prepare($sql);
 
-    $types = str_repeat("s", count($transaction_ids)); // Adjust types if needed
+    $types = str_repeat("s", count($transaction_ids));
     $stmt->bind_param($types, ...$transaction_ids);
     $stmt->execute();
 

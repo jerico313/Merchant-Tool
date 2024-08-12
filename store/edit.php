@@ -35,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "An error occurred while updating the record. Please try again later.";
     }
 
-    // Close the statement and connection
     $stmt->close();
     $conn->close();
 }

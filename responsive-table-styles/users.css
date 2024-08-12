@@ -1,0 +1,45 @@
+body {
+    background-image: url("../images/bg_booky.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.add-btns {
+    padding-bottom: 0px;
+    padding-right: 5vh;
+    display: flex;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+#alertContainer {
+    width: 475px;
+    font-size: 10px;
+    background-color: #F8D7DA;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+select {
+    background: transparent;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    color: #333;
+    width: 80px;
+}
+
+select:focus {
+    outline: none;
+    box-shadow: none;
+}

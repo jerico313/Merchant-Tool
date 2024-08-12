@@ -26,8 +26,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 </head>
 
 <body>
-
-    <div class="cont-box">
+    <div class="cont">
         <div class="custom-box pt-4">
             <a href="javascript:history.back()">
                 <span class="back">
@@ -356,20 +355,20 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
         if (e.target && e.target.id === 'NoStartDate') {
             var startDateInput = e.target.closest('.row').querySelector('#start_date');
             if (e.target.checked) {
-                startDateInput.value = ''; // Clear the date
-                startDateInput.disabled = true; // Disable the input
+                startDateInput.value = ''; 
+                startDateInput.disabled = true; 
             } else {
-                startDateInput.disabled = false; // Enable the input
+                startDateInput.disabled = false; 
             }
         }
 
         if (e.target && e.target.id === 'NoEndDate') {
             var endDateInput = e.target.closest('.row').querySelector('#end_date');
             if (e.target.checked) {
-                endDateInput.value = ''; // Clear the date
-                endDateInput.disabled = true; // Disable the input
+                endDateInput.value = ''; 
+                endDateInput.disabled = true; 
             } else {
-                endDateInput.disabled = false; // Enable the input
+                endDateInput.disabled = false; 
             }
         }
     });
@@ -380,47 +379,42 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
         });
 
         document.getElementById('uploadForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault(); 
 
-            // Check if file name is 'Merchant Listing.csv'
             var fileInput = document.getElementById('fileToUpload');
-            var fileName = fileInput.value.split('\\').pop(); // Get the file name without path
+            var fileName = fileInput.value.split('\\').pop(); 
 
             if (fileName === '') {
-                document.querySelector('.alert-custom').style.display = 'block'; // Show empty file alert
+                document.querySelector('.alert-custom').style.display = 'block'; 
                 setTimeout(function () {
-                    document.querySelector('.alert-custom').style.display = 'none'; // Hide after 3 seconds
+                    document.querySelector('.alert-custom').style.display = 'none'; 
                 }, 3000);
-                return; // Prevent form submission
+                return; 
             }
 
             if (fileName !== 'Promo Listing.csv') {
-                document.querySelector('.alert-custom-filename').style.display = 'block'; // Show filename alert
+                document.querySelector('.alert-custom-filename').style.display = 'block'; 
                 setTimeout(function () {
-                    document.querySelector('.alert-custom-filename').style.display = 'none'; // Hide after 3 seconds
+                    document.querySelector('.alert-custom-filename').style.display = 'none'; 
                 }, 3000);
-                return; // Prevent form submission
+                return; 
             }
 
-            // Check file type
             if (!fileName.endsWith('.csv')) {
-                document.querySelector('.alert-custom-filetype').style.display = 'block'; // Show file type alert
+                document.querySelector('.alert-custom-filetype').style.display = 'block'; 
                 setTimeout(function () {
-                    document.querySelector('.alert-custom-filetype').style.display = 'none'; // Hide after 3 seconds
+                    document.querySelector('.alert-custom-filetype').style.display = 'none';
                 }, 3000);
-                return; // Prevent form submission
+                return; 
             }
 
-            // Get the file size in bytes
             var fileSize = fileInput.files[0].size;
 
-            // Update the submit button text with file size and show loading spinner
             var submitButton = document.getElementById('submitButton');
-            var fileSizeKB = (fileSize / 1024).toFixed(2); // Convert bytes to KB
+            var fileSizeKB = (fileSize / 1024).toFixed(2); 
             submitButton.innerHTML = `<div class="spinner-border spinner-border-sm" role="status"></div><span> Uploading (${fileSizeKB} KB)...</span>`;
 
-            // If valid, simulate loading time based on file size and submit the form
-            var loadingTime = fileSize / 1024; // Simulate loading time in seconds based on file size
+            var loadingTime = fileSize / 1024; 
             setTimeout(function () {
                 document.getElementById('uploadForm').submit();
             }, loadingTime * 1000);
@@ -431,7 +425,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
         document.getElementById('dynamic-form').addEventListener('submit', function (e) {
             e.preventDefault();
             let promoCodes = document.querySelectorAll('input[name="promo_code[]"]');
-            let codes = Array.from(promoCodes).map(input => input.value.trim()); // Ensure no extra spaces
+            let codes = Array.from(promoCodes).map(input => input.value.trim()); 
 
             let duplicateCodes = codes.filter((code, index) => codes.indexOf(code) !== index);
             if (duplicateCodes.length > 0) {
@@ -478,7 +472,6 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
         </div>
     `;
 
-            // Automatically remove alert after a few seconds
             setTimeout(() => {
                 let alertElement = alertContainer.querySelector('.alert');
                 if (alertElement) {

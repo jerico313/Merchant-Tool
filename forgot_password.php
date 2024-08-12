@@ -1,7 +1,7 @@
 <?php
 session_start();
 $email = "";
-require 'Mailer/vendor/autoload.php'; // Include Composer autoloader
+require 'Mailer/vendor/autoload.php'; 
 include "inc/config.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -9,17 +9,16 @@ use PHPMailer\PHPMailer\Exception;
 
 function sendEmail($to, $subject, $message)
 {
-    // Create a new PHPMailer instance
     $mail = new PHPMailer();
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com'; // Replace with your SMTP server
+    $mail->Host = 'smtp.gmail.com'; 
     $mail->SMTPAuth = true;
-    $mail->Username = 'jericobuncag0@gmail.com'; // Replace with your SMTP username
-    $mail->Password = 'zswmpiantsrswvci'; // Replace with your SMTP password
+    $mail->Username = 'jericobuncag0@gmail.com'; 
+    $mail->Password = 'zswmpiantsrswvci'; 
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom('jericobuncag0@gmail.com', 'PNR'); // Replace with your email and name
+    $mail->setFrom('jericobuncag0@gmail.com', 'PNR');
     $mail->addAddress($to);
 
     $mail->Subject = $subject;
@@ -29,7 +28,7 @@ function sendEmail($to, $subject, $message)
     return $mail->send();
 }
 
-$alertMessage = ''; // Variable to store alert message
+$alertMessage = ''; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
     $verification_code = mt_rand(100000, 999999);
@@ -82,10 +81,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
 
             $mail = new PHPMailer();
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com'; // Replace with your SMTP server
+            $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'jericobuncag0@gmail.com'; // Replace with your SMTP username
-            $mail->Password = 'zswmpiantsrswvci'; // Replace with your SMTP password
+            $mail->Username = 'jericobuncag0@gmail.com'; 
+            $mail->Password = 'zswmpiantsrswvci'; 
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
@@ -96,8 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
             $mail->isHTML(true);
             $mail->Body = $message;
 
-            // Attach logo image
-            $mail->addEmbeddedImage('images/booky2.png', 'booky_logo'); // Adjust path as needed
+            $mail->addEmbeddedImage('images/booky2.png', 'booky_logo'); 
 
             if ($mail->send()) {
                 $alertMessage = '<div class="alert-container alert alert-success" role="alert">
@@ -227,7 +225,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
             box-sizing: border-box;
             opacity: 1;
             transition: opacity 1s ease-out;
-            /* Smooth transition for fade-out effect */
         }
 
         .alert-container.fade-out {
@@ -256,16 +253,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Function to add fade-out class to alert
         function fadeOutAlert() {
             const alert = document.querySelector('.alert-container');
             if (alert) {
                 setTimeout(() => {
                     alert.classList.add('fade-out');
-                }, 3000); // Time in milliseconds before the fade-out starts
+                }, 3000); 
             }
         }
-
         fadeOutAlert();
     });
 </script>

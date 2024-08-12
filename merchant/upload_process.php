@@ -27,7 +27,7 @@ function displayMessage($type, $message) {
             border-radius: 10px; 
             width: 500px;
             height: auto; 
-            padding: 20px; /* Increased padding */
+            padding: 20px;
             backdrop-filter: blur(16px) saturate(180%); 
             -webkit-backdrop-filter: blur(16px) saturate(180%); 
             background-color: rgba(255, 255, 255, 0.40); 
@@ -35,7 +35,7 @@ function displayMessage($type, $message) {
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px; 
         }
         .success-container {
-            width: 250px; /* Set width to 200px for success container */
+            width: 250px;
             height: 300px;
         }
         .error-icon { 
@@ -89,14 +89,14 @@ function displayMessage($type, $message) {
             100% { stroke-dashoffset: 0; } 
         }
         .error-list {
-            font-size: 14px; /* Adjusted font size */
-            text-align: left; /* Left-align list items */
+            font-size: 14px; 
+            text-align: left; 
             margin-top: 10px;
-            padding-left: 0; /* Remove default padding */
-            list-style-type: none; /* Remove bullet points */
+            padding-left: 0; 
+            list-style-type: none; 
         }
         .error-list li {
-            margin-bottom: 5px; /* Adjust spacing between list items */
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -109,7 +109,6 @@ function displayMessage($type, $message) {
         $header
 HTML;
 
-    // If the message is an error and contains a list, format the list accordingly
     if ($type === 'error' && strpos($message, '<br>') !== false) {
         echo '<ul class="error-list">';
         $errors = explode('<br>', $message);
@@ -167,7 +166,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     }
 
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle); // Skip header row
+    fgetcsv($handle); 
 
     $duplicateMessages = [];
 
@@ -186,22 +185,20 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         exit();
     }
 
-    // If no duplicates, proceed with inserting into database
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle); // Skip header row again
+    fgetcsv($handle);
     $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, legal_entity_name, business_address, email_address, sales, account_manager) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $data[2] = empty($data[2]) ? null : $data[2]; // Convert blank merchant_partnership_type to null
-        $data[3] = empty($data[3]) ? null : $data[3]; // Convert blank legal_entity_name to null
-        $data[4] = empty($data[4]) ? null : $data[4]; // Convert blank business_address to null
-        $data[5] = empty($data[5]) ? null : $data[5]; // Convert blank email_address to null
-        $data[6] = empty($data[6]) ? null : $data[6]; // Convert blank sales to null
-        $data[7] = empty($data[7]) ? null : $data[7]; // Convert blank account_manager to null
+        $data[2] = empty($data[2]) ? null : $data[2];
+        $data[3] = empty($data[3]) ? null : $data[3]; 
+        $data[4] = empty($data[4]) ? null : $data[4];
+        $data[5] = empty($data[5]) ? null : $data[5];
+        $data[6] = empty($data[6]) ? null : $data[6];
+        $data[7] = empty($data[7]) ? null : $data[7];
         $stmt->bind_param("ssssssss", $data[1], $data[0], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7]);
         $stmt->execute();
 
-        // Update the user_id column in the latest activity_history record
         updateActivityHistory($conn, $data[0], $userId);
     }
 

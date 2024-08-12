@@ -1,0 +1,110 @@
+body {
+    background-image: url("../images/bg_booky.png");
+}
+
+tr:hover {
+    background-color: #e0e0e0 !important;
+    color: white !important;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 767px) {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+        text-align: left !important;
+    }
+
+    thead tr,
+    tfoot tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50% !important;
+    }
+
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left !important;
+        font-weight: bold;
+    }
+
+    .table td:nth-child(1) {
+        background: #E96529;
+        height: 100%;
+        top: 0;
+        left: 0;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    td:nth-of-type(1):before {
+        content: "Merchant ID";
+    }
+
+    td:nth-of-type(2):before {
+        content: "Merchant Name";
+    }
+
+    td:nth-of-type(3):before {
+        content: "Merchant Type";
+    }
+
+    td:nth-of-type(4):before {
+        content: "Legal Entity Name";
+    }
+
+    td:nth-of-type(5):before {
+        content: "Fullfillment Type";
+    }
+
+    td:nth-of-type(6):before {
+        content: "Business Address";
+    }
+
+    td:nth-of-type(7):before {
+        content: "Email Address";
+    }
+
+    td:nth-of-type(8):before {
+        content: "VAT Type";
+    }
+
+    td:nth-of-type(9):before {
+        content: "Commission ID";
+    }
+
+    td:nth-of-type(10):before {
+        content: "Action";
+    }
+
+    .dataTables_length {
+        display: none;
+    }
+
+    .title {
+        font-size: 25px;
+        padding-left: 2vh;
+        padding-top: 10px;
+    }
+
+    .add-btns {
+        padding-right: 2vh;
+    }
+}

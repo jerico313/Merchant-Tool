@@ -21,11 +21,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         $result = $stmt->get_result();
         if ($result->num_rows === 0) {
-            // No rows returned, redirect to failed.php
             header("Location: failed.php");
             exit;
         }
-        $stmt->close(); // Close the first statement
+        $stmt->close(); 
 
         $maxGcashReportId = null;
         $stmt = $conn->prepare("SELECT gcash_report_id FROM report_history_gcash_head ORDER BY created_at DESC LIMIT 1");
@@ -59,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $merchantIds = [$merchantIdHead];
         $gcashReportIds = $gcashReportIdsBody;
 
-        // Update user_id in activity_history based on merchant_id
         if ($merchantIdHead) {
             $pattern = '%merchant_id: ' . $merchantIdHead . '%';
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE description LIKE ? AND user_id IS NULL");
@@ -74,7 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // Update user_id in activity_history based on gcash_report_id
         foreach ($gcashReportIds as $reportId) {
             $pattern = '%gcash_report_id: ' . $reportId . '%';
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE description LIKE ? AND user_id IS NULL");

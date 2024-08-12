@@ -51,196 +51,8 @@ function displayUser()
     integrity="sha384-mQ93qBRaUHnTwhWm6A98qE6pK6DdEDQNl7h4WBC5h85ibG/NHOoxuHV9r+lpazjl"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../style.css">
-
-  <style>
-    body {
-      background-image: url("../images/bg_booky.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .action-item {
-      animation: fadeIn 0.3s ease forwards;
-    }
-
-    .add-btns {
-      padding-bottom: 0px;
-      padding-right: 5vh;
-      display: flex;
-      align-items: center;
-    }
-
-    .modal-title {
-      font-size: 15px;
-      font-weight: bold;
-    }
-
-    .form-label {
-      font-weight: bold;
-    }
-
-    #alertContainer {
-      width: 475px;
-      font-size: 10px;
-      background-color: #F8D7DA;
-      border-radius: 5px;
-      margin:5px 0;
-    }
-
-    select {
-      background: transparent;
-      border: 1px solid #ccc;
-      padding: 5px;
-      border-radius: 5px;
-      color: #333;
-      width: 80px;
-    }
-
-    select:focus {
-      outline: none;
-      box-shadow: none;
-    }
-
-    .loading {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 80vh;
-      font-size: 18px;
-      color: #333;
-      font-weight: 800;
-    }
-
-    .cont-box {
-      display: none;
-    }
-
-
-    .lds-default,
-    .lds-default div {
-      box-sizing: border-box;
-    }
-
-    .lds-default {
-      display: inline-block;
-      position: relative;
-      width: 80px;
-      height: 80px;
-      color: #E96529;
-    }
-
-    .lds-default div {
-      position: absolute;
-      width: 6.4px;
-      height: 6.4px;
-      background: currentColor;
-      border-radius: 50%;
-      animation: lds-default 1.2s linear infinite;
-    }
-
-    .lds-default div:nth-child(1) {
-      animation-delay: 0s;
-      top: 36.8px;
-      left: 66.24px;
-    }
-
-    .lds-default div:nth-child(2) {
-      animation-delay: -0.1s;
-      top: 22.08px;
-      left: 62.29579px;
-    }
-
-    .lds-default div:nth-child(3) {
-      animation-delay: -0.2s;
-      top: 11.30421px;
-      left: 51.52px;
-    }
-
-    .lds-default div:nth-child(4) {
-      animation-delay: -0.3s;
-      top: 7.36px;
-      left: 36.8px;
-    }
-
-    .lds-default div:nth-child(5) {
-      animation-delay: -0.4s;
-      top: 11.30421px;
-      left: 22.08px;
-    }
-
-    .lds-default div:nth-child(6) {
-      animation-delay: -0.5s;
-      top: 22.08px;
-      left: 11.30421px;
-    }
-
-    .lds-default div:nth-child(7) {
-      animation-delay: -0.6s;
-      top: 36.8px;
-      left: 7.36px;
-    }
-
-    .lds-default div:nth-child(8) {
-      animation-delay: -0.7s;
-      top: 51.52px;
-      left: 11.30421px;
-    }
-
-    .lds-default div:nth-child(9) {
-      animation-delay: -0.8s;
-      top: 62.29579px;
-      left: 22.08px;
-    }
-
-    .lds-default div:nth-child(10) {
-      animation-delay: -0.9s;
-      top: 66.24px;
-      left: 36.8px;
-    }
-
-    .lds-default div:nth-child(11) {
-      animation-delay: -1s;
-      top: 62.29579px;
-      left: 51.52px;
-    }
-
-    .lds-default div:nth-child(12) {
-      animation-delay: -1.1s;
-      top: 51.52px;
-      left: 62.29579px;
-    }
-
-    @keyframes lds-default {
-
-      0%,
-      20%,
-      80%,
-      100% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.5);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="../responsive-table-styles/users.css">
 </head>
-
 <body>
 <div class="loading">
     <div>
@@ -289,7 +101,7 @@ function displayUser()
         </div>
       </div>
     </div>
-<!-- Edit Modal -->
+
 <div class="modal fade" id="editUserModal" data-bs-backdrop="static" tabindex="-1"
   aria-labelledby="editUserModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -376,7 +188,6 @@ function displayUser()
 
     editPasswordCheckbox.addEventListener("change", togglePasswordField);
 
-    // Initial toggle based on the checkbox state
     togglePasswordField();
   });
 
@@ -385,7 +196,6 @@ function displayUser()
     alertContainer.classList.remove('d-none');
     alertContainer.innerHTML = message;
 
-    // Hide the alert after 2 seconds
     setTimeout(() => {
       alertContainer.classList.add('d-none');
       alertContainer.innerHTML = '';
@@ -398,20 +208,17 @@ function displayUser()
     const newPassword = document.getElementById('newPassword').value.trim();
     const confirmPassword = document.getElementById('confirmPassword').value.trim();
 
-    // Reset alert
     const alertContainer = document.getElementById('alertContainer');
     alertContainer.classList.add('d-none');
     alertContainer.innerHTML = '';
 
     if (editPasswordCheckbox.checked) {
-      // Check if password fields are empty
       if (newPassword === '' || confirmPassword === '') {
         showAlert('<i class="fa-solid fa-circle-exclamation"></i> Please enter both new password and confirm password.');
         event.preventDefault();
         return;
       }
 
-      // Check if passwords match
       if (newPassword !== confirmPassword) {
         showAlert('<i class="fa-solid fa-circle-exclamation"></i> Passwords do not match.');
         event.preventDefault();
@@ -445,10 +252,8 @@ function displayUser()
    }); 
   });
     </script>
-    <!-- Edit Merchant Modal -->
     <script>
       function editUser(userUuid) {
-        // Fetch the current data of the selected merchant
         var userRow = $('#dynamicTableBody').find('tr[data-uuid="' + userUuid + '"]');
         var name = userRow.find('td:nth-child(2)').text();
         var emailAddress = userRow.find('td:nth-child(3)').text();
@@ -456,7 +261,6 @@ function displayUser()
         var status = userRow.find('td:nth-child(5)').text();
         var password = userRow.find('td:nth-child(6)').text();
 
-    // Set values in the edit modal
         $('#user_Id').val(userUuid);
         $('#name').val(name);
         $('#emailAddress').val(emailAddress);

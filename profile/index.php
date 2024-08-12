@@ -2,7 +2,7 @@
 include ("../header.php"); 
 include ("../inc/config.php");
 
-$user_id = $_SESSION['user_id']; // Assuming you have the user_id stored in session
+$user_id = $_SESSION['user_id'];
 $sql = "SELECT * FROM user WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $user_id);
@@ -11,16 +11,13 @@ $result = $stmt->get_result();
 $data = $result->fetch_assoc();
 $stmt->close();
 
-$alert = ''; // Initialize alert variable
+$alert = ''; 
 
-
-// Function to change password
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
     $old_password = $_POST['old_password'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Check if old password matches
     $sql = "SELECT password FROM user WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $user_id);
@@ -107,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
 </head>
 
 <body>
-    <div class="cont-box">
+    <div class="cont">
         <div class="custom-box pt-2">
             <div class="upload pt-3" style="text-align:left;">
                 <div class="add-btns">
@@ -219,13 +216,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
             crossorigin="anonymous"></script>
 
         <script>
-    // Function to remove the alert message after 3 seconds
     setTimeout(function(){
         var alertMessage = document.getElementById('alert-message');
         if(alertMessage){
             alertMessage.remove();
         }
-    }, 3000); // 3000 milliseconds = 3 seconds
+    }, 3000); 
 </script>
 </body>
 

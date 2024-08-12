@@ -58,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $merchantIds = [$merchantIdHead];
         $gcashReportIds = $gcashReportIdsBody;
 
-        // Update user_id in activity_history based on merchant_id
         if ($merchantIdHead) {
             $pattern = '%merchant_id: ' . $merchantIdHead . '%';
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE description LIKE ? AND user_id IS NULL");
@@ -73,7 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // Update user_id in activity_history based on gcash_report_id
         foreach ($gcashReportIds as $reportId) {
             $pattern = '%gcash_report_id: ' . $reportId . '%';
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE description LIKE ? AND user_id IS NULL");

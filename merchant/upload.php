@@ -24,7 +24,7 @@
 </head>
 
 <body>
-    <div class="cont-box">
+    <div class="cont">
         <div class="custom-box pt-4">
             <a href="javascript:history.back()">
                 <span class="back">
@@ -61,7 +61,6 @@
                         </div>
                         <div class="file-preview" style="margin-top:20px;">
                             <div class="table-container">
-                                <!-- Table will be appended here -->
                             </div>
                         </div>
                     </div>
@@ -267,46 +266,41 @@
         });
 
         document.getElementById('uploadForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault(); 
 
-            // Check if file name is 'Merchant Listing.csv'
             var fileInput = document.getElementById('fileToUpload');
-            var fileName = fileInput.value.split('\\').pop(); // Get the file name without path
+            var fileName = fileInput.value.split('\\').pop(); 
 
             if (fileName === '') {
-                document.querySelector('.alert-custom').style.display = 'block'; // Show empty file alert
+                document.querySelector('.alert-custom').style.display = 'block'; 
                 setTimeout(function () {
-                    document.querySelector('.alert-custom').style.display = 'none'; // Hide after 3 seconds
+                    document.querySelector('.alert-custom').style.display = 'none'; 
                 }, 3000);
-                return; // Prevent form submission
+                return; 
             }
 
             if (fileName !== 'Merchant Listing.csv') {
-                document.querySelector('.alert-custom-filename').style.display = 'block'; // Show filename alert
+                document.querySelector('.alert-custom-filename').style.display = 'block';
                 setTimeout(function () {
-                    document.querySelector('.alert-custom-filename').style.display = 'none'; // Hide after 3 seconds
+                    document.querySelector('.alert-custom-filename').style.display = 'none'; 
                 }, 3000);
-                return; // Prevent form submission
+                return;
             }
 
-            // Check file type
             if (!fileName.endsWith('.csv')) {
-                document.querySelector('.alert-custom-filetype').style.display = 'block'; // Show file type alert
+                document.querySelector('.alert-custom-filetype').style.display = 'block'; 
                 setTimeout(function () {
-                    document.querySelector('.alert-custom-filetype').style.display = 'none'; // Hide after 3 seconds
+                    document.querySelector('.alert-custom-filetype').style.display = 'none'; 
                 }, 3000);
-                return; // Prevent form submission
+                return; 
             }
 
-            // Get the file size in bytes
             var fileSize = fileInput.files[0].size;
 
-            // Update the submit button text with file size and show loading spinner
             var submitButton = document.getElementById('submitButton');
             var fileSizeKB = (fileSize / 1024).toFixed(2);
             submitButton.innerHTML = `<div class="spinner-border spinner-border-sm" role="status"></div><span> Uploading (${fileSizeKB} KB)...</span>`;
 
-            // Directly submit the form after updating the submit button
             document.getElementById('uploadForm').submit();
         });
 
@@ -360,7 +354,6 @@ function showAlert(message, type) {
         </div>
     `;
     
-    // Automatically remove alert after a few seconds
     setTimeout(() => {
         let alertElement = alertContainer.querySelector('.alert');
         if (alertElement) {

@@ -1,26 +1,25 @@
 <?php
 $email = isset($_GET['email']) ? $_GET['email'] : '';
 session_start();
-require 'Mailer/vendor/autoload.php'; // Include Composer autoloader
+require 'Mailer/vendor/autoload.php'; 
 include "inc/config.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-$alertMessage = ''; // Variable to store alert message
+$alertMessage = ''; 
 
 function sendEmail($to, $subject, $message) {
-    // Create a new PHPMailer instance
     $mail = new PHPMailer();
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com'; // Replace with your SMTP server
+    $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'jericobuncag0@gmail.com'; // Replace with your SMTP username
-    $mail->Password = 'zswmpiantsrswvci'; // Replace with your SMTP password
+    $mail->Username = 'jericobuncag0@gmail.com'; 
+    $mail->Password = 'zswmpiantsrswvci'; 
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom('jericobuncag0@gmail.com', 'PNR'); // Replace with your email and name
+    $mail->setFrom('jericobuncag0@gmail.com', 'PNR'); 
     $mail->addAddress($to);
 
     $mail->Subject = $subject;
@@ -81,10 +80,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["resend_code"])) {
 
             $mail = new PHPMailer();
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com'; // Replace with your SMTP server
+            $mail->Host = 'smtp.gmail.com'; 
             $mail->SMTPAuth = true;
-            $mail->Username = 'jericobuncag0@gmail.com'; // Replace with your SMTP username
-            $mail->Password = 'zswmpiantsrswvci'; // Replace with your SMTP password
+            $mail->Username = 'jericobuncag0@gmail.com'; 
+            $mail->Password = 'zswmpiantsrswvci'; 
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
@@ -95,8 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["resend_code"])) {
             $mail->isHTML(true);
             $mail->Body = $message;
 
-            // Attach logo image
-            $mail->addEmbeddedImage('images/booky2.png', 'booky_logo'); // Adjust path as needed
+            $mail->addEmbeddedImage('images/booky2.png', 'booky_logo');
 
             if ($mail->send()) {
                 $alertMessage = '<div class="alert-custom alert alert-success" role="alert"><i class="fa-solid fa-circle-check" style="padding-right:3px"></i>Verification code sent to your email. Check your inbox.</div>';
@@ -181,10 +179,10 @@ function sendTemporaryPasswordEmail($to, $temporary_password) {
 
     $mail = new PHPMailer();
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com'; // Replace with your SMTP server
+    $mail->Host = 'smtp.gmail.com'; 
     $mail->SMTPAuth = true;
-    $mail->Username = 'jericobuncag0@gmail.com'; // Replace with your SMTP username
-    $mail->Password = 'zswmpiantsrswvci'; // Replace with your SMTP password
+    $mail->Username = 'jericobuncag0@gmail.com';
+    $mail->Password = 'zswmpiantsrswvci';
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
@@ -195,8 +193,7 @@ function sendTemporaryPasswordEmail($to, $temporary_password) {
     $mail->isHTML(true);
     $mail->Body = $message;
 
-    // Attach logo image
-    $mail->addEmbeddedImage('images/booky2.png', 'booky_logo'); // Adjust path as needed
+    $mail->addEmbeddedImage('images/booky2.png', 'booky_logo');
 
     if ($mail->send()) {
         $alertMessage = '<div class="alert-container alert alert-success" role="alert"><i class="fa-solid fa-circle-check" style="padding-right:3px"></i>Temporary password sent to your email. Check your inbox.</div>';
@@ -237,12 +234,12 @@ function sendTemporaryPasswordEmail($to, $temporary_password) {
             content: "";
             position: absolute;
             top: 0;
-            z-index: -1; /* Move the pseudo-element to the background */
+            z-index: -1; 
             left: 0;
             width: 100%;
             height: 100%;  
-            background: rgba(0, 0, 0, 0.3); /* Adjust alpha value for darkness */
-            background-attachment: fixed; /* Ensure the dark overlay doesn't move */
+            background: rgba(0, 0, 0, 0.3);
+            background-attachment: fixed; 
         }
         .verification-container {
             max-width: 400px;
@@ -310,7 +307,6 @@ function sendTemporaryPasswordEmail($to, $temporary_password) {
             box-sizing: border-box;
             opacity: 1;
             transition: opacity 1s ease-out;
-            /* Smooth transition for fade-out effect */
         }
 
         .alert-container.fade-out {
@@ -341,7 +337,7 @@ function sendTemporaryPasswordEmail($to, $temporary_password) {
             alerts.forEach(function(alert) {
                 setTimeout(function() {
                     alert.style.opacity = '0';
-                }, 3000); // Adjust the delay time as needed
+                }, 3000); 
             });
         });
     </script>

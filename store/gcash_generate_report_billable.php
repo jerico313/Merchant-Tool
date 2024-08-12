@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: failed.php");
             exit;
         }
-        $stmt->close(); // Close the first statement
+        $stmt->close();
 
         $maxGcashReportId = null;
         $stmt = $conn->prepare("SELECT gcash_report_id FROM report_history_gcash_head ORDER BY created_at DESC LIMIT 1");
@@ -60,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $storeIds = [$storeIdHead];
         $gcashReportIds = $gcashReportIdsBody;
 
-        // Update user_id in activity_history based on store_id
         if ($storeIdHead) {
             $pattern = '%store_id: ' . $storeIdHead . '%';
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE description LIKE ? AND user_id IS NULL");

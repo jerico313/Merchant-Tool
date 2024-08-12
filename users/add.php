@@ -1,11 +1,10 @@
 <?php
 include("../inc/config.php");
-require '../Mailer/vendor/autoload.php'; // Include Composer autoloader
+require '../Mailer/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Function to generate a random password
 function generateRandomPassword($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
@@ -16,35 +15,32 @@ function generateRandomPassword($length = 10) {
     return $randomPassword;
 }
 
-// Function to send email
 function sendEmail($to, $subject, $message) {
     $mail = new PHPMailer();
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com'; // Replace with your SMTP server
+    $mail->Host = 'smtp.gmail.com'; 
     $mail->SMTPAuth = true;
-    $mail->Username = 'jericobuncag0@gmail.com'; // Replace with your SMTP username
-    $mail->Password = 'zswmpiantsrswvci'; // Replace with your SMTP password
+    $mail->Username = 'jericobuncag0@gmail.com'; 
+    $mail->Password = 'zswmpiantsrswvci'; 
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom('jericobuncag0@gmail.com', 'Booky'); // Replace with your email and name
+    $mail->setFrom('jericobuncag0@gmail.com', 'Booky'); 
     $mail->addAddress($to);
     
     $mail->Subject = $subject;
     $mail->isHTML(true);
     $mail->Body = $message;
-    $mail->addEmbeddedImage('../images/booky2.png', 'booky_logo'); // Adjust path as needed
+    $mail->addEmbeddedImage('../images/booky2.png', 'booky_logo');
     return $mail->send();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Retrieve POST data
     $name = $_POST['name'];
     $emailAddress = $_POST['emailAddress'];
     $type = $_POST['type'];
     $user_id = $_POST['userId'];
 
-    // Check if the email already exists
     $stmt = $conn->prepare("SELECT COUNT(*) FROM user WHERE email_address = ?");
     $stmt->bind_param("s", $emailAddress);
     $stmt->execute();
@@ -53,28 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->close();
 
     if ($emailCount > 0) {
-        // Email already exists
         echo "Error: The email address is already registered.";
     } else {
-        // Generate random password
         $randomPassword = generateRandomPassword();
-        // Hash the password before storing in the database
         $hashedPassword = password_hash($randomPassword, PASSWORD_BCRYPT);
 
-        // Prepare and execute the insert statement
         $stmt = $conn->prepare("INSERT INTO user (name, email_address, type, password) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $name, $emailAddress, $type, $hashedPassword);
         $stmt->execute();
         $stmt->close();
 
-        // Get the latest activity_id
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
         if ($stmt->execute()) {
             $stmt->bind_result($latestActivityId);
             $stmt->fetch();
             $stmt->close();
 
-            // Update the user_id column in the latest activity_history record
             if ($latestActivityId) {
                 $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
                 $stmt->bind_param("ss", $user_id, $latestActivityId);
@@ -83,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        // Prepare email content
         $subject = "Welcome to Merchant Settlement Tool";
         $message = '
             <html>
@@ -135,14 +124,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </html>
         ';
 
-        // Send the email
         if (sendEmail($emailAddress, $subject, $message)) {
             echo "Success: The account has been created, and the password has been sent to the provided email address.";
         } else {
             echo "Error: Failed to send the email.";
         }
 
-        // Redirect to the same page after a successful update
         header("Location: index.php");
         exit();
     }

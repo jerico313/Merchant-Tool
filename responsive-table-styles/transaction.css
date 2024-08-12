@@ -1,0 +1,137 @@
+body {
+    background-image: url("../images/bg_booky.png");
+}
+@media only screen and (max-width: 767px) {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+        text-align: left !important;
+    }
+
+    thead tr,
+    tfoot tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50% !important;
+    }
+
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        text-align: left !important;
+    }
+
+    td:nth-of-type(1):before {
+        content: "Transaction ID";
+    }
+
+    td:nth-of-type(2):before {
+        content: "Transaction Date";
+    }
+
+    td:nth-of-type(3):before {
+        content: "Customer ID";
+    }
+
+    td:nth-of-type(4):before {
+        content: "Customer Name";
+    }
+
+    td:nth-of-type(5):before {
+        content: "Promo Code";
+    }
+
+    td:nth-of-type(6):before {
+        content: "Voucher Type";
+    }
+
+    td:nth-of-type(7):before {
+        content: "Promo Category";
+    }
+
+    td:nth-of-type(8):before {
+        content: "Promo Group";
+    }
+
+    td:nth-of-type(9):before {
+        content: "Promo Type";
+    }
+
+    td:nth-of-type(10):before {
+        content: "Gross Amount";
+    }
+
+    td:nth-of-type(11):before {
+        content: "Discount";
+    }
+
+    td:nth-of-type(12):before {
+        content: "Cart Amount";
+    }
+
+    td:nth-of-type(13):before {
+        content: "Mode of Payment";
+    }
+
+    td:nth-of-type(14):before {
+        content: "Bill Status";
+    }
+
+    td:nth-of-type(15):before {
+        content: "Commission Type";
+    }
+
+    td:nth-of-type(16):before {
+        content: "Commission Rate";
+    }
+
+    td:nth-of-type(17):before {
+        content: "Commission Amount";
+    }
+
+    td:nth-of-type(18):before {
+        content: "Total Billing";
+    }
+
+    td:nth-of-type(19):before {
+        content: "PG Fee Rate";
+    }
+
+    td:nth-of-type(20):before {
+        content: "PG Fee Amount";
+    }
+
+    td:nth-of-type(21):before {
+        content: "Amount to be Disbursed";
+    }
+
+    .dataTables_length {
+        display: none;
+    }
+
+    .title {
+        font-size: 25px;
+        padding-left: 2vh;
+        padding-top: 10px;
+    }
+
+    .voucher-type {
+        padding-right: 2vh;
+    }
+}

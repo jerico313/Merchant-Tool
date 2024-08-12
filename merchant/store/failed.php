@@ -48,7 +48,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
         .checkmark__circle {
             stroke-width: 4;
             stroke-miterlimit: 10;
-            stroke: #f44336; /* Change color to red for X */
+            stroke: #f44336; 
             fill: none;
         }
 
@@ -58,7 +58,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
             stroke-width: 4;
             stroke-linecap: round;
             stroke-miterlimit: 10;
-            stroke: #f44336; /* Change color to red for X */
+            stroke: #f44336;
             fill: none;
             animation: draw 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
         }
@@ -86,7 +86,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
     <script>
         setTimeout(function(){
             window.location.href = '../store/index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
-        }, 3000); // Delay for 3 seconds (3000 milliseconds)
+        }, 3000);
     </script>
 </body>
 </html>

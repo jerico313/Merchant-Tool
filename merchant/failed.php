@@ -6,7 +6,7 @@ require_once("../header.php");
 <html>
 <head>
     <link rel="stylesheet" href="../style.css">
-    <title>Upload Success</title>
+    <title>Upload Failed</title>
     <style>
         body {
             background-image: url("../images/bg_booky.png");
@@ -42,7 +42,7 @@ require_once("../header.php");
         .checkmark__circle {
             stroke-width: 4;
             stroke-miterlimit: 10;
-            stroke: #f44336; /* Change color to red for X */
+            stroke: #f44336; 
             fill: none;
         }
 
@@ -52,7 +52,7 @@ require_once("../header.php");
             stroke-width: 4;
             stroke-linecap: round;
             stroke-miterlimit: 10;
-            stroke: #f44336; /* Change color to red for X */
+            stroke: #f44336;
             fill: none;
             animation: draw 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
         }
@@ -80,7 +80,7 @@ require_once("../header.php");
     <script>
         setTimeout(function(){
             window.location.href = 'index.php';
-        }, 3000); // Delay for 3 seconds (3000 milliseconds)
+        }, 3000); 
     </script>
 </body>
 </html>
