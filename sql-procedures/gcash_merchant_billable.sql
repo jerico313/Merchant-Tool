@@ -35,20 +35,26 @@ BEGIN
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
             END AS settlement_period,
 
-            SUM(`Cart Amount`) AS total_amount,
+            SUM(`Voucher Price`) AS total_amount,
             `Commission Rate` AS commission_rate,
-            SUM(`Commission Amount`) AS commission_amount,
-            CASE
-                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+            ROUND(CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Voucher Price`) * (`Commission Rate` / 100) / 1.12
+                ELSE SUM(`Voucher Price`) * (`Commission Rate` / 100)
+            END, 2) AS commission_amount,
+            ROUND(CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN (SUM(`Voucher Price`) * (`Commission Rate` / 100) / 1.12) * 0.12
                 ELSE 0.00
-            END AS vat_amount,
-            SUM(`Commission Amount`)
+            END, 2) AS vat_amount,
+            ROUND(CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Voucher Price`) * (`Commission Rate` / 100) / 1.12
+                ELSE SUM(`Voucher Price`) * (`Commission Rate` / 100)
+            END
             + CASE
-                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+                WHEN fee.commission_type = ''Vat Exc'' THEN (SUM(`Voucher Price`) * (`Commission Rate` / 100) / 1.12) * 0.12
                 ELSE 0.00
-            END AS total_commission_fees
+            END, 2) AS total_commission_fees
         FROM 
-            `transaction_summary_view`
+            `gcash_transactions_view`
         JOIN
             `merchant` ON `Merchant ID` = merchant.`merchant_id`
         JOIN
@@ -56,10 +62,8 @@ BEGIN
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Promo Group` = ''Gcash''
             AND `Bill Status` = ''BILLABLE''
-        GROUP BY 
-            `Merchant ID`');
+        ');
 
     PREPARE stmt_insert FROM @sql_insert;
     EXECUTE stmt_insert;
@@ -86,20 +90,26 @@ BEGIN
                     CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
             END AS settlement_period,
 
-            SUM(`Cart Amount`) AS total_amount,
+            SUM(`Voucher Price`) AS total_amount,
             `Commission Rate` AS commission_rate,
-            SUM(`Commission Amount`) AS commission_amount,
-            CASE
-                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+            ROUND(CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Voucher Price`) * (`Commission Rate` / 100) / 1.12
+                ELSE SUM(`Voucher Price`) * (`Commission Rate` / 100)
+            END, 2) AS commission_amount,
+            ROUND(CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN (SUM(`Voucher Price`) * (`Commission Rate` / 100) / 1.12) * 0.12
                 ELSE 0.00
-            END AS vat_amount,
-            SUM(`Commission Amount`)
+            END, 2) AS vat_amount,
+            ROUND(CASE
+                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Voucher Price`) * (`Commission Rate` / 100) / 1.12
+                ELSE SUM(`Voucher Price`) * (`Commission Rate` / 100)
+            END
             + CASE
-                WHEN fee.commission_type = ''Vat Exc'' THEN SUM(`Commission Amount`) * 0.12
+                WHEN fee.commission_type = ''Vat Exc'' THEN (SUM(`Voucher Price`) * (`Commission Rate` / 100) / 1.12) * 0.12
                 ELSE 0.00
-            END AS total_commission_fees
+            END, 2) AS total_commission_fees
         FROM 
-            `transaction_summary_view`
+            `gcash_transactions_view`
         JOIN
             `merchant` ON `Merchant ID` = merchant.`merchant_id`
         JOIN
@@ -107,33 +117,31 @@ BEGIN
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Promo Group` = ''Gcash''
             AND `Bill Status` = ''BILLABLE''
-        GROUP BY 
-            `Merchant ID`');
+        ');
 
     PREPARE stmt_select FROM @sql_select;
     EXECUTE stmt_select;
     DEALLOCATE PREPARE stmt_select;
 
     SET @sql_insert1 = CONCAT('INSERT INTO report_history_gcash_body
-        (gcash_report_id, item, quantity_redeemed, net_amount)
+        (gcash_report_id, item, quantity_redeemed, voucher_value, amount)
         SELECT 
             "', v_uuid, '"  AS gcash_report_id,
             p.promo_code as item,
             COUNT(`Transaction ID`) AS quantity_redeemed,
-	        SUM(`Cart Amount`) AS net_amount
+            p.promo_amount AS voucher_value,
+	        ROUND(COUNT(`Transaction ID`) * p.promo_amount, 2) AS amount
         FROM 
-            `transaction_summary_view`
+            `gcash_transactions_view`
         JOIN
-            `promo` p ON `Promo Code` = p.promo_code
+            `promo` p ON `Item` = p.promo_code
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Promo Group` = ''Gcash''
             AND `Bill Status` = ''BILLABLE''
         GROUP BY 
-            `Promo Code`');
+            `Item`');
 
     PREPARE stmt_insert1 FROM @sql_insert1;
     EXECUTE stmt_insert1;
@@ -143,18 +151,18 @@ BEGIN
             "', v_uuid, '"  AS gcash_report_id,
             p.promo_code as item,
             COUNT(`Transaction ID`) AS quantity_redeemed,
-	        SUM(`Cart Amount`) AS net_amount
+            p.promo_amount AS voucher_value,
+	        ROUND(COUNT(`Transaction ID`) * p.promo_amount, 2) AS amount
         FROM 
-            `transaction_summary_view`
+            `gcash_transactions_view`
         JOIN
-            `promo` p ON `Promo Code` = p.promo_code
+            `promo` p ON `Item` = p.promo_code
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-            AND `Promo Group` = ''Gcash''
             AND `Bill Status` = ''BILLABLE''
         GROUP BY 
-            `Promo Code`');
+            `Item`');
 
     PREPARE stmt_select1 FROM @sql_select1;
     EXECUTE stmt_select1;
