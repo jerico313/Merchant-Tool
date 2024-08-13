@@ -1,6 +1,6 @@
 <?php
 include ("../inc/config.php");
-session_start(); // Start the session to access session variables
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['transaction_ids'])) {
@@ -17,8 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->affected_rows > 0) {
             echo 'Transactions deleted successfully.';
 
-            // Update all activities in activity_history matching the delete criteria
-            $userId = $_SESSION['user_id']; // Use the session ID as the user ID
+            $userId = $_SESSION['user_id'];
             $update_stmt = $conn->prepare("
                 UPDATE activity_history
                 SET user_id = ?
