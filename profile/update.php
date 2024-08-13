@@ -11,13 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
     $stmt->bind_param("sss", $name, $email, $user_id);
 
     if ($stmt->execute()) {
-        // Redirect to index.php
         header("Location: index.php");
         exit();
     } else {
-        // Handle the error
         $alert = '<div id="alert-message" class="alert alert-danger" role="alert">Profile update failed!</div>';
-        echo $alert; // Display the alert message
+        echo $alert; 
     }
 
     $stmt->close();

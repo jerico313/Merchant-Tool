@@ -1,0 +1,95 @@
+body {
+    background-image: url("../images/bg_booky.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 900;
+    margin-right: auto;
+    padding-left: 5vh;
+    color: #4BB0B8;
+}
+
+.voucher-type {
+    padding-bottom: 0px;
+    padding-right: 5vh;
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 767px) {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+        text-align: left !important;
+    }
+
+    thead tr,
+    tfoot tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50% !important;
+    }
+
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        text-align: left !important;
+    }
+
+    .table td:nth-child(1) {
+        background: #E96529;
+        height: 100%;
+        top: 0;
+        left: 0;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    td:nth-of-type(1):before {
+        content: "Promo ID";
+    }
+
+    td:nth-of-type(2):before {
+        content: "Old Bill Status";
+    }
+
+    td:nth-of-type(3):before {
+        content: "New Bill Status";
+    }
+
+    .dataTables_length {
+        display: none;
+    }
+
+    .title {
+        font-size: 25px;
+        padding-left: 2vh;
+        padding-top: 10px;
+    }
+
+    .voucher-type {
+        padding-right: 2vh;
+    }
+}

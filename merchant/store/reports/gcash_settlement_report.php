@@ -1,5 +1,4 @@
 <?php
-// Include the configuration file
 include ('../../../inc/config.php');
 
 $gcash_report_id = isset($_GET['gcash_report_id']) ? $_GET['gcash_report_id'] : '';
@@ -51,14 +50,12 @@ $bill_status = isset($_GET['bill_status']) ? $_GET['bill_status'] : '';
 
 function displayOffers($store_id, $start_date, $end_date, $bill_status)
 {
-  include ("../../inc/config.php");
+  include ("../../../inc/config.php");
 
-  // Base SQL query
   $sql = "SELECT * FROM transaction_summary_view 
             WHERE `Store ID` = ? 
             AND `Transaction Date` BETWEEN ? AND ?";
 
-  // Adjust SQL query based on the bill_status parameter
   if ($bill_status === 'BILLABLE') {
     $sql .= " AND `Bill Status` = 'BILLABLE' ORDER BY `Transaction Date A` ASC";
   } elseif ($bill_status === 'PRE-TRIAL') {
@@ -73,7 +70,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
   }
 
-  // Bind parameters without bill_status as it's already in the query
   $stmt->bind_param("sss", $store_id, $start_date, $end_date);
 
   if (!$stmt->execute()) {
@@ -168,7 +164,9 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       text-decoration: none;
     }
 
+
     nav {
+      opacity: 0.8;
       box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.25);
       -webkit-box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.25);
       -moz-box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.25);
@@ -190,48 +188,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       }
     }
   </style>
-  <script>
-    function exportToExcel() {
-      const table = document.getElementById("myTable");
-      const ws = XLSX.utils.table_to_sheet(table);
-
-      // Format columns 9 and 10 to two decimal places with commas
-      ws['!cols'] = [{ wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 15 }, { wch: 15 }]; // Adjust column widths if needed
-
-      // Add number formatting to columns 9 and 10
-      for (let i = 1; i <= ws['!ref'].split(':')[1].replace(/\D/g, ''); i++) {
-        if (ws[`J${i}`]) {
-          ws[`J${i}`].z = '#,##0.00';
-        }
-        if (ws[`K${i}`]) {
-          ws[`K${i}`].z = '#,##0.00';
-        }
-        if (ws[`L${i}`]) {
-          ws[`L${i}`].z = '#,##0.00';
-        }
-        if (ws[`Q${i}`]) {
-          ws[`Q${i}`].z = '#,##0.00';
-        }
-        if (ws[`R${i}`]) {
-          ws[`R${i}`].z = '#,##0.00';
-        }
-        if (ws[`T${i}`]) {
-          ws[`T${i}`].z = '#,##0.00';
-        }
-        if (ws[`J${i}`]) {
-          ws[`J${i}`].z = '#,##0.00';
-        }
-        if (ws[`U${i}`]) {
-          ws[`U${i}`].z = '#,##0.00';
-        }
-      }
-
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-      XLSX.writeFile(wb, "<?php echo htmlspecialchars($store_brand_name); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
-    }
-  </script>
 </head>
 
 <body>
@@ -252,17 +208,15 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
-          <!-- Add your navigation items here if needed -->
         </ul>
         <a class="print" id="print" href="#"><i class="fa-solid fa-print fa-lg"></i> Print</a>
-        <a class="downloadBtnExcel" id="downloadBtnExcel" onclick="exportToExcel()" href="#"><i
-            class="fa-solid fa-download fa-lg"></i> Excel</a>
-        <!-- <a class="downloadBtn" id="downloadBtn"  href="#"> <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
+        <a class="downloadBtnExcel" id="downloadBtnExcel" onclick="downloadTables()" href="#"><i
+            class="fa-solid fa-download fa-lg"></i> CSV</a>
       </div>
     </div>
   </nav>
   <div class="box" style="display:none;">
-    <table id="myTable" class="table bord" style="width:250%;">
+    <table id="transaction" class="table bord" style="width:250%;">
       <thead>
         <tr>
           <th>Merchant Name</th>
@@ -283,8 +237,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       </tbody>
     </table>
   </div>
-
-
   <div class="container" style="padding:70px;" id="content">
     <p style="text-align:center;font-size:20px;font-weight:900;">SETTLEMENT REPORT</p>
     <p class="text-right" style="font-weight:bold;font-size:40px;">
@@ -317,7 +269,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
-    <p style="text-align:center;font-weight:bold;">GCash Lead Generation</p>
+    <p style="text-align:center;font-weight:bold;">Gcash Lead Generation</p>
     <hr style="border: 1px solid #3b3b3b;">
     <table id="example" style="width:100%;">
       <thead>
@@ -343,20 +295,18 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     <hr style="border: 1px solid #3b3b3b;">
     <table style="width:100% !important;">
       <tr>
-        <td style="width:31%;"></td>
-        <td style="text-align:right;width:28%;">Commission (<?php echo htmlspecialchars($data['commission_rate']); ?>)
+        <td style="text-align:right;width:80%;">Commission (<?php echo htmlspecialchars($data['commission_rate']); ?>)</td>
+        <td style="text-align:right;width:20%;padding-right:70px;"><?php echo $commissionAmount; ?></td>
+      </tr>
+      <tr>
+
+        <td style="text-align:right;width:80%;">VAT (12%)</td>
+        <td style="text-align:right;width:20%;padding-right:70px;"><?php echo $vatAmount; ?></td>
+      </tr>
+      <tr>
+        <td style="text-align:right;width:80%;"></td>
+        <td style="text-align:right;width:20%;font-weight:bold;padding-right:70px;"><?php echo $totalCommissionFees; ?>
         </td>
-        <td style="text-align:right;width:41%;padding-right:70px;"><?php echo $commissionAmount; ?></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td style="text-align:right;width:24%;">VAT (12.00%)</td>
-        <td style="text-align:right;padding-right:70px;"><?php echo $vatAmount; ?></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td style="text-align:right;width:24%;"></td>
-        <td style="text-align:right;font-weight:bold;padding-right:70px;"><?php echo $totalCommissionFees; ?></td>
       </tr>
     </table>
     <br>
@@ -384,8 +334,8 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       document.getElementById("downloadBtn").addEventListener("click", () => {
         const invoice = document.getElementById("content");
         var opt = {
-          margin: [-1.5, -0.5, -0.5, -0.5], // [top, right, bottom, left] in inches
-          filename: '<?php echo htmlspecialchars($data['merchant_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf',
+          margin: [-1.5, -0.5, -0.5, -0.5],
+          filename: '<?php echo htmlspecialchars($data['store_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf',
           image: { type: 'jpeg', quality: 1.0 },
           html2canvas: { scale: 5 },
           jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' }
@@ -403,16 +353,37 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       window.onafterprint = function () {
         document.body.innerHTML = originalContent;
         setTimeout(function () {
-          location.reload(); // Reload the page after a short delay
-        }, 10); // Adjust the delay duration (in milliseconds) as needed
+          location.reload(); 
+        }, 10); 
       };
 
       window.print();
     });
   </script>
+  <script>
+    function downloadTables() {
+        var table = document.getElementById("example");
+        var rows = table.querySelectorAll("tr");
+        var data = [];
 
+        rows.forEach(function(row) {
+            var rowData = [];
+            var cells = row.querySelectorAll("th, td");
+            
+            cells.forEach(function(cell) {
+                var cellText = cell.innerText || cell.textContent;
+                rowData.push(cellText);
+            });
 
+            data.push(rowData);
+        });
 
+        var ws = XLSX.utils.aoa_to_sheet(data);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+    }
+</script>
 </body>
-
 </html>

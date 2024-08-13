@@ -57,7 +57,6 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             WHERE `Merchant ID` = ? 
             AND `Transaction Date` BETWEEN ? AND ?";
 
-  // Adjust SQL query based on the bill_status parameter
   if ($bill_status === 'BILLABLE') {
     $sql .= " AND `Bill Status` = 'BILLABLE' ORDER BY `Transaction Date A` ASC";
   } elseif ($bill_status === 'PRE-TRIAL') {
@@ -72,7 +71,6 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
     die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
   }
 
-  // Bind parameters without bill_status as it's already in the query
   $stmt->bind_param("sss", $merchant_id, $start_date, $end_date);
 
   if (!$stmt->execute()) {
@@ -211,17 +209,15 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
-          <!-- Add your navigation items here if needed -->
         </ul>
         <a class="print" id="print" href="#"><i class="fa-solid fa-print fa-lg"></i> Print</a>
         <a class="downloadBtnExcel" id="downloadBtnExcel" onclick="downloadTables()" href="#"><i
             class="fa-solid fa-download fa-lg"></i> Excel</a>
-        <!-- <a class="downloadBtn" id="downloadBtn"  href="#"> <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
       </div>
     </div>
   </nav>
   <div class="box" style="display:none;">
-    <table id="transaction" class="table bord" style="width:250%;">
+    <table id="example" class="table bord" style="width:250%;">
       <thead>
         <tr>
           <th>Merchant Name</th>
@@ -276,7 +272,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
     <hr style="border: 1px solid #3b3b3b;">
     <p style="text-align:center;font-weight:bold;">Gcash Lead Generation Report</p>
     <hr style="border: 1px solid #3b3b3b;">
-    <table id="example" style="width:100%;">
+    <table style="width:100%;">
       <thead>
         <tr>
           <td style="text-align:center;font-weight:bold;width:25%">Items</td>
@@ -340,7 +336,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
       document.getElementById("downloadBtn").addEventListener("click", () => {
         const invoice = document.getElementById("content");
         var opt = {
-          margin: [-1.5, -0.5, -0.5, -0.5], // [top, right, bottom, left] in inches
+          margin: [-1.5, -0.5, -0.5, -0.5], 
           filename: '<?php echo htmlspecialchars($data['merchant_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf',
           image: { type: 'jpeg', quality: 1.0 },
           html2canvas: { scale: 5 },
@@ -359,8 +355,8 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
       window.onafterprint = function () {
         document.body.innerHTML = originalContent;
         setTimeout(function () {
-          location.reload(); // Reload the page after a short delay
-        }, 10); // Adjust the delay duration (in milliseconds) as needed
+          location.reload(); 
+        }, 10); 
       };
 
       window.print();
@@ -368,12 +364,28 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
   </script>
   <script>
     function downloadTables() {
-      var table = document.getElementById("transaction");
-      var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
-      XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+        var table = document.getElementById("example");
+        var rows = table.querySelectorAll("tr");
+        var data = [];
+
+        rows.forEach(function(row) {
+            var rowData = [];
+            var cells = row.querySelectorAll("th, td");
+            
+            cells.forEach(function(cell) {
+                var cellText = cell.innerText || cell.textContent;
+                rowData.push(cellText);
+            });
+
+            data.push(rowData);
+        });
+
+        var ws = XLSX.utils.aoa_to_sheet(data);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
-  </script>
-
+</script>
 </body>
-
 </html>

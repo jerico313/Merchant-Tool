@@ -55,7 +55,6 @@
             box-sizing: border-box;
             opacity: 1;
             transition: opacity 1s ease-out;
-            /* Smooth transition for fade-out effect */
         }
 
         .alert-container.fade-out {
@@ -120,31 +119,28 @@
 
     <script>
     document.getElementById('submitButton').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault(); 
 
         const email = document.getElementById('email').value;
         const formData = new FormData(document.querySelector('form'));
 
         const submitButton = document.getElementById('submitButton');
         submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'; // Add loading spinner
-        submitButton.disabled = true; // Disable the button to prevent multiple submissions
+        submitButton.disabled = true; 
 
-        // Make an AJAX request to check if the email exists
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'check_user.php', true); // Replace 'check_user.php' with your actual PHP file
+        xhr.open('POST', 'check_user.php', true); 
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = xhr.responseText;
                 if (response === 'exists') {
-                    // Email exists, show the alert
                     const alertContainer = document.createElement('div');
                     alertContainer.classList.add('alert-container', 'alert', 'alert-danger', 'mt-3');
                     alertContainer.setAttribute('role', 'alert');
                     alertContainer.innerHTML = '<i class="fa-solid fa-circle-check" style="padding-right:3px"></i> The email address you entered already exists. Please use a different email address.';
                     document.getElementById('content').appendChild(alertContainer);
 
-                    // Remove the alert after 5 seconds
                     setTimeout(function() {
                         alertContainer.classList.add('fade-out');
                         setTimeout(function() {
@@ -152,30 +148,24 @@
                         }, 1000); 
                     }, 5000);
 
-                    // Re-enable the button and reset its text
                     submitButton.innerHTML = 'Submit';
                     submitButton.disabled = false;
                 } else {
-                    // Email doesn't exist, submit the form data to add.php
                     const formSubmit = new XMLHttpRequest();
                     formSubmit.open('POST', 'add.php', true);
                     formSubmit.onload = function() {
                         if (formSubmit.status === 200) {
-                            // Redirect or handle success
-                            window.location.href = 'index.php'; // Redirect to index.php after successful submission
+                            window.location.href = 'index.php';
                         } else {
                             console.error('Error submitting form:', formSubmit.status);
                         }
-                        // Re-enable the button and reset its text
                         submitButton.innerHTML = 'Submit';
                         submitButton.disabled = false;
                     };
                     formSubmit.send(formData);
                 }
             } else {
-                // Handle errors
                 console.error('Error checking email:', xhr.status);
-                // Re-enable the button and reset its text
                 submitButton.innerHTML = 'Submit';
                 submitButton.disabled = false;
             }
@@ -183,9 +173,5 @@
         xhr.send('email=' + encodeURIComponent(email));
     });
 </script>
-
-
-
 </body>
-
 </html>

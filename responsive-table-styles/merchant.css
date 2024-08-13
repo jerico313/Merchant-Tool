@@ -1,0 +1,34 @@
+body {
+    background-image: url("../images/bg_booky.png");
+}
+
+#alertContainer {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    margin-top: 15%;
+    width: 300px;
+    padding: 15px;
+    font-size: 13px;
+}
+
+table.dataTable tbody td:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 2;
+    background-color: #F1F1F1 !important;
+    box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+    -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+table thead th:last-child {
+    position: sticky !important;
+    right: 0;
+    z-index: 2;
+    box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+    -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+    -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+}

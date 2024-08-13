@@ -3,9 +3,8 @@
     const filename = this.files[0].name;
     filenameElement.textContent = `${filename}`;
 
-    // Preview the file content
     const previewArea = document.querySelector('.file-preview');
-    previewArea.innerHTML = ''; // Clear previous preview
+    previewArea.innerHTML = ''; 
     const file = this.files[0];
 
     if (file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.name.endsWith('.csv')) {
@@ -19,7 +18,6 @@
                 const thead = document.createElement('thead');
                 const tbody = document.createElement('tbody');
                 
-                // Display header (first row)
                 const headerRow = document.createElement('tr');
                 for (let key in data[0]) {
                     const th = document.createElement('th');
@@ -29,7 +27,6 @@
                 thead.appendChild(headerRow);
                 table.appendChild(thead);
 
-                // Display data
                 for (let i = 0; i < Math.min(10, data.length); i++) {
                     const row = document.createElement('tr');
                     for (let key in data[i]) {
@@ -50,7 +47,6 @@
     }
 });
 
-    // Custom function to handle CSV line parsing
     function splitCSVLine(line) {
         const values = [];
         let currentValue = '';
@@ -72,9 +68,9 @@
 
     document.getElementById('clearButton').addEventListener('click', function() {
         const fileInput = document.getElementById('fileToUpload');
-        fileInput.value = ''; // Clear file input
-        document.querySelector('.filename').textContent = ''; // Clear filename display
-        document.querySelector('.file-preview').innerHTML = ''; // Clear file preview
+        fileInput.value = ''; 
+        document.querySelector('.filename').textContent = ''; 
+        document.querySelector('.file-preview').innerHTML = '';
     });
 
     

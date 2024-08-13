@@ -27,7 +27,7 @@ function displayMessage($type, $message)
             border-radius: 10px; 
             width: $containerWidth;
             height: $containerHeight; 
-            padding: 20px; /* Increased padding */
+            padding: 20px;
             backdrop-filter: blur(16px) saturate(180%); 
             -webkit-backdrop-filter: blur(16px) saturate(180%); 
             background-color: rgba(255, 255, 255, 0.40); 
@@ -62,14 +62,14 @@ function displayMessage($type, $message)
             100% { stroke-dashoffset: 0; } 
         }
         .error-list {
-            font-size: 14px; /* Adjusted font size */
-            text-align: left; /* Left-align list items */
+            font-size: 14px; 
+            text-align: left; 
             margin-top: 10px;
-            padding-left: 0; /* Remove default padding */
-            list-style-type: none; /* Remove bullet points */
+            padding-left: 0; 
+            list-style-type: none; 
         }
         .error-list li {
-            margin-bottom: 5px; /* Adjust spacing between list items */
+            margin-bottom: 5px; 
         }
         #okay{
         display: inline-block;
@@ -91,12 +91,10 @@ function displayMessage($type, $message)
         </svg>
 HTML;
 
-    // Display success message
     if ($type === 'success') {
         echo "<br><h2 style='color:#4caf50;'>Successfully Uploaded</h2><br>";
     }
 
-    // If the message is an error and contains a list, format the list accordingly
     if ($type === 'error' && strpos($message, '<br>') !== false) {
         echo "<br><h2 style='color:#f44336;'>Error</h2>";
         echo '<ul class="error-list">';
@@ -176,7 +174,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     }
 
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle); // Skip header row
+    fgetcsv($handle); 
 
     $duplicateMessages = [];
     $invalidStoreIds = [];
@@ -185,11 +183,10 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $duplicateTransactionIds = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $storeId = $data[3]; // Assuming data[3] is store_id
-        $transactionId = $data[7]; // Assuming data[7] is transaction_id
-        $promoCode = $data[6]; // Assuming data[6] is promo_code
+        $storeId = $data[3]; 
+        $transactionId = $data[7];
+        $promoCode = $data[6]; 
 
-        // Check for duplicate transaction IDs in the CSV file itself
         if (isset($transactionIds[$transactionId])) {
             if (!isset($duplicateTransactionIds[$transactionId])) {
                 $duplicateTransactionIds[$transactionId] = [$transactionId, $transactionIds[$transactionId]];
@@ -199,19 +196,16 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
             $transactionIds[$transactionId] = $transactionId;
         }
 
-        // Check for duplicates in the database
         $duplicates = checkForDuplicates($conn, $transactionId);
 
         if (!empty($duplicates)) {
             $duplicateMessages = array_merge($duplicateMessages, $duplicates);
         }
 
-        // Check if store ID exists
         if (!checkStoreExistence($conn, $storeId) && !in_array("Store ID '{$storeId}' does not exist.", $invalidStoreIds)) {
             $invalidStoreIds[] = "Store ID '{$storeId}' does not exist.";
         }
 
-        // Check if promo code exists
         if (!checkPromoExistence($conn, $promoCode) && !in_array("Promo Code '{$promoCode}' does not exist.", $invalidPromoCodes)) {
             $invalidPromoCodes[] = "Promo Code '{$promoCode}' does not exist.";
         }
@@ -219,7 +213,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     fclose($handle);
 
-    // Add duplicate transaction IDs from the CSV file to the duplicate messages
     foreach ($duplicateTransactionIds as $transactionId => $transactionIds) {
         $duplicateMessages[] = "Duplicate Transaction ID '{$transactionId}' in CSV file: " . implode(", ", $transactionIds);
     }
@@ -231,22 +224,20 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         exit();
     }
 
-    // If no duplicates and all store IDs and promo codes are valid, proceed with inserting into the database
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle); // Skip header row again
+    fgetcsv($handle); 
 
     $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $data[4] = empty($data[4]) ? null : $data[4]; // Convert blank customer_name to null
+        $data[4] = empty($data[4]) ? null : $data[4]; 
         $transaction_date = convertDateFormat($data[8]);
-        $data[9] = str_replace(',', '', $data[9]); // gross_amount
-        $data[10] = str_replace(',', '', $data[10]); // discount
-        $data[11] = str_replace(',', '', $data[11]); // amount_discounted
-        $data[12] = str_replace(',', '', $data[12]); // amount_paid
-        $data[13] = ($data[13] = str_replace('"', '', $data[13])) === '' ? null : $data[13]; //payment
+        $data[9] = str_replace(',', '', $data[9]);
+        $data[10] = str_replace(',', '', $data[10]);
+        $data[11] = str_replace(',', '', $data[11]); 
+        $data[12] = str_replace(',', '', $data[12]);
+        $data[13] = ($data[13] = str_replace('"', '', $data[13])) === '' ? null : $data[13]; 
 
-        // Bind and execute for the transaction table
         $stmt1->bind_param("sssssssssssss", $data[7], $data[3], $data[6], $data[5], $data[4], $transaction_date, $data[9], $data[10], $data[11], $data[12], $data[13], $data[14], $data[15]);
         $stmt1->execute();
         

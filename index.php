@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email_address'];
     $password = $_POST['password'];
 
-    // Query to fetch user data
     $sql = "SELECT user_id, email_address, password, status FROM user WHERE email_address = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
@@ -23,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['email_address'] = $row['email_address'];
 
-                // Debugging statement
                 error_log("User authenticated and session variables set. Redirecting...");
 
                 header("Location: merchant/");
@@ -63,12 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 body {
   display: flex;
-  justify-content: flex-start; /* Align content to the left */
+  justify-content: flex-start;
   align-items: center;
   background: url('images/homebg.png') no-repeat center center/cover;
-  background-size: cover; /* Ensure the background covers the entire element */
-  height: 100vh; /
-  padding: 20px; /* Add padding for spacing */
+  background-size: cover; 
+  height: 100vh; 
+  padding: 20px;
   padding-left: 245px;
 }
 
@@ -79,7 +77,7 @@ body {
   color: #fff;
   border-radius: 10px;
   padding: 30px 40px;
-  margin-left: 20px; /* Ensure there's space from the left */
+  margin-left: 20px; 
 }
 
 .wrapper h1 {
@@ -212,40 +210,40 @@ body {
 
 .input-box {
   position: relative;
-  margin-bottom: 20px; /* Adjust as needed */
+  margin-bottom: 20px; 
 }
 
 .input-icon {
   position: absolute;
-  left: 10px; /* Adjust the position of the icon */
+  left: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: #999; /* Adjust the color of the icon */
-  pointer-events: none; /* Ensures the icon does not interfere with input */
+  color: #999;
+  pointer-events: none; 
 }
 
 .input-icon {
   position: absolute;
-  left: 10px; /* Adjust the position of the icon */
+  left: 10px; 
   top: 50%;
   transform: translateY(-50%);
-  color: #999; /* Adjust the color of the icon */
-  pointer-events: none; /* Ensures the icon does not interfere with input */
+  color: #999; 
+  pointer-events: none; 
 }
 
 .toggle-password:hover {
-  color: #666; /* Adjust the color when hovered */
+  color: #666;
 }
 
 @media (max-width: 600px) {
   body {
-    padding: 20px; /* Maintain padding for smaller screens */
+    padding: 20px; 
     background: #E96529; 
   }
 
   .wrapper {
     padding: 20px;
-    margin-left: 10px; /* Reduce margin for smaller screens */
+    margin-left: 10px; 
   }
 
   .input-box input {

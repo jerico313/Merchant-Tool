@@ -31,12 +31,12 @@
   content: "";
   position: absolute;
   top: 0;
-  z-index: -1; /* Move the pseudo-element to the background */
+  z-index: -1; 
   left: 0;
   width: 100%;
   height: 100%;  
-  background: rgba(0, 0, 0, 0.3); /* Adjust alpha value for darkness */
-  background-attachment: fixed; /* Ensure the dark overlay doesn't move */
+  background: rgba(0, 0, 0, 0.3);
+  background-attachment: fixed; 
 }
 .message-container {
     max-width: 400px;
@@ -112,14 +112,14 @@ input {
             100% { stroke-dashoffset: 0; } 
         }
         .error-list {
-            font-size: 14px; /* Adjusted font size */
-            text-align: left; /* Left-align list items */
+            font-size: 14px; 
+            text-align: left; 
             margin-top: 10px;
-            padding-left: 0; /* Remove default padding */
-            list-style-type: none; /* Remove bullet points */
+            padding-left: 0;
+            list-style-type: none; 
         }
         .error-list li {
-            margin-bottom: 5px; /* Adjust spacing between list items */
+            margin-bottom: 5px; 
         }
     </style>
 </head>

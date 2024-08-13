@@ -16,48 +16,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error preparing statement: " . $conn->error);
     }
 
-    // Bind parameters to the prepared statement
     $stmt->bind_param("sss", $merchantId, $startDate, $endDate);
 
     if ($stmt->execute()) {
         $result = $stmt->get_result();
         if ($result->num_rows === 0) {
-            // No rows returned, redirect to failed.php
             header("Location: failed.php");
             exit;
         }
-        $stmt->close(); // Close the first statement
+        $stmt->close(); 
 
-        // Get the latest activity_id from activity_history
         $latestActivityId = null;
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
         if ($stmt) {
             $stmt->execute();
             $stmt->bind_result($latestActivityId);
-            $stmt->fetch(); // Fetch the result
-            $stmt->close(); // Close the statement
+            $stmt->fetch(); 
+            $stmt->close(); 
         }
 
-        // Get the max coupled_report_id from report_history_coupled
         $maxDecoupledReportId = null;
         $stmt = $conn->prepare("SELECT decoupled_report_id FROM report_history_decoupled ORDER BY created_at DESC LIMIT 1");
         if ($stmt) {
             $stmt->execute();
             $stmt->bind_result($maxDecoupledReportId);
-            $stmt->fetch(); // Fetch the result
-            $stmt->close(); // Close the statement
+            $stmt->fetch(); 
+            $stmt->close(); 
         }
 
         if ($latestActivityId !== null && $maxDecoupledReportId !== null) {
-            // Update activity_history with user_id
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
             if ($stmt) {
                 $stmt->bind_param("ss", $userId, $latestActivityId);
                 $stmt->execute();
-                $stmt->close(); // Close the statement
+                $stmt->close(); 
             }
 
-            // Redirect to the report page with parameters
             $merchant_id = htmlspecialchars($merchantId);
             $merchant_name = htmlspecialchars($merchantName);
             $settlement_period_start = htmlspecialchars($startDate);
@@ -74,6 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error executing stored procedure: " . $stmt->error;
     }
 
-    $conn->close(); // Close the database connection
+    $conn->close(); 
 }
 ?>

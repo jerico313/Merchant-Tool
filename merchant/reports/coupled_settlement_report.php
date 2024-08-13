@@ -1,10 +1,8 @@
 <?php
-// Include the configuration file
 include ('../../inc/config.php');
 
 $coupled_report_id = isset($_GET['coupled_report_id']) ? $_GET['coupled_report_id'] : '';
 
-// Fetch data from the database
 $sql = "SELECT * FROM report_history_coupled WHERE coupled_report_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $coupled_report_id);
@@ -46,12 +44,10 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
 {
     include ("../../inc/config.php");
 
-    // Base SQL query
     $sql = "SELECT * FROM transaction_summary_view 
             WHERE `Merchant ID` = ? 
             AND `Transaction Date` BETWEEN ? AND ?";
 
-    // Adjust SQL query based on the bill_status parameter
     if ($bill_status === 'BILLABLE') {
         $sql .= " AND `Bill Status` = 'BILLABLE' ORDER BY `Transaction Date A` ASC";
     } elseif ($bill_status === 'PRE-TRIAL') {
@@ -66,7 +62,6 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
         die("Prepare failed: (" . $conn->errno . ") " . $conn->error);
     }
 
-    // Bind parameters without bill_status as it's already in the query
     $stmt->bind_param("sss", $merchant_id, $start_date, $end_date);
 
     if (!$stmt->execute()) {
@@ -213,12 +208,11 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
-                    <!-- Add your navigation items here if needed -->
+                    
                 </ul>
                 <a class="print" id="print" href="#"><i class="fa-solid fa-print fa-lg"></i> Print</a>
                 <a class="downloadExcel" id="downloadBtnExcel" type="button" onclick="downloadTables()" href="#"><i
                         class="fa-solid fa-download fa-lg"></i> Excel</a>
-                <!--<a class="downloadBtn" id="downloadBtn"  href="#"> <i class="fa-solid fa-download fa-lg"></i> PDF</a>-->
             </div>
         </div>
     </nav>
@@ -467,24 +461,38 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
             window.onafterprint = function () {
                 document.body.innerHTML = originalContent;
                 setTimeout(function () {
-                    location.reload(); // Reload the page after a short delay
-                }, 10); // Adjust the delay duration (in milliseconds) as needed
+                    location.reload();
+                }, 10); 
             };
 
             window.print();
         });
     </script>
-    <script>
-        function downloadTables() {
-            // Get the table element
-            var table = document.getElementById("example");
-            // Convert the table to a worksheet
-            var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
-            // Generate an Excel file and prompt download
-            XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
-        }
+<script>
+    function downloadTables() {
+        var table = document.getElementById("example");
+        var rows = table.querySelectorAll("tr");
+        var data = [];
 
-    </script>
+        rows.forEach(function(row) {
+            var rowData = [];
+            var cells = row.querySelectorAll("th, td");
+            
+            cells.forEach(function(cell) {
+                var cellText = cell.innerText || cell.textContent;
+                rowData.push(cellText);
+            });
+
+            data.push(rowData);
+        });
+
+        var ws = XLSX.utils.aoa_to_sheet(data);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+    }
+</script>
 </body>
 
 </html>

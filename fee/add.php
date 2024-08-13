@@ -4,25 +4,20 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
 require_once("../header.php");
 require_once '../inc/config.php';
-require_once '../vendor/autoload.php'; // Include the Composer autoload file
+require_once '../vendor/autoload.php'; 
 
 use Ramsey\Uuid\Uuid;
 
-// Create a database connection
 $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Prepare and bind SQL statement
     $stmt = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type, cwt_rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssssssss", $fee_id, $merchant_id, $paymaya_creditcard, $gcash, $gcash_miniapp, $paymaya, $paymaya_creditcard, $paymaya_creditcard, $leadgen_commission, $commission_type, $cwt_rate);
 
-    // Set parameters and execute
     foreach ($_POST['merchant_id'] as $key => $value) {
         $fee_id = Uuid::uuid4()->toString();
         $merchant_id = $_POST['merchant_id'][$key];
@@ -35,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cwt_rate = $_POST['cwt_rate'][$key];
         $stmt->execute();
 
-        // Update the user_id in activity_history where it is blank or null and the description contains the promo_code
         $update_stmt = $conn->prepare("
             UPDATE activity_history
             SET user_id = ?
@@ -43,18 +37,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             AND description LIKE CONCAT('%merchant_id: ', ?, '%')
         ");
 
-        $user_id = $_SESSION['user_id']; // Assuming the user_id is stored in the session
+        $user_id = $_SESSION['user_id']; 
 
         $update_stmt->bind_param("ss", $user_id, $merchant_id);
         $update_stmt->execute();
         $update_stmt->close();
     }
 
-    // Close statement
     $stmt->close();
 }
 
-// Close connection
 $conn->close();
 ?>
 
@@ -131,7 +123,7 @@ $conn->close();
     <script>
         setTimeout(function(){
             window.location.href = 'index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
-        }, 3000); // Delay for 3 seconds (3000 milliseconds)
+        }, 3000);
     </script>
 </body>
 </html>

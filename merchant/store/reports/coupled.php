@@ -5,7 +5,7 @@ $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 
-function displayCoupled($store_id, $store_name)
+function displayDecoupled($store_id, $store_name)
 {
     include ("../../../inc/config.php");
 
@@ -19,7 +19,7 @@ function displayCoupled($store_id, $store_name)
         while ($row = $result->fetch_assoc()) {
             $date = new DateTime($row['created_at']);
             $formattedDate = $date->format('F d, Y g:i:s A');
-            echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) ."&bill_status=" . urlencode($row['bill_status']) .  "'>";
+            echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) .  "'>";
             echo "<td style='text-align:center;'>" . $row['settlement_number'] . "</td>";
             echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['store_business_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
             echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
@@ -36,7 +36,7 @@ function displayCoupled($store_id, $store_name)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($store_name); ?> - Coupled Settlement Reports</title>
+    <title><?php echo htmlspecialchars($store_name); ?> - Decoupled Settlement Reports</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
@@ -48,6 +48,31 @@ function displayCoupled($store_id, $store_name)
     <style>
         body {
             background-image: url("../../../images/bg_booky.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: 900;
+            margin-right: auto;
+            padding-left: 5vh;
+            color: #4BB0B8;
+        }
+
+        .voucher-type {
+            padding-bottom: 0px;
+            padding-right: 5vh;
+            display: flex;
+            align-items: center;
+        }
+
+        tr:hover {
+            background-color: #e0e0e0 !important;
+            color: white !important;
+            cursor: pointer;
         }
 
         @media only screen and (max-width: 767px) {
@@ -85,6 +110,15 @@ function displayCoupled($store_id, $store_name)
                 white-space: nowrap;
                 font-weight: bold;
                 text-align: left !important;
+            }
+
+            .table td:nth-child(1) {
+                background: #E96529;
+                height: 100%;
+                top: 0;
+                left: 0;
+                font-weight: bold;
+                color: #fff;
             }
 
             td:nth-of-type(1):before {
@@ -125,6 +159,25 @@ function displayCoupled($store_id, $store_name)
 </head>
 
 <body>
+<div class="loading">
+    <div>
+      <div class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    Loading...
+  </div>
     <div class="cont-box">
         <div class="custom-box pt-4">
             <div class="sub" style="text-align:left;">
@@ -167,24 +220,24 @@ function displayCoupled($store_id, $store_name)
                                 </li>
                             </ol>
                         </nav>
-                        <p class="title">
+                        <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
                             <?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?>
                         </p>
                     </div>
                 </div>
-                <div class="content">
+                <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                     <table id="example" class="table bord" style="width:100%;">
                         <thead>
-                            <tr>
-                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">
+                        <tr>
+                                <th style="border-top-left-radius:10px;border-bottom-left-radius:10px;">
                                     Settlement Number</th>
-                                <th style="padding:10px;">Filename</th>
-                                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">
+                                <th>Filename</th>
+                                <th style="border-top-right-radius:10px;border-bottom-right-radius:10px;">
                                     Created At</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
-                            <?php displayCoupled($store_id, $store_name); ?>
+                            <?php displayDecoupled($store_id, $store_name); ?>
                         </tbody>
                     </table>
                 </div>
@@ -194,13 +247,23 @@ function displayCoupled($store_id, $store_name)
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                scrollX: true,
-                order: [[2, 'desc']] // Default sort by the 'Created At' column in descending order
-            });
+         $(window).on('load', function () {
+        $('.loading').hide();
+        $('.cont-box').show();
 
-            // Bind click event to all rows
+        var table = $('#example').DataTable({
+          scrollX: true,
+          columnDefs: [
+            { orderable: false, targets: [0] }
+          ],
+          order: [[2, 'desc']],
+        createdRow: function (row, data, dataIndex) {
+            var date = new Date(data[2]); 
+            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            $('td:eq(2)', row).html(formattedDate);
+        }
+   }); 
+
             $('#example tbody').on('click', 'tr', function () {
                 var href = $(this).attr('data-href');
                 if (href) {

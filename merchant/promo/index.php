@@ -22,8 +22,6 @@ function displayOffers($merchant_id, $merchant_name)
             $shortPromoId = substr($row['promo_id'], 0, 8);
             $start_date = empty($row['start_date']) ? 'No Start Date' : $row['start_date'];
             $end_date = empty($row['end_date']) ? 'No End Date' : $row['end_date'];
-
-            // Prepare truncated and full text for promo_details, remarks and remarks2
             $promo_details_full = $row['promo_details'];
             $promo_details = strlen($row['promo_details']) > 30 ? substr($row['promo_details'], 0, 30) . '...' : $row['promo_details'];
             $remarks_full = empty($row['remarks']) ? '-' : $row['remarks'];
@@ -48,19 +46,14 @@ function displayOffers($merchant_id, $merchant_name)
             echo "<td style='display:none;'>" . $row['merchant_name'] . "</td>";
             echo "<td class='actions-cell'>";
             echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
-            echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; // Hidden initially
+            echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; 
             echo "<ul class='list-group'>";
-
-            // Dropdown menu items
             if ($type !== 'User') {
                 echo "<li class='list-group-item action-item'><a href='#' class='edit-link' data-promo-id='" . $row['promo_id'] . "' data-promo-code='" . $row['promo_code'] . "' data-merchant-name='" . $row['merchant_name'] . "' data-promo-amount='" . $row['promo_amount'] . "' data-voucher-type='" . $row['voucher_type'] . "' data-promo-category='" . $row['promo_category'] . "' data-promo-group='" . $row['promo_group'] . "' data-promo-type='" . $row['promo_type'] . "' data-promo-details='" . htmlentities($promo_details_full) . "' data-remarks='" . htmlentities($remarks_full) . "' data-bill-status='" . $row['bill_status'] . "' data-start-date='" . $start_date . "' data-end-date='" . $end_date . "' data-remarks2='" . $row['remarks2'] . "' style='color:#E96529;'>Edit</a></li>";
             }
-
             echo "<li class='list-group-item action-item'><a href='#' onclick='viewHistory(\"" . htmlentities($merchant_id) . "\", \"" . htmlentities($merchant_name) . "\", \"" . htmlentities($row['promo_id']) . "\", \"" . htmlentities($row['promo_code']) . "\")' style='color:#E96529;'>View History</a></li>";
-
             echo "</ul>";
             echo "</div>";
-
             echo "</td>";
             echo "</tr>";
         }
@@ -69,13 +62,8 @@ function displayOffers($merchant_id, $merchant_name)
     $conn->close();
 }
 ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,239 +76,7 @@ function displayOffers($merchant_id, $merchant_name)
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../style.css">
-    <style>
-        body {
-            background-image: url("../../images/bg_booky.png");
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        table.dataTable tbody th:last-child,
-        table.dataTable tbody td:last-child {
-            position: sticky;
-            right: 0;
-            z-index: 2;
-            background-color: #F1F1F1 !important;
-            box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-            -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-            -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-        }
-
-        table thead th:last-child {
-            position: sticky !important;
-            right: 0;
-            z-index: 2;
-            box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-            -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-            -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-        }
-
-        @media only screen and (max-width: 767px) {
-
-            table,
-            thead,
-            tbody,
-            th,
-            td,
-            tr {
-                display: block;
-                text-align: left !important;
-            }
-
-            thead tr,
-            tfoot tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-
-            td {
-                border: none;
-                border-bottom: 1px solid #eee;
-                position: relative;
-                padding-left: 50% !important;
-            }
-
-            td:before {
-                position: absolute;
-                top: 6px;
-                left: 6px;
-                width: 45%;
-                padding-right: 10px;
-                white-space: nowrap;
-                font-weight: bold;
-                text-align: left !important;
-            }
-
-            td:nth-of-type(1):before {
-                content: "Merchant ID";
-            }
-
-            td:nth-of-type(2):before {
-                content: "Merchant Name";
-            }
-
-            td:nth-of-type(3):before {
-                content: "Merchant Type";
-            }
-
-            td:nth-of-type(4):before {
-                content: "Legal Entity Name";
-            }
-
-            td:nth-of-type(5):before {
-                content: "Fullfillment Type";
-            }
-
-            td:nth-of-type(6):before {
-                content: "Business Address";
-            }
-
-            td:nth-of-type(7):before {
-                content: "Email Address";
-            }
-
-            td:nth-of-type(8):before {
-                content: "VAT Type";
-            }
-
-            td:nth-of-type(9):before {
-                content: "Commission ID";
-            }
-
-            td:nth-of-type(10):before {
-                content: "Action";
-            }
-
-            .dataTables_length {
-                display: none;
-            }
-
-            .title {
-                font-size: 25px;
-                padding-left: 2vh;
-                padding-top: 10px;
-            }
-
-            .add-btns {
-                padding-right: 2vh;
-            }
-        }
-
-        .loading {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 80vh;
-      font-size: 18px;
-      color: #333;
-      font-weight: 800;
-    }
-
-    .cont-box {
-      display: none;
-    }
-
-    
-.lds-default,
-.lds-default div {
-  box-sizing: border-box;
-}
-.lds-default {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  color:#E96529;
-}
-.lds-default div {
-  position: absolute;
-  width: 6.4px;
-  height: 6.4px;
-  background: currentColor;
-  border-radius: 50%;
-  animation: lds-default 1.2s linear infinite;
-}
-.lds-default div:nth-child(1) {
-  animation-delay: 0s;
-  top: 36.8px;
-  left: 66.24px;
-}
-.lds-default div:nth-child(2) {
-  animation-delay: -0.1s;
-  top: 22.08px;
-  left: 62.29579px;
-}
-.lds-default div:nth-child(3) {
-  animation-delay: -0.2s;
-  top: 11.30421px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(4) {
-  animation-delay: -0.3s;
-  top: 7.36px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(5) {
-  animation-delay: -0.4s;
-  top: 11.30421px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(6) {
-  animation-delay: -0.5s;
-  top: 22.08px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(7) {
-  animation-delay: -0.6s;
-  top: 36.8px;
-  left: 7.36px;
-}
-.lds-default div:nth-child(8) {
-  animation-delay: -0.7s;
-  top: 51.52px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(9) {
-  animation-delay: -0.8s;
-  top: 62.29579px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(10) {
-  animation-delay: -0.9s;
-  top: 66.24px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(11) {
-  animation-delay: -1s;
-  top: 62.29579px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(12) {
-  animation-delay: -1.1s;
-  top: 51.52px;
-  left: 62.29579px;
-}
-@keyframes lds-default {
-  0%, 20%, 80%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-}
-    </style>
+    <link rel="stylesheet" href="../../responsive-table-styles/promo.css">
 </head>
 
 <body>
@@ -406,7 +162,6 @@ function displayOffers($merchant_id, $merchant_name)
         </div>
     </div>
 
-    <!-- Modal: Edit Promo Details -->
     <div class="modal fade" id="editStoreModal" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="editStoreModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -570,7 +325,6 @@ function displayOffers($merchant_id, $merchant_name)
     
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Ensure actions toggle function works with dynamic content
             document.body.addEventListener('click', function (event) {
                 if (event.target.closest('.btn') && event.target.closest('.actions-cell')) {
                     var button = event.target.closest('.btn');
@@ -585,11 +339,8 @@ function displayOffers($merchant_id, $merchant_name)
             });
         });
     </script>
-
-    <!-- Script: Edit Promo Details -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Event delegation for edit link
             document.body.addEventListener('click', function (event) {
                 if (event.target.classList.contains('edit-link')) {
                     event.preventDefault();
@@ -609,7 +360,6 @@ function displayOffers($merchant_id, $merchant_name)
                     var remarks2 = event.target.getAttribute('data-remarks2');
                     var noStartDateChecked = event.target.getAttribute('data-nostartdate');
 
-                    // Set the modal input fields with the current data
                     $('#promoId').val(promoId);
                     $('#editPromoForm #promoCode').val(promoCode);
                     $('#editPromoForm #merchantName').val(merchantName);
@@ -633,15 +383,12 @@ function displayOffers($merchant_id, $merchant_name)
                         $('#editPromoForm #remarks2').val(remarks2);
                     }
 
-                    // Set the NoStartDate checkbox
                     $('#editPromoForm #NoStartDate').prop('checked', noStartDateChecked === 'checked');
 
-                    // Show the modal
                     $('#editStoreModal').modal('show');
                 }
             });
 
-            // Event delegation for text toggle
             document.body.addEventListener('click', function (event) {
                 if (event.target.classList.contains('text-cell')) {
                     var fullText = event.target.getAttribute('data-full');
@@ -658,19 +405,15 @@ function displayOffers($merchant_id, $merchant_name)
     </script>
     <script>
         function updateDateFields() {
-            // Get the date fields
             var startDate = document.getElementById('startDate');
             var endDate = document.getElementById('endDate');
 
-            // Get the checkboxes
             var noStartDateCheckbox = document.getElementById('NoStartDate');
             var noEndDateCheckbox = document.getElementById('NoEndDate');
 
-            // Update the checkbox based on the date field values
             noStartDateCheckbox.checked = !startDate.value;
             noEndDateCheckbox.checked = !endDate.value;
 
-            // Disable or enable the date fields based on the checkbox states
             startDate.disabled = noStartDateCheckbox.checked;
             endDate.disabled = noEndDateCheckbox.checked;
         }
@@ -679,7 +422,6 @@ function displayOffers($merchant_id, $merchant_name)
             updateDateFields();
         });
 
-        // Add event listeners to checkboxes to handle their state changes
         document.getElementById('NoStartDate').addEventListener('change', function () {
             var startDate = document.getElementById('startDate');
             startDate.disabled = this.checked;
@@ -696,7 +438,6 @@ function displayOffers($merchant_id, $merchant_name)
             }
         });
 
-        // Add event listeners to date fields to automatically check the checkboxes if the date fields are cleared
         document.getElementById('startDate').addEventListener('input', function () {
             if (!this.value) {
                 document.getElementById('NoStartDate').checked = true;

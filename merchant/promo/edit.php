@@ -2,7 +2,6 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("../../inc/config.php");
 
-    // Retrieve the form data
     $promoId = $_POST['promoId'];
     $promoCode = $_POST['promoCode'];
     $promoAmount = $_POST['promoAmount'];
@@ -20,12 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $merchantName = $_POST['merchantName'];
     $userId = $_POST['userId'];
 
-    // Update promo details
     $stmt = $conn->prepare("UPDATE promo SET promo_code=?, promo_amount=?, voucher_type=?, promo_category=?, promo_type=?, promo_group=?, promo_details=?, remarks=?, bill_status=?, start_date=?, end_date=?, remarks2=? WHERE promo_id=?");
     $stmt->bind_param("sssssssssssss", $promoCode, $promoAmount, $voucherType, $promoCategory, $promoType, $promoGroup, $promoDetails, $remarks, $billStatus, $startDate, $endDate, $remarks2, $promoId);
 
-    if ($stmt->execute()) {
-        // Find the latest inserted activity in activity_history  
+    if ($stmt->execute()) {  
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
         $stmt->execute();
         $stmt->bind_result($latestActivityId);
@@ -37,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($latestPromoHistoryId);
         $stmt->fetch();
         $stmt->close();
-        // Update the user_id column in the latest activity_history record
         if ($latestActivityId) {
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
             $stmt->bind_param("ss", $userId, $latestActivityId);

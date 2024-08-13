@@ -4,25 +4,20 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 
 require_once("../../header.php");
 require_once '../../inc/config.php';
-require_once '../../vendor/autoload.php'; // Include the Composer autoload file
+require_once '../../vendor/autoload.php'; 
 
 use Ramsey\Uuid\Uuid;
 
-// Create a database connection
 $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Prepare and bind SQL statement
     $stmt = $conn->prepare("INSERT INTO promo (promo_id, promo_code, merchant_id, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, remarks2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssssssssssss", $promo_id, $promo_code, $merchant_id, $promo_amount, $voucher_type, $promo_category, $promo_group, $promo_type, $promo_details, $remarks, $bill_status, $start_date, $end_date, $remarks2);
 
-    // Set parameters and execute
     foreach ($_POST['promo_code'] as $key => $value) {
         $promo_id = Uuid::uuid4()->toString();
         $promo_code = $_POST['promo_code'][$key];
@@ -40,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $remarks2 = empty($_POST['remarks2'][$key]) ? NULL : $_POST['remarks2'][$key];
         $stmt->execute();
 
-        // Update the user_id in activity_history where it is blank or null and the description contains the promo_code
         $update_stmt = $conn->prepare("
             UPDATE activity_history
             SET user_id = ?
@@ -48,18 +42,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             AND description LIKE CONCAT('%promo_code: ', ?, '%')
         ");
 
-        $user_id = $_SESSION['user_id']; // Assuming the user_id is stored in the session
+        $user_id = $_SESSION['user_id']; 
 
         $update_stmt->bind_param("ss", $user_id, $promo_code);
         $update_stmt->execute();
         $update_stmt->close();
     }
 
-    // Close statement
     $stmt->close();
 }
 
-// Close connection
 $conn->close();
 ?>
 

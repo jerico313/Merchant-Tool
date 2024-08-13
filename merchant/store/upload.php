@@ -26,7 +26,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 </head>
 
 <body>
-    <div class="cont-box">
+    <div class="cont">
         <div class="custom-box pt-4">
             <a href="javascript:history.back()">
                 <span class="back">
@@ -183,7 +183,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 document.getElementById('dynamic-form').addEventListener('submit', function (e) {
     e.preventDefault();
     let storeIds = document.querySelectorAll('input[name="store_id[]"]');
-    let ids = Array.from(storeIds).map(input => input.value.trim()); // Ensure no extra spaces
+    let ids = Array.from(storeIds).map(input => input.value.trim());
 
     let duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
     if (duplicateIds.length > 0) {
@@ -230,7 +230,6 @@ function showAlert(message, type) {
         </div>
     `;
     
-    // Automatically remove alert after a few seconds
     setTimeout(() => {
         let alertElement = alertContainer.querySelector('.alert');
         if (alertElement) {

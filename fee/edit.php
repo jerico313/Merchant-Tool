@@ -16,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cwtRate = $_POST['cwtRate'];
     $userId = $_POST['userId'];
 
-    // Update fee details
     $stmt = $conn->prepare("UPDATE fee SET paymaya_credit_card=?, gcash=?, gcash_miniapp=?, paymaya=?, maya_checkout=?, maya=?, lead_gen_commission=?, commission_type=?, cwt_rate=? WHERE fee_id=?");
     $stmt->bind_param("ssssssssss", $paymayaCreditCard, $gcash, $gcashMiniapp, $paymaya,  $paymayaCreditCard,  $paymayaCreditCard, $leadgenCommission, $commissionType, $cwtRate, $feeId);
 
@@ -27,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->fetch();
         $stmt->close();
 
-        // Update the user_id column in the latest activity_history record
         if ($latestActivityId) {
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
             $stmt->bind_param("ss", $userId, $latestActivityId);
@@ -48,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
         }
 
-        // Redirect to the same page after successful update
         header("Location: index.php");
         exit();
     } else {

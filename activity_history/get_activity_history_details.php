@@ -4,13 +4,9 @@ require_once('../inc/config.php');
 if (isset($_POST['activityId'])) {
     $activityId = $_POST['activityId'];
 
-    // Prepare the SQL statement
     if ($stmt = $conn->prepare("SELECT table_id, table_name, column_name, description, created_at FROM activity_history_view WHERE activity_history_id = ?")) {
-        // Bind the activityId parameter to the prepared statement
         $stmt->bind_param("s", $activityId);
-        // Execute the statement
         $stmt->execute();
-        // Get the result
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {

@@ -6,7 +6,7 @@ require_once("../header.php");
 <html>
 <head>
     <link rel="stylesheet" href="../style.css">
-    <title>Upload Success</title>
+    <title>Failed</title>
     <style>
         body {
             background-image: url("../images/bg_booky.png");
@@ -46,7 +46,7 @@ require_once("../header.php");
         .checkmark__circle {
             stroke-width: 4;
             stroke-miterlimit: 10;
-            stroke: #f44336; /* Change color to red for X */
+            stroke: #f44336;
             fill: none;
         }
 
@@ -56,7 +56,7 @@ require_once("../header.php");
             stroke-width: 4;
             stroke-linecap: round;
             stroke-miterlimit: 10;
-            stroke: #f44336; /* Change color to red for X */
+            stroke: #f44336;
             fill: none;
             animation: draw 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
         }
@@ -78,13 +78,13 @@ require_once("../header.php");
             <circle class="checkmark__circle" cx="26" cy="26" r="25"/>
             <path class="checkmark__check" fill="none" d="M16 16 36 36 M36 16 16 36"/>
         </svg>
-        <h2 style="padding-top:10px;color: #f44336;">Failed to generate</h2>
+        <h2 style="padding-top:10px;color: #f44336;">Failed to Add New Merchant/s</h2>
         <a href="index.php"><button type="button" class="btn btn-danger okay-failed">Okay</button></a>
     </div>
     <script>
         setTimeout(function(){
             window.location.href = 'index.php';
-        }, 3000); // Delay for 3 seconds (3000 milliseconds)
+        }, 3000);
     </script>
 </body>
 </html>

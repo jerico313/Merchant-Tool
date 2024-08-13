@@ -24,7 +24,7 @@ function displayFeeHistory($fee_id) {
             echo "<td style='text-align:center;'>" . $row['old_value'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['new_value'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['changed_at'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['changed_by_name'] . "</td>"; // Display user name instead of user ID
+            echo "<td style='text-align:center;'>" . $row['changed_by_name'] . "</td>"; 
             echo "</tr>";
         }
     }
@@ -46,192 +46,7 @@ function displayFeeHistory($fee_id) {
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../style.css">
-    <style>
-        body {
-            background-image: url("../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-        .title {
-            font-size: 30px; 
-            font-weight: 900; 
-            margin-right: auto; 
-            padding-left: 5vh;
-            color: #4BB0B8;
-        }
-        .voucher-type {
-            padding-bottom: 0px; 
-            padding-right: 5vh; 
-            display: flex; 
-            align-items: center;
-        }
-        @media only screen and (max-width: 767px) {
-            table,
-            thead,
-            tbody,
-            th,
-            td,
-            tr {
-                display: block;
-                text-align: left !important;
-            }
-            thead tr,
-            tfoot tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-            td {
-                border: none;
-                border-bottom: 1px solid #eee;
-                position: relative;
-                padding-left: 50% !important;
-            }
-            td:before {
-                position: absolute;
-                top: 6px;
-                left: 6px;
-                width: 45%;
-                padding-right: 10px;
-                white-space: nowrap;
-                font-weight: bold;
-                text-align: left !important;
-            }
-            .table td:nth-child(1) {
-                background: #E96529;
-                height: 100%;
-                top: 0;
-                left: 0;
-                font-weight: bold;
-                color: #fff;
-            }
-            td:nth-of-type(1):before {
-                content: "Promo ID";
-            }
-            td:nth-of-type(2):before {
-                content: "Old Bill Status";
-            }
-            td:nth-of-type(3):before {
-                content: "New Bill Status";
-            }
-            .dataTables_length {
-                display: none;
-            }
-            .title {
-                font-size: 25px;
-                padding-left: 2vh;
-                padding-top: 10px;
-            }
-            .voucher-type {
-                padding-right: 2vh; 
-            }
-        }
-
-        .loading {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 80vh;
-      font-size: 18px;
-      color: #333;
-      font-weight: 800;
-    }
-
-    .cont-box {
-      display: none;
-    }
-
-    
-.lds-default,
-.lds-default div {
-  box-sizing: border-box;
-}
-.lds-default {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  color:#E96529;
-}
-.lds-default div {
-  position: absolute;
-  width: 6.4px;
-  height: 6.4px;
-  background: currentColor;
-  border-radius: 50%;
-  animation: lds-default 1.2s linear infinite;
-}
-.lds-default div:nth-child(1) {
-  animation-delay: 0s;
-  top: 36.8px;
-  left: 66.24px;
-}
-.lds-default div:nth-child(2) {
-  animation-delay: -0.1s;
-  top: 22.08px;
-  left: 62.29579px;
-}
-.lds-default div:nth-child(3) {
-  animation-delay: -0.2s;
-  top: 11.30421px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(4) {
-  animation-delay: -0.3s;
-  top: 7.36px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(5) {
-  animation-delay: -0.4s;
-  top: 11.30421px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(6) {
-  animation-delay: -0.5s;
-  top: 22.08px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(7) {
-  animation-delay: -0.6s;
-  top: 36.8px;
-  left: 7.36px;
-}
-.lds-default div:nth-child(8) {
-  animation-delay: -0.7s;
-  top: 51.52px;
-  left: 11.30421px;
-}
-.lds-default div:nth-child(9) {
-  animation-delay: -0.8s;
-  top: 62.29579px;
-  left: 22.08px;
-}
-.lds-default div:nth-child(10) {
-  animation-delay: -0.9s;
-  top: 66.24px;
-  left: 36.8px;
-}
-.lds-default div:nth-child(11) {
-  animation-delay: -1s;
-  top: 62.29579px;
-  left: 51.52px;
-}
-.lds-default div:nth-child(12) {
-  animation-delay: -1.1s;
-  top: 51.52px;
-  left: 62.29579px;
-}
-@keyframes lds-default {
-  0%, 20%, 80%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-}
+    <link rel="stylesheet" href="../responsive-table-styles/fee_history.css">
     </style>
 </head>
 <body>
@@ -259,12 +74,12 @@ function displayFeeHistory($fee_id) {
                 <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Fee History ID</th>
-                            <th style="padding:10px;">Column Name</th>
-                            <th style="padding:10px;">Old Value</th>
-                            <th style="padding:10px;">New Value</th>
-                            <th style="padding:10px;">Change At</th>
-                            <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Change By</th>
+                            <th class="first-col">Fee History ID</th>
+                            <th>Column Name</th>
+                            <th>Old Value</th>
+                            <th>New Value</th>
+                            <th>Change At</th>
+                            <th class="action-col">Change By</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
@@ -288,7 +103,7 @@ $(window).on('load', function() {
       scrollX: true,
       order: [[4, 'desc']],
         createdRow: function (row, data, dataIndex) {
-            var date = new Date(data[4]); // Assuming 'Created At' column is the third column (index 2)
+            var date = new Date(data[4]);
             var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
             $('td:eq(4)', row).html(formattedDate); 
         }

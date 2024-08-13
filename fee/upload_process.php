@@ -1,7 +1,7 @@
 <?php
 require_once("../header.php");
 require_once("../inc/config.php");
-require_once '../vendor/autoload.php'; // Include the Composer autoload file
+require_once '../vendor/autoload.php'; 
 
 use Ramsey\Uuid\Uuid;
 
@@ -29,7 +29,7 @@ function displayMessage($type, $message) {
             border-radius: 10px; 
             width: $containerWidth;
             height: $containerHeight; 
-            padding: 20px; /* Increased padding */
+            padding: 20px;
             backdrop-filter: blur(16px) saturate(180%); 
             -webkit-backdrop-filter: blur(16px) saturate(180%); 
             background-color: rgba(255, 255, 255, 0.40); 
@@ -64,14 +64,14 @@ function displayMessage($type, $message) {
             100% { stroke-dashoffset: 0; } 
         }
         .error-list {
-            font-size: 14px; /* Adjusted font size */
-            text-align: left; /* Left-align list items */
+            font-size: 14px;
+            text-align: left;
             margin-top: 10px;
-            padding-left: 0; /* Remove default padding */
-            list-style-type: none; /* Remove bullet points */
+            padding-left: 0;
+            list-style-type: none;
         }
         .error-list li {
-            margin-bottom: 5px; /* Adjust spacing between list items */
+            margin-bottom: 5px;
         }
         #okay{
         display: inline-block;
@@ -93,12 +93,10 @@ function displayMessage($type, $message) {
         </svg>
 HTML;
 
-    // Display success message
     if ($type === 'success') {
         echo "<br><h2 style='color:#4caf50;'>Successfully Uploaded</h2><br>";
     }
 
-    // If the message is an error and contains a list, format the list accordingly
     if ($type === 'error' && strpos($message, '<br>') !== false) {
         echo "<br><h2 style='color:#f44336;'>Error</h2>";
         echo '<ul class="error-list">';
@@ -162,16 +160,15 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     }
 
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle); // Skip header row
+    fgetcsv($handle); 
 
     $invalidMerchantIds = [];
     $merchantIds = [];
     $duplicateMerchantIds = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $merchantId = $data[1]; // Assuming data[1] is merchant_id
+        $merchantId = $data[1];
 
-        // Check for duplicate merchant IDs in the CSV file itself
         if (isset($merchantIds[$merchantId])) {
             if (!isset($duplicateMerchantIds[$merchantId])) {
                 $duplicateMerchantIds[$merchantId] = [$merchantIds[$merchantId]];
@@ -181,12 +178,10 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
             $merchantIds[$merchantId] = $merchantId;
         }
 
-        // Check if merchant ID exists in the database
         if (!checkMerchantExistence($conn, $merchantId)) {
             $invalidMerchantIds[] = "Merchant ID '{$merchantId}' does not exist.";
         }
 
-        // Check for duplicates in the fee table
         $duplicates = checkForDuplicates($conn, $merchantId);
         if (!empty($duplicates)) {
             $invalidMerchantIds = array_merge($invalidMerchantIds, $duplicates);
@@ -195,7 +190,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     fclose($handle);
 
-    // Add duplicate merchant IDs from the CSV file to the invalid messages
     foreach ($duplicateMerchantIds as $merchantId => $merchantIds) {
         $invalidMerchantIds[] = "Duplicate Merchant ID '{$merchantId}' in CSV file.";
     }
@@ -207,7 +201,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     }
 
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle); // Skip header row again
+    fgetcsv($handle);
 
     $stmt1 = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type, cwt_rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 

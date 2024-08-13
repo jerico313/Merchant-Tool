@@ -7,7 +7,7 @@ function displayCoupled($merchant_id, $merchant_name)
 {
     include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM report_history_coupled WHERE merchant_id = ? ORDER BY created_at DESC"; // Changed to DESC for latest to newest
+    $sql = "SELECT * FROM report_history_coupled WHERE merchant_id = ? ORDER BY created_at DESC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -134,6 +134,25 @@ function displayCoupled($merchant_id, $merchant_name)
 </head>
 
 <body>
+<div class="loading">
+    <div>
+      <div class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    Loading...
+  </div>
     <div class="cont-box">
         <div class="custom-box pt-4">
             <div class="sub" style="text-align:left;">
@@ -168,10 +187,12 @@ function displayCoupled($merchant_id, $merchant_name)
                 <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                     <table id="example" class="table bord" style="width:100%;">
                         <thead>
-                            <tr>
-                            <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Settlement Number</th>
-                            <th style="padding:10px;">Filename</th>
-                            <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Created At</th>
+                        <tr>
+                                <th style="border-top-left-radius:10px;border-bottom-left-radius:10px;">
+                                    Settlement Number</th>
+                                <th>Filename</th>
+                                <th style="border-top-right-radius:10px;border-bottom-right-radius:10px;">
+                                    Created At</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -185,18 +206,23 @@ function displayCoupled($merchant_id, $merchant_name)
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
-       $(document).ready(function () {
-    $('#example').DataTable({
-        scrollX: true,
-        order: [[2, 'desc']], // Default sort by the 'Created At' column in descending order
-        createdRow: function (row, data, dataIndex) {
-            var date = new Date(data[2]); // Assuming 'Created At' column is the third column (index 2)
-            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            $('td:eq(2)', row).html(formattedDate); // Update the cell with the formatted date
-        }
-    });
+       $(window).on('load', function () {
+        $('.loading').hide();
+        $('.cont-box').show();
 
-    // Bind click event to all rows
+        var table = $('#example').DataTable({
+          scrollX: true,
+          columnDefs: [
+            { orderable: false, targets: [0] }
+          ],
+          order: [[2, 'desc']], 
+        createdRow: function (row, data, dataIndex) {
+            var date = new Date(data[2]); 
+            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            $('td:eq(2)', row).html(formattedDate); 
+        }
+   }); 
+
     $('#example tbody').on('click', 'tr', function () {
         var href = $(this).attr('data-href');
         if (href) {

@@ -29,11 +29,9 @@ $user_id = $_SESSION['user_id'];
 
 $escaped_user_id = mysqli_real_escape_string($conn, $user_id);
 
-// Query the database for user information
 $sql = "SELECT * FROM user WHERE user_id = '$escaped_user_id'";
 $result = mysqli_query($conn, $sql);
 
-// Check if the query was successful and if any rows were returned
 if ($result && mysqli_num_rows($result) > 0) {
     $user_data = mysqli_fetch_assoc($result);
     $type = $user_data['type'];
@@ -43,18 +41,14 @@ if ($result && mysqli_num_rows($result) > 0) {
     $type = 'unknown';
 }
 
-// Get the first letter of the name and make it uppercase
 $initial = strtoupper($name[0]);
 
-// Check if the user type is 'User' and if the current page is 'users/index.php'
 if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/users') !== false) {
-    // Redirect to access denied page
     header("Location: /Merchant-Tool/access_denied.php");
     exit();
 }
 
 if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !== false) {
-    // Redirect to access denied page
     header("Location: /Merchant-Tool/access_denied.php");
     exit();
 }
@@ -185,17 +179,13 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
 </nav>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Get the current page URL
         var currentPage = window.location.href;
-
-        // Get the navbar links
         var merchantLink = document.getElementById('merchant-link');
         var transactionLink = document.getElementById('transaction-link');
         var pgLink = document.getElementById('pg-link');
         var storeLink = document.getElementById('store-link');
         var promoLink = document.getElementById('promo-link');
 
-        // Set the active class based on the current page
         if (currentPage.includes('merchant/'))  {
             merchantLink.classList.add('active_nav');
         } else if (currentPage.includes('transaction/')) {
@@ -208,7 +198,6 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
             promoLink.classList.add('active_nav');
         }
 
-        // Prevent default behavior of anchor tags
         var navbarLinks = document.querySelectorAll('.navbar-nav a');
         navbarLinks.forEach(function(link) {
             link.addEventListener('click', function(event) {
@@ -220,7 +209,6 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
             });
         });
 
-        // Session timeout logic
         var timeout;
         var timeoutDuration = 10000000;
                               
@@ -233,17 +221,14 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
             window.location.href = '/Merchant-Tool/logout.php';
         }
 
-        // Reset the timeout on any user activity
         document.addEventListener('mousemove', resetTimeout);
         document.addEventListener('keydown', resetTimeout);
         document.addEventListener('scroll', resetTimeout);
         document.addEventListener('click', resetTimeout);
 
-        // Initialize the timeout
         resetTimeout();
     });
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 </body>

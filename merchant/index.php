@@ -10,8 +10,6 @@ function displayMerchant()
   if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
       $shortMerchantId = substr($row['merchant_id'], 0, 8);
-
-      // Prepare truncated and full text for email_address
       $email_address_full = $row['email_address'];
       $email_address = strlen($row['email_address']) > 30 ? substr($row['email_address'], 0, 30) . '...' : $row['email_address'];
 
@@ -27,24 +25,20 @@ function displayMerchant()
       echo "<td>" . htmlspecialchars($row['account_manager']) . "</td>";
       echo "<td class='actions-cell'>";
       echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
-      echo "<div class='mt-2 actions-list' style='display:none;'>"; // Hidden initially
+      echo "<div class='mt-2 actions-list' style='display:none;'>";
       echo "<ul class='list-group'>";
-
       $escapedMerchantId = htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8');
       $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
-
       if ($type !== 'User') {
         echo "<li class='list-group-item action-item'><a href='#' onclick='viewMerchant(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View</a></li>";
         echo "<li class='list-group-item action-item'><a href='#' onclick='editMerchant(\"" . htmlspecialchars($row['merchant_id'], ENT_QUOTES, 'UTF-8') . "\")' style='color:#E96529;'>Edit</a></li>";
       } else {
         echo "<li class='list-group-item action-item'><a href='#' onclick='viewMerchant(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View</a></li>";
       }
-
       echo "<li class='list-group-item action-item'><a href='#' onclick='checkReport(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>Check Report</a></li>";
       echo "<li class='list-group-item action-item'><a href='#'  onclick='viewReport(\"" . $escapedMerchantId . "\", \"" . $escapedMerchantName . "\")' style='color:#E96529;'>View Reports</a></li> ";
       echo "</ul>";
       echo "</div>";
-
       echo "</td>";
       echo "</tr>";
     }
@@ -76,167 +70,7 @@ function displayMerchant()
     integrity="sha384-mQ93qBRaUHnTwhWm6A98qE6pK6DdEDQNl7h4WBC5h85ibG/NHOoxuHV9r+lpazjl"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../style.css">
-
-  <style>
-    body {
-      background-image: url("../images/bg_booky.png");
-    }
-
-    #alertContainer {
-      position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      margin-top: 15%;
-      width: 300px;
-      padding: 15px;
-      font-size: 13px;
-    }
-
-    table.dataTable tbody td:last-child {
-      position: sticky;
-      right: 0;
-      z-index: 2;
-      background-color: #F1F1F1 !important;
-      box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-      -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-      -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-    }
-
-    table thead th:last-child {
-      position: sticky !important;
-      right: 0;
-      z-index: 2;
-      box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
-      -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
-      -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
-    }
-
-    .loading {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 80vh;
-      font-size: 18px;
-      color: #333;
-      font-weight: 800;
-    }
-
-    .cont-box {
-      display: none;
-    }
-
-
-    .lds-default,
-    .lds-default div {
-      box-sizing: border-box;
-    }
-
-    .lds-default {
-      display: inline-block;
-      position: relative;
-      width: 80px;
-      height: 80px;
-      color: #E96529;
-    }
-
-    .lds-default div {
-      position: absolute;
-      width: 6.4px;
-      height: 6.4px;
-      background: currentColor;
-      border-radius: 50%;
-      animation: lds-default 1.2s linear infinite;
-    }
-
-    .lds-default div:nth-child(1) {
-      animation-delay: 0s;
-      top: 36.8px;
-      left: 66.24px;
-    }
-
-    .lds-default div:nth-child(2) {
-      animation-delay: -0.1s;
-      top: 22.08px;
-      left: 62.29579px;
-    }
-
-    .lds-default div:nth-child(3) {
-      animation-delay: -0.2s;
-      top: 11.30421px;
-      left: 51.52px;
-    }
-
-    .lds-default div:nth-child(4) {
-      animation-delay: -0.3s;
-      top: 7.36px;
-      left: 36.8px;
-    }
-
-    .lds-default div:nth-child(5) {
-      animation-delay: -0.4s;
-      top: 11.30421px;
-      left: 22.08px;
-    }
-
-    .lds-default div:nth-child(6) {
-      animation-delay: -0.5s;
-      top: 22.08px;
-      left: 11.30421px;
-    }
-
-    .lds-default div:nth-child(7) {
-      animation-delay: -0.6s;
-      top: 36.8px;
-      left: 7.36px;
-    }
-
-    .lds-default div:nth-child(8) {
-      animation-delay: -0.7s;
-      top: 51.52px;
-      left: 11.30421px;
-    }
-
-    .lds-default div:nth-child(9) {
-      animation-delay: -0.8s;
-      top: 62.29579px;
-      left: 22.08px;
-    }
-
-    .lds-default div:nth-child(10) {
-      animation-delay: -0.9s;
-      top: 66.24px;
-      left: 36.8px;
-    }
-
-    .lds-default div:nth-child(11) {
-      animation-delay: -1s;
-      top: 62.29579px;
-      left: 51.52px;
-    }
-
-    .lds-default div:nth-child(12) {
-      animation-delay: -1.1s;
-      top: 51.52px;
-      left: 62.29579px;
-    }
-
-    @keyframes lds-default {
-
-      0%,
-      20%,
-      80%,
-      100% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.5);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="../responsive-table-styles/merchant.css">
 </head>
 
 <body>
@@ -295,7 +129,6 @@ function displayMerchant()
       </div>
     </div>
 
-    <!-- Modal: Edit Merchant Details -->
     <div class="modal fade" id="editMerchantModal" data-bs-backdrop="static" tabindex="-1"
       aria-labelledby="editMerchantModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -363,7 +196,6 @@ function displayMerchant()
       </div>
     </div>
 
-    <!-- Modal: Check Report -->
     <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -421,14 +253,11 @@ function displayMerchant()
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
 
-    <!-- Script: Check Report -->
     <script>
       function checkReport(merchantId, merchantName) {
-        // Set the merchantId and merchantName in the report modal
         document.getElementById('reportMerchantId').value = merchantId;
         document.getElementById('reportMerchantName').value = merchantName;
 
-        // Show the report modal
         $('#reportModal').modal('show');
       }
 
@@ -463,14 +292,12 @@ function displayMerchant()
           }
         }
 
-        // Set the method to POST
         form.method = 'POST';
 
         form.submit();
       });
     </script>
 
-    <!-- Script: DataTable -->
     <script>
       $(window).on('load', function () {
         $('.loading').hide();
@@ -484,23 +311,19 @@ function displayMerchant()
           order: [[1, 'asc']]
         });
       });
-
     </script>
 
-    <!-- Script: Edit Merchant Details -->
     <script>
       function editMerchant(merchantUuid) {
-        // Fetch the current data of the selected merchant
         var merchantRow = $('#dynamicTableBody').find('tr[data-uuid="' + merchantUuid + '"]');
         var merchantName = merchantRow.find('td:nth-child(2)').text();
         var merchantParntershipType = merchantRow.find('td:nth-child(3)').text();
         var legalEntityName = merchantRow.find('td:nth-child(4)').text();
         var businessAddress = merchantRow.find('td:nth-child(5)').text();
         var emailAddress = merchantRow.find('td:nth-child(6)').text();
-        var sales = merchantRow.find('td:nth-child(8)').text();  // Corrected index for salesId
-        var accountManager = merchantRow.find('td:nth-child(9)').text();  // Corrected index for accountManagerId
+        var sales = merchantRow.find('td:nth-child(8)').text(); 
+        var accountManager = merchantRow.find('td:nth-child(9)').text(); 
 
-        // Set values in the edit modal
         $('#merchantId').val(merchantUuid);
         $('#merchantName').val(merchantName);
         $('#merchantParntershipType').val(merchantParntershipType);
@@ -535,13 +358,11 @@ function displayMerchant()
           $('#accountManager').val(accountManager);
         }
 
-        // Open the edit modal
         $('#editMerchantModal').modal('show');
       }
     </script>
 
     <script>
-      // Event delegation for text toggle of email address
       document.body.addEventListener('click', function (event) {
         if (event.target.classList.contains('text-cell')) {
           var fullText = event.target.getAttribute('data-full');
@@ -566,10 +387,8 @@ function displayMerchant()
     </script>
     <script>
       function toggleActions(button) {
-        // Find the actions-list div relative to the button
         var actionsList = button.nextElementSibling;
 
-        // Toggle the display style of the actions-list div
         if (actionsList.style.display === 'none') {
           actionsList.style.display = 'block';
         } else {

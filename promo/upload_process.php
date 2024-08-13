@@ -29,7 +29,7 @@ function displayMessage($type, $message) {
             border-radius: 10px; 
             width: $containerWidth;
             height: $containerHeight; 
-            padding: 20px; /* Increased padding */
+            padding: 20px;
             backdrop-filter: blur(16px) saturate(180%); 
             -webkit-backdrop-filter: blur(16px) saturate(180%); 
             background-color: rgba(255, 255, 255, 0.40); 
@@ -64,14 +64,14 @@ function displayMessage($type, $message) {
             100% { stroke-dashoffset: 0; } 
         }
         .error-list {
-            font-size: 14px; /* Adjusted font size */
-            text-align: left; /* Left-align list items */
+            font-size: 14px; 
+            text-align: left; 
             margin-top: 10px;
-            padding-left: 0; /* Remove default padding */
-            list-style-type: none; /* Remove bullet points */
+            padding-left: 0; 
+            list-style-type: none; 
         }
         .error-list li {
-            margin-bottom: 5px; /* Adjust spacing between list items */
+            margin-bottom: 5px;
         }
         #okay{
         display: inline-block;
@@ -93,12 +93,10 @@ function displayMessage($type, $message) {
         </svg>
 HTML;
 
-    // Display success message
     if ($type === 'success') {
         echo "<br><br><h2 style='color:#4caf50;'>Successfully Uploaded</h2><br>";
     }
 
-    // If the message is an error and contains a list, format the list accordingly
     if ($type === 'error' && strpos($message, '<br>') !== false) {
         echo "<br><h2 style='color:#f44336;'>Error</h2>";
         echo '<ul class="error-list">';
@@ -164,7 +162,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     }
 
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle); // Skip header row
+    fgetcsv($handle); 
 
     $duplicateMessages = [];
     $invalidMerchantIds = [];
@@ -172,10 +170,9 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $duplicatePromoCodes = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $merchantId = $data[1]; // Assuming data[1] is merchant_id
+        $merchantId = $data[1]; 
         $promoCode = $data[2]; 
 
-        // Check for duplicate promo codes in the CSV file itself
         if (isset($promoCodes[$promoCode])) {
             if (!isset($duplicatePromoCodes[$promoCode])) {
                 $duplicatePromoCodes[$promoCode] = [$promoCodes[$promoCode]];
@@ -185,14 +182,12 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
             $promoCodes[$promoCode] = $promoCode;
         }
 
-        // Check for duplicates in the database
         $duplicates = checkForDuplicates($conn, $promoCode);
 
         if (!empty($duplicates)) {
             $duplicateMessages = array_merge($duplicateMessages, $duplicates);
         }
 
-        // Check if merchant ID exists
         if (!checkMerchantExistence($conn, $merchantId) && !in_array("Merchant ID '{$merchantId}' does not exist.", $invalidMerchantIds)) {
             $invalidMerchantIds[] = "Merchant ID '{$merchantId}' does not exist.";
         }
@@ -200,7 +195,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     fclose($handle);
 
-    // Add duplicate promo codes from the CSV file to the duplicate messages
     foreach ($duplicatePromoCodes as $promoCode => $promoCodes) {
         $duplicateMessages[] = "Duplicate Promo Code '{$promoCode}' in CSV file: " . implode(", ", $promoCodes);
     }
@@ -212,13 +206,11 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         exit();
     }
 
-    // If no duplicates and all merchant IDs are valid, proceed with inserting into database
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle); // Skip header row again
+    fgetcsv($handle); 
     $stmt1 = $conn->prepare("INSERT INTO promo (promo_id, merchant_id, promo_code, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, remarks2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        // Handle date formatting
         $data[3] = str_replace(',', '', $data[3]);
         $start_date = !empty($data[11]) ? DateTime::createFromFormat('m/d/Y', $data[11]) : null;
         $end_date = !empty($data[12]) ? DateTime::createFromFormat('m/d/Y', $data[12]) : null;
@@ -235,7 +227,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
             $end_date = null;
         }
 
-        // Bind parameters and execute for promo table
         $promo_id = Uuid::uuid4()->toString();
         $promo_type = $data[7];
         $stmt1->bind_param("ssssssssssssss", $promo_id, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $promo_type, $data[8], $data[9], $data[10], $start_date, $end_date, $data[13]);

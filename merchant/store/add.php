@@ -1,25 +1,20 @@
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
-// Include the configuration file
+
 require_once("../../header.php");
 require_once '../../inc/config.php';
 
-// Create a database connection
 $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Prepare and bind SQL statement for inserting into the store table
     $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssss", $store_id, $merchant_id, $store_name, $legal_entity_name, $store_address, $email_address);
 
-    // Set parameters and execute
     foreach ($_POST['store_id'] as $key => $value) {
         $store_id = $_POST['store_id'][$key];
         $merchant_id = $_POST['merchant_id'][$key];
@@ -29,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email_address = empty($_POST['email_address'][$key]) ? NULL : $_POST['email_address'][$key];
         $stmt->execute();
 
-        // Update the user_id in activity_history where it is blank or null and the description contains the store_name
         $update_stmt = $conn->prepare("
             UPDATE activity_history
             SET user_id = ?
@@ -37,18 +31,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             AND description LIKE CONCAT('%store_name: ', ?, '%')
         ");
 
-        $user_id = $_SESSION['user_id']; // Assuming the user_id is stored in the session
+        $user_id = $_SESSION['user_id']; 
 
         $update_stmt->bind_param("ss", $user_id, $store_name);
         $update_stmt->execute();
         $update_stmt->close();
     }
 
-    // Close statement
     $stmt->close();
 }
 
-// Close connection
 $conn->close();
 ?>
 
@@ -125,7 +117,7 @@ $conn->close();
     <script>
         setTimeout(function(){
             window.location.href = 'index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
-        }, 3000); // Delay for 3 seconds (3000 milliseconds)
+        }, 3000); 
     </script>
 </body>
 </html>
