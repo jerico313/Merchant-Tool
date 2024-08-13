@@ -234,6 +234,52 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     </div>
 
 
+<<<<<<< HEAD
+  
+  <div class="container" style="padding:70px;" id="content">
+  <p style="text-align:center;font-size:20px;font-weight:900;">SETTLEMENT REPORT</p>
+    <p class="text-right" style="font-weight:bold;font-size:40px;">
+      <img src="../../../images/booky2.png" alt="booky" width="150" height="50">
+    </p>
+    <table style="width:100% !important;">
+    <tr >
+          <td>Business Name: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['store_business_name']); ?></span></td>
+          <td style="width:40%;">Settlement Date: <span style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span></td>
+      </tr>
+      <tr>
+          <td>Brand Name: <span style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['store_brand_name']); ?></span></td>
+          <td>Settlement Number: <span style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span></td>
+      </tr>
+      <tr style="vertical-align: text-top;">
+          <td>Business Address: <span style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span></td>
+          <td>Settlement Period: <span style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period']); ?></span></td>
+      </tr>
+    </table>
+    <hr style="border: 1px solid #3b3b3b;">
+    <table style="width:100% !important;">
+      <tr>
+          <td>Total Number of Successful Orders</td>
+          <td id="total_successful_orders" style="width:30%;text-align:center;"><?php echo htmlspecialchars($data['total_successful_orders']); ?> order/s</td>
+      </tr>
+    </table>
+    <br>
+    <table style="width:100% !important;">
+      <tr>
+          <td>Total Gross Sales</td>
+          <td id="total_gross_sales" style="width:30%;text-align:center;"><?php  echo $totalGrossSales; ?> PHP</td>
+      </tr>
+      <tr>
+          <td>Total Discount</td>
+          <td id="total_discount" style="width:30%;text-align:center;"><?php  echo $totalDiscount; ?> PHP</td>
+      </tr>
+      <tr>
+          <td style="font-weight:bold;">Total Outstanding Amount:</td>
+          <td id="total_net_sales" style="font-weight:bold;text-align:center;"><?php  echo $totalOutstandingAmount; ?> PHP</td>
+      </tr>
+    </table>
+    <hr style="border: 1px solid #3b3b3b;">
+=======
+>>>>>>> 3f24d2a68761837c7b255f6b104c9a38a7ce483a
 
     <div class="container" style="padding:70px;" id="content">
         <p style="text-align:center;font-size:20px;font-weight:900;">SETTLEMENT REPORT</p>

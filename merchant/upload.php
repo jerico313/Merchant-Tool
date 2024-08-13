@@ -300,7 +300,7 @@
             var submitButton = document.getElementById('submitButton');
             var fileSizeKB = (fileSize / 1024).toFixed(2);
             submitButton.innerHTML = `<div class="spinner-border spinner-border-sm" role="status"></div><span> Uploading (${fileSizeKB} KB)...</span>`;
-
+            submitButton.disabled = true;
             document.getElementById('uploadForm').submit();
         });
 

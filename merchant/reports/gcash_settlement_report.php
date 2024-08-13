@@ -261,11 +261,27 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
         </td>
       </tr>
       <tr>
+<<<<<<< HEAD
+        <td>Brand Name: <span
+            style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['merchant_brand_name']); ?></span>
+        </td>
+        <td>Settlement Number: <span
+            style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span>
+        </td>
+      </tr>
+      <tr style="vertical-align: text-top;">
+        <td>Business Address: <span
+            style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
+        </td>
+        <td>Settlement Period: <span
+            style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period']); ?></span>
+=======
         <td style="vertical-align:text-top">Business Address: </td>
         <td style="font-weight:bold;vertical-align:text-top">
           <?php echo htmlspecialchars($data['business_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
         <td style="vertical-align:text-top">Settlement Period: </td>
         <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['settlement_period']); ?>
+>>>>>>> 3f24d2a68761837c7b255f6b104c9a38a7ce483a
         </td>
       </tr>
     </table>

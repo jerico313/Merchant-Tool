@@ -266,7 +266,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                         style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span>
                 </td>
             </tr>
-            <tr>
+            <tr style="vertical-align: text-top;">
                 <td>Business Address: <span
                         style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span>
                 </td>
