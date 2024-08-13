@@ -71,7 +71,7 @@
 
 <body>
 
-    <div class="cont-box mt-5">
+    <div class="cont mt-5">
         <div id="content">
             <p style="font-weight:900;font-size:20px;color:#4BB0B8;">Add New User</p>
             <form action="add.php" method="POST">
