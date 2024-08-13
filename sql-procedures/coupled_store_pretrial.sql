@@ -20,7 +20,7 @@ BEGIN
          leadgen_commission_rate_base_billable, commission_rate_billable, total_billable, total_commission_fees_1, 
          card_payment_pg_fee, paymaya_pg_fee, gcash_miniapp_pg_fee, gcash_pg_fee, total_payment_gateway_fees_1, 
          total_outstanding_amount_2, total_commission_fees_2, total_payment_gateway_fees_2, bank_fees, 
-         wtax_from_gross_sales, cwt_from_transaction_fees, cwt_from_pg_fees, total_amount_paid_out)
+         wtax_from_gross_sales, cwt_from_transaction_fees, cwt_from_pg_fees, total_amount_paid_out, commission_type)
         SELECT 
             "', v_uuid, '" AS coupled_report_id, 
             ''PRE-TRIAL'' AS bill_status, 
@@ -46,7 +46,7 @@ BEGIN
             SUM(`Cart Amount`) AS total_outstanding_amount_1,
             
             SUM(CASE
-                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base`
+                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base A`
                 ELSE 0.00
             END) AS leadgen_commission_rate_base_pretrial,
             CONCAT(`Commission Rate`) AS commission_rate_pretrial,
@@ -56,7 +56,7 @@ BEGIN
             END) AS total_pretrial,
 
            SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base`
+                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A`
                 ELSE 0.00
             END) AS leadgen_commission_rate_base_billable,
             `Commission Rate` AS commission_rate_billable,
@@ -69,7 +69,7 @@ BEGIN
                 ELSE 0.00
             END) AS total_commission_fees_1,
 
-            SUM(CASE WHEN `Mode of Payment` IN (''paymaya_credit_card'', ''maya'', ''maya_checkout'') THEN `PG Fee Amount` ELSE 0 END) AS card_payment,
+            SUM(CASE WHEN `Mode of Payment` = ''Card Payment'' THEN `PG Fee Amount` ELSE 0 END) AS card_payment,
             SUM(CASE WHEN `Mode of Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
             SUM(CASE WHEN `Mode of Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
             SUM(CASE WHEN `Mode of Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
@@ -94,10 +94,13 @@ BEGIN
                 - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
                 + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * (`CWT Rate` / 100), 2)
                 + ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2),
-            2) AS total_amount_paid_out
+            2) AS total_amount_paid_out,
+            fee.commission_type AS commission_type
         FROM `transaction_summary_view`
 	    JOIN `store` ON `Store ID` = store.`store_id`
-        WHERE 
+        JOIN `merchant` ON merchant.merchant_id = store.merchant_id
+        JOIN `fee` ON fee.merchant_id = merchant.merchant_id
+        WHERE
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
 	        AND `Voucher Type` = ''Coupled''
@@ -134,7 +137,7 @@ BEGIN
             SUM(`Cart Amount`) AS total_outstanding_amount_1,
             
             SUM(CASE
-                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base`
+                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base A`
                 ELSE 0.00
             END) AS leadgen_commission_rate_base_pretrial,
             CONCAT(`Commission Rate`) AS commission_rate_pretrial,
@@ -144,7 +147,7 @@ BEGIN
             END) AS total_pretrial,
 
            SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base`
+                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A`
                 ELSE 0.00
             END) AS leadgen_commission_rate_base_billable,
             `Commission Rate` AS commission_rate_billable,
@@ -157,7 +160,7 @@ BEGIN
                 ELSE 0.00
             END) AS total_commission_fees_1,
 
-            SUM(CASE WHEN `Mode of Payment` IN (''paymaya_credit_card'', ''maya'', ''maya_checkout'') THEN `PG Fee Amount` ELSE 0 END) AS card_payment,
+            SUM(CASE WHEN `Mode of Payment` = ''Card Payment'' THEN `PG Fee Amount` ELSE 0 END) AS card_payment,
             SUM(CASE WHEN `Mode of Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
             SUM(CASE WHEN `Mode of Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
             SUM(CASE WHEN `Mode of Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
@@ -182,10 +185,13 @@ BEGIN
                 - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
                 + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * (`CWT Rate` / 100), 2)
                 + ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2),
-            2) AS total_amount_paid_out
+            2) AS total_amount_paid_out,
+            fee.commission_type AS commission_type
         FROM `transaction_summary_view`
 	    JOIN `store` ON `Store ID` = store.`store_id`
-        WHERE 
+        JOIN `merchant` ON merchant.merchant_id = store.merchant_id
+        JOIN `fee` ON fee.merchant_id = merchant.merchant_id
+        WHERE
             `Store ID` = "', store_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
 	        AND `Voucher Type` = ''Coupled''

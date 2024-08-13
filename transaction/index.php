@@ -63,6 +63,7 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $vou
       echo "<td>" . $row['Cart Amount'] . "</td>";
       echo "<td>" . $row['Mode of Payment'] . "</td>";
       echo "<td>" . $row['Bill Status'] . "</td>";
+      echo "<td>" . $row['Comm Rate Base'] . "</td>";
       echo "<td>" . $row['Commission Type'] . "</td>";
       echo "<td>" . $row['Commission Rate'] . "</td>";
       echo "<td>" . $row['Commission Amount'] . "</td>";
@@ -432,6 +433,7 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $vou
                   <th>Cart Amount</th>
                   <th>Mode of Payment</th>
                   <th>Bill Status</th>
+                  <th>Comm Rate Base</th>
                   <th>Commission Type</th>
                   <th>Commission Rate</th>
                   <th>Commission Amount</th>
@@ -526,7 +528,7 @@ function displayOrder($store_id = null, $startDate = null, $endDate = null, $vou
       var table = $('#example').DataTable({
         scrollX: true,
         columnDefs: [
-          { orderable: false, targets: [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23] }
+          { orderable: false, targets: [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24] }
         ]
       });
 

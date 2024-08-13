@@ -52,11 +52,11 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
 
     // Adjust SQL query based on the bill_status parameter
     if ($bill_status === 'BILLABLE') {
-        $sql .= " AND `Bill Status` = 'BILLABLE'";
+        $sql .= " AND `Bill Status` = 'BILLABLE' ORDER BY `Transaction Date A` ASC";
     } elseif ($bill_status === 'PRE-TRIAL') {
-        $sql .= " AND `Bill Status` = 'PRE-TRIAL'";
+        $sql .= " AND `Bill Status` = 'PRE-TRIAL' ORDER BY `Transaction Date A` ASC";
     } elseif ($bill_status === 'All') {
-        $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL')";
+        $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL') ORDER BY `Transaction Date A` ASC";
     }
 
     $stmt = $conn->prepare($sql);
@@ -88,9 +88,8 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                 echo "<td>" . $row['Cart Amount'] . "</td>";
                 echo "<td>" . $row['Mode of Payment'] . "</td>";
                 echo "<td>" . $row['Bill Status'] . "</td>";
-                echo "<td>" . $row['Commission Type'] . "</td>";
+                echo "<td>" . $row['Comm Rate Base'] . "</td>";
                 echo "<td>" . $row['Commission Rate'] . "</td>";
-                echo "<td>" . $row['Commission Amount'] . "</td>";
                 echo "<td>" . $row['Total Billing'] . "</td>";
                 echo "<td>" . $row['PG Fee Rate'] . "</td>";
                 echo "<td>" . $row['PG Fee Amount'] . "</td>";
@@ -245,12 +244,11 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                     <th>Gross Amount</th>
                     <th>Discount</th>
                     <th>Cart Amount</th>
-                    <th>Payment</th>
+                    <th>Mode of Payment</th>
                     <th>Bill Status</th>
-                    <th>Commission Type</th>
-                    <th>Commission Rate</th>
-                    <th>Commission Amount</th>
-                    <th>Total Billing</th>
+                    <th>Comm Rate Base</th>
+                    <th>Comm Rate</th>
+                    <th>Comm Amount (<?php echo htmlspecialchars($data['commission_type']); ?>)</th>
                     <th>PG Fee Rate</th>
                     <th>PG Fee Amount</th>
                     <th>Amount to be Disbursed</th>
@@ -269,35 +267,29 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         </p>
         <table style="width:100% !important;">
             <tr>
-                <td>Business Name: <span
-                        style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['store_business_name']); ?></span>
-                </td>
-                <td style="width:40%;">Settlement Date: <span
-                        style="margin-left:21px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_date']); ?></span>
-                </td>
+                <td style="width:15%;vertical-align:text-top">Business Name: </td>
+                <td style="width:45%;font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['store_business_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td style="width:15%;vertical-align:text-top">Settlement Date: </td>
+                <td style="width:25%;font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['settlement_date']); ?></td>
             </tr>
             <tr>
-                <td>Brand Name: <span
-                        style="margin-left:29px;font-weight:bold;"><?php echo htmlspecialchars($data['store_brand_name']); ?></span>
-                </td>
-                <td>Settlement Number: <span
-                        style="margin-left:5px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_number']); ?></span>
-                </td>
+                <td style="vertical-align:text-top">Brand Name: </td>
+                <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['store_brand_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td style="vertical-align:text-top">Settlement Number: </td>
+                <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['settlement_number']); ?></td>
             </tr>
             <tr>
-                <td>Business Address: <span
-                        style="margin-left:2px;font-weight:bold;"><?php echo htmlspecialchars($data['business_address']); ?></span>
-                </td>
-                <td>Settlement Period: <span
-                        style="margin-left:15px;font-weight:bold;"><?php echo htmlspecialchars($data['settlement_period']); ?></span>
-                </td>
+                <td style="vertical-align:text-top">Business Address: </td>
+                <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['business_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td style="vertical-align:text-top">Settlement Period: </td>
+                <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['settlement_period']); ?></td>
             </tr>
         </table>
         <hr style="border: 1px solid #3b3b3b;">
         <table style="width:100% !important;">
             <tr>
                 <td>Total Number of Successful Orders</td>
-                <td id="total_successful_orders" style="width:30%;text-align:center;">
+                <td id="total_successful_orders" style="width:30%;text-align:center;font-weight:bold">
                     <?php echo htmlspecialchars($data['total_successful_orders']); ?> order/s
                 </td>
             </tr>
@@ -314,7 +306,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                 <td id="total_discount" style="width:30%;text-align:center;"><?php echo $totalDiscount; ?> PHP</td>
             </tr>
             <tr>
-                <td style="font-weight:bold;">Total Outstanding Amount:</td>
+                <td style="font-weight:bold;">Total Outstanding Amount</td>
                 <td id="total_net_sales" style="font-weight:bold;text-align:center;">
                     <?php echo $totalOutstandingAmount1; ?> PHP
                 </td>
@@ -331,7 +323,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
 
         <table style="width:100% !important;">
             <tr>
-                <td style="padding-left:85px;">Leadgen Commission rate base(Pre-Trial)</td>
+                <td style="padding-left:85px;">Leadgen Commission rate base (Pre-Trial)</td>
                 <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;">
                     <?php echo $leadgenCommissionRateBasePretrial; ?>
                 </td>
@@ -353,7 +345,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
 
         <table style="width:100% !important;">
             <tr>
-                <td style="padding-left:85px;">Leadgen Commission rate base(Billable)</td>
+                <td style="padding-left:85px;">Leadgen Commission rate base (Billable)</td>
                 <td id="leadgen_commission_rate_base_billable" style="text-align:right;padding-right:85px;">
                     <?php echo $leadgenCommissionRateBaseBillable; ?>
                 </td>
@@ -374,7 +366,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         <br>
         <table style="width:100% !important;">
             <tr>
-                <td style="font-weight:bold;">Total Commision Fees:</td>
+                <td style="font-weight:bold;">Total Commision Fees</td>
                 <td id="total_commission_fees" style="font-weight:bold;text-align:right;padding-right:85px;">
                     <?php echo $totalCommissionFees1; ?> PHP
                 </td>
@@ -421,7 +413,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         <hr style="border: 1px solid #3b3b3b;">
         <table style="width:100% !important;">
             <tr>
-                <td>Payment Outstanding Amount</td>
+                <td>Total Outstanding Amount</td>
                 <td id="leadgen_commission_rate_base_pretrial" style="width:30%;text-align:right;padding-right:85px;">
                     <?php echo $totalOutstandingAmount2; ?> PHP
                 </td>

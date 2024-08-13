@@ -16,7 +16,7 @@ BEGIN
         (decoupled_report_id, bill_status, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, 
          total_successful_orders, total_gross_sales, total_discount, total_outstanding_amount, 
          leadgen_commission_rate_base_pretrial, commission_rate_pretrial, total_pretrial, 
-         leadgen_commission_rate_base_billable, commission_rate_billable, total_billable, total_commission_fees)
+         leadgen_commission_rate_base_billable, commission_rate_billable, total_billable, total_commission_fees, commission_type)
         SELECT 
             "', v_uuid, '" AS decoupled_report_id, 
             ''PRE-TRIAL and BILLABLE'' AS bill_status, 
@@ -42,7 +42,7 @@ BEGIN
             SUM(`Cart Amount`) AS total_outstanding_amount,
             
             SUM(CASE
-                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base`
+                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base A`
                 ELSE 0.00
             END) AS leadgen_commission_rate_base_pretrial,
             CONCAT(`Commission Rate`) AS commission_rate_pretrial,
@@ -52,7 +52,7 @@ BEGIN
             END) AS total_pretrial,
 
            SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base`
+                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A`
                 ELSE 0.00
             END) AS leadgen_commission_rate_base_billable,
             `Commission Rate` AS commission_rate_billable,
@@ -63,9 +63,11 @@ BEGIN
             SUM(CASE
                 WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
                 ELSE 0.00
-            END) AS total_commission_fees
+            END) AS total_commission_fees,
+            fee.commission_type AS commission_type
         FROM `transaction_summary_view`
 	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
+        JOIN `fee` ON `Merchant ID` = fee.`merchant_id`
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
@@ -103,7 +105,7 @@ BEGIN
             SUM(`Cart Amount`) AS total_outstanding_amount,
             
             SUM(CASE
-                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base`
+                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base A`
                 ELSE 0.00
             END) AS leadgen_commission_rate_base_pretrial,
             CONCAT(`Commission Rate`) AS commission_rate_pretrial,
@@ -113,7 +115,7 @@ BEGIN
             END) AS total_pretrial,
 
            SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base`
+                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A`
                 ELSE 0.00
             END) AS leadgen_commission_rate_base_billable,
             `Commission Rate` AS commission_rate_billable,
@@ -124,9 +126,11 @@ BEGIN
             SUM(CASE
                 WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
                 ELSE 0.00
-            END) AS total_commission_fees
+            END) AS total_commission_fees,
+            fee.commission_type AS commission_type
         FROM `transaction_summary_view`
 	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
+        JOIN `fee` ON `Merchant ID` = fee.`merchant_id`
         WHERE 
             `Merchant ID` = "', merchant_id, '"
             AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
