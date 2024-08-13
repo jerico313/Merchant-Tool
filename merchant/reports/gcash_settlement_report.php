@@ -242,10 +242,11 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
     </table>
   </div>
   <div class="container" style="padding:70px;" id="content">
-    <p style="text-align:center;font-size:20px;font-weight:900;">SETTLEMENT REPORT</p>
     <p class="text-right" style="font-weight:bold;font-size:40px;">
       <img src="../../images/booky2.png" alt="booky" width="150" height="50">
     </p>
+    <p style="text-align:center;font-size:16px;font-weight:900;">SETTLEMENT REPORT</p>
+    <br>
     <table style="width:100% !important;">
       <tr>
         <td style="width:15%;vertical-align:text-top">Business Name: </td>

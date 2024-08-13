@@ -241,10 +241,11 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     </table>
   </div>
   <div class="container" style="padding:70px;" id="content">
-    <p style="text-align:center;font-size:20px;font-weight:900;">SETTLEMENT REPORT</p>
     <p class="text-right" style="font-weight:bold;font-size:40px;">
       <img src="../../../images/booky2.png" alt="booky" width="150" height="50">
     </p>
+    <p style="text-align:center;font-size:16px;font-weight:900;">SETTLEMENT REPORT</p>
+    <br>
     <table style="width:100% !important;">
       <tr>
         <td style="width:15%;vertical-align:text-top">Business Name: </td>
@@ -385,7 +386,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         var wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-        XLSX.writeFile(wb, "<?php echo htmlspecialchars($data['store_brand_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+        XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
 </script>
 </body>
