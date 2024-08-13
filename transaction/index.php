@@ -257,16 +257,15 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
       </div>
 
       <div class="modal-footer border-0">
-    <div class="row w-100">
+      <div class="row w-100">
         <div class="col-6">
             <button type="button" class="btn btn-danger w-100" id="confirmDeleteButton" style="background-color:#cc001b;border:solid #cc001b 2px;border-radius:20px;font-weight:bold;">Delete</button>
         </div>
         <div class="col-6">
             <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal" style="border-radius:20px;background-color:#fff;color:#cc001b;border:solid #cc001b 2px;font-weight:bold;">Cancel</button>
         </div>
-    </div>
-</div>
-
+        </div>
+      </div>
     </div>
   </div>
 </div>

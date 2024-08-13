@@ -23,7 +23,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 </head>
 <body>
 
-<div class="cont-box">
+<div class="cont">
     <div class="custom-box pt-4">
         <a href="javascript:history.back()">
             <span class="back">
