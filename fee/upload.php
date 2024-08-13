@@ -8,7 +8,8 @@ function fetchMerchants()
     $merchantSql = "SELECT m.merchant_id, m.merchant_name 
                     FROM merchant m
                     LEFT JOIN fee f ON m.merchant_id = f.merchant_id
-                    WHERE f.merchant_id IS NULL";
+                    WHERE f.merchant_id IS NULL
+                    ORDER BY m.merchant_name ASC";
     $merchantResult = $conn->query($merchantSql);
 
     if ($merchantResult->num_rows > 0) {
