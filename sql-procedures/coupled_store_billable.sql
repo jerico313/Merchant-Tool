@@ -51,7 +51,7 @@ BEGIN
             END) AS leadgen_commission_rate_base_pretrial,
             CONCAT(`Commission Rate`) AS commission_rate_pretrial,
             SUM(CASE
-                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Total Billing`
+                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base A` * (`Commission Rate` / 100)
                 ELSE 0.00
             END) AS total_pretrial,
 
@@ -61,7 +61,7 @@ BEGIN
             END) AS leadgen_commission_rate_base_billable,
             `Commission Rate` AS commission_rate_billable,
             SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
+                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A` * (`Commission Rate` / 100)
                 ELSE 0.00
             END) AS total_billable,
             SUM(CASE
@@ -142,7 +142,7 @@ BEGIN
             END) AS leadgen_commission_rate_base_pretrial,
             CONCAT(`Commission Rate`) AS commission_rate_pretrial,
             SUM(CASE
-                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Total Billing`
+                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base A` * (`Commission Rate` / 100)
                 ELSE 0.00
             END) AS total_pretrial,
 
@@ -152,7 +152,7 @@ BEGIN
             END) AS leadgen_commission_rate_base_billable,
             `Commission Rate` AS commission_rate_billable,
             SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
+                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A` * (`Commission Rate` / 100)
                 ELSE 0.00
             END) AS total_billable,
             SUM(CASE
