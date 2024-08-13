@@ -15,11 +15,15 @@ function displayReportHistoryGcashBody($gcash_report_id)
 
   if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+      $quantity_redeemed = number_format($row['quantity_redeemed'], 0);
+      $voucher_value = number_format($row['amount'], 2);
+      $amount = number_format($row['amount'], 2);
+
       echo "<tr>";
       echo "<td style='text-align:center;'>" . $row['item'] . "</td>";
-      echo "<td style='text-align:center;'>" . $row['quantity_redeemed'] . "</td>";
-      echo "<td style='text-align:center;'>" . $row['voucher_value'] . "</td>";
-      echo "<td style='text-align:center;'>" . $row['amount'] . " PHP" . "</td>";
+      echo "<td style='text-align:center;'>" . $quantity_redeemed . "</td>";
+      echo "<td style='text-align:center;'>" . $voucher_value . "</td>";
+      echo "<td style='text-align:center;'>" . $amount . " PHP" . "</td>";
       echo "</tr>";
     }
   }
@@ -37,7 +41,6 @@ $data = $result->fetch_assoc();
 $stmt->close();
 $conn->close();
 
-$store_brand_name = str_replace("'", "", $data['store_brand_name']);
 $totalAmount = number_format($data['total_amount'], 2);
 $commissionAmount = number_format($data['commission_amount'], 2);
 $vatAmount = number_format($data['vat_amount'], 2);
@@ -52,7 +55,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
 {
   include ("../../../inc/config.php");
 
-  $sql = "SELECT * FROM transaction_summary_view 
+  $sql = "SELECT * FROM gcash_transactions_view 
             WHERE `Store ID` = ? 
             AND `Transaction Date` BETWEEN ? AND ?";
 
@@ -197,7 +200,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         <i class="fa-solid fa-arrow-left fa-lg"></i>
         <span
           style="margin-left:10px;font-size:8px;background-color:#EA4335;padding:4px;border-radius:5px;font-family:helvetica;font-weight:bold;">PDF</span>
-        <?php echo htmlspecialchars($data['store_brand_name']); ?> -
+          <?php echo htmlspecialchars($data['store_brand_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?> -
         <?php echo htmlspecialchars($data['settlement_period']); ?> -
         (<?php echo htmlspecialchars($data['settlement_number']); ?>)
         <?php echo htmlspecialchars($data['bill_status']); ?>.pdf
@@ -211,12 +214,12 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         </ul>
         <a class="print" id="print" href="#"><i class="fa-solid fa-print fa-lg"></i> Print</a>
         <a class="downloadBtnExcel" id="downloadBtnExcel" onclick="downloadTables()" href="#"><i
-            class="fa-solid fa-download fa-lg"></i> CSV</a>
+            class="fa-solid fa-download fa-lg"></i> Excel</a>
       </div>
     </div>
   </nav>
   <div class="box" style="display:none;">
-    <table id="transaction" class="table bord" style="width:250%;">
+    <table id="example" class="table bord" style="width:250%;">
       <thead>
         <tr>
           <th>Merchant Name</th>
@@ -271,7 +274,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     <hr style="border: 1px solid #3b3b3b;">
     <p style="text-align:center;font-weight:bold;">Gcash Lead Generation</p>
     <hr style="border: 1px solid #3b3b3b;">
-    <table id="example" style="width:100%;">
+    <table style="width:100%;">
       <thead>
         <tr>
           <td style="text-align:center;font-weight:bold;width:25%">Items</td>
@@ -382,7 +385,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         var wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+        XLSX.writeFile(wb, "<?php echo htmlspecialchars($data['store_brand_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
 </script>
 </body>
