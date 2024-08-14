@@ -167,9 +167,9 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                             </ol>
                         </nav>
                         <div style="width:650px;">
-                        <p class="title2" style="padding-left:6px">
-                            <?php echo htmlspecialchars($store_name); ?>
-                        </p>
+                            <p class="title2" style="padding-left:6px">
+                                <?php echo htmlspecialchars($store_name); ?>
+                            </p>
                         </div>
                     </div>
 
@@ -205,7 +205,8 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                         </div>
                     </div>
                     <div class="dropdown">
-                        <button class="dropdown-toggle mt-4 dateRange" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="dropdown-toggle mt-4 dateRange" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-calendar"></i> Select Date Range
                         </button>
                         <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton">
@@ -255,7 +256,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                 <th>PG Fee Amount</th>
                                 <th>CWT Rate</th>
                                 <th class="action-col">Amount to be Disbursed</th>
-                                <th style="display:none;"></th>     
+                                <th style="display:none;"></th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -275,36 +276,36 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
-    function downloadTables() {
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString().split('T')[0]; 
+        function downloadTables() {
+            const currentDate = new Date();
+            const formattedDate = currentDate.toISOString().split('T')[0];
 
-    const table = $('#example').DataTable();
+            const table = $('#example').DataTable();
 
-    const filteredData = table.rows({ search: 'applied' }).data().toArray();
+            const filteredData = table.rows({ search: 'applied' }).data().toArray();
 
-    function formatDataForExcel(row) {
-        return [
-            row[0], row[1], row[2], row[3], row[4],
-            row[9], row[10], row[11], row[12], row[13],
-            row[15], row[16], row[17], row[18], row[19], row[20], row[21]
-        ];
-    }
+            function formatDataForExcel(row) {
+                return [
+                    row[0], row[1], row[2], row[3], row[4],
+                    row[9], row[10], row[11], row[12], row[13],
+                    row[15], row[16], row[17], row[18], row[19], row[20], row[21]
+                ];
+            }
 
-    const formattedRows = filteredData.map(row => formatDataForExcel(row));
+            const formattedRows = filteredData.map(row => formatDataForExcel(row));
 
-    formattedRows.unshift([
-        'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
-        'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
-        'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'CWT Rate','Amount to be Disbursed'
-    ]);
+            formattedRows.unshift([
+                'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
+                'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
+                'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'CWT Rate', 'Amount to be Disbursed'
+            ]);
 
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(formattedRows);
-    XLSX.utils.book_append_sheet(wb, ws, "Transactions");
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(formattedRows);
+            XLSX.utils.book_append_sheet(wb, ws, "Transactions");
 
-    XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
-}
+            XLSX.writeFile(wb, `<?php echo $store_name; ?> - ${formattedDate} - Transactions.xlsx`);
+        }
 
         $(window).on('load', function () {
             $('.loading').hide();
