@@ -39,7 +39,7 @@ SELECT
             WHEN `a`.`table_name` = 'report_history_coupled' THEN `rhc`.`settlement_number`
             WHEN `a`.`table_name` = 'report_history_decoupled' THEN `rhd`.`settlement_number`
             WHEN `a`.`table_name` = 'report_history_gcash_head' THEN `rhgh`.`settlement_number`
-            WHEN `a`.`table_name` = 'report_history_gcash_body' THEN `rhgh`.`settlement_number`
+            WHEN `a`.`table_name` = 'report_history_gcash_body' THEN `rhgh2`.`settlement_number`
             ELSE NULL
         END,
         'Deleted'
@@ -76,7 +76,7 @@ FROM
     LEFT JOIN `leadgen_db`.`report_history_decoupled` `rhd` ON `a`.`table_id` = `rhd`.`decoupled_report_id`
     LEFT JOIN `leadgen_db`.`report_history_gcash_head` `rhgh` ON `a`.`table_id` = `rhgh`.`gcash_report_id`
     LEFT JOIN `leadgen_db`.`report_history_gcash_body` `rhgb` ON `a`.`table_id` = `rhgb`.`gcash_report_body_id`
-    LEFT JOIN `leadgen_db`.`report_history_gcash_body` `rhgb2` ON `rhgb2`.`gcash_report_body_id` = `rhgh`.`gcash_report_id`
+    LEFT JOIN `leadgen_db`.`report_history_gcash_head` `rhgh2` ON `rhgh2`.`gcash_report_id` = `rhgb`.`gcash_report_id`
 WHERE
     `a`.`table_name` IN(
         'merchant',
