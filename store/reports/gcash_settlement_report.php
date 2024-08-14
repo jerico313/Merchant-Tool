@@ -272,7 +272,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
-    <p style="text-align:center;font-weight:bold;">Gcash Lead Generation</p>
+    <p style="text-align:center;font-weight:bold;">Gcash Lead Generation Report</p>
     <hr style="border: 1px solid #3b3b3b;">
     <table style="width:100%;">
       <thead>

@@ -1,11 +1,11 @@
 <?php
-include ('../../inc/config.php');
+include('../../inc/config.php');
 
 $gcash_report_id = isset($_GET['gcash_report_id']) ? $_GET['gcash_report_id'] : '';
 
 function displayReportHistoryGcashBody($gcash_report_id)
 {
-  include ("../../inc/config.php");
+  include("../../inc/config.php");
 
   $sql = "SELECT * FROM report_history_gcash_body WHERE gcash_report_id = ?";
   $stmt = $conn->prepare($sql);
@@ -52,7 +52,7 @@ $bill_status = isset($_GET['bill_status']) ? $_GET['bill_status'] : '';
 
 function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
 {
-  include ("../../inc/config.php");
+  include("../../inc/config.php");
 
   // Base SQL query
   $sql = "SELECT * FROM gcash_transactions_view 
@@ -200,7 +200,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
         <i class="fa-solid fa-arrow-left fa-lg"></i>
         <span
           style="margin-left:10px;font-size:8px;background-color:#EA4335;padding:4px;border-radius:5px;font-family:helvetica;font-weight:bold;">PDF</span>
-        <?php echo htmlspecialchars($data['merchant_brand_name']); ?> -
+          <?php echo htmlspecialchars($data['merchant_brand_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?> -
         <?php echo htmlspecialchars($data['settlement_period']); ?> -
         (<?php echo htmlspecialchars($data['settlement_number']); ?>)
         <?php echo htmlspecialchars($data['bill_status']); ?>.pdf
@@ -250,15 +250,18 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
       <tr>
         <td style="width:15%;vertical-align:text-top">Business Name: </td>
         <td style="width:45%;font-weight:bold;vertical-align:text-top">
-          <?php echo htmlspecialchars($data['merchant_business_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+          <?php echo htmlspecialchars($data['merchant_business_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
+        </td>
         <td style="width:15%;vertical-align:text-top">Settlement Date: </td>
         <td style="width:25%;font-weight:bold;vertical-align:text-top">
-          <?php echo htmlspecialchars($data['settlement_date']); ?></td>
+          <?php echo htmlspecialchars($data['settlement_date']); ?>
+        </td>
       </tr>
       <tr>
         <td style="vertical-align:text-top">Brand Name: </td>
         <td style="font-weight:bold;vertical-align:text-top">
-          <?php echo htmlspecialchars($data['merchant_brand_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+          <?php echo htmlspecialchars($data['merchant_brand_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
+        </td>
         <td style="vertical-align:text-top">Settlement Number: </td>
         <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['settlement_number']); ?>
         </td>
@@ -266,7 +269,8 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
       <tr>
         <td style="vertical-align:text-top">Business Address: </td>
         <td style="font-weight:bold;vertical-align:text-top">
-          <?php echo htmlspecialchars($data['business_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+          <?php echo htmlspecialchars($data['business_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
+        </td>
         <td style="vertical-align:text-top">Settlement Period: </td>
         <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['settlement_period']); ?>
         </td>
@@ -339,7 +343,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
       document.getElementById("downloadBtn").addEventListener("click", () => {
         const invoice = document.getElementById("content");
         var opt = {
-          margin: [-1.5, -0.5, -0.5, -0.5], 
+          margin: [-1.5, -0.5, -0.5, -0.5],
           filename: '<?php echo htmlspecialchars($data['merchant_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf',
           image: { type: 'jpeg', quality: 1.0 },
           html2canvas: { scale: 5 },
@@ -358,46 +362,47 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
       window.onafterprint = function () {
         document.body.innerHTML = originalContent;
         setTimeout(function () {
-          location.reload(); 
-        }, 10); 
+          location.reload();
+        }, 10);
       };
 
       window.print();
     });
   </script>
-<script>
+  <script>
     function formatNumber(value) {
-        return parseFloat(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return parseFloat(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function downloadTables() {
-        var table = document.getElementById("example");
-        var rows = table.querySelectorAll("tr");
-        var data = [];
+      var table = document.getElementById("example");
+      var rows = table.querySelectorAll("tr");
+      var data = [];
 
-        rows.forEach(function(row, rowIndex) {
-            var rowData = [];
-            var cells = row.querySelectorAll("th, td");
+      rows.forEach(function (row, rowIndex) {
+        var rowData = [];
+        var cells = row.querySelectorAll("th, td");
 
-            cells.forEach(function(cell, cellIndex) {
-                var cellText = cell.innerText || cell.textContent;
+        cells.forEach(function (cell, cellIndex) {
+          var cellText = cell.innerText || cell.textContent;
 
-                if (rowIndex !== 0 && (cellIndex === 13 || cellIndex === 15 || cellIndex === 16)) {
-                    cellText = formatNumber(cellText);
-                }
+          if (rowIndex !== 0 && (cellIndex === 13 || cellIndex === 15 || cellIndex === 16)) {
+            cellText = formatNumber(cellText);
+          }
 
-                rowData.push(cellText);
-            });
-
-            data.push(rowData);
+          rowData.push(cellText);
         });
 
-        var ws = XLSX.utils.aoa_to_sheet(data);
-        var wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        data.push(rowData);
+      });
 
-        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+      var ws = XLSX.utils.aoa_to_sheet(data);
+      var wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+      XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
-</script>
+  </script>
 </body>
+
 </html>

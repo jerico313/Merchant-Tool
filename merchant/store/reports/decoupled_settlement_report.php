@@ -330,7 +330,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         <br>
         <table style="width:100% !important;">
             <tr>
-                <td style="font-weight:bold;">Total Commision Fees</td>
+                <td style="font-weight:bold;">Total Commission Fees</td>
                 <td id="total_commission_fees" style="font-weight:bold;text-align:right;padding-right:85px;">
                     <?php echo $totalCommissionFees; ?> PHP</td>
             </tr>

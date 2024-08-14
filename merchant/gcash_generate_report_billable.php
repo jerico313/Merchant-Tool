@@ -58,11 +58,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $merchantIds = [$merchantIdHead];
         $gcashReportIds = $gcashReportIdsBody;
 
-        if ($merchantIdHead) {
-            $pattern = '%merchant_id: ' . $merchantIdHead . '%';
-            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE description LIKE ? AND user_id IS NULL");
+        if ($maxGcashReportId !== null) {
+            $stmt1 = $conn->prepare("UPDATE report_history_gcash_head SET generated_by=? WHERE gcash_report_id=?");
+            if ($stmt1) {
+                $stmt1->bind_param("ss", $userId, $maxGcashReportId);
+                $stmt1->execute();
+                $stmt1->close();
+            }
+
+            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE table_id=?");
             if ($stmt) {
-                $stmt->bind_param("ss", $userId, $pattern);
+                $stmt->bind_param("ss", $userId, $maxGcashReportId);
                 if (!$stmt->execute()) {
                     echo "Error executing update statement for merchant_id: " . $stmt->error;
                 }
@@ -91,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $settlement_period_start = htmlspecialchars($startDate);
         $settlement_period_end = htmlspecialchars($endDate);
         $bill_status = htmlspecialchars($billStatus);
-        $url = 'reports/gcash_settlement_report.php?merchant_id=' . urlencode($merchant_id) . '&gcash_report_id=' . urlencode($maxGcashReportId) . '&merchant_name=' . urlencode($merchant_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end). '&merchant_name=' . urlencode($merchant_name) . '&bill_status=' . urlencode($bill_status); 
+        $url = 'reports/gcash_settlement_report.php?merchant_id=' . urlencode($merchant_id) . '&gcash_report_id=' . urlencode($maxGcashReportId) . '&merchant_name=' . urlencode($merchant_name) . '&settlement_period_start=' . urlencode($settlement_period_start) . '&settlement_period_end=' . urlencode($settlement_period_end) . '&bill_status=' . urlencode($bill_status); 
         header("Location: $url");
         exit;
     } else {

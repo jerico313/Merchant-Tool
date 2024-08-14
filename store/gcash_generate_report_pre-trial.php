@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include("../../inc/config.php");
+    include("../inc/config.php");
 
     $storeId = $_POST['storeId'] ?? '';
     $storeName = $_POST['storeName'] ?? '';
@@ -60,17 +60,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $storeIds = [$storeIdHead];
         $gcashReportIds = $gcashReportIdsBody;
 
-        if ($storeIdHead) {
-            $pattern = '%store_id: ' . $storeIdHead . '%';
-            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE description LIKE ? AND user_id IS NULL");
+        if ($maxGcashReportId !== null) {
+            $stmt1 = $conn->prepare("UPDATE report_history_gcash_head SET generated_by=? WHERE gcash_report_id=?");
+            if ($stmt1) {
+                $stmt1->bind_param("ss", $userId, $maxGcashReportId);
+                $stmt1->execute();
+                $stmt1->close();
+            }
+
+            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE table_id=?");
             if ($stmt) {
-                $stmt->bind_param("ss", $userId, $pattern);
+                $stmt->bind_param("ss", $userId, $maxGcashReportId);
                 if (!$stmt->execute()) {
-                    echo "Error executing update statement for store_id: " . $stmt->error;
+                    echo "Error executing update statement for merchant_id: " . $stmt->error;
                 }
                 $stmt->close();
             } else {
-                echo "Error preparing update statement for store_id: " . $conn->error;
+                echo "Error preparing update statement for merchant_id: " . $conn->error;
             }
         }
         
