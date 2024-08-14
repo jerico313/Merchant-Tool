@@ -7,10 +7,10 @@ function displayGcash($merchant_id, $merchant_name)
 {
     include ("../../inc/config.php");
 
-    $sql = "SELECT h.gcash_report_id, h.merchant_brand_name, h.bill_status, h.settlement_number, h.settlement_period, h.settlement_period_start, h.settlement_period_end, b.created_at
-            FROM report_history_gcash_head h
-            JOIN report_history_gcash_body b ON h.gcash_report_id = b.gcash_report_id
-            WHERE h.merchant_id = ?";
+    $sql = "SELECT rhgh.*, user.name AS generated_by_name 
+            FROM report_history_gcash_head rhgh
+            LEFT JOIN user ON user.user_id = rhgh.generated_by
+            WHERE merchant_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
@@ -18,13 +18,14 @@ function displayGcash($merchant_id, $merchant_name)
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $generatedBy = $row['generated_by_name'] ? $row['generated_by_name'] : '-';
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             $date = new DateTime($row['created_at']);
-            $formattedDate = $date->format('F d, Y g:i:s A');
-            echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) . "'>";
-            echo "<td><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $escapedMerchantName . " - " . $row['settlement_period'] . " -(" . $row['settlement_number'] . ") ". $row['bill_status'] . ".pdf</td>";
-            echo "<td>" . $row['generated_by'] . "</td>";
-            echo "<td>" . $formattedDate . "</td>";
+            $formattedDate = $date->format('F d, Y g:i A');
+            echo "<tr class='clickable-row' data-href='gcash_settlement_report.php?gcash_report_id=" . $row['gcash_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) . "'>";
+            echo "<td style='text-align:left;padding-left:20px;width:50%'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $escapedMerchantName . " - " . $row['settlement_period'] . " -(" . $row['settlement_number'] . ") ". $row['bill_status'] . ".pdf</td>";
+            echo "<td style='width:25%'>" . $generatedBy . "</td>";
+            echo "<td style='width:25%'>" . $formattedDate . "</td>";
             echo "</tr>";
         }
     }
@@ -219,7 +220,7 @@ function displayGcash($merchant_id, $merchant_name)
           order: [[2, 'desc']], 
         createdRow: function (row, data, dataIndex) {
             var date = new Date(data[2]); 
-            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true });
             $('td:eq(2)', row).html(formattedDate); 
         }
    }); 

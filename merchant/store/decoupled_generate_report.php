@@ -28,15 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         $stmt->close();
 
-        $latestActivityId = null;
-        $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
-        if ($stmt) {
-            $stmt->execute();
-            $stmt->bind_result($latestActivityId);
-            $stmt->fetch();
-            $stmt->close();
-        }
-
         $maxDecoupledReportId = null;
         $stmt = $conn->prepare("SELECT decoupled_report_id FROM report_history_decoupled ORDER BY created_at DESC LIMIT 1");
         if ($stmt) {
@@ -46,10 +37,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close(); 
         }
 
-        if ($latestActivityId !== null && $maxDecoupledReportId !== null) {
-            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
+        if ($maxDecoupledReportId !== null) {
+            $stmt1 = $conn->prepare("UPDATE report_history_decoupled SET generated_by=? WHERE decoupled_report_id=?");
+            if ($stmt1) {
+                $stmt1->bind_param("ss", $userId, $maxDecoupledReportId);
+                $stmt1->execute();
+                $stmt1->close();
+            }
+
+            $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE table_id=?");
             if ($stmt) {
-                $stmt->bind_param("ss", $userId, $latestActivityId);
+                $stmt->bind_param("ss", $userId, $maxDecoupledReportId);
                 $stmt->execute();
                 $stmt->close(); 
             }

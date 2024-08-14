@@ -183,7 +183,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
                 <i class="fa-solid fa-arrow-left fa-lg"></i>
                 <span
                     style="margin-left:10px;font-size:8px;background-color:#EA4335;padding:3px;border-radius:5px;font-family:helvetica;font-weight:bold;">PDF</span>
-                <?php echo htmlspecialchars($data['merchant_brand_name']); ?> -
+                    <?php echo htmlspecialchars($data['merchant_brand_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?> -
                 <?php echo htmlspecialchars($data['settlement_period']); ?> -
                 (<?php echo htmlspecialchars($data['settlement_number']); ?>)
                 <?php echo htmlspecialchars($data['bill_status']); ?>.pdf
@@ -330,7 +330,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
         <br>
         <table style="width:100% !important;">
             <tr>
-                <td style="font-weight:bold;">Total Commision Fees</td>
+                <td style="font-weight:bold;">Total Commission Fees</td>
                 <td id="total_commission_fees" style="font-weight:bold;text-align:right;padding-right:85px;">
                     <?php echo $totalCommissionFees; ?> PHP</td>
             </tr>

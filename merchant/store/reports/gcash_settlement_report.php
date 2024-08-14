@@ -272,7 +272,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       </tr>
     </table>
     <hr style="border: 1px solid #3b3b3b;">
-    <p style="text-align:center;font-weight:bold;">Gcash Lead Generation</p>
+    <p style="text-align:center;font-weight:bold;">Gcash Lead Generation Report</p>
     <hr style="border: 1px solid #3b3b3b;">
     <table style="width:100%;">
       <thead>
@@ -394,7 +394,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         var wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+        XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
 </script>
 </body>

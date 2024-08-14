@@ -350,7 +350,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         <br>
         <table style="width:100% !important;">
             <tr>
-                <td style="font-weight:bold;">Total Commision Fees</td>
+                <td style="font-weight:bold;">Total Commission Fees</td>
                 <td id="total_commission_fees" style="font-weight:bold;text-align:right;padding-right:85px;">
                     <?php echo $totalCommissionFees1; ?> PHP
                 </td>
@@ -498,7 +498,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         var wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+        XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
 </script>
 </body>

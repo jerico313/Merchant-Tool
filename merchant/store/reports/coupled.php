@@ -9,7 +9,10 @@ function displayDecoupled($store_id, $store_name)
 {
     include ("../../../inc/config.php");
 
-    $sql = "SELECT * FROM report_history_coupled WHERE store_id = ? ORDER BY created_at DESC";
+    $sql = "SELECT rhc.*, user.name AS generated_by_name 
+            FROM report_history_coupled rhc
+            LEFT JOIN user ON user.user_id = rhc.generated_by
+            WHERE store_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $store_id);
     $stmt->execute();
@@ -17,12 +20,14 @@ function displayDecoupled($store_id, $store_name)
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $generatedBy = $row['generated_by_name'] ? $row['generated_by_name'] : '-';
+            $escapedStoreName = htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8');
             $date = new DateTime($row['created_at']);
-            $formattedDate = $date->format('F d, Y g:i:s A');
+            $formattedDate = $date->format('F d, Y g:i A');
             echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) . "'>";
-            echo "<td><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['store_brand_name'] . " - " . $row['settlement_period'] . " -(" . $row['settlement_number'] . ") ". $row['bill_status'] . ".pdf</td>";
-            echo "<td>" . $row['generated_by'] . "</td>";
-            echo "<td>" . $formattedDate . "</td>";
+            echo "<td style='text-align:left;padding-left:20px;width:50%'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $escapedStoreName . " - " . $row['settlement_period'] . " -(" . $row['settlement_number'] . ") ". $row['bill_status'] . ".pdf</td>";
+            echo "<td style='width:25%'>" . $generatedBy . "</td>";
+            echo "<td style='width:25%'>" . $formattedDate . "</td>";
             echo "</tr>";
         }
     }
@@ -242,7 +247,7 @@ function displayDecoupled($store_id, $store_name)
                 order: [[2, 'desc']],
                 createdRow: function (row, data, dataIndex) {
                     var date = new Date(data[2]);
-                    var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+                    var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true });
                     $('td:eq(2)', row).html(formattedDate);
                 }
             });

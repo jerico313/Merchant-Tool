@@ -9,7 +9,10 @@ function displayDecoupled($store_id, $store_name)
 {
     include ("../../inc/config.php");
 
-    $sql = "SELECT * FROM report_history_decoupled WHERE store_id = ? ORDER BY created_at DESC";
+    $sql = "SELECT rhd.*, user.name AS generated_by_name 
+            FROM report_history_decoupled rhd
+            LEFT JOIN user ON user.user_id = rhd.generated_by
+            WHERE store_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $store_id);
     $stmt->execute();
@@ -17,12 +20,14 @@ function displayDecoupled($store_id, $store_name)
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $generatedBy = $row['generated_by_name'] ? $row['generated_by_name'] : '-';
+            $escapedStoreName = htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8');
             $date = new DateTime($row['created_at']);
-            $formattedDate = $date->format('F d, Y g:i:s A');
-            echo "<tr class='clickable-row' data-href='decoupled_settlement_report.php?decoupled_report_id=" . $row['decoupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) .  "'>";
-            echo "<td style='text-align:center;'>" . $row['settlement_number'] . "</td>";
-            echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['store_brand_name'] . "_" . $row['settlement_number'] . ".pdf</td>";
-            echo "<td style='text-align:center;'>" . $formattedDate . "</td>";
+            $formattedDate = $date->format('F d, Y g:i A');
+            echo "<tr class='clickable-row' data-href='decoupled_settlement_report.php?decoupled_report_id=" . $row['decoupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) . "'>";
+            echo "<td style='text-align:left;padding-left:20px;width:50%'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $escapedStoreName . " - " . $row['settlement_period'] . " -(" . $row['settlement_number'] . ") ". $row['bill_status'] . ".pdf</td>";
+            echo "<td style='width:25%'>" . $generatedBy . "</td>";
+            echo "<td style='width:25%'>" . $formattedDate . "</td>";
             echo "</tr>";
         }
     }
@@ -48,25 +53,6 @@ function displayDecoupled($store_id, $store_name)
     <style>
         body {
             background-image: url("../../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        .title {
-            font-size: 30px;
-            font-weight: 900;
-            margin-right: auto;
-            padding-left: 5vh;
-            color: #4BB0B8;
-        }
-
-        .voucher-type {
-            padding-bottom: 0px;
-            padding-right: 5vh;
-            display: flex;
-            align-items: center;
         }
 
         tr:hover {
@@ -144,16 +130,6 @@ function displayDecoupled($store_id, $store_name)
             .dataTables_length {
                 display: none;
             }
-
-            .title {
-                font-size: 25px;
-                padding-left: 2vh;
-                padding-top: 10px;
-            }
-
-            .voucher-type {
-                padding-right: 2vh;
-            }
         }
     </style>
 </head>
@@ -203,20 +179,18 @@ function displayDecoupled($store_id, $store_name)
                                 </li>
                             </ol>
                         </nav>
-                        <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
+                        <p class="title2" style="padding-left:6px">
                             <?php echo htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8'); ?>
                         </p>
                     </div>
                 </div>
-                <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+                <div class="content">
                     <table id="example" class="table bord" style="width:100%;">
                         <thead>
-                        <tr>
-                                <th style="border-top-left-radius:10px;border-bottom-left-radius:10px;">
-                                    Settlement Number</th>
-                                <th>Filename</th>
-                                <th style="border-top-right-radius:10px;border-bottom-right-radius:10px;">
-                                    Created At</th>
+                            <tr>
+                                <th class="first-col">File Name</th>
+                                <th>Generated By</th>
+                                <th class="action-col">Created At</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -242,7 +216,7 @@ function displayDecoupled($store_id, $store_name)
           order: [[2, 'desc']], 
         createdRow: function (row, data, dataIndex) {
             var date = new Date(data[2]); 
-            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true });
             $('td:eq(2)', row).html(formattedDate); 
         }
    }); 
