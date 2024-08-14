@@ -40,7 +40,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         $sql .= " AND `Bill Status` = 'BILLABLE'";
     } elseif ($bill_status === 'PRE-TRIAL') {
         $sql .= " AND `Bill Status` = 'PRE-TRIAL'";
-    } elseif ($bill_status === 'All') {
+    } elseif ($bill_status === 'All' || $bill_status === 'PRE-TRIAL+and+BILLABLE') {
         $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL')";
     }
 
@@ -356,7 +356,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             cells.forEach(function(cell, cellIndex) {
                 var cellText = cell.innerText || cell.textContent;
 
-                if (rowIndex !== 0 && (cellIndex === 13 || cellIndex === 15 || cellIndex === 16)) {
+                if (rowIndex !== 0 && (cellIndex === 12 || cellIndex === 14 || cellIndex === 15)) {
                     cellText = formatNumber(cellText);
                 }
 
@@ -370,7 +370,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         var wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+        XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
 </script>
 </body>

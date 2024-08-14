@@ -51,7 +51,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
         $sql .= " AND `Bill Status` = 'BILLABLE' ORDER BY `Transaction Date A` ASC";
     } elseif ($bill_status === 'PRE-TRIAL') {
         $sql .= " AND `Bill Status` = 'PRE-TRIAL' ORDER BY `Transaction Date A` ASC";
-    } elseif ($bill_status === 'All') {
+    } elseif ($bill_status === 'All' || $bill_status === 'PRE-TRIAL+and+BILLABLE') {
         $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL') ORDER BY `Transaction Date A` ASC";
     }
 

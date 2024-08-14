@@ -1,5 +1,5 @@
 <?php
-include('../../../inc/config.php');
+include ('../../../inc/config.php');
 
 $decoupled_report_id = isset($_GET['decoupled_report_id']) ? $_GET['decoupled_report_id'] : '';
 
@@ -22,7 +22,6 @@ $leadgenCommissionRateBaseBillable = number_format($data['leadgen_commission_rat
 $totalBillable = number_format($data['total_billable'], 2);
 $totalCommissionFees = number_format($data['total_commission_fees'], 2);
 
-
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $end_date = isset($_GET['settlement_period_end']) ? $_GET['settlement_period_end'] : '';
 $start_date = isset($_GET['settlement_period_start']) ? $_GET['settlement_period_start'] : '';
@@ -30,7 +29,7 @@ $bill_status = isset($_GET['bill_status']) ? $_GET['bill_status'] : '';
 
 function displayOffers($store_id, $start_date, $end_date, $bill_status)
 {
-    include ("../../inc/config.php");
+    include ("../../../inc/config.php");
 
     $sql = "SELECT * FROM transaction_summary_view 
             WHERE `Store ID` = ? 
@@ -40,7 +39,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         $sql .= " AND `Bill Status` = 'BILLABLE' ORDER BY `Transaction Date A` ASC";
     } elseif ($bill_status === 'PRE-TRIAL') {
         $sql .= " AND `Bill Status` = 'PRE-TRIAL' ORDER BY `Transaction Date A` ASC";
-    } elseif ($bill_status === 'All') {
+    } elseif ($bill_status === 'All' || $bill_status === 'PRE-TRIAL+and+BILLABLE') {
         $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL') ORDER BY `Transaction Date A` ASC";
     }
 
@@ -90,6 +89,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
 }
 
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -173,7 +173,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                 margin: 25px;
             }
         }
-  </style>
+    </style>
 </head>
 
 <body>
@@ -210,14 +210,10 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                     <th>Customer ID</th>
                     <th>Customer Name</th>
                     <th>Promo Code</th>
-                    <th>Voucher Type</th>
-                    <th>Promo Category</th>
-                    <th>Promo Group</th>
-                    <th>Promo Type</th>
                     <th>Gross Amount</th>
                     <th>Discount</th>
                     <th>Cart Amount</th>
-                    <th>Payment</th>
+                    <th>Mode of Payment</th>
                     <th>Bill Status</th>
                     <th>Comm Rate Base</th>
                     <th>Comm Rate</th>
@@ -242,7 +238,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         <table style="width:100% !important;">
             <tr>
                 <td style="width:15%;vertical-align:text-top">Business Name: </td>
-                <td style="width:45%;font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['store_business_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td style="width:45%;font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['merchant_business_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>  
                 <td style="width:15%;vertical-align:text-top">Settlement Date: </td>
                 <td style="width:25%;font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['settlement_date']); ?></td>
             </tr>
@@ -252,7 +248,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                 <td style="vertical-align:text-top">Settlement Number: </td>
                 <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['settlement_number']); ?></td>
             </tr>
-            <tr>    
+            <tr>
                 <td style="vertical-align:text-top">Business Address: </td>
                 <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['business_address'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                 <td style="vertical-align:text-top">Settlement Period: </td>
@@ -308,7 +304,8 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             <tr>
                 <td style="font-weight:bold;padding-left:85px;">Total</td>
                 <td id="total_pretrial" style="font-weight:bold;text-align:right;padding-right:85px;">
-                    <?php echo $totalPretrial; ?></td>
+                    <?php echo $totalPretrial; ?>
+                </td>
             </tr>
         </table>
         <br>
@@ -347,11 +344,27 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         <p>Scrambled Eggs Software Inc. </p>
         <p>Unit D1 2/F 603 REY-D BUILDING </p>
         <p>San Rafael St. cor. Boni Avenue Bgy. Plainview Mandaluyong City 1550 Philippines</p>
-        <p>T: (632) 34917659 </p>
+        <p style="margin-bottom:50px;">T: (632) 34917659 </p>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js">
     </script>
 
+    <script>
+        window.onload = function () {
+            document.getElementById("downloadBtn").addEventListener("click", () => {
+                const invoice = document.getElementById("content");
+                var opt = {
+                    margin: [-1.5, -0.5, -0.5, -0.5],
+                    filename: '<?php echo htmlspecialchars($data['merchant_business_name']); ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>).pdf',
+                    image: { type: 'jpeg', quality: 1.0 },
+                    html2canvas: { scale: 5 },
+                    jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' }
+                };
+                html2pdf().from(invoice).set(opt).save();
+            });
+        }
+
+    </script>
     <script>
         document.getElementById('print').addEventListener('click', function () {
             const originalContent = document.body.innerHTML;
@@ -362,7 +375,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                 document.body.innerHTML = originalContent;
                 setTimeout(function () {
                     location.reload();
-                }, 10); 
+                }, 10);
             };
 
             window.print();
@@ -385,7 +398,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             cells.forEach(function(cell, cellIndex) {
                 var cellText = cell.innerText || cell.textContent;
 
-                if (rowIndex !== 0 && (cellIndex === 13 || cellIndex === 15 || cellIndex === 16)) {
+                if (rowIndex !== 0 && (cellIndex === 12 || cellIndex === 14 || cellIndex === 15)) {
                     cellText = formatNumber(cellText);
                 }
 
@@ -399,9 +412,8 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         var wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+        XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
 </script>
 </body>
-
 </html>

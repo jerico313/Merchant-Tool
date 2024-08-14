@@ -18,7 +18,7 @@ function displayCoupled($merchant_id, $merchant_name)
             $escapedMerchantName = htmlspecialchars($merchant_name, ENT_QUOTES, 'UTF-8');
             echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) . "'>";
             echo "<td style='text-align:center;'>" .  $row['settlement_number'] . "</td>";
-            echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['merchant_brand_name'] . " - " . $row['settlement_period'] . " - (" . $row['settlement_number'] . ").pdf</td>";
+            echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['merchant_brand_name'] . " - " . $row['settlement_period'] . " - (" .$row['settlement_number'] .") ". $row['bill_status'] .".pdf</td>";
             echo "<td style='text-align:center;'>" . $row['created_at'] . "</td>"; 
             echo "</tr>";
         }
