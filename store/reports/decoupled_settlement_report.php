@@ -38,15 +38,9 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     if ($bill_status === 'BILLABLE') {
         $sql .= " AND `Bill Status` = 'BILLABLE' ORDER BY `Transaction Date A` ASC";
     } elseif ($bill_status === 'PRE-TRIAL') {
-<<<<<<< HEAD
         $sql .= " AND `Bill Status` = 'PRE-TRIAL'";
     } elseif ($bill_status === 'All' || $bill_status === 'PRE-TRIAL+and+BILLABLE') {
         $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL')";
-=======
-        $sql .= " AND `Bill Status` = 'PRE-TRIAL' ORDER BY `Transaction Date A` ASC";
-    } elseif ($bill_status === 'All') {
-        $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL') ORDER BY `Transaction Date A` ASC";
->>>>>>> f45f0401895939a64df1b5cd733cad324b9ab35b
     }
 
     $stmt = $conn->prepare($sql);
@@ -387,15 +381,9 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                 cells.forEach(function (cell, cellIndex) {
                     var cellText = cell.innerText || cell.textContent;
 
-<<<<<<< HEAD
                 if (rowIndex !== 0 && (cellIndex === 12 || cellIndex === 14 || cellIndex === 15)) {
                     cellText = formatNumber(cellText);
                 }
-=======
-                    if (rowIndex !== 0 && (cellIndex === 13 || cellIndex === 15 || cellIndex === 16)) {
-                        cellText = formatNumber(cellText);
-                    }
->>>>>>> f45f0401895939a64df1b5cd733cad324b9ab35b
 
                     rowData.push(cellText);
                 });
@@ -407,7 +395,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             var wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-<<<<<<< HEAD
         var ws = XLSX.utils.aoa_to_sheet(data);
         var wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
@@ -415,11 +402,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
 </script>
-=======
-            XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
-        }
-    </script>
->>>>>>> f45f0401895939a64df1b5cd733cad324b9ab35b
 </body>
 
 </html>

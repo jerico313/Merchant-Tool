@@ -23,15 +23,9 @@ function displayCoupled($merchant_id, $merchant_name)
             $date = new DateTime($row['created_at']);
             $formattedDate = $date->format('F d, Y g:i A');
             echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&merchant_id=" . $merchant_id . "&merchant_name=" . urlencode($merchant_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) . "'>";
-<<<<<<< HEAD
-            echo "<td style='text-align:center;'>" .  $row['settlement_number'] . "</td>";
-            echo "<td style='text-align:center;'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $row['merchant_brand_name'] . " - " . $row['settlement_period'] . " - (" .$row['settlement_number'] .") ". $row['bill_status'] .".pdf</td>";
-            echo "<td style='text-align:center;'>" . $row['created_at'] . "</td>"; 
-=======
-            echo "<td style='text-align:left;padding-left:20px;width:50%'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $escapedMerchantName . " - " . $row['settlement_period'] . " -(" . $row['settlement_number'] . ") ". $row['bill_status'] . ".pdf</td>";
+            echo "<td style='text-align:left;padding-left:20px;width:55%'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $escapedMerchantName . " - " . $row['settlement_period'] . " -(" . $row['settlement_number'] . ") ". $row['bill_status'] . ".pdf</td>";
             echo "<td style='width:25%'>" . $generatedBy . "</td>";
-            echo "<td style='width:25%'>" . $formattedDate . "</td>";
->>>>>>> f45f0401895939a64df1b5cd733cad324b9ab35b
+            echo "<td style='width:20%'>" . $formattedDate . "</td>";
             echo "</tr>";
         }
     }

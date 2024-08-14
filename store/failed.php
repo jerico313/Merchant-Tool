@@ -1,5 +1,5 @@
 <?php
-require_once("../../header.php");
+require_once("../header.php");
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 ?>
@@ -7,11 +7,11 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../style.css">
     <title>Failed</title>
     <style>
         body {
-            background-image: url("../../images/bg_booky.png");
+            background-image: url("../images/bg_booky.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;

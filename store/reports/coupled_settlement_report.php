@@ -51,15 +51,9 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     if ($bill_status === 'BILLABLE') {
         $sql .= " AND `Bill Status` = 'BILLABLE' ORDER BY `Transaction Date A` ASC";
     } elseif ($bill_status === 'PRE-TRIAL') {
-<<<<<<< HEAD
         $sql .= " AND `Bill Status` = 'PRE-TRIAL'";
     } elseif ($bill_status === 'All' || $bill_status === 'PRE-TRIAL+and+BILLABLE') {
         $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL')";
-=======
-        $sql .= " AND `Bill Status` = 'PRE-TRIAL' ORDER BY `Transaction Date A` ASC";
-    } elseif ($bill_status === 'All') {
-        $sql .= " AND `Bill Status` IN ('BILLABLE', 'PRE-TRIAL') ORDER BY `Transaction Date A` ASC";
->>>>>>> f45f0401895939a64df1b5cd733cad324b9ab35b
     }
 
     $stmt = $conn->prepare($sql);
