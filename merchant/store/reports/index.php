@@ -25,7 +25,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 </head>
 
 <body>
-  <div class="cont-box">
+  <div class="cont">
     <div class="custom-box pt-4">
       <div class="voucher-type">
         <div class="row pb-2 title" aria-label="breadcrumb">

@@ -23,7 +23,7 @@ function displayReportHistoryGcashBody($gcash_report_id)
       echo "<td style='text-align:center;'>" . $row['item'] . "</td>";
       echo "<td style='text-align:center;'>" . $quantity_redeemed . "</td>";
       echo "<td style='text-align:center;'>" . $voucher_value . "</td>";
-      echo "<td style='text-align:center;'>" . $amount . " PHP" . "</td>";
+      echo "<td style='text-align:right;padding-right:53px;'>" . $amount . " PHP" . "</td>";
       echo "</tr>";
     }
   }
@@ -31,7 +31,6 @@ function displayReportHistoryGcashBody($gcash_report_id)
   $conn->close();
 }
 
-// Fetch data from the database
 $sql = "SELECT * FROM report_history_gcash_head WHERE gcash_report_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $gcash_report_id);
@@ -317,7 +316,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
     <table style="width:100% !important;">
       <tr>
         <td style="text-align:left;font-weight:bold;">Total Commission Fees</td>
-        <td style="text-align:right;font-weight:bold;padding-right:70px;"><?php echo $totalCommissionFees; ?></td>
+        <td style="text-align:right;font-weight:bold;padding-right:70px;"><?php echo $totalCommissionFees; ?> PHP</td>
       </tr>
     </table>
 
@@ -364,18 +363,27 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
       window.print();
     });
   </script>
-  <script>
+<script>
+    function formatNumber(value) {
+        return parseFloat(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
     function downloadTables() {
         var table = document.getElementById("example");
         var rows = table.querySelectorAll("tr");
         var data = [];
 
-        rows.forEach(function(row) {
+        rows.forEach(function(row, rowIndex) {
             var rowData = [];
             var cells = row.querySelectorAll("th, td");
-            
-            cells.forEach(function(cell) {
+
+            cells.forEach(function(cell, cellIndex) {
                 var cellText = cell.innerText || cell.textContent;
+
+                if (rowIndex !== 0 && (cellIndex === 13 || cellIndex === 15 || cellIndex === 16)) {
+                    cellText = formatNumber(cellText);
+                }
+
                 rowData.push(cellText);
             });
 
@@ -386,7 +394,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         var wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-        XLSX.writeFile(wb, "<?php echo $data['store_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
+        XLSX.writeFile(wb, "<?php echo $data['merchant_brand_name']; ?> - <?php echo htmlspecialchars($data['settlement_period']); ?> - (<?php echo htmlspecialchars($data['settlement_number']); ?>) <?php echo htmlspecialchars($data['bill_status']); ?>.xlsx");
     }
 </script>
 </body>

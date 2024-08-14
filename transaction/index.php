@@ -45,6 +45,13 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
     $count = 1; 
 
     while ($row = $result->fetch_assoc()) {
+        $AmounttobeDisbursed = $row['Amount to be Disbursed'];
+        if ($AmounttobeDisbursed < 0) {
+            $AmounttobeDisbursed = '(' . number_format(-$AmounttobeDisbursed, 2) . ')';
+        } else {
+            $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
+        }
+
         echo "<tr style='padding:10px;border:solid red 1px;'>";
 
         if ($type !== 'User') {
@@ -73,7 +80,8 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
         echo "<td style='width:4%;'>" . $row['Total Billing'] . "</td>";
         echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
         echo "<td style='width:4%;'>" . $row['PG Fee Amount'] . "</td>";
-        echo "<td style='width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
+        echo "<td style='width:3%;'>" . $row['CWT Rate'] . "</td>";
+        echo "<td style='width:5%;'>" . $AmounttobeDisbursed . "</td>";
         echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
         echo "</tr>";
 
@@ -214,6 +222,7 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
                                 <th id="total_billing">Total Billing</th>
                                 <th id="pg_fee_rate">PG Fee Rate</th>
                                 <th id="pg_fee_amount">PG Fee Amount</th>
+                                <th id="cwt_rate">CWT Rate</th>
                                 <th class="action-col" id="amount_to_be_disbursed">Amount to be Disbursed</th>
                                 <th style="display:none;"></th>
                             </tr>
@@ -285,9 +294,9 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 1, 3, 6, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22] }
+                    { orderable: false, targets: [0, 1, 3, 6, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23] }
                 ],
-                order: [[22, 'asc']]
+                order: [[23, 'asc']]
             });
 
             $('body').on('change', 'input.transaction[type="checkbox"]', function () {

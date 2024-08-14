@@ -23,7 +23,7 @@ function displayReportHistoryGcashBody($gcash_report_id)
       echo "<td style='text-align:center;'>" . $row['item'] . "</td>";
       echo "<td style='text-align:center;'>" . $quantity_redeemed . "</td>";
       echo "<td style='text-align:center;'>" . $voucher_value . "</td>";
-      echo "<td style='text-align:center;'>" . $amount . " PHP" . "</td>";
+      echo "<td style='text-align:right;padding-right:53px;'>" . $amount . " PHP" . "</td>";
       echo "</tr>";
     }
   }
@@ -31,7 +31,6 @@ function displayReportHistoryGcashBody($gcash_report_id)
   $conn->close();
 }
 
-// Fetch data from the database
 $sql = "SELECT * FROM report_history_gcash_head WHERE gcash_report_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $gcash_report_id);
@@ -366,18 +365,27 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
       window.print();
     });
   </script>
-  <script>
+<script>
+    function formatNumber(value) {
+        return parseFloat(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
     function downloadTables() {
         var table = document.getElementById("example");
         var rows = table.querySelectorAll("tr");
         var data = [];
 
-        rows.forEach(function(row) {
+        rows.forEach(function(row, rowIndex) {
             var rowData = [];
             var cells = row.querySelectorAll("th, td");
-            
-            cells.forEach(function(cell) {
+
+            cells.forEach(function(cell, cellIndex) {
                 var cellText = cell.innerText || cell.textContent;
+
+                if (rowIndex !== 0 && (cellIndex === 13 || cellIndex === 15 || cellIndex === 16)) {
+                    cellText = formatNumber(cellText);
+                }
+
                 rowData.push(cellText);
             });
 

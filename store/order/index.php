@@ -38,13 +38,9 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $GrossAmount = number_format($row['Gross Amount'], 2);
-            $Discount = number_format($row['Discount'], 2);
-            $CartAmount = number_format($row['Cart Amount'], 2);
             $CommissionAmount = number_format($row['Commission Amount'], 2);
             $TotalBilling = number_format($row['Total Billing'], 2);
             $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
-            $CustomerName = empty($row['Customer Name']) ? '-' : $row['Customer Name'];
 
             $AmounttobeDisbursed = $row['Amount to be Disbursed'];
             if ($AmounttobeDisbursed < 0) {
@@ -57,15 +53,15 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             echo "<td style='width:4%;'>" . $row['Transaction ID'] . "</td>";
             echo "<td style='width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Customer ID'] . "</td>";
-            echo "<td style='width:7%;'>" . $CustomerName . "</td>";
+            echo "<td style='width:7%;'>" . $row['Customer Name'] . "</td>";
             echo "<td style='width:5%;'>" . $row['Promo Code'] . "</td>";
             echo "<td style='width:3%;'>" . $row['Voucher Type'] . "</td>";
             echo "<td style='width:6%;'>" . $row['Promo Category'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Promo Group'] . "</td>";
             echo "<td style='width:6%;'>" . $row['Promo Type'] . "</td>";
-            echo "<td style='width:4%;'>" . $GrossAmount . "</td>";
-            echo "<td style='width:4%;'>" . $Discount . "</td>";
-            echo "<td style='width:4%;'>" . $CartAmount . "</td>";
+            echo "<td style='width:4%;'>" . $row['Gross Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Discount'] . "</td>";
+            echo "<td style='width:4%;'>" . $row['Cart Amount'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Mode of Payment'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Bill Status'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Commission Type'] . "</td>";
@@ -74,8 +70,10 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             echo "<td style='width:4%;'>" . $TotalBilling . "</td>";
             echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
             echo "<td style='width:4%;'>" . $PGFeeAmount . "</td>";
+            echo "<td style='width:3%;'>" . $row['CWT Rate'] . "</td>";
             echo "<td style='width:5%;'>" . $AmounttobeDisbursed . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
+            echo "</tr>";
             echo "</tr>";
         }
     }
@@ -223,8 +221,9 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                 <th>Total Billing</th>
                                 <th>PG Fee Rate</th>
                                 <th>PG Fee Amount</th>
-                                <th style="display:none;"></th>
+                                <th>CWT Rate</th>
                                 <th class="action-col">Amount to be Disbursed</th>
+                                <th style="display:none;"></th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -256,7 +255,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 return [
                     row[0], row[1], row[2], row[3], row[4],
                     row[9], row[10], row[11], row[12], row[13],
-                    row[15], row[16], row[17], row[18], row[19], row[20]
+                    row[15], row[16], row[17], row[18], row[19], row[20], row[21]
                 ];
             }
 
@@ -265,7 +264,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             formattedRows.unshift([
                 'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
                 'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
-                'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
+                'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'CWT Rate','Amount to be Disbursed'
             ]);
 
             const wb = XLSX.utils.book_new();
@@ -282,7 +281,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 2, 5, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21] }
+                    { orderable: false, targets: [0, 2, 5, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21, 22] }
                 ],
                 order: [[21, 'asc']]
             });

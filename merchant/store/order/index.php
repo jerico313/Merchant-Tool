@@ -43,11 +43,22 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $CommissionAmount = number_format($row['Commission Amount'], 2);
+            $TotalBilling = number_format($row['Total Billing'], 2);
+            $PGFeeAmount = number_format($row['PG Fee Amount'], 2);
+
+            $AmounttobeDisbursed = $row['Amount to be Disbursed'];
+            if ($AmounttobeDisbursed < 0) {
+                $AmounttobeDisbursed = '(' . number_format(-$AmounttobeDisbursed, 2) . ')';
+            } else {
+                $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
+            }
+
             echo "<tr style='padding:10px;'>";
             echo "<td style='width:4%;'>" . $row['Transaction ID'] . "</td>";
             echo "<td style='width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Customer ID'] . "</td>";
-            echo "<td style='width:7%;'>" . $row['Customer Name'] . "</td>";
+            echo "<td style='width:7%;'>" . $CustomerName . "</td>";
             echo "<td style='width:5%;'>" . $row['Promo Code'] . "</td>";
             echo "<td style='width:3%;'>" . $row['Voucher Type'] . "</td>";
             echo "<td style='width:6%;'>" . $row['Promo Category'] . "</td>";
@@ -60,12 +71,13 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             echo "<td style='width:4%;'>" . $row['Bill Status'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Commission Type'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Commission Rate'] . "</td>";
-            echo "<td style='width:4%;'>" . $row['Commission Amount'] . "</td>";
-            echo "<td style='width:4%;'>" . $row['Total Billing'] . "</td>";
+            echo "<td style='width:4%;'>" . $CommissionAmount . "</td>";
+            echo "<td style='width:4%;'>" . $TotalBilling . "</td>";
             echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
-            echo "<td style='width:4%;'>" . $row['PG Fee Amount'] . "</td>";
+            echo "<td style='width:4%;'>" . $PGFeeAmount . "</td>";
+            echo "<td style='width:4%;'>" . $row['CWT Rate'] . "</td>";
+            echo "<td style='width:5%;'>" . $AmounttobeDisbursed . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
-            echo "<td style='width:5%;'>" . $row['Amount to be Disbursed'] . "</td>";
             echo "</tr>";
         }
     }
@@ -241,8 +253,9 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                 <th>Total Billing</th>
                                 <th>PG Fee Rate</th>
                                 <th>PG Fee Amount</th>
-                                <th style="display:none;"></th>
+                                <th>CWT Rate</th>
                                 <th class="action-col">Amount to be Disbursed</th>
+                                <th style="display:none;"></th>     
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -274,7 +287,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
         return [
             row[0], row[1], row[2], row[3], row[4],
             row[9], row[10], row[11], row[12], row[13],
-            row[15], row[16], row[17], row[18], row[19], row[21]
+            row[15], row[16], row[17], row[18], row[19], row[20], row[21]
         ];
     }
 
@@ -283,7 +296,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
     formattedRows.unshift([
         'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
         'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
-        'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'Amount to be Disbursed'
+        'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount', 'CWT Rate','Amount to be Disbursed'
     ]);
 
     const wb = XLSX.utils.book_new();
