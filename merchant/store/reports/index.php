@@ -32,7 +32,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
               <li class="breadcrumb-item">
-                <a href="../../merchant/index.php" style="color:#E96529; font-size:14px;">
+                <a href="../../../merchant/index.php" style="color:#E96529; font-size:14px;">
                   Merchants
                 </a>
               </li>
@@ -49,6 +49,10 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                   <li><a class="dropdown-item"
                       href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                       data-breadcrumb="Offers">Promos</a>
+                  </li>
+                  <li><a class="dropdown-item"
+                      href="../../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                      data-breadcrumb="Offers">Transactions</a>
                   </li>
                 </ul>
               </li>

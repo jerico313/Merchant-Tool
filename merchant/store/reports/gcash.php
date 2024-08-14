@@ -208,6 +208,10 @@ function displayGcash($store_id, $store_name)
                                                 href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
                                         </li>
+                                        <li><a class="dropdown-item"
+                                                href="../../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                data-breadcrumb="Offers">Transactions</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="breadcrumb-item">
