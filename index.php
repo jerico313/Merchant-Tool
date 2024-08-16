@@ -294,14 +294,32 @@ body {
     </form>
   </div>
   <script>
-  document.getElementById('showPassword').addEventListener('change', function() {
-    var passwordInput = document.getElementById('password');
-    if (this.checked) {
-      passwordInput.type = 'text';
-    } else {
-      passwordInput.type = 'password';
-    }
-  });
-</script>
+    document.getElementById('showPassword').addEventListener('change', function() {
+      var passwordInput = document.getElementById('password');
+      if (this.checked) {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      var form = this;
+      var requiredFields = form.querySelectorAll('[required]');
+      var allValid = true;
+
+      requiredFields.forEach(function(field) {
+        if (!field.value) {
+          alert('Required field "' + field.getAttribute('placeholder') + '" should not be blank.');
+          field.focus();
+          allValid = false;
+          e.preventDefault(); 
+          return false;
+        }
+      });
+
+      return allValid;
+    });
+  </script>
 </body>
 </html>

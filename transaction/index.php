@@ -52,7 +52,7 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
             $AmounttobeDisbursed = number_format($AmounttobeDisbursed, 2);
         }
 
-        echo "<tr style='padding:10px;border:solid red 1px;'>";
+        echo "<tr style='padding:10px;'>";
 
         if ($type !== 'User') {
             echo "<td style='width:2%;' id='transaction'><input style='accent-color:#E96529;' class='transaction' type='checkbox' name='transaction_ids[]' value='" . $row['Transaction ID'] . "'></td>";

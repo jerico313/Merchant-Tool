@@ -231,7 +231,6 @@ function displayStore()
     <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
     <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
-    <script src="./js/script.js"></script>
     <script>
       $(window).on('load', function () {
         $('.loading').hide();
