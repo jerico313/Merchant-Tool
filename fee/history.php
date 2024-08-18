@@ -79,7 +79,7 @@ function displayFeeHistory($fee_id) {
                             <th>Old Value</th>
                             <th>New Value</th>
                             <th>Change At</th>
-                            <th class="action-col">Change By</th>
+                            <th class="action-col">Changed By</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">

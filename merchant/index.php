@@ -100,7 +100,7 @@ function displayMerchant()
           <p class="title">Merchants</p>
           <a href="upload.php">
             <button type="button" class="btn btn-primary add-merchant">
-              <i class="fa-solid fa-plus"></i> Add Merchant
+              <i class="fa-solid fa-upload"></i> Upload Merchants
             </button>
           </a>
         </div>
@@ -180,14 +180,14 @@ function displayMerchant()
                   Sales
                 </label>
                 <input type="text" class="form-control" id="sales" name="sales"
-                  placeholder="Enter sales person (leave blank if no assigned person)" maxlength="255">
+                  placeholder="Enter name of sales person (leave blank if none)" maxlength="255">
               </div>
               <div class="mb-3">
                 <label for="accountManager" class="form-label">
                   Account Manager
                 </label>
                 <input type="text" class="form-control" id="accountManager" name="accountManager"
-                  placeholder="Enter account manager (leave blank if no assigned person)" maxlength="255">
+                  placeholder="Enter name of account manager (leave blank if none)" maxlength="255">
               </div>
               <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
             </form>
