@@ -138,13 +138,13 @@
                                         <div class="mb-3">
                                             <label for="sales" class="form-label" id="form-input-label">Sales</label>
                                             <input id="form-input-field" type="text" class="form-control"
-                                                name="sales[]" placeholder="Enter sales person"
+                                                name="sales[]" placeholder="Enter name of sales person (leave blank if none)"
                                                 maxlength="255">
                                         </div>
                                         <div class="mb-3">
                                             <label for="account_manager" class="form-label" id="form-input-label">Account Manager</label>
                                             <input id="form-input-field" type="text" class="form-control"
-                                                name="account_manager[]" placeholder="Enter account manager"
+                                                name="account_manager[]" placeholder="Enter name of account manager (leave blank if none)"
                                                 maxlength="255">
                                         </div>
                                     </div>
@@ -239,7 +239,7 @@
                                 Sales<span class="text-danger" style="padding:2px">*</span>
                             </label>
                             <input id="form-input-field" type="text" class="form-control"
-                                name="sales[]" placeholder="Enter sales person"
+                                name="sales[]" placeholder="Enter name of sales person (leave blank if none)"
                                 maxlength="255">
                         </div>
                         <div class="mb-3">
@@ -247,7 +247,7 @@
                                 Account Manager<span class="text-danger" style="padding:2px">*</span>
                             </label>
                             <input id="form-input-field" type="text" class="form-control"
-                                name="account_manager[]" placeholder="Enter account manager"
+                                name="account_manager[]" placeholder="Enter name of account manager (leave blank if none)"
                                 maxlength="255">
                         </div>
                     </div>
