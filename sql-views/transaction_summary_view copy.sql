@@ -89,11 +89,7 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
         ELSE `p`.`promo_code` 
     END AS `Promo Code`,
     CASE
-        WHEN `t`.`promo_code` IS NULL THEN 
-            CASE 
-                WHEN `t`.`no_promo_code` IN ('Coupled', 'Decoupled') THEN `t`.`no_promo_code`
-                ELSE "-"
-            END
+        WHEN `t`.`promo_code` IS NULL THEN `t`.`no_voucher_type`
         ELSE `p`.`voucher_type` 
     END AS `Voucher Type`,
     CASE
@@ -101,11 +97,7 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
         ELSE `p`.`promo_category` 
     END AS `Promo Category`,
     CASE
-        WHEN `t`.`promo_code` IS NULL THEN 
-            CASE 
-                WHEN `t`.`no_promo_code` NOT IN ('Coupled', 'Decoupled') THEN `t`.`no_promo_code`
-                ELSE "-"
-            END
+        WHEN `t`.`promo_code` IS NULL THEN `t`.`no_promo_group`
         ELSE `p`.`promo_group` 
     END AS `Promo Group`,
     CASE
