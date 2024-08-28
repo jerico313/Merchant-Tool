@@ -84,26 +84,38 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
         WHEN `t`.`customer_name` IS NULL THEN "-"
         ELSE `t`.`customer_name`
     END AS `Customer Name`,
-    `p`.`promo_code` AS `Promo Code`,
-    `p`.`voucher_type` AS `Voucher Type`,
-    `p`.`promo_category` AS `Promo Category`,
-    `p`.`promo_group` AS `Promo Group`,
-    `p`.`promo_type` AS `Promo Type`,
+    CASE
+        WHEN `t`.`promo_code` IS NULL THEN "-"
+        ELSE `p`.`promo_code` 
+    END AS `Promo Code`,
+    CASE
+        WHEN `t`.`promo_code` IS NULL THEN `t`.`no_voucher_type`
+        ELSE `p`.`voucher_type` 
+    END AS `Voucher Type`,
+    CASE
+        WHEN `t`.`promo_code` IS NULL THEN "-"
+        ELSE `p`.`promo_category` 
+    END AS `Promo Category`,
+    CASE
+        WHEN `t`.`promo_code` IS NULL THEN `t`.`no_promo_group`
+        ELSE `p`.`promo_group` 
+    END AS `Promo Group`,
+    CASE
+        WHEN `t`.`promo_code` IS NULL THEN "-"
+        ELSE `p`.`promo_type` 
+    END AS `Promo Type`,
     CASE
         WHEN `t`.`payment` IS NULL THEN 0.00
-        WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
         WHEN `t`.`amount_paid` = 0.00 THEN 0.00
         ELSE `t`.`gross_amount` 
     END AS `Gross Amount`,
     CASE
         WHEN `t`.`payment` IS NULL THEN 0.00
-        WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
         WHEN `t`.`amount_paid` = 0.00 THEN 0.00
         ELSE `t`.`discount` 
     END AS `Discount`,
     CASE
         WHEN `t`.`payment` IS NULL THEN 0.00
-        WHEN `t`.`payment` = 'gcash_miniapp' THEN 0.00
         WHEN `t`.`amount_paid` = 0.00 THEN 0.00
         ELSE `t`.`amount_discounted` 
     END AS `Amount Discounted`,
@@ -150,7 +162,7 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
 FROM `leadgen_db`.`transaction` `t`
     JOIN `leadgen_db`.`store` `s` ON `t`.`store_id` = `s`.`store_id`
     JOIN `leadgen_db`.`merchant` `m` ON `m`.`merchant_id` = `s`.`merchant_id`
-    JOIN `leadgen_db`.`promo` `p` ON `p`.`promo_code` = `t`.`promo_code`
+    LEFT JOIN `leadgen_db`.`promo` `p` ON `p`.`promo_code` = `t`.`promo_code`
     JOIN `leadgen_db`.`fee` `f` ON `f`.`merchant_id` = `m`.`merchant_id`
     JOIN `pg_fee_cte` ON `t`.`transaction_id` = `pg_fee_cte`.`transaction_id`
 ORDER BY `t`.`transaction_date` DESC;
