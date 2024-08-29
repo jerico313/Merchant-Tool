@@ -198,7 +198,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                         <i class="fa-solid fa-file-excel"></i> Download</button>
                 </div>
                 <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
-                    <table id="example" class="table bord" style="width:275%;">
+                    <table id="example" class="table bord" style="width:280%;">
                         <thead>
                             <tr>
                                 <th class="first-col">Transaction ID</th>
@@ -290,7 +290,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 function (settings, data, dataIndex) {
                     var startDate = $('#startDate').val();
                     var endDate = $('#endDate').val();
-                    var date = data[21]; 
+                    var date = data[22]; 
 
                     if (startDate && endDate) {
                         return (date >= startDate && date <= endDate);

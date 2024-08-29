@@ -58,7 +58,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             echo "<td style='width:4%;'>" . $row['Transaction ID'] . "</td>";
             echo "<td style='width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Customer ID'] . "</td>";
-            echo "<td style='width:7%;'>" . $CustomerName . "</td>";
+            echo "<td style='width:7%;'>" . $row['Customer Name'] . "</td>";
             echo "<td style='width:5%;'>" . $row['Promo Code'] . "</td>";
             echo "<td style='width:3%;'>" . $row['Voucher Type'] . "</td>";
             echo "<td style='width:6%;'>" . $row['Promo Category'] . "</td>";
@@ -322,7 +322,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 function (settings, data, dataIndex) {
                     var startDate = $('#startDate').val();
                     var endDate = $('#endDate').val();
-                    var date = data[20];
+                    var date = data[22];
 
                     if (startDate && endDate) {
                         return (date >= startDate && date <= endDate);
