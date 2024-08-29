@@ -94,7 +94,7 @@ function displayStore()
           </a>
         </div>
 
-        <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
+        <div class="content">
           <table id="example" class="table bord" style="width:200%;height:auto;">
             <thead>
               <tr>
