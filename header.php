@@ -137,7 +137,7 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a id="merchant-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/merchant/" style="padding-right:10px;padding-left:10px;">Merchants</a>
+                    <a id="merchant-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/merchants/" style="padding-right:10px;padding-left:10px;">Merchants</a>
                 </li>
                 <li class="nav-item">
                     <a id="store-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/stores/" style="padding-right:10px;padding-left:10px;">Stores</a>

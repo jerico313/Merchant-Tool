@@ -116,11 +116,11 @@ function displayStore($merchant_id)
                                                 data-breadcrumb="Offers" style="color:#4BB0B8;"> Stores</a>
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../promos/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../transactions/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Transactions</a>
                                         </li>
                                     </ul>
@@ -327,7 +327,7 @@ function displayStore($merchant_id)
         }
 
         function viewOrder(storeId, merchantName, storeName) {
-            window.location.href = 'order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
+            window.location.href = 'transactions/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
         }
 
         function viewReport(storeId, merchantName, storeName) {

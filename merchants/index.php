@@ -378,7 +378,7 @@ function displayMerchant()
 
     <script>
       function viewMerchant(merchantId, merchantName) {
-        window.location.href = 'store/index.php?merchant_id=' + encodeURIComponent(merchantId) + '&merchant_name=' + encodeURIComponent(merchantName);
+        window.location.href = 'stores/index.php?merchant_id=' + encodeURIComponent(merchantId) + '&merchant_name=' + encodeURIComponent(merchantName);
       }
 
       function viewReport(merchantId, merchantName) {
