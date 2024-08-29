@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: merchants/");
                 exit();
             } else {
-                $error = "Your account is inactive. Please contact support.";
+                $error = "Your account is inactive. Please contact admin.";
             }
         } else {
             $error = "Incorrect password.";
