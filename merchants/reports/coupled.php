@@ -163,7 +163,7 @@ function displayCoupled($merchant_id, $merchant_name)
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                                 <li class="breadcrumb-item">
-                                    <a href="../../../index.php"
+                                    <a href="../../merchants/index.php"
                                         style="color:#E96529; font-size:14px;">
                                         Merchants
                                     </a>
