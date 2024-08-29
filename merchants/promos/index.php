@@ -104,7 +104,7 @@ function displayOffers($merchant_id, $merchant_name)
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="storeDropdown">
                                         <li><a class="dropdown-item"
-                                                href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../stores/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Stores</a>
                                         </li>
                                         <li><a class="dropdown-item"
@@ -112,7 +112,7 @@ function displayOffers($merchant_id, $merchant_name)
                                                 data-breadcrumb="Offers" style="color:#4BB0B8;">Promos</a>
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../transactions/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Transactions</a>
                                         </li>
                                     </ul>

@@ -134,7 +134,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                                 <li class="breadcrumb-item">
-                                    <a href="../../../merchant/index.php" style="color:#E96529; font-size:14px;">
+                                    <a href="../../../merchants/index.php" style="color:#E96529; font-size:14px;">
                                         Merchants
                                     </a>
                                 </li>
@@ -150,11 +150,11 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                                                 data-breadcrumb="Offers" style="color:#4BB0B8;">Stores</a>
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../../promos/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="../../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../../transactions/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Transactions</a>
                                         </li>
                                     </ul>

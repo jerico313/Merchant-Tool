@@ -88,7 +88,7 @@ function displayOfferHistory($promo_code, $merchant_name)
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="storeDropdown">
                     <li><a class="dropdown-item"
-                        href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                        href="../stores/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                         data-breadcrumb="Offers">Stores</a>
                     </li>
                     <li><a class="dropdown-item"
@@ -96,7 +96,7 @@ function displayOfferHistory($promo_code, $merchant_name)
                         data-breadcrumb="Offers" style="color:#4BB0B8;">Promos</a>
                     </li>
                     <li><a class="dropdown-item"
-                        href="../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                        href="../transactions/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                         data-breadcrumb="Offers">Transactions</a>
                     </li>
                   </ul>
@@ -105,7 +105,7 @@ function displayOfferHistory($promo_code, $merchant_name)
                     style="color:#E96529; font-size:14px;">History</a></li>
               </ol>
             </nav>
-            <p class="title2" style="padding-left:6px">
+            <p class="title2" style="padding-left:3px">
             <?php echo htmlspecialchars($promo_code); ?>
             </p>
           </div>

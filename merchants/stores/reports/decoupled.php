@@ -9,9 +9,9 @@ function displayDecoupled($store_id, $store_name)
 {
     include ("../../../inc/config.php");
 
-    $sql = "SELECT rhc.*, user.name AS generated_by_name 
-            FROM report_history_coupled rhc
-            LEFT JOIN user ON user.user_id = rhc.generated_by
+    $sql = "SELECT rhd.*, user.name AS generated_by_name 
+            FROM report_history_decoupled rhd
+            LEFT JOIN user ON user.user_id = rhd.generated_by
             WHERE store_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $store_id);
@@ -24,7 +24,7 @@ function displayDecoupled($store_id, $store_name)
             $escapedStoreName = htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8');
             $date = new DateTime($row['created_at']);
             $formattedDate = $date->format('F d, Y g:i A');
-            echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) . "'>";
+            echo "<tr class='clickable-row' data-href='decoupled_settlement_report.php?decoupled_report_id=" . $row['decoupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) . "'>";
             echo "<td style='text-align:left;padding-left:20px;width:55%'><i class='fa-solid fa-file-pdf' style='color:#4BB0B8'></i> " . $escapedStoreName . " - " . $row['settlement_period'] . " -(" . $row['settlement_number'] . ") ". $row['bill_status'] . ".pdf</td>";
             echo "<td style='width:25%'>" . $generatedBy . "</td>";
             echo "<td style='width:20%'>" . $formattedDate . "</td>";
@@ -130,16 +130,6 @@ function displayDecoupled($store_id, $store_name)
             .dataTables_length {
                 display: none;
             }
-
-            .title {
-                font-size: 25px;
-                padding-left: 2vh;
-                padding-top: 10px;
-            }
-
-            .voucher-type {
-                padding-right: 2vh;
-            }
         }
     </style>
 </head>
@@ -172,7 +162,7 @@ function displayDecoupled($store_id, $store_name)
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                                 <li class="breadcrumb-item">
-                                    <a href="../../../merchant/index.php" style="color:#E96529; font-size:14px;">
+                                    <a href="../../../merchants/index.php" style="color:#E96529; font-size:14px;">
                                         Merchants
                                     </a>
                                 </li>
@@ -184,15 +174,15 @@ function displayDecoupled($store_id, $store_name)
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="storeDropdown">
                                         <li><a class="dropdown-item"
-                                                href="../../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../../stores/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers" style="color:#4BB0B8;"> Stores</a>
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="../../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../../promos/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="../../order/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../../transactions/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Transactions</a>
                                         </li>
                                     </ul>
@@ -205,7 +195,7 @@ function displayDecoupled($store_id, $store_name)
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a href="#" style="color:#E96529; font-size:14px;">
-                                        Coupled
+                                        Decoupled
                                     </a>
                                 </li>
                             </ol>

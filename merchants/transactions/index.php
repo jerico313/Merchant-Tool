@@ -129,7 +129,7 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                                 <li class="breadcrumb-item">
-                                    <a href="../../merchant/index.php" style="color:#E96529; font-size:14px;">
+                                    <a href="../../merchants/index.php" style="color:#E96529; font-size:14px;">
                                         Merchants
                                     </a>
                                 </li>
@@ -142,11 +142,11 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
                                     <ul class="dropdown-menu" aria-labelledby="storeDropdown">
 
                                         <li><a class="dropdown-item"
-                                                href="../store/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../stores/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Stores</a>
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="../promo/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
+                                                href="../promos/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
                                                 data-breadcrumb="Offers">Promos</a>
                                         </li>
                                         <li><a class="dropdown-item"

@@ -1,21 +1,15 @@
 <?php
-require_once("../../header.php");
-$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
-$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+require_once("../header.php");
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../../style.css">
-    <title>Upload Success</title>
+    <link rel="stylesheet" href="../style.css">
+    <title>Upload Failed</title>
     <style>
         body {
-            background-image: url("../../images/bg_booky.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
+            background-image: url("../images/bg_booky.png");
         }
 
         .container {
@@ -80,13 +74,13 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
             <circle class="checkmark__circle" cx="26" cy="26" r="25"/>
             <path class="checkmark__check" fill="none" d="M16 16 36 36 M36 16 16 36"/>
         </svg>
-        <h2 style="padding-top:10px;color: #f44336;">Failed to Generate</h2>
-        <a href="../store/index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"><button type="button" class="btn btn-secondary okay-failed">Okay</button></a>
+        <h2 style="padding-top:10px;color: #f44336;">Failed to generate report</h2>
+        <a href="index.php"><button type="button" class="btn btn-danger okay-failed">Okay</button></a>
     </div>
     <script>
         setTimeout(function(){
-            window.location.href = '../store/index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
-        }, 3000);
+            window.location.href = 'index.php';
+        }, 3000); 
     </script>
 </body>
 </html>
