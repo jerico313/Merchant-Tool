@@ -184,7 +184,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $storeId = $data[3]; 
-        $transactionId = $data[7];
+        $transactionId = $data[9];
         $promoCode = $data[6]; 
 
         if (isset($transactionIds[$transactionId])) {
@@ -227,18 +227,21 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
 
-    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, no_voucher_type, no_promo_group, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $data[4] = empty($data[4]) ? null : $data[4]; 
-        $transaction_date = convertDateFormat($data[8]);
-        $data[9] = str_replace(',', '', $data[9]);
-        $data[10] = str_replace(',', '', $data[10]);
-        $data[11] = str_replace(',', '', $data[11]); 
+        $data[6] = empty($data[6]) ? null : $data[6]; 
+        $data[7] = empty($data[7]) ? null : $data[7]; 
+        $data[8] = empty($data[8]) ? null : $data[8]; 
+        $transaction_date = convertDateFormat($data[10]);
+        $data[11] = str_replace(',', '', $data[11]);
         $data[12] = str_replace(',', '', $data[12]);
-        $data[13] = ($data[13] = str_replace('"', '', $data[13])) === '' ? null : $data[13]; 
+        $data[13] = str_replace(',', '', $data[13]); 
+        $data[14] = str_replace(',', '', $data[14]);
+        $data[15] = ($data[15] = str_replace('"', '', $data[15])) === '' ? null : $data[15]; 
 
-        $stmt1->bind_param("sssssssssssss", $data[7], $data[3], $data[6], $data[5], $data[4], $transaction_date, $data[9], $data[10], $data[11], $data[12], $data[13], $data[14], $data[15]);
+        $stmt1->bind_param("sssssssssssssss", $data[7], $data[3], $data[6], $data[7], $data[8], $data[5], $data[4], $transaction_date, $data[11], $data[12], $data[13], $data[14], $data[15], $data[16], $data[17]);
         $stmt1->execute();
         
         updateActivityHistory($conn, $data[5], $userId);
