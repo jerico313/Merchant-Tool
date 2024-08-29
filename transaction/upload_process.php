@@ -217,9 +217,9 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $duplicateMessages[] = "Duplicate Transaction ID '{$transactionId}' in CSV file: " . implode(", ", $transactionIds);
     }
 
-    if (!empty($duplicateMessages) || !empty($invalidStoreIds) || !empty($invalidPromoCodes)) {
+    if (!empty($duplicateMessages) || !empty($invalidStoreIds)) {
         $conn->close();
-        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds, $invalidPromoCodes);
+        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds);
         displayMessage('error', 'Errors found:<br>' . implode('<br>', $errorMessages));
         exit();
     }
@@ -227,10 +227,11 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
 
-    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status, no_voucher_type, no_promo_group) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $data[4] = empty($data[4]) ? null : $data[4]; 
+        $data[6] = empty($data[6]) ? null : $data[6]; 
         $transaction_date = convertDateFormat($data[8]);
         $data[9] = str_replace(',', '', $data[9]);
         $data[10] = str_replace(',', '', $data[10]);
@@ -238,7 +239,15 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $data[12] = str_replace(',', '', $data[12]);
         $data[13] = ($data[13] = str_replace('"', '', $data[13])) === '' ? null : $data[13]; 
 
-        $stmt1->bind_param("sssssssssssss", $data[7], $data[3], $data[6], $data[5], $data[4], $transaction_date, $data[9], $data[10], $data[11], $data[12], $data[13], $data[14], $data[15]);
+        if (empty($data[6])) {  
+            $no_voucher_type = $data[22];
+            $no_promo_group = $data[23];
+        } else {
+            $no_voucher_type = null;
+            $no_promo_group = null;
+        }
+
+        $stmt1->bind_param("sssssssssssssss", $data[7], $data[3], $data[6], $data[5], $data[4], $transaction_date, $data[9], $data[10], $data[11], $data[12], $data[13], $data[14], $data[15], $no_voucher_type, $no_promo_group);
         $stmt1->execute();
         
         updateActivityHistory($conn, $data[5], $userId);
