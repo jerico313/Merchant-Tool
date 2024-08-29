@@ -60,15 +60,17 @@ function displayFeeHistory($fee_id) {
     <div class="custom-box pt-4">
         <div class="sub" style="text-align:left;">
             <div class="voucher-type">
-                <div class="row pb-2 title" aria-label="breadcrumb">
+                <div class="row title" aria-label="breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
-                            <li class="breadcrumb-item"><a href="index.php" style="color:#E96529; font-size:14px;">Fee</a></li>
+                            <li class="breadcrumb-item"><a href="index.php" style="color:#E96529; font-size:14px;">Fees</a></li>
                             <li class="breadcrumb-item"><a href="#" onclick="location.reload();" style="color:#E96529; font-size:14px;">History</a></li>
                         </ol>
                     </nav>
-                    <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);"><?php echo htmlspecialchars($merchant_name); ?></p>
                 </div>
+            </div>
+            <div class="add-btns">
+                <p class="title2"><?php echo htmlspecialchars($merchant_name); ?></p>
             </div>
             <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                 <table id="example" class="table bord" style="width:100%;">

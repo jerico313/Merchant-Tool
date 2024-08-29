@@ -1,4 +1,4 @@
-<?php include ("../header.php") ?>
+<?php include("../header.php") ?>
 <?php
 $promo_code = isset($_GET['promo_code']) ? $_GET['promo_code'] : '';
 $changed_at = isset($_GET['changed_at']) ? $_GET['changed_at'] : '';
@@ -6,7 +6,7 @@ $changed_by = isset($_GET['changed_by']) ? $_GET['changed_by'] : '';
 
 function displayOfferHistory($promo_code)
 {
-    include ("../inc/config.php");
+    include("../inc/config.php");
 
     $sql = "SELECT ph.*, u.name FROM promo_history ph
             LEFT JOIN user u ON ph.changed_by = u.user_id
@@ -24,7 +24,7 @@ function displayOfferHistory($promo_code)
             echo "<td style='text-align:center;'>" . $row['old_bill_status'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['new_bill_status'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['changed_at'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['name'] . "</td>"; 
+            echo "<td style='text-align:center;'>" . $row['name'] . "</td>";
             echo "</tr>";
         }
     }
@@ -52,17 +52,30 @@ function displayOfferHistory($promo_code)
 </head>
 
 <body>
-<div class="loading">
-  <div>
-   <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-  </div>
-  Loading, Please wait...
-</div>
+    <div class="loading">
+        <div>
+            <div class="lds-default">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        Loading, Please wait...
+    </div>
     <div class="cont-box">
         <div class="custom-box pt-4">
             <div class="sub" style="text-align:left;">
                 <div class="voucher-type">
-                    <div class="row pb-2 title" aria-label="breadcrumb">
+                    <div class="row title" aria-label="breadcrumb">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                                 <li class="breadcrumb-item"><a href="index.php"
@@ -71,19 +84,22 @@ function displayOfferHistory($promo_code)
                                         style="color:#E96529; font-size:14px;">History</a></li>
                             </ol>
                         </nav>
-                        <p class="title_store" style="font-size:30px;text-shadow: 3px 3px 5px rgba(99,99,99,0.35);">
-                            <?php echo htmlspecialchars($promo_code); ?></p>
                     </div>
+                </div>
+                <div class="add-btns">
+                    <p class="title2"><?php echo htmlspecialchars($promo_code); ?></p>
                 </div>
                 <div class="content" style="width:95%;margin-left:auto;margin-right:auto;">
                     <table id="example" class="table bord" style="width:100%;">
                         <thead>
                             <tr>
-                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">Promo History ID</th>
+                                <th style="padding:10px;border-top-left-radius:10px;border-bottom-left-radius:10px;">
+                                    Promo History ID</th>
                                 <th style="padding:10px;">Old Bill Status</th>
                                 <th style="padding:10px;">New Bill Status</th>
                                 <th style="padding:10px;">Changed At</th>
-                                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">Changed By</th>
+                                <th style="padding:10px;border-top-right-radius:10px;border-bottom-right-radius:10px;">
+                                    Changed By</th>
                             </tr>
                         </thead>
                         <tbody id="dynamicTableBody">
@@ -99,15 +115,16 @@ function displayOfferHistory($promo_code)
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
     <script src="./js/script.js"></script>
     <script>
-      $(window).on('load', function() {
-   $('.loading').hide();
-   $('.cont-box').show();
+        $(window).on('load', function () {
+            $('.loading').hide();
+            $('.cont-box').show();
 
-   var table = $('#example').DataTable({
-      scrollX: true,
-      order: [[3, 'asc']]
-   }); });
+            var table = $('#example').DataTable({
+                scrollX: true,
+                order: [[3, 'asc']]
+            });
+        });
     </script>
-</body> 
+</body>
 
 </html>

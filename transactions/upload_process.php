@@ -1,11 +1,9 @@
 <?php
-require_once("../header.php");
-require_once("../inc/config.php");
-require_once '../vendor/autoload.php'; 
+require_once ("../header.php");
+require_once ("../inc/config.php");
 
-use Ramsey\Uuid\Uuid;
-
-function displayMessage($type, $message) {
+function displayMessage($type, $message)
+{
     $color = $type === 'error' ? '#f44336' : '#4caf50';
     $icon = $type === 'error' ? 'error-icon' : 'checkmark';
     $path = $type === 'error' ? '<line x1="16" y1="16" x2="36" y2="36"/><line x1="36" y1="16" x2="16" y2="36"/>' : '<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>';
@@ -64,14 +62,14 @@ function displayMessage($type, $message) {
             100% { stroke-dashoffset: 0; } 
         }
         .error-list {
-            font-size: 14px;
-            text-align: left;
+            font-size: 14px; 
+            text-align: left; 
             margin-top: 10px;
-            padding-left: 0;
-            list-style-type: none;
+            padding-left: 0; 
+            list-style-type: none; 
         }
         .error-list li {
-            margin-bottom: 5px;
+            margin-bottom: 5px; 
         }
         #okay{
         display: inline-block;
@@ -115,9 +113,21 @@ HTML;
 HTML;
 }
 
-function checkMerchantExistence($conn, $merchantId) {
-    $stmt = $conn->prepare("SELECT * FROM merchant WHERE merchant_id = ?");
-    $stmt->bind_param("s", $merchantId);
+function checkForDuplicates($conn, $transactionId)
+{
+    $stmt = $conn->prepare("SELECT transaction_id FROM transaction WHERE transaction_id = ?");
+    $stmt->bind_param("s", $transactionId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $exists = $result->num_rows > 0;
+    $stmt->close();
+    return $exists ? ["Transaction ID '{$transactionId}' already exists."] : [];
+}
+
+function checkStoreExistence($conn, $storeId)
+{
+    $stmt = $conn->prepare("SELECT * FROM store WHERE store_id = ?");
+    $stmt->bind_param("s", $storeId);
     $stmt->execute();
     $result = $stmt->get_result();
     $exists = $result->num_rows > 0;
@@ -125,24 +135,28 @@ function checkMerchantExistence($conn, $merchantId) {
     return $exists;
 }
 
-function checkForDuplicates($conn, $merchantId) {
-    $stmt = $conn->prepare("SELECT merchant_id FROM fee WHERE merchant_id = ?");
-    $stmt->bind_param("s", $merchantId);
+function checkPromoExistence($conn, $promoCode)
+{
+    $stmt = $conn->prepare("SELECT * FROM promo WHERE promo_code = ?");
+    $stmt->bind_param("s", $promoCode);
     $stmt->execute();
     $result = $stmt->get_result();
-    $duplicates = [];
-    if ($result->num_rows > 0) {
-        $duplicates[] = "Merchant ID '{$merchantId}' already exists in the fee table.";
-    }
+    $exists = $result->num_rows > 0;
     $stmt->close();
-    return $duplicates;
+    return $exists;
 }
 
-function updateActivityHistory($conn, $merchantId, $userId) {
+function updateActivityHistory($conn, $customerId, $userId) {
     $stmt = $conn->prepare("UPDATE activity_history SET user_id = ? WHERE description LIKE CONCAT('%', ?, '%') AND user_id IS NULL ORDER BY created_at DESC LIMIT 1");
-    $stmt->bind_param("ss", $userId, $merchantId);
+    $stmt->bind_param("ss", $userId, $customerId);
     $stmt->execute();
     $stmt->close();
+}
+
+function convertDateFormat($dateString)
+{
+    $date = DateTime::createFromFormat('F d, Y h:iA', $dateString);
+    return $date->format('Y-m-d H:i:s');
 }
 
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
@@ -162,63 +176,83 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
 
-    $invalidMerchantIds = [];
-    $merchantIds = [];
-    $duplicateMerchantIds = [];
+    $duplicateMessages = [];
+    $invalidStoreIds = [];
+    $invalidPromoCodes = [];
+    $transactionIds = [];
+    $duplicateTransactionIds = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $merchantId = $data[1];
+        $storeId = $data[3]; 
+        $transactionId = $data[9];
+        $promoCode = $data[6]; 
 
-        if (isset($merchantIds[$merchantId])) {
-            if (!isset($duplicateMerchantIds[$merchantId])) {
-                $duplicateMerchantIds[$merchantId] = [$merchantIds[$merchantId]];
+        if (isset($transactionIds[$transactionId])) {
+            if (!isset($duplicateTransactionIds[$transactionId])) {
+                $duplicateTransactionIds[$transactionId] = [$transactionId, $transactionIds[$transactionId]];
             }
-            $duplicateMerchantIds[$merchantId][] = $merchantId;
+            $duplicateTransactionIds[$transactionId][] = $transactionId;
         } else {
-            $merchantIds[$merchantId] = $merchantId;
+            $transactionIds[$transactionId] = $transactionId;
         }
 
-        if (!checkMerchantExistence($conn, $merchantId)) {
-            $invalidMerchantIds[] = "Merchant ID '{$merchantId}' does not exist.";
-        }
+        $duplicates = checkForDuplicates($conn, $transactionId);
 
-        $duplicates = checkForDuplicates($conn, $merchantId);
         if (!empty($duplicates)) {
-            $invalidMerchantIds = array_merge($invalidMerchantIds, $duplicates);
+            $duplicateMessages = array_merge($duplicateMessages, $duplicates);
+        }
+
+        if (!checkStoreExistence($conn, $storeId) && !in_array("Store ID '{$storeId}' does not exist.", $invalidStoreIds)) {
+            $invalidStoreIds[] = "Store ID '{$storeId}' does not exist.";
+        }
+
+        if (!checkPromoExistence($conn, $promoCode) && !in_array("Promo Code '{$promoCode}' does not exist.", $invalidPromoCodes)) {
+            $invalidPromoCodes[] = "Promo Code '{$promoCode}' does not exist.";
         }
     }
 
     fclose($handle);
 
-    foreach ($duplicateMerchantIds as $merchantId => $merchantIds) {
-        $invalidMerchantIds[] = "Duplicate Merchant ID '{$merchantId}' in CSV file.";
+    foreach ($duplicateTransactionIds as $transactionId => $transactionIds) {
+        $duplicateMessages[] = "Duplicate Transaction ID '{$transactionId}' in CSV file: " . implode(", ", $transactionIds);
     }
 
-    if (!empty($invalidMerchantIds)) {
+    if (!empty($duplicateMessages) || !empty($invalidStoreIds)) {
         $conn->close();
-        displayMessage('error', 'Errors found:<br>' . implode('<br>', $invalidMerchantIds));
+        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds);
+        displayMessage('error', 'Errors found:<br>' . implode('<br>', $errorMessages));
         exit();
     }
 
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle);
+    fgetcsv($handle); 
 
-    $stmt1 = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type, cwt_rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, no_voucher_type, no_promo_group, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $fee_id = Uuid::uuid4()->toString();
-        $stmt1->bind_param("sssssssssss", $fee_id, $data[1], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11], $data[12]);
-        $stmt1->execute();
+        $data[4] = empty($data[4]) ? null : $data[4]; 
+        $data[6] = empty($data[6]) ? null : $data[6]; 
+        $data[7] = empty($data[7]) ? null : $data[7]; 
+        $data[8] = empty($data[8]) ? null : $data[8]; 
+        $transaction_date = convertDateFormat($data[10]);
+        $data[11] = str_replace(',', '', $data[11]);
+        $data[12] = str_replace(',', '', $data[12]);
+        $data[13] = str_replace(',', '', $data[13]); 
+        $data[14] = str_replace(',', '', $data[14]);
+        $data[15] = ($data[15] = str_replace('"', '', $data[15])) === '' ? null : $data[15]; 
 
-        updateActivityHistory($conn, $data[1], $userId);
+        $stmt1->bind_param("sssssssssssssss", $data[7], $data[3], $data[6], $data[7], $data[8], $data[5], $data[4], $transaction_date, $data[11], $data[12], $data[13], $data[14], $data[15], $data[16], $data[17]);
+        $stmt1->execute();
+        
+        updateActivityHistory($conn, $data[5], $userId);
     }
 
     fclose($handle);
     $stmt1->close();
     $conn->close();
 
-    displayMessage('success', 'Successfully uploaded!');
+    displayMessage('success', 'Upload complete');
 } else {
-    displayMessage('error', 'No file uploaded.');
+    displayMessage('error', 'No file uploaded');
 }
 ?>

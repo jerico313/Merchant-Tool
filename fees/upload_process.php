@@ -64,11 +64,11 @@ function displayMessage($type, $message) {
             100% { stroke-dashoffset: 0; } 
         }
         .error-list {
-            font-size: 14px; 
-            text-align: left; 
+            font-size: 14px;
+            text-align: left;
             margin-top: 10px;
-            padding-left: 0; 
-            list-style-type: none; 
+            padding-left: 0;
+            list-style-type: none;
         }
         .error-list li {
             margin-bottom: 5px;
@@ -94,7 +94,7 @@ function displayMessage($type, $message) {
 HTML;
 
     if ($type === 'success') {
-        echo "<br><br><h2 style='color:#4caf50;'>Successfully Uploaded</h2><br>";
+        echo "<br><h2 style='color:#4caf50;'>Successfully Uploaded</h2><br>";
     }
 
     if ($type === 'error' && strpos($message, '<br>') !== false) {
@@ -115,21 +115,6 @@ HTML;
 HTML;
 }
 
-function checkForDuplicates($conn, $promoCode) {
-    $stmt = $conn->prepare("SELECT promo_code FROM promo WHERE promo_code = ?");
-    $stmt->bind_param("s", $promoCode);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $duplicates = [];
-    while ($row = $result->fetch_assoc()) {
-        if ($row['promo_code'] === $promoCode) {
-            $duplicates[] = "Promo Code '{$promoCode}' already exists.";
-        }
-    }
-    $stmt->close();
-    return $duplicates;
-}
-
 function checkMerchantExistence($conn, $merchantId) {
     $stmt = $conn->prepare("SELECT * FROM merchant WHERE merchant_id = ?");
     $stmt->bind_param("s", $merchantId);
@@ -140,9 +125,22 @@ function checkMerchantExistence($conn, $merchantId) {
     return $exists;
 }
 
-function updateActivityHistory($conn, $promoCode, $userId) {
+function checkForDuplicates($conn, $merchantId) {
+    $stmt = $conn->prepare("SELECT merchant_id FROM fee WHERE merchant_id = ?");
+    $stmt->bind_param("s", $merchantId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $duplicates = [];
+    if ($result->num_rows > 0) {
+        $duplicates[] = "Merchant ID '{$merchantId}' already exists in the fee table.";
+    }
+    $stmt->close();
+    return $duplicates;
+}
+
+function updateActivityHistory($conn, $merchantId, $userId) {
     $stmt = $conn->prepare("UPDATE activity_history SET user_id = ? WHERE description LIKE CONCAT('%', ?, '%') AND user_id IS NULL ORDER BY created_at DESC LIMIT 1");
-    $stmt->bind_param("ss", $userId, $promoCode);
+    $stmt->bind_param("ss", $userId, $merchantId);
     $stmt->execute();
     $stmt->close();
 }
@@ -164,83 +162,63 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
 
-    $duplicateMessages = [];
     $invalidMerchantIds = [];
-    $promoCodes = [];
-    $duplicatePromoCodes = [];
+    $merchantIds = [];
+    $duplicateMerchantIds = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $merchantId = $data[1]; 
-        $promoCode = $data[2]; 
+        $merchantId = $data[1];
 
-        if (isset($promoCodes[$promoCode])) {
-            if (!isset($duplicatePromoCodes[$promoCode])) {
-                $duplicatePromoCodes[$promoCode] = [$promoCodes[$promoCode]];
+        if (isset($merchantIds[$merchantId])) {
+            if (!isset($duplicateMerchantIds[$merchantId])) {
+                $duplicateMerchantIds[$merchantId] = [$merchantIds[$merchantId]];
             }
-            $duplicatePromoCodes[$promoCode][] = $promoCode;
+            $duplicateMerchantIds[$merchantId][] = $merchantId;
         } else {
-            $promoCodes[$promoCode] = $promoCode;
+            $merchantIds[$merchantId] = $merchantId;
         }
 
-        $duplicates = checkForDuplicates($conn, $promoCode);
-
-        if (!empty($duplicates)) {
-            $duplicateMessages = array_merge($duplicateMessages, $duplicates);
-        }
-
-        if (!checkMerchantExistence($conn, $merchantId) && !in_array("Merchant ID '{$merchantId}' does not exist.", $invalidMerchantIds)) {
+        if (!checkMerchantExistence($conn, $merchantId)) {
             $invalidMerchantIds[] = "Merchant ID '{$merchantId}' does not exist.";
+        }
+
+        $duplicates = checkForDuplicates($conn, $merchantId);
+        if (!empty($duplicates)) {
+            $invalidMerchantIds = array_merge($invalidMerchantIds, $duplicates);
         }
     }
 
     fclose($handle);
 
-    foreach ($duplicatePromoCodes as $promoCode => $promoCodes) {
-        $duplicateMessages[] = "Duplicate Promo Code '{$promoCode}' in CSV file: " . implode(", ", $promoCodes);
+    foreach ($duplicateMerchantIds as $merchantId => $merchantIds) {
+        $invalidMerchantIds[] = "Duplicate Merchant ID '{$merchantId}' in CSV file.";
     }
 
-    if (!empty($duplicateMessages) || !empty($invalidMerchantIds)) {
+    if (!empty($invalidMerchantIds)) {
         $conn->close();
-        $errorMessages = array_merge($duplicateMessages, $invalidMerchantIds);
-        displayMessage('error', 'Errors found:<br>' . implode('<br>', $errorMessages));
+        displayMessage('error', 'Errors found:<br>' . implode('<br>', $invalidMerchantIds));
         exit();
     }
 
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle); 
-    $stmt1 = $conn->prepare("INSERT INTO promo (promo_id, merchant_id, promo_code, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, remarks2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    fgetcsv($handle);
+
+    $stmt1 = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type, cwt_rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $data[3] = str_replace(',', '', $data[3]);
-        $start_date = !empty($data[11]) ? DateTime::createFromFormat('m/d/Y', $data[11]) : null;
-        $end_date = !empty($data[12]) ? DateTime::createFromFormat('m/d/Y', $data[12]) : null;
-
-        if ($start_date instanceof DateTime) {
-            $start_date = $start_date->format('Y-m-d');
-        } else {
-            $start_date = null;
-        }
-
-        if ($end_date instanceof DateTime) {
-            $end_date = $end_date->format('Y-m-d');
-        } else {
-            $end_date = null;
-        }
-
-        $promo_id = Uuid::uuid4()->toString();
-        $promo_type = $data[7];
-        $stmt1->bind_param("ssssssssssssss", $promo_id, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $promo_type, $data[8], $data[9], $data[10], $start_date, $end_date, $data[13]);
+        $fee_id = Uuid::uuid4()->toString();
+        $stmt1->bind_param("sssssssssss", $fee_id, $data[1], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11], $data[12]);
         $stmt1->execute();
 
-        updateActivityHistory($conn, $data[2], $userId);
+        updateActivityHistory($conn, $data[1], $userId);
     }
 
     fclose($handle);
     $stmt1->close();
     $conn->close();
 
-    displayMessage('success', 'Successfully uploaded!');
+    displayMessage('success', 'Upload complete');
 } else {
-    displayMessage('error', 'No file uploaded.');
+    displayMessage('error', 'No file uploaded');
 }
 ?>

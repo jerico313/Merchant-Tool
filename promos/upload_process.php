@@ -1,9 +1,11 @@
 <?php
-require_once ("../header.php");
-require_once ("../inc/config.php");
+require_once("../header.php");
+require_once("../inc/config.php");
+require_once '../vendor/autoload.php'; 
 
-function displayMessage($type, $message)
-{
+use Ramsey\Uuid\Uuid;
+
+function displayMessage($type, $message) {
     $color = $type === 'error' ? '#f44336' : '#4caf50';
     $icon = $type === 'error' ? 'error-icon' : 'checkmark';
     $path = $type === 'error' ? '<line x1="16" y1="16" x2="36" y2="36"/><line x1="36" y1="16" x2="16" y2="36"/>' : '<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>';
@@ -69,7 +71,7 @@ function displayMessage($type, $message)
             list-style-type: none; 
         }
         .error-list li {
-            margin-bottom: 5px; 
+            margin-bottom: 5px;
         }
         #okay{
         display: inline-block;
@@ -92,7 +94,7 @@ function displayMessage($type, $message)
 HTML;
 
     if ($type === 'success') {
-        echo "<br><h2 style='color:#4caf50;'>Successfully Uploaded</h2><br>";
+        echo "<br><br><h2 style='color:#4caf50;'>Successfully Uploaded</h2><br>";
     }
 
     if ($type === 'error' && strpos($message, '<br>') !== false) {
@@ -113,50 +115,36 @@ HTML;
 HTML;
 }
 
-function checkForDuplicates($conn, $transactionId)
-{
-    $stmt = $conn->prepare("SELECT transaction_id FROM transaction WHERE transaction_id = ?");
-    $stmt->bind_param("s", $transactionId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $exists = $result->num_rows > 0;
-    $stmt->close();
-    return $exists ? ["Transaction ID '{$transactionId}' already exists."] : [];
-}
-
-function checkStoreExistence($conn, $storeId)
-{
-    $stmt = $conn->prepare("SELECT * FROM store WHERE store_id = ?");
-    $stmt->bind_param("s", $storeId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $exists = $result->num_rows > 0;
-    $stmt->close();
-    return $exists;
-}
-
-function checkPromoExistence($conn, $promoCode)
-{
-    $stmt = $conn->prepare("SELECT * FROM promo WHERE promo_code = ?");
+function checkForDuplicates($conn, $promoCode) {
+    $stmt = $conn->prepare("SELECT promo_code FROM promo WHERE promo_code = ?");
     $stmt->bind_param("s", $promoCode);
     $stmt->execute();
     $result = $stmt->get_result();
+    $duplicates = [];
+    while ($row = $result->fetch_assoc()) {
+        if ($row['promo_code'] === $promoCode) {
+            $duplicates[] = "Promo Code '{$promoCode}' already exists.";
+        }
+    }
+    $stmt->close();
+    return $duplicates;
+}
+
+function checkMerchantExistence($conn, $merchantId) {
+    $stmt = $conn->prepare("SELECT * FROM merchant WHERE merchant_id = ?");
+    $stmt->bind_param("s", $merchantId);
+    $stmt->execute();
+    $result = $stmt->get_result();
     $exists = $result->num_rows > 0;
     $stmt->close();
     return $exists;
 }
 
-function updateActivityHistory($conn, $customerId, $userId) {
+function updateActivityHistory($conn, $promoCode, $userId) {
     $stmt = $conn->prepare("UPDATE activity_history SET user_id = ? WHERE description LIKE CONCAT('%', ?, '%') AND user_id IS NULL ORDER BY created_at DESC LIMIT 1");
-    $stmt->bind_param("ss", $userId, $customerId);
+    $stmt->bind_param("ss", $userId, $promoCode);
     $stmt->execute();
     $stmt->close();
-}
-
-function convertDateFormat($dateString)
-{
-    $date = DateTime::createFromFormat('F d, Y h:iA', $dateString);
-    return $date->format('Y-m-d H:i:s');
 }
 
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
@@ -177,88 +165,82 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     fgetcsv($handle); 
 
     $duplicateMessages = [];
-    $invalidStoreIds = [];
-    $invalidPromoCodes = [];
-    $transactionIds = [];
-    $duplicateTransactionIds = [];
+    $invalidMerchantIds = [];
+    $promoCodes = [];
+    $duplicatePromoCodes = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $storeId = $data[3]; 
-        $transactionId = $data[7];
-        $promoCode = $data[6]; 
+        $merchantId = $data[1]; 
+        $promoCode = $data[2]; 
 
-        if (isset($transactionIds[$transactionId])) {
-            if (!isset($duplicateTransactionIds[$transactionId])) {
-                $duplicateTransactionIds[$transactionId] = [$transactionId, $transactionIds[$transactionId]];
+        if (isset($promoCodes[$promoCode])) {
+            if (!isset($duplicatePromoCodes[$promoCode])) {
+                $duplicatePromoCodes[$promoCode] = [$promoCodes[$promoCode]];
             }
-            $duplicateTransactionIds[$transactionId][] = $transactionId;
+            $duplicatePromoCodes[$promoCode][] = $promoCode;
         } else {
-            $transactionIds[$transactionId] = $transactionId;
+            $promoCodes[$promoCode] = $promoCode;
         }
 
-        $duplicates = checkForDuplicates($conn, $transactionId);
+        $duplicates = checkForDuplicates($conn, $promoCode);
 
         if (!empty($duplicates)) {
             $duplicateMessages = array_merge($duplicateMessages, $duplicates);
         }
 
-        if (!checkStoreExistence($conn, $storeId) && !in_array("Store ID '{$storeId}' does not exist.", $invalidStoreIds)) {
-            $invalidStoreIds[] = "Store ID '{$storeId}' does not exist.";
-        }
-
-        if (!checkPromoExistence($conn, $promoCode) && !in_array("Promo Code '{$promoCode}' does not exist.", $invalidPromoCodes)) {
-            $invalidPromoCodes[] = "Promo Code '{$promoCode}' does not exist.";
+        if (!checkMerchantExistence($conn, $merchantId) && !in_array("Merchant ID '{$merchantId}' does not exist.", $invalidMerchantIds)) {
+            $invalidMerchantIds[] = "Merchant ID '{$merchantId}' does not exist.";
         }
     }
 
     fclose($handle);
 
-    foreach ($duplicateTransactionIds as $transactionId => $transactionIds) {
-        $duplicateMessages[] = "Duplicate Transaction ID '{$transactionId}' in CSV file: " . implode(", ", $transactionIds);
+    foreach ($duplicatePromoCodes as $promoCode => $promoCodes) {
+        $duplicateMessages[] = "Duplicate Promo Code '{$promoCode}' in CSV file: " . implode(", ", $promoCodes);
     }
 
-    if (!empty($duplicateMessages) || !empty($invalidStoreIds)) {
+    if (!empty($duplicateMessages) || !empty($invalidMerchantIds)) {
         $conn->close();
-        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds);
+        $errorMessages = array_merge($duplicateMessages, $invalidMerchantIds);
         displayMessage('error', 'Errors found:<br>' . implode('<br>', $errorMessages));
         exit();
     }
 
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
-
-    $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status, no_voucher_type, no_promo_group) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1 = $conn->prepare("INSERT INTO promo (promo_id, merchant_id, promo_code, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, remarks2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $data[4] = empty($data[4]) ? null : $data[4]; 
-        $data[6] = empty($data[6]) ? null : $data[6]; 
-        $transaction_date = convertDateFormat($data[8]);
-        $data[9] = str_replace(',', '', $data[9]);
-        $data[10] = str_replace(',', '', $data[10]);
-        $data[11] = str_replace(',', '', $data[11]); 
-        $data[12] = str_replace(',', '', $data[12]);
-        $data[13] = ($data[13] = str_replace('"', '', $data[13])) === '' ? null : $data[13]; 
+        $data[3] = str_replace(',', '', $data[3]);
+        $start_date = !empty($data[11]) ? DateTime::createFromFormat('m/d/Y', $data[11]) : null;
+        $end_date = !empty($data[12]) ? DateTime::createFromFormat('m/d/Y', $data[12]) : null;
 
-        if (empty($data[6])) {  
-            $no_voucher_type = $data[22];
-            $no_promo_group = $data[23];
+        if ($start_date instanceof DateTime) {
+            $start_date = $start_date->format('Y-m-d');
         } else {
-            $no_voucher_type = null;
-            $no_promo_group = null;
+            $start_date = null;
         }
 
-        $stmt1->bind_param("sssssssssssssss", $data[7], $data[3], $data[6], $data[5], $data[4], $transaction_date, $data[9], $data[10], $data[11], $data[12], $data[13], $data[14], $data[15], $no_voucher_type, $no_promo_group);
+        if ($end_date instanceof DateTime) {
+            $end_date = $end_date->format('Y-m-d');
+        } else {
+            $end_date = null;
+        }
+
+        $promo_id = Uuid::uuid4()->toString();
+        $promo_type = $data[7];
+        $stmt1->bind_param("ssssssssssssss", $promo_id, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $promo_type, $data[8], $data[9], $data[10], $start_date, $end_date, $data[13]);
         $stmt1->execute();
-        
-        updateActivityHistory($conn, $data[5], $userId);
+
+        updateActivityHistory($conn, $data[2], $userId);
     }
 
     fclose($handle);
     $stmt1->close();
     $conn->close();
 
-    displayMessage('success', 'Successfully uploaded!');
+    displayMessage('success', 'Upload complete');
 } else {
-    displayMessage('error', 'No file uploaded.');
+    displayMessage('error', 'No file uploaded');
 }
 ?>
