@@ -57,14 +57,13 @@ WITH pg_fee_cte AS (
     ) AS commission_rate,
         COALESCE(
         (
-            SELECT `fh`.`old_value`
-            FROM `leadgen_db`.`fee_history` `fh`
-            WHERE `fh`.`fee_id` = `f`.`fee_id`
-                AND `fh`.`column_name` = 'cwt_rate'
-                AND `fh`.`changed_at` >= `t`.`transaction_date`
-            ORDER BY `fh`.`changed_at` DESC
+            SELECT `cwt`.`old_value`
+            FROM `leadgen_db`.`cwt_rate` `cwt`
+            WHERE `cwt`.`store_id` = `s`.`store_id`
+                AND `cwt`.`changed_at` >= `t`.`transaction_date`
+            ORDER BY `cwt`.`changed_at` DESC 
             LIMIT 1
-        ), `f`.`cwt_rate`
+        ), `s`.`cwt_rate`
     ) AS cwt_rate
     FROM `leadgen_db`.`transaction` `t`
         JOIN `leadgen_db`.`store` `s` ON (`t`.`store_id` = `s`.`store_id`)
@@ -149,7 +148,7 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
     END AS `Total Billing`,
     CONCAT(pg_fee_cte.pg_fee_rate, '%') AS `PG Fee Rate`,
     ROUND(`t`.`amount_paid` * (pg_fee_cte.pg_fee_rate / 100), 2) AS `PG Fee Amount`,
-    pg_fee_cte.cwt_rate `CWT Rate`,
+    CONCAT(pg_fee_cte.cwt_rate, '%') `CWT Rate`,
     ROUND(`t`.`amount_paid`
         - CASE
             WHEN pg_fee_cte.commission_type = 'Vat Exc' 
