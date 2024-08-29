@@ -311,7 +311,7 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
                 function (settings, data, dataIndex) {
                     var startDate = $('#startDate').val();
                     var endDate = $('#endDate').val();
-                    var date = data[22];
+                    var date = data[23];
 
                     if (startDate && endDate) {
                         return (date >= startDate && date <= endDate);

@@ -217,9 +217,9 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $duplicateMessages[] = "Duplicate Transaction ID '{$transactionId}' in CSV file: " . implode(", ", $transactionIds);
     }
 
-    if (!empty($duplicateMessages) || !empty($invalidStoreIds) || !empty($invalidPromoCodes)) {
+    if (!empty($duplicateMessages) || !empty($invalidStoreIds)) {
         $conn->close();
-        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds, $invalidPromoCodes);
+        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds);
         displayMessage('error', 'Errors found:<br>' . implode('<br>', $errorMessages));
         exit();
     }
