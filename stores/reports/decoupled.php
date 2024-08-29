@@ -158,7 +158,7 @@ function displayDecoupled($store_id, $store_name)
         <div class="custom-box pt-4">
             <div class="sub" style="text-align:left;">
                 <div class="voucher-type">
-                    <div class="row pb-2 title" aria-label="breadcrumb">
+                    <div class="row title" aria-label="breadcrumb">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                             <li class="breadcrumb-item">

@@ -285,7 +285,7 @@ function displayStore()
       }
 
       function viewOrder(storeId, storeName) {
-        window.location.href = 'order/index.php?store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
+        window.location.href = 'transactions/index.php?store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
       }
 
       function viewReport(storeId, storeName) {

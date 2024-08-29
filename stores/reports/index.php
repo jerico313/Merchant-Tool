@@ -36,7 +36,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                   Stores
                 </a>
               </li>
-              <li class="breadcrumb-item dropdown">
+              <li class="breadcrumb-item">
                 <a href="#" style="color:#E96529;font-size:14px;">
                   Settlement Reports
                 </a>
