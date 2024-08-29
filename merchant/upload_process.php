@@ -206,7 +206,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $stmt->close();
     $conn->close();
 
-    displayMessage('success', 'Successfully uploaded!');
+    displayMessage('success', 'Upload successful!');
 } else {
     displayMessage('error', 'No file uploaded.');
 }
