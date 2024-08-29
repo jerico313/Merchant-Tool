@@ -136,7 +136,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                             </ol>
                         </nav>
                         <div style="width:650px;">
-                            <p class="title2" style="padding-left:6px">
+                            <p class="title2" style="padding-left:3px">
                                 <?php echo htmlspecialchars($store_name); ?>
                             </p>
                         </div>

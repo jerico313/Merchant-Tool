@@ -140,7 +140,7 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
                     <a id="merchant-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/merchant/" style="padding-right:10px;padding-left:10px;">Merchants</a>
                 </li>
                 <li class="nav-item">
-                    <a id="store-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/store/" style="padding-right:10px;padding-left:10px;">Stores</a>
+                    <a id="store-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/stores/" style="padding-right:10px;padding-left:10px;">Stores</a>
                 </li>
                 <li class="nav-item">
                     <a id="promo-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/promos/" style="padding-right:10px;padding-left:10px;">Promos</a>
