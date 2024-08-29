@@ -114,7 +114,7 @@ function displayUser()
       </div>
       <div class="modal-body">
         
-        <form id="editUserForm" method="POST">
+        <form id="editUserForm" method="POST" action="edit.php">
           <input type="hidden" id="user_Id" name="user_Id">
           <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
           <div class="mb-3">
@@ -143,26 +143,7 @@ function displayUser()
               <option value="Inactive">Inactive</option>
             </select>
           </div>
-          <div class="mb-3">
-            <label for="editPassword" style="display:block;">
-              <input type="checkbox" id="editPassword" name="editPassword" style="accent-color:#E96529;vertical-align: middle; position: relative; bottom: 1px;" />
-             Edit Password
-            </label>
-            <div id="alertContainer" class="alert alert-danger d-none" role="alert"></div>
-          </div>
-          <div class="mb-3" id="passwordContainer">
-            <label for="password" class="form-label">
-              New Password<span class="text-danger" style="padding:2px">*</span>
-            </label>
-            <input type="text" class="form-control mb-3" id="newPassword" name="newPassword" placeholder="Enter New password" required>
-            <label for="password" class="form-label">
-              Confirm Password<span class="text-danger" style="padding:2px">*</span>
-            </label>
-            <input type="text" class="form-control" id="confirmPassword" placeholder="Confirm New password" required>
-          </div>
-          <button type="submit" id="saveChanges" class="btn btn-primary"
-            style="width:100%;background-color:#4BB0B8;border:#4BB0B8;border-radius: 20px;font-weight:700;">Save Changes
-          </button>
+          <button type="submit" class="btn btn-primary modal-save-btn" id="saveChanges">Save changes</button>
         </form>
       </div>
     </div>
@@ -170,27 +151,6 @@ function displayUser()
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const editPasswordCheckbox = document.getElementById("editPassword");
-    const passwordContainer = document.getElementById("passwordContainer");
-    const newPasswordInput = document.getElementById("newPassword");
-    const confirmPasswordInput = document.getElementById("confirmPassword");
-
-    function togglePasswordField() {
-      if (editPasswordCheckbox.checked) {
-        passwordContainer.style.display = "block";
-      } else {
-        passwordContainer.style.display = "none";
-        newPasswordInput.value = '';
-        confirmPasswordInput.value = '';
-      }
-    }
-
-    editPasswordCheckbox.addEventListener("change", togglePasswordField);
-
-    togglePasswordField();
-  });
-
   function showAlert(message) {
     const alertContainer = document.getElementById('alertContainer');
     alertContainer.classList.remove('d-none');
@@ -204,33 +164,9 @@ function displayUser()
 
   document.getElementById('saveChanges').addEventListener('click', function(event) {
     const form = document.getElementById('editUserForm');
-    const editPasswordCheckbox = document.getElementById('editPassword');
-    const newPassword = document.getElementById('newPassword').value.trim();
-    const confirmPassword = document.getElementById('confirmPassword').value.trim();
-
     const alertContainer = document.getElementById('alertContainer');
     alertContainer.classList.add('d-none');
     alertContainer.innerHTML = '';
-
-    if (editPasswordCheckbox.checked) {
-      if (newPassword === '' || confirmPassword === '') {
-        showAlert('<i class="fa-solid fa-circle-exclamation"></i> Please enter both new password and confirm password.');
-        event.preventDefault();
-        return;
-      }
-
-      if (newPassword !== confirmPassword) {
-        showAlert('<i class="fa-solid fa-circle-exclamation"></i> Passwords do not match.');
-        event.preventDefault();
-        return;
-      }
-
-      form.action = 'edit_password.php';
-    } else {
-      form.action = 'edit.php';
-    }
-
-    form.submit();
   });
 </script>
 
@@ -259,14 +195,12 @@ function displayUser()
         var emailAddress = userRow.find('td:nth-child(3)').text();
         var type = userRow.find('td:nth-child(4)').text();
         var status = userRow.find('td:nth-child(5)').text();
-        var password = userRow.find('td:nth-child(6)').text();
 
         $('#user_Id').val(userUuid);
         $('#name').val(name);
         $('#emailAddress').val(emailAddress);
         $('#type').val(type);
         $('#status').val(status);
-        $('#password').val(password);
 
         $('#editUserModal').modal('show');
       }
