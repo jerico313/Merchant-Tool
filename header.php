@@ -186,15 +186,15 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
         var storeLink = document.getElementById('store-link');
         var promoLink = document.getElementById('promo-link');
 
-        if (currentPage.includes('merchant/'))  {
+        if (currentPage.includes('merchants/'))  {
             merchantLink.classList.add('active_nav');
-        } else if (currentPage.includes('transaction/')) {
+        } else if (currentPage.includes('transactions/')) {
             transactionLink.classList.add('active_nav');
-        } else if (currentPage.includes('fee/')) {
+        } else if (currentPage.includes('fees/')) {
             pgLink.classList.add('active_nav');
-        } else if (currentPage.includes('store/')) {
+        } else if (currentPage.includes('stores/')) {
             storeLink.classList.add('active_nav');
-        } else if (currentPage.includes('promo/')) {
+        } else if (currentPage.includes('promos/')) {
             promoLink.classList.add('active_nav');
         }
 
