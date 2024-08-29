@@ -70,7 +70,7 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
             echo "<td style='width:4%;'>" . $TotalBilling . "</td>";
             echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
             echo "<td style='width:4%;'>" . $PGFeeAmount . "</td>";
-            echo "<td style='width:3%;'>" . $row['CWT Rate'] . "</td>";
+            echo "<td style='width:3%;'>" . $row['CWT Rate'] . "%" . "</td>";
             echo "<td style='width:5%;'>" . $AmounttobeDisbursed . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
             echo "</tr>";
