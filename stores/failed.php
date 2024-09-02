@@ -80,7 +80,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
             <circle class="checkmark__circle" cx="26" cy="26" r="25"/>
             <path class="checkmark__check" fill="none" d="M16 16 36 36 M36 16 16 36"/>
         </svg>
-        <h2 style="padding-top:10px;color: #f44336;">Failed to Generate</h2>
+        <h2 style="padding-top:10px;color: #f44336;">Failed to generate report</h2>
         <a href="../store/index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"><button type="button" class="btn btn-secondary okay-failed">Okay</button></a>
     </div>
     <script>

@@ -92,7 +92,7 @@ function displayMessage($type, $message)
 HTML;
 
     if ($type === 'success') {
-        echo "<br><h2 style='color:#4caf50;'>Successfully Uploaded</h2><br>";
+        echo "<br><h2 style='color:#4caf50;'>Upload complete</h2><br>";
     }
 
     if ($type === 'error' && strpos($message, '<br>') !== false) {

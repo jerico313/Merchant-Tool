@@ -8,7 +8,7 @@ function displayMessage($type, $message) {
     $path = $type === 'error' ? '<line x1="16" y1="16" x2="36" y2="36"/><line x1="36" y1="16" x2="16" y2="36"/>' : '<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>';
     $containerClass = $type === 'error' ? 'container' : 'container success-container';
     $headerColor = $type === 'error' ? 'color: #f44336;' : 'color: #4caf50';
-    $header = $type === 'error' ? "<br><h2 style=\"$headerColor\">Error</h2><br>" : "<br><h2 style=\"$headerColor\">Successfully Uploaded</h2><br>";
+    $header = $type === 'error' ? "<br><h2 style=\"$headerColor\">Error</h2><br>" : "<br><h2 style=\"$headerColor\">Upload complete</h2><br>";
     echo <<<HTML
 <!DOCTYPE html>
 <html>
