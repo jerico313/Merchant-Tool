@@ -16,6 +16,7 @@
             WHEN `s`.`email_address` IS NULL THEN "-"
             ELSE `s`.`email_address`
         END AS `email_address`,
+        `s`.`cwt_rate` AS `cwt_rate`,
         `m`.`merchant_id` AS `merchant_id`,
         `m`.`merchant_name` AS `merchant_name`,
         `s`.`created_at` AS `created_at`,
