@@ -13,11 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $paymaya = $_POST['paymaya'];
     $leadgenCommission = $_POST['leadgenCommission'];
     $commissionType = $_POST['commissionType'];
-    $cwtRate = $_POST['cwtRate'];
     $userId = $_POST['userId'];
 
-    $stmt = $conn->prepare("UPDATE fee SET paymaya_credit_card=?, gcash=?, gcash_miniapp=?, paymaya=?, maya_checkout=?, maya=?, lead_gen_commission=?, commission_type=?, cwt_rate=? WHERE fee_id=?");
-    $stmt->bind_param("ssssssssss", $paymayaCreditCard, $gcash, $gcashMiniapp, $paymaya,  $paymayaCreditCard,  $paymayaCreditCard, $leadgenCommission, $commissionType, $cwtRate, $feeId);
+    $stmt = $conn->prepare("UPDATE fee SET paymaya_credit_card=?, gcash=?, gcash_miniapp=?, paymaya=?, maya_checkout=?, maya=?, lead_gen_commission=?, commission_type=? WHERE fee_id=?");
+    $stmt->bind_param("sssssssss", $paymayaCreditCard, $gcash, $gcashMiniapp, $paymaya,  $paymayaCreditCard,  $paymayaCreditCard, $leadgenCommission, $commissionType, $feeId);
 
     if ($stmt->execute()) {
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");

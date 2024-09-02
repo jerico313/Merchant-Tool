@@ -7,12 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $legalEntityName = empty($_POST['legalEntityName']) ? NULL : $_POST['legalEntityName'];
     $storeAddress = empty($_POST['storeAddress']) ? NULL : $_POST['storeAddress'];
     $emailAddress = empty($_POST['emailAddress']) ? NULL : $_POST['emailAddress'];
+    $cwtRate = $_POST['cwtRate'];    
     $merchantId = $_POST['merchantId'];
     $merchantName = $_POST['merchantName'];
     $userId = $_POST['userId'];
 
-    $stmt = $conn->prepare("UPDATE store SET store_name=?, merchant_id=?, legal_entity_name=?, store_address=?, email_address=? WHERE store_id=?");
-    $stmt->bind_param("ssssss", $storeName, $merchantId, $legalEntityName, $storeAddress, $emailAddress, $storeId);
+    $stmt = $conn->prepare("UPDATE store SET store_name=?, merchant_id=?, legal_entity_name=?, store_address=?, email_address=?, cwt_rate=? WHERE store_id=?");
+    $stmt->bind_param("sssssss", $storeName, $merchantId, $legalEntityName, $storeAddress, $emailAddress, $cwtRate, $storeId);
 
     if ($stmt->execute()) {
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
