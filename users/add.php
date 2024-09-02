@@ -20,12 +20,12 @@ function sendEmail($to, $subject, $message) {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com'; 
     $mail->SMTPAuth = true;
-    $mail->Username = 'jericobuncag0@gmail.com'; 
-    $mail->Password = 'zswmpiantsrswvci'; 
+    $mail->Username = 'booky.0318@gmail.com'; 
+    $mail->Password = 'zktfeomgudhdcrhz'; 
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom('jericobuncag0@gmail.com', 'Booky'); 
+    $mail->setFrom('booky.0318@gmail.com', 'Booky'); 
     $mail->addAddress($to);
     
     $mail->Subject = $subject;

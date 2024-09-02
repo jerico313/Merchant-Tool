@@ -21,7 +21,6 @@ function displayFeeHistory($store_id) {
             $shortCWTRateId = substr($row['cwt_rate_id'], 0, 8);
             echo "<tr>";
             echo "<td style='text-align:center;'>" . $shortCWTRateId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['column_name'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['old_value'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['new_value'] . "</td>";
             echo "<td style='text-align:center;'>" . $row['changed_at'] . "</td>";
@@ -79,7 +78,6 @@ function displayFeeHistory($store_id) {
                     <thead>
                         <tr>
                             <th class="first-col">CWT Rate ID</th>
-                            <th>Column Name</th>
                             <th>Old Value</th>
                             <th>New Value</th>
                             <th>Change At</th>
@@ -105,11 +103,11 @@ $(window).on('load', function() {
 
    var table = $('#example').DataTable({
       scrollX: true,
-      order: [[4, 'desc']],
+      order: [[3, 'desc']],
         createdRow: function (row, data, dataIndex) {
-            var date = new Date(data[4]);
+            var date = new Date(data[3]);
             var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            $('td:eq(4)', row).html(formattedDate); 
+            $('td:eq(3)', row).html(formattedDate); 
         }
    }); 
 });

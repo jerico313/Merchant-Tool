@@ -14,12 +14,12 @@ function sendEmail($to, $subject, $message) {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'jericobuncag0@gmail.com'; 
-    $mail->Password = 'zswmpiantsrswvci'; 
+    $mail->Username = 'booky.0318@gmail.com'; 
+    $mail->Password = 'zktfeomgudhdcrhz'; 
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom('jericobuncag0@gmail.com', 'PNR'); 
+    $mail->setFrom('booky.0318@gmail.com', 'Booky'); 
     $mail->addAddress($to);
 
     $mail->Subject = $subject;
@@ -82,12 +82,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["resend_code"])) {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com'; 
             $mail->SMTPAuth = true;
-            $mail->Username = 'jericobuncag0@gmail.com'; 
-            $mail->Password = 'zswmpiantsrswvci'; 
+            $mail->Username = 'booky.0318@gmail.com'; 
+            $mail->Password = 'zktfeomgudhdcrhz'; 
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('jericobuncag0@gmail.com', 'BOOKY');
+            $mail->setFrom('booky.0318@gmail.com', 'Booky');
             $mail->addAddress($email);
 
             $mail->Subject = $subject;
@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["resend_code"])) {
             if ($mail->send()) {
                 $alertMessage = '<div class="alert-custom alert alert-success" role="alert"><i class="fa-solid fa-circle-check" style="padding-right:3px"></i>Verification code sent to your email. Check your inbox.</div>';
                 $_SESSION['email'] = $email;
-                header("Location: verify_change_pass.php?email=$email");
+                header("Location: verify_change_password.php?email=$email");
                 exit();
             } else {
                 $alertMessage = '<div class="alert-custom alert alert-danger" role="alert"><i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i>Error sending verification code. Please try again later.</div>';
@@ -146,7 +146,7 @@ function generateTemporaryPassword($length = 8) {
 }
 
 function sendTemporaryPasswordEmail($to, $temporary_password) {
-    $subject = "Temporary Password for Password Reset";
+    $subject = "New Password";
     $message = '
         <html>
         <head>
@@ -156,6 +156,8 @@ function sendTemporaryPasswordEmail($to, $temporary_password) {
                     color: #333;
                     padding: 20px;
                     text-align:center;
+                    background-color:#eeeeee;
+                    border-radius:15px;
                 }
 
                 .password {
@@ -171,6 +173,9 @@ function sendTemporaryPasswordEmail($to, $temporary_password) {
         <body>
             <div class="email-content">
                 <img src="cid:booky_logo" class="logo" alt="Booky Logo" />
+                <div class="">
+                <p style="font-weight:900;font-size:15px;color:#4BB0B8;">MERCHANT SETTLEMENT TOOL</p>
+                </div>
                 <p style="font-weight:900;">Your new password is: <span class="password"><br>' . $temporary_password . '</span></p>
             </div>
         </body>
@@ -181,12 +186,12 @@ function sendTemporaryPasswordEmail($to, $temporary_password) {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com'; 
     $mail->SMTPAuth = true;
-    $mail->Username = 'jericobuncag0@gmail.com';
-    $mail->Password = 'zswmpiantsrswvci';
+    $mail->Username = 'booky.0318@gmail.com';
+    $mail->Password = 'zktfeomgudhdcrhz';
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom('jericobuncag0@gmail.com', 'BOOKY');
+    $mail->setFrom('booky.0318@gmail.com', 'Booky');
     $mail->addAddress($to);
 
     $mail->Subject = $subject;

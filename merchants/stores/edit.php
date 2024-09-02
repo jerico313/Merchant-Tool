@@ -22,9 +22,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->fetch();
         $stmt->close();
 
+        $stmt = $conn->prepare("SELECT cwt_rate_id FROM cwt_rate ORDER BY changed_at DESC LIMIT 1");
+        $stmt->execute();
+        $stmt->bind_result($latestCWTRateId);
+        $stmt->fetch();
+        $stmt->close();
         if ($latestActivityId) {
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
             $stmt->bind_param("ss", $userId, $latestActivityId);
+            $stmt->execute();
+            $stmt->close();
+        }
+        
+        if ($latestCWTRateId) {
+            $stmt = $conn->prepare("UPDATE cwt_rate SET changed_by=? WHERE cwt_rate_id=?");
+            $stmt->bind_param("ss", $userId, $latestCWTRateId);
             $stmt->execute();
             $stmt->close();
         }

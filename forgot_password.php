@@ -13,12 +13,12 @@ function sendEmail($to, $subject, $message)
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com'; 
     $mail->SMTPAuth = true;
-    $mail->Username = 'jericobuncag0@gmail.com'; 
-    $mail->Password = 'zswmpiantsrswvci'; 
+    $mail->Username = 'booky.0318@gmail.com'; 
+    $mail->Password = 'zktfeomgudhdcrhz'; 
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom('jericobuncag0@gmail.com', 'PNR');
+    $mail->setFrom('booky.0318@gmail.com', 'Booky');
     $mail->addAddress($to);
 
     $mail->Subject = $subject;
@@ -56,6 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
                             color: #333;
                             text-align:center;
                             padding: 20px;
+                            background-color:#eeeeee;
+                            border-radius:15px;
                         }
                         .code {
                             color: #E96529;
@@ -69,9 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
                 </head>
                 <body>
                     <div class="email-content">
-                        <img src="cid:booky_logo" class="logo" alt="Booky Logo" />
+                        <img src="cid:booky_logo" class="logo" alt="Booky Logo" style="padding-top:10px;"/>
                         <div class="">
-                        <p style="font-weight:900;font-size:15px;">Merchant Settlement Tool</p>
+                        <p style="font-weight:900;font-size:15px;color:#4BB0B8;">MERCHANT SETTLEMENT TOOL</p>
                         </div>
                         <p style="font-weight:900;">Your verification code is: <span class="code"><br>' . $verification_code . '</span></p>
                     </div>
@@ -83,12 +85,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["verify_code"])) {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'jericobuncag0@gmail.com'; 
-            $mail->Password = 'zswmpiantsrswvci'; 
+            $mail->Username = 'booky.0318@gmail.com'; 
+            $mail->Password = 'zktfeomgudhdcrhz'; 
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('jericobuncag0@gmail.com', 'BOOKY');
+            $mail->setFrom('booky.0318@gmail.com', 'Booky');
             $mail->addAddress($email);
 
             $mail->Subject = $subject;
