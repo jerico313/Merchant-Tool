@@ -12,9 +12,7 @@ SELECT
                 WHEN `a`.`table_name` = 'merchant' THEN `m`.`merchant_id`
                 WHEN `a`.`table_name` = 'store' THEN `s`.`store_id`
                 WHEN `a`.`table_name` = 'promo' THEN `p`.`promo_id`
-                WHEN `a`.`table_name` = 'promo_history' THEN `ph`.`promo_history_id`
                 WHEN `a`.`table_name` = 'fee' THEN `f`.`fee_id`
-                WHEN `a`.`table_name` = 'fee_history' THEN `fh`.`fee_history_id`
                 WHEN `a`.`table_name` = 'transaction' THEN `t`.`transaction_id`
                 WHEN `a`.`table_name` = 'report_history_coupled' THEN `rhc`.`coupled_report_id`
                 WHEN `a`.`table_name` = 'report_history_decoupled' THEN `rhd`.`decoupled_report_id`
@@ -32,9 +30,7 @@ SELECT
             WHEN `a`.`table_name` = 'merchant' THEN `m`.`merchant_name`
             WHEN `a`.`table_name` = 'store' THEN `s`.`store_name`
             WHEN `a`.`table_name` = 'promo' THEN `p`.`promo_code`
-            WHEN `a`.`table_name` = 'promo_history' THEN `ph`.`promo_code`
             WHEN `a`.`table_name` = 'fee' THEN `fm`.`merchant_name`
-            WHEN `a`.`table_name` = 'fee_history' THEN `fhm`.`merchant_name`
             WHEN `a`.`table_name` = 'transaction' THEN `t`.`customer_id`
             WHEN `a`.`table_name` = 'report_history_coupled' THEN `rhc`.`settlement_number`
             WHEN `a`.`table_name` = 'report_history_decoupled' THEN `rhd`.`settlement_number`
@@ -65,12 +61,8 @@ FROM
     LEFT JOIN `leadgen_db`.`merchant` `m` ON `a`.`table_id` = `m`.`merchant_id`
     LEFT JOIN `leadgen_db`.`store` `s` ON `a`.`table_id` = `s`.`store_id`
     LEFT JOIN `leadgen_db`.`promo` `p` ON `a`.`table_id` = `p`.`promo_id`
-    LEFT JOIN `leadgen_db`.`promo_history` `ph` ON `a`.`table_id` = `ph`.`promo_history_id`
     LEFT JOIN `leadgen_db`.`fee` `f` ON `a`.`table_id` = `f`.`fee_id`
     LEFT JOIN `leadgen_db`.`merchant` `fm` ON `f`.`merchant_id` = `fm`.`merchant_id`
-    LEFT JOIN `leadgen_db`.`fee_history` `fh` ON `a`.`table_id` = `fh`.`fee_history_id`
-    LEFT JOIN `leadgen_db`.`fee` `ffh` ON `fh`.`fee_id` = `ffh`.`fee_id`
-    LEFT JOIN `leadgen_db`.`merchant` `fhm` ON `ffh`.`merchant_id` = `fhm`.`merchant_id`
     LEFT JOIN `leadgen_db`.`transaction` `t` ON `a`.`table_id` = `t`.`transaction_id`
     LEFT JOIN `leadgen_db`.`report_history_coupled` `rhc` ON `a`.`table_id` = `rhc`.`coupled_report_id`
     LEFT JOIN `leadgen_db`.`report_history_decoupled` `rhd` ON `a`.`table_id` = `rhd`.`decoupled_report_id`
@@ -82,9 +74,7 @@ WHERE
         'merchant',
         'store',
         'promo',
-        'promo_history',
         'fee',
-        'fee_history',
         'transaction',
         'report_history_coupled',
         'report_history_decoupled',
