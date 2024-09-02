@@ -138,6 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change_password'])) {
                                             <div class="form-group mb-3">
                                                 <label for="name" style="font-weight:900;color:#6c6868;">Name</label>
                                                 <input type="text" class="form-control" id="name" style="font-weight:700;" name="name" placeholder="Enter name" value="<?php echo htmlspecialchars($data['name']); ?>" required maxlength="255">
+                                                <input type="hidden" class="form-control" id="user_id" name="user_id" value="<?php echo htmlspecialchars($data['user_id']); ?>">
                                             </div>
                                             <div class="form-group mb-3">
                                                 <label for="email" style="font-weight:900;color:#6c6868;">Email Address</label>

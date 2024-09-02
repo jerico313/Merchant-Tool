@@ -15,7 +15,6 @@ if (isset($_SESSION['last_activity'])) {
 
 $_SESSION['last_activity'] = time();
 
-
 if (!isset($_SESSION['user_id'])) {
     header("Location: /Merchant-Tool/");
     exit();
@@ -41,7 +40,44 @@ if ($result && mysqli_num_rows($result) > 0) {
     $type = 'unknown';
 }
 
+// Determine the initial and corresponding image
 $initial = strtoupper($name[0]);
+
+// Regular expression to check if the initial is Ñ or the name starts with a number or symbol
+if (preg_match('/^[Ñ0-9\W]/u', $initial)) {
+    $image = 'unknown.png';
+} else {
+    $image_map = [
+        'A' => 'A.png',
+        'B' => 'B.png',
+        'C' => 'C.png',
+        'D' => 'D.png',
+        'E' => 'E.png',
+        'F' => 'F.png',
+        'G' => 'G.png',
+        'H' => 'H.png',
+        'I' => 'I.png',
+        'J' => 'J.png',
+        'K' => 'K.png',
+        'L' => 'L.png',
+        'M' => 'M.png',
+        'N' => 'N.png',
+        'Ñ' => 'Ñ.png',
+        'O' => 'O.png',
+        'P' => 'P.png',
+        'Q' => 'Q.png',
+        'R' => 'R.png',
+        'S' => 'S.png',
+        'T' => 'T.png',
+        'U' => 'U.png',
+        'V' => 'V.png',
+        'W' => 'W.png',
+        'X' => 'X.png',
+        'Y' => 'Y.png',
+        'Z' => 'Z.png',
+    ];
+    $image = isset($image_map[$initial]) ? $image_map[$initial] : 'unknown.png';
+}
 
 if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/users') !== false) {
     header("Location: /Merchant-Tool/access_denied.php");
@@ -95,28 +131,25 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
             display: none;
         }
 
-        .profile-initial{
-            background-color:#fff;
-            color:#4BB0B8;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-size:21px;
+        .profile-initial {
+            background-color: #fff;
+            color: #4BB0B8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 21px;
             font-weight: 800;
-            border-radius:50%;
-            height:30px;
-            width:30px;
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
             border: solid #fff 2px;
-            box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27)inset;
-            -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27)inset;
-            -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27)inset;
-            <?php if ($initial === 'D') echo 'padding-left:2px;padding-top:2px;'; ?>
-            <?php if ($initial === 'C' || $initial === 'G') echo 'padding-top:2px;padding-right:1px;'; ?>
-            <?php if ($initial === 'W' || $initial === 'Y' ) echo 'padding-top:3px;'; ?>
-            <?php if ($initial === 'H' ) echo 'padding-top:2px;'; ?>
+            box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27) inset;
+            -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27) inset;
+            -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27) inset;
+            background-image: url('<?php echo '/Merchant-Tool/images/Initials/' . $image; ?>');
+            background-size: cover;
+            background-position: center;
         }
-
-        
     </style>
 </head>
 <body>
@@ -154,16 +187,14 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
             </ul>
             <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
                 <li class="nav-item dropdown">
-                <a class="nav-link mx-2 dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <div class="d-flex align-items-center">
-        <div class="profile-initial" style="">
-            <?php echo $initial; ?>
-        </div>
-        <span style="color:#fff;padding-left:5px;font-weight:700;"><?php echo ' ' . htmlspecialchars($name); ?></span>
-    </div>
-</a>
-
-
+                    <a class="nav-link mx-2 dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <div class="profile-initial">
+                               
+                            </div>
+                            <span style="color:#fff;padding-left:5px;font-weight:700;"><?php echo ' ' . htmlspecialchars($name); ?></span>
+                        </div>
+                    </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="/Merchant-Tool/profile"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a></li>
                         <?php if ($type !== 'User') : ?>
@@ -174,7 +205,7 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
                     </ul>
                 </li>
             </ul>
-            </div>
+        </div>
     </div>
 </nav>
 <script>
