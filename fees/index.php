@@ -22,7 +22,6 @@ function displayFee()
       echo "<td>" . $row['maya'] . "%" . "</td>";
       echo "<td>" . $row['lead_gen_commission'] . "%" . "</td>";
       echo "<td>" . $row['commission_type'] . "</td>";
-      echo "<td>" . $row['cwt_rate'] . "%" . "</td>";
       echo "<td style='display:none;'>" . $row['merchant_id'] . "</td>";
       $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
       echo "<td class='actions-cell;'>";
@@ -131,7 +130,6 @@ function displayFee()
                 <th>Maya</th>
                 <th>Leadgen Commission</th>
                 <th>Commission Type</th>
-                <th>CWT Rate</th>
                 <th style="display:none;"></th>
                 <th class="action-col" style="width:8%;">Action</th>
               </tr>
@@ -213,15 +211,6 @@ function displayFee()
                   <option value="VAT Exc">VAT Exc</option>
                 </select>
               </div>
-              <div class="mb-3">
-                <label for="cwtRate" class="form-label">CWT Rate<span class="text-danger"
-                    style="padding:2px">*</span></label>
-                <div class="input-group">
-                  <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate" min="0.00"
-                    placeholder="0.00" required>
-                  <span class="input-group-text">%</span>
-                </div>
-              </div>
               <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
             </form>
           </div>
@@ -240,7 +229,7 @@ function displayFee()
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }    
+            { orderable: false, targets: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }    
           ],
           order: [[1, 'asc']]
         });
@@ -262,8 +251,7 @@ function displayFee()
         var maya = feeRow.find('td:nth-child(8)').text().replace('%', '').trim();
         var leadgenCommission = feeRow.find('td:nth-child(9)').text().replace('%', '').trim();
         var commissionType = feeRow.find('td:nth-child(10)').text();
-        var cwtRate = feeRow.find('td:nth-child(11)').text().replace('%', '').trim();
-        var merchantId = feeRow.find('td:nth-child(12)').text();
+        var merchantId = feeRow.find('td:nth-child(11)').text();
 
         $('#feeId').val(feeUuid);
         $('#paymayaCreditCard').val(paymayaCreditCard);
@@ -274,7 +262,6 @@ function displayFee()
         $('#maya').val(maya);
         $('#leadgenCommission').val(leadgenCommission);
         $('#commissionType').val(commissionType);
-        $('#cwtRate').val(cwtRate);
         $('#merchantId').val(merchantId);
 
         $('#editFeeModal').modal('show');
