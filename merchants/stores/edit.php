@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($latestCWTRateId);
         $stmt->fetch();
         $stmt->close();
+        
         if ($latestActivityId) {
             $stmt = $conn->prepare("UPDATE activity_history SET user_id=? WHERE activity_id=?");
             $stmt->bind_param("ss", $userId, $latestActivityId);

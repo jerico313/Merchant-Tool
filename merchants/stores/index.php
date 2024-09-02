@@ -27,9 +27,9 @@ function displayStore($merchant_id)
             echo "<td>" . $row['legal_entity_name'] . "</td>";
             echo "<td>" . $store_address . "</td>";
             echo "<td style='display:none;'>" . htmlspecialchars($email_address_full) . "</td>";
-            
             echo "<td class='text-cell' data-full='" . htmlentities($email_address_full) . "' data-short='" . htmlentities($email_address) . "'>" . $email_address . "</td>";
             echo "<td>" . $row['cwt_rate'] ."%". "</td>";
+            
             echo "<td class='actions-cell'>";
             echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
             echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>"; 

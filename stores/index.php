@@ -22,6 +22,8 @@ function displayStore()
       echo "<td>" . $row['store_address'] . "</td>";
       echo "<td style='display:none;'>" . htmlspecialchars($email_address_full) . "</td>";
       echo "<td class='text-cell' data-full='" . htmlentities($email_address_full) . "' data-short='" . htmlentities($email_address) . "'>" . $email_address . "</td>";
+      echo "<td>" . $row['cwt_rate'] ."%". "</td>";
+
       echo "<td class='actions-cell'>";
       echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
       echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>";
@@ -109,6 +111,7 @@ function displayStore()
                 <th>Store Address</th>
                 <th style="display:none;"></th>
                 <th>Email Address</th>
+                <th>CWT Rate</th>
                 <th class="action-col" style="width:6%">Actions</th>
               </tr>
             </thead>
@@ -162,6 +165,15 @@ function displayStore()
                 <label for="emailAddress" class="form-label">Email Address</label>
                 <textarea type="text" class="form-control" id="emailAddress" name="emailAddress"
                   placeholder="Enter email address" rows="2"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="CWT Rate" class="form-label">CWT Rate<span class="text-danger"
+                  style="padding:2px">*</span></label>
+                <div class="input-group">
+                <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate"
+                  min="0.00" placeholder="0.00" required>
+                <span class="input-group-text">%</span>
+                </div>
               </div>
               <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
             </form>
@@ -256,12 +268,14 @@ function displayStore()
         var legalEntityName = storeRow.find('td:nth-child(5)').text();
         var storeAddress = storeRow.find('td:nth-child(6)').text();
         var emailAddress = storeRow.find('td:nth-child(7)').text();
+        var cwtRate = storeRow.find('td:nth-child(9)').text().replace('%', '').trim();
 
         // Set values in the edit modal
         $('#storeId').val(storeId);
         $('#storeName').val(storeName);
         $('#merchantId').val(merchantId);
         $('#merchantName').val(merchantName);
+        $('#cwtRate').val(cwtRate);
 
         if (legalEntityName === '-') {
           $('#legalEntityName').val(null);
