@@ -40,10 +40,8 @@ if ($result && mysqli_num_rows($result) > 0) {
     $type = 'unknown';
 }
 
-// Determine the initial and corresponding image
 $initial = strtoupper($name[0]);
 
-// Regular expression to check if the initial is Ñ or the name starts with a number or symbol
 if (preg_match('/^[Ñ0-9\W]/u', $initial)) {
     $image = 'unknown.png';
 } else {

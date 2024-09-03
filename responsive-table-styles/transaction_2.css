@@ -7,9 +7,6 @@ display: none;
 }
 
 @media only screen and (max-width: 767px) {
-    table{
-        width: 100%;
-    }
     table,
     thead,
     tbody,
@@ -18,6 +15,7 @@ display: none;
     tr {
         display: block;
         text-align: left !important;
+        width: 100% !important;
     }
 
     thead tr,
@@ -44,88 +42,92 @@ display: none;
         font-weight: bold;
         text-align: left !important;
     }
-
+    
     td:nth-of-type(1):before {
-        content: "Transaction ID";
+        content: "Select";
     }
 
     td:nth-of-type(2):before {
-        content: "Transaction Date";
+        content: "Transaction ID";
     }
 
     td:nth-of-type(3):before {
-        content: "Customer ID";
+        content: "Transaction Date";
     }
 
     td:nth-of-type(4):before {
-        content: "Customer Name";
+        content: "Customer ID";
     }
 
     td:nth-of-type(5):before {
-        content: "Promo Code";
+        content: "Customer Name";
     }
 
     td:nth-of-type(6):before {
-        content: "Voucher Type";
+        content: "Promo Code";
     }
 
     td:nth-of-type(7):before {
-        content: "Promo Category";
+        content: "Voucher Type";
     }
 
     td:nth-of-type(8):before {
-        content: "Promo Group";
+        content: "Promo Category";
     }
 
     td:nth-of-type(9):before {
-        content: "Promo Type";
+        content: "Promo Group";
     }
 
     td:nth-of-type(10):before {
-        content: "Gross Amount";
+        content: "Promo Type";
     }
 
     td:nth-of-type(11):before {
-        content: "Discount";
+        content: "Gross Amount";
     }
 
     td:nth-of-type(12):before {
-        content: "Cart Amount";
+        content: "Discount";
     }
 
     td:nth-of-type(13):before {
-        content: "Mode of Payment";
+        content: "Cart Amount";
     }
 
     td:nth-of-type(14):before {
-        content: "Bill Status";
+        content: "Mode of Payment";
     }
 
     td:nth-of-type(15):before {
-        content: "Commission Type";
+        content: "Bill Status";
     }
 
     td:nth-of-type(16):before {
-        content: "Commission Rate";
+        content: "Commission Type";
     }
 
     td:nth-of-type(17):before {
-        content: "Commission Amount";
+        content: "Commission Rate";
     }
 
     td:nth-of-type(18):before {
-        content: "Total Billing";
+        content: "Commission Amount";
     }
 
     td:nth-of-type(19):before {
-        content: "PG Fee Rate";
+        content: "Total Billing";
     }
 
     td:nth-of-type(20):before {
-        content: "PG Fee Amount";
+        content: "PG Fee Rate";
     }
 
     td:nth-of-type(21):before {
+        content: "PG Fee Amount";
+    }
+
+    td:nth-of-type(22):before {
         content: "Amount to be Disbursed";
     }
 

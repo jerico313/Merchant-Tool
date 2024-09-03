@@ -77,8 +77,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                 echo "<td>" . $row['Store Name'] . "</td>";
                 echo "<td>" . $row['Transaction ID'] . "</td>";
                 echo "<td>" . $row['Formatted Transaction Date'] . "</td>";
-                echo "<td>" . $row['Customer ID'] . "</td>";
-                echo "<td>" . $row['Customer Name'] . "</td>";
                 echo "<td>" . $row['Promo Code'] . "</td>";
                 echo "<td>" . $row['Gross Amount'] . "</td>";
                 echo "<td>" . $row['Discount'] . "</td>";
@@ -223,8 +221,6 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                     <th>Branch</th>
                     <th>Transaction ID</th>
                     <th>Transaction Date</th>
-                    <th>Customer ID</th>
-                    <th>Customer Name</th>
                     <th>Promo Code</th>
                     <th>Gross Amount</th>
                     <th>Discount</th>
@@ -486,7 +482,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             cells.forEach(function(cell, cellIndex) {
                 var cellText = cell.innerText || cell.textContent;
 
-                if (rowIndex !== 0 && (cellIndex === 13 || cellIndex === 15 || cellIndex === 16)) {
+                if (rowIndex !== 0 && (cellIndex === 4 || cellIndex === 5 || cellIndex === 6 || cellIndex === 9 || cellIndex === 10 || cellIndex === 11 || cellIndex === 12 || cellIndex === 13 || cellIndex === 14)) {
                     cellText = formatNumber(cellText);
                 }
 

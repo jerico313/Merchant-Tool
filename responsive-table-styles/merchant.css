@@ -63,6 +63,7 @@ table thead th:last-child {
     tr {
         display: block;
         text-align: left !important;
+        width: 100% !important;
     }
 
     thead tr,

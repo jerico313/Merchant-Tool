@@ -62,6 +62,7 @@ table thead th:last-child {
     tr {
         display: block;
         text-align: left !important;
+        width: 100% !important;
     }
 
     thead tr,
@@ -115,6 +116,10 @@ table thead th:last-child {
     }
 
     td:nth-of-type(9):before {
+        content: "CWT Rate";
+    }
+
+    td:nth-of-type(10):before {
         content: "Actions";
     }
 

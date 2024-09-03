@@ -18,6 +18,7 @@ tr:hover {
     tr {
         display: block;
         text-align: left !important;
+        width: 100% !important;
     }
 
     thead tr,

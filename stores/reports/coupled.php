@@ -21,7 +21,7 @@ function displayDecoupled($store_id, $store_name)
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $generatedBy = $row['generated_by_name'] ? $row['generated_by_name'] : '-';
-            $escapedMerchantName = htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8');
+            $escapedStoreName = htmlspecialchars($store_name, ENT_QUOTES, 'UTF-8');
             $date = new DateTime($row['created_at']);
             $formattedDate = $date->format('F d, Y g:i A');
             echo "<tr class='clickable-row' data-href='coupled_settlement_report.php?coupled_report_id=" . $row['coupled_report_id'] . "&store_id=" . $store_id . "&store_name=" . urlencode($store_name) . "&settlement_period_start=" . urlencode($row['settlement_period_start']) . "&settlement_period_end=" . urlencode($row['settlement_period_end']) . "&bill_status=" . urlencode($row['bill_status']) . "'>";

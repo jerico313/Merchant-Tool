@@ -88,7 +88,6 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
       echo "<td>" . $row['Store Name'] . "</td>";
       echo "<td>" . $row['Transaction ID'] . "</td>";
       echo "<td>" . $row['Formatted Transaction Date'] . "</td>";
-      echo "<td>" . $row['Customer ID'] . "</td>";
       echo "<td>" . $row['Item'] . "</td>";
       echo "<td>" . $row['Voucher Price A'] . "</td>";
       echo "<td>" . $row['Total Merchant Sales'] . "</td>";
@@ -226,7 +225,6 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
           <th>Branch</th>
           <th>Transaction ID</th>
           <th>Transaction Date</th>
-          <th>Customer ID</th>
           <th>Item</th>
           <th>Voucher Price</th>
           <th>Total Merchant Sales</th>
@@ -386,7 +384,7 @@ function displayOffers($merchant_id, $start_date, $end_date, $bill_status)
         cells.forEach(function (cell, cellIndex) {
           var cellText = cell.innerText || cell.textContent;
 
-          if (rowIndex !== 0 && (cellIndex === 13 || cellIndex === 15 || cellIndex === 16)) {
+          if (rowIndex !== 0 && (cellIndex === 5 || cellIndex === 6 || cellIndex === 7 || cellIndex === 8)) {
             cellText = formatNumber(cellText);
           }
 
