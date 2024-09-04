@@ -17,15 +17,25 @@
 a.dropdown-item:hover {
   color: #fff !important;
   padding-left: 15px;
-  background-color: #E96529;
-  border-radius: 7px;
+  background-color: #4BB0B8;
+  border-radius: 18px;
   margin: 0 5px;
+  border: solid #4BB0B8 2px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27) inset;
+  -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27) inset;
+  -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.27) inset;
 }
 
 .dropdown-menu {
   width: 170px !important;
-  border-radius: 10px;
+  border-radius: 20px;
   font-weight: 900;
+   border: none;
+  box-shadow: 0px 4px 10px -2px rgba(0,0,0,0.3);
+-webkit-box-shadow: 0px 4px 10px -2px rgba(0,0,0,0.3);
+-moz-box-shadow: 0px 4px 10px -2px rgba(0,0,0,0.3);
 }
 
 .login-container {
