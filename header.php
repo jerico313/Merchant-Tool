@@ -148,6 +148,35 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
             background-size: cover;
             background-position: center;
         }
+
+        #booky{
+            font-weight:1000 !important;
+            color:#fff;
+            font-size:23px !important;
+            padding-top:1px;
+        }
+
+        #leadgen{
+            font-size:13px;
+            padding-top:4px;
+            font-family: Nanum Gothic;
+        }
+        #lead{
+            display: none;
+        }
+        @media only screen and (max-width: 767px) {
+        #booky{
+            font-size:18px !important;
+        }
+        #leadgen{
+            display: none;
+        }
+        #lead{
+            display:inline;
+            padding-left: 8px;
+            margin-bottom:15px;
+        }
+        }
     </style>
 </head>
 <body>
@@ -156,8 +185,8 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
         <a class="navbar-brand" href="/Merchant-tool/merchant/">
             <table style="border:10px;">
                 <tr>
-                    <th style="font-weight:1000 !important;color:#fff;font-size:23px !important;padding-top:1px;">booky <span style="font-size:25px;font-weight:normal;">|</span></th>
-                    <th style="font-size:13px;padding-top:4px;font-family: Nanum Gothic">&nbsp; LEADGEN</th>
+                    <th id="booky">booky <span id="div" style="font-size:25px;font-weight:normal;">|<span id="lead">LEADGEN</span></span></th>
+                    <th id="leadgen">&nbsp; LEADGEN</th>
                 </tr>
             </table>
         </a>
@@ -183,7 +212,7 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
                     <a id="transaction-link" class="nav-link mx-2" aria-current="page" href="/Merchant-Tool/transactions/" style="padding-right:10px;padding-left:10px;">Transactions</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
+            <ul class="navbar-nav ms-auto d-lg-inline-flex">
                 <li class="nav-item dropdown">
                     <a class="nav-link mx-2 dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="d-flex align-items-center">

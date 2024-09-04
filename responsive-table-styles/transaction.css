@@ -119,6 +119,10 @@ body {
     }
 
     td:nth-of-type(21):before {
+        content: "CWT Rate";
+    }
+
+    td:nth-of-type(22):before {
         content: "Amount to be Disbursed";
     }
 
