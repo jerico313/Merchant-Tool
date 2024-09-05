@@ -85,7 +85,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
     </div>
     <script>
         setTimeout(function(){
-            window.location.href = '../store/index.php?merchant_id=<?php echo $merchant_id; ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
+            window.location.href = 'index.php';
         }, 3000);
     </script>
 </body>
