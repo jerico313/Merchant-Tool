@@ -4,12 +4,14 @@ session_start();
 include("inc/config.php");
 
 $error = "";
+$lockout_duration = 5 * 60; 
+$remaining_time = 0; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email_address'];
     $password = $_POST['password'];
 
-    $sql = "SELECT user_id, email_address, password, status FROM user WHERE email_address = ?";
+    $sql = "SELECT user_id, email_address, password, status, login_attempts, lockout_time FROM user WHERE email_address = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -17,29 +19,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
-            if ($row['status'] == 'Active') {
-                $_SESSION['user_id'] = $row['user_id'];
-                $_SESSION['email_address'] = $row['email_address'];
 
-                error_log("User authenticated and session variables set. Redirecting...");
-
-                header("Location: merchants/");
-                exit();
-            } else {
-                $error = "Your account is inactive. Please contact admin.";
-            }
+        if ($row['lockout_time'] && strtotime($row['lockout_time']) > time()) {
+            $remaining_time = strtotime($row['lockout_time']) - time();
+            $error = "Account is locked. Please wait &nbsp;<span id='countdown'></span>&nbsp; seconds.";
         } else {
-            $error = "Incorrect password.";
+            if ($row['lockout_time'] && strtotime($row['lockout_time']) <= time()) {
+                $sql_reset_lockout = "UPDATE user SET login_attempts = 0, lockout_time = NULL WHERE email_address = ?";
+                $stmt_reset_lockout = $conn->prepare($sql_reset_lockout);
+                $stmt_reset_lockout->bind_param("s", $email);
+                $stmt_reset_lockout->execute();
+                $stmt_reset_lockout->close();
+                $row['login_attempts'] = 0; 
+            }
+
+            if (password_verify($password, $row['password'])) {
+                if ($row['status'] == 'Active') {
+                    $sql_reset_attempts = "UPDATE user SET login_attempts = 0, lockout_time = NULL WHERE email_address = ?";
+                    $stmt_reset = $conn->prepare($sql_reset_attempts);
+                    $stmt_reset->bind_param("s", $email);
+                    $stmt_reset->execute();
+                    $stmt_reset->close();
+
+                    $_SESSION['user_id'] = $row['user_id'];
+                    $_SESSION['email_address'] = $row['email_address'];
+
+                    header("Location: merchants/");
+                    exit();
+                } else {
+                    $error = "Your account is inactive. Please contact admin.";
+                }
+            } else {
+                $new_attempts = $row['login_attempts'] + 1;
+                if ($new_attempts >= 3) {
+                    $lockout_time = date("Y-m-d H:i:s", strtotime("+$lockout_duration seconds"));
+                    $sql_lock_account = "UPDATE user SET login_attempts = ?, lockout_time = ? WHERE email_address = ?";
+                    $stmt_lock = $conn->prepare($sql_lock_account);
+                    $stmt_lock->bind_param("iss", $new_attempts, $lockout_time, $email);
+                    $stmt_lock->execute();
+                    $stmt_lock->close();
+
+                    $error = "Too many incorrect attempts. Your account is locked for 5 minutes.";
+                    $remaining_time = $lockout_duration;
+                } else {
+                    $sql_update_attempts = "UPDATE user SET login_attempts = ? WHERE email_address = ?";
+                    $stmt_update = $conn->prepare($sql_update_attempts);
+                    $stmt_update->bind_param("is", $new_attempts, $email);
+                    $stmt_update->execute();
+                    $stmt_update->close();
+
+                    $error = "Incorrect password. Attempt $new_attempts of 3.";
+                }
+            }
         }
     } else {
         $error = "Email not found.";
     }
+
     $stmt->close();
     $conn->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -320,6 +360,22 @@ body {
 
       return allValid;
     });
+  </script>
+    <script>
+    var remainingTime = <?php echo $remaining_time; ?>;
+    if (remainingTime > 0) {
+      var countdownDisplay = document.getElementById('countdown');
+
+      var countdown = setInterval(function() {
+        countdownDisplay.textContent = remainingTime;
+        remainingTime--;
+
+        if (remainingTime <= 0) {
+          clearInterval(countdown);
+          window.location.href = 'index.php'; 
+        }
+      }, 1000);
+    }
   </script>
 </body>
 </html>
