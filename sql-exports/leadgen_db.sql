@@ -12056,7 +12056,9 @@ CREATE TABLE `user` (
   `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
   `verification_code` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `login_attempts` int(11) DEFAULT 0,
+  `lockout_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
