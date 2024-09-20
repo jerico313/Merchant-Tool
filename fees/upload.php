@@ -163,13 +163,6 @@ function fetchMerchants()
                                                 <option value="Vat Exc">Vat Exc</option>
                                             </select>
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="cwt_rate" class="form-label" id="form-input-label">
-                                                CWT Rate<span class="text-danger" style="padding:2px">*</span>
-                                            </label>
-                                            <input id="form-input-field" type="number" class="form-control"
-                                                name="cwt_rate[]" placeholder="0.00" id="cwt_rate" required>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -275,13 +268,6 @@ function fetchMerchants()
                                                 <option value="Vat Inc">Vat Inc</option>
                                                 <option value="Vat Exc">Vat Exc</option>
                                             </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="cwt_rate" class="form-label" id="form-input-label">
-                                                CWT Rate<span class="text-danger" style="padding:2px">*</span>
-                                            </label>
-                                            <input id="form-input-field" type="number" class="form-control"
-                                                name="cwt_rate[]" placeholder="0.00" id="cwt_rate" required>
                                         </div>
                                     </div>
                     <div class="mb-3 mt-3" style="text-align:right;">

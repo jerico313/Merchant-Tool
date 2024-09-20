@@ -12,8 +12,8 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $store_id, $merchant_id, $store_name, $legal_entity_name, $store_address, $email_address);
+    $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address, cwt_rate) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $store_id, $merchant_id, $store_name, $legal_entity_name, $store_address, $email_address, $cwt_rate);
 
     foreach ($_POST['store_id'] as $key => $value) {
         $store_id = $_POST['store_id'][$key];
@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $legal_entity_name = empty($_POST['legal_entity_name'][$key]) ? NULL : $_POST['legal_entity_name'][$key];
         $store_address = empty($_POST['store_address'][$key]) ? NULL : $_POST['store_address'][$key];
         $email_address = empty($_POST['email_address'][$key]) ? NULL : $_POST['email_address'][$key];
+        $cwt_rate = $_POST['cwt_rate'][$key];
         $stmt->execute();
 
         $update_stmt = $conn->prepare("

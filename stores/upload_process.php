@@ -216,7 +216,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $data[4] = empty($data[4]) ? null : $data[4];
         $data[5] = empty($data[5]) ? null : $data[5]; 
         $data[6] = empty($data[6]) ? null : $data[6];
-        $stmt->bind_param("ssssss", $data[3], $data[1], $data[2], $data[4], $data[5], $data[6], $data[7]);
+        $stmt->bind_param("sssssss", $data[3], $data[1], $data[2], $data[4], $data[5], $data[6], $data[7]);
         $stmt->execute();
 
         updateActivityHistory($conn, $data[1], $userId);
