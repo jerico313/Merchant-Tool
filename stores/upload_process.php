@@ -210,13 +210,13 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
-    $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address, cwt_rate) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $data[4] = empty($data[4]) ? null : $data[4];
         $data[5] = empty($data[5]) ? null : $data[5]; 
         $data[6] = empty($data[6]) ? null : $data[6];
-        $stmt->bind_param("ssssss", $data[3], $data[1], $data[2], $data[4], $data[5], $data[6]);
+        $stmt->bind_param("ssssss", $data[3], $data[1], $data[2], $data[4], $data[5], $data[6], $data[7]);
         $stmt->execute();
 
         updateActivityHistory($conn, $data[1], $userId);
