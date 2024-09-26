@@ -178,9 +178,9 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                                 name="end_date[]" id="end_date" disrequired>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="remarks2" class="form-label" id="form-input-label">Remarks 2</label>
+                                            <label for="finance_am" class="form-label" id="form-input-label">Finance AM</label>
                                             <textarea id="form-input-field" class="form-control" rows="2"
-                                                name="remarks2[]" placeholder="Enter additional remarks"></textarea>
+                                                name="finance_am[]" placeholder="Enter name of Finance AM"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -335,9 +335,9 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                             <input id="end_date" type="date" class="form-control" name="end_date[]" required>
                         </div>
                         <div class="mb-3">
-                            <label for="remarks2" class="form-label" id="form-input-label">Remarks 2</label>
+                            <label for="finance_am" class="form-label" id="form-input-label">Finance AM</label>
                             <textarea id="form-input-field" class="form-control" rows="2"
-                                name="remarks2[]" placeholder="Enter additional remarks"></textarea>
+                                name="finance_am[]" placeholder="Enter name of Finance AM"></textarea>
                         </div>
                     </div>
                     <div class="mb-3 mt-3" style="text-align:right;">

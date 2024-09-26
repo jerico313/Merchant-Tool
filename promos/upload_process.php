@@ -115,9 +115,9 @@ HTML;
 HTML;
 }
 
-function checkForDuplicates($conn, $promoCode) {
-    $stmt = $conn->prepare("SELECT promo_code FROM promo WHERE promo_code = ?");
-    $stmt->bind_param("s", $promoCode);
+function checkForDuplicates($conn, $promoCode, $merchantId) {
+    $stmt = $conn->prepare("SELECT promo_code FROM promo WHERE promo_code = ? AND merchant_id = ?");
+    $stmt->bind_param("ss", $promoCode, $merchantId);
     $stmt->execute();
     $result = $stmt->get_result();
     $duplicates = [];
@@ -167,26 +167,9 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $duplicateMessages = [];
     $invalidMerchantIds = [];
     $promoCodes = [];
-    $duplicatePromoCodes = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $merchantId = $data[1]; 
-        $promoCode = $data[2]; 
-
-        if (isset($promoCodes[$promoCode])) {
-            if (!isset($duplicatePromoCodes[$promoCode])) {
-                $duplicatePromoCodes[$promoCode] = [$promoCodes[$promoCode]];
-            }
-            $duplicatePromoCodes[$promoCode][] = $promoCode;
-        } else {
-            $promoCodes[$promoCode] = $promoCode;
-        }
-
-        $duplicates = checkForDuplicates($conn, $promoCode);
-
-        if (!empty($duplicates)) {
-            $duplicateMessages = array_merge($duplicateMessages, $duplicates);
-        }
 
         if (!checkMerchantExistence($conn, $merchantId) && !in_array("Merchant ID '{$merchantId}' does not exist.", $invalidMerchantIds)) {
             $invalidMerchantIds[] = "Merchant ID '{$merchantId}' does not exist.";
@@ -194,10 +177,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     }
 
     fclose($handle);
-
-    foreach ($duplicatePromoCodes as $promoCode => $promoCodes) {
-        $duplicateMessages[] = "Duplicate Promo Code '{$promoCode}' in CSV file: " . implode(", ", $promoCodes);
-    }
 
     if (!empty($duplicateMessages) || !empty($invalidMerchantIds)) {
         $conn->close();
@@ -208,7 +187,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
-    $stmt1 = $conn->prepare("INSERT INTO promo (promo_id, merchant_id, promo_code, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, remarks2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1 = $conn->prepare("INSERT INTO promo (promo_id, merchant_id, promo_code, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, finance_am) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $data[3] = str_replace(',', '', $data[3]);

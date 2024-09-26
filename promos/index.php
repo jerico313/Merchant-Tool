@@ -19,8 +19,8 @@ function displayStore()
       $promo_details = strlen($row['promo_details']) > 30 ? substr($row['promo_details'], 0, 30) . '...' : $row['promo_details'];
       $remarks_full = empty($row['remarks']) ? '-' : $row['remarks'];
       $remarks = empty($row['remarks']) ? '-' : (strlen($row['remarks']) > 30 ? substr($row['remarks'], 0, 30) . '...' : $row['remarks']);
-      $remarks2_full = empty($row['remarks2']) ? '-' : $row['remarks2'];
-      $remarks2 = empty($row['remarks2']) ? '-' : (strlen($row['remarks2']) > 30 ? substr($row['remarks2'], 0, 30) . '...' : $row['remarks2']);
+      $finance_am_full = empty($row['finance_am']) ? '-' : $row['finance_am'];
+      $finance_am = empty($row['finance_am']) ? '-' : (strlen($row['finance_am']) > 30 ? substr($row['finance_am'], 0, 30) . '...' : $row['finance_am']);
 
       echo "<tr style='padding:15px 0;' data-uuid='" . $row['promo_id'] . "'>";
       echo "<td>" . $shortPromoId . "</td>";
@@ -36,13 +36,13 @@ function displayStore()
       echo "<td>" . $row['bill_status'] . "</td>";
       echo "<td>" . $start_date . "</td>";
       echo "<td>" . $end_date . "</td>";
-      echo "<td class='text-cell' data-full='" . htmlentities($remarks2_full) . "' data-short='" . htmlentities($remarks2) . "'>" . $remarks2 . "</td>";
+      echo "<td class='text-cell' data-full='" . htmlentities($finance_am_full) . "' data-short='" . htmlentities($finance_am) . "'>" . $finance_am . "</td>";
       echo "<td class='actions-cell'>";
       echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
       echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>";
       echo "<ul class='list-group'>";
       if ($type !== 'User') {
-        echo "<li class='list-group-item action-item'><a href='#' class='edit-link' data-promo-id='" . $row['promo_id'] . "' data-promo-code='" . $row['promo_code'] . "' data-merchant-name='" . $row['merchant_name'] . "' data-promo-amount='" . $row['promo_amount'] . "' data-voucher-type='" . $row['voucher_type'] . "' data-promo-category='" . $row['promo_category'] . "' data-promo-group='" . $row['promo_group'] . "' data-promo-type='" . $row['promo_type'] . "' data-promo-details='" . htmlentities($promo_details_full) . "' data-remarks='" . htmlentities($remarks_full) . "' data-bill-status='" . $row['bill_status'] . "' data-start-date='" . $start_date . "' data-end-date='" . $end_date . "' data-remarks2='" . $row['remarks2'] . "' style='color:#E96529;'>Edit</a></li>";
+        echo "<li class='list-group-item action-item'><a href='#' class='edit-link' data-promo-id='" . $row['promo_id'] . "' data-promo-code='" . $row['promo_code'] . "' data-merchant-name='" . $row['merchant_name'] . "' data-promo-amount='" . $row['promo_amount'] . "' data-voucher-type='" . $row['voucher_type'] . "' data-promo-category='" . $row['promo_category'] . "' data-promo-group='" . $row['promo_group'] . "' data-promo-type='" . $row['promo_type'] . "' data-promo-details='" . htmlentities($promo_details_full) . "' data-remarks='" . htmlentities($remarks_full) . "' data-bill-status='" . $row['bill_status'] . "' data-start-date='" . $start_date . "' data-end-date='" . $end_date . "' data-finance_am='" . $row['finance_am'] . "' style='color:#E96529;'>Edit</a></li>";
       }
       echo "<li class='list-group-item action-item'><a href='#' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;'>View History</a></li>";
       echo "</ul>";
@@ -111,7 +111,7 @@ function displayStore()
                 <th>Bill Status</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Remarks 2</th>
+                <th>Finance AM</th>
                 <th class="action-col" style="width:25px;">Actions</th>
               </tr>
             </thead>
@@ -246,8 +246,8 @@ function displayStore()
                     </select>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="remarks2" class="form-label">Remarks 2</label>
-                    <textarea class="form-control" rows="1" id="remarks2" name="remarks2" placeholder="Enter additional remarks" ></textarea>
+                    <label for="finance_am" class="form-label">Finance AM</label>
+                    <textarea class="form-control" rows="1" id="finance_am" name="finance_am" placeholder="Enter name of Finance AM" ></textarea>
                 </div>
               </div>
               <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
@@ -313,7 +313,7 @@ function displayStore()
             var billStatus = event.target.getAttribute('data-bill-status');
             var startDate = event.target.getAttribute('data-start-date');
             var endDate = event.target.getAttribute('data-end-date');
-            var remarks2 = event.target.getAttribute('data-remarks2');
+            var finance_am = event.target.getAttribute('data-finance_am');
             var noStartDateChecked = event.target.getAttribute('data-nostartdate');
 
             $('#promoId').val(promoId);
@@ -334,10 +334,10 @@ function displayStore()
             $('#editPromoForm #billStatus').val(billStatus);
             $('#editPromoForm #startDate').val(startDate);
             $('#editPromoForm #endDate').val(endDate);
-            if (remarks2 === '-') {
-                $('#editPromoForm #remarks2').val(null);
+            if (finance_am === '-') {
+                $('#editPromoForm #finance_am').val(null);
             } else {
-                $('#editPromoForm #remarks2').val(remarks2);
+                $('#editPromoForm #finance_am').val(finance_am);
             }
 
             $('#editPromoForm #NoStartDate').prop('checked', noStartDateChecked === 'checked');

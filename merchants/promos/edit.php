@@ -14,13 +14,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $billStatus = $_POST['billStatus'];
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
-    $remarks2 = empty($_POST['remarks2']) ? NULL : $_POST['remarks2'];
+    $finance_am = empty($_POST['finance_am']) ? NULL : $_POST['finance_am'];
     $merchantId = $_POST['merchantId'];
     $merchantName = $_POST['merchantName'];
     $userId = $_POST['userId'];
 
-    $stmt = $conn->prepare("UPDATE promo SET promo_code=?, promo_amount=?, voucher_type=?, promo_category=?, promo_type=?, promo_group=?, promo_details=?, remarks=?, bill_status=?, start_date=?, end_date=?, remarks2=? WHERE promo_id=?");
-    $stmt->bind_param("sssssssssssss", $promoCode, $promoAmount, $voucherType, $promoCategory, $promoType, $promoGroup, $promoDetails, $remarks, $billStatus, $startDate, $endDate, $remarks2, $promoId);
+    $stmt = $conn->prepare("UPDATE promo SET promo_code=?, promo_amount=?, voucher_type=?, promo_category=?, promo_type=?, promo_group=?, promo_details=?, remarks=?, bill_status=?, start_date=?, end_date=?, finance_am=? WHERE promo_id=?");
+    $stmt->bind_param("sssssssssssss", $promoCode, $promoAmount, $voucherType, $promoCategory, $promoType, $promoGroup, $promoDetails, $remarks, $billStatus, $startDate, $endDate, $finance_am, $promoId);
 
     if ($stmt->execute()) {  
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");

@@ -15,8 +15,8 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $stmt = $conn->prepare("INSERT INTO promo (promo_id, promo_code, merchant_id, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, remarks2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssssssssss", $promo_id, $promo_code, $merchant_id, $promo_amount, $voucher_type, $promo_category, $promo_group, $promo_type, $promo_details, $remarks, $bill_status, $start_date, $end_date, $remarks2);
+    $stmt = $conn->prepare("INSERT INTO promo (promo_id, promo_code, merchant_id, promo_amount, voucher_type, promo_category, promo_group, promo_type, promo_details, remarks, bill_status, start_date, end_date, finance_am) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssssssss", $promo_id, $promo_code, $merchant_id, $promo_amount, $voucher_type, $promo_category, $promo_group, $promo_type, $promo_details, $remarks, $bill_status, $start_date, $end_date, $finance_am);
 
     foreach ($_POST['promo_code'] as $key => $value) {
         $promo_id = Uuid::uuid4()->toString();
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $bill_status = $_POST['bill_status'][$key];
         $start_date = $_POST['start_date'][$key];
         $end_date = $_POST['end_date'][$key];
-        $remarks2 = empty($_POST['remarks2'][$key]) ? NULL : $_POST['remarks2'][$key];
+        $finance_am = empty($_POST['finance_am'][$key]) ? NULL : $_POST['finance_am'][$key];
         $stmt->execute();
 
         $update_stmt = $conn->prepare("

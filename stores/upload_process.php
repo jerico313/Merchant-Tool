@@ -112,18 +112,15 @@ HTML;
 HTML;
 }
 
-function checkForDuplicates($conn, $storeId, $storeName) {
-    $stmt = $conn->prepare("SELECT store_id, store_name FROM store WHERE store_id = ? OR store_name = ?");
-    $stmt->bind_param("ss", $storeId, $storeName);
+function checkForDuplicates($conn, $storeId) {
+    $stmt = $conn->prepare("SELECT store_id FROM store WHERE store_id = ?");
+    $stmt->bind_param("s", $storeId);
     $stmt->execute();
     $result = $stmt->get_result();
     $duplicates = [];
     while ($row = $result->fetch_assoc()) {
         if ($row['store_id'] === $storeId) {
             $duplicates[] = "Store ID '{$storeId}' already exists.";
-        }
-        if ($row['store_name'] === $storeName) {
-            $duplicates[] = "Store Name '{$storeName}' already exists.";
         }
     }
     $stmt->close();
