@@ -61,27 +61,29 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
         }
 
         echo "<td style='width:4%;'>" . $row['Transaction ID'] . "</td>";
-        echo "<td style='width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
+        echo "<td style='width:4%;'>" . $row['Formatted Transaction Date'] . "</td>";
+        echo "<td style='width:5%;'>" . $row['Merchant Name'] . "</td>";
+        echo "<td style='width:5%;'>" . $row['Store Name'] . "</td>";
         echo "<td style='width:4%;'>" . $row['Customer ID'] . "</td>";
         echo "<td style='width:7%;'>" . $row['Customer Name'] . "</td>";
         echo "<td style='width:5%;'>" . $row['Promo Code'] . "</td>";
         echo "<td style='width:3%;'>" . $row['Voucher Type'] . "</td>";
         echo "<td style='width:6%;'>" . $row['Promo Category'] . "</td>";
         echo "<td style='width:4%;'>" . $row['Promo Group'] . "</td>";
-        echo "<td style='width:6%;'>" . $row['Promo Type'] . "</td>";
-        echo "<td style='width:4%;'>" . $row['Gross Amount'] . "</td>";
-        echo "<td style='width:4%;'>" . $row['Discount'] . "</td>";
-        echo "<td style='width:4%;'>" . $row['Cart Amount'] . "</td>";
+        echo "<td style='width:5%;'>" . $row['Promo Type'] . "</td>";
+        echo "<td style='width:3%;'>" . $row['Gross Amount'] . "</td>";
+        echo "<td style='width:3%;'>" . $row['Discount'] . "</td>";
+        echo "<td style='width:3%;'>" . $row['Cart Amount'] . "</td>";
         echo "<td style='width:4%;'>" . $row['Mode of Payment'] . "</td>";
         echo "<td style='width:4%;'>" . $row['Bill Status'] . "</td>";
         echo "<td style='width:4%;'>" . $row['Commission Type'] . "</td>";
-        echo "<td style='width:4%;'>" . $row['Commission Rate'] . "</td>";
+        echo "<td style='width:3%;'>" . $row['Commission Rate'] . "</td>";
         echo "<td style='width:4%;'>" . $row['Commission Amount'] . "</td>";
-        echo "<td style='width:4%;'>" . $row['Total Billing'] . "</td>";
-        echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
+        echo "<td style='width:3%;'>" . $row['Total Billing'] . "</td>";
+        echo "<td style='width:3%;'>" . $row['PG Fee Rate'] . "</td>";
         echo "<td style='width:4%;'>" . $row['PG Fee Amount'] . "</td>";
         echo "<td style='width:3%;'>" . $row['CWT Rate'] . "%" ."</td>";
-        echo "<td style='width:5%;'>" . $AmounttobeDisbursed . "</td>";
+        echo "<td style='width:10%;'>" . $AmounttobeDisbursed . "</td>";
         echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
         echo "</tr>";
 
@@ -198,16 +200,18 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
                             class="fa-solid fa-trash"></i> Delete</button>
                 </div>
                 <div class="content">
-                    <table id="example" class="table bord" style="width:280%;">
+                    <table id="example" class="table bord" style="width:320%;">
                         <thead>
                             <tr>
                                 <?php if ($type === 'User'): ?>
                                     <th class="first-col" id="select">#</th>
                                 <?php else: ?>
-                                    <th class="first-col" id="select">Select</th>
+                                    <th class="first-col" id="select" style="text-align:center">Select</th>
                                 <?php endif; ?>
                                 <th class="second-col">Transaction ID</th>
                                 <th id="transaction_date">Transaction Date</th>
+                                <th id="merchant_name">Merchant Name</th>
+                                <th id="store_name">Store Name</th>
                                 <th id="customer_id">Customer ID</th>
                                 <th id="customer_name">Customer Name</th>
                                 <th id="promo_code">Promo Code</th>
@@ -307,7 +311,7 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 1, 3, 6, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23] }
+                    { orderable: false, targets: [0, 3, 5, 8, 12, 13, 14, 15, 18, 19, 20, 21, 22, 23, 24, 25] }
                 ],
                 order: [[0, 'asc']]
             }); 
@@ -339,12 +343,12 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
 
             $('#btnCoupled').on('click', function () {
                 table.search('').columns().search('').draw();
-                table.column(6).search('^Coupled$', true, false).draw();
+                table.column(8).search('^Coupled$', true, false).draw();
             });
 
             $('#btnDecoupled').on('click', function () {
                 table.search('').columns().search('').draw();
-                table.column(6).search('^Decoupled$', true, false).draw();
+                table.column(8).search('^Decoupled$', true, false).draw();
             });
 
             $('#btnGCash').on('click', function () {
@@ -354,17 +358,17 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
 
             $('#btnPretrial').on('click', function () {
                 table.search('').columns().search('').draw();
-                table.column(14).search('PRE-TRIAL', true, false).draw();
+                table.column(16).search('PRE-TRIAL', true, false).draw();
             });
 
             $('#btnBillable').on('click', function () {
                 table.search('').columns().search('').draw();
-                table.column(14).search('^BILLABLE$', true, false).draw();
+                table.column(16).search('^BILLABLE$', true, false).draw();
             });
 
             $('#btnNotBillable').on('click', function () {
                 table.search('').columns().search('').draw();
-                table.column(14).search('^NOT BILLABLE$', true, false).draw();
+                table.column(16).search('^NOT BILLABLE$', true, false).draw();
             });
 
             $('#btnShowAll').on('click', function () {

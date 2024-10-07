@@ -161,7 +161,7 @@ SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
 FROM `leadgen_db`.`transaction` `t`
     JOIN `leadgen_db`.`store` `s` ON `t`.`store_id` = `s`.`store_id`
     JOIN `leadgen_db`.`merchant` `m` ON `m`.`merchant_id` = `s`.`merchant_id`
-    LEFT JOIN `leadgen_db`.`promo` `p` ON `p`.`promo_code` = `t`.`promo_code`
+    JOIN `leadgen_db`.`promo` `p` ON `p`.`promo_code` = `t`.`promo_code` AND `p`.`merchant_id` = `m`.`merchant_id`
     JOIN `leadgen_db`.`fee` `f` ON `f`.`merchant_id` = `m`.`merchant_id`
     JOIN `pg_fee_cte` ON `t`.`transaction_id` = `pg_fee_cte`.`transaction_id`
 ORDER BY `t`.`transaction_date` DESC;
