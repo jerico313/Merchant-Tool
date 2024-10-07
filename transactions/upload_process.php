@@ -155,8 +155,23 @@ function updateActivityHistory($conn, $customerId, $userId) {
 
 function convertDateFormat($dateString)
 {
-    $date = DateTime::createFromFormat('F d, Y h:iA', $dateString);
-    return $date->format('Y-m-d H:i:s');
+    // Check if the string contains a time part and also if it has an extra comma
+    if (strpos($dateString, ',') !== false && strpos($dateString, ':') !== false) {
+        // If there is an extra comma, remove it and parse with date and time
+        $dateString = str_replace(', ', ' ', $dateString); // Remove the extra comma
+        $date = DateTime::createFromFormat('F d Y h:iA', $dateString);
+    } elseif (strpos($dateString, ':') !== false) {
+        // Parse with date and time if colon is present (without extra comma)
+        $date = DateTime::createFromFormat('F d, Y h:iA', $dateString);
+    } else {
+        // Parse date only and set default time to 00:00:00 if no time is present
+        $date = DateTime::createFromFormat('F d, Y', $dateString);
+        if ($date) {
+            $date->setTime(0, 0, 0);
+        }
+    }
+
+    return $date ? $date->format('Y-m-d H:i:s') : false;
 }
 
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
@@ -231,6 +246,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $data[4] = empty($data[4]) ? null : $data[4]; 
+        $data[5] = (substr($data[5], 0, 1) !== '"' || substr($data[5], -1) !== '"') ? '"' . $data[5] . '"' : $data[5];
         $data[6] = empty($data[6]) ? null : $data[6]; 
         $data[7] = empty($data[7]) ? null : $data[7]; 
         $data[8] = empty($data[8]) ? null : $data[8]; 
