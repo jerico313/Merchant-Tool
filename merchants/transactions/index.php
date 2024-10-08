@@ -52,15 +52,16 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
             echo "<tr style='padding:10px;'>";
             echo "<td style='width:4%;'>" . $row['Transaction ID'] . "</td>";
             echo "<td style='width:7%;'>" . $row['Formatted Transaction Date'] . "</td>";
+            echo "<td style='width:5%;'>" . $row['Store Name'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Customer ID'] . "</td>";
             echo "<td style='width:7%;'>" . $row['Customer Name'] . "</td>";
             echo "<td style='width:5%;'>" . $row['Promo Code'] . "</td>";
             echo "<td style='width:3%;'>" . $row['Voucher Type'] . "</td>";
-            echo "<td style='width:6%;'>" . $row['Promo Category'] . "</td>";
+            echo "<td style='width:5%;'>" . $row['Promo Category'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Promo Group'] . "</td>";
-            echo "<td style='width:6%;'>" . $row['Promo Type'] . "</td>";
-            echo "<td style='width:4%;'>" . $row['Gross Amount'] . "</td>";
-            echo "<td style='width:4%;'>" . $row['Discount'] . "</td>";
+            echo "<td style='width:5%;'>" . $row['Promo Type'] . "</td>";
+            echo "<td style='width:3%;'>" . $row['Gross Amount'] . "</td>";
+            echo "<td style='width:3%;'>" . $row['Discount'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Cart Amount'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Mode of Payment'] . "</td>";
             echo "<td style='width:4%;'>" . $row['Bill Status'] . "</td>";
@@ -68,7 +69,7 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
             echo "<td style='width:4%;'>" . $row['Commission Rate'] . "</td>";
             echo "<td style='width:4%;'>" . $CommissionAmount . "</td>";
             echo "<td style='width:4%;'>" . $TotalBilling . "</td>";
-            echo "<td style='width:4%;'>" . $row['PG Fee Rate'] . "</td>";
+            echo "<td style='width:3%;'>" . $row['PG Fee Rate'] . "</td>";
             echo "<td style='width:4%;'>" . $PGFeeAmount . "</td>";
             echo "<td style='width:3%;'>" . $row['CWT Rate'] . "%" . "</td>";
             echo "<td style='width:5%;'>" . $AmounttobeDisbursed . "</td>";
@@ -226,6 +227,7 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
                             <tr>
                                 <th class="first-col">Transaction ID</th>
                                 <th>Transaction Date</th>
+                                <th>Store Name</th>
                                 <th>Customer ID</th>
                                 <th>Customer Name</th>
                                 <th>Promo Code</th>
@@ -278,14 +280,14 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
                 return [
                     row[0], row[1], row[2], row[3], row[4],
                     row[9], row[10], row[11], row[12], row[13],
-                    row[15], row[16], row[17], row[18], row[19], row[20], row[21]
+                    row[15], row[16], row[17], row[18], row[19], row[20], row[21], row[22]
                 ];
             }
 
             const formattedRows = filteredData.map(row => formatDataForExcel(row));
 
             formattedRows.unshift([
-                'Transaction ID', 'Transaction Date', 'Customer ID', 'Customer Name', 'Promo Code',
+                'Transaction ID', 'Transaction Date', 'Store Name', 'Customer ID', 'Customer Name', 'Promo Code',
                 'Gross Amount', 'Discount', 'Cart Amount', 'Mode of Payment', 'Bill Status', 'Commission Rate',
                 'Commission Amount', 'Total Billing', 'PG Fee Rate', 'PG Fee Amount','CWT Rate', 'Amount to be Disbursed'
             ]);
@@ -304,9 +306,9 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 2, 5, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21] }
+                    { orderable: false, targets: [0, 3, 6, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22] }
                 ],
-                order: [[21, 'asc']]
+                order: [[23, 'desc']]
             });
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
