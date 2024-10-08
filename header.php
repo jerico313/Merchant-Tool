@@ -182,7 +182,7 @@ if ($type === 'User' && strpos($_SERVER['REQUEST_URI'], '/activity_history') !==
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark p-3">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/Merchant-tool/merchant/">
+        <a class="navbar-brand" href="/Merchant-tool/merchants/">
             <table style="border:10px;">
                 <tr>
                     <th id="booky">booky <span id="div" style="font-size:25px;font-weight:normal;">|<span id="lead">LEADGEN</span></span></th>
