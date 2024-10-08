@@ -9,7 +9,7 @@ function displayMessage($type, $message) {
     $color = $type === 'error' ? '#f44336' : '#4caf50';
     $icon = $type === 'error' ? 'error-icon' : 'checkmark';
     $path = $type === 'error' ? '<line x1="16" y1="16" x2="36" y2="36"/><line x1="36" y1="16" x2="16" y2="36"/>' : '<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>';
-    $containerWidth = $type === 'success' ? '250px' : '500px';
+    $containerWidth = $type === 'success' ? '250px' : '650px';
     $containerHeight = $type === 'success' ? '300px' : 'auto';
     echo <<<HTML
 <!DOCTYPE html>
@@ -116,14 +116,15 @@ HTML;
 }
 
 function checkForDuplicates($conn, $promoCode, $merchantId) {
-    $stmt = $conn->prepare("SELECT promo_code FROM promo WHERE promo_code = ? AND merchant_id = ?");
+    $stmt = $conn->prepare("SELECT p.promo_code, m.merchant_id, m.merchant_name FROM promo p JOIN merchant m ON m.merchant_id = p.merchant_id WHERE p.promo_code = ? AND p.merchant_id = ?");
     $stmt->bind_param("ss", $promoCode, $merchantId);
     $stmt->execute();
     $result = $stmt->get_result();
     $duplicates = [];
     while ($row = $result->fetch_assoc()) {
-        if ($row['promo_code'] === $promoCode) {
-            $duplicates[] = "Promo Code '{$promoCode}' already exists.";
+        if ($row['promo_code'] === $promoCode && $row['merchant_id'] === $merchantId) {
+            $truncatedMerchantId = substr($row['merchant_id'], 0, 8);
+            $duplicates[] = "Promo Code '{$row['promo_code']}' for Merchant ID '{$truncatedMerchantId}' ({$row['merchant_name']}) already exists.";
         }
     }
     $stmt->close();
@@ -167,9 +168,38 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $duplicateMessages = [];
     $invalidMerchantIds = [];
     $promoCodes = [];
+    $duplicatePromoCodes = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $merchantId = $data[1]; 
+        $promoCode = $data[2]; 
+        $merchantName = $data[0];
+
+        // Create a unique key combining promo code and merchant ID
+        $uniqueKey = $promoCode . '|' . $merchantId; 
+
+        // Track promo codes with their associated merchant IDs
+        if (isset($promoCodes[$uniqueKey])) {
+            // If the promo code and merchant ID already exist, add to duplicates
+            if (!isset($duplicatePromoCodes[$promoCode])) {
+                $duplicatePromoCodes[$promoCode] = []; // Initialize an array for duplicate merchant IDs
+            }
+            // Store the merchant ID and merchant name for duplicates
+            $duplicatePromoCodes[$promoCode][] = [
+                'merchant_id' => $merchantId,
+                'merchant_name' => $merchantName
+            ];
+        } else {
+            // Store the unique combination
+            $promoCodes[$uniqueKey] = true; // Store it as true for uniqueness
+        }
+
+        // Check for duplicates in the database
+        $duplicates = checkForDuplicates($conn, $promoCode, $merchantId);
+
+        if (!empty($duplicates)) {
+            $duplicateMessages = array_merge($duplicateMessages, $duplicates);
+        }
 
         if (!checkMerchantExistence($conn, $merchantId) && !in_array("Merchant ID '{$merchantId}' does not exist.", $invalidMerchantIds)) {
             $invalidMerchantIds[] = "Merchant ID '{$merchantId}' does not exist.";
@@ -178,10 +208,24 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     fclose($handle);
 
+    // Loop through the duplicate promo codes and output messages
+    foreach ($duplicatePromoCodes as $promoCode => $merchantData) {
+        foreach ($merchantData as $data) {
+            $truncatedMerchantId = substr($data['merchant_id'], 0, 8);
+            $duplicateMessages[] = "Duplicate Promo Code '{$promoCode}' for Merchant ID '{$truncatedMerchantId}' ({$data['merchant_name']}) in CSV file.";
+        }
+    }
+
     if (!empty($duplicateMessages) || !empty($invalidMerchantIds)) {
         $conn->close();
+        // Merge the error messages
         $errorMessages = array_merge($duplicateMessages, $invalidMerchantIds);
-        displayMessage('error', 'Errors found:<br>' . implode('<br>', $errorMessages));
+        
+        // Count total number of errors
+        $totalErrors = count($duplicateMessages) + count($invalidMerchantIds);
+
+        // Display the error message
+        displayMessage('error', "Errors found: {$totalErrors}<br>" . implode('<br>', $errorMessages));
         exit();
     }
 
