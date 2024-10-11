@@ -71,7 +71,7 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
             echo "<td style='width:4%;'>" . $TotalBilling . "</td>";
             echo "<td style='width:3%;'>" . $row['PG Fee Rate'] . "</td>";
             echo "<td style='width:4%;'>" . $PGFeeAmount . "</td>";
-            echo "<td style='width:3%;'>" . $row['CWT Rate'] . "%" . "</td>";
+            echo "<td style='width:3%;'>" . $row['CWT Rate'] . "</td>";
             echo "<td style='width:5%;'>" . $AmounttobeDisbursed . "</td>";
             echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
             echo "</tr>";
@@ -278,9 +278,9 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
 
             function formatDataForExcel(row) {
                 return [
-                    row[0], row[1], row[2], row[3], row[4],
-                    row[9], row[10], row[11], row[12], row[13],
-                    row[15], row[16], row[17], row[18], row[19], row[20], row[21], row[22]
+                    row[0], row[1], row[2], row[3], row[4], row[5],
+                    row[10], row[11], row[12], row[13], row[14], row[16],
+                    row[17], row[18], row[19], row[20], row[21], row[22]
                 ];
             }
 
@@ -308,8 +308,9 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
                 columnDefs: [
                     { orderable: false, targets: [0, 3, 6, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22] }
                 ],
-                order: [[23, 'desc']]
+                order: [[23, 'desc']],
             });
+            
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     var startDate = $('#startDate').val();

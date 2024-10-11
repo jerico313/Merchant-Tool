@@ -287,8 +287,8 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             function formatDataForExcel(row) {
                 return [
                     row[0], row[1], row[2], row[3], row[4],
-                    row[9], row[10], row[11], row[12], row[13],
-                    row[15], row[16], row[17], row[18], row[19], row[20], row[21]
+                    row[9], row[10], row[11], row[12], row[13], row[15], 
+                    row[16], row[17], row[18], row[19], row[20], row[21]
                 ];
             }
 
@@ -316,7 +316,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
                 columnDefs: [
                     { orderable: false, targets: [0, 2, 5, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21] }
                 ],
-                order: [[20, 'asc']]
+                order: [[22, 'desc']]
             });
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
