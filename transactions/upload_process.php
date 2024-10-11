@@ -200,19 +200,40 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $storeId = $data[3]; 
-        $transactionId = $data[9];
         $promoCode = $data[6]; 
+        $voucherType = $data[7];
+        $promoGroup = $data[8];
+        $transactionId = $data[9];
 
-        // Check for columns 6, 7, 8 for promo code:
-        if (!empty($data[6])) {
-            if (!empty($data[7]) || !empty($data[8])) {
-                $validationErrors[] = "Transaction ID '{$transactionId}': If [6] promo_code is present, [7] voucher_type if no promo_code and [8] promo_group if no promo_code must be empty.";
+        // Check promo-related fields: [6] promo_code, [7] voucher_type, [8] promo_group
+        if (!empty($promoCode)) {
+            // If promo_code is present, both voucher_type and promo_group must be empty
+            if (!empty($voucherType) || !empty($promoGroup)) {
+                $validationErrors[] = "Transaction ID '{$transactionId}': If [6] promo_code is present, both [7] voucher_type and [8] promo_group must be empty.";
             }
-        } elseif (!empty($data[7]) || !empty($data[8])) {
-            if (!empty($data[6])) {
-                $validationErrors[] = "Transaction ID '{$transactionId}': If [7] voucher_type if no promo_code or [8] promo_group if no promo_code are present, [6] promo_code must be empty.";
+
+            // Check if promo_code exists in the database
+            if (!checkPromoExistence($conn, $promoCode) && !in_array("Promo Code '{$promoCode}' does not exist.", $invalidPromoCodes)) {
+                $invalidPromoCodes[] = "Transaction ID '{$transactionId}': Promo Code '{$promoCode}' does not exist.";
+            }
+        } else {
+            // If promo_code is empty
+            if (!empty($voucherType) || !empty($promoGroup)) {
+                // If voucher_type or promo_group are present, both must be filled
+                if (empty($voucherType) || empty($promoGroup)) {
+                    $validationErrors[] = "Transaction ID '{$transactionId}': If [6] promo_code is empty, both [7] voucher_type and [8] promo_group must be present.";
+                }
+            } else {
+                // All promo-related fields are empty
+                $validationErrors[] = "Transaction ID '{$transactionId}': [6] promo_code, [7] voucher_type, and [8] promo_group cannot all be empty.";
             }
         }
+
+        // Check if all 6, 7, and 8 have values (they should not all be present)
+        if (!empty($promoCode) && !empty($voucherType) && !empty($promoGroup)) {
+            $validationErrors[] = "Transaction ID '{$transactionId}': [6] promo_code, [7] voucher_type, and [8] promo_group cannot all be filled at the same time.";
+        }
+
 
         if (isset($transactionIds[$transactionId])) {
             if (!isset($duplicateTransactionIds[$transactionId])) {
@@ -232,10 +253,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         if (!checkStoreExistence($conn, $storeId) && !in_array("Store ID '{$storeId}' does not exist.", $invalidStoreIds)) {
             $invalidStoreIds[] = "Store ID '{$storeId}' does not exist.";
         }
-
-        if (!checkPromoExistence($conn, $promoCode) && !in_array("Promo Code '{$promoCode}' does not exist.", $invalidPromoCodes)) {
-            $invalidPromoCodes[] = "Promo Code '{$promoCode}' does not exist.";
-        }
     }
 
     fclose($handle);
@@ -244,13 +261,13 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $duplicateMessages[] = "Duplicate Transaction ID '{$transactionId}' in CSV file: " . implode(", ", $transactionIds);
     }
 
-    if (!empty($duplicateMessages) || !empty($invalidStoreIds) || !empty($validationErrors)) {
+    if (!empty($duplicateMessages) || !empty($invalidStoreIds) || !empty($validationErrors) || !empty($invalidPromoCodes)) {
         $conn->close();
         // Merge the error messages
-        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds, $validationErrors);
+        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds, $invalidPromoCodes, $validationErrors);
 
         // Count total number of errors
-        $totalErrors = count($duplicateMessages) + count($invalidStoreIds) + count($validationErrors);
+        $totalErrors = count($duplicateMessages) + count($invalidStoreIds) + count($invalidPromoCodes) + count($validationErrors);
 
         // Display the error message
         displayMessage('error', "Errors found: {$totalErrors}<br>" . implode('<br>', $errorMessages));
