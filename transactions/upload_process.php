@@ -1,6 +1,6 @@
 <?php
-require_once ("../header.php");
-require_once ("../inc/config.php");
+require_once("../header.php");
+require_once("../inc/config.php");
 
 function displayMessage($type, $message)
 {
@@ -191,6 +191,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
 
+    $validationErrors = [];
     $duplicateMessages = [];
     $invalidStoreIds = [];
     $invalidPromoCodes = [];
@@ -201,6 +202,17 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $storeId = $data[3]; 
         $transactionId = $data[9];
         $promoCode = $data[6]; 
+
+        // Check for columns 6, 7, 8 for promo code:
+        if (!empty($data[6])) {
+            if (!empty($data[7]) || !empty($data[8])) {
+                $validationErrors[] = "Transaction ID '{$transactionId}': If [6] promo_code is present, [7] voucher_type if no promo_code and [8] promo_group if no promo_code must be empty.";
+            }
+        } elseif (!empty($data[7]) || !empty($data[8])) {
+            if (!empty($data[6])) {
+                $validationErrors[] = "Transaction ID '{$transactionId}': If [7] voucher_type if no promo_code or [8] promo_group if no promo_code are present, [6] promo_code must be empty.";
+            }
+        }
 
         if (isset($transactionIds[$transactionId])) {
             if (!isset($duplicateTransactionIds[$transactionId])) {
@@ -232,15 +244,21 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $duplicateMessages[] = "Duplicate Transaction ID '{$transactionId}' in CSV file: " . implode(", ", $transactionIds);
     }
 
-    if (!empty($duplicateMessages) || !empty($invalidStoreIds)) {
+    if (!empty($duplicateMessages) || !empty($invalidStoreIds) || !empty($validationErrors)) {
         $conn->close();
-        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds);
-        displayMessage('error', 'Errors found:<br>' . implode('<br>', $errorMessages));
+        // Merge the error messages
+        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds, $validationErrors);
+
+        // Count total number of errors
+        $totalErrors = count($duplicateMessages) + count($invalidStoreIds) + count($validationErrors);
+
+        // Display the error message
+        displayMessage('error', "Errors found: {$totalErrors}<br>" . implode('<br>', $errorMessages));
         exit();
     }
 
     $handle = fopen($file_tmp, "r");
-    fgetcsv($handle); 
+    fgetcsv($handle);
 
     $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, no_voucher_type, no_promo_group, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
