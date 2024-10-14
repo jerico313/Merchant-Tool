@@ -1,13 +1,14 @@
 <?php
 require_once("../header.php");
 require_once("../inc/config.php");
+set_time_limit(300); 
 
 function displayMessage($type, $message)
 {
     $color = $type === 'error' ? '#f44336' : '#4caf50';
     $icon = $type === 'error' ? 'error-icon' : 'checkmark';
     $path = $type === 'error' ? '<line x1="16" y1="16" x2="36" y2="36"/><line x1="36" y1="16" x2="16" y2="36"/>' : '<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>';
-    $containerWidth = $type === 'success' ? '250px' : '500px';
+    $containerWidth = $type === 'success' ? '250px' : '750px';
     $containerHeight = $type === 'success' ? '300px' : 'auto';
     echo <<<HTML
 <!DOCTYPE html>
@@ -209,7 +210,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         if (!empty($promoCode)) {
             // If promo_code is present, both voucher_type and promo_group must be empty
             if (!empty($voucherType) || !empty($promoGroup)) {
-                $validationErrors[] = "Transaction ID '{$transactionId}': If [6] promo_code is present, both [7] voucher_type and [8] promo_group must be empty.";
+                $validationErrors[] = "Transaction ID '{$transactionId}': If '[6] promo_code' is present, both '[7] voucher_type' and '[8] promo_group' must be empty.";
             }
 
             // Check if promo_code exists in the database
@@ -221,17 +222,17 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
             if (!empty($voucherType) || !empty($promoGroup)) {
                 // If voucher_type or promo_group are present, both must be filled
                 if (empty($voucherType) || empty($promoGroup)) {
-                    $validationErrors[] = "Transaction ID '{$transactionId}': If [6] promo_code is empty, both [7] voucher_type and [8] promo_group must be present.";
+                    $validationErrors[] = "Transaction ID '{$transactionId}': If '[6] promo_code' is empty, both '[7] voucher_type' and '[8] promo_group' must be present.";
                 }
             } else {
                 // All promo-related fields are empty
-                $validationErrors[] = "Transaction ID '{$transactionId}': [6] promo_code, [7] voucher_type, and [8] promo_group cannot all be empty.";
+                $validationErrors[] = "Transaction ID '{$transactionId}': '[6] promo_code', '[7] voucher_type', and '[8] promo_group' cannot all be empty.";
             }
         }
 
         // Check if all 6, 7, and 8 have values (they should not all be present)
         if (!empty($promoCode) && !empty($voucherType) && !empty($promoGroup)) {
-            $validationErrors[] = "Transaction ID '{$transactionId}': [6] promo_code, [7] voucher_type, and [8] promo_group cannot all be filled at the same time.";
+            $validationErrors[] = "Transaction ID '{$transactionId}': '[6] promo_code', '[7] voucher_type', and '[8] promo_group' cannot all be filled at the same time.";
         }
 
 
@@ -277,25 +278,56 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle);
 
+    $batchSize = 200;  // Insert 200 rows per batch
+    $batchData = [];
+
     $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, no_voucher_type, no_promo_group, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $userId = $_SESSION['user_id']; 
+    $userId = $_SESSION['user_id'];
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $data[4] = empty($data[4]) ? null : $data[4]; 
+        $data[4] = empty($data[4]) ? null : $data[4];
         $data[5] = (substr($data[5], 0, 1) !== '"' || substr($data[5], -1) !== '"') ? '"' . $data[5] . '"' : $data[5];
-        $data[6] = empty($data[6]) ? null : $data[6]; 
-        $data[7] = empty($data[7]) ? null : $data[7]; 
-        $data[8] = empty($data[8]) ? null : $data[8]; 
+        $data[6] = empty($data[6]) ? null : $data[6];
+        $data[7] = empty($data[7]) ? null : $data[7];
+        $data[8] = empty($data[8]) ? null : $data[8];
         $transaction_date = convertDateFormat($data[10]);
         $data[11] = str_replace(',', '', $data[11]);
         $data[12] = str_replace(',', '', $data[12]);
-        $data[13] = str_replace(',', '', $data[13]); 
+        $data[13] = str_replace(',', '', $data[13]);
         $data[14] = str_replace(',', '', $data[14]);
-        $data[15] = ($data[15] = str_replace('"', '', $data[15])) === '' ? null : $data[15]; 
+        $data[15] = ($data[15] = str_replace('"', '', $data[15])) === '' ? null : $data[15];
 
-        $stmt1->bind_param("sssssssssssssss", $data[9], $data[3], $data[6], $data[7], $data[8], $data[5], $data[4], $transaction_date, $data[11], $data[12], $data[13], $data[14], $data[15], $data[16], $data[17]);
-        $stmt1->execute();
-        
+        // Accumulate data for batch insert
+        $batchData[] = [
+            $data[9], $data[3], $data[6], $data[7], $data[8], $data[5], $data[4],
+            $transaction_date, $data[11], $data[12], $data[13], $data[14], $data[15], $data[16], $data[17]
+        ];
+
+        // Perform batch insert when we reach the batch size
+        if (count($batchData) >= $batchSize) {
+            // Prepare batch insert
+            foreach ($batchData as $row) {
+                $stmt1->bind_param("sssssssssssssss", ...$row);
+                $stmt1->execute();
+            }
+            $batchData = [];  // Clear the batch data array
+        }
+
+        // $stmt1->bind_param("sssssssssssssss", $data[9], $data[3], $data[6], $data[7], $data[8], $data[5], $data[4], $transaction_date, $data[11], $data[12], $data[13], $data[14], $data[15], $data[16], $data[17]);
+        //$stmt1->execute();
+
         updateActivityHistory($conn, $data[5], $userId);
+    }
+
+    // Insert any remaining data that didn't reach the batch size
+    if (!empty($batchData)) {
+        foreach ($batchData as $row) {
+            $stmt1->bind_param("sssssssssssssss", ...$row);
+            $stmt1->execute();
+            
+            // Update activity history for each row
+            $customerId = $row[5];
+            updateActivityHistory($conn, $customerId, $userId);
+        }
     }
 
     fclose($handle);
