@@ -132,7 +132,7 @@ function checkForDuplicates($conn, $merchantId) {
     $result = $stmt->get_result();
     $duplicates = [];
     if ($result->num_rows > 0) {
-        $duplicates[] = "Merchant ID '{$merchantId}' already exists in the fee table.";
+        $duplicates[] = "Merchant ID '{$merchantId}' already exists.";
     }
     $stmt->close();
     return $duplicates;
@@ -167,7 +167,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $duplicateMerchantIds = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $merchantId = $data[1];
+        $merchantId = strtolower($data[1]);
 
         if (isset($merchantIds[$merchantId])) {
             if (!isset($duplicateMerchantIds[$merchantId])) {
@@ -207,6 +207,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $fee_id = Uuid::uuid4()->toString();
+        $data[1] = strtolower($data[1]);
         $stmt1->bind_param("ssssssssss", $fee_id, $data[1], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
         $stmt1->execute();
 

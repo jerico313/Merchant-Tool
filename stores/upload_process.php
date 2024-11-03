@@ -168,7 +168,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $duplicateStoreIds = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $merchantId = $data[1]; 
+        $merchantId = strtolower($data[1]);
         $storeId = $data[3];
         $storeName = $data[2]; 
 
@@ -210,6 +210,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address, cwt_rate) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
+        $data[1] = strtolower($data[1]);
         $data[4] = empty($data[4]) ? null : $data[4];
         $data[5] = empty($data[5]) ? null : $data[5]; 
         $data[6] = empty($data[6]) ? null : $data[6];

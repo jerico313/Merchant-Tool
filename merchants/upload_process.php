@@ -171,7 +171,9 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $duplicateMessages = [];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $duplicates = checkForDuplicates($conn, $data[1], $data[0]);
+        $merchantId = strtolower($data[1]);
+        
+        $duplicates = checkForDuplicates($conn, $merchantId, $data[0]);
         if (!empty($duplicates)) {
             $duplicateMessages = array_merge($duplicateMessages, $duplicates);
         }
@@ -190,6 +192,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $stmt = $conn->prepare("INSERT INTO merchant (merchant_id, merchant_name, merchant_partnership_type, legal_entity_name, business_address, email_address, sales, account_manager) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
+        $data[1] = strtolower($data[1]);
         $data[2] = empty($data[2]) ? null : $data[2];
         $data[3] = empty($data[3]) ? null : $data[3]; 
         $data[4] = empty($data[4]) ? null : $data[4];

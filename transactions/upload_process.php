@@ -204,7 +204,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $promoCode = $data[6]; 
         $voucherType = $data[7];
         $promoGroup = $data[8];
-        $transactionId = $data[9];
+        $transactionId = strtolower($data[9]);
 
         // Check promo-related fields: [6] promo_code, [7] voucher_type, [8] promo_group
         if (!empty($promoCode)) {
@@ -289,6 +289,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $data[6] = empty($data[6]) ? null : $data[6];
         $data[7] = empty($data[7]) ? null : $data[7];
         $data[8] = empty($data[8]) ? null : $data[8];
+        $data[9] = strtolower($data[9]);
         $transaction_date = convertDateFormat($data[10]);
         $data[11] = str_replace(',', '', $data[11]);
         $data[12] = str_replace(',', '', $data[12]);
