@@ -259,7 +259,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     fclose($handle);
 
     foreach ($duplicateTransactionIds as $transactionId => $transactionIds) {
-        $duplicateMessages[] = "Duplicate Transaction ID '{$transactionId}' in CSV file: " . implode(", ", $transactionIds);
+        $duplicateMessages[] = "Duplicate Transaction ID '{$transactionId}' in CSV file.";
     }
 
     if (!empty($duplicateMessages) || !empty($invalidStoreIds) || !empty($validationErrors) || !empty($invalidPromoCodes)) {
