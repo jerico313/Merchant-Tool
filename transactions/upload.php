@@ -111,9 +111,12 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     var fileSize = fileInput.files[0].size; 
 
     var submitButton = document.getElementById('submitButton');
+    var clearButton = document.getElementById('clearButton');
     var fileSizeKB = (fileSize / 1024).toFixed(2); 
+
     submitButton.innerHTML = `<div class="spinner-border spinner-border-sm" role="status"></div><span> Uploading (${fileSizeKB} KB)...</span>`;
     submitButton.disabled = true;
+    clearButton.disabled = true;
     
     document.getElementById('uploadForm').submit();
 });
