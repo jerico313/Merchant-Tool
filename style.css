@@ -650,12 +650,11 @@ th.next.available {
   text-shadow: 3px 3px 5px rgba(99, 99, 99, 0.35);
 }
 
-.title {
-  font-size: 30px;
-  font-weight: 900;
-  margin-right: auto;
-  padding-left: 5vh;
-  color: #E96529;
+.timer {
+  font-size: 18px;
+  font-weight: 800;
+  margin-right: 0;
+  color:#808080;
   text-shadow: 3px 3px 5px rgba(99, 99, 99, 0.35);
 }
 
