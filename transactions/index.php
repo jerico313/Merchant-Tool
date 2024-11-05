@@ -28,7 +28,7 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
         $params[] = $endDate;
     }
 
-    $sql .= " ORDER BY `Transaction Date` ASC";
+    $sql .= " ORDER BY `Transaction Date` DESC LIMIT 100";
 
     $stmt = $conn->prepare($sql);
     if (!$stmt) {

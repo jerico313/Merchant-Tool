@@ -1,14 +1,14 @@
 <?php
 require_once("../header.php");
 require_once("../inc/config.php");
-set_time_limit(300); 
+set_time_limit(1200); 
 
 function displayMessage($type, $message)
 {
     $color = $type === 'error' ? '#f44336' : '#4caf50';
     $icon = $type === 'error' ? 'error-icon' : 'checkmark';
     $path = $type === 'error' ? '<line x1="16" y1="16" x2="36" y2="36"/><line x1="36" y1="16" x2="16" y2="36"/>' : '<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>';
-    $containerWidth = $type === 'success' ? '250px' : '750px';
+    $containerWidth = $type === 'success' ? '250px' : '500px';
     $containerHeight = $type === 'success' ? '300px' : 'auto';
     echo <<<HTML
 <!DOCTYPE html>
@@ -114,39 +114,6 @@ HTML;
 HTML;
 }
 
-function checkForDuplicates($conn, $transactionId)
-{
-    $stmt = $conn->prepare("SELECT transaction_id FROM transaction WHERE transaction_id = ?");
-    $stmt->bind_param("s", $transactionId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $exists = $result->num_rows > 0;
-    $stmt->close();
-    return $exists ? ["Transaction ID '{$transactionId}' already exists."] : [];
-}
-
-function checkStoreExistence($conn, $storeId)
-{
-    $stmt = $conn->prepare("SELECT * FROM store WHERE store_id = ?");
-    $stmt->bind_param("s", $storeId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $exists = $result->num_rows > 0;
-    $stmt->close();
-    return $exists;
-}
-
-function checkPromoExistence($conn, $promoCode)
-{
-    $stmt = $conn->prepare("SELECT * FROM promo WHERE promo_code = ?");
-    $stmt->bind_param("s", $promoCode);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $exists = $result->num_rows > 0;
-    $stmt->close();
-    return $exists;
-}
-
 function updateActivityHistory($conn, $customerId, $userId) {
     $stmt = $conn->prepare("UPDATE activity_history SET user_id = ? WHERE description LIKE CONCAT('%', ?, '%') AND user_id IS NULL ORDER BY created_at DESC LIMIT 1");
     $stmt->bind_param("ss", $userId, $customerId);
@@ -175,6 +142,22 @@ function convertDateFormat($dateString)
     return $date ? $date->format('Y-m-d H:i:s') : false;
 }
 
+function executeBatchInsert($stmt, $data, $conn, $userId) {
+    foreach ($data as $row) {
+        // Ensure each row is an array
+        if (!is_array($row)) {
+            throw new Exception("Each row in \$data must be an array.");
+        }
+
+        // Bind parameters
+        $stmt->bind_param("sssssssssssssss", ...$row);
+        $stmt->execute();
+
+        // Call updateActivityHistory after each row is inserted
+        updateActivityHistory($conn, $row[5], $userId);
+    }
+}
+
 if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] != '') {
     $file_tmp = $_FILES['fileToUpload']['tmp_name'];
     $file_ext = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
@@ -192,12 +175,14 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
 
+    // Load all transaction_ids, store_ids, and promo_codes in memory to avoid multiple DB hits
+    $existingTransactionIds = array_column($conn->query("SELECT transaction_id FROM transaction")->fetch_all(MYSQLI_ASSOC), 'transaction_id');
+    $existingStoreIds = array_column($conn->query("SELECT store_id FROM store")->fetch_all(MYSQLI_ASSOC), 'store_id');
+    $existingPromoCodes = array_column($conn->query("SELECT promo_code FROM promo")->fetch_all(MYSQLI_ASSOC), 'promo_code');
+
     $validationErrors = [];
-    $duplicateMessages = [];
-    $invalidStoreIds = [];
-    $invalidPromoCodes = [];
-    $transactionIds = [];
-    $duplicateTransactionIds = [];
+    $csvTransactionIds = [];
+    $rowsProcessed = 0;
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $storeId = $data[3]; 
@@ -206,80 +191,52 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $promoGroup = $data[8];
         $transactionId = strtolower($data[9]);
 
-        // Check promo-related fields: [6] promo_code, [7] voucher_type, [8] promo_group
-        if (!empty($promoCode)) {
-            // If promo_code is present, both voucher_type and promo_group must be empty
-            if (!empty($voucherType) || !empty($promoGroup)) {
-                $validationErrors[] = "Transaction ID '{$transactionId}': If '[6] promo_code' is present, both '[7] voucher_type' and '[8] promo_group' must be empty.";
-            }
+        // Check for duplicates within the CSV file
+        if (in_array($transactionId, $csvTransactionIds)) {
+            $validationErrors[] = "Duplicate Transaction ID '{$transactionId}' found in the CSV file.";
+        }
+        $csvTransactionIds[] = $transactionId;
 
-            // Check if promo_code exists in the database
-            if (!checkPromoExistence($conn, $promoCode) && !in_array("Promo Code '{$promoCode}' does not exist.", $invalidPromoCodes)) {
-                $invalidPromoCodes[] = "Transaction ID '{$transactionId}': Promo Code '{$promoCode}' does not exist.";
-            }
-        } else {
-            // If promo_code is empty
-            if (!empty($voucherType) || !empty($promoGroup)) {
-                // If voucher_type or promo_group are present, both must be filled
-                if (empty($voucherType) || empty($promoGroup)) {
-                    $validationErrors[] = "Transaction ID '{$transactionId}': If '[6] promo_code' is empty, both '[7] voucher_type' and '[8] promo_group' must be present.";
-                }
-            } else {
-                // All promo-related fields are empty
-                $validationErrors[] = "Transaction ID '{$transactionId}': '[6] promo_code', '[7] voucher_type', and '[8] promo_group' cannot all be empty.";
-            }
+        // Check if transaction ID already exists in the database
+        if (in_array($transactionId, $existingTransactionIds)) {
+            $validationErrors[] = "Transaction ID '{$transactionId}' already exists in the database.";
         }
 
-        // Check if all 6, 7, and 8 have values (they should not all be present)
-        if (!empty($promoCode) && !empty($voucherType) && !empty($promoGroup)) {
-            $validationErrors[] = "Transaction ID '{$transactionId}': '[6] promo_code', '[7] voucher_type', and '[8] promo_group' cannot all be filled at the same time.";
+        // Check if store ID exists
+        if (!in_array($storeId, $existingStoreIds)) {
+            $validationErrors[] = "Store ID '{$storeId}' does not exist.";
         }
 
-
-        if (isset($transactionIds[$transactionId])) {
-            if (!isset($duplicateTransactionIds[$transactionId])) {
-                $duplicateTransactionIds[$transactionId] = [$transactionId, $transactionIds[$transactionId]];
-            }
-            $duplicateTransactionIds[$transactionId][] = $transactionId;
-        } else {
-            $transactionIds[$transactionId] = $transactionId;
+        // Check if promo code exists (if provided)
+        if ($promoCode && !in_array($promoCode, $existingPromoCodes)) {
+            $validationErrors[] = "Promo Code '{$promoCode}' does not exist.";
         }
 
-        $duplicates = checkForDuplicates($conn, $transactionId);
-
-        if (!empty($duplicates)) {
-            $duplicateMessages = array_merge($duplicateMessages, $duplicates);
-        }
-
-        if (!checkStoreExistence($conn, $storeId) && !in_array("Store ID '{$storeId}' does not exist.", $invalidStoreIds)) {
-            $invalidStoreIds[] = "Store ID '{$storeId}' does not exist.";
+        // Validate fields [6], [7], and [8]
+        if (!empty($promoCode) && (!empty($voucherType) || !empty($promoGroup))) {
+            $validationErrors[] = "Transaction ID '{$transactionId}': Only promo_code should be filled if it's present.";
+        } elseif (empty($promoCode) && (empty($voucherType) || empty($promoGroup))) {
+            $validationErrors[] = "Transaction ID '{$transactionId}': Both voucher_type and promo_group are required if promo_code is empty.";
         }
     }
 
     fclose($handle);
 
-    foreach ($duplicateTransactionIds as $transactionId => $transactionIds) {
-        $duplicateMessages[] = "Duplicate Transaction ID '{$transactionId}' in CSV file.";
-    }
-
-    if (!empty($duplicateMessages) || !empty($invalidStoreIds) || !empty($validationErrors) || !empty($invalidPromoCodes)) {
+    if (!empty($validationErrors)) {
         $conn->close();
-        // Merge the error messages
-        $errorMessages = array_merge($duplicateMessages, $invalidStoreIds, $invalidPromoCodes, $validationErrors);
 
         // Count total number of errors
-        $totalErrors = count($duplicateMessages) + count($invalidStoreIds) + count($invalidPromoCodes) + count($validationErrors);
+        $totalErrors = count($validationErrors);
 
         // Display the error message
-        displayMessage('error', "Errors found: {$totalErrors}<br>" . implode('<br>', $errorMessages));
+        displayMessage('error', "Errors found: {$totalErrors}<br>" . implode('<br>', $validationErrors));
         exit();
     }
 
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle);
 
-    $batchSize = 200;  // Insert 200 rows per batch
-    $batchData = [];
+    $batchInsertData = [];
 
     $stmt1 = $conn->prepare("INSERT INTO transaction (transaction_id, store_id, promo_code, no_voucher_type, no_promo_group, customer_id, customer_name, transaction_date, gross_amount, discount, amount_discounted, amount_paid, payment, comm_rate_base, bill_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id'];
@@ -297,37 +254,41 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $data[14] = str_replace(',', '', $data[14]);
         $data[15] = ($data[15] = str_replace('"', '', $data[15])) === '' ? null : $data[15];
 
-        // Accumulate data for batch insert
-        $batchData[] = [
+        //Accumulate data for batch insert
+        $batchInsertData[] = [
             $data[9], $data[3], $data[6], $data[7], $data[8], $data[5], $data[4],
             $transaction_date, $data[11], $data[12], $data[13], $data[14], $data[15], $data[16], $data[17]
         ];
 
-        // Perform batch insert when we reach the batch size
-        if (count($batchData) >= $batchSize) {
-            // Prepare batch insert
-            foreach ($batchData as $row) {
-                $stmt1->bind_param("sssssssssssssss", ...$row);
-                $stmt1->execute();
+        // Insert in batches and commit every 200 rows
+        if (count($batchInsertData) >= 200) {
+            $conn->begin_transaction(); // Start a new transaction
+            try {
+                executeBatchInsert($stmt1, $batchInsertData, $conn, $userId);
+                $conn->commit(); // Commit the transaction
+                $batchInsertData = []; // Clear batch
+            } catch (Exception $e) {
+                $conn->rollback(); // Rollback on error
+                displayMessage('error', 'Failed to insert data for batch: ' . $e->getMessage());
+                break; // Exit the loop on error
             }
-            $batchData = [];  // Clear the batch data array
         }
 
         // $stmt1->bind_param("sssssssssssssss", $data[9], $data[3], $data[6], $data[7], $data[8], $data[5], $data[4], $transaction_date, $data[11], $data[12], $data[13], $data[14], $data[15], $data[16], $data[17]);
-        //$stmt1->execute();
+        // $stmt1->execute();
 
-        updateActivityHistory($conn, $data[5], $userId);
+        // updateActivityHistory($conn, $data[5], $userId);
     }
 
-    // Insert any remaining data that didn't reach the batch size
-    if (!empty($batchData)) {
-        foreach ($batchData as $row) {
-            $stmt1->bind_param("sssssssssssssss", ...$row);
-            $stmt1->execute();
-            
-            // Update activity history for each row
-            $customerId = $row[5];
-            updateActivityHistory($conn, $customerId, $userId);
+    // Insert any remaining data in the last batch and commit
+    if (!empty($batchInsertData)) {
+        $conn->begin_transaction(); // Start a new transaction
+        try {
+            executeBatchInsert($stmt1, $batchInsertData, $conn, $userId);
+            $conn->commit(); // Commit the transaction
+        } catch (Exception $e) {
+            $conn->rollback(); // Rollback on error
+            displayMessage('error', 'Failed to insert data for remaining batch: ' . $e->getMessage());
         }
     }
 
