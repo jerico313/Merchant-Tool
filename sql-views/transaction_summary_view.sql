@@ -3,6 +3,8 @@ DROP VIEW IF EXISTS transaction_summary_view;
 CREATE VIEW transaction_summary_view AS
 WITH pg_fee_cte AS (
     SELECT t.transaction_id,
+    ROW_NUMBER() OVER (PARTITION BY t.transaction_id ORDER BY f.effective_date DESC) AS row_num,
+
         CASE
             WHEN `t`.`payment` IN (
                 'paymaya_credit_card',
@@ -12,65 +14,60 @@ WITH pg_fee_cte AS (
                 'gcash',
                 'gcash_miniapp'
             ) THEN
-            (SELECT COALESCE(
-                    (
-                        SELECT `fh`.`old_value`
-                        FROM `leadgen_db`.`fee_history` `fh`
-                        WHERE `fh`.`fee_id` = `f`.`fee_id`
-                            AND `fh`.`column_name` = `t`.`payment`
-                            AND `fh`.`changed_at` >= `t`.`transaction_date`
-                        ORDER BY `fh`.`changed_at` DESC
-                        LIMIT 1
-                    ), CASE
-                        `t`.`payment`
-                        WHEN 'paymaya_credit_card' THEN `f`.`paymaya_credit_card`
-                        WHEN 'gcash' THEN `f`.`gcash`
-                        WHEN 'gcash_miniapp' THEN `f`.`gcash_miniapp`
-                        WHEN 'paymaya' THEN `f`.`paymaya`
-                        WHEN 'maya_checkout' THEN `f`.`maya_checkout`
-                        WHEN 'maya' THEN `f`.`maya`
-                    END
-                ))
-                WHEN `t`.`payment` IS NULL OR `t`.`payment` = '' THEN 0
+                (SELECT COALESCE(
+                    CASE
+                        WHEN `t`.`payment` = 'paymaya_credit_card' THEN `f`.`paymaya_credit_card`
+                        WHEN `t`.`payment` = 'gcash' THEN `f`.`gcash`
+                        WHEN `t`.`payment` = 'gcash_miniapp' THEN `f`.`gcash_miniapp`
+                        WHEN `t`.`payment` = 'paymaya' THEN `f`.`paymaya`
+                        WHEN `t`.`payment` = 'maya_checkout' THEN `f`.`maya_checkout`
+                        WHEN `t`.`payment` = 'maya' THEN `f`.`maya`
+                    END, 0)
+                FROM `leadgen_db`.`fee` `f`
+                WHERE `f`.`merchant_id` = `m`.`merchant_id`
+                AND `f`.`effective_date` <= `t`.`transaction_date`
+                ORDER BY `f`.`effective_date` DESC
+                LIMIT 1)
+            WHEN `t`.`payment` IS NULL OR `t`.`payment` = '' THEN 0
         END AS pg_fee_rate,
+
         COALESCE(
-        (
-            SELECT `fh`.`old_value`
-            FROM `leadgen_db`.`fee_history` `fh`
-            WHERE `fh`.`fee_id` = `f`.`fee_id`
-                AND `fh`.`column_name` = 'commission_type'
-                AND `fh`.`changed_at` >= `t`.`transaction_date`
-            ORDER BY `fh`.`changed_at` DESC
-            LIMIT 1
-        ), `f`.`commission_type`
-    ) AS commission_type,
+            (SELECT `f`.`commission_type`
+            FROM `leadgen_db`.`fee` `f`
+            WHERE `f`.`merchant_id` = `m`.`merchant_id`
+            AND `f`.`effective_date` <= `t`.`transaction_date`
+            ORDER BY `f`.`effective_date` DESC
+            LIMIT 1), 
+            0
+        ) AS commission_type,
+
         COALESCE(
-        (
-            SELECT `fh`.`old_value`
-            FROM `leadgen_db`.`fee_history` `fh`
-            WHERE `fh`.`fee_id` = `f`.`fee_id`
-                AND `fh`.`column_name` = 'lead_gen_commission'
-                AND `fh`.`changed_at` >= `t`.`transaction_date`
-            ORDER BY `fh`.`changed_at` DESC
-            LIMIT 1
-        ), `f`.`lead_gen_commission`
-    ) AS commission_rate,
+            (SELECT  `f`.`lead_gen_commission`
+            FROM `leadgen_db`.`fee` `f`
+            WHERE `f`.`merchant_id` = `m`.`merchant_id`
+            AND `f`.`effective_date` <= `t`.`transaction_date`
+            ORDER BY `f`.`effective_date` DESC
+            LIMIT 1), 
+            0
+        ) AS commission_rate,
+        
         COALESCE(
-        (
-            SELECT `cwt`.`old_value`
+            (SELECT `cwt`.`cwt_rate`
             FROM `leadgen_db`.`cwt_rate` `cwt`
             WHERE `cwt`.`store_id` = `s`.`store_id`
-                AND `cwt`.`changed_at` >= `t`.`transaction_date`
-            ORDER BY `cwt`.`changed_at` DESC 
-            LIMIT 1
-        ), `s`.`cwt_rate`
-    ) AS cwt_rate
+            AND `cwt`.`effective_date` <= `t`.`transaction_date`
+            ORDER BY `cwt`.`effective_date` DESC 
+            LIMIT 1), 
+            0
+        ) AS cwt_rate
     FROM `leadgen_db`.`transaction` `t`
         JOIN `leadgen_db`.`store` `s` ON (`t`.`store_id` = `s`.`store_id`)
         JOIN `leadgen_db`.`merchant` `m` ON (`m`.`merchant_id` = `s`.`merchant_id`)
-        JOIN `leadgen_db`.`fee` `f` ON (`f`.`merchant_id` = `m`.`merchant_id`)
+        LEFT JOIN `leadgen_db`.`fee` `f` ON (`f`.`merchant_id` = `m`.`merchant_id`)
 )
-SELECT SUBSTR(`t`.`transaction_id`,1,8) AS `Transaction ID`,
+
+SELECT DISTINCT
+    `t`.`transaction_id` AS `Transaction ID`,
     CONCAT('',DATE_FORMAT(`t`.`transaction_date`, '%M %d, %Y %h:%i%p'),'') AS `Formatted Transaction Date`,
     DATE_FORMAT(`t`.`transaction_date`, "%Y-%m-%d %T") AS `Transaction Date A`,
     DATE_FORMAT(`t`.`transaction_date`, "%Y-%m-%d") AS `Transaction Date`,
@@ -164,4 +161,5 @@ FROM `leadgen_db`.`transaction` `t`
     JOIN `leadgen_db`.`promo` `p` ON `p`.`promo_code` = `t`.`promo_code` AND `p`.`merchant_id` = `m`.`merchant_id`
     JOIN `leadgen_db`.`fee` `f` ON `f`.`merchant_id` = `m`.`merchant_id`
     JOIN `pg_fee_cte` ON `t`.`transaction_id` = `pg_fee_cte`.`transaction_id`
+WHERE pg_fee_cte.row_num = 1
 ORDER BY `t`.`transaction_date` DESC;

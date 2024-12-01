@@ -3,20 +3,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("../inc/config.php");
 
     $feeId = $_POST['feeId'];
-    
+    $merchantId = $_POST['merchantId'];
+    $merchantName = $_POST['merchantName'];
     $paymayaCreditCard = $_POST['paymayaCreditCard'];
-    $gcash = $_POST['gcash'];
-    $gcashMiniapp = $_POST['gcashMiniapp'];
-    $paymaya = $_POST['paymaya'];
     $gcash = $_POST['gcash'];
     $gcashMiniapp = $_POST['gcashMiniapp'];
     $paymaya = $_POST['paymaya'];
     $leadgenCommission = $_POST['leadgenCommission'];
     $commissionType = $_POST['commissionType'];
+    $effectiveDate = $_POST['effectiveDate'];
     $userId = $_POST['userId'];
 
-    $stmt = $conn->prepare("UPDATE fee SET paymaya_credit_card=?, gcash=?, gcash_miniapp=?, paymaya=?, maya_checkout=?, maya=?, lead_gen_commission=?, commission_type=? WHERE fee_id=?");
-    $stmt->bind_param("sssssssss", $paymayaCreditCard, $gcash, $gcashMiniapp, $paymaya,  $paymayaCreditCard,  $paymayaCreditCard, $leadgenCommission, $commissionType, $feeId);
+    $stmt = $conn->prepare("UPDATE fee SET paymaya_credit_card=?, gcash=?, gcash_miniapp=?, paymaya=?, maya_checkout=?, maya=?, lead_gen_commission=?, commission_type=?, effective_date=? WHERE fee_id=?");
+    $stmt->bind_param("ssssssssss", $paymayaCreditCard, $gcash, $gcashMiniapp, $paymaya, $paymayaCreditCard, $paymayaCreditCard, $leadgenCommission, $commissionType, $effectiveDate, $feeId);
 
     if ($stmt->execute()) {
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
@@ -31,21 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
             $stmt->close();
         }
-        
-        $stmt = $conn->prepare("SELECT fee_history_id FROM fee_history ORDER BY changed_at DESC LIMIT 1");
-        $stmt->execute();
-        $stmt->bind_result($latestFeeHistoryId);
-        $stmt->fetch();
-        $stmt->close();
-        
-        if ($latestFeeHistoryId) {
-            $stmt = $conn->prepare("UPDATE fee_history SET changed_by=? WHERE fee_history_id=?");
-            $stmt->bind_param("ss", $userId, $latestFeeHistoryId);
-            $stmt->execute();
-            $stmt->close();
-        }
 
-        header("Location: index.php");
+        header("Location: history.php?merchant_name=" . $merchantName . "&merchant_id=" . htmlspecialchars($merchantId));
         exit();
     } else {
         echo "Error updating record: " . $stmt->error;

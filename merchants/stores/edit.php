@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
         }
 
-        header("Location: index.php?merchant_id=" . htmlspecialchars($merchantId) . "&merchant_name=" . htmlspecialchars($merchantName));
+        header("Location: index.php?merchant_name=" . htmlspecialchars($merchantName) . "&merchant_id=" . htmlspecialchars($merchantId));
         exit();
     } else {
         error_log("Error updating record: " . $stmt->error);

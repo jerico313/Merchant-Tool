@@ -125,19 +125,6 @@ function checkMerchantExistence($conn, $merchantId) {
     return $exists;
 }
 
-function checkForDuplicates($conn, $merchantId) {
-    $stmt = $conn->prepare("SELECT merchant_id FROM fee WHERE merchant_id = ?");
-    $stmt->bind_param("s", $merchantId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $duplicates = [];
-    if ($result->num_rows > 0) {
-        $duplicates[] = "Merchant ID '{$merchantId}' already exists.";
-    }
-    $stmt->close();
-    return $duplicates;
-}
-
 function updateActivityHistory($conn, $merchantId, $userId) {
     $stmt = $conn->prepare("UPDATE activity_history SET user_id = ? WHERE description LIKE CONCAT('%', ?, '%') AND user_id IS NULL ORDER BY created_at DESC LIMIT 1");
     $stmt->bind_param("ss", $userId, $merchantId);
@@ -181,11 +168,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         if (!checkMerchantExistence($conn, $merchantId)) {
             $invalidMerchantIds[] = "Merchant ID '{$merchantId}' does not exist.";
         }
-
-        $duplicates = checkForDuplicates($conn, $merchantId);
-        if (!empty($duplicates)) {
-            $invalidMerchantIds = array_merge($invalidMerchantIds, $duplicates);
-        }
     }
 
     fclose($handle);
@@ -196,19 +178,32 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     if (!empty($invalidMerchantIds)) {
         $conn->close();
-        displayMessage('error', 'Errors found:<br>' . implode('<br>', $invalidMerchantIds));
+
+        // Count total number of errors
+        $totalErrors = count($invalidMerchantIds);
+
+        displayMessage('error', "Errors found: {$totalErrors}<br>" . implode('<br>', $invalidMerchantIds));
         exit();
     }
 
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle);
 
-    $stmt1 = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt1 = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type, effective_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $fee_id = Uuid::uuid4()->toString();
         $data[1] = strtolower($data[1]);
-        $stmt1->bind_param("ssssssssss", $fee_id, $data[1], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11]);
+
+        $effective_date = !empty($data[12]) ? DateTime::createFromFormat('m/d/Y', $data[12]) : false;
+
+        if ($effective_date instanceof DateTime) {
+            $effective_date = $effective_date ->format('Y-m-d');
+        } else {
+            $effective_date = '0000-00-00';
+        }
+
+        $stmt1->bind_param("sssssssssss", $fee_id, $data[1], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $data[11], $effective_date);
         $stmt1->execute();
 
         updateActivityHistory($conn, $data[1], $userId);

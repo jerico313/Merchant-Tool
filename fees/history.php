@@ -1,30 +1,41 @@
 <?php include("../header.php")?>
 <?php
 $fee_id = isset($_GET['fee_id']) ? $_GET['fee_id'] : '';
-$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
+// $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$merchant_name = isset($_GET['merchant_name']) ? urldecode($_GET['merchant_name']) : '';
 
-function displayFeeHistory($fee_id) {
+function displayFeeHistory($merchant_id) {
     global $conn, $type;
 
-    $sql = "SELECT fh.*, u.name AS changed_by_name
-            FROM fee_history AS fh
-            LEFT JOIN user AS u ON fh.changed_by = u.user_id
-            WHERE fh.fee_id = ?";
+    $sql = "SELECT * FROM fee_all_view WHERE merchant_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $fee_id);
+    $stmt->bind_param("s", $merchant_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $shortFeeId = substr($row['fee_history_id'], 0, 8);
-            echo "<tr>";
-            echo "<td style='text-align:center;'>" . $shortFeeId . "</td>";
-            echo "<td style='text-align:center;'>" . $row['column_name'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['old_value'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['new_value'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['changed_at'] . "</td>";
-            echo "<td style='text-align:center;'>" . $row['changed_by_name'] . "</td>"; 
+            $shortFeeId = substr($row['fee_id'], 0, 8);
+            $escapedMerchantName = htmlspecialchars($row['merchant_name'], ENT_QUOTES, 'UTF-8');
+            
+            echo "<tr data-id='" . $row['fee_id'] . "'>";
+            echo "<td>" . $shortFeeId . "</td>";
+            echo "<td>" . $row['paymaya_credit_card'] . "%" . "</td>";
+            echo "<td>" . $row['gcash'] . "%" . "</td>";
+            echo "<td>" . $row['gcash_miniapp'] . "%" . "</td>";
+            echo "<td>" . $row['paymaya'] . "%" . "</td>";
+            echo "<td>" . $row['maya_checkout'] . "%" . "</td>";
+            echo "<td>" . $row['maya'] . "%" . "</td>";
+            echo "<td>" . $row['lead_gen_commission'] . "%" . "</td>";
+            echo "<td>" . $row['commission_type'] . "</td>";
+            echo "<td>" . $row['effective_date'] . "</td>";
+            echo "<td style='display:none;'>" . $merchant_id . "</td>";
+            if ($type !== 'User') {
+                echo "<td class='actions-cell;'>";
+                    echo "<a href='#' onclick='editFee(\"" . $row['fee_id'] . "\")' style='color:#E96529;pointer'>Edit</a>";            
+                echo "</td>";
+            }
             echo "</tr>";
         }
     }
@@ -76,22 +87,111 @@ function displayFeeHistory($fee_id) {
                 <table id="example" class="table bord" style="width:100%;">
                     <thead>
                         <tr>
-                            <th class="first-col">Fee History ID</th>
-                            <th>Column Name</th>
-                            <th>Old Value</th>
-                            <th>New Value</th>
-                            <th>Change At</th>
-                            <th class="action-col">Changed By</th>
+                            <th class="first-col">Fee ID</th>
+                            <th>Paymaya Credit Card</th>
+                            <th>Gcash</th>
+                            <th>Gcash Miniapp</th>
+                            <th>Paymaya</th>
+                            <th>Maya Checkout</th>
+                            <th>Maya</th>
+                            <th>Leadgen Commission</th>
+                            <th>Commission Type</th>
+                            <th>Effective Date</th>
+                            <th style="display:none;"></th>
+                            <th class="action-col" style="width:8%;">Action</th>
                         </tr>
                     </thead>
                     <tbody id="dynamicTableBody">
-                    <?php displayFeeHistory($fee_id); ?>
+                    <?php displayFeeHistory($merchant_id); ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="editFeeModal" data-bs-backdrop="static" tabindex="-1"
+    aria-labelledby="editFeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:20px;">
+        <div class="modal-header border-0">
+        <p class="modal-title" id="editFeeModalLabel">Edit Fee Details</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form id="editFeeForm" action="edit.php" method="POST">
+            <input type="hidden" id="feeId" name="feeId">
+            <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+            <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
+            <input type="hidden" id="merchantName" name="merchantName" value="<?php echo htmlspecialchars($merchant_name); ?>">
+
+            <div class="mb-3">
+            <label for="paymayaCreditCard" class="form-label">Paymaya Credit Card, Maya Checkout, & Maya<span
+                class="text-danger" style="padding:2px">*</span></label>
+            <div class="input-group">
+                <input type="number" step="0.01" class="form-control" id="paymayaCreditCard" name="paymayaCreditCard"
+                min="0.00" placeholder="0.00" required>
+                <span class="input-group-text">%</span>
+            </div>
+            </div>
+            <div class="mb-3">
+            <label for="gcash" class="form-label">Gcash<span class="text-danger"
+                style="padding:2px">*</span></label>
+            <div class="input-group">
+                <input type="number" step="0.01" class="form-control" id="gcash" name="gcash" min="0.00"
+                placeholder="0.00" required>
+                <span class="input-group-text">%</span>
+            </div>
+            </div>
+            <div class="mb-3">
+            <label for="gcashMiniapp" class="form-label">Gcash Miniapp<span class="text-danger"
+                style="padding:2px">*</span></label>
+            <div class="input-group">
+                <input type="number" step="0.01" class="form-control" id="gcashMiniapp" name="gcashMiniapp" min="0.00"
+                placeholder="0.00" required>
+                <span class="input-group-text">%</span>
+            </div>
+            </div>
+            <div class="mb-3">
+            <label for="paymaya" class="form-label">Paymaya<span class="text-danger"
+                style="padding:2px">*</span></label>
+            <div class="input-group">
+                <input type="number" step="0.01" class="form-control" id="paymaya" name="paymaya" min="0.00"
+                placeholder="0.00" required>
+                <span class="input-group-text">%</span>
+            </div>
+            </div>
+            <div class="mb-3">
+            <label for="leadgenCommission" class="form-label">Leadgen Commission<span class="text-danger"
+                style="padding:2px">*</span></label>
+            <div class="input-group">
+                <input type="number" step="0.01" class="form-control" id="leadgenCommission" name="leadgenCommission"
+                min="0.00" placeholder="0.00" required>
+                <span class="input-group-text">%</span>
+            </div>
+            </div>
+            <div class="mb-3">
+            <label for="commissionType" class="form-label">Commission Type<span class="text-danger"
+                style="padding:2px">*</span></label>
+            <select class="form-select" id="commissionType" name="commissionType" required>
+                <option selected disabled>-- Select Commission Type --</option>
+                <option value="VAT Inc">VAT Inc</option>
+                <option value="VAT Exc">VAT Exc</option>
+            </select>
+            </div>
+            <div class="mb-3">
+            <label for="effectiveDate" class="form-label">
+                Effective Date<span class="text-danger" style="padding:2px">*</span>
+            </label>
+            <input type="date" class="form-control" id="effectiveDate" name="effectiveDate" required>
+            </div>
+            <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+
 <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
 <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
 <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
@@ -102,15 +202,42 @@ $(window).on('load', function() {
    $('.cont-box').show();
 
    var table = $('#example').DataTable({
-      scrollX: true,
-      order: [[4, 'desc']],
-        createdRow: function (row, data, dataIndex) {
-            var date = new Date(data[4]);
-            var formattedDate = date.toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            $('td:eq(4)', row).html(formattedDate); 
-        }
+      scrollX: true,yorder: [[1, 'asc']]
    }); 
 });
+</script>
+
+<script>
+    function editFee(feeUuid) {
+        var feeRow = $('#dynamicTableBody').find('tr[data-id="' + feeUuid + '"]');
+        var paymayaCreditCard = feeRow.find('td:nth-child(2)').text().replace('%', '').trim();
+        var gcash = feeRow.find('td:nth-child(3)').text().replace('%', '').trim();
+        var gcashMiniapp = feeRow.find('td:nth-child(4)').text().replace('%', '').trim();
+        var paymaya = feeRow.find('td:nth-child(5)').text().replace('%', '').trim();
+        var mayaCheckout = feeRow.find('td:nth-child(6)').text().replace('%', '').trim();
+        var maya = feeRow.find('td:nth-child(7)').text().replace('%', '').trim();
+        var leadgenCommission = feeRow.find('td:nth-child(8)').text().replace('%', '').trim();
+        var commissionType = feeRow.find('td:nth-child(9)').text();
+        var effectiveDate = feeRow.find('td:nth-child(10)').text();
+        var merchantId = feeRow.find('td:nth-child(11)').text();
+        var merchantName = "<?php echo $merchant_name; ?>";
+        console.log("Merchant Name: ", merchantName); // Log the merchant name
+
+        $('#feeId').val(feeUuid);
+        $('#paymayaCreditCard').val(paymayaCreditCard);
+        $('#gcash').val(gcash);
+        $('#gcashMiniapp').val(gcashMiniapp);
+        $('#paymaya').val(paymaya);
+        $('#mayaCheckout').val(mayaCheckout);
+        $('#maya').val(maya);
+        $('#leadgenCommission').val(leadgenCommission);
+        $('#commissionType').val(commissionType);
+        $('#effectiveDate').val(effectiveDate);
+        $('#merchantId').val(merchantId);
+        $('#merchantName').val(merchantName);
+
+        $('#editFeeModal').modal('show');
+    }
 </script>
 </body>
 </html>
