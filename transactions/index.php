@@ -82,7 +82,7 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
         echo "<td style='width:3%;'>" . $row['Total Billing'] . "</td>";
         echo "<td style='width:3%;'>" . $row['PG Fee Rate'] . "</td>";
         echo "<td style='width:4%;'>" . $row['PG Fee Amount'] . "</td>";
-        echo "<td style='width:3%;'>" . $row['CWT Rate'] . "%" ."</td>";
+        echo "<td style='width:3%;'>" . $row['CWT Rate'] . "</td>";
         echo "<td style='width:10%;'>" . $AmounttobeDisbursed . "</td>";
         echo "<td style='display:none;'>" . $row['Transaction Date'] . "</td>";
         echo "</tr>";

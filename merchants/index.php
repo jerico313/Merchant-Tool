@@ -14,7 +14,7 @@ function displayMerchant()
       $email_address = strlen($row['email_address']) > 30 ? substr($row['email_address'], 0, 30) . '...' : $row['email_address'];
 
       echo "<tr style='padding:15px 0;' data-uuid='" . $row['merchant_id'] . "'>";
-      echo "<td>" . $shortMerchantId . "</td>";
+      echo "<td>" . $shortMerchantId . "</td  >";
       echo "<td>" . htmlspecialchars($row['merchant_name']) . "</td>";
       echo "<td>" . htmlspecialchars($row['merchant_partnership_type']) . "</td>";
       echo "<td>" . htmlspecialchars($row['legal_entity_name']) . "</td>";
@@ -141,7 +141,12 @@ function displayMerchant()
             <form id="editMerchantForm" action="edit.php" method="POST">
               <input type="hidden" id="merchantId" name="merchantId">
               <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-
+              <div class="mb-3">
+                  <label for="merchantId" class="form-label">
+                      Merchant ID
+                  </label>
+                  <input type="text" class="form-control" id="merchantId1" name="merchantId1" disabled>
+              </div>
               <div class="mb-3">
                 <label for="merchantName" class="form-label">
                   Merchant Name<span class="text-danger" style="padding:2px">*</span>
@@ -157,7 +162,7 @@ function displayMerchant()
                   <option selected disabled>-- Select Partnership Type --</option>
                   <option value="Primary">Primary</option>
                   <option value="Secondary">Secondary</option>
-                  <option value="Unknown partnership type">Unknown partnership type</option>
+                  <option value="-">Unknown partnership type</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -325,6 +330,7 @@ function displayMerchant()
         var accountManager = merchantRow.find('td:nth-child(9)').text(); 
 
         $('#merchantId').val(merchantUuid);
+        $('#merchantId1').val(merchantUuid);
         $('#merchantName').val(merchantName);
         $('#merchantParntershipType').val(merchantParntershipType);
 
@@ -346,13 +352,13 @@ function displayMerchant()
           $('#emailAddress').val(emailAddress);
         }
 
-        if (sales === 'No assigned person') {
+        if (sales === '-') {
           $('#sales').val(null);
         } else {
           $('#sales').val(sales);
         }
 
-        if (accountManager === 'No assigned person') {
+        if (accountManager === '-') {
           $('#accountManager').val(null);
         } else {
           $('#accountManager').val(accountManager);

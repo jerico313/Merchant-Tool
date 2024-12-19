@@ -76,14 +76,14 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                                 name="store_name[]" placeholder="Enter store name"
                                                 required maxlength="255">
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="legal_entity_name" class="form-label" id="form-input-label">Legal Entity Name</label>
                                             <input id="form-input-field" type="text" class="form-control" 
                                                 name="legal_entity_name[]" placeholder="Enter legal entity name"
                                                 maxlength="255">
                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="store_address" class="form-label" id="form-input-label">Store Address</label>
                                             <textarea id="form-input-field" class="form-control" rows="1" 
@@ -94,13 +94,23 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                             <textarea id="form-input-field" class="form-control" rows="1" 
                                                 name="email_address[]" placeholder="Enter email address"></textarea>
                                         </div>
-                                        <!-- <div class="mb-3">
+                                        <div class="mb-3">
                                             <label for="cwt_rate" class="form-label" id="form-input-label">
-                                                CWT Rate<span class="text-danger" style="padding:2px">*</span>
+                                                Current CWT Rate<span class="text-danger" style="padding:2px">*</span>
                                             </label>
-                                            <input id="form-input-field" type="number" class="form-control"
-                                                name="cwt_rate[]" placeholder="0.00" id="cwt_rate" required>
-                                        </div> -->
+                                            <div class="input-group">
+                                                <input id="form-input-field" type="number" class="form-control"
+                                                    name="cwt_rate[]" step="0.01" min="0.00" placeholder="0.00" id="cwt_rate" required>
+                                                <span class="input-group-text">%</span>
+                                            </div>                                            
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="effective_date" class="form-label" id="form-input-label">
+                                                Current CWT Rate Effective Date<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <input id="form-input-field" type="date" class="form-control"
+                                                name="effective_date[]" id="effective_date" required>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -151,14 +161,14 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                 name="store_name[]" placeholder="Enter store name"
                                 required maxlength="255">
                         </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="mb-3">
                             <label for="legal_entity_name" class="form-label" id="form-input-label">Legal Entity Name</label>
                             <input id="form-input-field" type="text" class="form-control" 
                                 name="legal_entity_name[]" placeholder="Enter legal entity name"
                                 maxlength="255">
                         </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="mb-3">
                             <label for="store_address" class="form-label" id="form-input-label">Store Address</label>
                             <textarea id="form-input-field" class="form-control" rows="1" 
@@ -168,6 +178,23 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                             <label for="email_address" class="form-label" id="form-input-label">Email Address</label>
                             <textarea id="form-input-field" class="form-control" rows="1" 
                                 name="email_address[]" placeholder="Enter email address"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cwt_rate" class="form-label" id="form-input-label">
+                                Current CWT Rate<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <div class="input-group">
+                                <input id="form-input-field" type="number" class="form-control"
+                                    name="cwt_rate[]" step="0.01" min="0.00" placeholder="0.00" id="cwt_rate" required>
+                                <span class="input-group-text">%</span>
+                            </div>                                            
+                        </div>
+                        <div class="mb-3">
+                            <label for="effective_date" class="form-label" id="form-input-label">
+                                Current CWT Rate Effective Date<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input id="form-input-field" type="date" class="form-control"
+                                name="effective_date[]" id="effective_date" required>
                         </div>
                     </div>
                     <div class="mb-3 mt-3" style="text-align:right;">
@@ -180,13 +207,7 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
             formFields.appendChild(newField);
         });
 
-        // <div class="mb-3">
-        //     <label for="cwt_rate" class="form-label" id="form-input-label">
-        //         CWT Rate<span class="text-danger" style="padding:2px">*</span>
-        //     </label>
-        //     <input id="form-input-field" type="number" class="form-control"
-        //         name="cwt_rate[]" placeholder="0.00" id="cwt_rate" required>
-        // </div>
+        
 
         document.addEventListener('click', function (e) {
             if (e.target && e.target.classList.contains('remove-field')) {

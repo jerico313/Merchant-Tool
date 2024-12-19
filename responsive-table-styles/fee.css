@@ -86,11 +86,11 @@
     }
 
     td:nth-of-type(11):before {
-        content: "CWT Rate";
+        content: "Effective Date";
     }
 
     td:nth-of-type(12):before {
-        content: "Actions";
+        content: "Action";
     }
 
     .dataTables_length {

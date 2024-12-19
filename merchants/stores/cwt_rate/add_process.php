@@ -1,9 +1,12 @@
 <?php
 $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
 $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
+$store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
+$store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 
-require_once("../../header.php");
-require_once '../../inc/config.php';
+require_once("../../../header.php");
+require_once '../../../inc/config.php';
+require_once '../../../vendor/autoload.php'; 
 
 $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
@@ -12,52 +15,31 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $store_id, $merchant_id, $store_name, $legal_entity_name, $store_address, $email_address);
-
-    $stmt1 = $conn->prepare("INSERT INTO cwt_rate (store_id, cwt_rate, effective_date) VALUES (?, ?, ?)");
-    $stmt1->bind_param("sss", $store_id, $cwt_rate, $effective_date);
+    $stmt = $conn->prepare("INSERT INTO cwt_rate (store_id, cwt_rate, effective_date) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $store_id, $cwt_rate, $effective_date);
 
     foreach ($_POST['store_id'] as $key => $value) {
         $store_id = $_POST['store_id'][$key];
-        $merchant_id = $_POST['merchant_id'][$key];
-        $store_name = $_POST['store_name'][$key];
-        $legal_entity_name = empty($_POST['legal_entity_name'][$key]) ? NULL : $_POST['legal_entity_name'][$key];
-        $store_address = empty($_POST['store_address'][$key]) ? NULL : $_POST['store_address'][$key];
-        $email_address = empty($_POST['email_address'][$key]) ? NULL : $_POST['email_address'][$key];
         $cwt_rate = $_POST['cwt_rate'][$key];
         $effective_date = $_POST['effective_date'][$key];
         $stmt->execute();
-        $stmt1->execute();
-
-        $user_id = $_SESSION['user_id']; 
 
         $update_stmt = $conn->prepare("
-            UPDATE activity_history
-            SET user_id = ?
-            WHERE table_id = ?
-            AND (user_id IS NULL OR user_id = '')
-            AND activity_type = 'Add'
-        ");
-
-        $update_stmt->bind_param("ss", $user_id, $store_id);
-        $update_stmt->execute();
-        $update_stmt->close();
-
-        $update_stmt1 = $conn->prepare("
             UPDATE activity_history
             SET user_id = ?
             WHERE (user_id IS NULL OR user_id = '')
             AND (
                 description LIKE CONCAT('%store_id: ', ?, '%') 
-                AND description LIKE CONCAT('%cwt_rate: ', ?, '%') 
-                AND description LIKE CONCAT('%effective_date: ', ?, '%')
+                OR description LIKE CONCAT('%cwt_rate: ', ?, '%') 
+                OR description LIKE CONCAT('%effective_date: ', ?, '%')
             )
-        ");      
+        ");
 
-        $update_stmt1->bind_param("ssss", $user_id, $store_id, $cwt_rate, $effective_date);
-        $update_stmt1->execute();
-        $update_stmt1->close();
+        $user_id = $_SESSION['user_id']; 
+
+        $update_stmt->bind_param("ssss", $user_id, $store_id, $cwt_rate, $effective_date);
+        $update_stmt->execute();
+        $update_stmt->close();
     }
 
     $stmt->close();
@@ -69,11 +51,11 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../../style.css">
     <title>Upload Success</title>
     <style>
         body {
-            background-image: url("../../images/bg_booky.png");
+            background-image: url("../../../images/bg_booky.png");
         }
 
         .container {
@@ -134,14 +116,14 @@ $conn->close();
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
         <h2 style="padding-top:10px;color: #4caf50;">Successfully Added!</h2>
-        <a href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">
+        <a href="index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>">
             <button type="button" class="btn btn-secondary okay">Okay</button>
         </a>
     </div>
     <script>
         setTimeout(function(){
-            window.location.href = 'index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>';
-        }, 3000); 
+            window.location.href = 'index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>';
+        }, 3000);
     </script>
 </body>
 </html>

@@ -220,10 +220,24 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         updateActivityHistory($conn, $data[1], $userId);
     }
 
-    $stmt1 = $conn->prepare("INSERT INTO cwt_rate (store_id, cwt_rate, effective_date) VALUES (?, ?, ?)");
+    rewind($handle); // Reset file pointer
+    fgetcsv($handle); // Skip header
+
+    $stmt = $conn->prepare("INSERT INTO cwt_rate (store_id, cwt_rate, effective_date) VALUES (?, ?, ?)");
     while (($data = fgetcsv($handle)) !== FALSE) {
-        $stmt1->bind_param("sss", $data[3], $data[7], $data[8]);
-        $stmt1->execute();
+        $cwt_rate = empty($data[7]) ? null : $data[7];
+
+        $effective_date = !empty($data[8]) ? DateTime::createFromFormat('m/d/Y', $data[8]) : false;
+
+        if ($effective_date instanceof DateTime) {
+            $effective_date = $effective_date ->format('Y-m-d');
+        } else {
+            $effective_date = '0000-00-00';
+        }
+        if ($cwt_rate !== null && $effective_date !== null) {
+            $stmt->bind_param("sss", $data[3], $cwt_rate, $effective_date);
+            $stmt->execute();
+        }
     }
     fclose($handle);
     $stmt->close();

@@ -7,24 +7,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $legalEntityName = empty($_POST['legalEntityName']) ? NULL : $_POST['legalEntityName'];
     $storeAddress = empty($_POST['storeAddress']) ? NULL : $_POST['storeAddress'];
     $emailAddress = empty($_POST['emailAddress']) ? NULL : $_POST['emailAddress'];
-    $cwtRate = $_POST['cwtRate'];    
     $merchantId = $_POST['merchantId'];
     $merchantName = $_POST['merchantName'];
     $userId = $_POST['userId'];
-
-    $stmt = $conn->prepare("UPDATE store SET store_name=?, merchant_id=?, legal_entity_name=?, store_address=?, email_address=?, cwt_rate=? WHERE store_id=?");
-    $stmt->bind_param("sssssss", $storeName, $merchantId, $legalEntityName, $storeAddress, $emailAddress, $cwtRate, $storeId);
+    
+    $stmt = $conn->prepare("UPDATE store SET store_name=?, legal_entity_name=?, store_address=?, email_address=? WHERE store_id=?");
+    $stmt->bind_param("sssss", $storeName, $legalEntityName, $storeAddress, $emailAddress, $storeId);
 
     if ($stmt->execute()) {
         $stmt = $conn->prepare("SELECT activity_id FROM activity_history ORDER BY created_at DESC LIMIT 1");
         $stmt->execute();
         $stmt->bind_result($latestActivityId);
-        $stmt->fetch();
-        $stmt->close();
-
-        $stmt = $conn->prepare("SELECT cwt_rate_id FROM cwt_rate ORDER BY changed_at DESC LIMIT 1");
-        $stmt->execute();
-        $stmt->bind_result($latestCWTRateId);
         $stmt->fetch();
         $stmt->close();
         
@@ -34,15 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
             $stmt->close();
         }
-        
-        if ($latestCWTRateId) {
-            $stmt = $conn->prepare("UPDATE cwt_rate SET changed_by=? WHERE cwt_rate_id=?");
-            $stmt->bind_param("ss", $userId, $latestCWTRateId);
-            $stmt->execute();
-            $stmt->close();
-        }
 
-        header("Location: index.php?merchant_name=" . htmlspecialchars($merchantName) . "&merchant_id=" . htmlspecialchars($merchantId));
+        header("Location: index.php?merchant_id=" . htmlspecialchars($merchantId) . "&merchant_name=" . htmlspecialchars($merchantName));
         exit();
     } else {
         error_log("Error updating record: " . $stmt->error);

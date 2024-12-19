@@ -39,14 +39,12 @@ function displayStore($merchant_id)
             $escapedLegalEntityName = htmlspecialchars($row['legal_entity_name'], ENT_QUOTES, 'UTF-8');
             $escapedStoreAddress = empty($row['store_address']) ? '-' : htmlspecialchars($row['store_address'], ENT_QUOTES, 'UTF-8');
             if ($type !== 'User') {
-                echo "<li class='list-group-item action-item'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;pointer'>View</a></li>";
                 echo "<li class='list-group-item action-item'><a href='#' onclick='editStore(\"" . $row['store_id'] . "\")' style='color:#E96529;'>Edit</a></li>";
-            } else {
-                echo "<li class='list-group-item action-item'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View</a></li>";
-            }
+            } 
             echo "<li class='list-group-item action-item'><a href='#' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")' style='color:#E96529;'>Check Report</a></li>";
             echo "<li class='list-group-item action-item'><a href='#' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")' style='color:#E96529;'>View Reports</a></li>";
-            echo "<li class='list-group-item action-item'><a href='#' onclick='viewHistory(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View CWT Rates</a></li>";
+            echo "<li class='list-group-item action-item'><a href='#' onclick='viewOrder(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>Transactions</a></li>";
+            echo "<li class='list-group-item action-item'><a href='#' onclick='viewHistory(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>CWT Rates</a></li>";
             echo "</ul>";
             echo "</div>";
             echo "</td>";
@@ -177,17 +175,16 @@ function displayStore($merchant_id)
                 </div>
                 <div class="modal-body">
                     <form id="editStoreForm" action="edit.php" method="POST">
-                        <input type="hidden" id="merchantId" name="merchantId"
-                            value="<?php echo htmlspecialchars($merchant_id); ?>">
-                        <input type="hidden" id="merchantName" name="merchantName"
-                            value="<?php echo htmlspecialchars($merchant_name); ?>">
+                        <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
+                        <input type="hidden" id="merchantName" name="merchantName" value="<?php echo htmlspecialchars($merchant_name); ?>">
+                        <input type="hidden" id="storeId" name="storeId">
                         <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
 
                         <div class="mb-3">
                             <label for="storeId" class="form-label">
                                 Store ID
                             </label>
-                            <input type="text" class="form-control" id="storeId" name="storeId" disabled>
+                            <input type="text" class="form-control" id="storeId1" name="storeId1" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="storeName" class="form-label">
@@ -210,15 +207,6 @@ function displayStore($merchant_id)
                             <label for="emailAddress" class="form-label">Email Address</label>
                             <textarea class="form-control" rows="2" id="emailAddress" name="emailAddress"
                                 placeholder="Enter email address"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="CWT Rate" class="form-label">Current CWT Rate<span class="text-danger"
-                                style="padding:2px">*</span></label>
-                            <div class="input-group">
-                            <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate"
-                                min="0.00" placeholder="0.00" required>
-                            <span class="input-group-text">%</span>
-                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
                     </form>
@@ -310,18 +298,16 @@ function displayStore($merchant_id)
     <script>
         function editStore(storeId) {
             var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
-            var storeId1 = storeRow.attr('data-uuid');
             var storeName = storeRow.find('td:nth-child(2)').text();
             var legalEntityName = storeRow.find('td:nth-child(3)').text();
             var storeAddress = storeRow.find('td:nth-child(4)').text();
             var emailAddress = storeRow.find('td:nth-child(5)').text();
-            var cwtRate = storeRow.find('td:nth-child(7)').text().replace('%', '').trim();
             var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>";
             var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; 
 
-            $('#storeId').val(storeId1);
+            $('#storeId').val(storeId);
+            $('#storeId1').val(storeId);
             $('#storeName').val(storeName);
-            $('#cwtRate').val(cwtRate);
 
             if (legalEntityName === '-') {
                 $('#legalEntityName').val(null);
@@ -356,7 +342,7 @@ function displayStore($merchant_id)
         }
 
         function viewHistory(storeId, merchantName, storeName) {
-            window.location.href = 'history.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
+            window.location.href = 'cwt_rate/index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=' + encodeURIComponent(merchantName) + '&store_id=' + encodeURIComponent(storeId) + '&store_name=' + encodeURIComponent(storeName);
         }
     </script>
     <script>
@@ -425,18 +411,6 @@ function displayStore($merchant_id)
                 actionsList.style.display = 'none';
             }
         }
-    </script>
-     <script>
-      const inputs = document.querySelectorAll('#cwtRate');
-      inputs.forEach(input => {
-        input.addEventListener('blur', function () {
-          let value = this.value;
-
-          if (!isNaN(value) && Number.isInteger(parseFloat(value))) {
-            this.value = parseFloat(value).toFixed(2);
-          }
-        });
-      });
     </script>
 </body>
 
