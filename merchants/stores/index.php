@@ -46,7 +46,7 @@ function displayStore($merchant_id)
             }
             echo "<li class='list-group-item action-item'><a href='#' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")' style='color:#E96529;'>Check Report</a></li>";
             echo "<li class='list-group-item action-item'><a href='#' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")' style='color:#E96529;'>View Reports</a></li>";
-            echo "<li class='list-group-item action-item'><a href='#' onclick='viewHistory(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View History</a></li>";
+            echo "<li class='list-group-item action-item'><a href='#' onclick='viewHistory(\"" . $row['store_id'] . "\", \"" . $escapedMerchantName . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View CWT Rates</a></li>";
             echo "</ul>";
             echo "</div>";
             echo "</td>";
@@ -136,7 +136,7 @@ function displayStore($merchant_id)
                 <div class="add-btns">
                     <p class="title2"><?php echo htmlspecialchars($merchant_name); ?></p>
                     <a
-                        href="upload.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">
+                        href="add.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>">
                         <button type="button" class="btn btn-primary add-merchant">
                             <i class="fa-solid fa-plus"></i> Add Store
                         </button>
@@ -153,7 +153,7 @@ function displayStore($merchant_id)
                                 <th>Store Address</th>
                                 <th style="display:none;"></th>
                                 <th>Email Address</th>
-                                <th>CWT Rate</th>
+                                <th>Current CWT Rate</th>
                                 <th class="action-col" style="width:7%;">Actions</th>
                             </tr>
                         </thead>
@@ -177,13 +177,18 @@ function displayStore($merchant_id)
                 </div>
                 <div class="modal-body">
                     <form id="editStoreForm" action="edit.php" method="POST">
-                        <input type="hidden" id="storeId" name="storeId">
                         <input type="hidden" id="merchantId" name="merchantId"
                             value="<?php echo htmlspecialchars($merchant_id); ?>">
                         <input type="hidden" id="merchantName" name="merchantName"
                             value="<?php echo htmlspecialchars($merchant_name); ?>">
                         <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
 
+                        <div class="mb-3">
+                            <label for="storeId" class="form-label">
+                                Store ID
+                            </label>
+                            <input type="text" class="form-control" id="storeId" name="storeId" disabled>
+                        </div>
                         <div class="mb-3">
                             <label for="storeName" class="form-label">
                                 Store Name<span class="text-danger" style="padding:2px">*</span>
@@ -207,7 +212,7 @@ function displayStore($merchant_id)
                                 placeholder="Enter email address"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="CWT Rate" class="form-label">CWT Rate<span class="text-danger"
+                            <label for="CWT Rate" class="form-label">Current CWT Rate<span class="text-danger"
                                 style="padding:2px">*</span></label>
                             <div class="input-group">
                             <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate"
@@ -305,6 +310,7 @@ function displayStore($merchant_id)
     <script>
         function editStore(storeId) {
             var storeRow = $('#dynamicTableBody').find('tr[data-uuid="' + storeId + '"]');
+            var storeId1 = storeRow.attr('data-uuid');
             var storeName = storeRow.find('td:nth-child(2)').text();
             var legalEntityName = storeRow.find('td:nth-child(3)').text();
             var storeAddress = storeRow.find('td:nth-child(4)').text();
@@ -313,7 +319,7 @@ function displayStore($merchant_id)
             var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>";
             var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; 
 
-            $('#storeId').val(storeId);
+            $('#storeId').val(storeId1);
             $('#storeName').val(storeName);
             $('#cwtRate').val(cwtRate);
 

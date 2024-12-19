@@ -22,7 +22,7 @@ function displayStore()
       echo "<td>" . $row['store_address'] . "</td>";
       echo "<td style='display:none;'>" . htmlspecialchars($email_address_full) . "</td>";
       echo "<td class='text-cell' data-full='" . htmlentities($email_address_full) . "' data-short='" . htmlentities($email_address) . "'>" . $email_address . "</td>";
-      echo "<td>" . $row['cwt_rate'] ."%". "</td>";
+      echo "<td style='width:10%'>" . $row['cwt_rate'] ."%". "</td>";
 
       echo "<td class='actions-cell'>";
       echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
@@ -39,7 +39,7 @@ function displayStore()
       }
       echo "<li class='list-group-item action-item'><a href='#' onclick='checkReport(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\", \"" . $escapedStoreAddress . "\")' style='color:#E96529;'>Check Report</a></li>";
       echo "<li class='list-group-item action-item'><a href='#' onclick='viewReport(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\", \"" . $escapedLegalEntityName . "\")' style='color:#E96529;'>View Reports</a></li>";
-      echo "<li class='list-group-item action-item'><a href='#' onclick='viewHistory(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View History</a></li>";
+      echo "<li class='list-group-item action-item'><a href='#' onclick='viewHistory(\"" . $row['store_id'] . "\", \"" . $escapedStoreName . "\")' style='color:#E96529;'>View CWT Rates</a></li>";
       echo "</ul>";
       echo "</div>";
       echo "</td>";
@@ -112,7 +112,7 @@ function displayStore()
                 <th>Store Address</th>
                 <th style="display:none;"></th>
                 <th>Email Address</th>
-                <th>CWT Rate</th>
+                <th>Current CWT Rate</th>
                 <th class="action-col" style="width:6%">Actions</th>
               </tr>
             </thead>
@@ -168,7 +168,7 @@ function displayStore()
                   placeholder="Enter email address" rows="2"></textarea>
               </div>
               <div class="mb-3">
-                <label for="CWT Rate" class="form-label">CWT Rate<span class="text-danger"
+                <label for="CWT Rate" class="form-label">Current CWT Rate<span class="text-danger"
                   style="padding:2px">*</span></label>
                 <div class="input-group">
                 <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate"

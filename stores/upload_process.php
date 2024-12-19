@@ -207,19 +207,24 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
-    $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address, cwt_rate) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO store (store_id, merchant_id, store_name, legal_entity_name, store_address, email_address) VALUES (?, ?, ?, ?, ?, ?)");
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $data[1] = strtolower($data[1]);
         $data[4] = empty($data[4]) ? null : $data[4];
         $data[5] = empty($data[5]) ? null : $data[5]; 
         $data[6] = empty($data[6]) ? null : $data[6];
-        $stmt->bind_param("sssssss", $data[3], $data[1], $data[2], $data[4], $data[5], $data[6], $data[7]);
+        $stmt->bind_param("ssssss", $data[3], $data[1], $data[2], $data[4], $data[5], $data[6]);
         $stmt->execute();
 
         updateActivityHistory($conn, $data[1], $userId);
     }
 
+    $stmt1 = $conn->prepare("INSERT INTO cwt_rate (store_id, cwt_rate, effective_date) VALUES (?, ?, ?)");
+    while (($data = fgetcsv($handle)) !== FALSE) {
+        $stmt1->bind_param("sss", $data[3], $data[7], $data[8]);
+        $stmt1->execute();
+    }
     fclose($handle);
     $stmt->close();
     $conn->close();
