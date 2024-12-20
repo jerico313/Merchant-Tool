@@ -30,8 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             WHERE (user_id IS NULL OR user_id = '')
             AND (
                 description LIKE CONCAT('%store_id: ', ?, '%') 
-                OR description LIKE CONCAT('%cwt_rate: ', ?, '%') 
-                OR description LIKE CONCAT('%effective_date: ', ?, '%')
+                AND description LIKE CONCAT('%cwt_rate: ', ?, '%') 
+                AND description LIKE CONCAT('%effective_date: ', ?, '%')
             )
         ");
 

@@ -15,8 +15,8 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $stmt = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type,) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssssss", $fee_id, $merchant_id, $paymaya_creditcard, $gcash, $gcash_miniapp, $paymaya, $paymaya_creditcard, $paymaya_creditcard, $leadgen_commission, $commission_type);
+    $stmt = $conn->prepare("INSERT INTO fee (fee_id, merchant_id, paymaya_credit_card, gcash, gcash_miniapp, paymaya, maya_checkout, maya, lead_gen_commission, commission_type, effective_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssssss", $fee_id, $merchant_id, $paymaya_creditcard, $gcash, $gcash_miniapp, $paymaya, $paymaya_creditcard, $paymaya_creditcard, $leadgen_commission, $commission_type, $effective_date);
 
     foreach ($_POST['merchant_id'] as $key => $value) {
         $fee_id = Uuid::uuid4()->toString();
@@ -27,18 +27,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $paymaya = $_POST['paymaya'][$key];
         $leadgen_commission = $_POST['leadgen_commission'][$key];
         $commission_type = $_POST['commission_type'][$key];
+        $effective_date = $_POST['effective_date'][$key];
         $stmt->execute();
 
         $update_stmt = $conn->prepare("
             UPDATE activity_history
             SET user_id = ?
             WHERE (user_id IS NULL OR user_id = '')
-            AND description LIKE CONCAT('%merchant_id: ', ?, '%')
+            AND table_id = ?
         ");
+        
 
         $user_id = $_SESSION['user_id']; 
 
-        $update_stmt->bind_param("ss", $user_id, $merchant_id);
+        $update_stmt->bind_param("ss", $user_id, $fee_id);
         $update_stmt->execute();
         $update_stmt->close();
     }

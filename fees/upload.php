@@ -7,14 +7,13 @@ function fetchMerchants()
 
     $merchantSql = "SELECT m.merchant_id, m.merchant_name 
                     FROM merchant m
-                    LEFT JOIN fee f ON m.merchant_id = f.merchant_id
-                    WHERE f.merchant_id IS NULL
                     ORDER BY m.merchant_name ASC";
     $merchantResult = $conn->query($merchantSql);
 
     if ($merchantResult->num_rows > 0) {
         while ($merchantRow = $merchantResult->fetch_assoc()) {
-            echo "<option value='" . htmlspecialchars($merchantRow['merchant_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($merchantRow['merchant_name'], ENT_QUOTES, 'UTF-8') . "</option>";
+            $shortMerchantId = substr($merchantRow['merchant_id'], 0, 8);
+            echo "<option value='" . htmlspecialchars($merchantRow['merchant_id'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($merchantRow['merchant_name'], ENT_QUOTES, 'UTF-8') . " [" . $shortMerchantId . "]" . "</option>";
         }
     } else {
         echo "<option value=''>No merchants found</option>";
@@ -28,7 +27,7 @@ function fetchMerchants()
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Merchants</title>
+    <title>Add Fees</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
@@ -142,7 +141,7 @@ function fetchMerchants()
                                         
                                     </div>
                                     <div class="col-md-6">
-                                    <div class="mb-3">
+                                        <div class="mb-3">
                                             <label for="Paymaya" class="form-label"
                                                 id="form-input-label">Paymaya<span class="text-danger" style="padding:2px">*</span></label>
                                             <input id="form-input-field" type="number" class="form-control"
@@ -162,6 +161,13 @@ function fetchMerchants()
                                                 <option value="Vat Inc">Vat Inc</option>
                                                 <option value="Vat Exc">Vat Exc</option>
                                             </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="effective_date" class="form-label" id="form-input-label">
+                                                Effective Date<span class="text-danger" style="padding:2px">*</span>
+                                            </label>
+                                            <input id="form-input-field" type="date" class="form-control"
+                                                name="effective_date[]" id="effective_date" required>
                                         </div>
                                     </div>
                                 </div>
@@ -211,65 +217,72 @@ function fetchMerchants()
             newField.classList.add('form-group');
             newField.innerHTML = `
                 <div class="row">
-                <hr style="border: 1px solid #3b3b3b;">
-                 <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="merchant_id" class="form-label" id="form-input-label">
-                                                Merchant Name<span class="text-danger" style="padding:2px">*</span>
-                                            </label>
-                                            <select id="form-input-field" class="form-select" name="merchant_id[]" required>
-                                                <option value="" disabled selected>-- Select Merchant --</option>
-                                                <?php fetchMerchants(); ?>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="paymaya_creditcard" class="form-label" id="form-input-label">
-                                                Paymaya Credit Card, Maya Checkout, & Maya<span class="text-danger" style="padding:2px">*</span>
-                                            </label>
-                                            <input id="form-input-field" type="number" class="form-control"
-                                                name="paymaya_creditcard[]" step="0.01" id="paymaya_creditcard"placeholder="0.00" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="gcash" class="form-label"
-                                                id="form-input-label">
-                                                Gcash<span class="text-danger" style="padding:2px">*</span>
-                                            </label>
-                                            <input id="form-input-field" type="number" class="form-control"
-                                                name="gcash[]" id="gcash" placeholder="0.00" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="gcash_miniapp" class="form-label"
-                                                id="form-input-label">
-                                                Gcash Miniapp<span class="text-danger" style="padding:2px">*</span>
-                                            </label>
-                                            <input id="form-input-field" type="number" class="form-control"
-                                                name="gcash_miniapp[]" id="gcash_miniapp" placeholder="0.00" required>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="col-md-6">
-                                    <div class="mb-3">
-                                            <label for="Paymaya" class="form-label"
-                                                id="form-input-label">Paymaya<span class="text-danger" style="padding:2px">*</span></label>
-                                            <input id="form-input-field" type="number" class="form-control"
-                                                name="paymaya[]" id="paymaya" placeholder="0.00" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="leadgen_commission" class="form-label"
-                                                id="form-input-label">Leadgen Commission<span class="text-danger" style="padding:2px">*</span></label>
-                                            <input id="form-input-field" type="number" class="form-control"
-                                                name="leadgen_commission[]" id="leadgen_commission" placeholder="0.00" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="commission_type" class="form-label" id="form-input-label">Commission Type<span class="text-danger" style="padding:2px">*</span></label>
-                                            <select id="form-input-field" class="form-select"
-                                                name="commission_type[]" required>
-                                                <option value="" disabled selected>-- Select Commission Type --</option>
-                                                <option value="Vat Inc">Vat Inc</option>
-                                                <option value="Vat Exc">Vat Exc</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                    <hr style="border: 1px solid #3b3b3b;">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="merchant_id" class="form-label" id="form-input-label">
+                                Merchant Name<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <select id="form-input-field" class="form-select" name="merchant_id[]" required>
+                                <option value="" disabled selected>-- Select Merchant --</option>
+                                <?php fetchMerchants(); ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="paymaya_creditcard" class="form-label" id="form-input-label">
+                                Paymaya Credit Card, Maya Checkout, & Maya<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input id="form-input-field" type="number" class="form-control"
+                                name="paymaya_creditcard[]" step="0.01" id="paymaya_creditcard"placeholder="0.00" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gcash" class="form-label"
+                                id="form-input-label">
+                                Gcash<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input id="form-input-field" type="number" class="form-control"
+                                name="gcash[]" id="gcash" placeholder="0.00" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gcash_miniapp" class="form-label"
+                                id="form-input-label">
+                                Gcash Miniapp<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input id="form-input-field" type="number" class="form-control"
+                                name="gcash_miniapp[]" id="gcash_miniapp" placeholder="0.00" required>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6">
+                    <div class="mb-3">
+                            <label for="Paymaya" class="form-label"
+                                id="form-input-label">Paymaya<span class="text-danger" style="padding:2px">*</span></label>
+                            <input id="form-input-field" type="number" class="form-control"
+                                name="paymaya[]" id="paymaya" placeholder="0.00" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="leadgen_commission" class="form-label"
+                                id="form-input-label">Leadgen Commission<span class="text-danger" style="padding:2px">*</span></label>
+                            <input id="form-input-field" type="number" class="form-control"
+                                name="leadgen_commission[]" id="leadgen_commission" placeholder="0.00" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="commission_type" class="form-label" id="form-input-label">Commission Type<span class="text-danger" style="padding:2px">*</span></label>
+                            <select id="form-input-field" class="form-select"
+                                name="commission_type[]" required>
+                                <option value="" disabled selected>-- Select Commission Type --</option>
+                                <option value="Vat Inc">Vat Inc</option>
+                                <option value="Vat Exc">Vat Exc</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="effective_date" class="form-label" id="form-input-label">
+                                Effective Date<span class="text-danger" style="padding:2px">*</span>
+                            </label>
+                            <input id="form-input-field" type="date" class="form-control"
+                                name="effective_date[]" id="effective_date" required>
+                        </div>
+                    </div>
                     <div class="mb-3 mt-3" style="text-align:right;">
                         <button type="button" class="btn btn-danger remove-field" id="remove-field"><i class="fa-solid fa-trash"></i> Remove</button>
                     </div>
