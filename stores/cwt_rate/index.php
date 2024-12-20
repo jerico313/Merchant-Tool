@@ -1,7 +1,5 @@
-<?php include("../../../header.php") ?>
+<?php include("../../header.php") ?>
 <?php
-$merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
-$merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
 $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : '';
 $store_name = isset($_GET['store_name']) ? $_GET['store_name'] : '';
 
@@ -49,8 +47,8 @@ function displayRateHistory($store_id)
     <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="../../../style.css">
-    <link rel="stylesheet" href="../../../responsive-table-styles/fee_history.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../responsive-table-styles/fee_history.css">
     </style>
 </head>
 
@@ -82,11 +80,7 @@ function displayRateHistory($store_id)
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb" style="--bs-breadcrumb-divider: '|';">
                                 <li class="breadcrumb-item">
-                                    <a href="../../index.php" style="color:#E96529; font-size:14px;">Merchants</a>
-                                </li>
-                                <li class="breadcrumb-item">
-                                    <a href="../index.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>"
-                                        style="color:#E96529; font-size:14px;">
+                                    <a href="../index.php" style="color:#E96529; font-size:14px;">
                                         Stores
                                     </a>
                                 </li>
@@ -102,7 +96,7 @@ function displayRateHistory($store_id)
                 <div class="add-btns">
                     <p class="title2"><?php echo htmlspecialchars($store_name); ?></p>
                     <a
-                        href="add.php?merchant_id=<?php echo htmlspecialchars($merchant_id); ?>&merchant_name=<?php echo htmlspecialchars($merchant_name); ?>&store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>">
+                        href="add.php?store_id=<?php echo htmlspecialchars($store_id); ?>&store_name=<?php echo htmlspecialchars($store_name); ?>">
                         <button type="button" class="btn btn-primary add-merchant">
                             <i class="fa-solid fa-plus"></i> Add CWT Rate
                         </button>
@@ -137,8 +131,6 @@ function displayRateHistory($store_id)
                 </div>
                 <div class="modal-body">
                     <form id="editRateForm" action="edit.php" method="POST">
-                        <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
-                        <input type="hidden" id="merchantName" name="merchantName" value="<?php echo htmlspecialchars($merchant_name); ?>">
                         <input type="hidden" id="storeId" name="storeId" value="<?php echo htmlspecialchars($store_id); ?>">
                         <input type="hidden" id="storeName" name="storeName" value="<?php echo htmlspecialchars($store_name); ?>">
                         <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
@@ -175,7 +167,7 @@ function displayRateHistory($store_id)
     <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
     <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
     <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
-    <script src="../../js/script.js"></script>
+    <script src="../js/script.js"></script>
     <script>
         $(window).on('load', function () {
             $('.loading').hide();
@@ -197,13 +189,9 @@ function displayRateHistory($store_id)
             var cwt_rate_id = cwtRateRow.attr('data-id');
             var cwt_rate = cwtRateRow.find('td:nth-child(2)').text().replace('%', '').trim();
             var effective_date = cwtRateRow.find('td:nth-child(3)').text();
-            var merchantId = "<?php echo htmlspecialchars($merchant_id); ?>";
-            var merchantName = "<?php echo htmlspecialchars($merchant_name); ?>"; 
             var storeId = "<?php echo htmlspecialchars($store_id); ?>";
             var storeName = "<?php echo htmlspecialchars($store_name); ?>"; 
 
-            $('#merchantId').val(merchantId);
-            $('#merchantName').val(merchantName);
             $('#storeId').val(storeId);
             $('#storeName').val(storeName);
             $('#cwt_rate_id').val(cwt_rate_id);
