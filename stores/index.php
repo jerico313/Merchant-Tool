@@ -103,10 +103,10 @@ function displayStore()
             <thead>
               <tr>
                 <th class="first-col" style="width:7%">Store ID</th>
-                <th style="width:20%">Store Name</th>
+                <th style="width:15%">Store Name</th>
                 <th style="display:none;"></th>
                 <th style="width:15%">Merchant Name</th>
-                <th>Legal Entity Name</th>
+                <th style="width:20%">Legal Entity Name</th>
                 <th>Store Address</th>
                 <th style="display:none;"></th>
                 <th>Email Address</th>
@@ -134,21 +134,25 @@ function displayStore()
               <input type="hidden" id="storeId" name="storeId">
               <input type="hidden" id="merchantId" name="merchantId">
               <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-
+              
+              <div class="mb-3">
+                <label for="merchantName" class="form-label">
+                  Merchant Name
+                </label>
+                <input type="text" class="form-control" id="merchantName" name="merchantName" disabled>
+              </div>
+              <div class="mb-3">
+                <label for="storeId" class="form-label">
+                  Store ID
+                </label>
+                <input type="text" class="form-control" id="storeId1" name="storeId1" disabled>
+              </div>
               <div class="mb-3">
                 <label for="storeName" class="form-label">
                   Store Name<span class="text-danger" style="padding:2px">*</span>
                 </label>
                 <input type="text" class="form-control" id="storeName" name="storeName" placeholder="Enter store name"
                   required maxlength="255">
-              </div>
-              <div class="mb-3">
-                <label for="merchantName" class="form-label">
-                  Merchant Name<span class="text-danger" style="padding:2px">*</span>
-                </label>
-                <input type="text" class="form-control" id="merchantName" name="merchantName"
-                  style="background-color: #d3d3d3; caret-color: transparent;" placeholder="Enter merchant name"
-                  required readonly>
               </div>
               <div class="mb-3">
                 <label for="legalEntityName" class="form-label">Legal Entity Name</label>
@@ -164,15 +168,6 @@ function displayStore()
                 <label for="emailAddress" class="form-label">Email Address</label>
                 <textarea type="text" class="form-control" id="emailAddress" name="emailAddress"
                   placeholder="Enter email address" rows="2"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="CWT Rate" class="form-label">Current CWT Rate<span class="text-danger"
-                  style="padding:2px">*</span></label>
-                <div class="input-group">
-                <input type="number" step="0.01" class="form-control" id="cwtRate" name="cwtRate"
-                  min="0.00" placeholder="0.00" required>
-                <span class="input-group-text">%</span>
-                </div>
               </div>
               <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
             </form>
@@ -271,6 +266,7 @@ function displayStore()
 
         // Set values in the edit modal
         $('#storeId').val(storeId);
+        $('#storeId1').val(storeId);
         $('#storeName').val(storeName);
         $('#merchantId').val(merchantId);
         $('#merchantName').val(merchantName);

@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ");
 
         $user_id = $_SESSION['user_id']; 
-
         $update_stmt->bind_param("ssss", $user_id, $store_id, $cwt_rate, $effective_date);
         $update_stmt->execute();
         $update_stmt->close();
