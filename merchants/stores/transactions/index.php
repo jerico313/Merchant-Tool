@@ -314,7 +314,7 @@ function displayOffers($store_id, $startDate = null, $endDate = null, $voucherTy
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 2, 5, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21] }
+                    { orderable: false, targets: [21] }
                 ],
                 order: [[22, 'desc']]
             });

@@ -311,7 +311,7 @@ function displayOffers($type, $startDate = null, $endDate = null, $voucherType =
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 3, 5, 8, 12, 13, 14, 15, 18, 19, 20, 21, 22, 23, 24, 25] }
+                    { orderable: false, targets: [25] }
                 ],
                 order: [[0, 'asc']],
                 lengthMenu: [50, 100, 200, 300]

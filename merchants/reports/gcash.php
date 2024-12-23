@@ -214,9 +214,6 @@ function displayGcash($merchant_id, $merchant_name)
 
         var table = $('#example').DataTable({
           scrollX: true,
-          columnDefs: [
-            { orderable: false, targets: [0] }
-          ],
           order: [[2, 'desc']], 
         createdRow: function (row, data, dataIndex) {
             var date = new Date(data[2]); 

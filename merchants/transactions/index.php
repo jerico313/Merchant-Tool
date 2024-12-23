@@ -306,7 +306,7 @@ function displayOffers($merchant_id, $startDate = null, $endDate = null, $vouche
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 3, 6, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22] }
+                    { orderable: false, targets: [22] }
                 ],
                 order: [[23, 'desc']],
             });

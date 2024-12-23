@@ -184,7 +184,7 @@ function displayRateHistory($store_id)
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 1, 3] }
+                    { orderable: false, targets: [3] }
                 ],
                 order: [[2, 'desc']]
             });

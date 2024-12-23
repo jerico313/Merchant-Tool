@@ -245,7 +245,7 @@ function displayStore()
         var table = $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 5, 6, 7, 8] }
+            { orderable: false, targets: [9] }
           ],
           order: [[1, 'asc']]
         });

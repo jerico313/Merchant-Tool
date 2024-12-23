@@ -148,7 +148,7 @@ function displayFee()
         $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 9, 12] }
+            { orderable: false, targets: [12] }
           ],
           order: [[1, 'asc']]
         });

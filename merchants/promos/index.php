@@ -314,7 +314,7 @@ function displayOffers($merchant_id, $merchant_name)
    var table = $('#example').DataTable({
       scrollX: true,
       columnDefs: [
-            { orderable: false, targets: [8, 12, 13] }
+            { orderable: false, targets: [13] }
           ],
       order: [[1, 'asc']]
    }); });

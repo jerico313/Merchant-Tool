@@ -121,7 +121,7 @@ function displayHistory()
       var table = $('#example').DataTable({
         scrollX: true,
         columnDefs: [
-            { orderable: false, targets: [0, 1, 2, 3, 4, 5, 6, 7] } 
+            { orderable: false, targets: [7] } 
           ],
         order: [[6, 'desc']]
       });

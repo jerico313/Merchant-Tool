@@ -289,7 +289,7 @@ function displayStore($merchant_id)
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [4, 5, 6] }
+                    { orderable: false, targets: [6] }
                 ],
                 order: [[1, 'asc']]
             });

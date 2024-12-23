@@ -232,7 +232,7 @@ function displayFeeHistory($merchant_id)
             var table = $('#example').DataTable({
                 scrollX: true,
                 columnDefs: [
-                    { orderable: false, targets: [0, 8, 11] }
+                    { orderable: false, targets: [11] }
                 ],
                 order: [[9, 'desc']]
             });

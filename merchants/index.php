@@ -311,7 +311,7 @@ function displayMerchant()
         var table = $('#example').DataTable({
           scrollX: true,
           columnDefs: [
-            { orderable: false, targets: [0, 2, 5, 6, 9] }
+            { orderable: false, targets: [9] }
           ],
           order: [[1, 'asc']]
         });
