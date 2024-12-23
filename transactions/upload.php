@@ -74,8 +74,7 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
             </div>
 
             <div class="alert-custom-filename alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
-                <i class="fa-solid fa-circle-exclamation"></i> Please upload the correct file named "Transaction
-                Listing.csv" !
+                <i class="fa-solid fa-circle-exclamation"></i> The file name must include the words "Transaction Listing". Please upload the correct file!
             </div>
 
             <div class="alert-custom-filetype alert alert-danger" role="alert" style="border-left:solid 3px #f01e2c;">
@@ -137,12 +136,12 @@ $merchant_name = isset($_GET['merchant_name']) ? $_GET['merchant_name'] : '';
                 return;
             }
 
-            if (fileName !== 'Transaction Listing.csv') {
-                document.querySelector('.alert-custom-filename').style.display = 'block';
+            if (!fileName.toLowerCase().includes('transaction listing')) {
+                document.querySelector('.alert-custom-filename').style.display = 'block'; 
                 setTimeout(function () {
-                    document.querySelector('.alert-custom-filename').style.display = 'none';
+                    document.querySelector('.alert-custom-filename').style.display = 'none'; 
                 }, 3000);
-                return;
+                return; 
             }
 
             if (!fileName.endsWith('.csv')) {

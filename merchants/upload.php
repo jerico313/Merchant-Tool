@@ -165,8 +165,7 @@
     </div>
 
     <div class="alert-custom-filename alert alert-danger" role="alert">
-        <i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i> Please upload the correct file named
-        "Merchant Listing.csv" !
+        <i class="fa-solid fa-circle-exclamation" style="padding-right:3px"></i> The file name must include the words "Merchant Listing". Please upload the correct file!
     </div>
 
     <div class="alert-custom-filetype alert alert-danger" role="alert">
@@ -279,7 +278,7 @@
                 return; 
             }
 
-            if (fileName !== 'Merchant Listing.csv') {
+            if (!fileName.toLowerCase().includes('merchant listing')) {
                 document.querySelector('.alert-custom-filename').style.display = 'block';
                 setTimeout(function () {
                     document.querySelector('.alert-custom-filename').style.display = 'none'; 
