@@ -172,14 +172,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $billStatuses = [];
     $duplicatePromoCodes = [];
     $validVoucherType = ['COUPLED', 'DECOUPLED'];
-    $validPromoCategory = ['CASUAL DINING', 'GRAB & GO'];
-    $validPromoGroup = ['BOOKY', 'GCASH', 'GCASH/BOOKY', 'UB/BOOKY', 'UNIONBANK'];
-    $validPromoType = ['BOGO','BUNDLE','FIXED DISCOUNT','FREE ITEM','PERCENT DISCOUNT','X FOR Y',
-        'BOGO, BUNDLE','BOGO, FIXED DISCOUNT','BOGO, FREE ITEM','BOGO, PERCENT DISCOUNT','BOGO, X FOR Y',
-        'BUNDLE, FIXED DISCOUNT','BUNDLE, FREE ITEM','BUNDLE, PERCENT DISCOUNT','BUNDLE, X FOR Y',
-        'FIXED DISCOUNT, FREE ITEM','FIXED DISCOUNT, PERCENT DISCOUNT','FIXED DISCOUNT, X FOR Y',
-        'PERCENT DISCOUNT, FREE ITEM','PERCENT DISCOUNT, X FOR Y','X FOR Y, FREE ITEM'
-    ];
     $validBillStatus = ['PRE-TRIAL', 'BILLABLE', 'NOT BILLABLE'];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
@@ -187,9 +179,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $merchantId = strtoupper($data[1]); 
         $promoCode = $data[2]; 
         $voucherType = $data[4]; 
-        $promoCategory = $data[5]; 
-        $promoGroup = $data[6];
-        $promoType = $data[7];
         $billStatus = $data[10]; 
 
         // Create a unique key combining promo code and merchant ID
@@ -228,27 +217,6 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         } else if (!in_array(strtoupper($voucherType), $validVoucherType)) {
             $invalidData[] = "Invalid Voucher Type '{$voucherType}' for Promo Code '{$promoCode}'.";
         }
-
-        // Check promoCategory
-        if (empty($promoCategory)) {
-            $invalidData[] = "Promo Category is empty for Promo Code '{$promoCode}'.";
-        } else if (!in_array(strtoupper($promoCategory), $validPromoCategory)) {
-            $invalidData[] = "Invalid Promo Category '{$promoCategory}' for Promo Code '{$promoCode}'.";
-        }
-
-        // Check promoGroup
-        if (empty($promoGroup)) {
-            $invalidData[] = "Promo Group is empty for Promo Code '{$promoCode}'.";
-        } else if (!in_array(strtoupper($promoGroup), $validPromoGroup)) {
-            $invalidData[] = "Invalid Promo Group '{$promoGroup}' for Promo Code '{$promoCode}'.";
-        }
-
-        // Check promoType
-        if (empty($promoType)) {
-            $invalidData[] = "Promo Type is empty for Promo Code '{$promoCode}'.";
-        } else if (!in_array(strtoupper($promoType), $validPromoType)) {
-            $invalidData[] = "Invalid Promo Type '{$promoType}' for Promo Code '{$promoCode}'.";
-        }   
         
         // Check billStatus
         if (empty($billStatus)) {
@@ -287,6 +255,9 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $userId = $_SESSION['user_id']; 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $data[3] = str_replace(',', '', $data[3]);
+        foreach ([5, 6, 7, 8, 9, 13] as $index) {
+            $data[$index] = empty($data[$index]) ? null : $data[$index];
+        }        
         $start_date = !empty($data[11]) ? DateTime::createFromFormat('m/d/Y', $data[11]) : null;
         $end_date = !empty($data[12]) ? DateTime::createFromFormat('m/d/Y', $data[12]) : null;
 

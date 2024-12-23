@@ -194,7 +194,7 @@
             newField.classList.add('form-group');
             newField.innerHTML = `
                 <div class="row">
-                <hr style="border: 1px solid #3b3b3b;">
+                    <hr style="border: 1px solid #3b3b3b;">
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="merchant_id" class="form-label" id="form-input-label">

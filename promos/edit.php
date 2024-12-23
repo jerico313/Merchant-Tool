@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
         }
 
-        header("Location: index.php?");
+        header("Location: index.php");
         exit();
     } else {
         error_log("Error updating record: " . $stmt->error);

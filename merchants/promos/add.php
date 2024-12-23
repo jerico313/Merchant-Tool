@@ -24,10 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $merchant_id = $_POST['merchant_id'][$key];
         $promo_amount = $_POST['promo_amount'][$key];
         $voucher_type = $_POST['voucher_type'][$key];
-        $promo_category = $_POST['promo_category'][$key];
-        $promo_group = $_POST['promo_group'][$key];
-        $promo_type = $_POST['promo_type'][$key];
-        $promo_details = $_POST['promo_details'][$key];
+        $promo_category = $_POST['promo_category'][$key] ? NULL : $_POST['promo_category'][$key];
+        $promo_group = $_POST['promo_group'][$key] ? NULL : $_POST['promo_group'][$key];
+        $promo_type = $_POST['promo_type'][$key] ? NULL : $_POST['promo_type'][$key];
+        $promo_details = $_POST['promo_details'][$key] ? NULL : $_POST['promo_details'][$key];
         $remarks = empty($_POST['remarks'][$key]) ? NULL : $_POST['remarks'][$key];
         $bill_status = $_POST['bill_status'][$key];
         $start_date = $_POST['start_date'][$key];

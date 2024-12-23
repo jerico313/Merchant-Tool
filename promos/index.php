@@ -5,22 +5,18 @@ function displayStore()
 {
   global $conn, $type;
 
-  $sql = "SELECT promo.*, merchant.merchant_name 
-            FROM promo 
-            JOIN merchant ON promo.merchant_id = merchant.merchant_id";
+  $sql = "SELECT * FROM promo_view";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
       $shortPromoId = substr($row['promo_id'], 0, 8);
-      $start_date = empty($row['start_date']) ? 'No Start Date' : $row['start_date'];
-      $end_date = empty($row['end_date']) ? 'No End Date' : $row['end_date'];
       $promo_details_full = $row['promo_details'];
       $promo_details = strlen($row['promo_details']) > 30 ? substr($row['promo_details'], 0, 30) . '...' : $row['promo_details'];
-      $remarks_full = empty($row['remarks']) ? '-' : $row['remarks'];
-      $remarks = empty($row['remarks']) ? '-' : (strlen($row['remarks']) > 30 ? substr($row['remarks'], 0, 30) . '...' : $row['remarks']);
-      $finance_am_full = empty($row['finance_am']) ? '-' : $row['finance_am'];
-      $finance_am = empty($row['finance_am']) ? '-' : (strlen($row['finance_am']) > 30 ? substr($row['finance_am'], 0, 30) . '...' : $row['finance_am']);
+      $remarks_full = $row['remarks'];
+      $remarks = strlen($row['remarks']) > 30 ? substr($row['remarks'], 0, 30) . '...' : $row['remarks'];
+      $finance_am_full = $row['finance_am'];
+      $finance_am = strlen($row['finance_am']) > 30 ? substr($row['finance_am'], 0, 30) . '...' : $row['finance_am'];
 
       echo "<tr style='padding:15px 0;' data-uuid='" . $row['promo_id'] . "'>";
       echo "<td>" . $shortPromoId . "</td>";
@@ -34,15 +30,15 @@ function displayStore()
       echo "<td class='text-cell' data-full='" . htmlentities($promo_details_full) . "' data-short='" . htmlentities($promo_details) . "'>" . $promo_details . "</td>";
       echo "<td class='text-cell' data-full='" . htmlentities($remarks_full) . "' data-short='" . htmlentities($remarks) . "'>" . $remarks . "</td>";
       echo "<td>" . $row['bill_status'] . "</td>";
-      echo "<td>" . $start_date . "</td>";
-      echo "<td>" . $end_date . "</td>";
+      echo "<td>" . $row['start_date'] . "</td>";
+      echo "<td>" . $row['end_date'] . "</td>";
       echo "<td class='text-cell' data-full='" . htmlentities($finance_am_full) . "' data-short='" . htmlentities($finance_am) . "'>" . $finance_am . "</td>";
       echo "<td class='actions-cell'>";
       echo "<button class='btn action-btn' onclick='toggleActions(this)'><i class='fa-solid fa-ellipsis' style='font-size:25px;color:#F1F1F1;'></i></button>";
       echo "<div class='mt-2 actions-list' style='display:none;cursor:pointer;'>";
       echo "<ul class='list-group'>";
       if ($type !== 'User') {
-        echo "<li class='list-group-item action-item'><a href='#' class='edit-link' data-promo-id='" . $row['promo_id'] . "' data-promo-code='" . $row['promo_code'] . "' data-merchant-name='" . $row['merchant_name'] . "' data-promo-amount='" . $row['promo_amount'] . "' data-voucher-type='" . $row['voucher_type'] . "' data-promo-category='" . $row['promo_category'] . "' data-promo-group='" . $row['promo_group'] . "' data-promo-type='" . $row['promo_type'] . "' data-promo-details='" . htmlentities($promo_details_full) . "' data-remarks='" . htmlentities($remarks_full) . "' data-bill-status='" . $row['bill_status'] . "' data-start-date='" . $start_date . "' data-end-date='" . $end_date . "' data-finance_am='" . $row['finance_am'] . "' style='color:#E96529;'>Edit</a></li>";
+        echo "<li class='list-group-item action-item'><a href='#' class='edit-link' data-promo-id='" . $row['promo_id'] . "' data-promo-code='" . $row['promo_code'] . "' data-merchant-name='" . htmlspecialchars($row['merchant_name'], ENT_QUOTES) . "' data-promo-amount='" . $row['promo_amount'] . "' data-voucher-type='" . $row['voucher_type'] . "' data-promo-category='" . $row['promo_category'] . "' data-promo-group='" . $row['promo_group'] . "' data-promo-type='" . $row['promo_type'] . "' data-promo-details='" . htmlentities($promo_details_full) . "' data-remarks='" . htmlentities($remarks_full) . "' data-bill-status='" . $row['bill_status'] . "' data-start-date='" . $row['start_date'] . "' data-end-date='" . $row['end_date'] . "' data-finance_am='" . $row['finance_am'] . "' style='color:#E96529;'>Edit</a></li>";
       }
       echo "<li class='list-group-item action-item'><a href='#' onclick='viewHistory(\"" . $row['promo_id'] . "\", \"" . $row['promo_id'] . "\", \"" . $row['promo_code'] . "\")' style='color:#E96529;'>View History</a></li>";
       echo "</ul>";
@@ -151,121 +147,112 @@ function displayStore()
               <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
 
               <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="promoCode" class="form-label">
-                    Promo Code<span class="text-danger" style="padding:2px">*</span>
-                  </label>
-                  <input type="text" class="form-control" id="promoCode" name="promoCode" placeholder="Enter promo code"
-                    required maxlength="100">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="promoDetails" class="form-label">
-                    Promo Details
-                  </label>
-                  <textarea class="form-control" rows="1" id="promoDetails" name="promoDetails"
-                    placeholder="Enter promo details"></textarea>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label for="promoAmount" class="form-label">
-                    Promo Amount<span class="text-danger" style="padding:2px">*</span>
-                  </label>
-                  <input type="number" class="form-control" id="promoAmount" name="promoAmount" placeholder="0" min="0"
-                    required>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="remarks" class="form-label">Remarks</label>
-                  <textarea class="form-control" rows="1" id="remarks" name="remarks"
-                    placeholder="Enter remarks"></textarea>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label for="voucherType" class="form-label">
-                    Voucher Type<span class="text-danger" style="padding:2px">*</span>
-                  </label>
-                  <select class="form-select" id="voucherType" name="voucherType" required>
-                    <option value="Coupled">Coupled</option>
-                    <option value="Decoupled">Decoupled</option>
-                  </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="billStatus" class="form-label">
-                    Bill Status<span class="text-danger" style="padding:2px">*</span>
-                  </label>
-                  <select class="form-select" id="billStatus" name="billStatus" required>
-                    <option selected disabled>-- Select Bill Status --</option>
-                    <option value="PRE-TRIAL">PRE-TRIAL</option>
-                    <option value="BILLABLE">BILLABLE</option>
-                    <option value="NOT BILLABLE">NOT BILLABLE</option>
-                  </select>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label for="promoCategory" class="form-label">
-                    Promo Category<span class="text-danger" style="padding:2px">*</span>
-                  </label>
-                  <select class="form-select" id="promoCategory" name="promoCategory" required>
-                    <option selected disabled>-- Select Promo Category --</option>
-                    <option value="Grab & Go">Grab & Go</option>
-                    <option value="Casual Dining">Casual Dining</option>
-                  </select>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="promoId" class="form-label">
+                      Promo ID
+                    </label>
+                    <input type="text" class="form-control" id="promoId1" name="promoId1" required disabled>
+                  </div>
+                  <div class="mb-3">
+                    <label for="merchantName" class="form-label">
+                      Merchant Name
+                    </label>
+                    <input type="text" class="form-control" id="merchantName" name="merchantName" required disabled>
+                  </div>
+                  <div class="mb-3">
+                    <label for="promoCode" class="form-label">
+                      Promo Code<span class="text-danger" style="padding:2px">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="promoCode" name="promoCode"
+                      placeholder="Enter promo code" required maxlength="100">
+                  </div>
+                  <div class="mb-3">
+                    <label for="promoAmount" class="form-label">
+                      Promo Amount<span class="text-danger" style="padding:2px">*</span>
+                    </label>
+                    <input type="number" class="form-control" id="promoAmount" name="promoAmount" placeholder="0"
+                      min="0" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="voucherType" class="form-label">
+                      Voucher Type<span class="text-danger" style="padding:2px">*</span>
+                    </label>
+                    <select class="form-select" id="voucherType" name="voucherType" required>
+                      <option value="Coupled">Coupled</option>
+                      <option value="Decoupled">Decoupled</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="promoCategory" class="form-label">
+                      Promo Category
+                    </label>
+                    <input type="text" class="form-control" id="promoCategory" name="promoCategory" maxlength="50"
+                      placeholder="Enter promo category">
+                  </div>
+                  <div class="mb-3">
+                    <label for="promoGroup" class="form-label">
+                      Promo Group
+                    </label>
+                    <input type="text" class="form-control" id="promoGroup" name="promoGroup" maxlength="50"
+                      placeholder="Enter promo group">
+                  </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                  <label for="startDate" class="form-label">
-                    Start Date<span class="text-danger" style="padding:2px">*</span>
-                    <input type="checkbox" class="form-check-input" id="NoStartDate" name="NoStartDate"
-                      style="accent-color:#E96529;">
-                    <label class="form-check-label" for="NoStartDate">No Start Date</label>
-                  </label>
-                  <input type="date" class="form-control" id="startDate" name="startDate" required>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label for="promoType" class="form-label">
-                    Promo Type<span class="text-danger" style="padding:2px">*</span>
-                  </label>
-                  <select class="form-select" id="promoType" name="promoType" required>
-                    <option selected disabled>-- Select Promo Type --</option>
-                    <option value="BOGO">BOGO</option>
-                    <option value="Bundle">Bundle</option>
-                    <option value="Free item">Free item</option>
-                    <option value="Fixed discount">Fixed discount</option>
-                    <option value="Fixed discount, Free item">Fixed discount, Free item</option>
-                    <option value="Percent discount">Percent discount</option>
-                    <option value="Percent discount, Free item">Percent discount, Free item</option>
-                    <option value="X for Y">X for Y</option>
-                    <option value="X for Y, Free item">X for Y, Free item</option>
-                  </select>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label for="endDate" class="form-label">
-                    End Date<span class="text-danger" style="padding:2px">*</span>
-                    <input type="checkbox" class="form-check-input" id="NoEndDate" name="NoEndDate"
-                      style="accent-color:#E96529 !important;">
-                    <label class="form-check-label" for="NoEndDate">No End Date</label>
-                  </label>
-                  <input type="date" class="form-control" id="endDate" name="endDate" required>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label for="promoGroup" class="form-label">
-                    Promo Group<span class="text-danger" style="padding:2px">*</span>
-                  </label>
-                  <select class="form-select" id="promoGroup" name="promoGroup" required>
-                    <option selected disabled>-- Select Promo Group --</option>
-                    <option value="Booky">Booky</option>
-                    <option value="Gcash">Gcash</option>
-                    <option value="Unionbank">Unionbank</option>
-                    <option value="Gcash/Booky">Gcash/Booky</option>
-                  </select>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label for="finance_am" class="form-label">Finance AM</label>
-                  <textarea class="form-control" rows="1" id="finance_am" name="finance_am"
-                    placeholder="Enter name of Finance AM"></textarea>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="promoType" class="form-label">
+                      Promo Type
+                    </label>
+                    <input type="text" class="form-control" id="promoType" name="promoType" maxlength="100"
+                      placeholder="Enter promo type">
+                  </div>
+                  <div class="mb-3">
+                    <label for="promoDetails" class="form-label">
+                      Promo Details
+                    </label>
+                    <textarea class="form-control" rows="1" id="promoDetails" name="promoDetails"
+                      placeholder="Enter promo details"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="billStatus" class="form-label">
+                      Bill Status<span class="text-danger" style="padding:2px">*</span>
+                    </label>
+                    <select class="form-select" id="billStatus" name="billStatus" required>
+                      <option selected disabled>-- Select Bill Status --</option>
+                      <option value="PRE-TRIAL">PRE-TRIAL</option>
+                      <option value="BILLABLE">BILLABLE</option>
+                      <option value="NOT BILLABLE">NOT BILLABLE</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="finance_am" class="form-label">Finance AM</label>
+                    <input type="text" class="form-control" id="finance_am" name="finance_am" maxlength="255"
+                      placeholder="Enter Finance AM">
+                  </div>
+                  <div class="mb-3">
+                    <label for="startDate" class="form-label">
+                      Start Date<span class="text-danger" style="padding:2px">*</span>
+                      <input type="checkbox" class="form-check-input" id="NoStartDate" name="NoStartDate"
+                        style="accent-color:#E96529;">
+                      <label class="form-check-label" for="NoStartDate">No Start Date</label>
+                    </label>
+                    <input type="date" class="form-control" id="startDate" name="startDate" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="endDate" class="form-label">
+                      End Date<span class="text-danger" style="padding:2px">*</span>
+                      <input type="checkbox" class="form-check-input" id="NoEndDate" name="NoEndDate"
+                        style="accent-color:#E96529 !important;">
+                      <label class="form-check-label" for="NoEndDate">No End Date</label>
+                    </label>
+                    <input type="date" class="form-control" id="endDate" name="endDate" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="remarks" class="form-label">Remarks</label>
+                    <textarea class="form-control" rows="1" id="remarks" name="remarks"
+                      placeholder="Enter remarks"></textarea>
+                  </div>
                 </div>
               </div>
               <button type="submit" class="btn btn-primary modal-save-btn">Save changes</button>
@@ -335,6 +322,7 @@ function displayStore()
             var noStartDateChecked = event.target.getAttribute('data-nostartdate');
 
             $('#promoId').val(promoId);
+            $('#promoId1').val(promoId);
             $('#editPromoForm #promoCode').val(promoCode);
             $('#editPromoForm #merchantName').val(merchantName);
             $('#editPromoForm #promoAmount').val(promoAmount);

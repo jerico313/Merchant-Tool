@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
 
-        header("Location: index.php?merchant_id=" . htmlspecialchars($merchantId) . "&merchant_name=" . htmlspecialchars($merchantName));
+        header("Location: index.php?merchant_id=" . htmlspecialchars($merchantId) . "&merchant_name=" . $merchantName);
         exit();
     } else {
         error_log("Error updating record: " . $stmt->error);
