@@ -13,187 +13,230 @@ BEGIN
     SET v_uuid = UUID();
 
     SET @sql_insert = CONCAT('INSERT INTO report_history_coupled 
-        (coupled_report_id, bill_status, merchant_id, merchant_business_name, merchant_brand_name, business_address, settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, 
+        (coupled_report_id, bill_status, merchant_id, merchant_business_name, merchant_brand_name, business_address, 
+         settlement_period_start, settlement_period_end, settlement_date, settlement_number, settlement_period, 
          total_successful_orders, total_gross_sales, total_discount, total_outstanding_amount_1, 
          leadgen_commission_rate_base_pretrial, commission_rate_pretrial, total_pretrial, 
          leadgen_commission_rate_base_billable, commission_rate_billable, total_billable, total_commission_fees_1, 
          card_payment_pg_fee, paymaya_pg_fee, gcash_miniapp_pg_fee, gcash_pg_fee, total_payment_gateway_fees_1, 
          total_outstanding_amount_2, total_commission_fees_2, total_payment_gateway_fees_2, bank_fees, 
          wtax_from_gross_sales, cwt_from_transaction_fees, cwt_from_pg_fees, total_amount_paid_out, commission_type)
-        SELECT 
-            "', v_uuid, '" AS coupled_report_id, 
-            ''PRE-TRIAL and BILLABLE'' AS bill_status, 
-	        `Merchant ID` AS merchant_id, 
-            merchant.legal_entity_name AS merchant_business_name, 
-            `Merchant Name` AS merchant_brand_name,
-            merchant.business_address AS business_address,
-            "', start_date, '" AS settlement_period_start,
-            "', end_date, '" AS settlement_period_end,
-            DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
-	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
-	        CASE
-                WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
-                WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
-                ELSE 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
-            END AS settlement_period,
+    WITH aggregated_transactions AS (
+        SELECT
+            `Merchant ID`,
             COUNT(`Transaction ID`) AS total_successful_orders,
             SUM(`Gross Amount`) AS total_gross_sales,
             SUM(`Discount`) AS total_discount,
-            SUM(`Cart Amount`) AS total_outstanding_amount_1,
+            SUM(`Cart Amount`) AS total_outstanding_amount,
             
-            SUM(CASE
-                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base A`
-                ELSE 0.00
-            END) AS leadgen_commission_rate_base_pretrial,
-            CONCAT(`Commission Rate`) AS commission_rate_pretrial,
-            SUM(CASE
-                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Total Billing`
-                ELSE 0.00
-            END) AS total_pretrial,
-
-           SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A`
-                ELSE 0.00
-            END) AS leadgen_commission_rate_base_billable,
-            `Commission Rate` AS commission_rate_billable,
-            SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A` * (`Commission Rate` / 100)
-                ELSE 0.00
-            END) AS total_billable,
-            SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-            END) AS total_commission_fees_1,
+            `Commission Rate` AS commission_rate,
+            SUM(CASE WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base` ELSE 0.00 END) AS leadgen_commission_rate_base_pretrial,
+            SUM(CASE WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Total Billing` ELSE 0.00 END) AS total_pretrial,
+            SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base` ELSE 0.00 END) AS leadgen_commission_rate_base_billable,
+            SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A` * (`Commission Rate` / 100) ELSE 0.00 END) AS total_billable,
+            SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) AS total_commission_fees,
 
             SUM(CASE WHEN `Mode of Payment` = ''Card Payment'' THEN `PG Fee Amount` ELSE 0 END) AS card_payment,
             SUM(CASE WHEN `Mode of Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
             SUM(CASE WHEN `Mode of Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
             SUM(CASE WHEN `Mode of Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
-            SUM(`PG Fee Amount`) AS total_payment_gateway_fees_1,
-            
-            SUM(`Cart Amount`) AS total_outstanding_amount_2,
-	        SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-            END) AS total_commission_fees_2,
-            SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
-	        CASE WHEN SUM(`Amount to be Disbursed`) <= 0.00 THEN 0.00 ELSE 10.00 END AS bank_fees,
-    	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-	        ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * (`CWT Rate` / 100), 2) AS cwt_from_transaction_fees,
-            ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2) AS cwt_from_pg_fees,
-            
-            ROUND(
-                SUM(`Cart Amount`)
-                - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
-                - SUM(`PG Fee Amount`)
-                - CASE WHEN SUM(`Amount to be Disbursed`) <= 0.00 THEN 0.00 ELSE 10.00 END
-                - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-                + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) / 1.12 * (`CWT Rate` / 100), 2)
-                + ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2),
-            2) AS total_amount_paid_out,
-            fee.commission_type AS commission_type
+            SUM(`PG Fee Amount`) AS total_payment_gateway_fees,
+
+            CASE WHEN SUM(`Amount to be Disbursed`) <= 0.00 THEN 0.00 ELSE 10.00 END AS bank_fees,
+            ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales
         FROM `transaction_summary_view`
-	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
-        JOIN `fee` ON `Merchant ID` = fee.`merchant_id`
-        WHERE 
-            `Merchant ID` = "', merchant_id, '"
-            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	        AND `Voucher Type` = ''Coupled''
-	        AND `Bill Status` != ''NOT BILLABLE''
-        GROUP BY 
-            `Merchant ID`');
+        WHERE
+            `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+            AND `Voucher Type` = ''Coupled''
+            AND `Bill Status` != ''NOT BILLABLE''
+        GROUP BY `Merchant ID`
+    ),
+    merchant_details AS (
+        SELECT DISTINCT
+            m.merchant_id,
+            m.legal_entity_name AS merchant_business_name,
+            m.merchant_name AS merchant_brand_name,
+            m.business_address,
+            fee.commission_type
+        FROM `merchant_view` m
+        JOIN `fee` ON fee.merchant_id = m.merchant_id
+    )
+    SELECT 
+        "', v_uuid, '" AS coupled_report_id, 
+        ''PRE-TRIAL and BILLABLE'' AS bill_status, 
+        t.`Merchant ID` AS merchant_id,
+        m.merchant_business_name,
+        m.merchant_brand_name,
+        m.business_address,
+        "', start_date, '" AS settlement_period_start,
+        "', end_date, '" AS settlement_period_end,
+        DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
+        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
+        CASE
+            WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
+            WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+            ELSE 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+        END AS settlement_period,
+        t.total_successful_orders,
+        t.total_gross_sales,
+        t.total_discount,
+        t.total_outstanding_amount AS total_outstanding_amount_1,
+        
+        t.leadgen_commission_rate_base_pretrial,
+        t.commission_rate AS commission_rate_pretrial,
+        t.total_pretrial,
+        t.leadgen_commission_rate_base_billable,
+        t.commission_rate AS commission_rate_billable,
+        t.total_billable,
+        t.total_commission_fees AS total_commission_fees_1,
+
+        t.card_payment,
+        t.paymaya_pg_fee,
+        t.gcash_miniapp_pg_fee,
+        t.gcash_pg_fee,
+        t.total_payment_gateway_fees AS total_payment_gateway_fees_1,
+
+        t.total_outstanding_amount AS total_outstanding_amount_2,
+        t.total_commission_fees AS total_commission_fees_2,
+        t.total_payment_gateway_fees AS total_payment_gateway_fees_2,
+        t.bank_fees,
+        t.wtax_from_gross_sales,
+        ROUND((t.total_commission_fees / 1.12) * 0.02, 2) AS cwt_from_transaction_fees,
+        ROUND((t.total_payment_gateway_fees / 1.12) * 0.02, 2) AS cwt_from_pg_fees,
+        ROUND(
+            t.total_outstanding_amount
+            - t.total_commission_fees
+            - t.total_payment_gateway_fees
+            - t.bank_fees
+            - t.wtax_from_gross_sales
+            + ROUND((t.total_commission_fees / 1.12) * 0.02, 2)
+            + ROUND((t.total_payment_gateway_fees / 1.12) * 0.02, 2),
+        2) AS total_amount_paid_out,
+        m.commission_type
+    FROM aggregated_transactions t
+    JOIN merchant_details m ON t.`Merchant ID` = m.merchant_id
+    WHERE t.`Merchant ID` = "', merchant_id, '"
+    GROUP BY 
+        t.`Merchant ID`, 
+        m.merchant_business_name, 
+        m.merchant_brand_name, 
+        m.business_address, 
+        m.commission_type;
+    ');
 
     PREPARE stmt_insert FROM @sql_insert;
     EXECUTE stmt_insert;
     DEALLOCATE PREPARE stmt_insert;
 
-    SET @sql_select = CONCAT('SELECT 
-            "', v_uuid, '" AS coupled_report_id, 
-            ''PRE-TRIAL and BILLABLE'' AS bill_status, 
-	        `Merchant ID` AS merchant_id, 
-            merchant.legal_entity_name AS merchant_business_name, 
-            `Merchant Name` AS merchant_brand_name,
-            merchant.business_address AS business_address,
-            "', start_date, '" AS settlement_period_start,
-            "', end_date, '" AS settlement_period_end,
-            DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
-	        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
-	        CASE
-                WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
-                WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
-                ELSE 
-                    CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
-            END AS settlement_period,
+    SET @sql_select = CONCAT(
+    'WITH aggregated_transactions AS (
+        SELECT
+            `Merchant ID`,
             COUNT(`Transaction ID`) AS total_successful_orders,
             SUM(`Gross Amount`) AS total_gross_sales,
             SUM(`Discount`) AS total_discount,
-            SUM(`Cart Amount`) AS total_outstanding_amount_1,
+            SUM(`Cart Amount`) AS total_outstanding_amount,
             
-            SUM(CASE
-                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base A`
-                ELSE 0.00
-            END) AS leadgen_commission_rate_base_pretrial,
-            CONCAT(`Commission Rate`) AS commission_rate_pretrial,
-            SUM(CASE
-                WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Total Billing`
-                ELSE 0.00
-            END) AS total_pretrial,
-
-           SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A`
-                ELSE 0.00
-            END) AS leadgen_commission_rate_base_billable,
-            `Commission Rate` AS commission_rate_billable,
-            SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A` * (`Commission Rate` / 100)
-                ELSE 0.00
-            END) AS total_billable,
-            SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-            END) AS total_commission_fees_1,
+            `Commission Rate` AS commission_rate,
+            SUM(CASE WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Comm Rate Base` ELSE 0.00 END) AS leadgen_commission_rate_base_pretrial,
+            SUM(CASE WHEN `Bill Status` = ''PRE-TRIAL'' THEN `Total Billing` ELSE 0.00 END) AS total_pretrial,
+            SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base` ELSE 0.00 END) AS leadgen_commission_rate_base_billable,
+            SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Comm Rate Base A` * (`Commission Rate` / 100) ELSE 0.00 END) AS total_billable,
+            SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END) AS total_commission_fees,
 
             SUM(CASE WHEN `Mode of Payment` = ''Card Payment'' THEN `PG Fee Amount` ELSE 0 END) AS card_payment,
             SUM(CASE WHEN `Mode of Payment` = ''paymaya'' THEN `PG Fee Amount` ELSE 0 END) AS paymaya_pg_fee,
             SUM(CASE WHEN `Mode of Payment` = ''gcash_miniapp'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_miniapp_pg_fee,
             SUM(CASE WHEN `Mode of Payment` = ''gcash'' THEN `PG Fee Amount` ELSE 0 END) AS gcash_pg_fee,
-            SUM(`PG Fee Amount`) AS total_payment_gateway_fees_1,
-            
-            SUM(`Cart Amount`) AS total_outstanding_amount_2,
-	        SUM(CASE
-                WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing`
-                ELSE 0.00
-            END) AS total_commission_fees_2,
-            SUM(`PG Fee Amount`) AS total_payment_gateway_fees_2,
-	        CASE WHEN SUM(`Amount to be Disbursed`) <= 0.00 THEN 0.00 ELSE 10.00 END AS bank_fees,
-    	    ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales,
-            ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * (`CWT Rate` / 100), 2) AS cwt_from_transaction_fees,
-            ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2) AS cwt_from_pg_fees,
-            
-            ROUND(SUM(`Cart Amount`)
-                - SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)
-                - SUM(`PG Fee Amount`)
-                - CASE WHEN SUM(`Amount to be Disbursed`) <= 0.00 THEN 0.00 ELSE 10.00 END
-                - ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2)
-                + ROUND(SUM(CASE WHEN `Bill Status` = ''BILLABLE'' THEN `Total Billing` ELSE 0.00 END)/ 1.12 * (`CWT Rate` / 100), 2)
-                + ROUND(SUM(`PG Fee Amount`) / 1.12 * (`CWT Rate` / 100), 2),
-            2) AS total_amount_paid_out,
-            fee.commission_type AS commission_type
+            SUM(`PG Fee Amount`) AS total_payment_gateway_fees,
+
+            CASE WHEN SUM(`Amount to be Disbursed`) <= 0.00 THEN 0.00 ELSE 10.00 END AS bank_fees,
+            ROUND((SUM(`Cart Amount`) - SUM(`PG Fee Amount`)) / 2 * 0.01, 2) AS wtax_from_gross_sales
         FROM `transaction_summary_view`
-	    JOIN `merchant` ON `Merchant ID` = merchant.`merchant_id`
-        JOIN `fee` ON `Merchant ID` = fee.`merchant_id`
         WHERE
-            `Merchant ID` = "', merchant_id, '"
-            AND `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
-	        AND `Voucher Type` = ''Coupled''
-	        AND `Bill Status` != ''NOT BILLABLE''
-        GROUP BY 
-            `Merchant ID`');
+            `Transaction Date` BETWEEN ''', start_date, ''' AND ''', end_date, '''
+            AND `Voucher Type` = ''Coupled''
+            AND `Bill Status` != ''NOT BILLABLE''
+        GROUP BY `Merchant ID`
+    ),
+    merchant_details AS (
+        SELECT DISTINCT
+            m.merchant_id,
+            m.legal_entity_name AS merchant_business_name,
+            m.merchant_name AS merchant_brand_name,
+            m.business_address,
+            fee.commission_type
+        FROM `merchant_view` m
+        JOIN `fee` ON fee.merchant_id = m.merchant_id
+    )
+    SELECT 
+        "', v_uuid, '" AS coupled_report_id, 
+        ''PRE-TRIAL and BILLABLE'' AS bill_status, 
+        t.`Merchant ID` AS merchant_id,
+        m.merchant_business_name,
+        m.merchant_brand_name,
+        m.business_address,
+        "', start_date, '" AS settlement_period_start,
+        "', end_date, '" AS settlement_period_end,
+        DATE_FORMAT(NOW(), "%M %e, %Y") AS settlement_date,
+        CONCAT("SR#LG", DATE_FORMAT(NOW(), "%Y-%m-%d"), "-", LEFT("', v_uuid, '", 8)) AS settlement_number,
+        CASE
+            WHEN DATE_FORMAT("', start_date, '", ''%Y%m'') = DATE_FORMAT("', end_date, '", ''%Y%m'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%e, %Y''))
+            WHEN DATE_FORMAT("', start_date, '", ''%Y'') = DATE_FORMAT("', end_date, '", ''%Y'') THEN 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+            ELSE 
+                CONCAT(DATE_FORMAT("', start_date, '", ''%M %e, %Y''), ''-'', DATE_FORMAT("', end_date, '", ''%M %e, %Y''))
+        END AS settlement_period,
+        t.total_successful_orders,
+        t.total_gross_sales,
+        t.total_discount,
+        t.total_outstanding_amount AS total_outstanding_amount_1,
+        
+        t.leadgen_commission_rate_base_pretrial,
+        t.commission_rate AS commission_rate_pretrial,
+        t.total_pretrial,
+        t.leadgen_commission_rate_base_billable,
+        t.commission_rate AS commission_rate_billable,
+        t.total_billable,
+        t.total_commission_fees AS total_commission_fees_1,
+
+        t.card_payment,
+        t.paymaya_pg_fee,
+        t.gcash_miniapp_pg_fee,
+        t.gcash_pg_fee,
+        t.total_payment_gateway_fees AS total_payment_gateway_fees_1,
+
+        t.total_outstanding_amount AS total_outstanding_amount_2,
+        t.total_commission_fees AS total_commission_fees_2,
+        t.total_payment_gateway_fees AS total_payment_gateway_fees_2,
+        t.bank_fees,
+        t.wtax_from_gross_sales,
+        ROUND((t.total_commission_fees / 1.12) * 0.02, 2) AS cwt_from_transaction_fees,
+        ROUND((t.total_payment_gateway_fees / 1.12) * 0.02, 2) AS cwt_from_pg_fees,
+        ROUND(
+            t.total_outstanding_amount
+            - t.total_commission_fees
+            - t.total_payment_gateway_fees
+            - t.bank_fees
+            - t.wtax_from_gross_sales
+            + ROUND((t.total_commission_fees / 1.12) * 0.02, 2)
+            + ROUND((t.total_payment_gateway_fees / 1.12) * 0.02, 2),
+        2) AS total_amount_paid_out,
+        m.commission_type
+    FROM aggregated_transactions t
+    JOIN merchant_details m ON t.`Merchant ID` = m.merchant_id
+    WHERE t.`Merchant ID` = "', merchant_id, '"
+    GROUP BY 
+        t.`Merchant ID`, 
+        m.merchant_business_name, 
+        m.merchant_brand_name, 
+        m.business_address, 
+        m.commission_type;
+    ');
 
     PREPARE stmt_select FROM @sql_select;
     EXECUTE stmt_select;
