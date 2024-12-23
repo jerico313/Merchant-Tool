@@ -140,16 +140,15 @@ function displayFeeHistory($merchant_id)
                 <div class="modal-body">
                     <form id="editFeeForm" action="edit.php" method="POST">
                         <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
-                        <input type="hidden" id="merchantId" name="merchantId"
-                            value="<?php echo htmlspecialchars($merchant_id); ?>">
-                        <input type="hidden" id="merchantName" name="merchantName"
-                            value="<?php echo htmlspecialchars($merchant_name); ?>">
+                        <input type="hidden" id="merchantId" name="merchantId" value="<?php echo htmlspecialchars($merchant_id); ?>">
+                        <input type="hidden" id="merchantName" name="merchantName" value="<?php echo htmlspecialchars($merchant_name); ?>">
+                        <input type="hidden" id="feeId" name="feeId">
 
                         <div class="mb-3">
                             <label for="feeId" class="form-label">
                                 Fee ID
                             </label>
-                            <input type="text" class="form-control" id="feeId" name="feeId" disabled>
+                            <input type="text" class="form-control" id="feeId1" name="feeId1" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="paymayaCreditCard" class="form-label">
@@ -242,7 +241,6 @@ function displayFeeHistory($merchant_id)
     <script>
         function editFee(feeUuid) {
             var feeRow = $('#dynamicTableBody').find('tr[data-id="' + feeUuid + '"]');
-            var feeId = feeRow.attr('data-id');
             var paymayaCreditCard = feeRow.find('td:nth-child(2)').text().replace('%', '').trim();
             var gcash = feeRow.find('td:nth-child(3)').text().replace('%', '').trim();
             var gcashMiniapp = feeRow.find('td:nth-child(4)').text().replace('%', '').trim();
@@ -256,7 +254,8 @@ function displayFeeHistory($merchant_id)
             var merchantName = "<?php echo $merchant_name; ?>";
             console.log("Merchant Name: ", merchantName); // Log the merchant name
 
-            $('#feeId').val(feeId);
+            $('#feeId').val(feeUuid);
+            $('#feeId1').val(feeUuid);
             $('#paymayaCreditCard').val(paymayaCreditCard);
             $('#gcash').val(gcash);
             $('#gcashMiniapp').val(gcashMiniapp);

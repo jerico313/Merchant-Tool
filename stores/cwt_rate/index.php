@@ -134,11 +134,12 @@ function displayRateHistory($store_id)
                         <input type="hidden" id="storeId" name="storeId" value="<?php echo htmlspecialchars($store_id); ?>">
                         <input type="hidden" id="storeName" name="storeName" value="<?php echo htmlspecialchars($store_name); ?>">
                         <input type="hidden" value="<?php echo htmlspecialchars($user_id); ?>" name="userId">
+                        <input type="hidden" id="cwt_rate_id" name="cwt_rate_id">
                         <div class="mb-3">
                             <label for="cwt_rate_id" class="form-label">
                                 CWT Rate ID
                             </label>
-                            <input type="text" class="form-control" id="cwt_rate_id" name="cwt_rate_id" disabled>
+                            <input type="text" class="form-control" id="cwt_rate_id1" name="cwt_rate_id1" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="cwt_rate" class="form-label">
@@ -186,15 +187,15 @@ function displayRateHistory($store_id)
     <script>
         function editRate(cwt_rate_Uuid) {
             var cwtRateRow = $('#dynamicTableBody').find('tr[data-id="' + cwt_rate_Uuid + '"]');
-            var cwt_rate_id = cwtRateRow.attr('data-id');
             var cwt_rate = cwtRateRow.find('td:nth-child(2)').text().replace('%', '').trim();
             var effective_date = cwtRateRow.find('td:nth-child(3)').text();
             var storeId = "<?php echo htmlspecialchars($store_id); ?>";
             var storeName = "<?php echo htmlspecialchars($store_name); ?>"; 
 
+            $('#cwt_rate_id').val(cwt_rate_Uuid);
+            $('#cwt_rate_id1').val(cwt_rate_Uuid);
             $('#storeId').val(storeId);
             $('#storeName').val(storeName);
-            $('#cwt_rate_id').val(cwt_rate_id);
             $('#cwt_rate').val(cwt_rate);
             $('#effective_date').val(effective_date);
 
