@@ -71,7 +71,7 @@ function displayStore($merchant_id)
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../style.css">
-    <link rel="stylesheet" href="../../responsive-table-styles/store.css">
+    <link rel="stylesheet" href="../../responsive-table-styles/store_2.css">
 </head>
 <body>
     <div class="loading">

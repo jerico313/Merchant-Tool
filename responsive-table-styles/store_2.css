@@ -14,7 +14,6 @@ body {
     }
 }
 
-table.dataTable tbody th:last-child,
 table.dataTable tbody td:last-child {
     position: sticky;
     right: 0;
@@ -29,9 +28,28 @@ table thead th:last-child {
     position: sticky !important;
     right: 0;
     z-index: 2;
-    box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-    -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
-    -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+    -webkit-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+    -moz-box-shadow: -4px 0px 5px 0px rgba(0, 0, 0, 0.12) !important;
+}
+
+.voucher-type {
+    padding-bottom: 0px;
+    padding-right: 5vh;
+    display: flex;
+    align-items: center;
+}
+
+#alertContainer {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    margin-top: 15%;
+    width: 300px;
+    padding: 15px;
+    font-size: 13px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -58,6 +76,7 @@ table thead th:last-child {
         border: none;
         border-bottom: 1px solid #eee;
         position: relative;
+        font-weight: 400;
         padding-left: 50% !important;
     }
 
@@ -65,7 +84,7 @@ table thead th:last-child {
         position: absolute;
         top: 6px;
         left: 6px;
-        width: 45%;
+        width: auto;
         padding-right: 10px;
         white-space: nowrap;
         font-weight: bold;
@@ -75,64 +94,32 @@ table thead th:last-child {
     .table td:nth-child(1) {
         font-weight: bold;
     }
-    
+
     td:nth-of-type(1):before {
-        content: "Promo ID";
+        content: "Store ID";
     }
 
     td:nth-of-type(2):before {
-        content: "Merchant Name";
+        content: "Store Name";
     }
 
     td:nth-of-type(3):before {
-        content: "Promo Code";
+        content: "Legal Entity Name";
     }
 
     td:nth-of-type(4):before {
-        content: "Promo Amount";
-    }
-
-    td:nth-of-type(5):before {
-        content: "Voucher Type";
+        content: "Store Address";
     }
 
     td:nth-of-type(6):before {
-        content: "Promo Category";
+        content: "Email Address";
     }
 
     td:nth-of-type(7):before {
-        content: "Promo Group";
+        content: "Current CWT Rate";
     }
 
     td:nth-of-type(8):before {
-        content: "Promo Type";
-    }
-
-    td:nth-of-type(9):before {
-        content: "Promo Details";
-    }
-
-    td:nth-of-type(10):before {
-        content: "Remarks";
-    }
-
-    td:nth-of-type(11):before {
-        content: "Bill Status";
-    }
-
-    td:nth-of-type(12):before {
-        content: "Start Date";
-    }
-
-    td:nth-of-type(13):before {
-        content: "End Date";
-    }
-
-    td:nth-of-type(14):before {
-        content: "Remarks 2";
-    }
-
-    td:nth-of-type(15):before {
         content: "Actions";
     }
 
@@ -146,7 +133,7 @@ table thead th:last-child {
         padding-top: 10px;
     }
 
-    .add-btns {
+    .voucher-type {
         padding-right: 2vh;
     }
 }

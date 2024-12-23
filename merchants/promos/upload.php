@@ -121,12 +121,13 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                                 <option disabled selected>-- Select Promo Type --</option>
                                                 <option value="BOGO">BOGO</option>
                                                 <option value="Bundle">Bundle</option>
-                                                <option value="Fixed discount">Fixed discount</option>
                                                 <option value="Free item">Free item</option>
-                                                <option value="Fixed discount, Free item">Free discount, Free item
-                                                </option>
+                                                <option value="Fixed discount">Fixed discount</option>
+                                                <option value="Fixed discount, Free item">Fixed discount, Free item</option>
                                                 <option value="Percent discount">Percent discount</option>
+                                                <option value="Percent discount, Free item">Percent discount, Free item</option>
                                                 <option value="X for Y">X for Y</option>
+                                                <option value="X for Y, Free item">X for Y, Free item</option>
                                             </select>
                                         </div>
                                     </div>
@@ -284,11 +285,13 @@ $merchant_id = isset($_GET['merchant_id']) ? $_GET['merchant_id'] : '';
                                 <option disabled selected>-- Select Promo Type --</option>
                                 <option value="BOGO">BOGO</option>
                                 <option value="Bundle">Bundle</option>
-                                <option value="Fixed discount">Fixed discount</option>
                                 <option value="Free item">Free item</option>
-                                <option value="Fixed discount, Free item">Free discount, Free item</option>
+                                <option value="Fixed discount">Fixed discount</option>
+                                <option value="Fixed discount, Free item">Fixed discount, Free item</option>
                                 <option value="Percent discount">Percent discount</option>
+                                <option value="Percent discount, Free item">Percent discount, Free item</option>
                                 <option value="X for Y">X for Y</option>
+                                <option value="X for Y, Free item">X for Y, Free item</option>
                             </select>
                         </div>
                     </div>

@@ -167,13 +167,27 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     $duplicateMessages = [];
     $invalidMerchantIds = [];
+    $invalidData = [];
     $promoCodes = [];
+    $billStatuses = [];
     $duplicatePromoCodes = [];
+    $validVoucherType = ['COUPLED', 'DECOUPLED'];
+    $validPromoCategory = ['CASUAL DINING', 'GRAB & GO'];
+    $validPromoGroup = ['BOOKY', 'GCASH', 'GCASH/BOOKY', 'UB/BOOKY', 'UNIONBANK'];
+    $validPromoType = ['BOGO', 'BUNDLE', 'FREE ITEM', 'FIXED DISCOUNT', 'FIXED DISCOUNT, FREE ITEM',
+        'PERCENT DISCOUNT', 'PERCENT DISCOUNT, FREE ITEM', 'X FOR Y', 'X FOR Y, FREE ITEM'
+    ];
+    $validBillStatus = ['PRE-TRIAL', 'BILLABLE', 'NOT BILLABLE'];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
+        $merchantName = $data[0];
         $merchantId = strtoupper($data[1]); 
         $promoCode = $data[2]; 
-        $merchantName = $data[0];
+        $voucherType = $data[4]; 
+        $promoCategory = $data[5]; 
+        $promoGroup = $data[6];
+        $promoType = $data[7];
+        $billStatus = $data[10]; 
 
         // Create a unique key combining promo code and merchant ID
         $uniqueKey = $promoCode . '|' . $merchantId; 
@@ -182,7 +196,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         if (isset($promoCodes[$uniqueKey])) {
             // If the promo code and merchant ID already exist, add to duplicates
             if (!isset($duplicatePromoCodes[$promoCode])) {
-                $duplicatePromoCodes[$promoCode] = []; // Initialize an array for duplicate merchant IDs
+                $duplicatePromoCodes[$promoCode] = [];
             }
             // Store the merchant ID and merchant name for duplicates
             $duplicatePromoCodes[$promoCode][] = [
@@ -191,7 +205,7 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
             ];
         } else {
             // Store the unique combination
-            $promoCodes[$uniqueKey] = true; // Store it as true for uniqueness
+            $promoCodes[$uniqueKey] = true;
         }
 
         // Check for duplicates in the database
@@ -203,6 +217,41 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
         if (!checkMerchantExistence($conn, $merchantId) && !in_array("Merchant ID '{$merchantId}' does not exist.", $invalidMerchantIds)) {
             $invalidMerchantIds[] = "Merchant ID '{$merchantId}' does not exist.";
+        }
+               
+        // Check voucherType
+        if (empty($voucherType)) {
+            $invalidData[] = "Voucher Type is empty for Promo Code '{$promoCode}'.";
+        } else if (!in_array(strtoupper($voucherType), $validVoucherType)) {
+            $invalidData[] = "Invalid Voucher Type '{$voucherType}' for Promo Code '{$promoCode}'.";
+        }
+
+        // Check promoCategory
+        if (empty($promoCategory)) {
+            $invalidData[] = "Promo Category is empty for Promo Code '{$promoCode}'.";
+        } else if (!in_array(strtoupper($promoCategory), $validPromoCategory)) {
+            $invalidData[] = "Invalid Promo Category '{$promoCategory}' for Promo Code '{$promoCode}'.";
+        }
+
+        // Check promoGroup
+        if (empty($promoGroup)) {
+            $invalidData[] = "Promo Group is empty for Promo Code '{$promoCode}'.";
+        } else if (!in_array(strtoupper($promoGroup), $validPromoGroup)) {
+            $invalidData[] = "Invalid Promo Group '{$promoGroup}' for Promo Code '{$promoCode}'.";
+        }
+
+        // Check promoType
+        if (empty($promoType)) {
+            $invalidData[] = "Promo Type is empty for Promo Code '{$promoCode}'.";
+        } else if (!in_array(strtoupper($promoType), $validPromoType)) {
+            $invalidData[] = "Invalid Promo Type '{$promoType}' for Promo Code '{$promoCode}'.";
+        }   
+        
+        // Check billStatus
+        if (empty($billStatus)) {
+            $invalidData[] = "Bill Status is empty for Promo Code '{$promoCode}'.";
+        } else if (!in_array(strtoupper($billStatus), $validBillStatus)) {
+            $invalidData[] = "Invalid Bill Status '{$billStatus}' for Promo Code '{$promoCode}'.";
         }
     }
 
@@ -216,13 +265,13 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         }
     }
 
-    if (!empty($duplicateMessages) || !empty($invalidMerchantIds)) {
+    if (!empty($duplicateMessages) || !empty($invalidMerchantIds) || !empty($invalidData)) {
         $conn->close();
         // Merge the error messages
-        $errorMessages = array_merge($duplicateMessages, $invalidMerchantIds);
+        $errorMessages = array_merge($duplicateMessages, $invalidMerchantIds, $invalidData);
         
         // Count total number of errors
-        $totalErrors = count($duplicateMessages) + count($invalidMerchantIds);
+        $totalErrors = count($duplicateMessages) + count($invalidMerchantIds) + count($invalidData);
 
         // Display the error message
         displayMessage('error', "Errors found: {$totalErrors}<br>" . implode('<br>', $errorMessages));

@@ -123,7 +123,7 @@ table thead th:last-child {
         content: "Account Manager";
     }
 
-    td:nth-of-type(10):before {
+    td:nth-of-type(11):before {
         content: "Actions";
     }
 
