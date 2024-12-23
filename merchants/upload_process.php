@@ -168,22 +168,30 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
 
-    $duplicateMessages = [];
+    $validationErrors = [];
+    $validPartnershipType = ['PRIMARY', 'SECONDARY'];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $merchantId = strtolower($data[1]);
+        $partnershipType = $data[2]; 
         
         $duplicates = checkForDuplicates($conn, $merchantId, $data[0]);
         if (!empty($duplicates)) {
-            $duplicateMessages = array_merge($duplicateMessages, $duplicates);
+            $validationErrors = array_merge($validationErrors, $duplicates);
         }
+
+        // Check partnershipType
+        if (!empty($partnershipType) && !in_array(strtoupper($partnershipType), $validPartnershipType)) {
+            $validationErrors[] = "Invalid Partnership Type '{$partnershipType}' for Merchant ID '{$merchantId}'.";
+        } 
     }
 
     fclose($handle);
 
-    if (!empty($duplicateMessages)) {
+    if (!empty($validationErrors)) {
         $conn->close();
-        displayMessage('error', 'Errors found:<br>' . implode('<br>', $duplicateMessages));
+        $totalErrors = count($validationErrors);
+        displayMessage('error', "Errors found: {$totalErrors}<br>" . implode('<br>', $validationErrors));
         exit();
     }
 

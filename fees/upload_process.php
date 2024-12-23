@@ -149,12 +149,14 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
     $handle = fopen($file_tmp, "r");
     fgetcsv($handle); 
 
-    $invalidMerchantIds = [];
+    $validationErrors = [];
     $merchantIds = [];
     $duplicateMerchantIds = [];
+    $validCommissionType = ['VAT EXC', 'VAT INC'];
 
     while (($data = fgetcsv($handle)) !== FALSE) {
         $merchantId = strtolower($data[1]);
+        $commissionType = $data[11]; 
 
         if (isset($merchantIds[$merchantId])) {
             if (!isset($duplicateMerchantIds[$merchantId])) {
@@ -166,23 +168,25 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         }
 
         if (!checkMerchantExistence($conn, $merchantId)) {
-            $invalidMerchantIds[] = "Merchant ID '{$merchantId}' does not exist.";
+            $validationErrors[] = "Merchant ID '{$merchantId}' does not exist.";
         }
+
+        // Check commissionType
+        if (!empty($commissionType) && !in_array(strtoupper($commissionType), $validCommissionType)) {
+            $validationErrors[] = "Invalid Commission Type '{$commissionType}' for Merchant ID '{$merchantId}'.";
+        } 
     }
 
     fclose($handle);
 
     foreach ($duplicateMerchantIds as $merchantId => $merchantIds) {
-        $invalidMerchantIds[] = "Duplicate Merchant ID '{$merchantId}' in CSV file.";
+        $validationErrors[] = "Duplicate Merchant ID '{$merchantId}' in CSV file.";
     }
 
-    if (!empty($invalidMerchantIds)) {
+    if (!empty($validationErrors)) {
         $conn->close();
-
-        // Count total number of errors
-        $totalErrors = count($invalidMerchantIds);
-
-        displayMessage('error', "Errors found: {$totalErrors}<br>" . implode('<br>', $invalidMerchantIds));
+        $totalErrors = count($validationErrors);
+        displayMessage('error', "Errors found: {$totalErrors}<br>" . implode('<br>', $validationErrors));
         exit();
     }
 

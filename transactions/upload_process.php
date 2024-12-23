@@ -182,6 +182,8 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
 
     $validationErrors = [];
     $csvTransactionIds = [];
+    $validPayment = ['"paymaya_credit_card"', '"gcash"', '"gcash_miniapp"', '"paymaya"', '"maya"', '"maya_checkout"'];
+    $validBillStatus = ['PRE-TRIAL', 'BILLABLE', 'NOT BILLABLE'];
     $rowsProcessed = 0;
 
     while (($data = fgetcsv($handle)) !== FALSE) {
@@ -190,6 +192,8 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
         $voucherType = $data[7];
         $promoGroup = $data[8];
         $transactionId = strtolower($data[9]);
+        $payment = $data[15];
+        $billStatus = $data[17];
 
         // Check for duplicates within the CSV file
         if (in_array($transactionId, $csvTransactionIds)) {
@@ -217,6 +221,18 @@ if (isset($_FILES['fileToUpload']['name']) && $_FILES['fileToUpload']['name'] !=
             $validationErrors[] = "Transaction ID '{$transactionId}': Only promo_code should be filled if it's present.";
         } elseif (empty($promoCode) && (empty($voucherType) || empty($promoGroup))) {
             $validationErrors[] = "Transaction ID '{$transactionId}': Both voucher_type and promo_group are required if promo_code is empty.";
+        }
+
+        // Check payment
+        if (!empty($payment) && !in_array(strtolower($payment), $validPayment)) {
+            $validationErrors[] = "Invalid Payment '{$payment}' for Transaction ID '{$transactionId}'.";
+        } 
+
+        // Check billStatus
+        if (empty($billStatus)) {
+            $validationErrors[] = "Bill Status is empty for Transaction ID '{$transactionId}'.";
+        } else if (!in_array(strtoupper($billStatus), $validBillStatus)) {
+            $validationErrors[] = "Invalid Bill Status '{$billStatus}' for Transaction ID '{$transactionId}'.";
         }
     }
 
