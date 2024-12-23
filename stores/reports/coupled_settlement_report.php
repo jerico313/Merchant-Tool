@@ -85,6 +85,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                 echo "<td>" . $row['Bill Status'] . "</td>";
                 echo "<td>" . $row['Comm Rate Base'] . "</td>";
                 echo "<td>" . $row['Commission Rate'] . "</td>";
+                echo "<td>" . $row['Commission Amount'] . "</td>";
                 echo "<td>" . $row['Total Billing'] . "</td>";
                 echo "<td>" . $row['PG Fee Rate'] . "</td>";
                 echo "<td>" . $row['PG Fee Amount'] . "</td>";
@@ -229,7 +230,8 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                     <th>Bill Status</th>
                     <th>Comm Rate Base</th>
                     <th>Comm Rate</th>
-                    <th>Comm Amount (<?php echo htmlspecialchars($data['commission_type']); ?>)</th>
+                    <th>Comm Amount</th>
+                    <th>Total Billing (<?php echo htmlspecialchars($data['commission_type']); ?>)</th>
                     <th>PG Fee Rate</th>
                     <th>PG Fee Amount</th>
                     <th>Amount to be Disbursed</th>
@@ -250,13 +252,13 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         <table style="width:100% !important;">
             <tr>
                 <td style="width:15%;vertical-align:text-top">Business Name: </td>
-                <td style="width:45%;font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['merchant_business_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td style="width:45%;font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['store_business_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                 <td style="width:15%;vertical-align:text-top">Settlement Date: </td>
                 <td style="width:25%;font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['settlement_date']); ?></td>
             </tr>
             <tr>
                 <td style="vertical-align:text-top">Brand Name: </td>
-                <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['merchant_brand_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['store_brand_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                 <td style="vertical-align:text-top">Settlement Number: </td>
                 <td style="font-weight:bold;vertical-align:text-top"><?php echo htmlspecialchars($data['settlement_number']); ?></td>
             </tr>
@@ -482,7 +484,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             cells.forEach(function(cell, cellIndex) {
                 var cellText = cell.innerText || cell.textContent;
 
-                if (rowIndex !== 0 && (cellIndex === 4 || cellIndex === 5 || cellIndex === 6 || cellIndex === 9 || cellIndex === 10 || cellIndex === 11 || cellIndex === 12 || cellIndex === 13 || cellIndex === 14)) {
+                if (rowIndex !== 0 && (cellIndex === 4 || cellIndex === 5 || cellIndex === 6 || cellIndex === 9 || cellIndex === 10 || cellIndex === 11 || cellIndex === 12 || cellIndex === 13 || cellIndex === 14 || cellIndex === 15)) {
                     cellText = formatNumber(cellText);
                 }
 

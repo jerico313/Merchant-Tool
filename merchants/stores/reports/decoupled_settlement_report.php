@@ -61,6 +61,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         while ($row = $result->fetch_assoc()) {
             if ($row['Voucher Type'] == "Decoupled") {
                 echo "<tr>";
+                echo "<td>" . $row['Store Name'] . "</td>";
                 echo "<td>" . $row['Transaction ID'] . "</td>";
                 echo "<td>" . $row['Formatted Transaction Date'] . "</td>";
                 echo "<td>" . $row['Promo Code'] . "</td>";
@@ -71,6 +72,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                 echo "<td>" . $row['Bill Status'] . "</td>";
                 echo "<td>" . $row['Comm Rate Base'] . "</td>";
                 echo "<td>" . $row['Commission Rate'] . "</td>";
+                echo "<td>" . $row['Commission Amount'] . "</td>";
                 echo "<td>" . $row['Total Billing'] . "</td>";
                 echo "<td>" . $row['PG Fee Rate'] . "</td>";
                 echo "<td>" . $row['PG Fee Amount'] . "</td>";
@@ -203,6 +205,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
         <table id="example" class="table bord" style="width:250%;">
             <thead>
                 <tr>
+                    <th>Branch</th>
                     <th>Transaction ID</th>
                     <th>Transaction Date</th>
                     <th>Promo Code</th>
@@ -213,7 +216,8 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
                     <th>Bill Status</th>
                     <th>Comm Rate Base</th>
                     <th>Comm Rate</th>
-                    <th>Comm Amount (<?php echo htmlspecialchars($data['commission_type']); ?>)</th>
+                    <th>Comm Amount</th>
+                    <th>Total Billing (<?php echo htmlspecialchars($data['commission_type']); ?>)</th>
                     <th>PG Fee Rate</th>
                     <th>PG Fee Amount</th>
                     <th>Amount to be Disbursed</th>
@@ -394,7 +398,7 @@ function displayOffers($store_id, $start_date, $end_date, $bill_status)
             cells.forEach(function(cell, cellIndex) {
                 var cellText = cell.innerText || cell.textContent;
 
-                if (rowIndex !== 0 && (cellIndex === 3 || cellIndex === 4 || cellIndex === 5 || cellIndex === 8 || cellIndex === 9 || cellIndex === 10 || cellIndex === 11 || cellIndex === 12 || cellIndex === 13)) {
+                if (rowIndex !== 0 && (cellIndex === 4 || cellIndex === 5 || cellIndex === 6 || cellIndex === 9 || cellIndex === 10 || cellIndex === 11 || cellIndex === 12 || cellIndex === 13 || cellIndex === 14 || cellIndex === 15)) {
                     cellText = formatNumber(cellText);
                 }
 
